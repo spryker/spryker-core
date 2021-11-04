@@ -41,70 +41,87 @@ class ShoppingListsRestApiBusinessTester extends Actor
      * @var int
      */
     public const COMPANY_USER_ID = 123;
+
     /**
      * @var string
      */
     public const OWNER_NAME = 'John Doe';
+
     /**
      * @var string
      */
     public const SHOPPING_LIST_UUID = 'SHOPPING_LIST_UUID';
+
     /**
      * @var int
      */
     public const SHOPPING_LIST_ID = 123;
+
     /**
      * @var int
      */
     public const READ_ONLY_SHOPPING_LIST_ID = 456;
+
     /**
      * @var string
      */
     public const SHOPPING_LIST_ITEM_UUID = 'SHOPPING_LIST_ITEM_UUID';
+
     /**
      * @var int
      */
     public const SHOPPING_LIST_ITEM_ID = 123;
+
     /**
      * @var string
      */
     public const GOOD_CUSTOMER_REFERENCE = 'GOOD_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */
     public const BAD_CUSTOMER_REFERENCE = 'BAD_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */
     public const GOOD_SHOPPING_LIST_UUID = 'GOOD_SHOPPING_LIST_UUID';
+
     /**
      * @var string
      */
     public const BAD_SHOPPING_LIST_UUID = 'BAD_SHOPPING_LIST_UUID';
+
     /**
      * @var string
      */
     public const READ_ONLY_SHOPPING_LIST_UUID = 'FOREIGN_SHOPPING_LIST_UUID';
+
     /**
      * @var string
      */
     public const GOOD_SHOPPING_LIST_NAME = 'GOOD_SHOPPING_LIST_NAME';
+
     /**
      * @var string
      */
     public const BAD_SHOPPING_LIST_NAME = 'BAD_SHOPPING_LIST_NAME';
+
     /**
      * @var string
      */
     public const GOOD_SKU = '123_123';
+
     /**
      * @var string
      */
     public const BAD_SKU = '123_124';
+
     /**
      * @var int
      */
     public const GOOD_QUANTITY = 1;
+
     /**
      * @var int
      */
@@ -132,13 +149,13 @@ class ShoppingListsRestApiBusinessTester extends Actor
         $shoppingListCollectionTransfer->addShoppingList(
             (new ShoppingListTransfer())
                 ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
+                ->setIdCompanyUser(static::COMPANY_USER_ID),
         );
 
         $shoppingListCollectionTransfer->addShoppingList(
             (new ShoppingListTransfer())
                 ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setIdCompanyUser(static::COMPANY_USER_ID)
+                ->setIdCompanyUser(static::COMPANY_USER_ID),
         );
 
         return $shoppingListCollectionTransfer;
@@ -170,15 +187,15 @@ class ShoppingListsRestApiBusinessTester extends Actor
                 ->setIdShoppingList(
                     $shoppingListTransfer->getUuid() === static::READ_ONLY_SHOPPING_LIST_UUID
                         ? static::READ_ONLY_SHOPPING_LIST_ID
-                        : static::SHOPPING_LIST_ID
+                        : static::SHOPPING_LIST_ID,
                 )
                 ->addItem(
                     (new ShoppingListItemTransfer())
                         ->setQuantity(static::GOOD_QUANTITY)
                         ->setSku(static::GOOD_SKU)
                         ->setIdShoppingListItem(static::SHOPPING_LIST_ITEM_ID)
-                        ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
-                )
+                        ->setUuid(static::SHOPPING_LIST_ITEM_UUID),
+                ),
         );
 
         return $shoppingListResponseTransfer->setIsSuccess(true);
@@ -204,7 +221,7 @@ class ShoppingListsRestApiBusinessTester extends Actor
             (new ShoppingListTransfer())
                 ->setCustomerReference($shoppingListTransfer->getCustomerReference())
                 ->setIdCompanyUser(static::COMPANY_USER_ID)
-                ->setName($shoppingListTransfer->getName())
+                ->setName($shoppingListTransfer->getName()),
         );
 
         $this->lastShoppingListName = $shoppingListTransfer->getName();
@@ -240,7 +257,7 @@ class ShoppingListsRestApiBusinessTester extends Actor
                 ->setCustomerReference($shoppingListTransfer->getCustomerReference())
                 ->setIdCompanyUser(static::COMPANY_USER_ID)
                 ->setName($shoppingListTransfer->getName())
-                ->setUuid($shoppingListTransfer->getUuid())
+                ->setUuid($shoppingListTransfer->getUuid()),
         );
 
         $this->lastShoppingListName = $shoppingListTransfer->getName();
@@ -299,7 +316,7 @@ class ShoppingListsRestApiBusinessTester extends Actor
             ->setShoppingListItem(
                 $shoppingListItemTransfer
                     ->setIdShoppingListItem(static::SHOPPING_LIST_ITEM_ID)
-                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID)
+                    ->setUuid(static::SHOPPING_LIST_ITEM_UUID),
             );
     }
 
@@ -326,7 +343,7 @@ class ShoppingListsRestApiBusinessTester extends Actor
         return (new ShoppingListItemResponseTransfer())
             ->setIsSuccess(true)
             ->setShoppingListItem(
-                $shoppingListItemTransfer->setFkShoppingList(static::SHOPPING_LIST_ID)
+                $shoppingListItemTransfer->setFkShoppingList(static::SHOPPING_LIST_ID),
             );
     }
 

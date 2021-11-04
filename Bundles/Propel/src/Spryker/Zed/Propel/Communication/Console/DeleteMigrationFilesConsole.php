@@ -21,6 +21,7 @@ class DeleteMigrationFilesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:migration:delete';
+
     /**
      * @var string
      */

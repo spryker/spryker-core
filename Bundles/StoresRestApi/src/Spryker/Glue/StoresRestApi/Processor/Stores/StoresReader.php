@@ -81,13 +81,13 @@ class StoresReader implements StoresReaderInterface
 
         $storesRestAttributes = $this->storesResourceMapper->mapStoreToStoresRestAttribute(
             $this->countryReader->getStoresCountryAttributes($currentStore->getCountries()),
-            $this->currencyReader->getStoresCurrencyAttributes($currentStore->getAvailableCurrencyIsoCodes())
+            $this->currencyReader->getStoresCurrencyAttributes($currentStore->getAvailableCurrencyIsoCodes()),
         );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             StoresRestApiConfig::RESOURCE_STORES,
             $currentStore->getName(),
-            $storesRestAttributes
+            $storesRestAttributes,
         );
 
         return $response->addResource($restResource);

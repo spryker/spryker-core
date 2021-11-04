@@ -73,7 +73,7 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new User(
             $userTransfer,
-            [SecurityGuiConfig::ROLE_BACK_OFFICE_USER]
+            [SecurityGuiConfig::ROLE_BACK_OFFICE_USER],
         );
     }
 

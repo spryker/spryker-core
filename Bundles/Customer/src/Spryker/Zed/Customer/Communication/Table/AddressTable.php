@@ -26,6 +26,7 @@ class AddressTable extends AbstractTable
      * @var string
      */
     public const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+
     /**
      * @var string
      */
@@ -183,7 +184,7 @@ class AddressTable extends AbstractTable
                     CustomerConstants::PARAM_ID_CUSTOMER_ADDRESS => $idCustomerAddress,
                     CustomerConstants::PARAM_ID_CUSTOMER => $this->idCustomer,
                 ]),
-                'Edit'
+                'Edit',
             );
         }
 

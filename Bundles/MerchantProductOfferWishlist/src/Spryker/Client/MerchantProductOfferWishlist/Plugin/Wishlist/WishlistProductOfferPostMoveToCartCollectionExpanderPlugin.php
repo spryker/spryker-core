@@ -39,7 +39,7 @@ class WishlistProductOfferPostMoveToCartCollectionExpanderPlugin extends Abstrac
             ->expandWishlistMoveToCartRequestCollectionTransfer(
                 $wishlistMoveToCartRequestCollectionTransfer,
                 $quoteTransfer,
-                $wishlistMoveToCartRequestCollectionDiffTransfer
+                $wishlistMoveToCartRequestCollectionDiffTransfer,
             );
     }
 }

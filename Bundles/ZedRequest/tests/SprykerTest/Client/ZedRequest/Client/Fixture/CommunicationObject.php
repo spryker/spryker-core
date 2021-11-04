@@ -12,7 +12,7 @@ use Spryker\Shared\ZedRequest\Client\AbstractObject;
 class CommunicationObject extends AbstractObject
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $values = [
         'test1' => null,

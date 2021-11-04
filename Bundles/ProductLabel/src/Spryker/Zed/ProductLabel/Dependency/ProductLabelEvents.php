@@ -17,6 +17,7 @@ interface ProductLabelEvents
      * - This events will be used for product_abstract_label publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH = 'ProductLabel.product_abstract_label.publish';
@@ -26,6 +27,7 @@ interface ProductLabelEvents
      * - This events will be used for product_abstract_label un-publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH = 'ProductLabel.product_abstract_label.unpublish';
@@ -35,6 +37,7 @@ interface ProductLabelEvents
      * - This events will be used for product_label_dictionary publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_LABEL_DICTIONARY_PUBLISH = 'ProductLabel.product_label_dictionary.publish';
@@ -44,6 +47,7 @@ interface ProductLabelEvents
      * - This events will be used for product_label_dictionary un-publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_LABEL_DICTIONARY_UNPUBLISH = 'ProductLabel.product_label_dictionary.unpublish';
@@ -53,6 +57,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label_product_abstract entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_label_product_abstract.create';
@@ -62,6 +67,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label_product_abstract entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_label_product_abstract.update';
@@ -71,6 +77,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label_product_abstract entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_label_product_abstract.delete';
@@ -80,6 +87,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_CREATE = 'Entity.spy_product_label.create';
@@ -89,6 +97,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_UPDATE = 'Entity.spy_product_label.update';
@@ -98,6 +107,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_DELETE = 'Entity.spy_product_label.delete';
@@ -107,6 +117,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label_localized_attributes entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE = 'Entity.spy_product_label_localized_attributes.create';
@@ -116,6 +127,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label_localized_attributes entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE = 'Entity.spy_product_label_localized_attributes.update';
@@ -125,6 +137,7 @@ interface ProductLabelEvents
      * - This events will be used for spy_product_label_localized_attributes entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_product_label_localized_attributes.delete';

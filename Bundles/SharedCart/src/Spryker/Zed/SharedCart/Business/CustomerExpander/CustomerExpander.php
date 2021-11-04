@@ -39,7 +39,7 @@ class CustomerExpander implements CustomerExpanderInterface
             ->findPermissionsByIdCompanyUser(
                 $customerTransfer
                     ->getCompanyUserTransfer()
-                    ->getIdCompanyUser()
+                    ->getIdCompanyUser(),
             );
 
         return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);

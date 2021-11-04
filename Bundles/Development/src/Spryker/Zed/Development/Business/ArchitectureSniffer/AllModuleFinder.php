@@ -144,9 +144,9 @@ class AllModuleFinder implements AllModuleFinderInterface
     }
 
     /**
-     * @param array $modules
+     * @param array<array<string, mixed>> $modules
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function addApplication(array $modules): array
     {

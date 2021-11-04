@@ -43,7 +43,7 @@ class SecurityBlockerDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_REDIS, function (Container $container) {
             return new SecurityBlockerToRedisClientBridge(
-                $container->getLocator()->redis()->client()
+                $container->getLocator()->redis()->client(),
             );
         });
 

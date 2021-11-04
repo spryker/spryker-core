@@ -24,6 +24,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'product query container';
+
     /**
      * @var string
      */
@@ -83,7 +85,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new QueryContainerProductRelationToProductBridge(
-                $container->getLocator()->product()->queryContainer()
+                $container->getLocator()->product()->queryContainer(),
             );
         });
 
@@ -99,7 +101,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER, function (Container $container) {
             return new ProductRelationToPropelQueryBuilderBridge(
-                $container->getLocator()->propelQueryBuilder()->queryContainer()
+                $container->getLocator()->propelQueryBuilder()->queryContainer(),
             );
         });
 
@@ -115,7 +117,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductRelationToLocaleBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -131,7 +133,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductRelationToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -147,7 +149,7 @@ class ProductRelationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductRelationToTouchBridge(
-                $container->getLocator()->touch()->facade()
+                $container->getLocator()->touch()->facade(),
             );
         });
 

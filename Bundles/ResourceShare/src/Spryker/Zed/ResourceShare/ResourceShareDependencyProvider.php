@@ -20,6 +20,7 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY';
+
     /**
      * @var string
      */
@@ -60,7 +61,7 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ResourceShareToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

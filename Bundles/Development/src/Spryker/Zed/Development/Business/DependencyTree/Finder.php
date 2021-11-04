@@ -89,7 +89,7 @@ class Finder
                 $this->getYvesDirectories(),
                 $this->getClientDirectories(),
                 $this->getSharedDirectories(),
-                $this->getServiceDirectories()
+                $this->getServiceDirectories(),
             ));
 
             return $directories;

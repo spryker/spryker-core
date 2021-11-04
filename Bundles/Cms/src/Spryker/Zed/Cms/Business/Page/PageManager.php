@@ -380,7 +380,7 @@ class PageManager implements PageManagerInterface
 
         if ($localeEntity === null) {
             throw new LocaleNotFoundException(
-                sprintf('Locale with id %s not found', $idLocale)
+                sprintf('Locale with id %s not found', $idLocale),
             );
         }
 

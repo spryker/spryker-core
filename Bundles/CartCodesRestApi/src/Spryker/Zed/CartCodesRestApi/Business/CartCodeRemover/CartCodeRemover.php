@@ -51,14 +51,14 @@ class CartCodeRemover implements CartCodeRemoverInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
             );
         }
 
         $discountTransfers = $quoteResponseTransfer->getQuoteTransfer()->getVoucherDiscounts();
         if (!$this->isVoucherCodeInQuote($discountTransfers, $cartCodeRequestTransfer->getCartCode())) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND,
             );
         }
 
@@ -79,7 +79,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
             );
         }
 
@@ -89,7 +89,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
 
         if (!$cartCodeResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANNOT_BE_REMOVED
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANNOT_BE_REMOVED,
             );
         }
 
@@ -121,7 +121,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
     protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeResponseTransfer
     {
         return (new CartCodeResponseTransfer())->addMessage(
-            (new MessageTransfer())->setValue($errorIdentifier)
+            (new MessageTransfer())->setValue($errorIdentifier),
         );
     }
 }

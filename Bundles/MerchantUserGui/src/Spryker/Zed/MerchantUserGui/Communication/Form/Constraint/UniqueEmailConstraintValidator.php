@@ -29,7 +29,7 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
         }
 
         $userTransfer = $constraint->getMerchantUserFacade()->findUser(
-            (new UserCriteriaTransfer())->setEmail($email)
+            (new UserCriteriaTransfer())->setEmail($email),
         );
 
         if (!$userTransfer) {

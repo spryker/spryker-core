@@ -39,7 +39,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createConfigurableBundleReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -50,7 +50,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleStorageUnpublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -65,7 +65,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
             $this->createConfigurableBundleReader(),
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $this->getProductImageFacade()
+            $this->getProductImageFacade(),
         );
     }
 
@@ -76,7 +76,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateImageStorageUnpublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -86,7 +86,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleReader(): ConfigurableBundleReaderInterface
     {
         return new ConfigurableBundleReader(
-            $this->getConfigurableBundleFacade()
+            $this->getConfigurableBundleFacade(),
         );
     }
 

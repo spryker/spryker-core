@@ -26,10 +26,6 @@ class PriceProductsMerger implements PriceProductsMergerInterface
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *
@@ -42,7 +38,7 @@ class PriceProductsMerger implements PriceProductsMergerInterface
         foreach ($this->priceProductMergeStrategies as $priceProductMergeStrategy) {
             $mergedPriceProductTransfers = $priceProductMergeStrategy->merge(
                 $priceProductTransfers,
-                $newPriceProductTransfer
+                $newPriceProductTransfer,
             );
 
             if ($mergedPriceProductTransfers !== null) {
@@ -52,15 +48,11 @@ class PriceProductsMerger implements PriceProductsMergerInterface
 
         return $this->mergeWithDefaultStrategy(
             $priceProductTransfers,
-            $newPriceProductTransfer
+            $newPriceProductTransfer,
         );
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *

@@ -75,6 +75,7 @@ class FacadeTestAbstract extends Unit
      * @var string
      */
     public const ABSTRACT_SKU = 'foo';
+
     /**
      * @var string
      */
@@ -200,13 +201,13 @@ class FacadeTestAbstract extends Unit
             $touchBridge,
             $localeBridge,
             $this->productQueryContainer,
-            $urlGenerator
+            $urlGenerator,
         );
 
         $this->productManager = new ProductManager(
             $this->productAbstractManager,
             $this->productConcreteManager,
-            $this->productQueryContainer
+            $this->productQueryContainer,
         );
     }
 

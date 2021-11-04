@@ -49,7 +49,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResponseExpander(),
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
         );
     }
 
@@ -62,7 +62,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
         );
     }
 
@@ -76,7 +76,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createCartChangeRequestExpander(),
             $this->createQuoteResponseExpander(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -90,7 +90,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteResponseExpander(),
             $this->getMessengerFacade(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -104,7 +104,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
             $this->createQuoteMerger(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -116,7 +116,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteDeleter(
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -129,7 +129,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
             $this->createQuoteResolver(),
-            $this->createQuoteItemOperation()
+            $this->createQuoteItemOperation(),
         );
     }
 
@@ -139,7 +139,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
         return new QuoteResponseExpander(
-            $this->getQuoteResponseExpanderPlugins()
+            $this->getQuoteResponseExpanderPlugins(),
         );
     }
 
@@ -149,7 +149,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function createCartChangeRequestExpander(): CartChangeRequestExpanderInterface
     {
         return new CartChangeRequestExpander(
-            $this->getRemoveItemsRequestExpanderPlugins()
+            $this->getRemoveItemsRequestExpanderPlugins(),
         );
     }
 
@@ -159,7 +159,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteMerger(): QuoteMergerInterface
     {
         return new QuoteMerger(
-            $this->getCartAddItemStrategyPlugins()
+            $this->getCartAddItemStrategyPlugins(),
         );
     }
 
@@ -172,7 +172,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getCartFacade(),
             $this->createQuoteResolver(),
             $this->getQuoteFacade(),
-            $this->createQuoteResponseExpander()
+            $this->createQuoteResponseExpander(),
         );
     }
 

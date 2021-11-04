@@ -22,10 +22,12 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';
+
     /**
      * @var string
      */
     public const PROPEL_SALES_ORDER_ITEM_QUERY = 'SALES_ORDER_ITEM_QUERY';
+
     /**
      * @var string
      */
@@ -33,6 +35,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';

@@ -54,7 +54,7 @@ class ProductPricesRestApiToPriceProductStorageClientBridge implements ProductPr
             ->priceProductStorageClient
             ->getResolvedPriceProductConcreteTransfers(
                 $idProductConcrete,
-                $idProductAbstract
+                $idProductAbstract,
             );
     }
 }

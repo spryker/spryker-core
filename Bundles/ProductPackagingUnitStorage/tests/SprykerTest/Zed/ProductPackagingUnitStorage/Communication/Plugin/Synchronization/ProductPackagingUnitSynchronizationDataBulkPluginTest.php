@@ -35,6 +35,7 @@ class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
      * @var int
      */
     protected const TEST_INVALID_ID = 111;
+
     /**
      * @var string
      */
@@ -68,7 +69,7 @@ class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
         $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataBulkPlugin->getData(
             0,
             1,
-            [static::TEST_INVALID_ID]
+            [static::TEST_INVALID_ID],
         );
 
         $this->assertEmpty($synchronizationDataTransfers);

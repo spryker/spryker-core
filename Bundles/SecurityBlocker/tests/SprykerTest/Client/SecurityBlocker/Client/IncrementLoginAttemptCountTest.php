@@ -75,7 +75,7 @@ class IncrementLoginAttemptCountTest extends Test
             'kv:%s:%s:%s',
             $securityCheckAuthContextTransfer->getType(),
             $securityCheckAuthContextTransfer->getIp(),
-            $securityCheckAuthContextTransfer->getAccount()
+            $securityCheckAuthContextTransfer->getAccount(),
         );
 
         $expectedNumberOfAttempts = '0';

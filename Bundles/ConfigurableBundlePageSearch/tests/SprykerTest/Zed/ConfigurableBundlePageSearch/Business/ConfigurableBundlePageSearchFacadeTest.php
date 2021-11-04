@@ -53,7 +53,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester
             ->getFacade()
             ->getConfigurableBundleTemplatePageSearchCollection(
-                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
             );
         $configurableBundleTemplatePageSearchTransfers = $configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches();
 
@@ -63,7 +63,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
         foreach ($configurableBundleTemplatePageSearchTransfers as $configurableBundleTemplatePageSearchTransfer) {
             $this->assertSame(
                 $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
-                $configurableBundleTemplatePageSearchTransfer->getFkConfigurableBundleTemplate()
+                $configurableBundleTemplatePageSearchTransfer->getFkConfigurableBundleTemplate(),
             );
         }
     }
@@ -80,13 +80,13 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->publishConfigurableBundleTemplates($configurableBundleTemplateIds);
         $this->tester->getLocator()->configurableBundle()->facade()->deactivateConfigurableBundleTemplate(
-            (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
         $this->tester->getFacade()->publishConfigurableBundleTemplates($configurableBundleTemplateIds);
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester
             ->getFacade()
             ->getConfigurableBundleTemplatePageSearchCollection(
-                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
             );
 
         // Assert
@@ -108,7 +108,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester
             ->getFacade()
             ->getConfigurableBundleTemplatePageSearchCollection(
-                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
             );
 
         // Assert
@@ -142,7 +142,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
 
         // Act
         $configurableBundleTemplateCollectionTransfer = $this->tester->getFacade()->getConfigurableBundleTemplateCollection(
-            (new FilterTransfer())->setLimit(1)
+            (new FilterTransfer())->setLimit(1),
         );
 
         // Assert
@@ -161,7 +161,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester
             ->getFacade()
             ->getConfigurableBundleTemplatePageSearchCollection(
-                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
             );
 
         // Assert

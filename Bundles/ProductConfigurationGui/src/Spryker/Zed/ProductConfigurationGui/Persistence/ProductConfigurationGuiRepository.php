@@ -35,11 +35,11 @@ class ProductConfigurationGuiRepository extends AbstractRepository implements Pr
             ->endUse()
             ->withColumn(
                 sprintf('COUNT(%s)', SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION),
-                ProductConfigurationAggregationTransfer::PRODUCT_CONFIGURATION_COUNT
+                ProductConfigurationAggregationTransfer::PRODUCT_CONFIGURATION_COUNT,
             )
             ->withColumn(
                 sprintf('COUNT(%s)', SpyProductTableMap::COL_ID_PRODUCT),
-                ProductConfigurationAggregationTransfer::PRODUCT_CONCRETE_COUNT
+                ProductConfigurationAggregationTransfer::PRODUCT_CONCRETE_COUNT,
             )
             ->select([
                 ProductConfigurationAggregationTransfer::PRODUCT_CONCRETE_COUNT,

@@ -31,7 +31,7 @@ class ProductOfferMerchantPortalGuiPersistenceFactory extends AbstractPersistenc
     public function createProductTableDataMapper(): ProductTableDataMapper
     {
         return new ProductTableDataMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -41,7 +41,7 @@ class ProductOfferMerchantPortalGuiPersistenceFactory extends AbstractPersistenc
     public function createProductOfferTableDataMapper(): ProductOfferTableDataMapper
     {
         return new ProductOfferTableDataMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

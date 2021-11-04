@@ -18,6 +18,7 @@ class MetadataExpander implements MetadataExpanderInterface
      * @var string
      */
     protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
+
     /**
      * @var string
      */
@@ -59,7 +60,7 @@ class MetadataExpander implements MetadataExpanderInterface
             $giftCardMetadata = $this->getGiftCardMetadata(
                 $itemTransfer,
                 $indexedGiftCardAbstractConfigurationForAbstractProductTransfers,
-                $indexedGiftCartConfigurationForProductTransfers
+                $indexedGiftCartConfigurationForProductTransfers,
             );
             $itemTransfer->setGiftCardMetadata($giftCardMetadata);
         }
@@ -102,7 +103,7 @@ class MetadataExpander implements MetadataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getAbstractAndConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

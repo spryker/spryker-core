@@ -87,7 +87,7 @@ class PriceProductScheduleListTest extends Unit
                         MoneyValueTransfer::FK_CURRENCY => $currencyId,
                     ],
                 ],
-            ]
+            ],
         );
 
         // Act
@@ -97,7 +97,7 @@ class PriceProductScheduleListTest extends Unit
         $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse(
             $priceProductScheduleEntity->isCurrent(),
-            'Scheduled price with not active price product schedule list should not have been set as current.'
+            'Scheduled price with not active price product schedule list should not have been set as current.',
         );
     }
 
@@ -121,7 +121,7 @@ class PriceProductScheduleListTest extends Unit
         // Assert
         $this->assertTrue(
             $priceProductScheduleListResponseTransfer->getIsSuccess(),
-            'Price Product Schedule list should be created.'
+            'Price Product Schedule list should be created.',
         );
     }
 
@@ -139,19 +139,19 @@ class PriceProductScheduleListTest extends Unit
 
         if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER])) {
             $priceProductScheduleListTransfer->setFkUser(
-                $priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER]
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::FK_USER],
             );
         }
 
         if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::NAME])) {
             $priceProductScheduleListTransfer->setName(
-                $priceProductScheduleListData[PriceProductScheduleListTransfer::NAME]
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::NAME],
             );
         }
 
         if (isset($priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE])) {
             $priceProductScheduleListTransfer->setIsActive(
-                $priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE]
+                $priceProductScheduleListData[PriceProductScheduleListTransfer::IS_ACTIVE],
             );
         }
 
@@ -162,13 +162,13 @@ class PriceProductScheduleListTest extends Unit
         // Assert
         $this->assertTrue(
             $priceProductScheduleListResponseTransfer->getIsSuccess(),
-            'Price Product Schedule list should be updated.'
+            'Price Product Schedule list should be updated.',
         );
 
         $this->assertEquals(
             $priceProductScheduleListResponseTransfer->getPriceProductScheduleList(),
             $priceProductScheduleListTransfer,
-            'Values must be updated'
+            'Values must be updated',
         );
     }
 

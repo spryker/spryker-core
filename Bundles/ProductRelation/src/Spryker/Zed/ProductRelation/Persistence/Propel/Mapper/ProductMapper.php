@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract> $productRelationRelatedProductEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract[] $productRelationRelatedProductEntities
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
@@ -30,8 +30,8 @@ class ProductMapper
             $productRelationTransfer->addRelatedProduct(
                 $this->mapProductRelationProductAbstractEntityToProductRelationRelatedProductTransfer(
                     $productRelationRelatedProductEntity,
-                    new ProductRelationRelatedProductTransfer()
-                )
+                    new ProductRelationRelatedProductTransfer(),
+                ),
             );
         }
 
@@ -52,7 +52,7 @@ class ProductMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
      * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
@@ -64,7 +64,7 @@ class ProductMapper
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $productAbstractTransfers[] = $this->mapProductAbstractEntityToProductAbstractTransfer(
                 $productAbstractEntity,
-                new ProductAbstractTransfer()
+                new ProductAbstractTransfer(),
             );
         }
 

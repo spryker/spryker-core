@@ -12,10 +12,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface ProductOptionToGlossaryFacadeInterface
 {
     /**
-     * @phpstan-param array<mixed> $data
-     *
      * @param string $keyName
-     * @param array $data
+     * @param array<mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException

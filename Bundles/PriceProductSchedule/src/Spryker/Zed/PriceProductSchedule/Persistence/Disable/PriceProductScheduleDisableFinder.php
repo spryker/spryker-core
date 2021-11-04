@@ -80,7 +80,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
 
         $priceProductScheduleQuery = $this->addProductIdentifierToIsScheduledPriceForSwitchExists(
             $priceProductScheduleQuery,
-            $priceProductTransfer
+            $priceProductTransfer,
         );
 
         return $priceProductScheduleQuery->exists();
@@ -186,7 +186,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
             ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->filterByIdPriceProductSchedule(
                 $priceProductScheduleTransfer->getIdPriceProductSchedule(),
-                Criteria::NOT_EQUAL
+                Criteria::NOT_EQUAL,
             )
             ->find()
             ->getData();

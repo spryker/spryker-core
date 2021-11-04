@@ -32,6 +32,7 @@ class CompanyUnitAddressTable extends AbstractTable
      * @var string
      */
     protected const COL_COUNTRY_RELATION = 'Country';
+
     /**
      * @var string
      */
@@ -49,6 +50,7 @@ class CompanyUnitAddressTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\EditCompanyUnitAddressController::indexAction()
+     *
      * @var string
      */
     protected const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
@@ -214,7 +216,7 @@ class CompanyUnitAddressTable extends AbstractTable
             Url::generate(static::URL_COMPANY_UNIT_ADDRESS_EDIT, [
                 static::REQUEST_ID_COMPANY_UNIT_ADDRESS => $companyUnitAddressEntity->getIdCompanyUnitAddress(),
             ]),
-            'Edit Company Unit Address'
+            'Edit Company Unit Address',
         );
 
         return implode(' ', $buttons);

@@ -38,7 +38,7 @@ class VolumePriceUpdater implements VolumePriceUpdaterInterface
     ): PriceProductTransfer {
         $volumePriceData = $this->addNewVolumePriceDataElement(
             $this->getVolumePriceData($priceProductTransfer),
-            $newVolumePriceProductTransfer
+            $newVolumePriceProductTransfer,
         );
 
         return $this->setVolumePriceData($priceProductTransfer, $volumePriceData);
@@ -144,7 +144,7 @@ class VolumePriceUpdater implements VolumePriceUpdaterInterface
     {
         $priceData = $this->utilEncodingService->decodeJson(
             $priceProductTransfer->getMoneyValueOrFail()->getPriceData(),
-            true
+            true,
         );
 
         if (!is_array($priceData)) {
@@ -164,7 +164,9 @@ class VolumePriceUpdater implements VolumePriceUpdaterInterface
         PriceProductTransfer $priceProductTransfer,
         array $volumePriceData
     ): PriceProductTransfer {
-        $priceData[PriceProductVolumeConfig::VOLUME_PRICE_TYPE] = array_values($volumePriceData);
+        $priceData = [
+            PriceProductVolumeConfig::VOLUME_PRICE_TYPE => array_values($volumePriceData),
+        ];
 
         $priceDataJson = $this->utilEncodingService->encodeJson($priceData);
 

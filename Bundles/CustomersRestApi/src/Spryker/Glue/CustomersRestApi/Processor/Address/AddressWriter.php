@@ -210,7 +210,7 @@ class AddressWriter implements AddressWriterInterface
         return $this->addressRestResponseBuilder->createAddressRestResource(
             $addressTransfer->getUuid(),
             $customerTransfer->getCustomerReference(),
-            $restAddressAttributesTransfer
+            $restAddressAttributesTransfer,
         );
     }
 }

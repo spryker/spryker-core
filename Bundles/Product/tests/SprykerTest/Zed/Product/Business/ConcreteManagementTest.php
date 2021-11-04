@@ -60,7 +60,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -115,7 +115,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
     }
 
@@ -129,13 +129,13 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->productFacade->touchProductConcreteActive($this->productAbstractTransfer->getIdProductAbstract());
         $this->tester->assertTouchActive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
 
         $this->productFacade->touchProductConcreteInactive($this->productAbstractTransfer->getIdProductAbstract());
         $this->tester->assertTouchInactive(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
     }
 
@@ -150,7 +150,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $this->tester->assertTouchDeleted(
             ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE,
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
     }
 
@@ -162,7 +162,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->setupDefaultProducts();
 
         $productConcretesTransfers = $this->productFacade->findProductConcretesBySkus(
-            [$this->productConcreteTransfer->getSku()]
+            [$this->productConcreteTransfer->getSku()],
         );
 
         $this->assertCreateProductConcrete($productConcretesTransfers[0]);
@@ -193,7 +193,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->setupDefaultProducts();
 
         $productConcreteTransfer = $this->productFacade->findProductConcreteById(
-            $this->productConcreteTransfer->getIdProductConcrete()
+            $this->productConcreteTransfer->getIdProductConcrete(),
         );
 
         $this->assertCreateProductConcrete($productConcreteTransfer);
@@ -262,7 +262,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->setupDefaultProducts();
 
         $productConcreteCollection = $this->productFacade->getConcreteProductsByAbstractProductId(
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
 
         foreach ($productConcreteCollection as $productConcrete) {
@@ -301,7 +301,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     public function testGetConcreteProductsByAbstractProductIdShouldReturnEmptyArray(): void
     {
         $productConcreteCollection = $this->productFacade->getConcreteProductsByAbstractProductId(
-            121231
+            121231,
         );
 
         $this->assertEmpty($productConcreteCollection);
@@ -316,12 +316,12 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         $productNameEN = $this->productFacade->getLocalizedProductConcreteName(
             $this->productConcreteTransfer,
-            $this->locales['en_US']
+            $this->locales['en_US'],
         );
 
         $productNameDE = $this->productFacade->getLocalizedProductConcreteName(
             $this->productConcreteTransfer,
-            $this->locales['de_DE']
+            $this->locales['de_DE'],
         );
 
         $this->assertSame(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);

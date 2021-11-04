@@ -38,10 +38,12 @@ class ShipmentCartConnectorFacadeTest extends Unit
      * @var string
      */
     public const SKU = 'sku';
+
     /**
      * @var string
      */
     public const CURRENCY_ISO_CODE = 'USD';
+
     /**
      * @var array
      */
@@ -53,12 +55,14 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     *
      * @var string
      */
     protected const OPERATION_ADD = 'add';
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     *
      * @var string
      */
     protected const OPERATION_REMOVE = 'remove';
@@ -119,7 +123,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertSame(
                 $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
-                $quoteTransfer->getCurrency()->getCode()
+                $quoteTransfer->getCurrency()->getCode(),
             );
 
             $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
@@ -153,7 +157,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $sourcePrice,
-            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice(),
         );
     }
 
@@ -182,7 +186,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $sourcePrice,
-            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice()
+            $updatedCartChangeTransfer->getQuote()->getExpenses()->getIterator()->current()->getUnitGrossPrice(),
         );
     }
 

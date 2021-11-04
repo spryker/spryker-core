@@ -31,17 +31,19 @@ class CmsBlockType extends AbstractType
      * @var string
      */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+
     /**
      * @var string
      */
     public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+
     /**
      * @var string
      */
     public const OPTION_WRONG_TEMPLATE_CATEGORY_LIST = 'option-wring-template-category-list';
 
     /**
-     * @var array
+     * @var array<string>
      */
     public const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
@@ -50,7 +52,7 @@ class CmsBlockType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -59,13 +61,13 @@ class CmsBlockType extends AbstractType
         $this->addWarningParagraphs(
             $builder,
             $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST],
-            $options[static::OPTION_CATEGORY_ARRAY]
+            $options[static::OPTION_CATEGORY_ARRAY],
         );
         $this->addCategoryFields(
             $builder,
             $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
             $options[static::OPTION_CATEGORY_ARRAY],
-            $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST]
+            $options[static::OPTION_WRONG_TEMPLATE_CATEGORY_LIST],
         );
     }
 

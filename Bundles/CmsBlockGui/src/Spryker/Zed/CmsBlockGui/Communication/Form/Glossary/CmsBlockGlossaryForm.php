@@ -25,6 +25,7 @@ class CmsBlockGlossaryForm extends AbstractType
      * @var string
      */
     public const FIELD_GLOSSARY_PLACEHOLDERS = 'glossaryPlaceholders';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class CmsBlockGlossaryForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -53,7 +54,7 @@ class CmsBlockGlossaryForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

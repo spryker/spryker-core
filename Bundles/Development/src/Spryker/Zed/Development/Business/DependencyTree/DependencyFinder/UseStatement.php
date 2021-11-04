@@ -16,6 +16,7 @@ class UseStatement extends AbstractDependencyFinder
      * @var string
      */
     public const LAYER_DEFAULT = 'Default';
+
     /**
      * @var string
      */

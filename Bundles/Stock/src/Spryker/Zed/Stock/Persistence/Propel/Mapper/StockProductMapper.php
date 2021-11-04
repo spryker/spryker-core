@@ -23,7 +23,7 @@ class StockProductMapper
         foreach ($stockProductEntities as $stockProductEntity) {
             $stockProductTransfers[] = $this->mapStockProductEntityToStockProductTransfer(
                 $stockProductEntity,
-                new StockProductTransfer()
+                new StockProductTransfer(),
             );
         }
 

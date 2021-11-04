@@ -49,7 +49,7 @@ class GracefulRunner implements GracefulRunnerInterface
             if ($signalHandler->isTriggered()) {
                 if ($throwableClassName) {
                     $generator->throw(new $throwableClassName(
-                        'Signal was received, stopped Generator execution. Wrap your Generator into try/catch to continue script execution.'
+                        'Signal was received, stopped Generator execution. Wrap your Generator into try/catch to continue script execution.',
                     ));
                 }
 

@@ -23,6 +23,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
      * @var string
      */
     public const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+
     /**
      * @var string
      */
@@ -63,7 +64,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
             $entityQuery->condition(
                 self::UPDATED_FROM_CONDITION,
                 SpyProductAbstractTableMap::COL_UPDATED_AT . ' >= ?',
-                $availabilityDataFeedTransfer->getUpdatedFrom()
+                $availabilityDataFeedTransfer->getUpdatedFrom(),
             )->where([self::UPDATED_FROM_CONDITION]);
         }
 
@@ -71,7 +72,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
             $entityQuery->condition(
                 self::UPDATED_TO_CONDITION,
                 SpyProductAbstractTableMap::COL_UPDATED_AT . ' <= ?',
-                $availabilityDataFeedTransfer->getUpdatedTo()
+                $availabilityDataFeedTransfer->getUpdatedTo(),
             )->where([self::UPDATED_TO_CONDITION]);
         }
 

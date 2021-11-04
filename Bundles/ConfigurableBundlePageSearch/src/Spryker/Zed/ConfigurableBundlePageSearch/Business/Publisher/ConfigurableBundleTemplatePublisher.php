@@ -83,7 +83,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
         }
 
         $configurableBundleTemplateTransfers = $this->configurableBundleFacade->getConfigurableBundleTemplateCollection(
-            (new ConfigurableBundleTemplateFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+            (new ConfigurableBundleTemplateFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
         );
         $configurableBundleTemplatePageSearchTransfers = $this->getConfigurableBundleTemplatePageSearchTransfers($configurableBundleTemplateIds);
 
@@ -94,7 +94,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
 
     /**
      * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer> $configurableBundleTemplateTransfers
-     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]> $groupedConfigurableBundleTemplatePageSearchTransfers
+     * @param array<array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>> $groupedConfigurableBundleTemplatePageSearchTransfers
      *
      * @return void
      */
@@ -113,7 +113,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
 
             $this->storeConfigurableBundlePageSearches(
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplatePageSearchTransfers
+                $configurableBundleTemplatePageSearchTransfers,
             );
         }
     }
@@ -121,12 +121,12 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param array<int> $configurableBundleTemplateIds
      *
-     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>>
      */
     protected function getConfigurableBundleTemplatePageSearchTransfers(array $configurableBundleTemplateIds): array
     {
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->configurableBundlePageSearchRepository->getConfigurableBundleTemplatePageSearchCollection(
-            (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+            (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds),
         );
 
         return $this->groupConfigurableBundleTemplatePageSearchTransfers($configurableBundleTemplatePageSearchCollectionTransfer);
@@ -135,7 +135,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>>
      */
     protected function groupConfigurableBundleTemplatePageSearchTransfers(
         ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
@@ -164,7 +164,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     ): void {
         $configurableBundleTemplatePageSearchTransfers = $this->getMappedConfigurableBundleTemplatePageSearchTransfers(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplatePageSearchTransfers
+            $configurableBundleTemplatePageSearchTransfers,
         );
 
         foreach ($configurableBundleTemplatePageSearchTransfers as $configurableBundleTemplatePageSearchTransfer) {
@@ -211,7 +211,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
             $mappedConfigurableBundleTemplatePageSearchTransfers[] = $this->configurableBundleTemplatePageSearchMapper->mapConfigurableBundleTemplateTransferToPageSearchTransfer(
                 $configurableBundleTemplateTransfer,
                 $localeTransfer,
-                $configurableBundleTemplatePageSearchTransfers[$localeTransfer->getLocaleName()] ?? new ConfigurableBundleTemplatePageSearchTransfer()
+                $configurableBundleTemplatePageSearchTransfers[$localeTransfer->getLocaleName()] ?? new ConfigurableBundleTemplatePageSearchTransfer(),
             );
         }
 

@@ -28,6 +28,7 @@ class LocalizedContentForm extends AbstractType
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
@@ -63,7 +64,7 @@ class LocalizedContentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -100,7 +101,7 @@ class LocalizedContentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -119,7 +120,7 @@ class LocalizedContentForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         $builder->get(static::FIELD_PARAMETERS)
@@ -142,7 +143,7 @@ class LocalizedContentForm extends AbstractType
                     $parameters = $arrayFilter($transfer->toArray());
 
                     return (!empty($parameters)) ? $this->getFactory()->getUtilEncoding()->encodeJson($transfer->toArray()) : null;
-                }
+                },
             ));
 
         return $this;

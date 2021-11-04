@@ -37,6 +37,7 @@ class ProductOfferStockDataImportPluginTest extends Unit
      * @var string
      */
     protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer-1';
+
     /**
      * @var string
      */

@@ -33,18 +33,22 @@ class CurrencyFacadeTest extends Unit
      * @var string
      */
     protected const ERROR_MESSAGE_CURRENCY_DATA_IS_MISSING = 'quote.validation.error.currency_is_missing';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'quote.validation.error.currency_is_incorrect';
+
     /**
      * @var string
      */
     protected const WRONG_ISO_CODE = 'WRONGCODE';
+
     /**
      * @var string
      */
     protected const STORE_NAME = 'DE';
+
     /**
      * @var string
      */

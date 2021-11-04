@@ -28,14 +28,17 @@ class ProductBarcodeTable extends AbstractTable
      * @var string
      */
     protected const COL_ID_PRODUCT = 'id_product';
+
     /**
      * @var string
      */
     protected const COL_PRODUCT_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const COL_PRODUCT_NAME = 'name';
+
     /**
      * @var string
      */
@@ -130,7 +133,7 @@ class ProductBarcodeTable extends AbstractTable
         $queryResults = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         $results = [];
@@ -184,7 +187,7 @@ class ProductBarcodeTable extends AbstractTable
         return sprintf(
             static::BARCODE_IMAGE_TEMPLATE,
             $barcodeResponseTransfer->getEncoding(),
-            $barcodeResponseTransfer->getCode()
+            $barcodeResponseTransfer->getCode(),
         );
     }
 }

@@ -32,10 +32,12 @@ class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements E
      * @var string
      */
     protected const MODULE = 'module';
+
     /**
      * @var string
      */
     protected const CONTROLLER = 'controller';
+
     /**
      * @var string
      */
@@ -45,10 +47,12 @@ class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements E
      * @var string
      */
     protected const DEFAULT_MODULE = 'application';
+
     /**
      * @var string
      */
     protected const DEFAULT_CONTROLLER = 'index';
+
     /**
      * @var string
      */
@@ -58,10 +62,12 @@ class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements E
      * @var int
      */
     protected const POSITION_OF_ACTION = 2;
+
     /**
      * @var int
      */
     protected const POSITION_OF_CONTROLLER = 1;
+
     /**
      * @var int
      */

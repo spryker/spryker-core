@@ -31,7 +31,7 @@ class TranslatorFactory extends AbstractFactory
     {
         return new Translator(
             $this->getGlossaryStorageClient(),
-            $this->getLocaleClient()
+            $this->getLocaleClient(),
         );
     }
 

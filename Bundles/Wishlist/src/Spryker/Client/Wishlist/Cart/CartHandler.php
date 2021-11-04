@@ -81,7 +81,7 @@ class CartHandler implements CartHandlerInterface
         $wishlistRequestCollectionDiff = $this->executeWishlistPostMoveToCartCollectionExpanderPlugins(
             $wishlistRequestCollectionDiff,
             $quoteTransfer,
-            $requestCollectionTransfer
+            $requestCollectionTransfer,
         );
 
         return $wishlistRequestCollectionDiff;
@@ -115,7 +115,7 @@ class CartHandler implements CartHandlerInterface
         $successfulRequestCollection = $this->executeWishlistCollectionToRemoveExpanderPlugins(
             $requestedCollection,
             $failedCollection,
-            $successfulRequestCollection
+            $successfulRequestCollection,
         );
 
         return $successfulRequestCollection;
@@ -140,12 +140,12 @@ class CartHandler implements CartHandlerInterface
 
         $failedToMoveRequestCollectionTransfer = $this->getWishlistRequestCollectionToCartDiff(
             $wishlistMoveToCartRequestCollectionTransfer,
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         $wishlistItemCollectionTransfer = $this->getWishlistCollectionToRemove(
             $wishlistMoveToCartRequestCollectionTransfer,
-            $failedToMoveRequestCollectionTransfer
+            $failedToMoveRequestCollectionTransfer,
         );
 
         $this->wishlistClient->removeItemCollection($wishlistItemCollectionTransfer);
@@ -191,11 +191,9 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @phpstan-return array<string, bool>
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, bool>
      */
     protected function createExistingSkuIndex(QuoteTransfer $quoteTransfer)
     {
@@ -227,7 +225,7 @@ class CartHandler implements CartHandlerInterface
             $wishlistMoveToCartRequestCollectionDiffTransfer = $wishlistPostMoveToCartCollectionExpanderPlugin->expand(
                 $wishlistMoveToCartRequestCollectionTransfer,
                 $quoteTransfer,
-                $wishlistMoveToCartRequestCollectionDiffTransfer
+                $wishlistMoveToCartRequestCollectionDiffTransfer,
             );
         }
 
@@ -250,7 +248,7 @@ class CartHandler implements CartHandlerInterface
             $wishlistItemCollectionTransfer = $wishlistCollectionToRemoveExpanderPlugin->expand(
                 $wishlistMoveToCartRequestCollectionTransfer,
                 $failedWishlistMoveToCartRequestCollectionTransfer,
-                $wishlistItemCollectionTransfer
+                $wishlistItemCollectionTransfer,
             );
         }
 

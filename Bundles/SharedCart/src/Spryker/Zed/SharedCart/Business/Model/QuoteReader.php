@@ -50,7 +50,7 @@ class QuoteReader implements QuoteReaderInterface
 
         return $this->applyIsDefaultFlagForSharedQuotes(
             $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer),
-            $sharedCartsIdDefaultFlagData
+            $sharedCartsIdDefaultFlagData,
         );
     }
 

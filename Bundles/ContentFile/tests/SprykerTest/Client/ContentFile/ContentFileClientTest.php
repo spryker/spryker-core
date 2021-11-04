@@ -31,10 +31,12 @@ class ContentFileClientTest extends Unit
      * @var string
      */
     protected const LOCALE_NAME = 'de_DE';
+
     /**
      * @var string
      */
     protected const WRONG_KEY_CONTENT = 'fl-0';
+
     /**
      * @var string
      */
@@ -78,8 +80,8 @@ class ContentFileClientTest extends Unit
         // Assert
         $this->expectExceptionObject(
             new InvalidFileListTermException(
-                sprintf(static::EXCEPTION_ERROR_MESSAGE, 'Banner')
-            )
+                sprintf(static::EXCEPTION_ERROR_MESSAGE, 'Banner'),
+            ),
         );
 
         // Act

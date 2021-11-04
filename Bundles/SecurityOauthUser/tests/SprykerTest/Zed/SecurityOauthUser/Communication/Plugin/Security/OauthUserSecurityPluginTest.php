@@ -32,12 +32,14 @@ class OauthUserSecurityPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     *
      * @var string
      */
     protected const SERVICE_SESSION = 'session';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
@@ -59,18 +61,21 @@ class OauthUserSecurityPluginTest extends Unit
 
     /**
      * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_FIREWALL_NAME
+     *
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'OauthUser';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::SECURITY_FIREWALL_NAME
+     *
      * @var string
      */
     protected const SECURITY_USER_FIREWALL_NAME = 'User';
 
     /**
      * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR
+     *
      * @var string
      */
     protected const SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR = 'security.oauth_user.token.authenticator';
@@ -115,7 +120,7 @@ class OauthUserSecurityPluginTest extends Unit
         ]);
 
         $this->tester->setOauthUserClientStrategyPlugin(
-            $this->createOauthUserClientStrategyPluginMock(true, $userTransfer->getUsername())
+            $this->createOauthUserClientStrategyPluginMock(true, $userTransfer->getUsername()),
         );
 
         $securityPlugin = new OauthUserSecurityPlugin();
@@ -133,7 +138,7 @@ class OauthUserSecurityPluginTest extends Unit
         $httpKernelBrowser->request(
             'get',
             '/security-oauth-user/login',
-            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL]
+            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL],
         );
 
         // Assert
@@ -164,7 +169,7 @@ class OauthUserSecurityPluginTest extends Unit
         $this->assertNotNull($firewalls[static::SECURITY_USER_FIREWALL_NAME]['users']);
         $this->assertSame(
             static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
-            $firewalls[static::SECURITY_USER_FIREWALL_NAME]['guard']['authenticators'][0]
+            $firewalls[static::SECURITY_USER_FIREWALL_NAME]['guard']['authenticators'][0],
         );
     }
 
@@ -187,7 +192,7 @@ class OauthUserSecurityPluginTest extends Unit
         $this->assertNotNull($firewalls[static::SECURITY_FIREWALL_NAME]['users']);
         $this->assertSame(
             static::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR,
-            $firewalls[static::SECURITY_FIREWALL_NAME]['guard']['authenticators'][0]
+            $firewalls[static::SECURITY_FIREWALL_NAME]['guard']['authenticators'][0],
         );
     }
 
@@ -200,7 +205,7 @@ class OauthUserSecurityPluginTest extends Unit
         $container = $this->tester->getContainer();
 
         $this->tester->setOauthUserClientStrategyPlugin(
-            $this->createOauthUserClientStrategyPluginMock(false)
+            $this->createOauthUserClientStrategyPluginMock(false),
         );
 
         $securityPlugin = new OauthUserSecurityPlugin();
@@ -217,7 +222,7 @@ class OauthUserSecurityPluginTest extends Unit
         $httpKernelBrowser->request(
             'get',
             '/security-oauth-user/login',
-            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL]
+            ['code' => static::SOME_CODE, 'state' => static::SOME_EMAIL],
         );
 
         // Assert
@@ -250,7 +255,7 @@ class OauthUserSecurityPluginTest extends Unit
         $this->assertSame(
             'test-text',
             $httpKernelBrowser->getResponse()->getContent(),
-            'Expected that ignorable paths are accessible.'
+            'Expected that ignorable paths are accessible.',
         );
     }
 
@@ -276,7 +281,7 @@ class OauthUserSecurityPluginTest extends Unit
 
         if ($successFlow) {
             $resourceOwnerResponseTransfer->setResourceOwner(
-                (new ResourceOwnerTransfer())->setEmail($email)
+                (new ResourceOwnerTransfer())->setEmail($email),
             );
         }
 

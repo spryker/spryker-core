@@ -23,6 +23,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+
     /**
      * @var string
      */
@@ -136,7 +137,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     {
         $checkoutResponseTransfer->setIsSuccess(false)
             ->addError(
-                (new CheckoutErrorTransfer())->setMessage($message)
+                (new CheckoutErrorTransfer())->setMessage($message),
             );
 
         return $checkoutResponseTransfer;

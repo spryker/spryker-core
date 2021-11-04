@@ -130,7 +130,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
             strpos($productOptionValueTransfer->getValue(), ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false
         ) {
             $productOptionValueTransfer->setValue(
-                ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue()
+                ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue(),
             );
         }
 
@@ -152,7 +152,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     }
 
     /**
-     * @param mixed|int $idProductOptionValue
+     * @param int $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */

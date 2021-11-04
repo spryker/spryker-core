@@ -46,12 +46,14 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 {
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE
+     *
      * @var string
      */
     public const COL_KEY_REFERENCE = 'reference';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';
@@ -71,7 +73,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 
         $propelPager = $merchantSalesOrderQuery->paginate(
             $merchantOrderTableCriteriaTransfer->requirePage()->getPage(),
-            $merchantOrderTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $merchantOrderTableCriteriaTransfer->requirePageSize()->getPageSize(),
         );
 
         $paginationTransfer = $this->hydratePaginationTransfer($propelPager);
@@ -80,7 +82,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ->createMerchantOrderTableDataMapper()
             ->mapMerchantOrderTableDataArrayToMerchantOrderCollectionTransfer(
                 $propelPager->getResults()->getData(),
-                new MerchantOrderCollectionTransfer()
+                new MerchantOrderCollectionTransfer(),
             );
 
         $merchantOrderCollectionTransfer->setPagination($paginationTransfer);
@@ -103,7 +105,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 
         $propelPager = $merchantSalesOrderItemQuery->paginate(
             $merchantOrderItemTableCriteriaTransfer->requirePage()->getPage(),
-            $merchantOrderItemTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $merchantOrderItemTableCriteriaTransfer->requirePageSize()->getPageSize(),
         );
 
         $paginationTransfer = $this->hydratePaginationTransfer($propelPager);
@@ -112,7 +114,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ->createMerchantOrderItemTableDataMapper()
             ->mapMerchantOrderItemTableDataArrayToMerchantOrderCollectionTransfer(
                 $propelPager->getResults()->getData(),
-                new MerchantOrderItemCollectionTransfer()
+                new MerchantOrderItemCollectionTransfer(),
             );
 
         $merchantOrderItemCollectionTransfer->setPagination($paginationTransfer);
@@ -142,7 +144,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ->addAsColumn(MerchantOrderCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
                 MerchantOrderCountsTransfer::NEW,
-                "COUNT(CASE WHEN '" . $newOrdersDateTime . "' < " . SpyMerchantSalesOrderTableMap::COL_CREATED_AT . ' THEN 1 END)'
+                "COUNT(CASE WHEN '" . $newOrdersDateTime . "' < " . SpyMerchantSalesOrderTableMap::COL_CREATED_AT . ' THEN 1 END)',
             )
             ->select([
                 MerchantOrderCountsTransfer::TOTAL,
@@ -157,7 +159,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         foreach ($totalsPerStore as $totalPerStore) {
             $merchantOrderCountsTransfer->addTotalPerStore(
                 $totalPerStore[OrderTransfer::STORE],
-                $totalPerStore[MerchantOrderCountsTransfer::TOTAL_PER_STORE]
+                $totalPerStore[MerchantOrderCountsTransfer::TOTAL_PER_STORE],
             );
         }
 
@@ -234,7 +236,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->addAnd(SpyMerchantTableMap::COL_ID_MERCHANT, $idMerchant)
             ->filterByIdMerchantSalesOrderItem_In($merchantOrderItemTableCriteriaTransfer->getMerchantOrderItemIds())
@@ -269,12 +271,12 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderQuery
         ->addJoinObject(new Join(
             SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
-            SpyMerchantTableMap::COL_MERCHANT_REFERENCE
+            SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
         ), 'SpyMerchant');
 
         $merchantSalesOrderQuery->addAnd(
             SpyMerchantTableMap::COL_ID_MERCHANT,
-            $idMerchant
+            $idMerchant,
         );
 
         return $merchantSalesOrderQuery;
@@ -348,7 +350,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -366,7 +368,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -384,7 +386,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_FIRST_NAME,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -402,7 +404,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_LAST_NAME,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -420,7 +422,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_EMAIL,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -438,7 +440,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderItemTableMap::COL_NAME,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -456,7 +458,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderItemTableMap::COL_SKU,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -548,7 +550,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     ): SpyMerchantSalesOrderItemQuery {
         $merchantSalesOrderItemQuery = $this->addOrderItemStatesMerchantOrderItemFilter(
             $merchantSalesOrderItemQuery,
-            $merchantOrderItemTableCriteriaTransfer
+            $merchantOrderItemTableCriteriaTransfer,
         );
 
         return $merchantSalesOrderItemQuery;
@@ -692,7 +694,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     /**
      * @param int $idMerchant
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     protected function getOrderTotalsPerStore(int $idMerchant): array
     {

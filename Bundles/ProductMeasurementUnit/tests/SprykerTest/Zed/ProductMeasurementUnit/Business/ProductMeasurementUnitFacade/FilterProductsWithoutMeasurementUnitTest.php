@@ -74,13 +74,13 @@ class FilterProductsWithoutMeasurementUnitTest extends Unit
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productConcreteTransferWithMeasurementUnit->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $this->tester->haveProductMeasurementSalesUnit(
             $productConcreteTransferWithMeasurementUnit->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         // Act
@@ -108,7 +108,7 @@ class FilterProductsWithoutMeasurementUnitTest extends Unit
 
         $this->tester->haveProductMeasurementBaseUnit(
             $productConcreteTransferWithMeasurement->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         // Act

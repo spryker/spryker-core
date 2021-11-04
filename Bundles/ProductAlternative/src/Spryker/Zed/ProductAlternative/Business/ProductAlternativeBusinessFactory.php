@@ -34,7 +34,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getProductFacade(),
-            $this->createProductAlternativePluginExecutor()
+            $this->createProductAlternativePluginExecutor(),
         );
     }
 
@@ -47,7 +47,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getLocaleFacade(),
             $this->getProductFacade(),
-            $this->getAlternativeProductApplicablePlugins()
+            $this->getAlternativeProductApplicablePlugins(),
         );
     }
 
@@ -58,7 +58,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativePluginExecutor(
             $this->getPostProductAlternativeCreatePlugins(),
-            $this->getPostProductAlternativeDeletePlugins()
+            $this->getPostProductAlternativeDeletePlugins(),
         );
     }
 

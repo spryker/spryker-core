@@ -82,7 +82,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer */
         $companyUnitAddressCollectionTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/get-company-unit-address-collection',
-            $criteriaFilterTransfer
+            $criteriaFilterTransfer,
         );
 
         return $companyUnitAddressCollectionTransfer;
@@ -113,7 +113,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
         $companyUnitAddressResponseTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/create-company-unit-address-and-update-business-unit-default-addresses',
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
 
         return $companyUnitAddressResponseTransfer;
@@ -130,7 +130,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
         $companyUnitAddressResponseTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/update-company-unit-address-and-business-unit-default-addresses',
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
 
         return $companyUnitAddressResponseTransfer;
@@ -146,7 +146,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     ): void {
         $this->zedRequestClient->call(
             '/company-unit-address/gateway/save-company-business-unit-addresses',
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
     }
 
@@ -160,7 +160,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */
         $companyUnitAddressResponseTransfer = $this->zedRequestClient->call(
             '/company-unit-address/gateway/find-company-business-unit-address-by-uuid',
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
 
         return $companyUnitAddressResponseTransfer;

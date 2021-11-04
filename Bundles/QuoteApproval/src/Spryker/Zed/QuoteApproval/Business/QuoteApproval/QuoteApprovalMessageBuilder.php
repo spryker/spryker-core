@@ -18,10 +18,12 @@ class QuoteApprovalMessageBuilder implements QuoteApprovalMessageBuilderInterfac
      * @var string
      */
     protected const PARAMETER_FIRST_NAME = '%first_name%';
+
     /**
      * @var string
      */
     protected const PARAMETER_LAST_NAME = '%last_name%';
+
     /**
      * @var string
      */

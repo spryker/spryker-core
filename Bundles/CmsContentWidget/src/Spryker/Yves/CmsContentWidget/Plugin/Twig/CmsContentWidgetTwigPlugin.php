@@ -43,7 +43,7 @@ class CmsContentWidgetTwigPlugin extends AbstractPlugin implements TwigPluginInt
     {
         foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
             $twig->addFunction(
-                $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin)
+                $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin),
             );
         }
 
@@ -61,7 +61,7 @@ class CmsContentWidgetTwigPlugin extends AbstractPlugin implements TwigPluginInt
         return new TwigFunction(
             $functionName,
             $cmsContentWidgetPlugin->getContentWidgetFunction(),
-            $this->getTwigSimpleFunctionOptions()
+            $this->getTwigSimpleFunctionOptions(),
         );
     }
 

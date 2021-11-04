@@ -19,6 +19,7 @@ class UserPasswordResetConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::PASSWORD_RESET_PATH
+     *
      * @var string
      */
     protected const PASSWORD_RESET_PATH = '/security-gui/password/reset';

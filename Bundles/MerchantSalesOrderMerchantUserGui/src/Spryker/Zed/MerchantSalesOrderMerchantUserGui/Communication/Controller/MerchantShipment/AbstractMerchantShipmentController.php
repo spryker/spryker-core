@@ -26,6 +26,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     *
      * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
@@ -44,12 +46,14 @@ abstract class AbstractMerchantShipmentController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_SALES_ORDER_ITEMS_FORM
+     *
      * @var string
      */
     protected const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
 
     /**
      * @uses \Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType::FIELD_IS_UPDATED
+     *
      * @var string
      */
     protected const FIELD_IS_UPDATED = 'is_updated';
@@ -90,7 +94,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
 
         return $this->mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
             $merchantOrderTransfer,
-            $merchantOrderItemsStateHistory
+            $merchantOrderItemsStateHistory,
         );
     }
 
@@ -116,11 +120,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array
+     * @return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function groupMerchantOrderItemsByIdSalesOrderItem(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -189,13 +191,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
-     *
-     * @phpstan-return array<int, int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @return array<int>
+     * @return array<int, int|null>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {
@@ -203,15 +201,13 @@ abstract class AbstractMerchantShipmentController extends AbstractController
             function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
                 return $merchantOrderItemTransfer->getIdMerchantOrderItem();
             },
-            $merchantOrderItems->getArrayCopy()
+            $merchantOrderItems->getArrayCopy(),
         );
     }
 
     /**
-     * @phpstan-param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param array $merchantOrderItemsStateHistory
+     * @param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
@@ -225,7 +221,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
             }
 
             $merchantOrderItemTransfer->setStateHistory(
-                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()]),
             );
         }
 

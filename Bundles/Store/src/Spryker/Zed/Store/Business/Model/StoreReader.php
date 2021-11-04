@@ -109,7 +109,7 @@ class StoreReader implements StoreReaderInterface
 
         if (!$storeEntity) {
             throw new StoreNotFoundException(
-                sprintf('Store with id "%s" not found!', $idStore)
+                sprintf('Store with id "%s" not found!', $idStore),
             );
         }
 
@@ -139,7 +139,7 @@ class StoreReader implements StoreReaderInterface
 
         if (!$storeEntity) {
             throw new StoreNotFoundException(
-                sprintf('Store with name "%s" not found!', $storeName)
+                sprintf('Store with name "%s" not found!', $storeName),
             );
         }
 

@@ -23,42 +23,52 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 class OrdersTable extends AbstractTable
 {
     public const URL = SalesTablePluginInterface::ROW_ACTIONS;
+
     /**
      * @var string
      */
     public const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
+
     /**
      * @var string
      */
     public const ID_ORDER_ITEM_STATE = 'id-order-item-state';
+
     /**
      * @var string
      */
     public const FILTER = 'filter';
+
     /**
      * @var string
      */
     public const URL_SALES_DETAIL = '/sales/detail';
+
     /**
      * @var string
      */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @var string
      */
     public const GRAND_TOTAL = 'GrandTotal';
+
     /**
      * @var string
      */
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+
     /**
      * @var string
      */
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+
     /**
      * @var string
      */
     protected const COLUMN_SEPARATOR = ' ';
+
     /**
      * @var string
      */
@@ -263,14 +273,14 @@ class OrdersTable extends AbstractTable
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $item[SpySalesOrderTableMap::COL_FIRST_NAME],
-            $item[SpySalesOrderTableMap::COL_LAST_NAME]
+            $item[SpySalesOrderTableMap::COL_LAST_NAME],
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
             $customerTransfer = $this->customerFacade->findByReference(
-                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
+                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE],
             );
 
             if (!$customerTransfer) {
@@ -349,7 +359,7 @@ class OrdersTable extends AbstractTable
             Url::generate(static::URL_SALES_DETAIL, [
                 static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
             ]),
-            'View'
+            'View',
         );
 
         return $urls;
@@ -384,8 +394,8 @@ class OrdersTable extends AbstractTable
                     'table?id-order-item-process=%s&id-order-item-state=%s&filter=%s',
                     $idOrderItemProcess,
                     $idOrderItemState,
-                    $filter
-                )
+                    $filter,
+                ),
             );
         }
     }
@@ -480,7 +490,7 @@ class OrdersTable extends AbstractTable
     /**
      * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -498,7 +508,7 @@ class OrdersTable extends AbstractTable
             static::FULL_NAME_SEARCHABLE_FIELD_PATTERN,
             SpySalesOrderTableMap::COL_FIRST_NAME,
             static::COLUMN_SEPARATOR,
-            SpySalesOrderTableMap::COL_LAST_NAME
+            SpySalesOrderTableMap::COL_LAST_NAME,
         );
     }
 }

@@ -51,7 +51,7 @@ class ProductSupplierController extends AbstractController
             ->createProductSuppliersTable($idCompany);
 
         return $this->jsonResponse(
-            $productSuppliersTable->fetchData()
+            $productSuppliersTable->fetchData(),
         );
     }
 }

@@ -12,14 +12,12 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 interface PriceProductOfferVolumeReaderInterface
 {
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param string $storeName
      * @param string $currencyCode
      * @param string|null $priceType
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getVolumePricesData(
         ProductOfferTransfer $productOfferTransfer,

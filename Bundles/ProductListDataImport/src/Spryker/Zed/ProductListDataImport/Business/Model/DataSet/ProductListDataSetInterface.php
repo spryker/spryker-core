@@ -13,10 +13,12 @@ interface ProductListDataSetInterface
      * @var string
      */
     public const PRODUCT_LIST_KEY = 'product_list_key';
+
     /**
      * @var string
      */
     public const PRODUCT_LIST_NAME = 'name';
+
     /**
      * @var string
      */
@@ -26,6 +28,7 @@ interface ProductListDataSetInterface
      * @var string
      */
     public const CATEGORY_KEY = 'category_key';
+
     /**
      * @var string
      */
@@ -35,10 +38,12 @@ interface ProductListDataSetInterface
      * @var string
      */
     public const ID_PRODUCT_LIST = 'id_product_list';
+
     /**
      * @var string
      */
     public const ID_CATEGORY = 'id_category';
+
     /**
      * @var string
      */

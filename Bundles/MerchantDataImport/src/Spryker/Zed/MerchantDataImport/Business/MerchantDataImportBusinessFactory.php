@@ -29,7 +29,7 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     public function createMerchantDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantDataImporterConfiguration()
+            $this->getConfig()->getMerchantDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -40,7 +40,7 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
             ]))
             ->addStep(new MerchantWriterStep(
                 $this->getEventFacade(),
-                $this->getMerchantFacade()
+                $this->getMerchantFacade(),
             ));
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -54,7 +54,7 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     public function createMerchantStoreDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantStoreDataImporterConfiguration()
+            $this->getConfig()->getMerchantStoreDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

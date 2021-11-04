@@ -68,7 +68,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
             self::KEY_NAMESPACE,
             self::KEY_BUNDLE,
             static::KEY_CODE_BUCKET,
-            self::KEY_CONTROLLER
+            self::KEY_CONTROLLER,
         );
     }
 
@@ -95,7 +95,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
         $className = str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
 
         return $className;

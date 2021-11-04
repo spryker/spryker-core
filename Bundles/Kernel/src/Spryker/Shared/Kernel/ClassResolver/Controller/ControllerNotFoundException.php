@@ -33,7 +33,7 @@ class ControllerNotFoundException extends Exception implements ExceptionInterfac
         $message .= sprintf(
             'Can not resolve %2$sController for your bundle "%1$s"',
             ucfirst($bundleControllerAction->getBundle()),
-            ucfirst($bundleControllerAction->getController())
+            ucfirst($bundleControllerAction->getController()),
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Controller to your bundle.' . PHP_EOL;

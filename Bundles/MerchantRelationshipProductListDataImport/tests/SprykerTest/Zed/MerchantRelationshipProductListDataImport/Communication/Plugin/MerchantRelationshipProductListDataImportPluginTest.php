@@ -46,7 +46,7 @@ class MerchantRelationshipProductListDataImportPluginTest extends Unit
         $merchantRelationshipProductListDataImportPlugin = new MerchantRelationshipProductListDataImportPlugin();
         // Act
         $dataImporterReportTransfer = $merchantRelationshipProductListDataImportPlugin->import(
-            $this->getDataImporterReaderConfigurationTransfer('import/merchant_relation_to_product_list.csv')
+            $this->getDataImporterReaderConfigurationTransfer('import/merchant_relation_to_product_list.csv'),
         );
 
         // Assert

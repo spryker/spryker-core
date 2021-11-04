@@ -25,7 +25,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
         $productConfigurationInstanceTransfer->fromArray($productConfigurationStorageTransfer->toArray(), true);
 
         $productConfigurationInstanceTransfer->setConfiguration(
-            $productConfigurationStorageTransfer->getDefaultConfiguration()
+            $productConfigurationStorageTransfer->getDefaultConfiguration(),
         );
         $productConfigurationInstanceTransfer->setDisplayData($productConfigurationStorageTransfer->getDefaultDisplayData());
 
@@ -47,7 +47,7 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
 
             $productConfigurationInstanceTransfers[$sku] = $this->mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer(
                 $productConfigurationStorageTransfer,
-                new ProductConfigurationInstanceTransfer()
+                new ProductConfigurationInstanceTransfer(),
             );
         }
 

@@ -35,7 +35,7 @@ class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurati
         foreach ($this->contentWidgetConfigurationProviders as $contentWidgetConfigurationProvider) {
             $cmsContentWidgetConfigurationTransfer = $this->mapCmsContentWidgetConfigurationTransfer(
                 $contentWidgetConfigurationProvider->getFunctionName(),
-                $contentWidgetConfigurationProvider
+                $contentWidgetConfigurationProvider,
             );
             $cmsContentConfigurationList->addCmsContentWidgetConfiguration($cmsContentWidgetConfigurationTransfer);
         }

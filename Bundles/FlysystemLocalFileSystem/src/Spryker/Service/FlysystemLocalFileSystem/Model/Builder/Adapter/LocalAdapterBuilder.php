@@ -56,7 +56,7 @@ class LocalAdapterBuilder implements AdapterBuilderInterface
             '%s%s%s',
             $this->adapterConfig->getRoot(),
             DIRECTORY_SEPARATOR,
-            $this->adapterConfig->getPath()
+            $this->adapterConfig->getPath(),
         );
 
         return $this;

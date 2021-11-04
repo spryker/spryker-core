@@ -156,7 +156,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     {
         return date(
             'Y-m-d',
-            (int)strtotime(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate()))
+            (int)strtotime(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate())),
         );
     }
 

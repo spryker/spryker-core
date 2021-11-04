@@ -27,14 +27,17 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @var string
      */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+
     /**
      * @var string
      */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+
     /**
      * @var string
      */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+
     /**
      * @var string
      */
@@ -208,7 +211,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 $itemTransfer->getSku(),
-                $storeTransfer
+                $storeTransfer,
             );
 
         if ($productConcreteAvailabilityTransfer === null || $productConcreteAvailabilityTransfer->getAvailability() === null) {
@@ -217,7 +220,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
         $bundledItemsQuantity = $this->getAccumulatedItemQuantityForBundledProductsByGivenSku(
             $itemsInCart,
-            $itemTransfer->getSku()
+            $itemTransfer->getSku(),
         );
 
         $availabilityAfterBundling = $productConcreteAvailabilityTransfer->getAvailability()
@@ -277,7 +280,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ) {
             $bundleAvailabilityErrorMessage = $this->createItemIsNotAvailableMessageTransfer(
                 $availabilityTransfer->getAvailability(),
-                $itemTransfer->getSku()
+                $itemTransfer->getSku(),
             );
 
             return [

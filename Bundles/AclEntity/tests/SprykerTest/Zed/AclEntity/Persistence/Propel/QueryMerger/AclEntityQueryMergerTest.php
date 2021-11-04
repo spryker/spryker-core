@@ -121,7 +121,7 @@ class AclEntityQueryMergerTest extends Unit
         $modelCriteriaDstMock = $this->createMock(ModelCriteria::class);
         $joinDstMock = $this->getMockBuilder(Join::class)
             ->onlyMethods(
-                ['getRightTableName', 'getRightTableAliasOrName', 'getRightColumn', 'getLeftColumn', 'getJoinType']
+                ['getRightTableName', 'getRightTableAliasOrName', 'getRightColumn', 'getLeftColumn', 'getJoinType'],
             )
             ->getMock();
         $joinDstMock->method('getRightTableName')->willReturn('Table1');

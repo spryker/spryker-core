@@ -85,7 +85,7 @@ class FileManagerMapper implements FileManagerMapperInterface
     {
         $fileInfoEntityTransfer->fromArray($fileInfo->toArray(), true);
         $fileInfoEntityTransfer->setFile(
-            (new SpyFileEntityTransfer())->fromArray($fileInfo->getFile()->toArray())
+            (new SpyFileEntityTransfer())->fromArray($fileInfo->getFile()->toArray()),
         );
 
         return $fileInfoEntityTransfer;
@@ -115,7 +115,7 @@ class FileManagerMapper implements FileManagerMapperInterface
         SpyFileLocalizedAttributes $fileLocalizedAttributes
     ) {
         $fileLocalizedAttributes->fromArray(
-            $fileLocalizedAttributesTransfer->toArray()
+            $fileLocalizedAttributesTransfer->toArray(),
         );
 
         return $fileLocalizedAttributes;
@@ -148,7 +148,7 @@ class FileManagerMapper implements FileManagerMapperInterface
             $fileDirectoryLocalizedAttributesTransfer = new FileDirectoryLocalizedAttributesTransfer();
             $fileDirectoryLocalizedAttributesTransfer->fromArray(
                 $fileDirectoryLocalizedAttributes->toArray(),
-                true
+                true,
             );
             $fileDirectoryTransfer->addFileDirectoryLocalizedAttribute($fileDirectoryLocalizedAttributesTransfer);
         }
@@ -218,8 +218,8 @@ class FileManagerMapper implements FileManagerMapperInterface
             $fileTransfer->addFileInfo(
                 (new FileInfoTransfer())->fromArray(
                     $fileInfo->toArray(),
-                    true
-                )
+                    true,
+                ),
             );
         }
     }
@@ -237,7 +237,7 @@ class FileManagerMapper implements FileManagerMapperInterface
 
         foreach ($attributesCollection as $attribute) {
             $fileTransfer->addLocalizedAttributes(
-                $this->mapFileLocalizedAttributesEntityToTransfer($attribute)
+                $this->mapFileLocalizedAttributesEntityToTransfer($attribute),
             );
         }
     }

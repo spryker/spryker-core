@@ -73,7 +73,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
                 $this->executePriceProductStoreQueryWithPriceDimensionForDeletePlugin(
                     $priceProductStoreQuery,
                     $priceProductCriteriaTransfer,
-                    $priceDimensionQueryCriteriaPlugin
+                    $priceDimensionQueryCriteriaPlugin,
                 );
 
                 continue;
@@ -109,7 +109,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
             $priceProductStoreQuery,
             $priceProductCriteriaTransfer,
-            $priceDimensionQueryCriteriaPlugin
+            $priceDimensionQueryCriteriaPlugin,
         );
 
         if (!$priceDimensionQueryCriteriaTransfer) {
@@ -152,7 +152,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
             $queryCriteriaTransfer = $this->runPlugin(
                 $priceProductStoreQuery,
                 $priceProductCriteriaTransfer,
-                $priceDimensionQueryCriteriaPlugin
+                $priceDimensionQueryCriteriaPlugin,
             );
 
             if (!$queryCriteriaTransfer) {
@@ -162,7 +162,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
             $dimensionConditionNames = array_merge($dimensionConditionNames, $this->addConditionToFilterOrphans(
                 $priceProductStoreQuery,
                 $queryCriteriaTransfer,
-                $priceDimensionQueryCriteriaPlugin->getDimensionName()
+                $priceDimensionQueryCriteriaPlugin->getDimensionName(),
             ));
         }
 
@@ -186,7 +186,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         /** @var string $priceDimensionType */
         $priceDimensionType = $priceDimensionTransfer->requireType()->getType();
         $priceDimensionQueryCriteriaPlugin = $this->findPriceDimensionCriteriaPluginByName(
-            $priceDimensionType
+            $priceDimensionType,
         );
 
         if ($priceDimensionQueryCriteriaPlugin) {
@@ -194,7 +194,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
                 $priceProductStoreQuery,
                 $priceProductCriteriaTransfer,
                 $priceDimensionQueryCriteriaPlugin,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
         }
     }
@@ -260,7 +260,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
             $priceProductStoreQuery->addJoin(
                 $queryJoinTransfer->getLeft(),
                 $queryJoinTransfer->getRight(),
-                $joinType ?: $queryJoinTransfer->getJoinType()
+                $joinType ?: $queryJoinTransfer->getJoinType(),
             );
         }
     }
@@ -321,7 +321,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
                 $conditionName,
                 $field,
                 null,
-                Criteria::ISNOTNULL
+                Criteria::ISNOTNULL,
             );
 
             $conditionNames[] = $conditionName;

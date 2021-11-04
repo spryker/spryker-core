@@ -48,7 +48,7 @@ class IndexController extends AbstractController
             ->createProductTable();
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 

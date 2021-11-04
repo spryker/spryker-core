@@ -32,10 +32,12 @@ class CmsFacadePageTest extends Unit
      * @var string
      */
     public const CMS_PAGE_NEW_TITLE = 'new title';
+
     /**
      * @var string
      */
     public const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
+
     /**
      * @var string
      */
@@ -80,7 +82,7 @@ class CmsFacadePageTest extends Unit
         $translations = $cmsGlossaryAttributesTransfer->getTranslations();
         foreach ($translations as $cmsPlaceholderTranslationTransfer) {
             $cmsPlaceholderTranslationTransfer->setTranslation(
-                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]
+                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()],
             );
         }
 
@@ -92,7 +94,7 @@ class CmsFacadePageTest extends Unit
         foreach ($translations as $cmsPlaceholderTranslationTransfer) {
             $this->assertSame(
                 $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()],
-                $cmsPlaceholderTranslationTransfer->getTranslation()
+                $cmsPlaceholderTranslationTransfer->getTranslation(),
             );
         }
     }
@@ -169,7 +171,7 @@ class CmsFacadePageTest extends Unit
         $translations = $cmsGlossaryAttributesTransfer->getTranslations();
         foreach ($translations as $cmsPlaceholderTranslationTransfer) {
             $cmsPlaceholderTranslationTransfer->setTranslation(
-                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()]
+                $translationFixtures[$cmsPlaceholderTranslationTransfer->getLocaleName()],
             );
         }
         $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);

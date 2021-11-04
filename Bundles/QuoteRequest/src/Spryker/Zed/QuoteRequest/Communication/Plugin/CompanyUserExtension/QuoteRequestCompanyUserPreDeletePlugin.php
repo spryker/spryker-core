@@ -31,7 +31,7 @@ class QuoteRequestCompanyUserPreDeletePlugin extends AbstractPlugin implements C
     public function preDelete(CompanyUserTransfer $companyUserTransfer): void
     {
         $this->getFacade()->deleteQuoteRequestsByIdCompanyUser(
-            $companyUserTransfer->getIdCompanyUser()
+            $companyUserTransfer->getIdCompanyUser(),
         );
     }
 }

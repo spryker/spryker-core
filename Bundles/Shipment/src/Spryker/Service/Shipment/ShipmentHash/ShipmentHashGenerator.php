@@ -62,7 +62,7 @@ class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
             $this->prepareShipmentMethodKey($shipmentTransfer),
             $this->prepareShippingAddressKey($shipmentTransfer),
             $shipmentTransfer->getRequestedDeliveryDate(),
-            $this->getShipmentAdditionalKeyData($shipmentTransfer)
+            $this->getShipmentAdditionalKeyData($shipmentTransfer),
         ));
     }
 

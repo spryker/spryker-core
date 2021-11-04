@@ -37,7 +37,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
         return new MerchantProfileWriter(
             $this->getEntityManager(),
             $this->createMerchantProfileGlossaryWriter(),
-            $this->createMerchantProfileAddressWriter()
+            $this->createMerchantProfileAddressWriter(),
         );
     }
 
@@ -47,7 +47,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     public function createMerchantProfileReader(): MerchantProfileReaderInterface
     {
         return new MerchantProfileReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -59,7 +59,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
         return new MerchantProfileGlossaryWriter(
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
-            $this->createMerchantProfileGlossaryKeyBuilder()
+            $this->createMerchantProfileGlossaryKeyBuilder(),
         );
     }
 
@@ -69,7 +69,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     public function createMerchantProfileAddressWriter(): MerchantProfileAddressWriterInterface
     {
         return new MerchantProfileAddressWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

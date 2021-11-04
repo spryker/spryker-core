@@ -26,6 +26,7 @@ class UtilUuidGeneratorServiceTest extends Unit
      * @var string
      */
     protected const TEST_VALUE_ENCODED = 'carts.DE--1.Shopping Cart';
+
     /**
      * @var string
      */

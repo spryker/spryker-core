@@ -20,6 +20,7 @@ class StepEngine implements StepEngineInterface
      * @var string
      */
     public const TEMPLATE_VARIABLE_PREVIOUS_STEP_URL = 'previousStepUrl';
+
     /**
      * @var string
      */
@@ -202,7 +203,7 @@ class StepEngine implements StepEngineInterface
             $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(
                 $this->stepCollection,
                 $quoteTransfer,
-                $currentStep
+                $currentStep,
             );
         }
         $templateVariables = array_merge($templateVariables, $currentStep->getTemplateVariables($quoteTransfer));

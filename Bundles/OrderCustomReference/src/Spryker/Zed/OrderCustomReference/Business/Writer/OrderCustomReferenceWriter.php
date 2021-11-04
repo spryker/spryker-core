@@ -21,6 +21,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH = 'order_custom_reference.validation.error.message_invalid_length';
+
     /**
      * @var string
      */
@@ -60,7 +61,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
             return $this->orderCustomReferenceEntityManager
                 ->saveOrderCustomReference(
                     $saveOrderTransfer->getIdSalesOrder(),
-                    $quoteTransfer->getOrderCustomReference()
+                    $quoteTransfer->getOrderCustomReference(),
                 );
         }
 
@@ -84,7 +85,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
             return $orderCustomReferenceResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_WAS_NOT_CHANGED),
                 );
         }
 
@@ -93,7 +94,7 @@ class OrderCustomReferenceWriter implements OrderCustomReferenceWriterInterface
                 ->setIsSuccessful(false)
                 ->addMessage(
                     (new MessageTransfer())
-                        ->setValue(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH)
+                        ->setValue(static::GLOSSARY_KEY_ORDER_CUSTOM_REFERENCE_MESSAGE_INVALID_LENGTH),
                 );
         }
 

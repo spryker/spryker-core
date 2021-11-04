@@ -19,10 +19,12 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE = 'PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE';
+
     /**
      * @var string
      */

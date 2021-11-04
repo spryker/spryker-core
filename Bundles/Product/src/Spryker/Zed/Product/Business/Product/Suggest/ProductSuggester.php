@@ -59,7 +59,7 @@ class ProductSuggester implements ProductSuggesterInterface
         return $this->productRepository->findProductAbstractDataBySkuOrLocalizedName(
             $suggestion,
             $this->getCurrentLocale(),
-            $limit
+            $limit,
         );
     }
 
@@ -76,7 +76,7 @@ class ProductSuggester implements ProductSuggesterInterface
         return $this->productRepository->getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
             $suggestion,
             $paginationTransfer,
-            $this->getCurrentLocale()
+            $this->getCurrentLocale(),
         );
     }
 
@@ -93,7 +93,7 @@ class ProductSuggester implements ProductSuggesterInterface
         return $this->productRepository->findProductConcreteDataBySkuOrLocalizedName(
             $suggestion,
             $this->getCurrentLocale(),
-            $limit
+            $limit,
         );
     }
 

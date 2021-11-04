@@ -54,7 +54,7 @@ class SecurityHelper extends Module
         $this->securityPlugins[] = new RememberMeSecurityPlugin();
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getSecurityApplicationPluginStub()
+            $this->getSecurityApplicationPluginStub(),
         );
 
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new RouterListenerEventDispatcherPlugin());

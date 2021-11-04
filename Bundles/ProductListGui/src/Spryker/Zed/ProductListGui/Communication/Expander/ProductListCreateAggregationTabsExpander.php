@@ -16,10 +16,12 @@ class ProductListCreateAggregationTabsExpander implements ProductListCreateAggre
      * @var string
      */
     public const CATEGORIES_TAB_NAME = 'product_list_category_relation';
+
     /**
      * @var string
      */
     public const CATEGORIES_TAB_TITLE = 'Assign Categories';
+
     /**
      * @var string
      */
@@ -29,10 +31,12 @@ class ProductListCreateAggregationTabsExpander implements ProductListCreateAggre
      * @var string
      */
     public const PRODUCTS_TAB_NAME = 'product_list_product_concrete_relation';
+
     /**
      * @var string
      */
     public const PRODUCTS_TAB_TITLE = 'Assign Products';
+
     /**
      * @var string
      */

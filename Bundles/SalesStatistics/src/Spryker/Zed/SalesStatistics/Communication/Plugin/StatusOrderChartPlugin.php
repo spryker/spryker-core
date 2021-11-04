@@ -24,6 +24,7 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
      * @var string
      */
     public const NAME = 'status-orders';
+
     /**
      * @var string
      */
@@ -74,7 +75,7 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
         return $this->getFactory()
             ->getTwigEnvironment()
             ->createTemplate(
-                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME)
+                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME),
             )
             ->render([]);
     }

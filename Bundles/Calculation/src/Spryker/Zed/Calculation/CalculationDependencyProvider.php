@@ -20,10 +20,12 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
+
     /**
      * @var string
      */
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
+
     /**
      * @var string
      */

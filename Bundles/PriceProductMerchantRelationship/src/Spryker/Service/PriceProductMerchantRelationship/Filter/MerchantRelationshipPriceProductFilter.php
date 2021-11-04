@@ -31,7 +31,7 @@ class MerchantRelationshipPriceProductFilter implements MerchantRelationshipPric
 
         return $this->filterOutPriceProductTransfersWithIncorrectMerchantRelationship(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
     }
 

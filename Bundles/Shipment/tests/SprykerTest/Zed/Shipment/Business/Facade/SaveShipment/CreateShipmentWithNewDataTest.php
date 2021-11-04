@@ -61,7 +61,7 @@ class CreateShipmentWithNewDataTest extends Test
         $saveOrderTransfer = $this->tester->createOrderWithMultiShipment($quoteTransfer);
 
         $shipmentTransfer->getMethod()->setIdShipmentMethod(
-            $this->tester->haveShipmentMethod($shipmentTransfer->getMethod()->toArray())->getIdShipmentMethod()
+            $this->tester->haveShipmentMethod($shipmentTransfer->getMethod()->toArray())->getIdShipmentMethod(),
         );
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
         $shipmentGroupTransfer->addItem($itemTransfer);
@@ -103,7 +103,7 @@ class CreateShipmentWithNewDataTest extends Test
 
         $actualShipmentTransfer = clone $itemTransfer->getShipment();
         $actualShipmentTransfer->setShippingAddress(
-            (new AddressBuilder())->build()
+            (new AddressBuilder())->build(),
         );
 
         return [$quoteTransfer, $actualShipmentTransfer, $itemTransfer];
@@ -122,7 +122,7 @@ class CreateShipmentWithNewDataTest extends Test
             ->setMethod(
                 (new ShipmentMethodBuilder())->seed([
                     ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
-                ])->build()
+                ])->build(),
             );
 
         return [$quoteTransfer, $actualShipmentTransfer, $itemTransfer];
@@ -139,7 +139,7 @@ class CreateShipmentWithNewDataTest extends Test
         $actualShipmentTransfer = clone $itemTransfer
             ->getShipment()
             ->setRequestedDeliveryDate(
-                (new DateTime())->getTimestamp()
+                (new DateTime())->getTimestamp(),
             );
 
         return [$quoteTransfer, $actualShipmentTransfer, $itemTransfer];
@@ -160,8 +160,8 @@ class CreateShipmentWithNewDataTest extends Test
                             ->withShippingAddress()
                             ->withMethod([
                                 ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
-                            ])
-                    )
+                            ]),
+                    ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
@@ -170,8 +170,8 @@ class CreateShipmentWithNewDataTest extends Test
                             ->withShippingAddress()
                             ->withMethod([
                                 ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
-                            ])
-                    )
+                            ]),
+                    ),
             )
             ->withBillingAddress()
             ->withCustomer()
@@ -213,7 +213,7 @@ class CreateShipmentWithNewDataTest extends Test
 
         // Assert
         $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment(
-            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
+            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment(),
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');
@@ -262,7 +262,7 @@ class CreateShipmentWithNewDataTest extends Test
 
         // Assert
         $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment(
-            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
+            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment(),
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');

@@ -32,7 +32,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
         return new ProductMeasurementUnitStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getStore(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -56,7 +56,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     {
         return new ProductMeasurementBaseUnitReader(
             $this->createProductConcreteMeasurementUnitStorageReader(),
-            $this->createProductMeasurementUnitReader()
+            $this->createProductMeasurementUnitReader(),
         );
     }
 
@@ -66,7 +66,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     public function createProductMeasurementUnitReader(): ProductMeasurementUnitReaderInterface
     {
         return new ProductMeasurementUnitReader(
-            $this->createProductMeasurementUnitStorageReader()
+            $this->createProductMeasurementUnitStorageReader(),
         );
     }
 
@@ -77,7 +77,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     {
         return new ProductMeasurementSalesUnitReader(
             $this->createProductConcreteMeasurementUnitStorageReader(),
-            $this->createProductMeasurementUnitReader()
+            $this->createProductMeasurementUnitReader(),
         );
     }
 

@@ -24,14 +24,17 @@ class BundlesFormType extends AbstractType
      * @var string
      */
     public const FORM_TYPE_NAME = 'bundlesFormType';
+
     /**
      * @var string
      */
     public const BUNDLE_NAME_CHOICES = 'bundleNames';
+
     /**
      * @var string
      */
     public const EXCLUDED_BUNDLES = 'excludedBundles';
+
     /**
      * @var string
      */
@@ -49,7 +52,7 @@ class BundlesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

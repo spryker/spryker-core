@@ -41,8 +41,8 @@ class CmsSlotTemplateReader implements CmsSlotTemplateReaderInterface
             throw new MissingCmsSlotTemplateException(
                 sprintf(
                     'CMS Slot Template with id "%d" not found.',
-                    $idCmsSlotTemplate
-                )
+                    $idCmsSlotTemplate,
+                ),
             );
         }
 

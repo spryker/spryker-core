@@ -14,6 +14,7 @@ interface ProductSetEvents
      * - This events will be used for product_set publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SET_PUBLISH = 'ProductSet.product_set.publish';
@@ -23,6 +24,7 @@ interface ProductSetEvents
      * - This events will be used for product_set un-publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SET_UNPUBLISH = 'ProductSet.product_set.unpublish';
@@ -32,6 +34,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_set entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SET_CREATE = 'Entity.spy_product_set.create';
@@ -41,6 +44,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_set entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SET_UPDATE = 'Entity.spy_product_set.update';
@@ -50,6 +54,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_set entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SET_DELETE = 'Entity.spy_product_set.delete';
@@ -59,6 +64,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_abstract_set entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE = 'Entity.spy_product_abstract_set.create';
@@ -68,6 +74,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_abstract_set entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE = 'Entity.spy_product_abstract_set.update';
@@ -77,6 +84,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_abstract_set entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE = 'Entity.spy_product_abstract_set.delete';
@@ -86,6 +94,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_set_data entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SET_DATA_CREATE = 'Entity.spy_product_set_data.create';
@@ -95,6 +104,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_set_data entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SET_DATA_UPDATE = 'Entity.spy_product_set_data.update';
@@ -104,6 +114,7 @@ interface ProductSetEvents
      * - This events will be used for spy_product_set_data entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_SET_DATA_DELETE = 'Entity.spy_product_set_data.delete';

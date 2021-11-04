@@ -42,7 +42,7 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
     {
         $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
             $this->getOverrideGroup($override),
-            $this->getOverrideValues($override)
+            $this->getOverrideValues($override),
         );
 
         $productOptionValueTransfer = $productOptionGroupTransfer->getProductOptionValues()->offsetGet(0);

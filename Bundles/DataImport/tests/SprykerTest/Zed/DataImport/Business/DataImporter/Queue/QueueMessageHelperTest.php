@@ -33,10 +33,12 @@ class QueueMessageHelperTest extends Unit
      * @var array
      */
     protected const DUMMY_MESSAGE_BODY = ['dummy message body'];
+
     /**
      * @var string
      */
     protected const DUMMY_ERROR_MESSAGE = 'dummy error message';
+
     /**
      * @var string
      */
@@ -60,7 +62,7 @@ class QueueMessageHelperTest extends Unit
         parent::setUp();
 
         $this->queueMessageHelper = new QueueMessageHelper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -107,7 +109,7 @@ class QueueMessageHelperTest extends Unit
     protected function getUtilEncodingService(): DataImportToUtilEncodingServiceInterface
     {
         return new DataImportToUtilEncodingServiceBridge(
-            $this->tester->getLocator()->utilEncoding()->service()
+            $this->tester->getLocator()->utilEncoding()->service(),
         );
     }
 

@@ -19,6 +19,7 @@ class MimeTypeSettingsTable extends AbstractTable
     protected const COL_NAME = SpyMimeTypeTableMap::COL_NAME;
     protected const COL_COMMENT = SpyMimeTypeTableMap::COL_COMMENT;
     protected const COL_IS_ALLOWED = SpyMimeTypeTableMap::COL_IS_ALLOWED;
+
     /**
      * @var string
      */
@@ -28,14 +29,17 @@ class MimeTypeSettingsTable extends AbstractTable
      * @var string
      */
     protected const TITLE_MIME_TYPE = 'MIME Type';
+
     /**
      * @var string
      */
     protected const TITLE_COMMENT = 'Comment';
+
     /**
      * @var string
      */
     protected const TITLE_IS_ALLOWED = 'Is allowed';
+
     /**
      * @var string
      */
@@ -45,10 +49,12 @@ class MimeTypeSettingsTable extends AbstractTable
      * @var string
      */
     protected const REQUEST_ID_MIME_TYPE = 'id-mime-type';
+
     /**
      * @var string
      */
     protected const ROUTE_EDIT = 'mime-type/edit';
+
     /**
      * @var string
      */
@@ -144,14 +150,14 @@ class MimeTypeSettingsTable extends AbstractTable
             "<input id='mime_type_is_allowed_%s' class='mime_type_is_allowed' type='checkbox' data-id='%s' %s/>",
             $item[static::COL_ID_MIME_TYPE],
             $item[static::COL_ID_MIME_TYPE],
-            $item[static::COL_IS_ALLOWED] ? "checked='checked'" : ''
+            $item[static::COL_IS_ALLOWED] ? "checked='checked'" : '',
         );
     }
 
     /**
      * @param array $item
      *
-     * @return array
+     * @return array<string>
      */
     protected function buildLinks(array $item)
     {
@@ -161,13 +167,13 @@ class MimeTypeSettingsTable extends AbstractTable
             Url::generate(static::ROUTE_EDIT, [
                 static::REQUEST_ID_MIME_TYPE => $item[static::COL_ID_MIME_TYPE],
             ]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::ROUTE_DELETE, [
                 static::REQUEST_ID_MIME_TYPE => $item[static::COL_ID_MIME_TYPE],
             ]),
-            'Delete'
+            'Delete',
         );
 
         return $buttons;

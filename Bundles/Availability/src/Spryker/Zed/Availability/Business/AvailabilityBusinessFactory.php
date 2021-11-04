@@ -50,7 +50,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->createAvailabilityHandler(),
             $this->getStoreFacade(),
             $this->getAvailabilityStrategyPlugins(),
-            $this->getBatchAvailabilityStrategyPlugins()
+            $this->getBatchAvailabilityStrategyPlugins(),
         );
     }
 
@@ -62,7 +62,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductAvailabilityCalculator(
             $this->getRepository(),
             $this->getOmsFacade(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
         );
     }
 
@@ -77,7 +77,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->createProductAvailabilityCalculator(),
             $this->getTouchFacade(),
             $this->getStockFacade(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -91,7 +91,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->createAvailabilityHandler(),
             $this->getStoreFacade(),
             $this->getProductFacade(),
-            $this->getAvailabilityStrategyPlugins()
+            $this->getAvailabilityStrategyPlugins(),
         );
     }
 
@@ -105,7 +105,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductReservationReader(
             $this->getQueryContainer(),
             $this->getStockFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -116,7 +116,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityReader(
             $this->getRepository(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -128,7 +128,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new AvailabilityWishlistItemExpander(
             $this->createProductAvailabilityReader(),
             $this->createSellableModel(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -164,7 +164,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductsAvailableCheckoutPreCondition(
             $this->createSellableModel(),
             $this->getConfig(),
-            $this->getCartItemQuantityCounterStrategyPlugins()
+            $this->getCartItemQuantityCounterStrategyPlugins(),
         );
     }
 

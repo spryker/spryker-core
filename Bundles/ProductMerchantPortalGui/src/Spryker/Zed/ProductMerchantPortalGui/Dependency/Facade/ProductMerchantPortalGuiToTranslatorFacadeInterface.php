@@ -10,10 +10,8 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 interface ProductMerchantPortalGuiToTranslatorFacadeInterface
 {
     /**
-     * @phpstan-param array<string, string> $parameters
-     *
      * @param string $id
-     * @param array $parameters
+     * @param array<string, string> $parameters
      * @param string|null $domain
      * @param string|null $locale
      *

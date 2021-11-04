@@ -19,14 +19,17 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
+
     /**
      * @var string
      */
     public const ROUTER_ROUTE_PROVIDER = 'ROUTER_ROUTE_PROVIDER';
+
     /**
      * @var string
      */
     public const POST_ADD_ROUTE_MANIPULATOR = 'POST_ADD_ROUTE_MANIPULATOR';
+
     /**
      * @var string
      */

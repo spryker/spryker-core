@@ -77,12 +77,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     {
         $priceProductTransfers = $this->filterProductPricesByPriceMode(
             $priceProductTransfers,
-            $priceProductFilterTransfer->getPriceModeOrFail()
+            $priceProductFilterTransfer->getPriceModeOrFail(),
         );
 
         return $this->applyPriceProductFilterPlugins(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
     }
 

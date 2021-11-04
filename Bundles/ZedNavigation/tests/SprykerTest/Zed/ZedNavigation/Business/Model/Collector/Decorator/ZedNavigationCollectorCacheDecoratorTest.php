@@ -43,7 +43,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         $navigationCollectorCacheDecorator = new ZedNavigationCollectorCacheDecorator(
             $navigationCollectorMock,
             $navigationCacheMock,
-            $configMock
+            $configMock,
         );
 
         //assert
@@ -65,7 +65,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         //assert
         $this->assertSame(
             $expectedNavigation,
-            $navigation
+            $navigation,
         );
     }
 
@@ -82,7 +82,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         $navigationCollectorCacheDecorator = new ZedNavigationCollectorCacheDecorator(
             $navigationCollectorMock,
             $navigationCacheMock,
-            $configMock
+            $configMock,
         );
 
         //assert
@@ -100,7 +100,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         //assert
         $this->assertSame(
             $expectedNavigation,
-            $navigation
+            $navigation,
         );
     }
 
@@ -117,7 +117,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         $navigationCollectorCacheDecorator = new ZedNavigationCollectorCacheDecorator(
             $navigationCollectorMock,
             $navigationCacheMock,
-            $configMock
+            $configMock,
         );
 
         //assert
@@ -140,7 +140,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         //assert
         $this->assertSame(
             $expectedNavigation,
-            $navigation
+            $navigation,
         );
     }
 }

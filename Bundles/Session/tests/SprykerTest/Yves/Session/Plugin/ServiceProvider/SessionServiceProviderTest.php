@@ -236,20 +236,20 @@ class SessionServiceProviderTest extends Unit
             ])
             ->getMock();
         $sessionFactoryMock->method('createSessionHandlerRedis')->willReturn(
-            $this->createMock(SessionHandlerRedis::class)
+            $this->createMock(SessionHandlerRedis::class),
         );
         $sessionFactoryMock->method('createSessionHandlerRedisLocking')->willReturn(
-            $this->createMock(SessionHandlerRedisLocking::class)
+            $this->createMock(SessionHandlerRedisLocking::class),
         );
         $sessionFactoryMock->method('createSessionHandlerFile')->willReturn(
-            $this->createMock(SessionHandlerFile::class)
+            $this->createMock(SessionHandlerFile::class),
         );
         $sessionFactoryMock->method('getSessionHandlerPlugins')->willReturn([]);
         $sessionFactoryMock->method('getMonitoringService')->willReturn(
-            $this->createMock(SessionToMonitoringServiceInterface::class)
+            $this->createMock(SessionToMonitoringServiceInterface::class),
         );
         $sessionFactoryMock->method('getConfig')->willReturn(
-            new SessionConfigYves()
+            new SessionConfigYves(),
         );
 
         return $sessionFactoryMock;

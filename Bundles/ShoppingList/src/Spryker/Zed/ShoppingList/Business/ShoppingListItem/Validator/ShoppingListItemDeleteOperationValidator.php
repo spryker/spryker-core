@@ -37,7 +37,7 @@ class ShoppingListItemDeleteOperationValidator implements ShoppingListItemDelete
     ): ShoppingListItemResponseTransfer {
         $shoppingListItemResponseTransferWithValidatedParent = $this->shoppingListItemValidator->checkShoppingListItemParent(
             $shoppingListItemTransfer,
-            $shoppingListItemResponseTransfer
+            $shoppingListItemResponseTransfer,
         );
 
         if (!$shoppingListItemResponseTransferWithValidatedParent->getIsSuccess()) {

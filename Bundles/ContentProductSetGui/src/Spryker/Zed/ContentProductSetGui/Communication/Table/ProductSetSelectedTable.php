@@ -22,10 +22,12 @@ class ProductSetSelectedTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'product-set-selected-table';
+
     /**
      * @var string
      */
     public const TABLE_CLASS = 'product-set-selected-table gui-table-data';
+
     /**
      * @var string
      */
@@ -40,18 +42,22 @@ class ProductSetSelectedTable extends AbstractTable
      * @var string
      */
     public const COL_ID_PRODUCT_SET = 'ID';
+
     /**
      * @var string
      */
     public const COL_NAME = 'Name';
+
     /**
      * @var string
      */
     public const COL_COUNT = 'Number of Products';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'Status';
+
     /**
      * @var string
      */
@@ -61,10 +67,12 @@ class ProductSetSelectedTable extends AbstractTable
      * @var string
      */
     public const TITLE_BUTTON_DELETE = 'Delete';
+
     /**
      * @var string
      */
     public const CLASS_BUTTON_DELETE = 'js-delete-product-set btn btn-sm btn-outline btn-danger';
+
     /**
      * @var string
      */

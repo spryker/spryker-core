@@ -34,7 +34,7 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
             $this->createServiceNameValidator(),
             $this->createServiceChainFilter(),
             $this->createResponseProcessor(),
-            $this->getHealthCheckPlugins()
+            $this->getHealthCheckPlugins(),
         );
     }
 
@@ -72,7 +72,7 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
     public function createResponseProcessor(): ResponseProcessorInterface
     {
         return new ResponseProcessor(
-            $this->getConfig()->isHealthCheckEnabled()
+            $this->getConfig()->isHealthCheckEnabled(),
         );
     }
 

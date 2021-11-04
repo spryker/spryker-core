@@ -19,10 +19,12 @@ abstract class AbstractClassResolver
      * @var string
      */
     public const KEY_NAMESPACE = '%namespace%';
+
     /**
      * @var string
      */
     public const KEY_BUNDLE = '%bundle%';
+
     /**
      * @var string
      */
@@ -32,6 +34,7 @@ abstract class AbstractClassResolver
      * @var string|null
      */
     protected const CLASS_NAME_PATTERN = null;
+
     /**
      * @var string|null
      */

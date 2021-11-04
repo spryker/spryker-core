@@ -31,34 +31,42 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'FACADE_PRICE';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
@@ -68,10 +76,12 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
+
     /**
      * @var string
      */
@@ -265,7 +275,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STOCK, function (Container $container) {
             return new ProductBundleToStockFacadeBridge(
-                $container->getLocator()->stock()->facade()
+                $container->getLocator()->stock()->facade(),
             );
         });
 

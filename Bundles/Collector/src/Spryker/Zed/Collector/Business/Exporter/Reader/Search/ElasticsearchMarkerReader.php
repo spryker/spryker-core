@@ -13,6 +13,7 @@ class ElasticsearchMarkerReader extends ElasticsearchReader
      * @var string
      */
     public const READER_NAME = 'elastic-search-marker-reader';
+
     /**
      * @var string
      */

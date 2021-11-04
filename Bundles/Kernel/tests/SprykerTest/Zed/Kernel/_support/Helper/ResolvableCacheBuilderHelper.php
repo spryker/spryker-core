@@ -24,10 +24,12 @@ class ResolvableCacheBuilderHelper extends Module
      * @var string
      */
     protected const CLASS_KEY_STORE = 'store';
+
     /**
      * @var string
      */
     protected const CLASS_KEY_PROJECT = 'project';
+
     /**
      * @var string
      */
@@ -42,6 +44,7 @@ class ResolvableCacheBuilderHelper extends Module
      * @var string
      */
     protected const CURRENT_STORE = 'DE';
+
     /**
      * @var string
      */
@@ -53,12 +56,12 @@ class ResolvableCacheBuilderHelper extends Module
     protected const PATH_TO_CACHE_FILE = 'vfs://root/directory/cacheFile.php';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $projectOrganizations = ['Pyz'];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $coreOrganizations = ['Spryker'];
 
@@ -267,7 +270,7 @@ class ResolvableCacheBuilderHelper extends Module
         $this->assertSame(
             $expectedCacheValue,
             $currentCacheValue,
-            sprintf('Expected "%s" but found "%s" for cache key "%s" given.', $expectedCacheValue, $currentCacheValue, $cacheKey)
+            sprintf('Expected "%s" but found "%s" for cache key "%s" given.', $expectedCacheValue, $currentCacheValue, $cacheKey),
         );
     }
 

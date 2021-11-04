@@ -25,7 +25,7 @@ class CmsBlockStorageFactory extends AbstractFactory
             $this->getStorage(),
             $this->getSynchronizationService(),
             $this->getUtilEncodingService(),
-            $this->getCmsBlockStorageReaderPlugins()
+            $this->getCmsBlockStorageReaderPlugins(),
         );
     }
 

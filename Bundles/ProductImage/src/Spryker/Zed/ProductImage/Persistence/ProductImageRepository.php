@@ -49,7 +49,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
@@ -68,7 +68,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     /**
      * @param array<int> $productSetIds
      *
-     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     public function getProductImagesByProductSetIds(array $productSetIds): array
     {
@@ -87,9 +87,9 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $productImageSetToProductImageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[] $productImageSetToProductImageEntities
      *
-     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     protected function indexProductImagesByProductImageSetId(ObjectCollection $productImageSetToProductImageEntities): array
     {
@@ -98,7 +98,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         foreach ($productImageSetToProductImageEntities as $productImageSetToProductImageEntity) {
             $productImageTransfer = $mapper->mapProductImageEntityToProductImageTransfer(
                 $productImageSetToProductImageEntity->getSpyProductImage(),
-                new ProductImageTransfer()
+                new ProductImageTransfer(),
             );
             $indexedProductImages[$productImageSetToProductImageEntity->getFkProductImageSet()][] = $productImageTransfer;
         }

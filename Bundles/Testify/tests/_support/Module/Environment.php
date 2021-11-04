@@ -25,6 +25,7 @@ class Environment extends Module
      * @var string
      */
     public const MODE_DEFAULT_ROOT = '../../../../..';
+
     /**
      * @var string
      */

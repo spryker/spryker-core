@@ -50,14 +50,14 @@ class ShoppingListUpdater implements ShoppingListUpdaterInterface
         }
         $shoppingListTransfer = $this->shoppingListMapper->mapShoppingListResponseTransferToShoppingListTransfer(
             $shoppingListResponseTransferByUuid,
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
 
         $shoppingListResponseTransfer = $this->shoppingListFacade->updateShoppingList($shoppingListTransfer);
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListMapper->mapShoppingListResponseErrorsToRestCodes(
-                $shoppingListResponseTransfer
+                $shoppingListResponseTransfer,
             );
         }
 

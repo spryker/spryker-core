@@ -78,7 +78,7 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($idFileDirectory, $idParentFileDirectory) {
                 return $this->executeDeleteTransaction($idFileDirectory, $idParentFileDirectory);
-            }
+            },
         );
     }
 

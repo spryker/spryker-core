@@ -21,6 +21,7 @@ class PropelSchemaXmlNameValidatorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:schema:validate-xml-names';
+
     /**
      * @var string
      */

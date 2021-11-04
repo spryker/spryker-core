@@ -36,7 +36,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
         return new SharedCartByCartIdExpander(
             $this->getClient(),
             $this->createSharedCartMapper(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -48,7 +48,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
         return new SharedCartCreator(
             $this->getClient(),
             $this->createSharedCartRestResponseBuilder(),
-            $this->getCompanyUserProviderPlugin()
+            $this->getCompanyUserProviderPlugin(),
         );
     }
 
@@ -59,7 +59,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     {
         return new SharedCartUpdater(
             $this->getClient(),
-            $this->createSharedCartRestResponseBuilder()
+            $this->createSharedCartRestResponseBuilder(),
         );
     }
 
@@ -70,7 +70,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
     {
         return new SharedCartDeleter(
             $this->getClient(),
-            $this->createSharedCartRestResponseBuilder()
+            $this->createSharedCartRestResponseBuilder(),
         );
     }
 
@@ -82,7 +82,7 @@ class SharedCartsRestApiFactory extends AbstractFactory
         return new SharedCartRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createSharedCartMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

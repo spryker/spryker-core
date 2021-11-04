@@ -56,8 +56,8 @@ class CheckContentDataStep implements DataImportStepInterface
             throw new InvalidDataException(
                 sprintf(
                     static::ERROR_MESSAGE,
-                    implode(';', $errorMessages)
-                )
+                    implode(';', $errorMessages),
+                ),
             );
         }
     }

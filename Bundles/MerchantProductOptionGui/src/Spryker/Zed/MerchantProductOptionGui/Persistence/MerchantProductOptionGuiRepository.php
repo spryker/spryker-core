@@ -31,7 +31,7 @@ class MerchantProductOptionGuiRepository implements MerchantProductOptionGuiRepo
             ->addJoin(
                 (new QueryJoinTransfer())
                     ->setJoinType(Criteria::INNER_JOIN)
-                    ->setRelation('SpyMerchantProductOptionGroup')
+                    ->setRelation('SpyMerchantProductOptionGroup'),
             )
             ->addJoin(
                 (new QueryJoinTransfer())
@@ -41,8 +41,8 @@ class MerchantProductOptionGuiRepository implements MerchantProductOptionGuiRepo
                     ->addQueryWhereCondition(
                         (new QueryWhereConditionTransfer())
                             ->setColumn(SpyMerchantTableMap::COL_ID_MERCHANT)
-                            ->setValue((string)$merchantProductOptionGroupCriteriaTransfer->getIdMerchant())
-                    )
+                            ->setValue((string)$merchantProductOptionGroupCriteriaTransfer->getIdMerchant()),
+                    ),
             );
 
         return $queryCriteriaTransfer;

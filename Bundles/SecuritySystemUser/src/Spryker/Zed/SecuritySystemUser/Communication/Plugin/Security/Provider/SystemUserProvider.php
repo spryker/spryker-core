@@ -75,7 +75,7 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
             if ($this->isValidToken($credential['token'], $token)) {
                 return $this->getFactory()->createSecurityUser(
                     (new UserTransfer())->setUsername($username)
-                        ->setPassword($credential['token'])
+                        ->setPassword($credential['token']),
                 );
             }
         }
@@ -96,7 +96,7 @@ class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
             if ($securityUserName === $username) {
                 return $this->getFactory()->createSecurityUser(
                     (new UserTransfer())->setUsername($username)
-                        ->setPassword($credential['token'])
+                        ->setPassword($credential['token']),
                 );
             }
         }

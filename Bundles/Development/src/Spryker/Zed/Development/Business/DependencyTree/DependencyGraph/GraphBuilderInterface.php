@@ -13,6 +13,7 @@ interface GraphBuilderInterface
      * @var string
      */
     public const ENGINE_BUNDLE_FONT_COLOR = 'grey';
+
     /**
      * @var string
      */

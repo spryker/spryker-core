@@ -32,7 +32,7 @@ class ProductOfferAvailabilityStorageBusinessFactory extends AbstractBusinessFac
             $this->getProductOfferAvailabilityFacade(),
             $this->getSynchronizationService(),
             $this->getRepository(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

@@ -77,7 +77,7 @@ class UniqueStoreCurrencyVolumeQuantityConstraintValidator extends ConstraintVal
             $moneyValueTransfer->getFkCurrencyOrFail(),
             $moneyValueTransfer->getFkStoreOrFail(),
             $volumePriceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail(),
-            $volumePriceProductTransfer->getVolumeQuantityOrFail()
+            $volumePriceProductTransfer->getVolumeQuantityOrFail(),
         );
     }
 
@@ -99,7 +99,7 @@ class UniqueStoreCurrencyVolumeQuantityConstraintValidator extends ConstraintVal
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::PRICE_DATA,
             PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE,
-            $volumePriceIndex
+            $volumePriceIndex,
         );
     }
 }

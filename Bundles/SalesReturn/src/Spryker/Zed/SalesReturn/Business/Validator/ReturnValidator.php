@@ -20,14 +20,17 @@ class ReturnValidator implements ReturnValidatorInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR = 'return.create_return.validation.items_error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR = 'return.create_return.validation.items_currency_error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR = 'return.create_return.validation.returnable_items_error';
+
     /**
      * @var string
      */

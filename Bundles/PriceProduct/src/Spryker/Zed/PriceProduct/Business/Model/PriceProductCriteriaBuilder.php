@@ -91,19 +91,19 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             ->setSku($priceProductFilterTransfer->getSku())
             ->setQuantity($priceProductFilterTransfer->getQuantity())
             ->setPriceDimension(
-                $priceProductFilterTransfer->getPriceDimension()
+                $priceProductFilterTransfer->getPriceDimension(),
             )
             ->setQuote(
-                $priceProductFilterTransfer->getQuote()
+                $priceProductFilterTransfer->getQuote(),
             )
             ->setIdCurrency(
-                $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
+                $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency(),
             )->setIdStore(
-                $this->getStoreFromFilter($priceProductFilterTransfer)->getIdStore()
+                $this->getStoreFromFilter($priceProductFilterTransfer)->getIdStore(),
             )->setPriceMode(
-                $this->getPriceModeFromFilter($priceProductFilterTransfer)
+                $this->getPriceModeFromFilter($priceProductFilterTransfer),
             )->setPriceType(
-                $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
+                $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName()),
             );
     }
 
@@ -116,19 +116,19 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     {
         return (new PriceProductCriteriaTransfer())
             ->setPriceMode(
-                $this->priceFacade->getDefaultPriceMode()
+                $this->priceFacade->getDefaultPriceMode(),
             )
             ->setIdCurrency(
-                $this->currencyReader->getDefaultCurrencyTransfer()->getIdCurrency()
+                $this->currencyReader->getDefaultCurrencyTransfer()->getIdCurrency(),
             )
             ->setIdStore(
-                $this->storeFacade->getCurrentStore()->getIdStore()
+                $this->storeFacade->getCurrentStore()->getIdStore(),
             )
             ->setPriceType(
-                $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
+                $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName),
             )
             ->setPriceDimension(
-                (new PriceProductDimensionTransfer())->setType($this->config->getPriceDimensionDefault())
+                (new PriceProductDimensionTransfer())->setType($this->config->getPriceDimensionDefault()),
             );
     }
 
@@ -204,19 +204,19 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
 
             $priceProductCriteriaTransfer
                 ->setPriceDimension(
-                    $priceProductFilterTransfer->getPriceDimension()
+                    $priceProductFilterTransfer->getPriceDimension(),
                 )
                 ->setQuote(
-                    $priceProductFilterTransfer->getQuote()
+                    $priceProductFilterTransfer->getQuote(),
                 )
                 ->setIdCurrency(
-                    $currencyTransfer->getIdCurrency()
+                    $currencyTransfer->getIdCurrency(),
                 )->setIdStore(
-                    $storeTransfer->getIdStore()
+                    $storeTransfer->getIdStore(),
                 )->setPriceMode(
-                    $this->getPriceModeFromFilter($priceProductFilterTransfer)
+                    $this->getPriceModeFromFilter($priceProductFilterTransfer),
                 )->setPriceType(
-                    $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
+                    $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName()),
                 )
                 ->setSku($priceProductFilterTransfer->getSku());
 

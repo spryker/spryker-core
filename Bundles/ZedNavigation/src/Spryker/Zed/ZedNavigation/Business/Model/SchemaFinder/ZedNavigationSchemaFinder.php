@@ -12,12 +12,12 @@ use Symfony\Component\Finder\Finder;
 class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $pathPattern;
 
     /**
-     * @param array $pathPattern
+     * @param array<string> $pathPattern
      */
     public function __construct(array $pathPattern)
     {
@@ -27,7 +27,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
     /**
      * @param string $fileNamePattern
      *
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     public function getSchemaFiles(string $fileNamePattern)
     {
@@ -40,7 +40,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getPaths()
     {
@@ -48,7 +48,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
         foreach ($this->pathPattern as $pathPattern) {
             $paths = array_merge(
                 $paths,
-                glob($pathPattern, GLOB_NOSORT | GLOB_ONLYDIR)
+                glob($pathPattern, GLOB_NOSORT | GLOB_ONLYDIR),
             );
         }
 

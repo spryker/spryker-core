@@ -24,7 +24,7 @@ class DiscontinuedProductConcreteEditFormExpanderPlugin extends AbstractPlugin i
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class DiscontinuedProductConcreteEditFormExpanderPlugin extends AbstractPlugin i
 
         $formType->buildForm(
             $builder,
-            []
+            [],
         );
     }
 }

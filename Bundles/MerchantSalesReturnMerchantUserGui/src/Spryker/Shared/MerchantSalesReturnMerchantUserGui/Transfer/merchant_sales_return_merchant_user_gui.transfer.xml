@@ -55,6 +55,7 @@
 
     <transfer name="ReturnFilter">
         <property name="returnIds" singular="idReturn" type="int[]"/>
+        <property name="returnReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItem">

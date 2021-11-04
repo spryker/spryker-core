@@ -32,7 +32,7 @@ class ProductPageProductAbstractStoreSearchListener extends AbstractProductPageS
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         $this->publish($productAbstractIds);

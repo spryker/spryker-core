@@ -23,14 +23,17 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_USER = 'FACADE_USER';
+
     /**
      * @var string
      */
     public const FACADE_ACL = 'FACADE_ACL';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
@@ -40,6 +43,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PLUGINS_OAUTH_USER_CLIENT_STRATEGY = 'PLUGINS_OAUTH_USER_CLIENT_STRATEGY';
+
     /**
      * @var string
      */
@@ -47,6 +51,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
@@ -94,7 +99,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new SecurityOauthUserToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+                $container->getLocator()->user()->facade(),
             );
         });
 
@@ -110,7 +115,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_ACL, function (Container $container) {
             return new SecurityOauthUserToAclFacadeBridge(
-                $container->getLocator()->acl()->facade()
+                $container->getLocator()->acl()->facade(),
             );
         });
 
@@ -126,7 +131,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SecurityOauthUserToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
+                $container->getLocator()->messenger()->facade(),
             );
         });
 
@@ -142,7 +147,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new SecurityOauthUserToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

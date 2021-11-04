@@ -41,6 +41,7 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
+     *
      * @var string
      */
     protected const SERVICE_VALIDATOR = 'validator';

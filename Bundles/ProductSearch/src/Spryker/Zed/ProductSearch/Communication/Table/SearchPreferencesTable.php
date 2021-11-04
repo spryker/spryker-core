@@ -18,22 +18,27 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 class SearchPreferencesTable extends AbstractTable
 {
     public const COL_NAME = SpyProductAttributeKeyTableMap::COL_KEY;
+
     /**
      * @var string
      */
     public const COL_SUGGESTION_TERMS = 'suggestionTerms';
+
     /**
      * @var string
      */
     public const COL_COMPLETION_TERMS = 'completionTerms';
+
     /**
      * @var string
      */
     public const COL_FULL_TEXT = 'full_Text';
+
     /**
      * @var string
      */
     public const COL_FULL_TEXT_BOOSTED = 'fullTextBoosted';
+
     /**
      * @var string
      */
@@ -163,7 +168,7 @@ class SearchPreferencesTable extends AbstractTable
     {
         return $this->generateLabel(
             $boolValue ? 'yes' : 'no',
-            null
+            null,
         );
     }
 
@@ -179,19 +184,19 @@ class SearchPreferencesTable extends AbstractTable
                 sprintf(
                     '/product-search/search-preferences/edit?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                    $productAttributeKeyEntity->getIdProductAttributeKey(),
                 ),
-                'Edit'
+                'Edit',
             ),
             $this->generateRemoveButton(
                 sprintf(
                     '/product-search/search-preferences/clean?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $productAttributeKeyEntity->getIdProductAttributeKey()
+                    $productAttributeKeyEntity->getIdProductAttributeKey(),
                 ),
                 'Deactivate all',
                 [],
-                CleanSearchPreferencesForm::class
+                CleanSearchPreferencesForm::class,
             ),
         ];
 

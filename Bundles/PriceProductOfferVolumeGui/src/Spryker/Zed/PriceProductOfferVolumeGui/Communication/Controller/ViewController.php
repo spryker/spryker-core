@@ -22,30 +22,31 @@ class ViewController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+
     /**
      * @var string
      */
     protected const PARAM_STORE_NAME = 'store-name';
+
     /**
      * @var string
      */
     protected const PARAM_CURRENCY_CODE = 'currency-code';
+
     /**
      * @var string
      */
     protected const PARAM_PRICE_TYPE_NAME = 'price-type-name';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function indexAction(Request $request): array
     {
         $idProductOffer = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT_OFFER
+            static::PARAM_ID_PRODUCT_OFFER,
         ));
         $storeName = $request->get(static::PARAM_STORE_NAME);
         $currencyCode = $request->get(static::PARAM_CURRENCY_CODE);
@@ -69,19 +70,16 @@ class ViewController extends AbstractController
             $response,
             $this->getFactory()
                 ->createPriceProductOfferVolumeReader()
-                ->getVolumePricesData($productOfferTransfer, $storeName, $currencyCode, $priceTypeName)
+                ->getVolumePricesData($productOfferTransfer, $storeName, $currencyCode, $priceTypeName),
         );
 
         return $this->viewResponse($response);
     }
 
     /**
-     * @phpstan-param array<string, mixed> $query
-     * @phpstan-param array<string, mixed> $options
-     *
      * @param string $url
-     * @param array $query
-     * @param array $options
+     * @param array<string, mixed> $query
+     * @param array<string, mixed> $options
      *
      * @return string
      */

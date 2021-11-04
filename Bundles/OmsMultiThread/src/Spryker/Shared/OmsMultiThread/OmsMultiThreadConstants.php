@@ -17,6 +17,7 @@ interface OmsMultiThreadConstants
      * - Defines the number of simultaneous OMS processors.
      *
      * @api
+     *
      * @var string
      */
     public const OMS_PROCESS_WORKER_NUMBER = 'OMS_MULTI_THREAD:OMS_PROCESS_WORKER_NUMBER';

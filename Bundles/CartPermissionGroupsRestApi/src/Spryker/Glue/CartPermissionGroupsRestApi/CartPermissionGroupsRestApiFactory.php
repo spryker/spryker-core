@@ -27,7 +27,7 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     public function createCartPermissionGroupByQuoteResourceRelationshipExpander(): CartPermissionGroupResourceRelationshipExpanderInterface
     {
         return new CartPermissionGroupByQuoteResourceRelationshipExpander(
-            $this->createCartPermissionGroupResponseBuilder()
+            $this->createCartPermissionGroupResponseBuilder(),
         );
     }
 
@@ -46,7 +46,7 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     {
         return new CartPermissionGroupResponseBuilder(
             $this->createCartPermissionGroupMapper(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -57,7 +57,7 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     {
         return new CartPermissionGroupReader(
             $this->getSharedCartClient(),
-            $this->createCartPermissionGroupResponseBuilder()
+            $this->createCartPermissionGroupResponseBuilder(),
         );
     }
 
@@ -67,7 +67,7 @@ class CartPermissionGroupsRestApiFactory extends AbstractFactory
     public function createCartPermissionGroupByShareDetailResourceRelationshipExpander(): CartPermissionGroupResourceRelationshipExpanderInterface
     {
         return new CartPermissionGroupByShareDetailResourceRelationshipExpander(
-            $this->createCartPermissionGroupResponseBuilder()
+            $this->createCartPermissionGroupResponseBuilder(),
         );
     }
 

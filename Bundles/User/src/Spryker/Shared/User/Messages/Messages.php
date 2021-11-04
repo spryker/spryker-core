@@ -13,6 +13,7 @@ class Messages
      * @var string
      */
     public const USER_EXISTS_ERROR = 'user.error.user_exists';
+
     /**
      * @var string
      */

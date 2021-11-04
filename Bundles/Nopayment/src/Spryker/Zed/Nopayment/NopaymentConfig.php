@@ -16,7 +16,7 @@ class NopaymentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getNopaymentMethods()
     {
@@ -28,7 +28,7 @@ class NopaymentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getWhitelistMethods()
     {
@@ -38,7 +38,7 @@ class NopaymentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getNopaymentMethodsDefaults()
     {

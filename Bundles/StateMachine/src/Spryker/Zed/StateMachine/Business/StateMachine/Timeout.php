@@ -143,8 +143,8 @@ class Timeout implements TimeoutInterface
             throw new StateMachineException(
                 sprintf(
                     'Invalid format for timeout "%s"',
-                    $timeout
-                )
+                    $timeout,
+                ),
             );
         }
 

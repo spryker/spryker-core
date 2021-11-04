@@ -65,7 +65,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
         $productAlternative = $this->getFactory()
             ->createProductAlternativePropelQuery()
             ->filterByIdProductAlternative(
-                $productAlternativeTransfer->getIdProductAlternative()
+                $productAlternativeTransfer->getIdProductAlternative(),
             )->findOne();
 
         $productAlternative->delete();

@@ -27,7 +27,7 @@ class ProductOptionStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->createValuePriceReader(),
             $this->createProductOptionMapper(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -62,7 +62,7 @@ class ProductOptionStorageFactory extends AbstractFactory
     {
         return new ValuePriceReader(
             $this->getCurrencyClient(),
-            $this->getPriceClient()
+            $this->getPriceClient(),
         );
     }
 

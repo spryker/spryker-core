@@ -76,7 +76,7 @@ abstract class AbstractRouteProviderPlugin extends AbstractPlugin implements Rou
             '%s/%s/%s',
             $moduleName,
             $filterChain->filter(str_replace('Controller', '', $controllerName)),
-            $filterChain->filter(str_replace('Action', '', $actionName))
+            $filterChain->filter(str_replace('Action', '', $actionName)),
         );
 
         $route->setDefault('_controller', [get_class($controller), $actionName]);

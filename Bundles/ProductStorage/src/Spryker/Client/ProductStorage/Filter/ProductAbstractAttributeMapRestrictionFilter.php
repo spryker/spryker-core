@@ -21,13 +21,16 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
     /**
      * @deprecated Exists for Backward Compatibility reasons only. Use {@link KEY_ATTRIBUTE_VARIANT_MAP} instead.
+     *
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
+
     /**
      * @var string
      */
@@ -58,7 +61,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
         }
 
         $restrictedProductConcreteIds = $this->getRestrictedProductConcreteIds(
-            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS]
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
         );
 
         if (empty($restrictedProductConcreteIds)) {
@@ -67,19 +70,19 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS] = $this->filterProductConcreteIds(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
-            $restrictedProductConcreteIds
+            $restrictedProductConcreteIds,
         );
 
         $productStorageData = $this->filterAttributeMapByAttributeVariantMap($productStorageData, $restrictedProductConcreteIds);
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS] = $this->filterAttributeVariants(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
-            $restrictedProductConcreteIds
+            $restrictedProductConcreteIds,
         );
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->filterSuperAttributes(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES],
-            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS]
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANTS],
         );
 
         return $productStorageData;
@@ -209,7 +212,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     {
         return new RecursiveIteratorIterator(
             new RecursiveArrayIterator($attributeVariants),
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         );
     }
 
@@ -243,11 +246,11 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_MAP] = $this->filterOutRestrictedAttributeVariants(
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_MAP],
-            $restrictedProductConcreteIds
+            $restrictedProductConcreteIds,
         );
 
         $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_SUPER_ATTRIBUTES] = $this->mapSuperAttributesByAttributeVariantMap(
-            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_MAP]
+            $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_ATTRIBUTE_VARIANT_MAP],
         );
 
         return $productStorageData;

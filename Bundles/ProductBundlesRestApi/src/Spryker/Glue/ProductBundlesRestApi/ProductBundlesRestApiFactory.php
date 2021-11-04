@@ -41,7 +41,7 @@ class ProductBundlesRestApiFactory extends AbstractFactory
         return new BundledProductReader(
             $this->getProductStorageClient(),
             $this->getProductBundleStorageClient(),
-            $this->createBundledProductRestResponseBuilder()
+            $this->createBundledProductRestResponseBuilder(),
         );
     }
 

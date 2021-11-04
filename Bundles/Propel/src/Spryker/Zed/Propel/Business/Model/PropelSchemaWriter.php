@@ -41,7 +41,7 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
     {
         $this->filesystem->dumpFile(
             $this->targetDirectory . DIRECTORY_SEPARATOR . $fileName,
-            $content
+            $content,
         );
     }
 }

@@ -38,6 +38,7 @@ class WhitelistExpandProductBundleTest extends Unit
 
     /**
      * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_WHITELIST
+     *
      * @var string
      */
     protected const PRODUCT_LIST_TYPE_WHITELIST = 'whitelist';
@@ -152,7 +153,7 @@ class WhitelistExpandProductBundleTest extends Unit
     {
         return $this->tester->createProductListTransfer(
             $productIds,
-            static::PRODUCT_LIST_TYPE_WHITELIST
+            static::PRODUCT_LIST_TYPE_WHITELIST,
         );
     }
 }

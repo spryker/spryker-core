@@ -27,7 +27,7 @@ class SchedulerJenkinsToGuzzleBridge implements SchedulerJenkinsToGuzzleInterfac
 
     /**
      * @param \Psr\Http\Message\RequestInterface $request
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Psr\Http\Message\ResponseInterface
      */

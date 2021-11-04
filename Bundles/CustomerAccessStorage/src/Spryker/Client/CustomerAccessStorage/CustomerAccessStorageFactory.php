@@ -22,7 +22,7 @@ class CustomerAccessStorageFactory extends AbstractFactory
         return new CustomerAccessStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->createCustomerAccessStorageMapper()
+            $this->createCustomerAccessStorageMapper(),
         );
     }
 

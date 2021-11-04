@@ -26,12 +26,12 @@ class ViewController extends BaseOptionController
     public function indexAction(Request $request)
     {
         $idProductOptionGroup = $this->castId(
-            $request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP)
+            $request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP),
         );
 
         $productOptionsTable = $this->getFactory()->createProductOptionTable(
             $idProductOptionGroup,
-            ProductOptionTable::TABLE_CONTEXT_VIEW
+            ProductOptionTable::TABLE_CONTEXT_VIEW,
         );
 
         $productOptionGroupTransfer = $this->getFacade()->getProductOptionGroupById($idProductOptionGroup);

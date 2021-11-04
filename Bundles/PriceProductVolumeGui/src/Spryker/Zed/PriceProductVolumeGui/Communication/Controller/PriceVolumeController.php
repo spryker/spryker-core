@@ -23,34 +23,42 @@ class PriceVolumeController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_PRODUCT = 'id-product';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_PRICE_DIMENSION = 'price-dimension';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_PRICE_TYPE = 'price-type';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
+
     /**
      * @var string
      */
@@ -60,10 +68,12 @@ class PriceVolumeController extends AbstractController
      * @var string
      */
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_URL = '/product-management/edit/variant';
+
     /**
      * @var string
      */
@@ -73,10 +83,12 @@ class PriceVolumeController extends AbstractController
      * @var string
      */
     protected const MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS = 'Volume prices successfully saved.';
+
     /**
      * @var string
      */
     protected const PARAM_URL_FRAGMENT = 'fragment';
+
     /**
      * @var string
      */
@@ -153,7 +165,7 @@ class PriceVolumeController extends AbstractController
             ->createPriceVolumeCollectionFormHandler()
             ->savePriceProduct(
                 $priceVolumeCollectionFormType->getData(),
-                $priceProductTransfer
+                $priceProductTransfer,
             );
 
         $this->addSuccessMessage(static::MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS);
@@ -178,9 +190,9 @@ class PriceVolumeController extends AbstractController
                 $dataProvider->getData(
                     $priceProductTransfer,
                     $request->get(static::REQUEST_PARAM_ID_PRODUCT_ABSTRACT),
-                    $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE)
+                    $request->get(static::REQUEST_PARAM_ID_PRODUCT_CONCRETE),
                 ),
-                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE))
+                $dataProvider->getOptions($request->get(static::REQUEST_PARAM_CURRENCY_CODE)),
             )->handleRequest($request);
 
         return $priceVolumeCollectionFormType;
@@ -200,7 +212,7 @@ class PriceVolumeController extends AbstractController
             $request->get(static::REQUEST_PARAM_STORE_NAME),
             $request->get(static::REQUEST_PARAM_CURRENCY_CODE),
             $request->get(static::REQUEST_PARAM_PRICE_DIMENSION, []),
-            $request->get(static::REQUEST_PARAM_PRICE_TYPE)
+            $request->get(static::REQUEST_PARAM_PRICE_TYPE),
         );
 
         return $priceProductTransfer;
@@ -283,7 +295,7 @@ class PriceVolumeController extends AbstractController
     /**
      * @param string $url
      * @param array $query
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

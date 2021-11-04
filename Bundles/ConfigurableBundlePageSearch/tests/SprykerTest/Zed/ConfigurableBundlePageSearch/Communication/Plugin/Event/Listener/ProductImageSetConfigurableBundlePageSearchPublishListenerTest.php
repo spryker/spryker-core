@@ -63,7 +63,7 @@ class ProductImageSetConfigurableBundlePageSearchPublishListenerTest extends Uni
         $configurableBundleTemplatePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH);
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester->getFacade()->getConfigurableBundleTemplatePageSearchCollection(
             (new ConfigurableBundleTemplatePageSearchFilterTransfer())
-                ->addConfigurableBundleTemplateId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                ->addConfigurableBundleTemplateId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
 
         // Assert

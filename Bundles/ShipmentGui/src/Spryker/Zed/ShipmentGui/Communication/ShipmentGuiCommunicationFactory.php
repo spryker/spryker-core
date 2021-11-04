@@ -52,7 +52,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ShipmentFormDataProvider(
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
@@ -82,7 +82,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             ShipmentCarrierFormType::class,
             $shipmentCarrierFormDataProvider->getData(),
-            $shipmentCarrierFormDataProvider->getOptions()
+            $shipmentCarrierFormDataProvider->getOptions(),
         );
     }
 
@@ -101,7 +101,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -116,7 +116,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createViewShipmentMethodFormDataProvider(): ViewShipmentMethodFormDataProvider
     {
         return new ViewShipmentMethodFormDataProvider(
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
         );
     }
 
@@ -180,13 +180,13 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ShipmentMethodFormDataProvider(
             $this->getShipmentFacade(),
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

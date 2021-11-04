@@ -23,7 +23,7 @@ use Codeception\Test\Unit;
 class WriteCollectionByReturnReasonEventsTest extends Unit
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected const RETURN_REASON_GLOSSARY_KEYS = [
         'return-reason-1',
@@ -65,7 +65,7 @@ class WriteCollectionByReturnReasonEventsTest extends Unit
         // Assert
         $this->assertSame(
             count($returnReasonTransfers) * count($localeTransfers),
-            $salesReturnSearchEntities->count()
+            $salesReturnSearchEntities->count(),
         );
     }
 

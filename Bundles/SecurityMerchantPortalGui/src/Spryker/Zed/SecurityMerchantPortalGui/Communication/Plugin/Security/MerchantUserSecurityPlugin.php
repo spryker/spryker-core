@@ -29,6 +29,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
      * @var string
      */
     protected const ROUTE_LOGIN = 'security-merchant-portal-gui:login';
+
     /**
      * @var string
      */
@@ -41,6 +42,7 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
 
     /**
      * @see \Symfony\Component\Form\Extension\Csrf\CsrfExtension::loadTypeExtensions()
+     *
      * @var string
      */
     protected const FORM_FIELD_CSRF_TOKEN = '_token';

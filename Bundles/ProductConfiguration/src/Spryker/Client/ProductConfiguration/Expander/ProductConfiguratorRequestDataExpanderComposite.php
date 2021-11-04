@@ -33,7 +33,7 @@ class ProductConfiguratorRequestDataExpanderComposite implements ProductConfigur
     {
         foreach ($this->productConfiguratorRequestDataExpanders as $productConfiguratorRequestDataExpander) {
             $productConfiguratorRequestDataTransfer = $productConfiguratorRequestDataExpander->expand(
-                $productConfiguratorRequestDataTransfer
+                $productConfiguratorRequestDataTransfer,
             );
         }
 

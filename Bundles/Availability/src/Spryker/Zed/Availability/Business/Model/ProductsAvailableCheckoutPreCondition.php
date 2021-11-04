@@ -149,7 +149,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             if ($cartItemQuantityCounterStrategyPlugin->isApplicable($quoteTransfer->getItems(), $itemTransfer)) {
                 return $cartItemQuantityCounterStrategyPlugin->countCartItemQuantity(
                     $quoteTransfer->getItems(),
-                    $itemTransfer
+                    $itemTransfer,
                 );
             }
         }
@@ -190,7 +190,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
             ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
             ->setErrorType(
-                $this->availabilityConfig->getAvailabilityErrorType()
+                $this->availabilityConfig->getAvailabilityErrorType(),
             )
             ->setParameters([
                 $this->availabilityConfig->getAvailabilityProductSkuParameter() => $sku,

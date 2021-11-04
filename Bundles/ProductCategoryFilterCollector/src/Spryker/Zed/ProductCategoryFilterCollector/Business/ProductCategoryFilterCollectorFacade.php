@@ -54,7 +54,7 @@ class ProductCategoryFilterCollectorFacade extends AbstractFacade implements Pro
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

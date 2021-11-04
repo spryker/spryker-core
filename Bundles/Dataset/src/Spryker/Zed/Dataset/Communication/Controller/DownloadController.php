@@ -25,18 +25,22 @@ class DownloadController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_ID_DATASET = 'id-dataset';
+
     /**
      * @var string
      */
     protected const CONTENT_DISPOSITION = 'Content-Disposition';
+
     /**
      * @var string
      */
     protected const CONTENT_TYPE = 'Content-Type';
+
     /**
      * @var string
      */
     protected const CONTENT_TYPE_CSV = 'text/plain';
+
     /**
      * @var string
      */
@@ -67,9 +71,9 @@ class DownloadController extends AbstractController
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             sprintf('%s.%s', $this->getFacade()->getFilenameByDatasetName(
-                (new DatasetFilenameTransfer())->setFilename($datasetTransfer->getName())
+                (new DatasetFilenameTransfer())->setFilename($datasetTransfer->getName()),
             )
-                ->getFilename(), static::FILE_EXTENTION)
+                ->getFilename(), static::FILE_EXTENTION),
         );
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
         $response->headers->set(static::CONTENT_TYPE, static::CONTENT_TYPE_CSV);

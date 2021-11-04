@@ -82,7 +82,7 @@ class RefreshTokensReader implements RefreshTokensReaderInterface
             ->createRestResource(
                 AuthRestApiConfig::RESOURCE_REFRESH_TOKENS,
                 null,
-                $restTokenAttributesTransfer
+                $restTokenAttributesTransfer,
             );
 
         $response = $this->restResourceBuilder->createRestResponse();

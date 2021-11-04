@@ -38,7 +38,7 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
             ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
 
         return $this->indexProductManagementAttributesByAttributeKey(
-            $productManagementAttributeCollectionTransfer->getProductManagementAttributes()
+            $productManagementAttributeCollectionTransfer->getProductManagementAttributes(),
         );
     }
 

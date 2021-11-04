@@ -29,13 +29,13 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
 
         $productLabelEntity = $productLabelMapper->mapProductLabelTransferToProductLabelEntity(
             $productLabelTransfer,
-            new SpyProductLabel()
+            new SpyProductLabel(),
         );
         $productLabelEntity->save();
 
         return $productLabelMapper->mapProductLabelEntityToProductLabelTransfer(
             $productLabelEntity,
-            $productLabelTransfer
+            $productLabelTransfer,
         );
     }
 
@@ -55,7 +55,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
         if ($productLabelEntity === null) {
             throw new MissingProductLabelException(sprintf(
                 'Could not find product label for id "%s"',
-                $productLabelTransfer->getIdProductLabel()
+                $productLabelTransfer->getIdProductLabel(),
             ));
         }
 
@@ -63,7 +63,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
 
         $productLabelEntity = $productLabelMapper->mapProductLabelTransferToProductLabelEntity(
             $productLabelTransfer,
-            $productLabelEntity
+            $productLabelEntity,
         );
         $productLabelEntity->save();
 

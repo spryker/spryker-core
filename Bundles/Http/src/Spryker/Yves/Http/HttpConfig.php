@@ -19,6 +19,7 @@ class HttpConfig extends AbstractBundleConfig
      * @var int
      */
     protected const DEFAULT_REQUEST_HTTP_PORT = 80;
+
     /**
      * @var int
      */
@@ -57,7 +58,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedProxies(): array
     {
@@ -67,7 +68,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedHosts(): array
     {
@@ -87,7 +88,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getHstsConfig(): array
     {

@@ -32,7 +32,7 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
     {
         $this->addSortingToQuery(
             $searchQuery->getSearchQuery(),
-            $requestParameters
+            $requestParameters,
         );
 
         return $searchQuery;
@@ -60,7 +60,7 @@ class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryEx
                 $nestedSortField => [
                     'order' => $sortConfig->getSortDirection($sortParamName),
                 ],
-            ]
+            ],
         );
     }
 }

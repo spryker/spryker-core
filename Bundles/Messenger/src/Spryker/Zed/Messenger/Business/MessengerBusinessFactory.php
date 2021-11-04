@@ -97,7 +97,7 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     {
         return array_merge(
             [$this->getTranslationPlugin()],
-            $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION)
+            $this->getProvidedDependency(MessengerDependencyProvider::PLUGINS_TRANSLATION),
         );
     }
 }

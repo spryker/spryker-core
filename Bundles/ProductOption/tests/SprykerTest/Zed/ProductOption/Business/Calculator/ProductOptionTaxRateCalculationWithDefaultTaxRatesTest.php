@@ -75,7 +75,7 @@ class ProductOptionTaxRateCalculationWithDefaultTaxRatesTest extends Unit
                         ['netAmount' => 10000],
                     ],
                 ],
-            ]
+            ],
         );
     }
 
@@ -96,7 +96,7 @@ class ProductOptionTaxRateCalculationWithDefaultTaxRatesTest extends Unit
         // Arrange
         $this->tester->setDependency(
             ProductOptionDependencyProvider::FACADE_TAX,
-            $this->createProductOptionToTaxFacadeBridgeMock($defaultCountryIso2Code, 0.00)
+            $this->createProductOptionToTaxFacadeBridgeMock($defaultCountryIso2Code, 0.00),
         );
 
         $productOptionValueEntity = SpyProductOptionValueQuery::create()->findOneBySku(static::PRODUCT_OPTION_VALUE_SKU);
@@ -114,8 +114,8 @@ class ProductOptionTaxRateCalculationWithDefaultTaxRatesTest extends Unit
             sprintf(
                 'Actual tax rate for product option is not valid. Expected %.2f, %.2f given.',
                 $expectedTaxRate,
-                $quoteTransfer->getItems()[0]->getProductOptions()[0]->getTaxRate()
-            )
+                $quoteTransfer->getItems()[0]->getProductOptions()[0]->getTaxRate(),
+            ),
         );
     }
 

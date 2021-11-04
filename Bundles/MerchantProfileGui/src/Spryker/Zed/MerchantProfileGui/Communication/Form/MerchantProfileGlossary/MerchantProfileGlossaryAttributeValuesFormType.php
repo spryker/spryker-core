@@ -22,26 +22,32 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      * @var string
      */
     protected const FIELD_DESCRIPTION_GLOSSARY = 'descriptionGlossaryKey';
+
     /**
      * @var string
      */
     protected const FIELD_BANNER_URL_GLOSSARY = 'bannerUrlGlossaryKey';
+
     /**
      * @var string
      */
     protected const FIELD_DELIVERY_TIME_GLOSSARY = 'deliveryTimeGlossaryKey';
+
     /**
      * @var string
      */
     protected const FIELD_TERMS_CONDITIONS_GLOSSARY = 'termsConditionsGlossaryKey';
+
     /**
      * @var string
      */
     protected const FIELD_CANCELLATION_POLICY_GLOSSARY = 'cancellationPolicyGlossaryKey';
+
     /**
      * @var string
      */
     protected const FIELD_IMPRINT_GLOSSARY = 'imprintGlossaryKey';
+
     /**
      * @var string
      */
@@ -51,26 +57,32 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      * @var string
      */
     protected const LABEL_DESCRIPTION_GLOSSARY = 'Description';
+
     /**
      * @var string
      */
     protected const LABEL_BANNER_URL_GLOSSARY = 'Banner URL';
+
     /**
      * @var string
      */
     protected const LABEL_DELIVERY_TIME_GLOSSARY = 'Average Delivery Time';
+
     /**
      * @var string
      */
     protected const LABEL_TERMS_CONDITIONS_GLOSSARY = 'Terms and Conditions';
+
     /**
      * @var string
      */
     protected const LABEL_CANCELLATION_POLICY_GLOSSARY = 'Cancellation Policy';
+
     /**
      * @var string
      */
     protected const LABEL_IMPRINT_GLOSSARY = 'Imprint';
+
     /**
      * @var string
      */
@@ -78,7 +90,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

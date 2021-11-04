@@ -27,7 +27,7 @@ class VaultEntityManager extends AbstractEntityManager implements VaultEntityMan
             ->createVaultDepositMapper()
             ->mapVaultDepositTransferToEntity(
                 $vaultDepositTransfer,
-                new SpyVaultDeposit()
+                new SpyVaultDeposit(),
             );
 
         return (bool)$vaultDepositEntity->save();
@@ -50,7 +50,7 @@ class VaultEntityManager extends AbstractEntityManager implements VaultEntityMan
             ->createVaultDepositMapper()
             ->mapVaultDepositTransferToEntity(
                 $vaultDepositTransfer,
-                $vaultDepositEntity
+                $vaultDepositEntity,
             );
 
         $vaultDepositEntity->save();

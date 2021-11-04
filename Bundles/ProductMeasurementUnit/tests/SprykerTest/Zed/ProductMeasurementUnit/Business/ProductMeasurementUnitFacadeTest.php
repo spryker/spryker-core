@@ -33,6 +33,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
      * @var int
      */
     protected const PRODUCT_MEASUREMENT_SALES_UNIT_ID = 777;
+
     /**
      * @var int
      */
@@ -119,8 +120,8 @@ class ProductMeasurementUnitFacadeTest extends Unit
                     ->setQuantitySalesUnit(
                         (new ProductMeasurementSalesUnitTransfer())
                             ->setConversion($conversion)
-                            ->setPrecision($precision)
-                    )
+                            ->setPrecision($precision),
+                    ),
             );
 
         // Act
@@ -182,7 +183,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         ]);
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $expectedSalesUnitIds = [];
@@ -190,7 +191,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
             $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
                 $productTransfer->getIdProductConcrete(),
                 $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
             );
 
             $expectedSalesUnitIds[] = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
@@ -223,20 +224,20 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
         $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer(
             $cartChangeTransfer,
             $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit(),
-            $productTransfer->getSku()
+            $productTransfer->getSku(),
         );
 
         //Act
@@ -263,13 +264,13 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
@@ -305,14 +306,14 @@ class ProductMeasurementUnitFacadeTest extends Unit
         ]);
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
@@ -347,13 +348,13 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $spyProductMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = $this->tester
@@ -378,14 +379,14 @@ class ProductMeasurementUnitFacadeTest extends Unit
         ]);
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 
         $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
@@ -434,7 +435,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit();
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productConcreteTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
         $this->tester->haveProductMeasurementSalesUnit(
             $productConcreteTransfer->getIdProductConcrete(),
@@ -445,12 +446,12 @@ class ProductMeasurementUnitFacadeTest extends Unit
                 ProductMeasurementSalesUnitTransfer::IS_DEFAULT => true,
                 ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_BASE_UNIT => $productMeasurementBaseUnitTransfer->toArray(),
                 ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_UNIT => $productMeasurementUnitTransfer->toArray(),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
             static::PRODUCT_MEASUREMENT_SALES_UNIT_ID,
-            $sku
+            $sku,
         );
 
         // Act
@@ -472,7 +473,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit();
         $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
             $productConcreteTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
         $this->tester->haveProductMeasurementSalesUnit(
             $productConcreteTransfer->getIdProductConcrete(),
@@ -482,12 +483,12 @@ class ProductMeasurementUnitFacadeTest extends Unit
                 ProductMeasurementSalesUnitTransfer::IS_DEFAULT => true,
                 ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_BASE_UNIT => $productMeasurementBaseUnitTransfer->toArray(),
                 ProductMeasurementSalesUnitTransfer::PRODUCT_MEASUREMENT_UNIT => $productMeasurementUnitTransfer->toArray(),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem(
             static::NON_EXISTING_PRODUCT_MEASUREMENT_SALES_UNIT_ID,
-            $sku
+            $sku,
         );
 
         // Act

@@ -33,7 +33,7 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsGuiGlossaryConverter(
             $this->createHtmlToTwigExpressionConverter(),
-            $this->createTwigExpressionToHtmlConverter()
+            $this->createTwigExpressionToHtmlConverter(),
         );
     }
 
@@ -44,7 +44,7 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockGuiGlossaryConverter(
             $this->createHtmlToTwigExpressionConverter(),
-            $this->createTwigExpressionToHtmlConverter()
+            $this->createTwigExpressionToHtmlConverter(),
         );
     }
 
@@ -55,7 +55,7 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
     {
         return new HtmlToTwigExpressionsConverter(
             $this->createDomDocument(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -68,7 +68,7 @@ class ContentGuiBusinessFactory extends AbstractBusinessFactory
             $this->getContentFacade(),
             $this->getConfig(),
             $this->getTranslatorFacade(),
-            $this->getContentEditorPlugins()
+            $this->getContentEditorPlugins(),
         );
     }
 

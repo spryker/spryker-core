@@ -86,7 +86,7 @@ class CategoryReader implements CategoryReaderInterface
         if ($categoryCriteriaTransfer->getWithChildren() || $categoryCriteriaTransfer->getWithChildrenRecursively()) {
             $categoryNodeCollectionTransfer = $this->categoryTreeReader->getCategoryNodeCollectionTree(
                 $categoryTransfer,
-                $categoryCriteriaTransfer
+                $categoryCriteriaTransfer,
             );
 
             $categoryTransfer->setNodeCollection($categoryNodeCollectionTransfer);

@@ -33,7 +33,7 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
@@ -66,7 +66,7 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImage> $productImageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImage[] $productImageEntityCollection
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      *
      * @return array<\Generated\Shared\Transfer\ProductImageTransfer>
@@ -81,7 +81,7 @@ class ProductImageTransferMapper implements ProductImageTransferMapperInterface
 
             $productImageTransfer->setSortOrder((int)$productImageSetToProductImageEntity->getSortOrder());
             $productImageTransfer->setIdProductImageSetToProductImage(
-                (int)$productImageSetToProductImageEntity->getIdProductImageSetToProductImage()
+                (int)$productImageSetToProductImageEntity->getIdProductImageSetToProductImage(),
             );
 
             $transferList[] = $productImageTransfer;

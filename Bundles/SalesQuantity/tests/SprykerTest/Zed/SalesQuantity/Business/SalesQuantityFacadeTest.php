@@ -38,10 +38,12 @@ class SalesQuantityFacadeTest extends Unit
      * @var string
      */
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
+
     /**
      * @var string
      */
     protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
+
     /**
      * @var int
      */
@@ -76,7 +78,7 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->facade->setFactory(
             (new SalesQuantityBusinessFactory())
-                ->setConfig($this->configMock)
+                ->setConfig($this->configMock),
         );
     }
 
@@ -241,8 +243,8 @@ class SalesQuantityFacadeTest extends Unit
     public function thresholds(): array
     {
         return [
-            [true,  5, null],
-            [true,  5, 6],
+            [true, 5, null],
+            [true, 5, 6],
             [false, 5, 5],
             [false, 5, 4],
         ];

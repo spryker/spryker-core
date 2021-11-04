@@ -23,7 +23,7 @@ class CompanyRoleDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCompanyRoleDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCompanyRoleDataImporterConfiguration()
+            $this->getConfig()->getCompanyRoleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -40,7 +40,7 @@ class CompanyRoleDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCompanyRolePermissionDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCompanyRolePermissionDataImporterConfiguration()
+            $this->getConfig()->getCompanyRolePermissionDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -57,7 +57,7 @@ class CompanyRoleDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCompanyUserRoleDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCompanyUserRoleDataImporterConfiguration()
+            $this->getConfig()->getCompanyUserRoleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

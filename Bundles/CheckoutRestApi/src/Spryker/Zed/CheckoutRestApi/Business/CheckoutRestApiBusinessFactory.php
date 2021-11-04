@@ -59,7 +59,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getCalculationFacade(),
             $this->createCheckoutValidator(),
             $this->getQuoteMapperPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -72,7 +72,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->getCartFacade(),
             $this->getCheckoutDataValidatorPlugins(),
-            $this->getReadCheckoutDataValidatorPlugins()
+            $this->getReadCheckoutDataValidatorPlugins(),
         );
     }
 
@@ -101,7 +101,7 @@ class CheckoutRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getShipmentFacade(),
             $this->getPaymentFacade(),
             $this->createAddressReader(),
-            $this->getCheckoutDataExpanderPlugins()
+            $this->getCheckoutDataExpanderPlugins(),
         );
     }
 

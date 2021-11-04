@@ -152,8 +152,8 @@ class State implements StateInterface
         throw new StateMachineException(
             sprintf(
                 'Event "%d" not found. Have you added this event to transition?',
-                $eventName
-            )
+                $eventName,
+            ),
         );
     }
 
@@ -286,8 +286,8 @@ class State implements StateInterface
         throw new StateMachineException(
             sprintf(
                 'There is no onEnter event for state "%s"',
-                $this->getName()
-            )
+                $this->getName(),
+            ),
         );
     }
 

@@ -39,7 +39,7 @@ class CollectorProviderTest extends Unit
         $collectorProvider = $this->createCollectorProvider();
         $compositeSpecification = $collectorProvider->createAnd(
             $this->createCollectorSpecificationMock(),
-            $this->createCollectorSpecificationMock()
+            $this->createCollectorSpecificationMock(),
         );
 
         $this->assertInstanceOf(CollectorAndSpecification::class, $compositeSpecification);
@@ -53,7 +53,7 @@ class CollectorProviderTest extends Unit
         $collectorProvider = $this->createCollectorProvider();
         $compositeSpecification = $collectorProvider->createOr(
             $this->createCollectorSpecificationMock(),
-            $this->createCollectorSpecificationMock()
+            $this->createCollectorSpecificationMock(),
         );
 
         $this->assertInstanceOf(CollectorOrSpecification::class, $compositeSpecification);

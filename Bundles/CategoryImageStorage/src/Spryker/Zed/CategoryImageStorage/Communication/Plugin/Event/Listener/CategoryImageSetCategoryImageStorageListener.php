@@ -36,7 +36,7 @@ class CategoryImageSetCategoryImageStorageListener extends AbstractPlugin implem
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
                 $eventEntityTransfers,
-                SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET
+                SpyCategoryImageSetToCategoryImageTableMap::COL_FK_CATEGORY_IMAGE_SET,
             );
         $categoryIds = $this->getRepository()
             ->getCategoryIdsByCategoryImageSetIds($categoryImageSetIds)

@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 class MerchantProductOfferWishlistRestApiReader implements MerchantProductOfferWishlistRestApiReaderInterface
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
@@ -29,7 +27,7 @@ class MerchantProductOfferWishlistRestApiReader implements MerchantProductOfferW
             $uuid = sprintf(
                 '%s_%s',
                 $wishlistItemTransfer->getSku(),
-                $wishlistItemTransfer->getProductOfferReference()
+                $wishlistItemTransfer->getProductOfferReference(),
             );
 
             if ($wishlistItemRequestTransfer->getUuid() === $uuid) {

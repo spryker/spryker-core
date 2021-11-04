@@ -18,6 +18,7 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
      * @var string
      */
     public const FIELD_ID_NAVIGATION = 'id_navigation';
+
     /**
      * @var string
      */
@@ -31,7 +32,7 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
             SpyNavigationTableMap::COL_ID_NAVIGATION,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->withColumn(SpyNavigationTableMap::COL_ID_NAVIGATION, self::FIELD_ID_NAVIGATION);

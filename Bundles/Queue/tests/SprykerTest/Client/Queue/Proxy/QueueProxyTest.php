@@ -56,7 +56,7 @@ class QueueProxyTest extends Unit
                     QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($this->queueAdapterMock),
                 ],
             ],
-            []
+            [],
         );
     }
 
@@ -143,7 +143,7 @@ class QueueProxyTest extends Unit
                     QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($betaQueueAdapterMock),
                 ],
             ],
-            []
+            [],
         );
 
         $alphaMessage = $queueProxy->receiveMessage('alphaQueue')->setQueueName('alphaQueue');

@@ -46,7 +46,7 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
     {
         return $this->productAlternativeFacade
             ->deleteProductAlternativeByIdProductAlternative(
-                $idProductAlternative
+                $idProductAlternative,
             );
     }
 

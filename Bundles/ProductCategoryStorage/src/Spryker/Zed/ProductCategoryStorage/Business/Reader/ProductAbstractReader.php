@@ -58,7 +58,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         foreach ($categoryIds as $idCategory) {
             $relatedCategoryIds = $this->getRelatedCategoryIdsFromCategoryNodes(
                 $this->categoryFacade->getAllNodesByIdCategory($idCategory),
-                $relatedCategoryIds
+                $relatedCategoryIds,
             );
         }
 
@@ -73,9 +73,9 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
-     * @param array<int[]> $relatedCategoryIds
+     * @param array<array<int>> $relatedCategoryIds
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getRelatedCategoryIdsFromCategoryNodes(array $nodeTransfers, array $relatedCategoryIds): array
     {

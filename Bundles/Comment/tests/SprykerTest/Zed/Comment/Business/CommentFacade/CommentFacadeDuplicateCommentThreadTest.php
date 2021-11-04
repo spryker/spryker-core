@@ -35,6 +35,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentThreadWriter::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
@@ -195,7 +196,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -246,7 +247,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
         $this->assertCount(1, $commentThreadTransfer->getComments());
         $this->assertEquals(
             $commentTransfer->getCommentTags()->offsetGet(0)->getName(),
-            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName()
+            $storedCommentTransfer->getCommentTags()->offsetGet(0)->getName(),
         );
     }
 

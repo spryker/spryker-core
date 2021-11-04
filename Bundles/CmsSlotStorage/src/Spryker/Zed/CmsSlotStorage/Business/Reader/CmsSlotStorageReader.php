@@ -40,7 +40,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
 
         $cmsSlotStorageEntityTransfers = $this->cmsSlotStorageRepository->getFilteredCmsSlotStorageEntities(
             $filterTransfer,
-            $cmsSlotStorageIds
+            $cmsSlotStorageIds,
         );
 
         foreach ($cmsSlotStorageEntityTransfers as $cmsSlotStorageEntityTransfer) {

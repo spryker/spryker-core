@@ -22,7 +22,7 @@ interface ProductImageRepositoryInterface
     /**
      * @param array<int> $productSetIds
      *
-     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     public function getProductImagesByProductSetIds(array $productSetIds): array;
 

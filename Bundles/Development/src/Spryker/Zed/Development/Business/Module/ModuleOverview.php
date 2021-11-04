@@ -52,7 +52,7 @@ class ModuleOverview implements ModuleOverviewInterface
             $moduleName = $this->getModuleNameFromModuleKey($moduleKey);
             $moduleOverviewTransfer = $this->getModuleOverviewTransfer(
                 $moduleOverviewTransferCollection,
-                $this->getModuleNameFromModuleKey($moduleKey)
+                $this->getModuleNameFromModuleKey($moduleKey),
             );
 
             $moduleOverviewTransfer->setExistsProjectModule(true);
@@ -76,7 +76,7 @@ class ModuleOverview implements ModuleOverviewInterface
             $moduleName = $this->getModuleNameFromModuleKey($moduleKey);
             $moduleOverviewTransfer = $this->getModuleOverviewTransfer(
                 $moduleOverviewTransferCollection,
-                $this->getModuleNameFromModuleKey($moduleKey)
+                $this->getModuleNameFromModuleKey($moduleKey),
             );
 
             $moduleOverviewTransfer->setExistsCoreModule(true);
@@ -100,7 +100,7 @@ class ModuleOverview implements ModuleOverviewInterface
     }
 
     /**
-     * @param array $moduleOverviewTransferCollection
+     * @param array<string, \Generated\Shared\Transfer\ModuleOverviewTransfer> $moduleOverviewTransferCollection
      * @param string $moduleName
      *
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer

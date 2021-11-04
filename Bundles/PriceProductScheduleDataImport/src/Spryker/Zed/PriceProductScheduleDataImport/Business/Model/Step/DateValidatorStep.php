@@ -20,6 +20,7 @@ class DateValidatorStep implements DataImportStepInterface
      * @var string
      */
     protected const DATE_EMPTY_EXCEPTION_MESSAGE = 'Both dates should not be empty';
+
     /**
      * @var string
      */

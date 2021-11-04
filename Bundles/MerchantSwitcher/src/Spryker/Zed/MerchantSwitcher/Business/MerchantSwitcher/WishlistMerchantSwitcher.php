@@ -53,7 +53,7 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
             $productOfferTransfer = $this->findProductOfferBySku(
                 $productOfferTransfers,
-                $wishlistItemTransfer->getSku()
+                $wishlistItemTransfer->getSku(),
             );
 
             if ($productOfferTransfer) {
@@ -68,8 +68,6 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      * @param string $sku
      *

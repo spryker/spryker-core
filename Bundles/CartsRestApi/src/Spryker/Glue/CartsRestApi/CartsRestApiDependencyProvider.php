@@ -20,14 +20,17 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_CART = 'CLIENT_CART';
+
     /**
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
@@ -37,14 +40,17 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CART_ITEM_EXPANDER = 'PLUGINS_CART_ITEM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER';
+
     /**
      * @var string
      */

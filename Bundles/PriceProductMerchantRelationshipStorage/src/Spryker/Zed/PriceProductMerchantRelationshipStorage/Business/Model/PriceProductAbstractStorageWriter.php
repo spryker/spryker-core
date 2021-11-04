@@ -64,11 +64,9 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @phpstan-param array<mixed> $businessUnitProducts
-     *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $businessUnitProducts
+     * @param array<mixed> $businessUnitProducts
      *
      * @return void
      */
@@ -96,7 +94,7 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
             $priceProductMerchantRelationshipStorageTransfer = $this->groupPrices(
                 $priceProductMerchantRelationshipStorageTransfer,
                 $existingStorageEntities,
-                $mergePrices
+                $mergePrices,
             );
 
             // Skip if no prices, the price entity will be deleted at the end
@@ -107,7 +105,7 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
             if (isset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()])) {
                 $this->priceProductMerchantRelationshipStorageEntityManager->updatePriceProductAbstract(
                     $priceProductMerchantRelationshipStorageTransfer,
-                    $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]
+                    $existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()],
                 );
 
                 unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
@@ -116,7 +114,7 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
             }
 
             $this->priceProductMerchantRelationshipStorageEntityManager->createPriceProductAbstract(
-                $priceProductMerchantRelationshipStorageTransfer
+                $priceProductMerchantRelationshipStorageTransfer,
             );
 
             unset($existingStorageEntities[$priceProductMerchantRelationshipStorageTransfer->getPriceKey()]);
@@ -162,7 +160,7 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
 
         return $this->priceGrouper->groupPricesData(
             $priceProductMerchantRelationshipStorageTransfer,
-            $this->getExistingPricesDataForPriceKey($existingStorageEntities, $priceProductMerchantRelationshipStorageTransfer->getPriceKey())
+            $this->getExistingPricesDataForPriceKey($existingStorageEntities, $priceProductMerchantRelationshipStorageTransfer->getPriceKey()),
         );
     }
 

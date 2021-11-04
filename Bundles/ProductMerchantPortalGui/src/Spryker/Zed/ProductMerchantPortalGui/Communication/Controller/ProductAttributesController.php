@@ -26,6 +26,7 @@ class ProductAttributesController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_DELETE_SUCCESS = 'Success! The Attribute is deleted.';
+
     /**
      * @var string
      */
@@ -35,18 +36,22 @@ class ProductAttributesController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME = 'The attribute name must be not empty';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTES = 'Please fill in at least one value';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND = 'Abstract Product cannot be found';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND = 'Concrete Product cannot be found';
+
     /**
      * @var string
      */
@@ -56,6 +61,7 @@ class ProductAttributesController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @var string
      */
@@ -63,12 +69,14 @@ class ProductAttributesController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE_DEFAULT = 'attribute_default';
@@ -152,7 +160,7 @@ class ProductAttributesController extends AbstractController
         }
 
         $idProductConcrete = $this->castId(
-            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE),
         );
 
         $productConcreteTransfer = $this->getFactory()
@@ -222,7 +230,7 @@ class ProductAttributesController extends AbstractController
         }
 
         $idProductConcrete = $this->castId(
-            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE),
         );
 
         $productConcreteTransfer = $this->getFactory()
@@ -239,7 +247,7 @@ class ProductAttributesController extends AbstractController
             ->extractSuperAttributes(
                 $productConcreteTransfer->getAttributes(),
                 $productConcreteTransfer->getLocalizedAttributes(),
-                $localeTransfer
+                $localeTransfer,
             );
 
         if (isset($superAttributeNames[$attributeName])) {
@@ -290,7 +298,7 @@ class ProductAttributesController extends AbstractController
     public function concreteTableDataAction(Request $request): Response
     {
         $idProductConcrete = $this->castId(
-            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE),
         );
 
         $productConcreteTransfer = $this->getFactory()
@@ -314,10 +322,6 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *
@@ -371,7 +375,7 @@ class ProductAttributesController extends AbstractController
                 $productAttributes = $this->updateAttribute(
                     $productAttributes,
                     $attributeName,
-                    $attributeValue
+                    $attributeValue,
                 );
             }
         }
@@ -400,7 +404,7 @@ class ProductAttributesController extends AbstractController
             $localizedAttributes = $this->updateAttribute(
                 $localizedAttributesTransfer->getAttributes(),
                 $attributeName,
-                $attributeValue
+                $attributeValue,
             );
 
             $localizedAttributesTransfer->setAttributes($localizedAttributes);
@@ -488,8 +492,6 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param array<string> $attributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
@@ -506,8 +508,6 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *

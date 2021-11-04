@@ -75,7 +75,7 @@ class QuoteRequestDataImportCommunicationTester extends Actor
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                 CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnit->getIdCompanyBusinessUnit(),
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
+            ],
         );
     }
 
@@ -88,7 +88,7 @@ class QuoteRequestDataImportCommunicationTester extends Actor
             [
                 CompanyTransfer::STATUS => 'approved',
                 CompanyTransfer::IS_ACTIVE => true,
-            ]
+            ],
         );
     }
 

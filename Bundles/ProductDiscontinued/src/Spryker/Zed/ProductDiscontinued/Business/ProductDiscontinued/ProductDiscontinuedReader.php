@@ -38,7 +38,7 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
         $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
             ->setFkProduct($idProduct);
         $productDiscontinuedTransfer = $this->productDiscontinuedRepository->findProductDiscontinuedByProductId(
-            $productDiscontinuedTransfer
+            $productDiscontinuedTransfer,
         );
 
         return (new ProductDiscontinuedResponseTransfer())

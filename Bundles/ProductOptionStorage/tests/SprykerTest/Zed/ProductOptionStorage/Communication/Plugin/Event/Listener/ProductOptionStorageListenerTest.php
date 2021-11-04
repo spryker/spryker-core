@@ -85,7 +85,7 @@ class ProductOptionStorageListenerTest extends Unit
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();

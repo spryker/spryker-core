@@ -38,14 +38,17 @@ class RedisClientTester extends Actor
      * @var string
      */
     public const DEFAULT_REDIS_SCHEME = 'redis';
+
     /**
      * @var string
      */
     public const DEFAULT_REDIS_HOST = 'localhost';
+
     /**
      * @var int
      */
     public const DEFAULT_REDIS_PORT = 6379;
+
     /**
      * @var int
      */
@@ -80,7 +83,7 @@ class RedisClientTester extends Actor
 
         return new RedisInMemoryLogger(
             $this->getUtilEncodingService(),
-            $configurationTransfer
+            $configurationTransfer,
         );
     }
 
@@ -102,7 +105,7 @@ class RedisClientTester extends Actor
     {
         if (!$this->redisToUtilEncodingServiceBridge) {
             $this->redisToUtilEncodingServiceBridge = new RedisToUtilEncodingServiceBridge(
-                $this->getLocator()->utilEncoding()->service()
+                $this->getLocator()->utilEncoding()->service(),
             );
         }
 

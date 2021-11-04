@@ -41,7 +41,7 @@ class ViewController extends AbstractController
         $table = $this->getFactory()->createOffersTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 

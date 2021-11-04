@@ -26,7 +26,7 @@ class ContentBannerConstraint extends SymfonyConstraint
     /**
      * @param \Spryker\Zed\ContentBannerGui\Dependency\Facade\ContentBannerGuiToContentBannerFacadeInterface $contentBannerFacade
      * @param \Spryker\Zed\ContentBannerGui\Dependency\Service\ContentBannerGuiToUtilEncodingInterface $utilEncoding
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(
         ContentBannerGuiToContentBannerFacadeInterface $contentBannerFacade,

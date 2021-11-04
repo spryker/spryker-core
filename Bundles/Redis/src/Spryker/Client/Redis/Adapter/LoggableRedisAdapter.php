@@ -80,7 +80,7 @@ class LoggableRedisAdapter implements RedisAdapterInterface
                 'expireTTL' => $expireTTL,
                 'flag' => $flag,
             ],
-            $result
+            $result,
         );
 
         return $result;
@@ -112,7 +112,7 @@ class LoggableRedisAdapter implements RedisAdapterInterface
         $this->redisLogger->log(
             'EVAL',
             ['script' => $script, 'numKeys' => $numKeys, 'keysOrArgs' => $keysOrArgs],
-            $result
+            $result,
         );
 
         return $result;
@@ -196,7 +196,7 @@ class LoggableRedisAdapter implements RedisAdapterInterface
 
     /**
      * @param int $cursor
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array [string, string[]]
      */

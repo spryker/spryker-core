@@ -35,7 +35,7 @@ class UrlDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted URL: %d',
-            $urlTransfer->getIdUrl()
+            $urlTransfer->getIdUrl(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($urlTransfer): void {
@@ -67,7 +67,7 @@ class UrlDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted URL Redirect: %d',
-            $urlRedirectTransfer->getIdUrlRedirect()
+            $urlRedirectTransfer->getIdUrlRedirect(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($urlRedirectTransfer): void {

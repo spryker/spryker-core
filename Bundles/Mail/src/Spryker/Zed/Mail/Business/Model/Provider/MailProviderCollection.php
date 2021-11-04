@@ -16,6 +16,7 @@ class MailProviderCollection implements MailProviderCollectionAddInterface, Mail
      * @var string
      */
     public const ACCEPTED_MAIL_TYPES = 'accepted mail types';
+
     /**
      * @var string
      */

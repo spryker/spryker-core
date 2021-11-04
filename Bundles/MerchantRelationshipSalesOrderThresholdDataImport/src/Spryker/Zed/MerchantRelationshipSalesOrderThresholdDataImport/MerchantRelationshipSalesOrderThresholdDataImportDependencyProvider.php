@@ -23,14 +23,17 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
      * @var string
      */
     public const FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD = 'FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -62,7 +65,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
     {
         $container->set(static::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipSalesOrderThresholdFacadeBridge(
-                $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade()
+                $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade(),
             );
         });
 
@@ -78,7 +81,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
     {
         $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipFacadeBridge(
-                $container->getLocator()->merchantRelationship()->facade()
+                $container->getLocator()->merchantRelationship()->facade(),
             );
         });
 
@@ -94,7 +97,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -110,7 +113,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
     {
         $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToCurrencyFacadeBridge(
-                $container->getLocator()->currency()->facade()
+                $container->getLocator()->currency()->facade(),
             );
         });
 

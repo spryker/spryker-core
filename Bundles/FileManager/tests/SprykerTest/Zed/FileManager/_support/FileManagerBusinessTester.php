@@ -39,10 +39,12 @@ class FileManagerBusinessTester extends Actor
      * @var string
      */
     protected const PATH_DOCUMENT = 'documents/';
+
     /**
      * @var string
      */
     protected const FILE_CONTENT = 'Spryker is awesome';
+
     /**
      * @var string
      */

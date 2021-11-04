@@ -167,7 +167,7 @@ class CheckoutRestApiBusinessTester extends Actor
         /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
         $customerResponseTransfer = (new CustomerResponseBuilder(['hasCustomer' => true, 'isSuccess' => true]))
             ->withCustomerTransfer(
-                (new CustomerBuilder(static::CUSTOMER))
+                (new CustomerBuilder(static::CUSTOMER)),
             )
             ->build();
 
@@ -199,12 +199,12 @@ class CheckoutRestApiBusinessTester extends Actor
 
         $paymentProviderTransfer->addPaymentMethod(
             (new PaymentMethodTransfer())
-                ->setMethodName($paymentMethodData1['methodName'])
+                ->setMethodName($paymentMethodData1['methodName']),
         );
 
         $paymentProviderTransfer->addPaymentMethod(
             (new PaymentMethodTransfer())
-                ->setMethodName($paymentMethodData2['methodName'])
+                ->setMethodName($paymentMethodData2['methodName']),
         );
 
         $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
@@ -281,8 +281,8 @@ class CheckoutRestApiBusinessTester extends Actor
             ->withShipmentMethods(
                 (new ShipmentMethodsBuilder())
                     ->withMethod(
-                        (new ShipmentMethodBuilder($shipmentMethodData))
-                    )
+                        (new ShipmentMethodBuilder($shipmentMethodData)),
+                    ),
             )
             ->build();
     }

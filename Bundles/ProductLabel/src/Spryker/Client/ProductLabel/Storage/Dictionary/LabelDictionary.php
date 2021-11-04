@@ -111,7 +111,7 @@ class LabelDictionary implements LabelDictionaryInterface
     {
         $storageKey = $this->keyBuilder->generateKey(
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
-            $localeName
+            $localeName,
         );
 
         return $this->storageClient->get($storageKey);

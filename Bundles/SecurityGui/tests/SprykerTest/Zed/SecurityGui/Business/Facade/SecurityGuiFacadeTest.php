@@ -63,7 +63,7 @@ class SecurityGuiFacadeTest extends Unit
 
         $this->tester->setDependency(
             SecurityGuiDependencyProvider::FACADE_USER,
-            new SecurityGuiToUserFacadeBridge($userFacadeMock)
+            new SecurityGuiToUserFacadeBridge($userFacadeMock),
         );
 
         return $userFacadeMock;

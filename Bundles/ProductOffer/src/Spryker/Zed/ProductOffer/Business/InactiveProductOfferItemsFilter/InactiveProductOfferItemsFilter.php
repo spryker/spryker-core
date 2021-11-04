@@ -22,6 +22,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
      * @var string
      */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+
     /**
      * @var string
      */
@@ -75,7 +76,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
             ->setIsActive(true)
             ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setIdStore(
-                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
+                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore(),
             );
         $productOfferCollectionTransfer = $this->productOfferRepository->get($productOfferCriteriaTransfer);
 

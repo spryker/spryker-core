@@ -36,14 +36,17 @@ class AclGroupRoleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_GROUP_NAME_1 = 'Group foo';
+
     /**
      * @var string
      */
     protected const ACL_GROUP_NAME_2 = 'Group bar';
+
     /**
      * @var string
      */
     protected const ACL_GROUP_REFERENCE_1 = 'group_foo';
+
     /**
      * @var string
      */
@@ -53,14 +56,17 @@ class AclGroupRoleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ROLE_NAME_1 = 'Role foo';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_NAME_2 = 'Role bar';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_REFERENCE_1 = 'role_foo';
+
     /**
      * @var string
      */
@@ -83,35 +89,35 @@ class AclGroupRoleDataImportPluginTest extends Unit
     {
         // Arrange
         $this->tester->deleteRoles(
-            (new AclRoleCriteriaTransfer())->setNames([static::ACL_ROLE_NAME_1, static::ACL_ROLE_NAME_2])
+            (new AclRoleCriteriaTransfer())->setNames([static::ACL_ROLE_NAME_1, static::ACL_ROLE_NAME_2]),
         );
         $this->tester->deleteGroups(
-            (new GroupCriteriaTransfer())->setNames([static::ACL_GROUP_NAME_1, static::ACL_GROUP_NAME_2])
+            (new GroupCriteriaTransfer())->setNames([static::ACL_GROUP_NAME_1, static::ACL_GROUP_NAME_2]),
         );
 
         $this->tester->haveGroup(
             [
                 GroupTransfer::NAME => static::ACL_GROUP_NAME_1,
                 GroupTransfer::REFERENCE => static::ACL_GROUP_REFERENCE_1,
-            ]
+            ],
         );
         $this->tester->haveGroup(
             [
                 GroupTransfer::NAME => static::ACL_GROUP_NAME_2,
                 GroupTransfer::REFERENCE => static::ACL_GROUP_REFERENCE_2,
-            ]
+            ],
         );
         $this->tester->haveRole(
             [
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_1,
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_1,
-            ]
+            ],
         );
         $this->tester->haveRole(
             [
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_2,
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_2,
-            ]
+            ],
         );
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();

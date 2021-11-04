@@ -68,7 +68,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
 
         return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

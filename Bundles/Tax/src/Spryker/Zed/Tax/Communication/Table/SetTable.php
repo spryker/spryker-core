@@ -21,6 +21,7 @@ class SetTable extends AbstractTable
      * @var string
      */
     public const TABLE_COL_ACTIONS = 'Actions';
+
     /**
      * @var string
      */
@@ -131,7 +132,7 @@ class SetTable extends AbstractTable
             '/tax/set/edit',
             [
                 self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet(),
-            ]
+            ],
         );
 
         return $this->generateEditButton($editTaxSetUrl, 'Edit');
@@ -148,7 +149,7 @@ class SetTable extends AbstractTable
             '/tax/set/view',
             [
                 self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -165,7 +166,7 @@ class SetTable extends AbstractTable
             '/tax/delete-set',
             [
                 self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
-            ]
+            ],
         );
 
         return $this->generateRemoveButton($deleteTaxSetUrl, 'Delete');

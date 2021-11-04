@@ -54,7 +54,7 @@ class AgentValidator implements AgentValidatorInterface
         return in_array(
             $restRequest->getResource()->getType(),
             $this->agentAuthRestApiConfig->getAgentResources(),
-            true
+            true,
         );
     }
 

@@ -23,18 +23,22 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_USER = 'FACADE_USER';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */
     public const FACADE_USER_PASSWORD_RESET = 'FACADE_USER_PASSWORD_RESET';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_TEXT = 'UTIL_TEXT_SERVICE';
+
     /**
      * @var string
      */
@@ -67,7 +71,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new MerchantUserToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+                $container->getLocator()->user()->facade(),
             );
         });
 
@@ -83,7 +87,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new MerchantUserToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 
@@ -99,7 +103,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantUserToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 
@@ -115,7 +119,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_USER_PASSWORD_RESET, function (Container $container) {
             return new MerchantUserToUserPasswordResetFacadeBridge(
-                $container->getLocator()->userPasswordReset()->facade()
+                $container->getLocator()->userPasswordReset()->facade(),
             );
         });
 

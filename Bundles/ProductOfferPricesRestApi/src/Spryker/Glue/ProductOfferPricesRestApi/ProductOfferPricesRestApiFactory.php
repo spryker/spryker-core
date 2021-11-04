@@ -36,7 +36,7 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getPriceProductStorageClient(),
             $this->getPriceProductClient(),
-            $this->createProductOfferPriceRestResponseBuilder()
+            $this->createProductOfferPriceRestResponseBuilder(),
         );
     }
 
@@ -47,7 +47,7 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     {
         return new ProductOfferPriceRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createProductOfferPriceMapper()
+            $this->createProductOfferPriceMapper(),
         );
     }
 
@@ -57,7 +57,7 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     public function createProductOfferPriceMapper(): ProductOfferPriceMapperInterface
     {
         return new ProductOfferPriceMapper(
-            $this->getRestProductOfferPricesAttributesMapperPlugins()
+            $this->getRestProductOfferPricesAttributesMapperPlugins(),
         );
     }
 

@@ -26,6 +26,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
      * @var string
      */
     protected const ERROR_MESSAGE_PARAM_TEMPLATE = '%template%';
+
     /**
      * @var string
      */
@@ -89,7 +90,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
         $productListResponseTransfer = $this->expandProductListResponseWithMessages(
             $productListResponseTransfer,
-            $configurableBundleTemplateSlotCollectionTransfer
+            $configurableBundleTemplateSlotCollectionTransfer,
         );
 
         return $productListResponseTransfer->setIsSuccessful(false);
@@ -113,7 +114,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
             $productListResponseTransfer = $this->addMessageToProductListResponse(
                 $productListResponseTransfer,
-                $configurableBundleTemplateSlotTransfer
+                $configurableBundleTemplateSlotTransfer,
             );
         }
 

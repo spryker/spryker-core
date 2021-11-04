@@ -32,10 +32,12 @@ class AttributeAbstractForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
@@ -45,14 +47,17 @@ class AttributeAbstractForm extends AbstractSubForm
      * @var string
      */
     public const OPTION_ATTRIBUTE = 'option_attribute';
+
     /**
      * @var string
      */
     public const OPTION_PRODUCT_MANAGEMENT_QUERY_CONTAINER = 'product-management-query-container';
+
     /**
      * @var string
      */
     public const OPTION_LOCALE_PROVIDER = 'locale-provider';
+
     /**
      * @var string
      */
@@ -122,7 +127,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -130,7 +135,7 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         parent::buildForm($builder, $options);
 
-        $this->localeTransfer = isset($options[static::OPTION_LOCALE_TRANSFER]) ? $options[static::OPTION_LOCALE_TRANSFER] : null;
+        $this->localeTransfer = $options[static::OPTION_LOCALE_TRANSFER] ?? null;
 
         $this
             ->addCheckboxNameField($builder, $options)
@@ -140,7 +145,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -169,7 +174,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -183,7 +188,7 @@ class AttributeAbstractForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -223,7 +228,7 @@ class AttributeAbstractForm extends AbstractSubForm
                     ->queryFindAttributeByValueOrTranslation(
                         $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
                         $idLocale,
-                        $value
+                        $value,
                     )->findOne();
 
                 $input = Select2ComboBoxType::class;
@@ -260,7 +265,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $valueCollection = $this->getQueryContainer()
             ->queryFindAttributeByValueOrTranslation(
                 $attributes[AbstractProductFormDataProvider::FORM_FIELD_ID],
-                $idLocale
+                $idLocale,
             )->find();
 
         if (!$existingValue && isset($attributeValue)) {

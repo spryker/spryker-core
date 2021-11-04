@@ -25,7 +25,7 @@ interface PriceGrouperInterface
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return array
+     * @return array<string, array>
      */
     public function groupPriceProduct(array $priceProductTransfers);
 }

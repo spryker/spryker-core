@@ -22,6 +22,7 @@ class OauthTokenConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'oauth:refresh-token:remove-expired';
+
     /**
      * @var string
      */

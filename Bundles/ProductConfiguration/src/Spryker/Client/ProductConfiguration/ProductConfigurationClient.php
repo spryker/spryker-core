@@ -89,7 +89,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
             ->createProductConfigurationResponseMapper()
             ->mapConfiguratorResponseDataToProductConfiguratorResponseTransfer(
                 $configuratorResponseData,
-                $productConfiguratorResponseTransfer
+                $productConfiguratorResponseTransfer,
             );
     }
 }

@@ -32,7 +32,7 @@ class TaxSetDataHelper extends Module
         $taxSetTransfer = (new TaxSetBuilder($override))->build();
 
         $taxSetTransfer->setIdTaxSet(
-            $this->saveTaxSet($taxSetTransfer)
+            $this->saveTaxSet($taxSetTransfer),
         );
 
         return $taxSetTransfer;

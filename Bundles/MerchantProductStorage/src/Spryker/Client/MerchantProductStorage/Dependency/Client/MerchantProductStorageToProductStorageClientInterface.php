@@ -10,12 +10,10 @@ namespace Spryker\Client\MerchantProductStorage\Dependency\Client;
 interface MerchantProductStorageToProductStorageClientInterface
 {
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
 }

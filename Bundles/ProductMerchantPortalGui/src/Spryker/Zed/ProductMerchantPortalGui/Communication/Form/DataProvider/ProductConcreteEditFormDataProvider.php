@@ -21,36 +21,42 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::OPTION_SEARCHABILITY_CHOICES
+     *
      * @var string
      */
     protected const OPTION_SEARCHABILITY_CHOICES = 'OPTION_SEARCHABILITY_CHOICES';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
@@ -111,24 +117,24 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $this->merchantProductFacade->findProductConcrete(
-            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete)
+            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->addIdProductConcrete($idProductConcrete),
         );
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = $this->productFacade->findProductAbstractById($productConcreteTransfer->getFkProductAbstractOrFail());
 
         $useAbstractProductName = $this->hasSameLocalizedAttributeNames(
             $productConcreteTransfer->getLocalizedAttributes(),
-            $productAbstractTransfer->getLocalizedAttributes()
+            $productAbstractTransfer->getLocalizedAttributes(),
         );
 
         $useAbstractProductDescription = $this->hasSameLocalizedDescriptions(
             $productConcreteTransfer->getLocalizedAttributes(),
-            $productAbstractTransfer->getLocalizedAttributes()
+            $productAbstractTransfer->getLocalizedAttributes(),
         );
 
         $useAbstractProductImageSets = $this->areProductImageSetTransfersEqual(
             $productConcreteTransfer->getImageSets(),
-            $productAbstractTransfer->getImageSets()
+            $productAbstractTransfer->getImageSets(),
         );
 
         return [
@@ -141,7 +147,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getOptions(): array
     {
@@ -151,9 +157,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteLocalizedAttributesTransfers
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteLocalizedAttributesTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
@@ -166,7 +169,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
         foreach ($productConcreteLocalizedAttributesTransfers as $productConcreteLocalizedAttributesTransfer) {
             $productAbstractLocalizedAttributesTransfer = $this->productAttributeDataProvider->findLocalizedAttribute(
                 $productAbstractLocalizedAttributesTransfers,
-                $productConcreteLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail()
+                $productConcreteLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail(),
             );
 
             if (!$productAbstractLocalizedAttributesTransfer) {
@@ -182,9 +185,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteAttributes
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractAttributes
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteAttributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractAttributes
      *
@@ -195,7 +195,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
         foreach ($productConcreteAttributes as $concreteLocalizedAttribute) {
             $abstractLocalizedAttribute = $this->productAttributeDataProvider->findLocalizedAttribute(
                 $productAbstractAttributes,
-                $concreteLocalizedAttribute->getLocaleOrFail()->getIdLocaleOrFail()
+                $concreteLocalizedAttribute->getLocaleOrFail()->getIdLocaleOrFail(),
             );
 
             if (!$abstractLocalizedAttribute) {
@@ -211,9 +211,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfersToCompare
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfersToCompare
      *
@@ -228,8 +225,6 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      *
      * @return array
@@ -250,7 +245,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
                         ProductImageTransfer::EXTERNAL_URL_LARGE,
                         ProductImageTransfer::EXTERNAL_URL_SMALL,
                         ProductImageTransfer::SORT_ORDER,
-                    ]
+                    ],
                 );
             }
 

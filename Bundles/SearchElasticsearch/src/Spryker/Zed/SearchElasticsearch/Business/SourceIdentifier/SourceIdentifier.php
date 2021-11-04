@@ -49,8 +49,8 @@ class SourceIdentifier implements SourceIdentifierInterface
                 sprintf(
                     static::INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE,
                     $sourceIdentifier,
-                    $this->getCurrentStore()
-                )
+                    $this->getCurrentStore(),
+                ),
             );
         }
 
@@ -81,7 +81,7 @@ class SourceIdentifier implements SourceIdentifierInterface
         return mb_strtolower(
             $this->getCurrentStore() .
             static::STORE_PREFIX_DELIMITER .
-            $configSourceIdentifier
+            $configSourceIdentifier,
         ) === $sourceIdentifier;
     }
 
@@ -101,8 +101,8 @@ class SourceIdentifier implements SourceIdentifierInterface
                 sprintf(
                     static::INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE,
                     $sourceIdentifier,
-                    $this->getCurrentStore()
-                )
+                    $this->getCurrentStore(),
+                ),
             );
         }
 

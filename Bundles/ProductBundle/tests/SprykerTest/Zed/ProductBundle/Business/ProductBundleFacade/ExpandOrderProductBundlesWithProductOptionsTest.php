@@ -30,6 +30,7 @@ class ExpandOrderProductBundlesWithProductOptionsTest extends Unit
      * @var string
      */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+
     /**
      * @var string
      */
@@ -39,6 +40,7 @@ class ExpandOrderProductBundlesWithProductOptionsTest extends Unit
      * @var string
      */
     protected const FAKE_PRODUCT_OPTION_SKU_1 = 'FAKE_PRODUCT_OPTION_SKU_1';
+
     /**
      * @var string
      */
@@ -95,7 +97,7 @@ class ExpandOrderProductBundlesWithProductOptionsTest extends Unit
         // Assert
         $this->assertSame(
             static::FAKE_PRODUCT_OPTION_SKU_1,
-            $orderTransfer->getBundleItems()->offsetGet(1)->getProductOptions()->offsetGet(0)->getSku()
+            $orderTransfer->getBundleItems()->offsetGet(1)->getProductOptions()->offsetGet(0)->getSku(),
         );
     }
 

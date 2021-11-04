@@ -35,7 +35,7 @@ class IndexController extends AbstractController
         $navigationTable = $this->getFactory()->createNavigationTable();
 
         return $this->jsonResponse(
-            $navigationTable->fetchData()
+            $navigationTable->fetchData(),
         );
     }
 }

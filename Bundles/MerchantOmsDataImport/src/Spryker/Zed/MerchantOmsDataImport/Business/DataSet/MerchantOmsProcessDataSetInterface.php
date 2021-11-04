@@ -13,10 +13,12 @@ interface MerchantOmsProcessDataSetInterface
      * @var string
      */
     public const MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     public const FK_STATE_MACHINE_PROCESS = 'fk_state_machine_process';
+
     /**
      * @var string
      */

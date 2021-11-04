@@ -80,13 +80,13 @@ class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteReso
             $restDiscountsAttributesTransfer = $this->discountMapper
                 ->mapDiscountDataToRestDiscountsAttributesTransfer(
                     $discountTransfer,
-                    new RestDiscountsAttributesTransfer()
+                    new RestDiscountsAttributesTransfer(),
                 );
 
             $discountResource = $this->restResourceBuilder->createRestResource(
                 CartCodesRestApiConfig::RESOURCE_CART_RULES,
                 (string)$discountTransfer->getIdDiscount(),
-                $restDiscountsAttributesTransfer
+                $restDiscountsAttributesTransfer,
             );
 
             $resource->addRelationship($discountResource);

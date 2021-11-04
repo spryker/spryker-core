@@ -19,10 +19,12 @@ class ViewShipmentMethodController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
+
     /**
      * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
+
     /**
      * @var string
      */
@@ -50,7 +52,7 @@ class ViewShipmentMethodController extends AbstractController
         $dataProvider = $this->getFactory()->createViewShipmentMethodFormDataProvider();
         $form = $this->getFactory()->createViewShipmentMethodForm(
             $dataProvider->getData($shipmentMethodTransfer),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
 
         return $this->viewResponse([

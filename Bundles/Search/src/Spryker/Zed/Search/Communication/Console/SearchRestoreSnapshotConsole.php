@@ -24,6 +24,7 @@ class SearchRestoreSnapshotConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:snapshot:restore';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class SearchRestoreSnapshotConsole extends Console
      * @var string
      */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+
     /**
      * @var string
      */

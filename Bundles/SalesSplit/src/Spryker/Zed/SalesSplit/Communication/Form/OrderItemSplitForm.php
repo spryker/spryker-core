@@ -26,10 +26,12 @@ class OrderItemSplitForm extends AbstractType
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_ID_ORDER_ITEM = 'id_sales_order_item';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class OrderItemSplitForm extends AbstractType
      * @var string
      */
     public const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
+
     /**
      * @var string
      */
@@ -64,7 +67,7 @@ class OrderItemSplitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

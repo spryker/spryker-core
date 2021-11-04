@@ -27,6 +27,7 @@ class Console extends SymfonyCommand
      * @var int
      */
     public const CODE_SUCCESS = 0;
+
     /**
      * @var int
      */
@@ -173,7 +174,7 @@ class Console extends SymfonyCommand
 
     /**
      * @param string $question
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $default
      *
      * @return mixed

@@ -106,7 +106,7 @@ class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
                 'id-product-abstract' => $this->idProductAbstract,
                 'id-product' => $this->idProduct,
             ]),
-            'Delete'
+            'Delete',
         );
     }
 }

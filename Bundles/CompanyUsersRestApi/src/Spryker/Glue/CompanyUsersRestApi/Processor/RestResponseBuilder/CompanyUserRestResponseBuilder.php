@@ -70,7 +70,7 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $totalItems,
-            $limit
+            $limit,
         );
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
@@ -96,7 +96,7 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
         $companyUserRestResource = $this->restResourceBuilder->createRestResource(
             CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
             $companyUserUuid,
-            $restCompanyUserAttributesTransfer
+            $restCompanyUserAttributesTransfer,
         );
 
         $companyUserRestResource->setPayload($companyUserTransfer);
@@ -140,13 +140,13 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
         $restCompanyUserAttributesTransfer = $this->companyUserMapper
             ->mapCompanyUserTransferToRestCompanyUserAttributesTransfer(
                 $companyUserTransfer,
-                new RestCompanyUserAttributesTransfer()
+                new RestCompanyUserAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyUsersRestApiConfig::RESOURCE_COMPANY_USERS,
             $companyUserTransfer->getUuid(),
-            $restCompanyUserAttributesTransfer
+            $restCompanyUserAttributesTransfer,
         );
 
         $restResource->setPayload($companyUserTransfer);

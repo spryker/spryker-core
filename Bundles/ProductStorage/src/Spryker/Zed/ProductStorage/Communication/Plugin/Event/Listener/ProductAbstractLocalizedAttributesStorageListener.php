@@ -35,7 +35,7 @@ class ProductAbstractLocalizedAttributesStorageListener extends AbstractPlugin i
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         $this->getFacade()->publishAbstractProducts($productAbstractIds);

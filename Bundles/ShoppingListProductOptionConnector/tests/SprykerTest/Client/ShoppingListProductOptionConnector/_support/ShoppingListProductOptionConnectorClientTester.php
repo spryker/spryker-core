@@ -45,7 +45,7 @@ class ShoppingListProductOptionConnectorClientTester extends Actor
                         [],
                     ],
                 ],
-            ]
+            ],
         );
 
         return $productOptionGroupTransfer;

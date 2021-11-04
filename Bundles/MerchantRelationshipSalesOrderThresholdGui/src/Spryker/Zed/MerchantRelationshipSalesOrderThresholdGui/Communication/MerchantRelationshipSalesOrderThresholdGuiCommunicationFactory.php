@@ -42,7 +42,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     public function createMerchantRelationshipSalesOrderThresholdTable(): MerchantRelationshipSalesOrderThresholdTable
     {
         return new MerchantRelationshipSalesOrderThresholdTable(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -63,7 +63,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
         return $this->getFormFactory()->create(
             MerchantRelationshipThresholdType::class,
             $formDataProvider->getData($idMerchantRelationship, $storeTransfer, $currencyTransfer),
-            $formDataProvider->getOptions($currencyTransfer)
+            $formDataProvider->getOptions($currencyTransfer),
         );
     }
 
@@ -76,7 +76,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
             $this->getMerchantRelationshipSalesOrderThresholdFacade(),
             $this->getCurrencyFacade(),
             $this->createMerchantRelationshipThresholdDataProviderResolver(),
-            $this->getSalesOrderThresholdFormExpanderPlugins()
+            $this->getSalesOrderThresholdFormExpanderPlugins(),
         );
     }
 
@@ -87,7 +87,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     {
         return new StoreCurrencyFinder(
             $this->getCurrencyFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -99,7 +99,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
         return new MerchantRelationshipThresholdFormMapperResolver(
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $this->getSalesOrderThresholdFormExpanderPlugins()
+            $this->getSalesOrderThresholdFormExpanderPlugins(),
         );
     }
 
@@ -110,7 +110,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     {
         return new MerchantRelationshipThresholdDataProviderResolver(
             $this->getConfig(),
-            $this->getSalesOrderThresholdFormExpanderPlugins()
+            $this->getSalesOrderThresholdFormExpanderPlugins(),
         );
     }
 

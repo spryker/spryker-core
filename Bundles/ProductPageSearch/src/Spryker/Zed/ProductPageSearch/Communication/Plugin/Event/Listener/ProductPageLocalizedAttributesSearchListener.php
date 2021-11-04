@@ -32,7 +32,7 @@ class ProductPageLocalizedAttributesSearchListener extends AbstractProductPageSe
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT
+            SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
 
         $this->publish($productAbstractIds);

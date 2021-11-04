@@ -18,10 +18,12 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
      * @var string
      */
     protected const NAME = 'completion';
+
     /**
      * @var string
      */
     protected const KEY_BUCKETS = 'buckets';
+
     /**
      * @var string
      */

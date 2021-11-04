@@ -33,9 +33,11 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
 
     /**
      * @deprecated Will be removed in next major release.
+     *
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var string
      */
@@ -109,7 +111,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
             ->getData();
 
         $restCatalogSearchSuggestionsAttributes = $mapper->mapSuggestionsToRestAttributesTransfer(
-            $searchSuggestionsResponseDataMock
+            $searchSuggestionsResponseDataMock,
         );
 
         foreach ($this->getProductsFromRestCatalogSearchAttributesTransfer($restCatalogSearchSuggestionsAttributes) as $product) {
@@ -149,9 +151,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     protected function getProductsFromRestCatalogSearchAttributesTransfer(
         RestCatalogSearchSuggestionsAttributesTransfer $restCatalogSearchSuggestionsAttributes
     ): ArrayObject {
-        return isset($restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS])
-            ? $restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS]
-            : $restCatalogSearchSuggestionsAttributes[static::KEY_PRODUCTS];
+        return $restCatalogSearchSuggestionsAttributes[static::KEY_ABSTRACT_PRODUCTS] ?? $restCatalogSearchSuggestionsAttributes[static::KEY_PRODUCTS];
     }
 
     /**

@@ -22,14 +22,17 @@ class BaseOptionController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
+
     /**
      * @var string
      */
     public const URL_PARAM_ACTIVE = 'active';
+
     /**
      * @var string
      */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
@@ -47,11 +50,11 @@ class BaseOptionController extends AbstractController
 
         $productOptionsTable = $this->getFactory()->createProductOptionTable(
             $idProductOptionGroup,
-            $tableContext
+            $tableContext,
         );
 
         return $this->jsonResponse(
-            $productOptionsTable->fetchData()
+            $productOptionsTable->fetchData(),
         );
     }
 
@@ -67,7 +70,7 @@ class BaseOptionController extends AbstractController
         $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 }

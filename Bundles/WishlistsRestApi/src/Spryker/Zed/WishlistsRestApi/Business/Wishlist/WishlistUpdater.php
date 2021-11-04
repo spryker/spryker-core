@@ -17,12 +17,14 @@ class WishlistUpdater implements WishlistUpdaterInterface
 {
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
 
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
@@ -52,7 +54,7 @@ class WishlistUpdater implements WishlistUpdaterInterface
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             $wishlistResponseTransfer->setErrorIdentifier(
-                WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
+                WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
             );
 
             return $wishlistResponseTransfer;
@@ -83,18 +85,18 @@ class WishlistUpdater implements WishlistUpdaterInterface
         foreach ($wishlistResponseTransfer->getErrors() as $error) {
             if ($error === static::ERROR_MESSAGE_NAME_ALREADY_EXISTS) {
                 return $wishlistResponseTransfer->setErrorIdentifier(
-                    WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST
+                    WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST,
                 );
             }
             if ($error === static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT) {
                 return $wishlistResponseTransfer->setErrorIdentifier(
-                    WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
+                    WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT,
                 );
             }
         }
 
         return $wishlistResponseTransfer->setErrorIdentifier(
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED,
         );
     }
 

@@ -44,13 +44,13 @@ class IsQuoteProductConfigurationValidTest extends Unit
 
         // Act
         $isQuoteProductConfigurationValid = $this->tester->getClient()->isQuoteProductConfigurationValid(
-            (new QuoteTransfer())->addItem($itemTransfer)
+            (new QuoteTransfer())->addItem($itemTransfer),
         );
 
         // Assert
         $this->assertTrue(
             $isQuoteProductConfigurationValid,
-            'Expects that product configuration will be valid.'
+            'Expects that product configuration will be valid.',
         );
     }
 
@@ -69,13 +69,13 @@ class IsQuoteProductConfigurationValidTest extends Unit
 
         // Act
         $isQuoteProductConfigurationValid = $this->tester->getClient()->isQuoteProductConfigurationValid(
-            (new QuoteTransfer())->addItem($itemTransfer)
+            (new QuoteTransfer())->addItem($itemTransfer),
         );
 
         // Assert
         $this->assertFalse(
             $isQuoteProductConfigurationValid,
-            'Expects that product configuration will be not valid with not completed product configuration.'
+            'Expects that product configuration will be not valid with not completed product configuration.',
         );
     }
 
@@ -86,13 +86,13 @@ class IsQuoteProductConfigurationValidTest extends Unit
     {
         // Act
         $isQuoteProductConfigurationValid = $this->tester->getClient()->isQuoteProductConfigurationValid(
-            (new QuoteTransfer())
+            (new QuoteTransfer()),
         );
 
         // Assert
         $this->assertTrue(
             $isQuoteProductConfigurationValid,
-            'Expects that product configuration will be valid with empty quote.'
+            'Expects that product configuration will be valid with empty quote.',
         );
     }
 
@@ -105,13 +105,13 @@ class IsQuoteProductConfigurationValidTest extends Unit
 
         // Act
         $isQuoteProductConfigurationValid = $this->tester->getClient()->isQuoteProductConfigurationValid(
-            (new QuoteTransfer())->addItem($itemTransfer)
+            (new QuoteTransfer())->addItem($itemTransfer),
         );
 
         // Assert
         $this->assertTrue(
             $isQuoteProductConfigurationValid,
-            'Expects that product configuration will be valid when item does not have product configuration.'
+            'Expects that product configuration will be valid when item does not have product configuration.',
         );
     }
 }

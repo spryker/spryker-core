@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel;
 
-use Orm\Zed\Sales\Persistence\Base\SpySalesShipment as SpySalesShipment;
+use Orm\Zed\Sales\Persistence\Base\SpySalesShipment;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_shipment' table.

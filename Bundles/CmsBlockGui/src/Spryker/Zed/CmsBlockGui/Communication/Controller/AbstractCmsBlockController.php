@@ -22,10 +22,12 @@ abstract class AbstractCmsBlockController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
+
     /**
      * @var string
      */
     public const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
+
     /**
      * @var string
      */

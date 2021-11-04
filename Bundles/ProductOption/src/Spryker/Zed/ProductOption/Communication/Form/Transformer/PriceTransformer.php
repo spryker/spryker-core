@@ -98,7 +98,7 @@ class PriceTransformer implements DataTransformerInterface
         }
 
         return $this->moneyFacade->convertDecimalToInteger(
-            (float)str_replace(',', '.', $value)
+            (float)str_replace(',', '.', $value),
         );
     }
 }

@@ -19,22 +19,27 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      * @var string
      */
     public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var string
      */
     public const COL_FK_PRODUCT = 'fk_product';
+
     /**
      * @var string
      */
     public const CONCRETE_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
     public const ABSTRACT_DESCRIPTION = 'abstract_description';
+
     /**
      * @var string
      */
     public const ABSTRACT_ATTRIBUTES = 'abstract_attributes';
+
     /**
      * @var string
      */
@@ -44,10 +49,12 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      * @var string
      */
     public const PRODUCT_CONCRETE_LOCALIZED_ENTITY = 'PRODUCT_CONCRETE_LOCALIZED_ENTITY';
+
     /**
      * @var string
      */
     public const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
+
     /**
      * @var string
      */
@@ -155,7 +162,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     {
         $pairedEntities = $this->pairProductConcreteLocalizedEntitiesWithProductConcreteStorageEntities(
             $productConcreteLocalizedEntities,
-            $productConcreteStorageEntities
+            $productConcreteStorageEntities,
         );
 
         foreach ($pairedEntities as $pair) {
@@ -171,7 +178,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             $this->storeProductConcreteStorageEntity(
                 $productConcreteLocalizedEntity,
                 $productConcreteStorageEntity,
-                $pair[static::LOCALE_NAME]
+                $pair[static::LOCALE_NAME],
             );
         }
     }
@@ -199,7 +206,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
                 $productConcreteLocalizedEntity['Locale']['locale_name'],
                 $productConcreteLocalizedEntity,
                 $mappedProductConcreteStorageEntities,
-                $pairs
+                $pairs,
             );
         }
 
@@ -224,8 +231,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         array $mappedProductConcreteStorageEntities,
         array $pairs
     ) {
-        $productConcreteStorageEntity = isset($mappedProductConcreteStorageEntities[$idProduct][$localeName]) ?
-            $mappedProductConcreteStorageEntities[$idProduct][$localeName] :
+        $productConcreteStorageEntity = $mappedProductConcreteStorageEntities[$idProduct][$localeName] ??
             new SpyProductConcreteStorage();
 
         $pairs[] = [

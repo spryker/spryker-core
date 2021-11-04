@@ -28,6 +28,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      * @var string
      */
     protected const STATUS_ACTIVE = 'Active';
+
     /**
      * @var string
      */
@@ -37,18 +38,22 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      * @var string
      */
     protected const COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id_configurable_bundle_template';
+
     /**
      * @var string
      */
     protected const COL_NAME_TRANSLATION = 'name_translation';
+
     /**
      * @var string
      */
     protected const COL_COUNT_OF_SLOTS = 'count_of_slots';
+
     /**
      * @var string
      */
     protected const COL_STATUS = 'is_active';
+
     /**
      * @var string
      */
@@ -61,24 +66,28 @@ class ConfigurableBundleTemplateTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_ACTIVATE = '/configurable-bundle-gui/template/activate';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deactivateAction()
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE = '/configurable-bundle-gui/template/deactivate';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::confirmDeleteAction()
+     *
      * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE = '/configurable-bundle-gui/template/confirm-delete';
@@ -150,11 +159,11 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate> $configurableBundleTemplateEntityCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[] $configurableBundleTemplateEntityCollection */
         $configurableBundleTemplateEntityCollection = $this->runQuery(
             $this->prepareQuery($this->configurableBundleTemplatePropelQuery),
             $config,
-            true
+            true,
         );
 
         if ($configurableBundleTemplateEntityCollection->count() === 0) {
@@ -180,7 +189,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::LEFT_JOIN)
             ->withColumn(
                 sprintf('COUNT(%s)', SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
-                static::COL_COUNT_OF_SLOTS
+                static::COL_COUNT_OF_SLOTS,
             )
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_NAME_TRANSLATION)
             ->where(
@@ -188,8 +197,8 @@ class ConfigurableBundleTemplateTable extends AbstractTable
                     '%s = %s',
                     SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
                     $this->localeFacade->getCurrentLocale()
-                        ->getIdLocale()
-                )
+                        ->getIdLocale(),
+                ),
             )
             ->groupByIdConfigurableBundleTemplate();
 
@@ -197,7 +206,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate> $configurableBundleTemplateEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[] $configurableBundleTemplateEntityCollection
      *
      * @return array
      */
@@ -240,7 +249,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             Url::generate(static::ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         $buttons[] = $this->generateTemplateStatusChangeButton($configurableBundleTemplateEntity);
@@ -248,7 +257,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
-            'Delete'
+            'Delete',
         );
 
         return implode(' ', $buttons);
@@ -270,7 +279,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
                 DeactivateConfigurableBundleTemplateForm::class,
                 [
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         }
 
@@ -279,7 +288,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Activate',
-            ActivateConfigurableBundleTemplateForm::class
+            ActivateConfigurableBundleTemplateForm::class,
         );
     }
 

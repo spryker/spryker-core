@@ -46,7 +46,7 @@ class MonitoringRequestTransactionServiceProvider extends AbstractPlugin impleme
     protected function addControllerListener(Application $app): void
     {
         $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createControllerListener()
+            $this->getFactory()->createControllerListener(),
         );
     }
 

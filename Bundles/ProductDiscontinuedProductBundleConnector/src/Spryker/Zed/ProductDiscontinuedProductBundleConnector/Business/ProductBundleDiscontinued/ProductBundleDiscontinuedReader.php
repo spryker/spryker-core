@@ -76,7 +76,7 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     {
         $bundledProductConcreteIds = [];
         $productForBundleTransfers = $this->productBundleFacade->findBundledProductsByIdProductConcrete(
-            $productDiscontinuedTransfer->getFkProduct()
+            $productDiscontinuedTransfer->getFkProduct(),
         );
 
         foreach ($productForBundleTransfers as $productForBundleTransfer) {

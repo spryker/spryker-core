@@ -50,7 +50,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
     public function getDatasetByIdWithRelation(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
         $datasetEntity = $this->joinDatasetRelations(
-            $this->getFactory()->createDatasetQuery()->filterByIdDataset($datasetTransfer->requireIdDataset()->getIdDataset())
+            $this->getFactory()->createDatasetQuery()->filterByIdDataset($datasetTransfer->requireIdDataset()->getIdDataset()),
         )->find()->getFirst();
 
         if (!$datasetEntity) {
@@ -70,7 +70,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
     public function getDatasetByNameWithRelation(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
         $datasetEntity = $this->joinDatasetRelations(
-            $this->getFactory()->createDatasetQuery()->filterByName($datasetTransfer->requireName()->getName())
+            $this->getFactory()->createDatasetQuery()->filterByName($datasetTransfer->requireName()->getName()),
         )->find()->getFirst();
 
         if (!$datasetEntity) {

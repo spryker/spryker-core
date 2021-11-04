@@ -35,6 +35,7 @@ class IndexDefinitionLoaderTest extends Unit
      * @var string
      */
     protected const SCHEMA_DEFINITION_FILE_NAME = 'index-name';
+
     /**
      * @var string
      */
@@ -44,6 +45,7 @@ class IndexDefinitionLoaderTest extends Unit
      * @var string
      */
     protected const INDEX_DEFINITION_KEY_NAME = 'name';
+
     /**
      * @var string
      */
@@ -69,7 +71,7 @@ class IndexDefinitionLoaderTest extends Unit
         $this->indexDefinitionLoader = new IndexDefinitionLoader(
             $this->createSchemaDefinitionFinderMock(),
             $this->createIndexDefinitionReaderMock(),
-            $this->createSourceIdentifierMock()
+            $this->createSourceIdentifierMock(),
         );
     }
 
@@ -103,7 +105,7 @@ class IndexDefinitionLoaderTest extends Unit
     {
         $splFileInfoMock = $this->createMock(SplFileInfo::class);
         $splFileInfoMock->method('getFilename')->willReturn(
-            sprintf('%s.%s', static::SCHEMA_DEFINITION_FILE_NAME, static::SCHEMA_DEFINITION_FILE_EXTENSION)
+            sprintf('%s.%s', static::SCHEMA_DEFINITION_FILE_NAME, static::SCHEMA_DEFINITION_FILE_EXTENSION),
         );
         $splFileInfoMock->method('getExtension')->willReturn(static::SCHEMA_DEFINITION_FILE_EXTENSION);
 

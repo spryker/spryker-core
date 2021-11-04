@@ -35,6 +35,7 @@ class CompanyBusinessUnitTester extends Actor
      * @var string
      */
     protected const LEVEL = 'level';
+
     /**
      * @var string
      */

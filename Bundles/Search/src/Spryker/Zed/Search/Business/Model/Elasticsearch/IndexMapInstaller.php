@@ -67,7 +67,7 @@ class IndexMapInstaller implements SearchInstallerInterface
         foreach ($indexDefinitions as $indexDefinition) {
             $this->messenger->info(sprintf(
                 'Generating index map classes for index: "%s"',
-                $indexDefinition->getIndexName()
+                $indexDefinition->getIndexName(),
             ));
 
             $this->indexMapGenerator->generate($indexDefinition);

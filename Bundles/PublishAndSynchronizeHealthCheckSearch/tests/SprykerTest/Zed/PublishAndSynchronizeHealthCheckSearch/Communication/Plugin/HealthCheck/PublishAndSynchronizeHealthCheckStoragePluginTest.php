@@ -75,7 +75,7 @@ class PublishAndSynchronizeHealthCheckStoragePluginTest extends Unit
         $this->tester->mockSearchData(
             SharedPublishAndSynchronizeHealthCheckSearchConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID,
             $publishAndSynchronizeHealthCheckData,
-            PublishAndSynchronizeHealthCheckSearchConfig::SOURCE_IDENTIFIER
+            PublishAndSynchronizeHealthCheckSearchConfig::SOURCE_IDENTIFIER,
         );
 
         // Act
@@ -103,7 +103,7 @@ class PublishAndSynchronizeHealthCheckStoragePluginTest extends Unit
         $this->tester->mockSearchData(
             SharedPublishAndSynchronizeHealthCheckSearchConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID,
             $publishAndSynchronizeHealthCheckData,
-            PublishAndSynchronizeHealthCheckSearchConfig::SOURCE_IDENTIFIER
+            PublishAndSynchronizeHealthCheckSearchConfig::SOURCE_IDENTIFIER,
         );
 
         // Act

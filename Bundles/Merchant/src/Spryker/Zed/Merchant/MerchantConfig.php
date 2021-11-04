@@ -15,10 +15,12 @@ class MerchantConfig extends AbstractBundleConfig
      * @var string
      */
     public const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+
     /**
      * @var string
      */
     public const STATUS_APPROVED = 'approved';
+
     /**
      * @var string
      */
@@ -37,7 +39,7 @@ class MerchantConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     public function getStatusTree(): array
     {

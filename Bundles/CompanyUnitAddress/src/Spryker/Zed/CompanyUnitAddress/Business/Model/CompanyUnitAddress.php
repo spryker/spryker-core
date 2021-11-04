@@ -230,7 +230,7 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
 
         $this->entityManager->deleteCompanyUnitAddressById(
-            $companyUnitAddressTransfer->getIdCompanyUnitAddress()
+            $companyUnitAddressTransfer->getIdCompanyUnitAddress(),
         );
     }
 

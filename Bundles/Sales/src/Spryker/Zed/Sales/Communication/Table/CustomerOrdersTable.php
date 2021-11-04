@@ -25,12 +25,14 @@ class CustomerOrdersTable extends OrdersTable
 
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\CustomerController
+     *
      * @var string
      */
     protected const CUSTOMER_ORDERS_TABLE_BASE_URL = '/sales/customer';
 
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\CustomerController::ordersTableAction()
+     *
      * @var string
      */
     protected const CUSTOMER_ORDERS_TABLE_URL = '/orders-table?%s=%s';
@@ -71,7 +73,7 @@ class CustomerOrdersTable extends OrdersTable
             $sanitizeService,
             $utilDateTimeService,
             $customerFacade,
-            $salesTablePlugins
+            $salesTablePlugins,
         );
         $this->customerReference = $customerReference;
         $this->salesQueryContainer = $salesQueryContainer;

@@ -52,7 +52,7 @@ class ProductLabelDictionaryCollectorStoragePlugin extends AbstractCollectorPlug
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

@@ -26,26 +26,32 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+
     /**
      * @var string
      */
     public const PLUGINS_ORDER_INVOICE_BEFORE_SAVE = 'PLUGINS_ORDER_INVOICE_BEFORE_SAVE';
+
     /**
      * @var string
      */
@@ -53,6 +59,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
@@ -85,7 +92,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SEQUENCE_NUMBER, function (Container $container) {
             return new SalesInvoiceToSequenceNumberFacadeBridge(
-                $container->getLocator()->sequenceNumber()->facade()
+                $container->getLocator()->sequenceNumber()->facade(),
             );
         });
 
@@ -133,7 +140,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MAIL, function (Container $container) {
             return new SalesInvoiceToMailFacadeBridge(
-                $container->getLocator()->mail()->facade()
+                $container->getLocator()->mail()->facade(),
             );
         });
 
@@ -149,7 +156,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesInvoiceToSalesFacadeBridge(
-                $container->getLocator()->sales()->facade()
+                $container->getLocator()->sales()->facade(),
             );
         });
 

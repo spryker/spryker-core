@@ -32,7 +32,7 @@ class ProductDiscontinuedGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new DiscontinueProductFormDataProvider(
             $this->getProductDiscontinuedFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

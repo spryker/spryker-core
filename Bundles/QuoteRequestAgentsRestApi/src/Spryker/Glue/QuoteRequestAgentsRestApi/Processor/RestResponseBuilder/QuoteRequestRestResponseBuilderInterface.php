@@ -13,8 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface QuoteRequestRestResponseBuilderInterface
 {
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

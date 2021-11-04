@@ -18,10 +18,12 @@ class SessionHandlerMysql implements SessionHandlerInterface
      * @var string
      */
     public const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
+
     /**
      * @var string
      */
     public const METRIC_SESSION_WRITE_TIME = 'Mysql/Session_write_time';
+
     /**
      * @var string
      */

@@ -17,10 +17,12 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
      * @var string
      */
     protected const KEY_LOG_ROTATE_DAYS = 'logrotate_days';
+
     /**
      * @var string
      */
     protected const KEY_JOB = 'job';
+
     /**
      * @var string
      */

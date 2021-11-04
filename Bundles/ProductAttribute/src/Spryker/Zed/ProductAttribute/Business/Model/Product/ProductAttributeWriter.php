@@ -75,7 +75,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
         $productAbstractTransfer->setAttributes(
-            $nonLocalizedAttributes
+            $nonLocalizedAttributes,
         );
 
         $localizedAttributes = $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productAbstractTransfer->getLocalizedAttributes());
@@ -98,7 +98,7 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
         $nonLocalizedAttributes = $this->getNonLocalizedAttributes($attributesToSave);
 
         $productConcreteTransfer->setAttributes(
-            $nonLocalizedAttributes
+            $nonLocalizedAttributes,
         );
 
         $localizedAttributes = $this->updateLocalizedAttributeTransfers($attributesToSave, (array)$productConcreteTransfer->getLocalizedAttributes());

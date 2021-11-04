@@ -92,7 +92,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
-     * @return \SplPriorityQueue<\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
+     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
      */
     public function get($eventName)
     {
@@ -100,8 +100,8 @@ class EventCollection implements EventCollectionInterface
             throw new EventListenerNotFoundException(
                 sprintf(
                     'Could not find event listeners for event "%s". You have to add it to EventDependencyProvider.',
-                    $eventName
-                )
+                    $eventName,
+                ),
             );
         }
 
@@ -117,6 +117,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->has($offset);
@@ -131,6 +132,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return \SplPriorityQueue|array
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -146,6 +148,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->add($value, $offset);
@@ -160,6 +163,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->eventListeners[$offset]);
@@ -172,6 +176,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return \Traversable
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->eventListeners);

@@ -28,6 +28,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
      * @var string
      */
     public const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
+
     /**
      * @var string
      */
@@ -46,7 +47,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
                 $twig->addFunction($this->getMoneyFormTableFunction($twig));
 
                 return $twig;
-            })
+            }),
         );
     }
 
@@ -107,10 +108,10 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
                     static::TEMPLATE_PATH_MONEY_TABLE,
                     [
                         'moneyValueFormViewCollection' => $moneyValueFormViewCollection,
-                    ]
+                    ],
                 );
             },
-            $options
+            $options,
         );
     }
 }

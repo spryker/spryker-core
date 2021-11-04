@@ -34,7 +34,7 @@ class ProductReviewClientTester extends Actor
     use _generated\ProductReviewClientTesterActions;
 
     /**
-     * @return array<int[][][]>
+     * @return array<array<array<array<int>>>>
      */
     public function createClinetSearchMockResponse(): array
     {

@@ -22,22 +22,27 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */
@@ -81,7 +86,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToProductQueryContainerBridge(
-                $container->getLocator()->product()->queryContainer()
+                $container->getLocator()->product()->queryContainer(),
             );
         });
 
@@ -97,7 +102,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToCategoryFacadeBridge(
-                $container->getLocator()->category()->facade()
+                $container->getLocator()->category()->facade(),
             );
         });
 
@@ -113,7 +118,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -129,7 +134,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -145,7 +150,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 
@@ -161,7 +166,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

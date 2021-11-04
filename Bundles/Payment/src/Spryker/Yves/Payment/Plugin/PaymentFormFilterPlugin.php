@@ -32,7 +32,7 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
     public function getValidFormNames(QuoteTransfer $quoteTransfer)
     {
         return $this->collectPaymentMethodNames(
-            $this->getClient()->getAvailableMethods($quoteTransfer)
+            $this->getClient()->getAvailableMethods($quoteTransfer),
         );
     }
 

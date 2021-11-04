@@ -15,6 +15,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::CONTENT_TYPE_NAVIGATION
      *
      * Content item navigation
+     *
      * @var string
      */
     public const CONTENT_TYPE_NAVIGATION = 'Navigation';
@@ -23,6 +24,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::CONTENT_TERM_NAVIGATION
      *
      * Content item navigation
+     *
      * @var string
      */
     public const CONTENT_TERM_NAVIGATION = 'Navigation';
@@ -31,6 +33,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE
      *
      * Content item navigation tree-inline template identifier
+     *
      * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_TREE_INLINE = 'tree-inline';
@@ -39,6 +42,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_TREE
      *
      * Content item navigation tree template identifier
+     *
      * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_TREE = 'tree';
@@ -47,6 +51,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE
      *
      * Content item navigation list-inline template identifier
+     *
      * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_LIST_INLINE = 'list-inline';
@@ -55,6 +60,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::WIDGET_TEMPLATE_IDENTIFIER_LIST
      *
      * Content item navigation list template identifier
+     *
      * @var string
      */
     public const WIDGET_TEMPLATE_IDENTIFIER_LIST = 'list';
@@ -91,6 +97,7 @@ class ContentNavigationGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentNavigation\ContentNavigationConfig::TWIG_FUNCTION_NAME
      *
      * Content item navigation function name
+     *
      * @var string
      */
     public const TWIG_FUNCTION_NAME = 'content_navigation';

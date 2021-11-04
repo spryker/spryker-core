@@ -36,7 +36,7 @@ class AddController extends AbstractController
         $form = $this->getFactory()
             ->createCustomerGroupForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

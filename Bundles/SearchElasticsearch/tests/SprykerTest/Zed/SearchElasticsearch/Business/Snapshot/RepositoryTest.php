@@ -34,18 +34,22 @@ class RepositoryTest extends Unit
      * @var string
      */
     protected const TYPE_FILESYSTEM = 'fs';
+
     /**
      * @var string
      */
     protected const TYPE_OTHER = 'other';
+
     /**
      * @var string
      */
     protected const SETTINGS_LOCATION = 'location';
+
     /**
      * @var string
      */
     protected const REPOSITORY_NAME = 'repository';
+
     /**
      * @var string
      */
@@ -70,7 +74,7 @@ class RepositoryTest extends Unit
 
         $this->elasticaSnapshotMock = $this->createElasticaSnapshotMock();
         $this->elasticsearchRepository = new Repository(
-            $this->elasticaSnapshotMock
+            $this->elasticaSnapshotMock,
         );
     }
 
@@ -120,8 +124,8 @@ class RepositoryTest extends Unit
             ->will($this->throwException(
                 new ResponseException(
                     $this->createMock(Request::class),
-                    $this->createMock(Response::class)
-                )
+                    $this->createMock(Response::class),
+                ),
             ));
 
         // Act

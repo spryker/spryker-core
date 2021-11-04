@@ -25,22 +25,27 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
+
     /**
      * @var string
      */
@@ -50,22 +55,27 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_TABS_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_TABS_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_DATA_PROVIDER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_FILE_UPLOAD_HANDLER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_FILE_UPLOAD_HANDLER';
+
     /**
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_SUB_TABS_PROVIDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_SUB_TABS_PROVIDER';
+
     /**
      * @var string
      */
@@ -104,7 +114,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
             return new ConfigurableBundleGuiToConfigurableBundleFacadeBridge(
-                $container->getLocator()->configurableBundle()->facade()
+                $container->getLocator()->configurableBundle()->facade(),
             );
         });
 
@@ -120,7 +130,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ConfigurableBundleGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -136,7 +146,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ConfigurableBundleGuiToProductListFacadeBridge(
-                $container->getLocator()->productList()->facade()
+                $container->getLocator()->productList()->facade(),
             );
         });
 

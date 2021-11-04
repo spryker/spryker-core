@@ -35,6 +35,7 @@ class ImportOrderItemsStatusConsoleTest extends Unit
      * @var int
      */
     protected const CODE_SUCCESS = 0;
+
     /**
      * @var int
      */
@@ -95,7 +96,7 @@ class ImportOrderItemsStatusConsoleTest extends Unit
         $salesOmsFacadeMock = $this->createMock(SalesOmsFacade::class);
 
         $salesOmsFacadeMock->method('findSalesOrderItemByOrderItemReference')->willReturn(
-            (new SalesOrderItemTransfer())
+            (new SalesOrderItemTransfer()),
         );
 
         return $salesOmsFacadeMock;

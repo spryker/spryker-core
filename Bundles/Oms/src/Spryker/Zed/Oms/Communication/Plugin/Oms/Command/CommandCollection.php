@@ -36,8 +36,8 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
                     "Invalid command '%s' interface. Must implement '%s' or '%s'.",
                     get_class($command),
                     CommandInterface::class,
-                    NewCommandInterface::class
-                )
+                    NewCommandInterface::class,
+                ),
             );
         }
 
@@ -67,7 +67,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
     {
         if (empty($this->commands[$name])) {
             throw new CommandNotFoundException(
-                sprintf('Could not find command "%s". You need to add the needed commands within your DependencyInjector.', $name)
+                sprintf('Could not find command "%s". You need to add the needed commands within your DependencyInjector.', $name),
             );
         }
 

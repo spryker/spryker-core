@@ -23,6 +23,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
@@ -94,7 +95,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>>
      */
     public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
@@ -107,16 +108,16 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
         return $this->getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
             $productLabelIdsByProductAbstractIds,
             $localeName,
-            $storeName
+            $storeName,
         );
     }
 
     /**
-     * @param array<int[]> $productLabelIdsByProductAbstractIds
+     * @param array<array<int>> $productLabelIdsByProductAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>>
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
@@ -125,14 +126,14 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     ): array {
         $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
-            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName, $storeName)
+            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName, $storeName),
         );
 
         $productLabelDictionaryItemTransfersByProductAbstractIds = [];
         foreach ($productLabelIdsByProductAbstractIds as $productAbstractId => $productLabelIds) {
             $productLabelDictionaryItemTransfersByProductAbstractIds[$productAbstractId] = array_intersect_key(
                 $productLabelDictionaryItemTransfers,
-                array_flip($productLabelIds)
+                array_flip($productLabelIds),
             );
         }
 
@@ -190,7 +191,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -242,7 +243,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param array $storageDataItems
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getProductLabelIdsGroupedByIdProductAbstract(array $storageDataItems): array
     {
@@ -266,7 +267,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
         return $this->getStorageKeyBuilder()
             ->generateKey(
                 (new SynchronizationDataTransfer())
-                    ->setReference((string)$idProductAbstract)
+                    ->setReference((string)$idProductAbstract),
             );
     }
 

@@ -29,7 +29,7 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     {
         $searchCollector = new ProductCustomerPermissionSearchCollector(
             $this->getUtilDataReaderService(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
         $searchCollector->setTouchQueryContainer($this->getTouchQueryContainer());
         $searchCollector->setQueryBuilder($this->createProductCustomerPermissionSearchCollectorQuery());
@@ -43,7 +43,7 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     public function createStorageProductCustomerPermissionCollector(): ProductCustomerPermissionStorageCollector
     {
         $storageCollector = new ProductCustomerPermissionStorageCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
         );
 
         $storageCollector->setTouchQueryContainer($this->getTouchQueryContainer());

@@ -15,10 +15,12 @@ class StoresRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_STORES = 'stores';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_STORE_NOT_FOUND = '601';
+
     /**
      * @var string
      */

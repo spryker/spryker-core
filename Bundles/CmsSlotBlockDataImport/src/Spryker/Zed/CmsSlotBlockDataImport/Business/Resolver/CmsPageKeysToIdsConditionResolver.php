@@ -68,8 +68,8 @@ class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find CMS Page IDs by keys "%s".',
-                    implode(',', $cmsPageKeys)
-                )
+                    implode(',', $cmsPageKeys),
+                ),
             );
         }
 

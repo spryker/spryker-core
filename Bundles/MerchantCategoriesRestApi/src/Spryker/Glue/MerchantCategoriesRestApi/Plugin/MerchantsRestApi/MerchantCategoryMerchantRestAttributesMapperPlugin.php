@@ -39,7 +39,7 @@ class MerchantCategoryMerchantRestAttributesMapperPlugin extends AbstractPlugin 
             ->mapCategoryTransfersToRestMerchantsAttributesTransfer(
                 $merchantStorageTransfer->getCategories()->getArrayCopy(),
                 $restMerchantsAttributesTransfer,
-                $localeName
+                $localeName,
             );
     }
 }

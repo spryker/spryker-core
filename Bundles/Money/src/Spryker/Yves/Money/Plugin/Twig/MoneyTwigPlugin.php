@@ -25,6 +25,7 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      * @var string
      */
     protected const FILTER_NAME_MONEY = 'money';
+
     /**
      * @var string
      */

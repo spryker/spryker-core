@@ -15,7 +15,7 @@ class FlysystemConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getFilesystemConfig()
     {
@@ -25,7 +25,7 @@ class FlysystemConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getFlysystemConfig()
     {

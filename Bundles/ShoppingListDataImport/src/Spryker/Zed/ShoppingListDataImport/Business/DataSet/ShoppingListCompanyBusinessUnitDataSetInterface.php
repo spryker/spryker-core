@@ -13,10 +13,12 @@ interface ShoppingListCompanyBusinessUnitDataSetInterface
      * @var string
      */
     public const COLUMN_SHOPPING_LIST_KEY = 'shopping_list_key';
+
     /**
      * @var string
      */
     public const COLUMN_COMPANY_BUSINESS_UNIT_KEY = 'business_unit_key';
+
     /**
      * @var string
      */
@@ -26,10 +28,12 @@ interface ShoppingListCompanyBusinessUnitDataSetInterface
      * @var string
      */
     public const ID_SHOPPING_LIST = 'id_shopping_list';
+
     /**
      * @var string
      */
     public const ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+
     /**
      * @var string
      */

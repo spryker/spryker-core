@@ -89,7 +89,7 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
 
             $availableShipmentMethods = $this->findAvailableShipmentMethodsByShipment(
                 $availableShipmentMethodsCollectionTransfer,
-                $shipmentTransfer
+                $shipmentTransfer,
             );
 
             if ($availableShipmentMethods === null) {
@@ -98,7 +98,7 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
 
             $shipmentMethodTransfer = $this->findAvailableShipmentMethodByIdShipmentMethod(
                 $availableShipmentMethods,
-                $cartShipmentMethodTransfer->getIdShipmentMethod()
+                $cartShipmentMethodTransfer->getIdShipmentMethod(),
             );
 
             if ($shipmentMethodTransfer !== null) {

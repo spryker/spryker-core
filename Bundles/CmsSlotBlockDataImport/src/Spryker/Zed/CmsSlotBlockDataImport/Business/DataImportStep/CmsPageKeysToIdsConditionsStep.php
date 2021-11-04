@@ -21,12 +21,14 @@ class CmsPageKeysToIdsConditionsStep implements DataImportStepInterface
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     *
      * @var string
      */
     protected const KEY_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CmsPageKeysToIdsConditionResolver::KEY_CMS_PAGE_IDS
+     *
      * @var string
      */
     protected const KEY_CMS_PAGE_IDS = 'pageIds';
@@ -63,12 +65,12 @@ class CmsPageKeysToIdsConditionsStep implements DataImportStepInterface
         $conditionsArray = $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? [];
 
         $conditionsArray[static::KEY_CONDITION_CMS_PAGE] = $this->allConditionsResolver->getConditions(
-            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_ALL]
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_ALL],
         );
 
         $conditionsArray[static::KEY_CONDITION_CMS_PAGE] = $this->cmsPageKeysToIdsConditionsResolver->getConditions(
             $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_KEYS],
-            $conditionsArray[static::KEY_CONDITION_CMS_PAGE]
+            $conditionsArray[static::KEY_CONDITION_CMS_PAGE],
         );
 
         if (!array_filter($conditionsArray[static::KEY_CONDITION_CMS_PAGE])) {

@@ -64,7 +64,7 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
 
         if (!$newValue) {
             throw new SecurityBlockerException(
-                sprintf('Could not set redisKey: "%s" with value: "%s"', $key, $newValue)
+                sprintf('Could not set redisKey: "%s" with value: "%s"', $key, $newValue),
             );
         }
 
@@ -94,7 +94,7 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
 
             if (!$incrResult) {
                 throw new SecurityBlockerException(
-                    sprintf('Could not increment redisKey: "%s"', $storageKey)
+                    sprintf('Could not increment redisKey: "%s"', $storageKey),
                 );
             }
 
@@ -109,7 +109,7 @@ class SecurityBlockerStorageWriter implements SecurityBlockerStorageWriterInterf
 
         if (!$setResult) {
             throw new SecurityBlockerException(
-                sprintf('Could not set redisKey: "%s" with value: "%s"', $storageKey, $newValue)
+                sprintf('Could not set redisKey: "%s" with value: "%s"', $storageKey, $newValue),
             );
         }
 

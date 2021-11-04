@@ -24,7 +24,7 @@ class CustomerAccessStorageMapper implements CustomerAccessStorageMapperInterfac
 
         foreach ($customerAccessEntities as $customerAccessEntity) {
             $customerAccessTransfer->addContentTypeAccess(
-                (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true)
+                (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true),
             );
         }
 

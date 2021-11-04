@@ -40,7 +40,7 @@ class OrderCustomReferenceGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_ORDER_CUSTOM_REFERENCE, function (Container $container) {
             return new OrderCustomReferenceGuiToOrderCustomReferenceFacadeBridge(
-                $container->getLocator()->orderCustomReference()->facade()
+                $container->getLocator()->orderCustomReference()->facade(),
             );
         });
 

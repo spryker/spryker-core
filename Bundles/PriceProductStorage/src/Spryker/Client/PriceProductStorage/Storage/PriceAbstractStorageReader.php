@@ -136,7 +136,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
         foreach ($this->priceProductExtractorPlugins as $extractorPlugin) {
             $priceProductTransfers = array_merge(
                 $priceProductTransfers,
-                $extractorPlugin->extractProductPricesForProductAbstract($priceProductTransfers)
+                $extractorPlugin->extractProductPricesForProductAbstract($priceProductTransfers),
             );
         }
 

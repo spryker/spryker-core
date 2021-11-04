@@ -46,7 +46,7 @@ class OrderWriter implements OrderWriterInterface
 
         $this->companyBusinessUnitSalesConnectorEntityManager->updateOrderCompanyBusinessUnitUuid(
             $saveOrderTransfer->getIdSalesOrder(),
-            $companyBusinessUnitUuid
+            $companyBusinessUnitUuid,
         );
     }
 

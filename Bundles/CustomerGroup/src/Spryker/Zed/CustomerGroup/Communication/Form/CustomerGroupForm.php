@@ -34,15 +34,18 @@ class CustomerGroupForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
     public const FIELD_ID_CUSTOMER_GROUP = self::ID_CUSTOMER_GROUP;
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER_ASSIGNMENT = 'customerAssignment';
+
     /**
      * @var string
      */
@@ -63,7 +66,7 @@ class CustomerGroupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -90,7 +93,7 @@ class CustomerGroupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -120,7 +123,7 @@ class CustomerGroupForm extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -160,7 +163,7 @@ class CustomerGroupForm extends AbstractType
             [
                 'label' => false,
                 'data_class' => CustomerGroupToCustomerAssignmentTransfer::class,
-            ]
+            ],
         );
 
         return $this;

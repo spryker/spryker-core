@@ -57,7 +57,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use {@link getProductSetForm()} instead.
      *
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -84,7 +84,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -97,7 +97,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use {@link getUpdateProductSetForm()} instead.
      *
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -108,7 +108,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -226,7 +226,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use {@link getReorderProductSetsForm()} instead.
      *
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -237,7 +237,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -272,7 +272,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductAbstractTableHelper(
             $this->getProductImageFacade(),
             $this->getPriceProductFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
     }
 

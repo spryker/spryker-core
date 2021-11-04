@@ -20,6 +20,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      * @var string
      */
     public const KEY_REQUIRE = 'require';
+
     /**
      * @var string
      */
@@ -208,7 +209,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
         throw new InvalidComposerJsonException(sprintf(
             'Unable to locate organization name from %s.',
-            $composerJsonFile->getRealPath()
+            $composerJsonFile->getRealPath(),
         ));
     }
 }

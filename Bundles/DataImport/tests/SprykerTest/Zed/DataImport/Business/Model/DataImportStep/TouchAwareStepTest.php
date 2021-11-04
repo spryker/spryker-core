@@ -32,10 +32,12 @@ class TouchAwareStepTest extends Unit
      * @var string
      */
     public const MAIN_TOUCHABLE_KEY = 'main touchable key';
+
     /**
      * @var string
      */
     public const SUB_TOUCHABLE_KEY_A = 'sub touchable key a';
+
     /**
      * @var string
      */

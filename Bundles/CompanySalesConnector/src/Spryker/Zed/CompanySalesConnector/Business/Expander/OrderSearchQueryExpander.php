@@ -17,13 +17,13 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 {
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
+     *
      * @var string
      */
     protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
     /**
-     * @psalm-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const MAPPED_ORDER_BY_FILTERS = [
         'customerName' => self::COLUMN_FULL_NAME,
@@ -37,37 +37,44 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_FIRST_NAME
+     *
      * @var string
      */
     protected const COLUMN_FIRST_NAME = 'first_name';
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_FIRST_NAME
+     *
      * @var string
      */
     protected const COLUMN_LAST_NAME = 'last_name';
 
     /**
      * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_UUID
+     *
      * @var string
      */
     protected const COLUMN_COMPANY_UUID = 'spy_sales_order.company_uuid';
 
     /**
      * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_EMAIL
+     *
      * @var string
      */
     protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     *
      * @var string
      */
     protected const COMPARISON_EQUAL = '=';
 
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::DELIMITER_ORDER_BY
+     *
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const DELIMITER_ORDER_BY = '::';
@@ -89,7 +96,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         return $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCompanyFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCompanyFilterQueryJoin($filterFieldTransfer->getValue()),
         );
     }
 
@@ -105,7 +112,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_ALL
+            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_ALL,
         );
 
         if (!$filterFieldTransfer) {
@@ -113,7 +120,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue())
+            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue()),
         );
 
         return $queryJoinCollectionTransfer;
@@ -131,7 +138,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     ): QueryJoinCollectionTransfer {
         $filterFieldTransfer = $this->extractFilterFieldByType(
             $filterFieldTransfers,
-            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY
+            CompanySalesConnectorConfig::FILTER_FIELD_TYPE_ORDER_BY,
         );
 
         if (!$filterFieldTransfer) {
@@ -146,7 +153,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
         }
 
         return $queryJoinCollectionTransfer->addQueryJoin(
-            $this->createCustomerSortingQueryJoin($orderColumn, $orderDirection)
+            $this->createCustomerSortingQueryJoin($orderColumn, $orderDirection),
         );
     }
 

@@ -22,10 +22,12 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE = 'CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE';
+
     /**
      * @var string
      */
@@ -55,7 +57,7 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductMeasurementUnitsRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -71,7 +73,7 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE, function (Container $container) {
             return new ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientBridge(
-                $container->getLocator()->productMeasurementUnitStorage()->client()
+                $container->getLocator()->productMeasurementUnitStorage()->client(),
             );
         });
 
@@ -87,7 +89,7 @@ class ProductMeasurementUnitsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ProductMeasurementUnitsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

@@ -27,7 +27,7 @@ class MultiCartDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCartDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMultiCartDataImporterConfiguration()
+            $this->getConfig()->getMultiCartDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

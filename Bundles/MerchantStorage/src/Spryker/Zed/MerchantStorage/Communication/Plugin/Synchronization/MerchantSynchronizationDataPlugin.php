@@ -25,6 +25,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
 {
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     *
      * @var string
      */
     protected const ORDER_DIRECTION = 'ASC';
@@ -70,7 +71,7 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
             ->getFilteredMerchantStorageEntityTransfers(
                 (new MerchantStorageCriteriaTransfer())
                     ->setFilter($this->createFilterTransfer($offset, $limit))
-                    ->setMerchantIds($ids)
+                    ->setMerchantIds($ids),
             );
 
         return $this->mapMerchantStorageEntitiesToSynchronizationDataTransfers($merchantStorageEntities);

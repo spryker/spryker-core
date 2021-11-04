@@ -39,7 +39,7 @@ class WishlistMerchantProductCollectionToRemoveExpanderPlugin extends AbstractPl
             ->expandWishlistItemCollectionTransfer(
                 $wishlistMoveToCartRequestCollectionTransfer,
                 $failedWishlistMoveToCartRequestCollectionTransfer,
-                $wishlistItemCollectionTransfer
+                $wishlistItemCollectionTransfer,
             );
     }
 }

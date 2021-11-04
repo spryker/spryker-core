@@ -97,7 +97,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
         }
 
         $returnReasonCollectionTransfer = $this->salesReturnFacade->getReturnReasons(
-            (new ReturnReasonFilterTransfer())->setReturnReasonIds($returnReasonIds)
+            (new ReturnReasonFilterTransfer())->setReturnReasonIds($returnReasonIds),
         );
 
         if (!$returnReasonCollectionTransfer->getReturnReasons()->count()) {
@@ -110,20 +110,20 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
         $returnReasonTranslations = $this->glossaryReader->getReturnReasonTranslations($returnReasonTransfers);
 
         $returnReasonSearchTransfers = $this->indexReturnReasonSearchTransfersByIdReturnReasonAndLocaleName(
-            $this->repository->getReturnReasonSearchTransfersByReturnReasonIds($returnReasonIds)
+            $this->repository->getReturnReasonSearchTransfersByReturnReasonIds($returnReasonIds),
         );
 
         $this->writeCollection(
             $returnReasonTransfers,
             $returnReasonSearchTransfers,
-            $returnReasonTranslations
+            $returnReasonTranslations,
         );
     }
 
     /**
      * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
-     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer[]> $returnReasonSearchTransfers
-     * @param array<string[]> $returnReasonTranslations
+     * @param array<array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer>> $returnReasonSearchTransfers
+     * @param array<array<string>> $returnReasonTranslations
      *
      * @return void
      */
@@ -139,15 +139,15 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
                 $returnReasonTransfer,
                 $returnReasonSearchTransfers,
                 $returnReasonTranslations,
-                $localeTransfers
+                $localeTransfers,
             );
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonTransfer $returnReasonTransfer
-     * @param array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer[]> $returnReasonSearchTransfers
-     * @param array<string[]> $returnReasonTranslations
+     * @param array<array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer>> $returnReasonSearchTransfers
+     * @param array<array<string>> $returnReasonTranslations
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return void
@@ -168,7 +168,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
                 $returnReasonTransfer,
                 $returnReasonSearchTransfer,
                 $localeTransfer,
-                $returnReasonTranslations
+                $returnReasonTranslations,
             );
 
             $this->entityManager->saveReturnReasonSearch($returnReasonSearchTransfer);

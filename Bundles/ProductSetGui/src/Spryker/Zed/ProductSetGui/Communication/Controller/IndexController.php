@@ -41,7 +41,7 @@ class IndexController extends AbstractController
             ->createProductSetTable($currentLocaleTransfer);
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 }

@@ -72,7 +72,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             $productOfferTransfer = $productOfferStorageMapper->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
             foreach ($productOfferEntity->getSpyProductOfferStores() as $productOfferStoreEntity) {
                 $productOfferTransfer->addStore(
-                    $productOfferStorageMapper->mapStoreEntityToStoreTransfer($productOfferStoreEntity->getSpyStore(), new StoreTransfer())
+                    $productOfferStorageMapper->mapStoreEntityToStoreTransfer($productOfferStoreEntity->getSpyStore(), new StoreTransfer()),
                 );
             }
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
@@ -112,7 +112,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
             $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaTransfer->getIsActiveConcreteProduct());
         }

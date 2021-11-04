@@ -22,18 +22,22 @@ class CodePhpMessDetectorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'code:phpmd';
+
     /**
      * @var string
      */
     public const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
     public const OPTION_MODULE_ALL = 'all';
+
     /**
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */

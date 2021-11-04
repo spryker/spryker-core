@@ -22,10 +22,12 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
      * @var string
      */
     public const RESOURCE_CARTS_REST_API = 'RESOURCE_CARTS_REST_API';
+
     /**
      * @var string
      */
     public const CLIENT_CONFIGURABLE_BUNDLE_STORAGE = 'CLIENT_CONFIGURABLE_BUNDLE_STORAGE';
+
     /**
      * @var string
      */
@@ -55,7 +57,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::RESOURCE_CARTS_REST_API, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToCartsRestApiResourceBridge(
-                $container->getLocator()->cartsRestApi()->resource()
+                $container->getLocator()->cartsRestApi()->resource(),
             );
         });
 
@@ -71,7 +73,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_STORAGE, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientBridge(
-                $container->getLocator()->configurableBundleStorage()->client()
+                $container->getLocator()->configurableBundleStorage()->client(),
             );
         });
 
@@ -87,7 +89,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

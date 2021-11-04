@@ -22,10 +22,12 @@ class NodeController extends AbstractController
      * @var string
      */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
+
     /**
      * @var string
      */
     public const PARAM_ID_NAVIGATION_NODE = 'id-navigation-node';
+
     /**
      * @var string
      */
@@ -48,7 +50,7 @@ class NodeController extends AbstractController
         $navigationNodeForm = $this->getFactory()
             ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData(),
-                $navigationNodeFormDataProvider->getOptions()
+                $navigationNodeFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -108,7 +110,7 @@ class NodeController extends AbstractController
         $navigationNodeForm = $this->getFactory()
             ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData($idNavigationNode),
-                $navigationNodeFormDataProvider->getOptions()
+                $navigationNodeFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 

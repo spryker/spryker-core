@@ -17,6 +17,7 @@ class ProductRelationConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PRODUCT_RELATION_UPDATE_CHUNK_SIZE = 1000;
+
     /**
      * @var int
      */
@@ -31,7 +32,7 @@ class ProductRelationConfig extends AbstractBundleConfig
     {
         return $this->get(
             ProductRelationConstants::PRODUCT_RELATION_READ_CHUNK,
-            static::PRODUCT_RELATION_UPDATE_CHUNK_SIZE
+            static::PRODUCT_RELATION_UPDATE_CHUNK_SIZE,
         );
     }
 
@@ -44,7 +45,7 @@ class ProductRelationConfig extends AbstractBundleConfig
     {
         return $this->get(
             ProductRelationConstants::PRODUCT_RELATION_UPDATE_CHUNK,
-            static::PRODUCT_RELATION_UPDATE_CHUNK_SIZE_DEFAULT
+            static::PRODUCT_RELATION_UPDATE_CHUNK_SIZE_DEFAULT,
         );
     }
 

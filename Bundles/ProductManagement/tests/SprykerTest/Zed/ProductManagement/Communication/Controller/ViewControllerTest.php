@@ -29,18 +29,22 @@ class ViewControllerTest extends Unit
      * @var string
      */
     public const PIM_IMAGE_URL = '/foo/bar.jpg';
+
     /**
      * @var string
      */
     public const SECURE_CDN_IMAGE_URL = 'https://example.com/bar.jpg';
+
     /**
      * @var string
      */
     public const NON_SECURE_CDN_IMAGE_URL = 'http://example.com/bar.jpg';
+
     /**
      * @var string
      */
     public const CDN_IMAGE_URL = '//example.com/bar.jpg';
+
     /**
      * @var string
      */

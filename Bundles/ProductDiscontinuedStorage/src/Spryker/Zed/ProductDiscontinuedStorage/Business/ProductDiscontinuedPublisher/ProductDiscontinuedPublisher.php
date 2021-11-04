@@ -96,7 +96,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
             $this->storeLocalizedData(
                 $productDiscontinuedTransfer,
                 $indexProductDiscontinuedStorageEntities,
-                $localeTransfers
+                $localeTransfers,
             );
         }
     }
@@ -118,7 +118,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
                 $this->storeDataSet(
                     $productDiscontinuedTransfer,
                     $localeTransfer,
-                    $indexProductDiscontinuedStorageEntities[$productDiscontinuedTransfer->getIdProductDiscontinued()][$localeName]
+                    $indexProductDiscontinuedStorageEntities[$productDiscontinuedTransfer->getIdProductDiscontinued()][$localeName],
                 );
 
                 continue;
@@ -144,7 +144,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
             ->setSku($productDiscontinuedTransfer->getSku())
             ->setLocale($localeTransfer->getLocaleName())
             ->setData(
-                $this->mapToProductDiscontinuedStorageTransfer($productDiscontinuedTransfer, $localeTransfer)->toArray()
+                $this->mapToProductDiscontinuedStorageTransfer($productDiscontinuedTransfer, $localeTransfer)->toArray(),
             );
 
         $productDiscontinuedStorage->setIsSendingToQueue($this->productDiscontinuedStorageConfig->isSendingToQueue());

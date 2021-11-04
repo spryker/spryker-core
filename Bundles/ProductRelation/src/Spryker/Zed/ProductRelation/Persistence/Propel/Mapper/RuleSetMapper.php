@@ -38,7 +38,7 @@ class RuleSetMapper
         if ($querySetData) {
             $propelQueryBuilderRuleSetTransfer->fromArray(
                 $this->utilEncodingService->decodeJson($querySetData, true),
-                true
+                true,
             );
         }
 

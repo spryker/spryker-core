@@ -26,6 +26,7 @@ class RouterHelper extends Module
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
@@ -51,7 +52,7 @@ class RouterHelper extends Module
      * @param callable $controller
      * @param array $defaults
      * @param array $requirements
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string|null $host
      * @param array $schemes
      * @param array $methods

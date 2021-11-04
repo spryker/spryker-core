@@ -54,7 +54,7 @@ abstract class AbstractCompanyBusinessUnitResourceRelationshipExpander implement
             }
 
             $resource->addRelationship(
-                $this->createCompanyBusinessUnitResource($companyBusinessUnitTransfer)
+                $this->createCompanyBusinessUnitResource($companyBusinessUnitTransfer),
             );
         }
 
@@ -79,13 +79,13 @@ abstract class AbstractCompanyBusinessUnitResourceRelationshipExpander implement
         $restCompanyBusinessUnitAttributesTransfer = $this->companyBusinessUnitMapper
             ->mapCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
                 $companyBusinessUnitTransfer,
-                new RestCompanyBusinessUnitAttributesTransfer()
+                new RestCompanyBusinessUnitAttributesTransfer(),
             );
 
         return $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS,
             $companyBusinessUnitTransfer->getUuid(),
-            $restCompanyBusinessUnitAttributesTransfer
+            $restCompanyBusinessUnitAttributesTransfer,
         );
     }
 }

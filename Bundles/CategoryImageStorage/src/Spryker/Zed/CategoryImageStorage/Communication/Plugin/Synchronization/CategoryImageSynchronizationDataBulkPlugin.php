@@ -60,7 +60,7 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
         return $this->getFacade()
             ->getSynchronizationDataTransfersByFilterAndCategoryIds(
                 $this->createFilterTransfer($offset, $limit),
-                $ids
+                $ids,
             );
     }
 

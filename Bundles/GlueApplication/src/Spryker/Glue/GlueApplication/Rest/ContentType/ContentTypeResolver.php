@@ -18,6 +18,7 @@ class ContentTypeResolver implements ContentTypeResolverInterface
      * @var string
      */
     protected const CONTENT_TYPE_REGULAR_EXPRESSION = '/application\/vnd.api\+([a-z]+)(?:;\s(?:version=([\d]+\.?[\d]+)))?/i';
+
     /**
      * @var string
      */
@@ -46,7 +47,7 @@ class ContentTypeResolver implements ContentTypeResolverInterface
     {
         $contentType = sprintf(
             static::RESPONSE_CONTENT_TYPE,
-            $restRequest->getMetadata()->getContentTypeFormat()
+            $restRequest->getMetadata()->getContentTypeFormat(),
         );
 
         $version = $restRequest->getMetadata()->getVersion();

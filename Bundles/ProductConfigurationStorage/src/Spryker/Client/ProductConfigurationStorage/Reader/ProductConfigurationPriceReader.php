@@ -61,7 +61,7 @@ class ProductConfigurationPriceReader implements ProductConfigurationPriceReader
         $productConcreteTransfer->requireSku();
 
         $productConfigurationInstance = $this->productConfigurationInstanceReader->findProductConfigurationInstanceBySku(
-            $productConcreteTransfer->getSkuOrFail()
+            $productConcreteTransfer->getSkuOrFail(),
         );
 
         if (!$productConfigurationInstance) {

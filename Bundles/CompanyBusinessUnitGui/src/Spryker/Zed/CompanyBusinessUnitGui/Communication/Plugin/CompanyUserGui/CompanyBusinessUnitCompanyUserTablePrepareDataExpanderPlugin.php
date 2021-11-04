@@ -37,7 +37,7 @@ class CompanyBusinessUnitCompanyUserTablePrepareDataExpanderPlugin extends Abstr
             $companyUserDataItem,
             [
                 CompanyBusinessUnitCompanyUserTableConfigExpanderPlugin::COL_COMPANY_BUSINESS_UNIT_NAME => $companyBusinessUnitName,
-            ]
+            ],
         );
     }
 }

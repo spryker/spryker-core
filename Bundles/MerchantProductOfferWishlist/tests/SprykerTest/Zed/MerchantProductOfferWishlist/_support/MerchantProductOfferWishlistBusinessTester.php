@@ -22,6 +22,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

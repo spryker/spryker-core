@@ -28,7 +28,7 @@ abstract class AbstractSearchPropelCollector extends AbstractPropelCollector
         $touchQuery->addJoin(
             [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchSearchTableMap::COL_FK_LOCALE, SpyTouchSearchTableMap::COL_FK_STORE],
             [SpyTouchSearchTableMap::COL_FK_TOUCH, $locale->getIdLocale(), $this->getCurrentStore()->getIdStore()],
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
 
         $touchQuery->withColumn(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, CollectorConfig::COLLECTOR_SEARCH_KEY);

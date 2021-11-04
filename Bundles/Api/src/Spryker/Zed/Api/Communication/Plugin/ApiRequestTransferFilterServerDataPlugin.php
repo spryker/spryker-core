@@ -28,8 +28,8 @@ class ApiRequestTransferFilterServerDataPlugin extends ApiRequestTransferFilterA
         $apiRequestTransfer->setServerData(
             $this->doFilter(
                 $apiRequestTransfer->getServerData(),
-                $this->getConfig()->getSafeServerDataKeys()
-            )
+                $this->getConfig()->getSafeServerDataKeys(),
+            ),
         );
 
         return $apiRequestTransfer;

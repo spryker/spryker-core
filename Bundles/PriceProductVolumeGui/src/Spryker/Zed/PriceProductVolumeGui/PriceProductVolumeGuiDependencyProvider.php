@@ -23,10 +23,12 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */

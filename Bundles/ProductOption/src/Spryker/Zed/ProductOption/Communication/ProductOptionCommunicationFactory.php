@@ -48,8 +48,8 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
                 [
                 'data_class' => ProductOptionGroupTransfer::class,
                 ],
-                $productOptionGroupDataProvider->getOptions()
-            )
+                $productOptionGroupDataProvider->getOptions(),
+            ),
         );
     }
 
@@ -93,7 +93,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
         return new ProductOptionGroupDataProvider(
             $this->getTaxFacade(),
             $this->getLocaleFacade(),
-            $productOptionGroupTransfer
+            $productOptionGroupTransfer,
         );
     }
 
@@ -110,7 +110,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
             $this->getUtilEncodingService(),
             $this->getCurrentLocale(),
             $idProductOptionGroup,
-            $tableContext
+            $tableContext,
         );
     }
 
@@ -125,7 +125,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getUtilEncodingService(),
             $this->getCurrentLocale(),
-            $idProductOptionGroup
+            $idProductOptionGroup,
         );
     }
 
@@ -138,7 +138,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getCurrencyFacade(),
             $this->getMoneyFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

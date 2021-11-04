@@ -68,7 +68,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
             $this->resolveProductOptionValuePrice(
                 $productOptionValueStorageTransfer,
                 $currentCurrencyCode,
-                $currentPriceMode
+                $currentPriceMode,
             );
         }
 
@@ -85,7 +85,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
     ): array {
         foreach ($productAbstractOptionStorageTransfers as $productAbstractOptionStorageTransfer) {
             $this->resolveProductAbstractOptionStorageTransferProductOptionValuePrices(
-                $productAbstractOptionStorageTransfer
+                $productAbstractOptionStorageTransfer,
             );
         }
 

@@ -35,13 +35,9 @@ interface ContentProductAbstractListRestResponseBuilderInterface
     public function createContentProductAbstractListProductsRestResponse(array $abstractProductResources): RestResponseInterface;
 
     /**
-     * @phpstan-param array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer> $contentProductAbstractListTypeTransfers
+     * @param array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer> $contentProductAbstractListTypeTransfers
      *
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
-     * @param array<\Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer> $contentProductAbstractListTypeTransfers
-     *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createContentProductAbstractListsRestResources(array $contentProductAbstractListTypeTransfers): array;
 

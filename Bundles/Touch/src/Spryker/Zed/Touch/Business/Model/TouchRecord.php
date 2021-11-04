@@ -102,7 +102,7 @@ class TouchRecord implements TouchRecordInterface
                         $itemType,
                         $itemEvent,
                         $idItem,
-                        SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+                        SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
                     );
                 }
             } else {
@@ -112,7 +112,7 @@ class TouchRecord implements TouchRecordInterface
             $touchEntity = $this->findOrCreateTouchEntity(
                 $itemType,
                 $idItem,
-                $itemEvent
+                $itemEvent,
             );
 
             $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
@@ -130,7 +130,7 @@ class TouchRecord implements TouchRecordInterface
     {
         $touchEntityCollection = $this->touchQueryContainer->queryUpdateTouchEntry(
             $itemType,
-            $idItem
+            $idItem,
         )->find();
 
         if ($touchEntityCollection->count() === 1) {
@@ -182,7 +182,7 @@ class TouchRecord implements TouchRecordInterface
             ->queryUpdateTouchEntry(
                 $itemType,
                 $idItem,
-                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
             )
             ->findOne();
 
@@ -194,7 +194,7 @@ class TouchRecord implements TouchRecordInterface
             ->queryUpdateTouchEntry(
                 $itemType,
                 $idItem,
-                SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+                SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
             )
             ->findOne();
 
@@ -217,7 +217,7 @@ class TouchRecord implements TouchRecordInterface
             ->queryUpdateTouchEntry(
                 $itemType,
                 $idItem,
-                SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE
+                SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
             )
             ->findOne();
 
@@ -229,7 +229,7 @@ class TouchRecord implements TouchRecordInterface
             ->queryUpdateTouchEntry(
                 $itemType,
                 $idItem,
-                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
             )
             ->findOne();
 
@@ -238,7 +238,7 @@ class TouchRecord implements TouchRecordInterface
                 $itemType,
                 $idItem,
                 SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
-                $touchOldEntity
+                $touchOldEntity,
             );
         }
     }
@@ -264,7 +264,7 @@ class TouchRecord implements TouchRecordInterface
         $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry(
             $itemType,
             $idItem,
-            $type
+            $type,
         )->findOneOrCreate();
 
         $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
@@ -299,7 +299,7 @@ class TouchRecord implements TouchRecordInterface
     {
         $touchListQuery = $this->touchQueryContainer
             ->queryTouchListByItemEvent(
-                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED,
             );
 
         return $this->removeTouchEntries($touchListQuery);

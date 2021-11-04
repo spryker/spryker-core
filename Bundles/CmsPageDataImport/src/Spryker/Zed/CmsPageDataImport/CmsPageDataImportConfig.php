@@ -16,6 +16,7 @@ class CmsPageDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_CMS_PAGE = 'cms-page';
+
     /**
      * @var string
      */
@@ -55,7 +56,7 @@ class CmsPageDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

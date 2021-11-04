@@ -42,7 +42,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
 
         $merchantRelationshipChoiceFormType->buildForm(
             $builder,
-            $merchantRelationshipChoiceFormDataProvider->getOptions()
+            $merchantRelationshipChoiceFormDataProvider->getOptions(),
         );
     }
 }

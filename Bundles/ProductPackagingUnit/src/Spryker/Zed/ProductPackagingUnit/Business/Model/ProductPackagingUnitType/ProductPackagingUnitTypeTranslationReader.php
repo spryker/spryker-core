@@ -72,7 +72,7 @@ class ProductPackagingUnitTypeTranslationReader implements ProductPackagingUnitT
         $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeTranslation(
             (new ProductPackagingUnitTypeTranslationTransfer())
                 ->setLocaleCode($localeTransfer->getLocaleName())
-                ->setName($translationTransfer->getValue())
+                ->setName($translationTransfer->getValue()),
         );
 
         return $productPackagingUnitTypeTransfer;

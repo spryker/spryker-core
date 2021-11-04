@@ -123,7 +123,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         $this->assertSame(
             500,
             $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
-            'Default price does not match expected value.'
+            'Default price does not match expected value.',
         );
     }
 
@@ -184,7 +184,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
         $this->assertSame(
             500,
             $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
-            'Default price does not match expected value.'
+            'Default price does not match expected value.',
         );
     }
 }

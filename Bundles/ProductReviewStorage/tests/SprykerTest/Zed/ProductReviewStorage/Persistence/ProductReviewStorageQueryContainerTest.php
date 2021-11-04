@@ -90,25 +90,25 @@ class ProductReviewStorageQueryContainerTest extends Unit
             $this->localeTransfer->getIdLocale(),
             $this->customerTransfer->getCustomerReference(),
             $this->productAbstractTransfer1->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer12 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $this->localeTransfer->getIdLocale(),
             $this->customerTransfer->getCustomerReference(),
             $this->productAbstractTransfer1->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer21 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $this->localeTransfer->getIdLocale(),
             $this->customerTransfer->getCustomerReference(),
             $this->productAbstractTransfer2->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer22 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $this->localeTransfer->getIdLocale(),
             $this->customerTransfer->getCustomerReference(),
             $this->productAbstractTransfer2->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productAbstract1RatingAverage = new Decimal(($productReviewTransfer11->getRating() + $productReviewTransfer12->getRating()) / 2);
         $productAbstract2RatingAverage = new Decimal(($productReviewTransfer21->getRating() + $productReviewTransfer22->getRating()) / 2);
@@ -137,13 +137,13 @@ class ProductReviewStorageQueryContainerTest extends Unit
             $this->localeTransfer->getIdLocale(),
             $this->customerTransfer->getCustomerReference(),
             $this->productAbstractTransfer1->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
         $productReviewTransfer2 = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
             $this->localeTransfer->getIdLocale(),
             $this->customerTransfer->getCustomerReference(),
             $this->productAbstractTransfer2->getIdProductAbstract(),
-            SpyProductReviewTableMap::COL_STATUS_APPROVED
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
         );
 
         // Act
@@ -156,7 +156,7 @@ class ProductReviewStorageQueryContainerTest extends Unit
         $this->assertCount(2, $result);
         $resultProductAbstractIds = array_map(
             'intval',
-            array_column($result, ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT)
+            array_column($result, ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT),
         );
         $this->assertContains($this->productAbstractTransfer1->getIdProductAbstract(), $resultProductAbstractIds);
         $this->assertContains($this->productAbstractTransfer2->getIdProductAbstract(), $resultProductAbstractIds);

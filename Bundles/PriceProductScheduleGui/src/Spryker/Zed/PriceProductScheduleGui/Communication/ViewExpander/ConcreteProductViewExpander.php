@@ -20,6 +20,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
      * @var string
      */
     protected const PRICE_TYPE_TEMPLATE = '@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig';
+
     /**
      * @var string
      */
@@ -74,13 +75,13 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
             $priceProductScheduleConcreteTable = $this->viewExpanderTableFactory->createPriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
                 $viewData['idProductAbstract'],
-                $priceTypeTransfer->getIdPriceType()
+                $priceTypeTransfer->getIdPriceType(),
             );
 
             $tablesByPriceType = $this->addTableByPriceType(
                 $tablesByPriceType,
                 $priceTypeTransfer,
-                $priceProductScheduleConcreteTable
+                $priceProductScheduleConcreteTable,
             );
         }
 

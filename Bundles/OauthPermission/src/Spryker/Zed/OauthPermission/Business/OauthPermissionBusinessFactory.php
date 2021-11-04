@@ -30,7 +30,7 @@ class OauthPermissionBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerIdentifierExpander(
             $this->getPermissionFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 

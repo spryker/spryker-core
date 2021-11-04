@@ -25,6 +25,7 @@ class QueueDumpConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'queue:dump';
+
     /**
      * @var string
      */
@@ -34,14 +35,17 @@ class QueueDumpConsole extends Console
      * @var string
      */
     protected const OPTION_LIMIT = 'limit';
+
     /**
      * @var string
      */
     protected const OPTION_LIMIT_SHORT = 'l';
+
     /**
      * @var int
      */
     protected const OPTION_LIMIT_DEFAULT = 10;
+
     /**
      * @var string
      */
@@ -51,14 +55,17 @@ class QueueDumpConsole extends Console
      * @var string
      */
     protected const OPTION_FORMAT = 'format';
+
     /**
      * @var string
      */
     protected const OPTION_FORMAT_SHORT = 'f';
+
     /**
      * @var string
      */
     protected const OPTION_FORMAT_DEFAULT = 'json';
+
     /**
      * @var string
      */
@@ -68,14 +75,17 @@ class QueueDumpConsole extends Console
      * @var string
      */
     protected const OPTION_ACK = 'ack';
+
     /**
      * @var string
      */
     protected const OPTION_ACK_SHORT = 'k';
+
     /**
      * @var int
      */
     protected const OPTION_ACK_DEFAULT = 0;
+
     /**
      * @var string
      */
@@ -85,6 +95,7 @@ class QueueDumpConsole extends Console
      * @var string
      */
     public const ARGUMENT_QUEUE = 'queue';
+
     /**
      * @var string
      */

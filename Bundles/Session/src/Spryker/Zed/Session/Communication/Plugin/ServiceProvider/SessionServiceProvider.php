@@ -103,7 +103,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             $params['path'],
             $params['domain'],
             $params['secure'],
-            $params['httponly']
+            $params['httponly'],
         ));
     }
 

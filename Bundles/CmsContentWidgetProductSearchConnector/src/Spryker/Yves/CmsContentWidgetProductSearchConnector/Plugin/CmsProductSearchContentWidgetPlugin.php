@@ -59,7 +59,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     ) {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier, $context),
-            $this->getTwigWidgetContent($searchString)
+            $this->getTwigWidgetContent($searchString),
         );
     }
 
@@ -81,8 +81,8 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
                 sprintf(
                     'Template identifier %s not found. Context: {%s}',
                     $templateIdentifier,
-                    json_encode($context)
-                )
+                    json_encode($context),
+                ),
             );
         }
 

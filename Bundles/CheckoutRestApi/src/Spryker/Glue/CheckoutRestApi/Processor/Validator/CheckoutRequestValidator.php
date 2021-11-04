@@ -59,12 +59,12 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         $restErrorCollectionTransfer = $this->validateCustomer($restRequest, new RestErrorCollectionTransfer());
         $restErrorCollectionTransfer = $this->validatePayments(
             $restCheckoutRequestAttributesTransfer,
-            $restErrorCollectionTransfer
+            $restErrorCollectionTransfer,
         );
 
         return $this->executeCheckoutRequestAttributesValidatorPlugins(
             $restCheckoutRequestAttributesTransfer,
-            $restErrorCollectionTransfer
+            $restErrorCollectionTransfer,
         );
     }
 
@@ -81,18 +81,18 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         $restErrorCollectionTransfer = $this->validateCustomer($restRequest, new RestErrorCollectionTransfer());
         $restErrorCollectionTransfer = $this->validatePayments(
             $restCheckoutRequestAttributesTransfer,
-            $restErrorCollectionTransfer
+            $restErrorCollectionTransfer,
         );
 
         // For BC reasons
         $restErrorCollectionTransfer = $this->executeCheckoutRequestAttributesValidatorPlugins(
             $restCheckoutRequestAttributesTransfer,
-            $restErrorCollectionTransfer
+            $restErrorCollectionTransfer,
         );
 
         return $this->executeCheckoutRequestValidatorPlugins(
             $restCheckoutRequestAttributesTransfer,
-            $restErrorCollectionTransfer
+            $restErrorCollectionTransfer,
         );
     }
 
@@ -140,7 +140,7 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
                     ->setDetail(sprintf(
                         CheckoutRestApiConfig::RESPONSE_DETAILS_INVALID_PAYMENT,
                         $restPaymentTransfer->getPaymentMethodName(),
-                        $restPaymentTransfer->getPaymentProviderName()
+                        $restPaymentTransfer->getPaymentProviderName(),
                     ));
 
                 $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
@@ -162,12 +162,12 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
     ): RestErrorCollectionTransfer {
         foreach ($this->checkoutRequestAttributesValidatorPlugins as $checkoutRequestAttributesValidatorPlugin) {
             $pluginErrorCollectionTransfer = $checkoutRequestAttributesValidatorPlugin->validateAttributes(
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
 
             $restErrorCollectionTransfer = $this->copyPluginErrorCollection(
                 $pluginErrorCollectionTransfer,
-                $restErrorCollectionTransfer
+                $restErrorCollectionTransfer,
             );
         }
 
@@ -186,12 +186,12 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
     ): RestErrorCollectionTransfer {
         foreach ($this->checkoutRequestValidatorPlugins as $checkoutRequestValidatorPlugin) {
             $pluginErrorCollectionTransfer = $checkoutRequestValidatorPlugin->validateAttributes(
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
 
             $restErrorCollectionTransfer = $this->copyPluginErrorCollection(
                 $pluginErrorCollectionTransfer,
-                $restErrorCollectionTransfer
+                $restErrorCollectionTransfer,
             );
         }
 

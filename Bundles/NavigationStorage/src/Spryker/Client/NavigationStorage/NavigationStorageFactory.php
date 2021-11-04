@@ -19,7 +19,7 @@ class NavigationStorageFactory extends AbstractFactory
     {
         return new NavigationStorage(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

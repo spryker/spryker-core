@@ -28,6 +28,7 @@ class FileListContentTermForm extends AbstractType
      * @var string
      */
     public const FIELD_FILE_IDS = 'fileIds';
+
     /**
      * @var string
      */
@@ -73,18 +74,18 @@ class FileListContentTermForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['tables']['fileListViewTable'] = $this->getFactory()->createContentFileListViewTable(
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['tables']['fileListSelectedTable'] = $this->getFactory()->createContentFileListSelectedTable(
             $view->vars['value']->getFileIds(),
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
     }
@@ -99,7 +100,7 @@ class FileListContentTermForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return void
      */
@@ -138,7 +139,7 @@ class FileListContentTermForm extends AbstractType
                 $ids = array_filter(array_values($event->getData()));
                 $event->setData($ids);
                 $event->getForm()->setData($ids);
-            }
+            },
         )->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event): void {
@@ -160,7 +161,7 @@ class FileListContentTermForm extends AbstractType
                 }
 
                 $event->setData($fileIds);
-            }
+            },
         );
 
         return $this;

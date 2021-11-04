@@ -36,7 +36,7 @@ class ConfigurableBundleNoteSetter implements ConfigurableBundleNoteSetterInterf
     ): QuoteResponseTransfer {
         $quoteResponseTransfer = $this->quoteFacade
             ->findQuoteById(
-                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()
+                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote(),
             );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -45,7 +45,7 @@ class ConfigurableBundleNoteSetter implements ConfigurableBundleNoteSetterInterf
 
         $quoteResponseTransfer = $this->updateConfiguredBundlesWithNotes(
             $configuredBundleNoteRequestTransfer,
-            $quoteResponseTransfer
+            $quoteResponseTransfer,
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

@@ -31,14 +31,17 @@ class StockForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_STOCK = 'idStock';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_IS_ACTIVE = 'isActive';
+
     /**
      * @var string
      */
@@ -72,7 +75,7 @@ class StockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -148,7 +151,7 @@ class StockForm extends AbstractType
             [
                 'label' => 'Available in the following store(s)',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

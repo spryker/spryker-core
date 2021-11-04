@@ -20,6 +20,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @var string
      */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */
@@ -29,10 +30,12 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -81,7 +84,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @param string $localeName
      * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductOptionsByProductAbstractSkus(
         array $productAbstractSkus,
@@ -91,10 +94,10 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractIds = $this->productStorageClient->getBulkProductAbstractIdsByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $productAbstractSkus,
-            $localeName
+            $localeName,
         );
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
-            $productAbstractIds
+            $productAbstractIds,
         );
         if ($productAbstractOptionStorageTransfers) {
             $productAbstractOptionStorageTransfers = $this->productOptionTranslator
@@ -106,7 +109,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
                 $productAbstractOptionStorageTransfers,
                 $productAbstractIds,
                 ProductOptionsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-                $sorts
+                $sorts,
             );
     }
 
@@ -115,7 +118,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @param string $localeName
      * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductOptionsByProductConcreteSkus(
         array $productConcreteSkus,
@@ -124,7 +127,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     ): array {
         $productAbstractIds = $this->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus, $localeName);
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
-            array_unique($productAbstractIds)
+            array_unique($productAbstractIds),
         );
 
         if ($productAbstractOptionStorageTransfers) {
@@ -137,7 +140,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
                 $productAbstractOptionStorageTransfers,
                 $productAbstractIds,
                 ProductOptionsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-                $sorts
+                $sorts,
             );
     }
 
@@ -172,7 +175,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productConcreteStorageDataItem = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
-            $productConcreteSku
+            $productConcreteSku,
         );
 
         return $productConcreteStorageDataItem[static::KEY_ID_PRODUCT_ABSTRACT] ?? null;
@@ -209,7 +212,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productConcreteStorageDataItems = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
-            $localeName
+            $localeName,
         );
         foreach ($productConcreteStorageDataItems as $productConcreteStorageDataItem) {
             $productAbstractIdsByProductConcreteSkus[$productConcreteStorageDataItem[static::KEY_PRODUCT_CONCRETE_SKU]] =

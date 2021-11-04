@@ -32,30 +32,35 @@ class SharedCartFacadeTest extends Test
 {
     /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_CART_ACCESS_DENIED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
 
     /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
 
     /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE = 'persistent_cart_share.error.quote_is_not_available';
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
+     *
      * @var string
      */
     public const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_FULL_ACCESS
+     *
      * @var string
      */
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
@@ -64,10 +69,12 @@ class SharedCartFacadeTest extends Test
      * @var int
      */
     protected const VALUE_NOT_EXISTING_ID_COMPANY_USER = 0;
+
     /**
      * @var string
      */
     protected const VALUE_NOT_EXISTING_SHARE_OPTION = 'VALUE_NIT_EXISTING_SHARE_OPTION';
+
     /**
      * @var bool
      */
@@ -137,7 +144,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_CART_ACCESS_DENIED
+            static::GLOSSARY_KEY_CART_ACCESS_DENIED,
         );
     }
 
@@ -168,7 +175,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
+            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART,
         );
     }
 
@@ -199,7 +206,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
+            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART,
         );
     }
 
@@ -306,7 +313,7 @@ class SharedCartFacadeTest extends Test
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+            static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE,
         );
     }
 
@@ -335,7 +342,7 @@ class SharedCartFacadeTest extends Test
             $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
                 ReadSharedCartPermissionPlugin::KEY,
                 WriteSharedCartPermissionPlugin::KEY,
-            ])
+            ]),
         );
 
         //Act
@@ -372,7 +379,7 @@ class SharedCartFacadeTest extends Test
             $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
                 ReadSharedCartPermissionPlugin::KEY,
                 WriteSharedCartPermissionPlugin::KEY,
-            ])
+            ]),
         );
 
         //Act
@@ -384,7 +391,7 @@ class SharedCartFacadeTest extends Test
         $this->assertCount(1, $customerCollectionTransfer->getCustomers());
         $this->assertSame(
             $otherCustomerTransfer->getCustomerReference(),
-            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference()
+            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference(),
         );
     }
 

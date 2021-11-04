@@ -31,6 +31,7 @@ class CacheKeyGeneratorTest extends Unit
      * @var string
      */
     protected const KEY_NAME_PREFIX = 'storage';
+
     /**
      * @var string
      */
@@ -228,7 +229,7 @@ class CacheKeyGeneratorTest extends Unit
     {
         $this->storageConfigMock = $this->createMock(StorageConfig::class);
         $this->storageConfigMock->method('getAllowedGetParametersList')->willReturn(
-            $this->allowedQueryStringParameters
+            $this->allowedQueryStringParameters,
         );
     }
 

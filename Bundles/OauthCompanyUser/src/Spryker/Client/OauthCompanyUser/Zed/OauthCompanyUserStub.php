@@ -36,7 +36,7 @@ class OauthCompanyUserStub implements OauthCompanyUserStubInterface
         /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
         $customerResponseTransfer = $this->zedRequestClient->call(
             '/oauth-company-user/gateway/get-customer-by-access-token',
-            $companyUserAccessTokenRequestTransfer
+            $companyUserAccessTokenRequestTransfer,
         );
 
         return $customerResponseTransfer;

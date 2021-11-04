@@ -58,12 +58,12 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
 
             $checkoutErrorMessages = $this->collectCheckoutErrorMessages(
                 $checkoutErrorMessages,
-                $this->checkPackagingUnitAvailability($itemTransfer, $quoteTransfer)
+                $this->checkPackagingUnitAvailability($itemTransfer, $quoteTransfer),
             );
 
             $checkoutErrorMessages = $this->collectCheckoutErrorMessages(
                 $checkoutErrorMessages,
-                $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $quoteTransfer)
+                $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $quoteTransfer),
             );
         }
 
@@ -84,7 +84,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
     ): ?CheckoutErrorTransfer {
         $isPackagingUnitSellable = $this->isPackagingUnitSellable(
             $itemTransfer,
-            $quoteTransfer->getStore()
+            $quoteTransfer->getStore(),
         );
 
         if ($isPackagingUnitSellable) {
@@ -92,7 +92,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
         }
 
         return $this->createCheckoutResponseTransfer(
-            static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
+            static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY,
         );
     }
 
@@ -109,7 +109,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
         $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
             $itemTransfer,
             clone $quoteTransfer->getItems(),
-            $quoteTransfer->getStore()
+            $quoteTransfer->getStore(),
         );
 
         if ($isPackagingUnitLeadProductSellable) {
@@ -117,7 +117,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
         }
 
         return $this->createCheckoutResponseTransfer(
-            static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
+            static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY,
         );
     }
 

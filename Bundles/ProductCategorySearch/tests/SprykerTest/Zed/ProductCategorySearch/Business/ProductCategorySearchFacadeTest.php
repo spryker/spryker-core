@@ -37,10 +37,12 @@ class ProductCategorySearchFacadeTest extends Unit
      * @var string
      */
     protected const STORE_DE = 'DE';
+
     /**
      * @var int
      */
     protected const FAKE_ID_PRODUCT_ABSTRACT = 6666;
+
     /**
      * @var string
      */
@@ -48,6 +50,7 @@ class ProductCategorySearchFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA
+     *
      * @var string
      */
     protected const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
@@ -91,13 +94,13 @@ class ProductCategorySearchFacadeTest extends Unit
 
         $this->tester->haveCategoryStoreRelation(
             $this->categoryTransfer->getIdCategory(),
-            $this->storeTransfer->getIdStore()
+            $this->storeTransfer->getIdStore(),
         );
 
         $this->productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $this->productConcreteTransfer->getFkProductAbstract()
+            $this->productConcreteTransfer->getFkProductAbstract(),
         );
     }
 
@@ -158,14 +161,14 @@ class ProductCategorySearchFacadeTest extends Unit
             new PageMapTransfer(),
             new PageMapBuilder(),
             $productData,
-            $this->localeTransfer
+            $this->localeTransfer,
         );
 
         //Assert
         $this->assertEquals(
             $this->tester->getExpectedPageMapTransfer()->toArray(true),
             $pageMapTransfer->toArray(true),
-            'Expansion of PageMapTransfer was not successful'
+            'Expansion of PageMapTransfer was not successful',
         );
     }
 
@@ -186,7 +189,7 @@ class ProductCategorySearchFacadeTest extends Unit
             [
                 ProductCategoryTransfer::FK_PRODUCT_ABSTRACT => $this->productConcreteTransfer->getFkProductAbstract(),
             ],
-            $this->storeTransfer->getIdStore()
+            $this->storeTransfer->getIdStore(),
         );
         $productCategoryEntities = $this->tester->getMappedProductCategoriesByIdProductAbstractAndStore([
             $this->productConcreteTransfer->getFkProductAbstract(),
@@ -205,7 +208,7 @@ class ProductCategorySearchFacadeTest extends Unit
         //Act
         $this->tester->getFacade()->expandProductPageDataWithCategoryData(
             $productData,
-            $productPageSearchTransfer
+            $productPageSearchTransfer,
         );
 
         //Assert
@@ -242,7 +245,7 @@ class ProductCategorySearchFacadeTest extends Unit
         //Act
         $this->tester->getFacade()->expandProductPageDataWithCategoryData(
             $productData,
-            $productPageSearchTransfer
+            $productPageSearchTransfer,
         );
 
         //Assert
@@ -260,7 +263,7 @@ class ProductCategorySearchFacadeTest extends Unit
         $categoryWithoutStoreRelationTransfer = $this->tester->haveLocalizedCategory(['locale' => $this->localeTransfer]);
         $this->tester->assignProductToCategory(
             $categoryWithoutStoreRelationTransfer->getIdCategory(),
-            $this->productConcreteTransfer->getFkProductAbstract()
+            $this->productConcreteTransfer->getFkProductAbstract(),
         );
 
         $productCategoryEntities = $this->tester->getMappedProductCategoriesByIdProductAbstractAndStore([
@@ -283,17 +286,17 @@ class ProductCategorySearchFacadeTest extends Unit
         //Act
         $this->tester->getFacade()->expandProductPageDataWithCategoryData(
             $productData,
-            $productPageSearchTransfer
+            $productPageSearchTransfer,
         );
 
         //Assert
         $this->assertFalse(
             in_array($categoryWithoutStoreRelationTransfer->getCategoryNode()->getIdCategoryNode(), $productPageSearchTransfer->getCategoryNodeIds()),
-            'Category node id without store relation should be filtered out.'
+            'Category node id without store relation should be filtered out.',
         );
         $this->assertTrue(
             in_array($this->categoryTransfer->getCategoryNode()->getIdCategoryNode(), $productPageSearchTransfer->getCategoryNodeIds()),
-            'Category node id with store relation should not be filtered out.'
+            'Category node id with store relation should not be filtered out.',
         );
         $this->assertNotEmpty($productPageSearchTransfer->getAllParentCategoryIds(), 'Property `allParentCategoryIds` should be expanded.');
         $this->assertNotEmpty($productPageSearchTransfer->getCategoryNames(), 'Property `categoryNames` should be expanded.');

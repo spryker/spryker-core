@@ -41,7 +41,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
         // Act
         $restOrderItemsAttributesTransfer = $productConfigurationRestOrderItemsAttributesMapperPlugin->mapItemTransferToRestOrderItemsAttributesTransfer(
             $itemTransfer,
-            $restOrderItemsAttributesTransfer
+            $restOrderItemsAttributesTransfer,
         );
 
         // Assert
@@ -69,7 +69,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPluginTest extends Unit
         // Act
         $restOrderItemsAttributesTransfer = $productConfigurationRestOrderItemsAttributesMapperPlugin->mapItemTransferToRestOrderItemsAttributesTransfer(
             $itemTransfer,
-            $restOrderItemsAttributesTransfer
+            $restOrderItemsAttributesTransfer,
         );
 
         // Assert

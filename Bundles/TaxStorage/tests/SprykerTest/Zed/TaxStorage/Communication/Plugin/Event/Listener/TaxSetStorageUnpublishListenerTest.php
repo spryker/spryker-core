@@ -87,7 +87,7 @@ class TaxSetStorageUnpublishListenerTest extends Unit
         // Act
         $this->taxSetStorageUnpublishListener->handleBulk(
             $eventTransfers,
-            TaxEvents::ENTITY_SPY_TAX_SET_DELETE
+            TaxEvents::ENTITY_SPY_TAX_SET_DELETE,
         );
         $taxProductStorageEntities = $this->taxStorageRepository
             ->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets([

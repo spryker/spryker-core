@@ -32,7 +32,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -56,7 +56,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
                 'property_path' => CompanyUnitAddressTransfer::LABEL_COLLECTION . '.' . CompanyUnitAddressLabelCollectionTransfer::LABELS,
                 'choices' => $options[static::OPTION_VALUES_LABEL_CHOICES],
                 'multiple' => true,
-            ]
+            ],
         );
 
         $this->addModelTransformer($builder);
@@ -105,8 +105,8 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
                     }
 
                     return new ArrayObject($labels);
-                }
-            )
+                },
+            ),
         );
     }
 }

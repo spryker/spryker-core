@@ -22,14 +22,17 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
     public const PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK = 'PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK';
+
     /**
      * @var string
      */
@@ -74,7 +77,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductAlternativeStorageToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -90,7 +93,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductAlternativeStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

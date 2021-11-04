@@ -17,6 +17,7 @@ class CouplingBetweenObjects extends AbstractRule implements ClassAware
      * @var string
      */
     public const COUPLING_BETWEEN_OBJECTS = 'cbo';
+
     /**
      * @var string
      */

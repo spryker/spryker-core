@@ -79,7 +79,7 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
 
             $this->touchFacade->touchDeleted(
                 CmsBlockProductConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR,
-                $relation->getFkProductAbstract()
+                $relation->getFkProductAbstract(),
             );
         }
     }
@@ -99,7 +99,7 @@ class CmsBlockProductAbstractWriter implements CmsBlockProductAbstractWriterInte
 
             $this->touchFacade->touchActive(
                 CmsBlockProductConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR,
-                $idProductAbstract
+                $idProductAbstract,
             );
         }
     }

@@ -34,18 +34,22 @@ class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTe
      * @var string
      */
     protected const PRICE_TYPE_NAME = 'priceTypeName';
+
     /**
      * @var int
      */
     protected const NET_AMOUNT = 111;
+
     /**
      * @var int
      */
     protected const GROSS_AMOUNT = 222;
+
     /**
      * @var string
      */
     protected const CURRENCY_NAME = 'EUR';
+
     /**
      * @var string
      */
@@ -95,7 +99,7 @@ class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTe
         // Act
         $restProductConfigurationPriceAttributesTransfers = $productConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin->map(
             $productConfigurationInstanceTransfer,
-            [$restProductConfigurationPriceAttributesTransfer]
+            [$restProductConfigurationPriceAttributesTransfer],
         );
 
         // Assert

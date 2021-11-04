@@ -78,7 +78,7 @@ class ShipmentMethodDataHelper extends Module
                     (new MoneyValueBuilder($moneyValueOverride))
                         ->build()
                         ->setFkCurrency($this->getIdCurrencyByIsoCode($currencyIsoCode))
-                        ->setFkStore($this->getIdStoreByName($storeName))
+                        ->setFkStore($this->getIdStoreByName($storeName)),
                 );
             }
         }

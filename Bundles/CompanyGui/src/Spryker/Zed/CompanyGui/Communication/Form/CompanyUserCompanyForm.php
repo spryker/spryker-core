@@ -32,13 +32,14 @@ class CompanyUserCompanyForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\CompanyGui\Communication\Controller\SuggestController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_SUGGEST = '/company-gui/suggest';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -72,13 +73,13 @@ class CompanyUserCompanyForm extends AbstractType
         $form->add(
             static::FIELD_FK_COMPANY,
             SelectType::class,
-            $this->getCompanyFieldParameters($companyChoices)
+            $this->getCompanyFieldParameters($companyChoices),
         );
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -87,7 +88,7 @@ class CompanyUserCompanyForm extends AbstractType
         $builder->add(
             static::FIELD_FK_COMPANY,
             SelectType::class,
-            $this->getCompanyFieldParameters($options)
+            $this->getCompanyFieldParameters($options),
         );
 
         return $this;

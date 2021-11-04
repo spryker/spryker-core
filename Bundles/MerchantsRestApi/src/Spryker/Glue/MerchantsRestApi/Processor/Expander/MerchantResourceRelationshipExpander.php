@@ -46,7 +46,7 @@ class MerchantResourceRelationshipExpander implements MerchantResourceRelationsh
 
         $merchantsResources = $this->merchantReader->getMerchantsResources(
             $merchantReferences,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         $this->addMerchantRelationships($resources, $merchantsResources);

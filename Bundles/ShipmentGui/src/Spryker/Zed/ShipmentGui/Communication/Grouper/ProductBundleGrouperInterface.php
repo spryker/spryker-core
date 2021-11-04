@@ -16,7 +16,7 @@ interface ProductBundleGrouperInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductBundleGroupTransfer>>
      */
     public function groupBundleItemsByShipmentGroupHash(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): array;
 }

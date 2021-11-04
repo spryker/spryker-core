@@ -76,7 +76,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 
@@ -108,7 +108,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         foreach ($this->cartItemExpanderPlugins as $cartItemExpanderPlugin) {
             $cartItemRequestTransfer = $cartItemExpanderPlugin->expand(
                 $cartItemRequestTransfer,
-                $restCartItemsAttributesTransfer
+                $restCartItemsAttributesTransfer,
             );
         }
 

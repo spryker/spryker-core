@@ -21,6 +21,7 @@ class ProductOfferAvailabilityDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_OMS = 'FACADE_OMS';
+
     /**
      * @var string
      */

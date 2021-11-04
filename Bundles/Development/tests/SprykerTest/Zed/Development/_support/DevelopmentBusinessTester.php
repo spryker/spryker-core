@@ -47,7 +47,7 @@ class DevelopmentBusinessTester extends Actor
     {
         return new ArchitectureSnifferConfigurationBuilder(
             $this->createConfigurationReader(),
-            static::DEFAULT_PRIORITY
+            static::DEFAULT_PRIORITY,
         );
     }
 
@@ -57,7 +57,7 @@ class DevelopmentBusinessTester extends Actor
     public function createConfigurationReader(): ConfigurationReaderInterface
     {
         return new ConfigurationReader(
-            $this->createSymfonyYamlParser()
+            $this->createSymfonyYamlParser(),
         );
     }
 
@@ -84,7 +84,7 @@ class DevelopmentBusinessTester extends Actor
     {
         return new CodeStyleSnifferConfigurationLoader(
             $this->createConfigurationReader(),
-            $this->createCodeStyleSnifferConfiguration()
+            $this->createCodeStyleSnifferConfiguration(),
         );
     }
 
@@ -94,7 +94,7 @@ class DevelopmentBusinessTester extends Actor
     public function createCodeStyleSnifferConfiguration(): CodeStyleSnifferConfiguration
     {
         return new CodeStyleSnifferConfiguration(
-            $this->createDevelopmentConfig()
+            $this->createDevelopmentConfig(),
         );
     }
 

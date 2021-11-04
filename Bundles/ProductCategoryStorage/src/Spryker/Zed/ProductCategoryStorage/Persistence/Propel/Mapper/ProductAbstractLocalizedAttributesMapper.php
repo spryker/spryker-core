@@ -16,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductAbstractLocalizedAttributesMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[] $productAbstractLocalizedAttributesEntities
      * @param array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer>
@@ -28,12 +28,12 @@ class ProductAbstractLocalizedAttributesMapper
         foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
             $productAbstractLocalizedAttributesTransfer = $this->mapProductAbstractLocalizedAttributesEntityToTransfer(
                 $productAbstractLocalizedAttributesEntity,
-                new ProductAbstractLocalizedAttributesTransfer()
+                new ProductAbstractLocalizedAttributesTransfer(),
             );
 
             $localeTransfer = $this->mapLocaleEntityToLocaleTransfer(
                 $productAbstractLocalizedAttributesEntity->getLocale(),
-                new LocaleTransfer()
+                new LocaleTransfer(),
             );
 
             $productAbstractLocalizedAttributesTransfer->setLocale($localeTransfer);

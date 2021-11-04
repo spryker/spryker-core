@@ -32,7 +32,7 @@ class CustomerMapper implements CustomerMapperInterface
         if ($restCheckoutRequestAttributesTransfer->getCustomer()) {
             $restCustomerTransfer->fromArray(
                 $restCheckoutRequestAttributesTransfer->getCustomer()->toArray(),
-                true
+                true,
             );
         }
 

@@ -39,7 +39,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ContentTable(
             $this->getPropelContentQuery(),
-            $this->getContentPlugins()
+            $this->getContentPlugins(),
         );
     }
 
@@ -59,7 +59,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentFormDataProvider(
             $this->createContentResolver(),
             $this->getContentFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -82,7 +82,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentByTypeTable(
             $contentType,
             $this->getPropelContentQuery(),
-            $contentKey
+            $contentKey,
         );
     }
 
@@ -96,7 +96,7 @@ class ContentGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

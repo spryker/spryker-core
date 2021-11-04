@@ -42,8 +42,6 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<mixed> $initialData
@@ -62,7 +60,7 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
                 $initialData = $this->addValidationErrorToInitialData(
                     $validationErrorTransfer,
                     $priceProductTransfers,
-                    $initialData
+                    $initialData,
                 );
             }
         }
@@ -71,8 +69,6 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<mixed> $initialData
@@ -148,8 +144,6 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<mixed> $propertyPath
      *

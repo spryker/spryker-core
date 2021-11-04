@@ -48,7 +48,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->createGroupModel(),
             $this->getQueryContainer(),
             $this->getAclRolesExpanderPlugins(),
-            $this->getAclRolePostSavePlugins()
+            $this->getAclRolePostSavePlugins(),
         );
     }
 
@@ -62,7 +62,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createRuleValidatorHelper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -73,7 +73,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     {
         return new NavigationItemFilter(
             $this->createRuleModel(),
-            $this->getUserFacade()
+            $this->getUserFacade(),
         );
     }
 
@@ -105,7 +105,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createAclConfigReader(),
             $this->createRoleWriter(),
-            $this->getAclInstallerPlugins()
+            $this->getAclInstallerPlugins(),
         );
     }
 
@@ -116,7 +116,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
     {
         return new GroupWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -128,7 +128,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
         return new RoleWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getAclRolePostSavePlugins()
+            $this->getAclRolePostSavePlugins(),
         );
     }
 

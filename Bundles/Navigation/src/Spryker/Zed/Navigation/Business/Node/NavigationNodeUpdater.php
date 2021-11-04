@@ -94,7 +94,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
         if (!$navigationNodeEntity) {
             throw new NavigationNodeNotFoundException(sprintf(
                 'Navigation node entity not found with ID %d.',
-                $navigationNodeTransfer->getIdNavigationNode()
+                $navigationNodeTransfer->getIdNavigationNode(),
             ));
         }
 
@@ -153,7 +153,7 @@ class NavigationNodeUpdater implements NavigationNodeUpdaterInterface
         if (!$navigationNodeLocalizedAttributesEntity) {
             throw new NavigationNodeLocalizedAttributesNotFoundException(sprintf(
                 'Navigation node localized attributes entity not found with ID %d.',
-                $navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes()
+                $navigationNodeLocalizedAttributesTransfer->getIdNavigationNodeLocalizedAttributes(),
             ));
         }
 

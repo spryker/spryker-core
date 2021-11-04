@@ -18,10 +18,12 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      * @var string
      */
     protected const SORT_NAME = 'name';
+
     /**
      * @var string
      */
     protected const SORT_PARAMETER_NAME_ASC = 'name_asc';
+
     /**
      * @var string
      */
@@ -31,14 +33,17 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 12;
+
     /**
-     * @var array
+     * @var array<int>
      */
     protected const PAGINATION_VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+
     /**
      * @var string
      */
     protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
+
     /**
      * @var string
      */
@@ -48,12 +53,14 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      * @deprecated For BC compatibility only. Use {@link \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      *
      * @uses \Spryker\Shared\Search\SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     *
      * @var string
      */
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     *
      * @var string
      */
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
@@ -109,7 +116,7 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     {
         return $this->get(
             static::FULL_TEXT_BOOSTED_BOOSTING_VALUE,
-            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED, 1)
+            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED, 1),
         );
     }
 }

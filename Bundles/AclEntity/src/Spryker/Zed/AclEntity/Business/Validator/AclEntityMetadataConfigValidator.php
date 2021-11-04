@@ -50,7 +50,7 @@ class AclEntityMetadataConfigValidator implements AclEntityMetadataConfigValidat
         }
         if ($aclEntityMetadataTransfer->getParent() && !class_exists($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())) {
             throw new AclEntityMetadataConfigParentEntityNotFoundException(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
         }
     }

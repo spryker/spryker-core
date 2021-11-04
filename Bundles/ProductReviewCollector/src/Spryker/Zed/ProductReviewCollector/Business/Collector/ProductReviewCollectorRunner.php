@@ -69,7 +69,7 @@ class ProductReviewCollectorRunner implements ProductReviewCollectorRunnerInterf
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

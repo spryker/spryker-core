@@ -42,7 +42,7 @@ class ZedRequestCommunicationTester extends Actor
             $this->getHttpKernelMock(),
             $controller,
             Request::createFromGlobals(),
-            HttpKernelInterface::MASTER_REQUEST
+            HttpKernelInterface::MASTER_REQUEST,
         );
 
         return $controllerEvent;

@@ -151,7 +151,7 @@ class UpdateMerchantTest extends Unit
         $storeRelationTransfer = (new StoreRelationBuilder())->seed([
             StoreRelationTransfer::ID_STORES => [$storeTransfer1->getIdStore()],
         ])->build();
-        $merchantTransfer = $this->tester->haveMerchant([ MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
         $storesIds = [
             $storeTransfer1->getIdStore(),
             $storeTransfer2->getIdStore(),

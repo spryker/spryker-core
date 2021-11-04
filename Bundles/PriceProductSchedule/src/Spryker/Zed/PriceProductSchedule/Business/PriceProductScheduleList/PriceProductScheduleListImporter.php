@@ -64,7 +64,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
         $priceProductScheduledListImportResponse = $this->createPriceProductScheduleListImportResponseTransfer(
-            $priceProductScheduledListImportRequest->getPriceProductScheduleList()
+            $priceProductScheduledListImportRequest->getPriceProductScheduleList(),
         );
 
         foreach ($priceProductScheduledListImportRequest->getItems() as $priceProductScheduleImportTransfer) {
@@ -80,7 +80,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
             $priceProductScheduleTransfer = $this->priceProductScheduleMapper
                 ->mapPriceProductScheduleImportTransferToPriceProductScheduleTransfer(
                     $priceProductScheduleImportTransfer,
-                    new PriceProductScheduleTransfer()
+                    new PriceProductScheduleTransfer(),
                 );
 
             $priceProductScheduleTransfer = $this->expandPriceProductTransfer($priceProductScheduleTransfer);

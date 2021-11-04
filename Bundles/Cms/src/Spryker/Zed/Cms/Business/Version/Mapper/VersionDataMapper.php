@@ -162,7 +162,7 @@ class VersionDataMapper implements VersionDataMapperInterface
     protected function mapToCmsPageStoreRelationData(CmsPageTransfer $cmsPageTransfer, SpyCmsPage $cmsPageEntity): CmsPageTransfer
     {
         $storeRelationTransfer = $this->cmsPageStoreRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage())
+            (new StoreRelationTransfer())->setIdEntity($cmsPageEntity->getIdCmsPage()),
         );
 
         $cmsPageTransfer->setStoreRelation($storeRelationTransfer);

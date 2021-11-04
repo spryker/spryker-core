@@ -38,21 +38,21 @@ class ProductCategoryAssignCest
 
         $availableProductCheckboxSelector = $this->buildProductSelector(
             $idAbstractProduct,
-            ProductCategoryAssignPage::AVAILABLE_PRODUCT_CHECKBOX_SELECTOR_PREFIX
+            ProductCategoryAssignPage::AVAILABLE_PRODUCT_CHECKBOX_SELECTOR_PREFIX,
         );
 
         $i->waitForElement($availableProductCheckboxSelector);
         $i->checkOption($availableProductCheckboxSelector);
         $i->seeInField(
             ProductCategoryAssignPage::SELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
-            (string)$idAbstractProduct
+            (string)$idAbstractProduct,
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
 
         $assignedProductCheckboxSelector = $this->buildProductSelector(
             $idAbstractProduct,
-            ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX
+            ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX,
         );
         $i->waitForElement($assignedProductCheckboxSelector);
     }
@@ -73,14 +73,14 @@ class ProductCategoryAssignCest
 
         $assignedProductCheckboxSelector = $this->buildProductSelector(
             $idAbstractProduct,
-            ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX
+            ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX,
         );
 
         $i->waitForElement($assignedProductCheckboxSelector);
         $i->uncheckOption($assignedProductCheckboxSelector);
         $i->seeInField(
             ProductCategoryAssignPage::DESELECTED_PRODUCTS_CSV_FIELD_SELECTOR,
-            (string)$idAbstractProduct
+            (string)$idAbstractProduct,
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
@@ -97,7 +97,7 @@ class ProductCategoryAssignCest
         return sprintf(
             '%s%s',
             $selectorPrefix,
-            $idAbstractProduct
+            $idAbstractProduct,
         );
     }
 }

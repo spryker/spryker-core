@@ -25,10 +25,12 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
+
     /**
      * @var string
      */
     public const PRICE_PLUGINS = 'PRICE_PLUGINS';
+
     /**
      * @var string
      */
@@ -38,22 +40,27 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_TAX = 'FACADE_TAX';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'FACADE_PRICE';
+
     /**
      * @var string
      */
@@ -63,6 +70,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
+
     /**
      * @var string
      */

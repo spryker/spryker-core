@@ -20,14 +20,14 @@ class TransferDefinitionMerger implements MergerInterface
         'To fix this, search for \'property name="%2$s"\' in the code base and fix the wrong one.';
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $mergedTransferDefinitions = [];
 
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<string, array>
      */
     public function merge(array $transferDefinitions)
     {
@@ -38,7 +38,7 @@ class TransferDefinitionMerger implements MergerInterface
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $this->mergeDefinitions(
                     $this->mergedTransferDefinitions[$transferDefinition['name']],
                     $transferDefinition,
-                    $transferDefinition['name']
+                    $transferDefinition['name'],
                 );
             } else {
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $transferDefinition;
@@ -49,11 +49,11 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $existingDefinition
-     * @param array $definitionToMerge
+     * @param array<string, mixed> $existingDefinition
+     * @param array<string, mixed> $definitionToMerge
      * @param string $transferName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function mergeDefinitions(array $existingDefinition, array $definitionToMerge, $transferName)
     {
@@ -61,7 +61,7 @@ class TransferDefinitionMerger implements MergerInterface
 
         $mergedDefinition = [
             'name' => $existingDefinition['name'],
-            'entity-namespace' => isset($existingDefinition['entity-namespace']) ? $existingDefinition['entity-namespace'] : null,
+            'entity-namespace' => $existingDefinition['entity-namespace'] ?? null,
             'deprecated' => $this->mergeDeprecatedClassDefinition($existingDefinition, $definitionToMerge),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property'], $transferName),
         ];
@@ -74,8 +74,8 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $existingDefinition
-     * @param array $definitionToMerge
+     * @param array<string, mixed> $existingDefinition
+     * @param array<string, mixed> $definitionToMerge
      *
      * @return string|null
      */
@@ -92,11 +92,11 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $existingProperties
-     * @param array $propertiesToMerge
+     * @param array<array> $existingProperties
+     * @param array<array> $propertiesToMerge
      * @param string $transferName
      *
-     * @return array
+     * @return array<string, array>
      */
     protected function mergeProperty(array $existingProperties, array $propertiesToMerge, $transferName)
     {
@@ -116,7 +116,7 @@ class TransferDefinitionMerger implements MergerInterface
             $mergedProperties[$propertyToMerge['name']] = $this->mergeProperties(
                 $mergedProperties[$propertyToMerge['name']],
                 $propertyToMerge,
-                $transferName
+                $transferName,
             );
         }
 
@@ -124,13 +124,13 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $property
-     * @param array $propertyToMerge
+     * @param array<string, mixed> $property
+     * @param array<string, mixed> $propertyToMerge
      * @param string $transferName
      *
      * @throws \Exception
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function mergeProperties(array $property, array $propertyToMerge, $transferName)
     {
@@ -159,7 +159,7 @@ class TransferDefinitionMerger implements MergerInterface
                             $transferName,
                             $property['name'],
                             $property[$propertyName],
-                            $propertyValue
+                            $propertyValue,
                         ));
                     }
 
@@ -171,10 +171,10 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $bundles1
-     * @param array $bundles2
+     * @param array<string> $bundles1
+     * @param array<string> $bundles2
      *
-     * @return array
+     * @return array<string>
      */
     protected function mergePropertyBundles(array $bundles1, array $bundles2)
     {
@@ -203,8 +203,8 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $existingTransferDefinition
-     * @param array $transferDefinitionToMerge
+     * @param array<string, mixed> $existingTransferDefinition
+     * @param array<string, mixed> $transferDefinitionToMerge
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException
      *
@@ -219,14 +219,14 @@ class TransferDefinitionMerger implements MergerInterface
         throw new TransferDefinitionMismatchException(
             sprintf(
                 'Strict mode violation detected for transfer %s. "strict" attribute value for this transfer must be identical across all definitions.',
-                $existingTransferDefinition['name']
-            )
+                $existingTransferDefinition['name'],
+            ),
         );
     }
 
     /**
-     * @param array $existingTransferProperty
-     * @param array $transferPropertyToMerge
+     * @param array<string, mixed> $existingTransferProperty
+     * @param array<string, mixed> $transferPropertyToMerge
      * @param string $transferName
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\TransferDefinitionMismatchException
@@ -243,15 +243,15 @@ class TransferDefinitionMerger implements MergerInterface
             sprintf(
                 'Strict mode violation detected for transfer property %s.%s. "strict" attribute value for this property must be identical across all definitions.',
                 $transferName,
-                $existingTransferProperty['name']
-            )
+                $existingTransferProperty['name'],
+            ),
         );
     }
 
     /**
      * @param string $attributeName
-     * @param array $existingDefinition
-     * @param array $definitionToMerge
+     * @param array<string, mixed> $existingDefinition
+     * @param array<string, mixed> $definitionToMerge
      *
      * @return bool
      */

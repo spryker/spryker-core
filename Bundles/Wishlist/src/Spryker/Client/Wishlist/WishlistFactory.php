@@ -21,7 +21,7 @@ class WishlistFactory extends AbstractFactory
     public function createZedStub()
     {
         return new WishlistStub(
-            $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED)
+            $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED),
         );
     }
 
@@ -32,7 +32,7 @@ class WishlistFactory extends AbstractFactory
     {
         return new ProductStorage(
             $this->createProductClient(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
         );
     }
 
@@ -64,7 +64,7 @@ class WishlistFactory extends AbstractFactory
             $cartClient,
             $wishlistClient,
             $this->getWishlistPostMoveToCartCollectionExpanderPlugins(),
-            $this->getWishlistCollectionToRemoveExpanderPlugins()
+            $this->getWishlistCollectionToRemoveExpanderPlugins(),
         );
     }
 

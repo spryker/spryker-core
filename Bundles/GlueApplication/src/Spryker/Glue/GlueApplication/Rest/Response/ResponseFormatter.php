@@ -60,7 +60,7 @@ class ResponseFormatter implements ResponseFormatterInterface
         if (!$encoder) {
             return new Response(
                 Response::$statusTexts[Response::HTTP_UNSUPPORTED_MEDIA_TYPE],
-                Response::HTTP_UNSUPPORTED_MEDIA_TYPE
+                Response::HTTP_UNSUPPORTED_MEDIA_TYPE,
             );
         }
 
@@ -74,7 +74,7 @@ class ResponseFormatter implements ResponseFormatterInterface
 
         return new Response(
             $encoder->encode($responseData),
-            $restResponseStatus
+            $restResponseStatus,
         );
     }
 
@@ -115,7 +115,7 @@ class ResponseFormatter implements ResponseFormatterInterface
 
         return new Response(
             $encoder->encode($response),
-            $responseStatus
+            $responseStatus,
         );
     }
 

@@ -88,7 +88,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
         $foundResults = $this->taxQueryContainer
             ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
                 $this->getIdProductAbstruct($itemTransfers),
-                $this->getCountryIso2Codes($itemTransfers)
+                $this->getCountryIso2Codes($itemTransfers),
             )
             ->find();
 
@@ -98,7 +98,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             $taxRate = $this->getEffectiveTaxRate(
                 $taxRatesByIdProductAbstractAndCountry,
                 $itemTransfer->getIdProductAbstract(),
-                $this->getShippingCountryIso2CodeByItem($itemTransfer)
+                $this->getShippingCountryIso2CodeByItem($itemTransfer),
             );
             $itemTransfer->setTaxRate($taxRate);
         }
@@ -107,7 +107,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param iterable<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<string>
      */
@@ -122,7 +122,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param iterable<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<int>
      */

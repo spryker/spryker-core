@@ -22,17 +22,17 @@ class PaymentCalculator implements PaymentCalculatorInterface
         $paymentCollection = $this->getPaymentCollection($calculableObjectTransfer);
 
         $this->definePriceToPay(
-            $calculableObjectTransfer->getTotals()
+            $calculableObjectTransfer->getTotals(),
         );
 
         $this->applyLimitedAmountPayments(
             $calculableObjectTransfer->getTotals(),
-            $paymentCollection
+            $paymentCollection,
         );
 
         $this->applyUnlimitedAmountPayments(
             $calculableObjectTransfer->getTotals(),
-            $paymentCollection
+            $paymentCollection,
         );
     }
 
@@ -69,7 +69,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
     protected function definePriceToPay(TotalsTransfer $totalsTransfer)
     {
         $totalsTransfer->setPriceToPay(
-            $totalsTransfer->getGrandTotal()
+            $totalsTransfer->getGrandTotal(),
         );
     }
 
@@ -93,7 +93,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
                 $priceToPay = 0;
             } else {
                 $paymentTransfer->setAmount(
-                    $paymentTransfer->getAvailableAmount()
+                    $paymentTransfer->getAvailableAmount(),
                 );
 
                 $priceToPay = $priceToPay - $paymentTransfer->getAvailableAmount();
@@ -117,7 +117,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
             }
 
             $paymentTransfer->setAmount(
-                $totalsTransfer->getPriceToPay()
+                $totalsTransfer->getPriceToPay(),
             );
         }
     }

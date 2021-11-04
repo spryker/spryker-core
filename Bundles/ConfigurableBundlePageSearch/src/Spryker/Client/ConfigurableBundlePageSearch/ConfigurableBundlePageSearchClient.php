@@ -35,7 +35,7 @@ class ConfigurableBundlePageSearchClient extends AbstractClient implements Confi
             ->expandQuery(
                 $searchQuery,
                 $this->getFactory()->getConfigurableBundleTemplatePageSearchQueryExpanderPlugins(),
-                $requestParameters
+                $requestParameters,
             );
 
         $resultFormatters = $this->getFactory()->getConfigurableBundleTemplateResultFormatterPlugins();

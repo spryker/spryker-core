@@ -18,30 +18,37 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
      * @var string
      */
     protected const SEARCH_RESPONSE_COMPLETION_KEY = 'completion';
+
     /**
      * @var string
      */
     protected const SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY = 'suggestionByType';
+
     /**
      * @var string
      */
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_KEY = 'product_abstract';
+
     /**
      * @var string
      */
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY = 'images';
+
     /**
      * @var string
      */
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
+
     /**
      * @var string
      */
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
+
     /**
      * @var string
      */
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
+
     /**
      * @var string
      */
@@ -106,7 +113,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     ): RestCatalogSearchSuggestionsAttributesTransfer {
         return $this->mapSearchSuggestionProductsToRestCatalogSearchSuggestionsAttributesTransfer(
             $restSearchResponse,
-            $restSearchSuggestionsAttributesTransfer
+            $restSearchSuggestionsAttributesTransfer,
         );
     }
 
@@ -127,7 +134,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         foreach ($categoriesSuggestions as $categoriesSuggestion) {
             $restSearchSuggestionsAttributesTransfer->addCategory(
-                (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true)
+                (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true),
             );
         }
 
@@ -151,7 +158,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         foreach ($cmsPagesSuggestions as $cmsPagesSuggestion) {
             $restSearchSuggestionsAttributesTransfer->addCmsPage(
-                (new RestCatalogSearchSuggestionCmsPagesTransfer())->fromArray($cmsPagesSuggestion, true)
+                (new RestCatalogSearchSuggestionCmsPagesTransfer())->fromArray($cmsPagesSuggestion, true),
             );
         }
 
@@ -175,7 +182,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
 
         $result = $this->mapArrayValuesByKeys(
             $restSearchResponse[static::SEARCH_RESPONSE_SUGGESTION_BY_TYPE_KEY][$suggestionName],
-            $suggestionKeysRequired
+            $suggestionKeysRequired,
         );
 
         return $result;
@@ -202,7 +209,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
             $restCatalogSearchSuggestionAbstractProducts = new RestCatalogSearchSuggestionAbstractProductsTransfer();
             $restCatalogSearchSuggestionAbstractProducts->fromArray(
                 $restSearchResponseSuggestProduct,
-                true
+                true,
             );
 
             $restSearchSuggestionsAttributesTransfer->addAbstractProduct($restCatalogSearchSuggestionAbstractProducts);

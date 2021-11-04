@@ -29,6 +29,7 @@ class FilterProductsWithoutPackagingUnitTest extends Unit
      * @var string
      */
     protected const PACKAGING_UNIT_NAME = 'packagingUnit';
+
     /**
      * @var int
      */

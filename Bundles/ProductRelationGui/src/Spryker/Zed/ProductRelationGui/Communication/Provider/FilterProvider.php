@@ -13,12 +13,14 @@ class FilterProvider implements FilterProviderInterface
 {
     /**
      * @see \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap::COL_ATTRIBUTES
+     *
      * @var string
      */
     protected const COL_ATTRIBUTES = 'spy_product_abstract.attributes';
 
     /**
      * @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_NAME
+     *
      * @var string
      */
     protected const COL_CATEGORY_NAME = 'spy_category_attribute.name';

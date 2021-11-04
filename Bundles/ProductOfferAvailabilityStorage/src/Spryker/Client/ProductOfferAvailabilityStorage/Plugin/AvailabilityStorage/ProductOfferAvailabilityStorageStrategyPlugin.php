@@ -50,7 +50,7 @@ class ProductOfferAvailabilityStorageStrategyPlugin extends AbstractPlugin imple
         $productOfferAvailabilityStorageTransfer = $this->getClient()
             ->findByProductOfferReference(
                 $productViewTransfer->getProductOfferReference(),
-                $storeTransfer->getName()
+                $storeTransfer->getName(),
             );
 
         return $productOfferAvailabilityStorageTransfer && $productOfferAvailabilityStorageTransfer->getIsAvailable();

@@ -50,7 +50,7 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
             ->createRestResource(
                 AgentAuthRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS,
                 null,
-                $restAgentAccessTokensAttributesTransfer
+                $restAgentAccessTokensAttributesTransfer,
             );
 
         return $this->restResourceBuilder
@@ -72,7 +72,7 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
             ->createRestResource(
                 AgentAuthRestApiConfig::RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS,
                 null,
-                $restAgentCustomerImpersonationAccessTokensAttributesTransfer
+                $restAgentCustomerImpersonationAccessTokensAttributesTransfer,
             );
 
         return $this->restResourceBuilder
@@ -92,14 +92,14 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
     ): RestResponseInterface {
         $agentCustomerSearchRestResponse = $this->restResourceBuilder->createRestResponse(
             $customerAutocompleteResponseTransfer->getPagination()->getNbResults(),
-            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()
+            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage(),
         );
 
         $restAgentCustomerSearchAttributesTransfer = new RestAgentCustomerSearchAttributesTransfer();
         foreach ($customerAutocompleteResponseTransfer->getCustomers() as $customerTransfer) {
             $restAgentCustomerSearchAttributesTransfer->addCustomer(
                 (new RestAgentCustomerSearchCustomersAttributesTransfer())
-                    ->fromArray($customerTransfer->toArray(), true)
+                    ->fromArray($customerTransfer->toArray(), true),
             );
         }
 
@@ -111,8 +111,8 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
             $this->restResourceBuilder->createRestResource(
                 AgentAuthRestApiConfig::RESOURCE_AGENT_CUSTOMER_SEARCH,
                 null,
-                $restAgentCustomerSearchAttributesTransfer
-            )
+                $restAgentCustomerSearchAttributesTransfer,
+            ),
         );
     }
 

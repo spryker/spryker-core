@@ -23,6 +23,7 @@ class InstallConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'setup:install';
+
     /**
      * @var string
      */

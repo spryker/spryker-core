@@ -31,14 +31,17 @@ class MoneyType extends AbstractType
      * @var string
      */
     public const FIELD_NET_AMOUNT = 'net_amount';
+
     /**
      * @var string
      */
     public const FIELD_GROSS_AMOUNT = 'gross_amount';
+
     /**
      * @var string
      */
     public const FIELD_FK_CURRENCY = 'fk_currency';
+
     /**
      * @var string
      */
@@ -48,6 +51,7 @@ class MoneyType extends AbstractType
      * @var int
      */
     public const MAX_MONEY_INT = 21474835;
+
     /**
      * @var int
      */
@@ -88,15 +92,15 @@ class MoneyType extends AbstractType
                     $event->getForm(),
                     static::FIELD_NET_AMOUNT,
                     $validationGroups,
-                    $moneyCurrencyOptions
+                    $moneyCurrencyOptions,
                 );
                 $this->configureMoneyInputs(
                     $event->getForm(),
                     static::FIELD_GROSS_AMOUNT,
                     $validationGroups,
-                    $moneyCurrencyOptions
+                    $moneyCurrencyOptions,
                 );
-            }
+            },
         );
     }
 
@@ -137,7 +141,7 @@ class MoneyType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface|\Symfony\Component\Form\FormInterface $builder
      * @param string $fieldName
      * @param string $validationGroups
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -197,7 +201,7 @@ class MoneyType extends AbstractType
      *
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Exception
      *
@@ -211,7 +215,7 @@ class MoneyType extends AbstractType
             throw new Exception(sprintf(
                 'Transfer object "%s" missing "%s" method which should provide currency transfer for current formType.',
                 get_class($viewData),
-                'getCurrency'
+                'getCurrency',
             ));
         }
 

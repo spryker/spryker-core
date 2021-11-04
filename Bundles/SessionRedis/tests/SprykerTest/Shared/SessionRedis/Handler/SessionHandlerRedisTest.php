@@ -154,7 +154,7 @@ class SessionHandlerRedisTest extends Unit
             ->with(
                 'session:session_id',
                 static::SESSION_LIFETIME,
-                json_encode('data')
+                json_encode('data'),
             )
             ->willReturn(true);
 
@@ -201,7 +201,7 @@ class SessionHandlerRedisTest extends Unit
             $this->redisClientMock,
             new SessionKeyBuilder(),
             $this->monitoringServiceMock,
-            $this->sessionRedisLifeTimeCalculatorMock
+            $this->sessionRedisLifeTimeCalculatorMock,
         );
     }
 }

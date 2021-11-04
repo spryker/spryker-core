@@ -39,7 +39,7 @@ class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements P
         return $productOfferStorageTransfer->setPrice(
             $this->getFactory()
                 ->getPriceProductStorageClient()
-                ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer)
+                ->getResolvedCurrentProductPriceTransfer($priceProductFilterTransfer),
         );
     }
 }

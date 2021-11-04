@@ -32,7 +32,7 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
     {
         return new SecurityBlockerStorage(
             $this->getSecurityBlockerClient(),
-            $this->createAuthenticationChecker()
+            $this->createAuthenticationChecker(),
         );
     }
 
@@ -44,7 +44,7 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
         return new SecurityBlockerValidator(
             $this->getSecurityBlockerClient(),
             $this->createAuthenticationChecker(),
-            $this->createRestErrorCollectionBuilder()
+            $this->createRestErrorCollectionBuilder(),
         );
     }
 
@@ -55,7 +55,7 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
     {
         return new SecurityBlockerAgentStorage(
             $this->getSecurityBlockerClient(),
-            $this->createAuthenticationChecker()
+            $this->createAuthenticationChecker(),
         );
     }
 
@@ -67,7 +67,7 @@ class SecurityBlockerRestApiFactory extends AbstractFactory
         return new SecurityBlockerAgentValidator(
             $this->getSecurityBlockerClient(),
             $this->createAuthenticationChecker(),
-            $this->createRestErrorCollectionBuilder()
+            $this->createRestErrorCollectionBuilder(),
         );
     }
 

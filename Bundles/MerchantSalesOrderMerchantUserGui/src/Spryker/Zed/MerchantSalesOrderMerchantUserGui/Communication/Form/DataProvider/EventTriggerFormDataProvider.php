@@ -18,30 +18,31 @@ class EventTriggerFormDataProvider
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_ID_MERCHANT_SALES_ORDER
+     *
      * @var string
      */
     protected const URL_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_REDIRECT
+     *
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_EVENT
+     *
      * @var string
      */
     protected const URL_PARAM_EVENT = 'event';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param int $idMerchantSalesOrder
      * @param string $event
      * @param string $redirect
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         int $idMerchantSalesOrder,

@@ -21,6 +21,7 @@ class CacheWarmerConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'twig:cache:warmer';
+
     /**
      * @var string
      */

@@ -70,7 +70,7 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -114,7 +114,7 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
         ->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
             ->setKey($this->getThresholdKey())
-            ->setThresholdGroup($this->getThresholdGroup())
+            ->setThresholdGroup($this->getThresholdGroup()),
         );
 
         return $salesOrderThresholdValueTransfer;
@@ -122,7 +122,7 @@ class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin im
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

@@ -21,6 +21,7 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
+
     /**
      * @var string
      */

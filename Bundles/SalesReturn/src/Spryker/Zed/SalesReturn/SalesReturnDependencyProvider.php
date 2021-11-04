@@ -24,10 +24,12 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
@@ -47,10 +49,12 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
+
     /**
      * @var string
      */
     public const PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR = 'PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR';
+
     /**
      * @var string
      */
@@ -58,6 +62,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGINS_RETURN_COLLECTION_EXPANDER = 'PLUGINS_RETURN_COLLECTION_EXPANDER';
@@ -164,7 +169,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new SalesReturnToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

@@ -28,14 +28,14 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
 
         $priceProductOfferEntity = $priceProductOfferMapper->mapPriceProductTransferToPriceProductOfferEntity(
             $priceProductTransfer,
-            new SpyPriceProductOffer()
+            new SpyPriceProductOffer(),
         );
 
         $priceProductOfferEntity->save();
 
         return $priceProductOfferMapper->mapPriceProductOfferEntityToPriceProductTransfer(
             $priceProductOfferEntity,
-            $priceProductTransfer
+            $priceProductTransfer,
         );
     }
 
@@ -64,13 +64,13 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
 
         $priceProductOfferEntity = $priceProductOfferMapper->mapPriceProductTransferToPriceProductOfferEntity(
             $priceProductTransfer,
-            $priceProductOfferEntity
+            $priceProductOfferEntity,
         );
         $priceProductOfferEntity->save();
 
         return $priceProductOfferMapper->mapPriceProductOfferEntityToPriceProductTransfer(
             $priceProductOfferEntity,
-            $priceProductTransfer
+            $priceProductTransfer,
         );
     }
 

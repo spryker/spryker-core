@@ -32,7 +32,7 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->createConfigurableBundleTemplateImageStorageExpander(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -44,7 +44,7 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
         return new ConfigurableBundleTemplateImageStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -54,7 +54,7 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     public function createConfigurableBundleTemplateImageStorageExpander(): ConfigurableBundleTemplateImageStorageExpanderInterface
     {
         return new ConfigurableBundleTemplateImageStorageExpander(
-            $this->createConfigurableBundleTemplateImageStorageReader()
+            $this->createConfigurableBundleTemplateImageStorageReader(),
         );
     }
 

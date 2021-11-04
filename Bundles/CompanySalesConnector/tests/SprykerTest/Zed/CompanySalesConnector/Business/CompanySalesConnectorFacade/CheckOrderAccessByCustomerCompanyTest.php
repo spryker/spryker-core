@@ -32,6 +32,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */
@@ -72,7 +73,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
             );
 
         // Assert
@@ -92,7 +93,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid(null),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
             );
 
         // Assert
@@ -112,7 +113,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer(null)
+                (new CustomerTransfer())->setCompanyUserTransfer(null),
             );
 
         // Assert
@@ -132,7 +133,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer(new CompanyUserTransfer())
+                (new CustomerTransfer())->setCompanyUserTransfer(new CompanyUserTransfer()),
             );
 
         // Assert
@@ -152,7 +153,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid($companyUserTransfer->getCompany()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer->setCompany(null))
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer->setCompany(null)),
             );
 
         // Assert
@@ -172,7 +173,7 @@ class CheckOrderAccessByCustomerCompanyTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerCompany(
                 (new OrderTransfer())->setCompanyUuid(static::FAKE_COMPANY_UUID),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
             );
 
         // Assert

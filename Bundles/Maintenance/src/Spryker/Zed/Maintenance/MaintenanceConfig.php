@@ -13,6 +13,7 @@ class MaintenanceConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Shared\Application\ApplicationConstants::ENABLE_APPLICATION_DEBUG
+     *
      * @var string
      */
     protected const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';

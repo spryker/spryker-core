@@ -71,7 +71,7 @@ class OauthFactory extends AbstractFactory
         return new ResourceServerCreator(
             $this->createKeyLoader(),
             $this->createAccessTokenRepository(),
-            $this->getAuthorizationValidatorPlugins()
+            $this->getAuthorizationValidatorPlugins(),
         );
     }
 

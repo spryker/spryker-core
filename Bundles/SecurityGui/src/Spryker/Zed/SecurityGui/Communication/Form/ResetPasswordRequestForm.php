@@ -25,6 +25,7 @@ class ResetPasswordRequestForm extends AbstractType
      * @var string
      */
     public const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class ResetPasswordRequestForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

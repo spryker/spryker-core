@@ -41,8 +41,8 @@ class DataValidationStep implements DataImportStepInterface
             throw new InvalidDataException(
                 sprintf(
                     'Product concrete with SKU "%s" has neither concrete nor abstract alternative products',
-                    $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU]
-                )
+                    $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU],
+                ),
             );
         }
     }
@@ -63,8 +63,8 @@ class DataValidationStep implements DataImportStepInterface
             throw new InvalidDataException(
                 sprintf(
                     'Product concrete with SKU "%s" has both a concrete and an abstract alternative products',
-                    $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU]
-                )
+                    $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU],
+                ),
             );
         }
     }

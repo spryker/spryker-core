@@ -39,7 +39,7 @@ class IndexController extends AbstractController
             ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocaleOrFail());
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 

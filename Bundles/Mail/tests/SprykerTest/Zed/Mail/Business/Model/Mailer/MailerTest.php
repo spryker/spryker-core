@@ -155,7 +155,7 @@ class MailerTest extends Unit
     {
         $mailProviderCollectionMock = $this->getMailProviderCollectionMock();
         $mailProviderCollectionMock->expects($this->once())->method('getProviderForMailType')->willReturn(
-            [$this->getProviderMock()]
+            [$this->getProviderMock()],
         );
 
         return $mailProviderCollectionMock;

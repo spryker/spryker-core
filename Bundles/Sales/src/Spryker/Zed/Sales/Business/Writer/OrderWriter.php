@@ -20,6 +20,7 @@ class OrderWriter implements OrderWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ORDER_NOT_FOUND = 'sales.error.customer_order_not_found';
+
     /**
      * @var string
      */

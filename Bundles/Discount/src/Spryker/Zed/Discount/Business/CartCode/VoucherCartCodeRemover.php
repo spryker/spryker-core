@@ -34,7 +34,7 @@ class VoucherCartCodeRemover implements VoucherCartCodeRemoverInterface
             $quoteTransfer->getUsedNotAppliedVoucherCodes(),
             function (string $usedNotAppliedVoucherCode) use ($cartCode) {
                 return $usedNotAppliedVoucherCode != $cartCode;
-            }
+            },
         );
 
         return $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);

@@ -18,13 +18,16 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -73,7 +76,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
         $productAbstractDataCollection = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
             static::PRODUCT_MAPPING_TYPE,
             $productAbstractSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productAbstractDataCollection) {
@@ -88,20 +91,20 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
         $productReviewsRestResourcesCollection = $this->productReviewReader
             ->getProductReviewsResourceCollection(
                 $productAbstractIds,
-                $this->createFilterTransfer()
+                $this->createFilterTransfer(),
             );
 
         foreach ($resources as $resource) {
             $this->addProductReviewsRelationships(
                 $productReviewsRestResourcesCollection,
                 $productAbstractDataCollection,
-                $resource
+                $resource,
             );
         }
     }
 
     /**
-     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $productReviewsRestResourcesCollection
+     * @param array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>> $productReviewsRestResourcesCollection
      * @param array $productAbstractDataCollection
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *

@@ -16,14 +16,17 @@ class TransferSanitizerProcessor
      * @var string
      */
     public const EXTRA = 'transfer';
+
     /**
      * @var string
      */
     public const CONTEXT_KEY = 'transfer';
+
     /**
      * @var string
      */
     public const RECORD_EXTRA = 'extra';
+
     /**
      * @var string
      */
@@ -43,9 +46,9 @@ class TransferSanitizerProcessor
     }
 
     /**
-     * @param array $record
+     * @param array<string, array> $record
      *
-     * @return array
+     * @return array<string, array>
      */
     public function __invoke(array $record)
     {

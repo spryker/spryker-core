@@ -84,7 +84,7 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
     {
         $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
             $productOptionTransfer->getIdProductOptionValue(),
-            $cartChangeTransfer->getQuote()->getCurrency()->getCode()
+            $cartChangeTransfer->getQuote()->getCurrency()->getCode(),
         );
 
         $priceMode = $this->getPriceMode($cartChangeTransfer);

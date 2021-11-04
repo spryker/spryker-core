@@ -26,7 +26,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportConfig extends DataImport
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'sales_order_threshold_per_merchant_relationship.csv']),
-            static::IMPORT_TYPE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD
+            static::IMPORT_TYPE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD,
         );
     }
 

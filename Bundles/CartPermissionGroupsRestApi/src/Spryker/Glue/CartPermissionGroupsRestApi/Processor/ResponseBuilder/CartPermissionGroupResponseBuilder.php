@@ -89,8 +89,8 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
             (string)$quotePermissionGroupTransfer->getIdQuotePermissionGroup(),
             $this->cartPermissionGroupMapper->mapQuotePermissionGroupTransferToRestCartPermissionGroupsAttributesTransfer(
                 $quotePermissionGroupTransfer,
-                new RestCartPermissionGroupsAttributesTransfer()
-            )
+                new RestCartPermissionGroupsAttributesTransfer(),
+            ),
         );
         $cartPermissionGroupRestResource->setPayload($quotePermissionGroupTransfer);
 
@@ -105,7 +105,7 @@ class CartPermissionGroupResponseBuilder implements CartPermissionGroupResponseB
         $errorMessageTransfer = $this->createErrorMessage(
             CartPermissionGroupsRestApiConfig::RESPONSE_CODE_CART_PERMISSION_GROUP_NOT_FOUND,
             Response::HTTP_NOT_FOUND,
-            CartPermissionGroupsRestApiConfig::RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND
+            CartPermissionGroupsRestApiConfig::RESPONSE_DETAIL_CART_PERMISSION_GROUP_NOT_FOUND,
         );
 
         return $this->createEmptyCartPermissionGroupsResponse()

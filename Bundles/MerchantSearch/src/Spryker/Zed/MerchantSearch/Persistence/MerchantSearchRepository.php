@@ -30,7 +30,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
 
         $merchantSearchEntityCollection = $this->getMerchantSearchEntityCollection(
             $filterTransfer,
-            $merchantIds
+            $merchantIds,
         );
 
         foreach ($merchantSearchEntityCollection as $merchantSearchEntity) {
@@ -49,7 +49,7 @@ class MerchantSearchRepository extends AbstractRepository implements MerchantSea
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array<int> $merchantIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
      */
     protected function getMerchantSearchEntityCollection(
         FilterTransfer $filterTransfer,

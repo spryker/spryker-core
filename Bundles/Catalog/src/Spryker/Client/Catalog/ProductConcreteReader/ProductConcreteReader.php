@@ -130,7 +130,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         $this->searchClient->expandQuery(
             $this->productConcretePageSearchQueryPlugin,
             $this->productConcretePageSearchQueryExpanderPlugins,
-            $requestParams
+            $requestParams,
         );
     }
 }

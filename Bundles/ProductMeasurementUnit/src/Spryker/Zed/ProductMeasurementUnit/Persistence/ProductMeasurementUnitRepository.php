@@ -31,10 +31,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      * @var string
      */
     protected const ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT = 'Product measurement base unit was not found for product ID "%d".';
+
     /**
      * @var string
      */
     protected const ERROR_NO_BASE_UNIT_BY_ID = 'Product measurement base unit was not found by its ID "%d".';
+
     /**
      * @var string
      */
@@ -44,10 +46,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      * @var string
      */
     protected const COL_ID_PRODUCT_MEASUREMENT_UNIT = 'idProductMeasurementUnit';
+
     /**
      * @var string
      */
     protected const COL_CODE = 'code';
+
     /**
      * @var string
      */
@@ -88,7 +92,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->createProductMeasurementUnitMapper()
             ->mapProductMeasurementSalesUnitTransfer(
                 $productMeasurementSalesUnitEntity,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
     }
 
@@ -161,7 +165,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->createProductMeasurementUnitMapper()
             ->mapProductMeasurementBaseUnitTransfer(
                 $productMeasurementBaseUnitEntity,
-                new ProductMeasurementBaseUnitTransfer()
+                new ProductMeasurementBaseUnitTransfer(),
             );
     }
 
@@ -202,7 +206,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $spySalesOrderItemEntityTransfers[] = $mapper->mapSalesOrderItemTransfer(
                 $salesOrderItemEntity,
-                new SpySalesOrderItemEntityTransfer()
+                new SpySalesOrderItemEntityTransfer(),
             );
         }
 
@@ -245,7 +249,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($productMeasurementUnitEntityCollection as $productMeasurementUnitEntity) {
             $productMeasurementUnitTransfers[] = $mapper->mapProductMeasurementUnitTransfer(
                 $productMeasurementUnitEntity,
-                new ProductMeasurementUnitTransfer()
+                new ProductMeasurementUnitTransfer(),
             );
         }
 
@@ -279,7 +283,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     {
         $productMeasurementUnitEntityCollection = $this->buildQueryFromCriteria(
             $this->getFactory()->createProductMeasurementUnitQuery(),
-            $filterTransfer
+            $filterTransfer,
         )->find();
 
         return $this->getMappedProductMeasurementUnitTransfers($productMeasurementUnitEntityCollection);
@@ -391,7 +395,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit> $productMeasurementUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit[] $productMeasurementUnitEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
@@ -403,7 +407,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($productMeasurementUnitEntityCollection as $productMeasurementUnitEntity) {
             $productMeasurementUnitTransfers[] = $mapper->mapProductMeasurementUnitTransfer(
                 $productMeasurementUnitEntity,
-                new ProductMeasurementUnitTransfer()
+                new ProductMeasurementUnitTransfer(),
             );
         }
 
@@ -411,7 +415,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit> $productMeasurementSalesUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit[] $productMeasurementSalesUnitEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
@@ -423,7 +427,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
             $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
                 $productMeasurementSalesUnitEntity,
-                new ProductMeasurementSalesUnitTransfer()
+                new ProductMeasurementSalesUnitTransfer(),
             );
         }
 
@@ -462,7 +466,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      * @param array<string> $productConcreteSkus
      * @param int $idStore
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {

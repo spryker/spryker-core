@@ -37,6 +37,7 @@ class ActiveProcessFetcherTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE_NAME = 'ActiveStateMachine';
+
     /**
      * @var array
      */
@@ -106,7 +107,7 @@ class ActiveProcessFetcherTest extends Unit
             new ReadOnlyArrayObject([
                 self::TEST_STATE_MACHINE_NAME,
             ]),
-            $builder
+            $builder,
         );
     }
 
@@ -130,7 +131,7 @@ class ActiveProcessFetcherTest extends Unit
             new State(),
             new Transition(),
             new Process($drawerMock),
-            [$this->getProcessLocation()]
+            [$this->getProcessLocation()],
         );
     }
 

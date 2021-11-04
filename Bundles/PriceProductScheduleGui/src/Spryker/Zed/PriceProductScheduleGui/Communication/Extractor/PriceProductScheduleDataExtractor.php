@@ -17,6 +17,7 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
      * @var string
      */
     protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
+
     /**
      * @var string
      */
@@ -72,7 +73,7 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     ): string {
         $priceProductScheduleTransfer->requireStore();
         $storeTransfer = $this->storeFacade->getStoreById(
-            $priceProductScheduleTransfer->getStore()->getIdStore()
+            $priceProductScheduleTransfer->getStore()->getIdStore(),
         );
         $timezone = $storeTransfer->getTimezone();
 
@@ -89,7 +90,7 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     ): string {
         $priceProductScheduleTransfer->requireStore();
         $storeTransfer = $this->storeFacade->getStoreById(
-            $priceProductScheduleTransfer->getStore()->getIdStore()
+            $priceProductScheduleTransfer->getStore()->getIdStore(),
         );
 
         return $storeTransfer->getTimezone();

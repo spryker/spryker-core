@@ -39,7 +39,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -58,7 +58,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -97,7 +97,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig(),
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createFilterGlossaryKeyBuilder()
+            $this->createFilterGlossaryKeyBuilder(),
         );
     }
 

@@ -21,6 +21,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+
     /**
      * @var string
      */
@@ -63,7 +64,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_COMPANY_USER_STORAGE, function (Container $container) {
             return new CompanyUsersRestApiToCompanyUserStorageClientBridge(
-                $container->getLocator()->companyUserStorage()->client()
+                $container->getLocator()->companyUserStorage()->client(),
             );
         });
 

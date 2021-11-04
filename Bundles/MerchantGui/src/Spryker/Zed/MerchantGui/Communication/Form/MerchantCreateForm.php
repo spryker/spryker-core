@@ -40,30 +40,37 @@ class MerchantCreateForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_MERCHANT = 'id_merchant';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
+
     /**
      * @var string
      */
     protected const FIELD_EMAIL = 'email';
+
     /**
      * @var string
      */
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     protected const FIELD_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     protected const FIELD_URL_COLLECTION = 'urlCollection';
+
     /**
      * @var string
      */
@@ -73,22 +80,27 @@ class MerchantCreateForm extends AbstractType
      * @var string
      */
     protected const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
+
     /**
      * @var string
      */
     protected const LABEL_EMAIL = 'Email';
+
     /**
      * @var string
      */
     protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
+
     /**
      * @var string
      */
     protected const LABEL_URL = 'Merchant URL';
+
     /**
      * @var string
      */
@@ -116,7 +128,7 @@ class MerchantCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -252,7 +264,7 @@ class MerchantCreateForm extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -339,7 +351,7 @@ class MerchantCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

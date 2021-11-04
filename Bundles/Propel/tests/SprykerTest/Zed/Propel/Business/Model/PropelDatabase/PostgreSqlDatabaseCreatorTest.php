@@ -31,7 +31,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     public function testGetEngine(): void
     {
         $postgreSqlDatabaseCreator = new PostgreSqlDatabaseCreator(
-            $this->getConfigMock()
+            $this->getConfigMock(),
         );
 
         $this->assertSame(PropelConfig::DB_ENGINE_PGSQL, $postgreSqlDatabaseCreator->getEngine());

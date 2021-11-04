@@ -42,7 +42,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $calendarWeekDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
-            $this->createClauseTransfer($dateTime->format(DayOfWeekDecisionRule::DATE_FORMAT))
+            $this->createClauseTransfer($dateTime->format(DayOfWeekDecisionRule::DATE_FORMAT)),
         );
 
         $this->assertTrue($isSatisfied);

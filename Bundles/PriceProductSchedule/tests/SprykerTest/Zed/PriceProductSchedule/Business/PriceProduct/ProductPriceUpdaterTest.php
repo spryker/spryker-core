@@ -108,12 +108,12 @@ class ProductPriceUpdaterTest extends Unit
         $this->assertSame(
             $productPrice2->getMoneyValue()->getNetAmount(),
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            'The net price should be updated.'
+            'The net price should be updated.',
         );
         $this->assertSame(
             $productPrice2->getMoneyValue()->getGrossAmount(),
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            'The gross price should be updated.'
+            'The gross price should be updated.',
         );
     }
 }

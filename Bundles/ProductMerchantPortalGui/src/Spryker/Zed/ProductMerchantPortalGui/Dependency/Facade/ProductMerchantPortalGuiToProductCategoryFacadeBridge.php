@@ -37,10 +37,8 @@ class ProductMerchantPortalGuiToProductCategoryFacadeBridge implements ProductMe
     }
 
     /**
-     * @phpstan-param array<int> $productIdsToAssign
-     *
      * @param int $idCategory
-     * @param array $productIdsToAssign
+     * @param array<int> $productIdsToAssign
      *
      * @return void
      */
@@ -50,10 +48,8 @@ class ProductMerchantPortalGuiToProductCategoryFacadeBridge implements ProductMe
     }
 
     /**
-     * @phpstan-param array<int> $productIdsToUnAssign
-     *
      * @param int $idCategory
-     * @param array $productIdsToUnAssign
+     * @param array<int> $productIdsToUnAssign
      *
      * @return void
      */

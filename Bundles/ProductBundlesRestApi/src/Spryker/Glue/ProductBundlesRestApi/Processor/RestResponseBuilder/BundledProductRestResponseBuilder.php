@@ -85,15 +85,15 @@ class BundledProductRestResponseBuilder implements BundledProductRestResponseBui
             $bundledProductRestResources[] = $this->restResourceBuilder->createRestResource(
                 ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
                 $productForProductBundleStorageTransfer->getSku(),
-                $restBundledProductsAttributesTransfer
+                $restBundledProductsAttributesTransfer,
             )->addLink(
                 RestLinkInterface::LINK_SELF,
                 sprintf(
                     '%s/%s/%s',
                     ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
                     $productConcreteSku,
-                    ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS
-                )
+                    ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
+                ),
             );
         }
 

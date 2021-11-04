@@ -29,6 +29,7 @@ class SalesOmsFacadeTest extends Unit
      * @var string
      */
     protected const ORDER_ITEM_REFERENCE = 'Test01';
+
     /**
      * @var string
      */
@@ -76,7 +77,7 @@ class SalesOmsFacadeTest extends Unit
         // Arrange
         $this->tester->createSalesOrderItemForOrder(
             $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME)->getIdSalesOrder(),
-            (new SalesOrderItemTransfer())->setOrderItemReference(static::ORDER_ITEM_REFERENCE)->toArray()
+            (new SalesOrderItemTransfer())->setOrderItemReference(static::ORDER_ITEM_REFERENCE)->toArray(),
         );
 
         // Act

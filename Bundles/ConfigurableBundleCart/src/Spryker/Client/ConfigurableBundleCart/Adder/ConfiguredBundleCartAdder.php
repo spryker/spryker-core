@@ -60,7 +60,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
 
         $cartChangeTransfer = $this->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
             $createConfiguredBundleRequestTransfer,
-            new CartChangeTransfer()
+            new CartChangeTransfer(),
         );
 
         return $this->cartClient->addToCart($cartChangeTransfer);
@@ -106,7 +106,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->setTemplate(
                 (new ConfigurableBundleTemplateTransfer())
                     ->setUuid($configuredBundleTransfer->getTemplate()->getUuid())
-                    ->setName($configuredBundleTransfer->getTemplate()->getName())
+                    ->setName($configuredBundleTransfer->getTemplate()->getName()),
             );
     }
 
@@ -128,7 +128,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->setQuantityPerSlot($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
             ->setSlot(
                 (new ConfigurableBundleTemplateSlotTransfer())
-                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid())
+                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid()),
             );
 
         $itemTransfer

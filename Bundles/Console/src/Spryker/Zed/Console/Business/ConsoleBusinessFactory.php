@@ -23,7 +23,7 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConsoleRunnerHook(
             $this->getPreRunHookPlugins(),
-            $this->getPostRunHookPlugins()
+            $this->getPostRunHookPlugins(),
         );
     }
 

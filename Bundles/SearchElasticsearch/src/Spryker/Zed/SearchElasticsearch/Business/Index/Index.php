@@ -132,7 +132,7 @@ class Index implements IndexInterface
         return $this->elasticaClient->request(
             $this->config->getReindexUrl(),
             Request::POST,
-            $this->buildCopyCommandRequestData($sourceSearchContextTransfer, $targetSearchContextTransfer)
+            $this->buildCopyCommandRequestData($sourceSearchContextTransfer, $targetSearchContextTransfer),
         )->isOk();
     }
 

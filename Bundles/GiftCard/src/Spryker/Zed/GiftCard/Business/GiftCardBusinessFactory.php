@@ -67,7 +67,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createGiftCardActualValueHydrator(),
             $this->getEncodingService(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -79,7 +79,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCreator(
             $this->createGiftCardReader(),
             $this->createGiftCardCodeGenerator(),
-            $this->getEncodingService()
+            $this->getEncodingService(),
         );
     }
 
@@ -91,7 +91,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCodeGenerator(
             $this->createGiftCardReader(),
             $this->getGiftCardCodeCandidateValidationPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -102,7 +102,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderItemSaver(
             $this->getGiftCardAttributePlugins(),
-            $this->getEncodingService()
+            $this->getEncodingService(),
         );
     }
 
@@ -113,7 +113,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderGiftCardsRelationshipWriter(
             $this->createSalesOrderItemSaver(),
-            $this->createSalesOrderPaymentSaver()
+            $this->createSalesOrderPaymentSaver(),
         );
     }
 
@@ -206,7 +206,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->createGiftCardReader(),
             $this->createGiftCardDecisionRuleChecker(),
             $this->createGiftCardActualValueHydrator(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -216,7 +216,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardActualValueHydrator()
     {
         return new GiftCardActualValueHydrator(
-            $this->getGiftCardValueProviderPlugin()
+            $this->getGiftCardValueProviderPlugin(),
         );
     }
 
@@ -226,7 +226,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     protected function createGiftCardDecisionRuleChecker()
     {
         return new GiftCardDecisionRuleChecker(
-            $this->getGiftCardDecisionRulePlugins()
+            $this->getGiftCardDecisionRulePlugins(),
         );
     }
 
@@ -255,7 +255,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->createGiftCardReader(),
             $this->createGiftCardDecisionRuleChecker(),
             $this->createGiftCardActualValueHydrator(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -266,7 +266,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderPaymentSaver(
             $this->getPaymentSaverPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -286,7 +286,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardReplacer(
             $this->createGiftCardReader(),
             $this->createGiftCardCreator(),
-            $this->createGiftCardCodeGenerator()
+            $this->createGiftCardCodeGenerator(),
         );
     }
 
@@ -309,7 +309,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->createAllowedShipmentMethodGiftCardFilter(),
             $this->createDisallowedShipmentMethodGiftCardFilter(),
             $this->createShipmentMethodGiftCardChecker(),
-            $this->createShipmentMethodGiftCardReader()
+            $this->createShipmentMethodGiftCardReader(),
         );
     }
 
@@ -320,7 +320,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodGiftCardFilter(
             $this->createShipmentMethodCollectionRemover(),
-            $this->createShipmentMethodGiftCardAllowedChecker()
+            $this->createShipmentMethodGiftCardAllowedChecker(),
         );
     }
 
@@ -331,7 +331,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodGiftCardFilter(
             $this->createShipmentMethodCollectionRemover(),
-            $this->createShipmentMethodGiftCardDisallowedChecker()
+            $this->createShipmentMethodGiftCardDisallowedChecker(),
         );
     }
 

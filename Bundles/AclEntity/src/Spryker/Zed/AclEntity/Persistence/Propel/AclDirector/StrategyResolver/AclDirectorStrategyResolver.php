@@ -62,7 +62,7 @@ class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterfac
         int $operationMask
     ): AclQueryDirectorStrategyInterface {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRuleCollectionTransferSorter->sortByScopePriority(
-            $aclEntityRuleCollectionTransfer
+            $aclEntityRuleCollectionTransfer,
         );
         foreach ($aclEntityRuleCollectionTransfer->getAclEntityRules() as $aclEntityRuleTransfer) {
             if (
@@ -79,15 +79,15 @@ class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterfac
                         $aclEntityRuleCollectionTransfer,
                         $aclEntityRuleScope,
                         $query->getModelName(),
-                        $operationMask
-                    )
+                        $operationMask,
+                    ),
                 );
             }
 
             if ($aclEntityRuleScope === AclEntityConstants::SCOPE_INHERITED) {
                 return call_user_func(
                     $this->strategyContainer[AclEntityConstants::SCOPE_INHERITED],
-                    $aclEntityRuleCollectionTransfer
+                    $aclEntityRuleCollectionTransfer,
                 );
             }
         }
@@ -108,7 +108,7 @@ class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterfac
         int $operationMask
     ): AclQueryDirectorStrategyInterface {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRuleCollectionTransferSorter->sortByScopePriority(
-            $aclEntityRuleCollectionTransfer
+            $aclEntityRuleCollectionTransfer,
         );
 
         foreach ($aclEntityRuleCollectionTransfer->getAclEntityRules() as $aclEntityRuleTransfer) {
@@ -128,8 +128,8 @@ class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterfac
                         $aclEntityRuleCollectionTransfer,
                         AclEntityConstants::SCOPE_GLOBAL,
                         get_class($entity),
-                        $operationMask
-                    )
+                        $operationMask,
+                    ),
                 );
             }
 
@@ -140,15 +140,15 @@ class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterfac
                         $aclEntityRuleCollectionTransfer,
                         AclEntityConstants::SCOPE_SEGMENT,
                         get_class($entity),
-                        $operationMask
-                    )
+                        $operationMask,
+                    ),
                 );
             }
 
             if ($aclEntityRuleTransfer->getScopeOrFail() === AclEntityConstants::SCOPE_INHERITED) {
                 return call_user_func(
                     $this->strategyContainer[AclEntityConstants::SCOPE_INHERITED],
-                    $aclEntityRuleCollectionTransfer
+                    $aclEntityRuleCollectionTransfer,
                 );
             }
         }

@@ -23,7 +23,7 @@ class ProductRelationStorageFactory extends AbstractFactory
         return new RelatedProductReader(
             $this->createProductRelationStorageReader(),
             $this->getProductStorageClient(),
-            $this->getRelatedProductExpanderPlugins()
+            $this->getRelatedProductExpanderPlugins(),
         );
     }
 
@@ -35,7 +35,7 @@ class ProductRelationStorageFactory extends AbstractFactory
         return new UpSellingProductReader(
             $this->createProductRelationStorageReader(),
             $this->getProductStorageClient(),
-            $this->getRelatedProductExpanderPlugins()
+            $this->getRelatedProductExpanderPlugins(),
         );
     }
 

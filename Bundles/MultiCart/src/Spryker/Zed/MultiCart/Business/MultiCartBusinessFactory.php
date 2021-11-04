@@ -39,7 +39,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteActivator(
             $this->getQuoteFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -49,7 +49,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteNameResolver(): QuoteNameResolverInterface
     {
         return new QuoteNameResolver(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -60,7 +60,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteResponseExpander(
             $this->getQuoteFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -80,7 +80,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -91,7 +91,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     {
         return new MultiCartMessenger(
             $this->getRepository(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 

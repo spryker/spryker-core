@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
+use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -209,6 +210,22 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         return $this->getFactory()
             ->createWishlistAddItemPreCheck()
             ->checkWishlistItemProductIsNotDiscontinued($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
+     */
+    public function checkUpdateWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreUpdateItemCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createWishlistAddItemPreCheck()
+            ->checkUpdateWishlistItemProductIsNotDiscontinued($wishlistItemTransfer);
     }
 
     /**

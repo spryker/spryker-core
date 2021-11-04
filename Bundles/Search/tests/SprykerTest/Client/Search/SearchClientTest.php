@@ -300,7 +300,7 @@ class SearchClientTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $elasticsearchSearchHandlerMock->method('executeQuery')->willReturn(
-            $this->getMockBuilder(ResultSet::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(ResultSet::class)->disableOriginalConstructor()->getMock(),
         );
 
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
@@ -510,7 +510,7 @@ class SearchClientTest extends Unit
         $searchContextExpanderMock->method('expandSearchContext')
             ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) {
                 $searchContextTransfer->setElasticsearchContext(
-                    (new ElasticsearchSearchContextTransfer())->setIndexName(static::INDEX_NAME)->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE)
+                    (new ElasticsearchSearchContextTransfer())->setIndexName(static::INDEX_NAME)->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE),
                 );
 
                 return $searchContextTransfer;
@@ -542,7 +542,7 @@ class SearchClientTest extends Unit
         $searchContextExpanderPluginMock->method('expandSearchContext')
             ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) {
                 $searchContextTransfer->setElasticsearchContext(
-                    (new ElasticsearchSearchContextTransfer())->setIndexName(static::INDEX_NAME)->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE)
+                    (new ElasticsearchSearchContextTransfer())->setIndexName(static::INDEX_NAME)->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE),
                 );
 
                 return $searchContextTransfer;

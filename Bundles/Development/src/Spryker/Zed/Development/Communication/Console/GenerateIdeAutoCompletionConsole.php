@@ -21,6 +21,7 @@ class GenerateIdeAutoCompletionConsole extends Console
      * @var string
      */
     protected const OLD_COMMAND_NAME = 'dev:ide:generate-auto-completion';
+
     /**
      * @var string
      */

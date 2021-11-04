@@ -17,10 +17,12 @@ class GlueControllerFinder implements GlueControllerFinderInterface
      * @var string
      */
     protected const PATTERN_CONTROLLER_NAMESPACE = '%s\Controller\%s';
+
     /**
      * @var string
      */
     protected const PATTERN_CONTROLLER_FILENAME = '%s.php';
+
     /**
      * @var string
      */
@@ -96,7 +98,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
         return sprintf(
             static::PATTERN_CONTROLLER_NAMESPACE,
             $moduleNamespace,
-            $controllerClass
+            $controllerClass,
         );
     }
 

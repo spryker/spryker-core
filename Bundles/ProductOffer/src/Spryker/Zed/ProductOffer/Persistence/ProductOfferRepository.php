@@ -42,10 +42,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
                 $productOfferEntity,
-                new ProductOfferTransfer()
+                new ProductOfferTransfer(),
             );
             $productOfferTransfer->setStores(new ArrayObject(
-                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores()),
             ));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
@@ -73,10 +73,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferMapper = $this->getFactory()->createProductOfferMapper();
         $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
             $productOfferEntity,
-            new ProductOfferTransfer()
+            new ProductOfferTransfer(),
         );
         $productOfferTransfer->setStores(new ArrayObject(
-            $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+            $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores()),
         ));
 
         return $productOfferTransfer;
@@ -161,7 +161,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
             $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteria->getIsActiveConcreteProduct());
         }
@@ -175,7 +175,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOffer\Persistence\SpyProductOffer[]
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

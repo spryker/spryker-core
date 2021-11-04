@@ -36,7 +36,7 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
             $this->getPersistentCartFacade(),
             $this->getCartsRestApiFacade(),
             $this->createConfiguredBundleMapper(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
         );
     }
 
@@ -50,7 +50,7 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
             $this->getCartsRestApiFacade(),
             $this->createConfiguredBundleMapper(),
             $this->createQuotePermissionChecker(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -60,7 +60,7 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
     public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
     {
         return new ConfiguredBundleMapper(
-            $this->getConfigurableBundleCartService()
+            $this->getConfigurableBundleCartService(),
         );
     }
 

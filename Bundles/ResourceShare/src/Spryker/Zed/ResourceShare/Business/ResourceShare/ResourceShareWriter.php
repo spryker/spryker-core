@@ -88,7 +88,7 @@ class ResourceShareWriter implements ResourceShareWriterInterface
     protected function findExistingResourceShare(ResourceShareTransfer $resourceShareTransfer): ?ResourceShareTransfer
     {
         return $this->resourceShareRepository->findResourceShareByUuid(
-            $this->resourceShareEntityManager->buildResourceShare($resourceShareTransfer)->getUuid()
+            $this->resourceShareEntityManager->buildResourceShare($resourceShareTransfer)->getUuid(),
         );
     }
 }

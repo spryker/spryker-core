@@ -30,18 +30,22 @@ class ImageSetForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_SET_ID = 'id_product_image_set';
+
     /**
      * @var string
      */
     public const FIELD_SET_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_SET_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     public const FIELD_SET_FK_PRODUCT = 'fk_product';
+
     /**
      * @var string
      */
@@ -101,7 +105,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -120,7 +124,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -134,7 +138,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -151,7 +155,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -165,7 +169,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -179,7 +183,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -193,7 +197,7 @@ class ImageSetForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

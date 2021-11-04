@@ -23,18 +23,22 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+
     /**
      * @var string
      */
@@ -71,7 +75,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ProductOfferPricesRestApiToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 
@@ -87,7 +91,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE, function (Container $container) {
             return new ProductOfferPricesRestApiToMerchantProductOfferStorageClientBridge(
-                $container->getLocator()->merchantProductOfferStorage()->client()
+                $container->getLocator()->merchantProductOfferStorage()->client(),
             );
         });
 
@@ -103,7 +107,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductOfferPricesRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -119,7 +123,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ProductOfferPricesRestApiToPriceProductClientBridge(
-                $container->getLocator()->priceProduct()->client()
+                $container->getLocator()->priceProduct()->client(),
             );
         });
 

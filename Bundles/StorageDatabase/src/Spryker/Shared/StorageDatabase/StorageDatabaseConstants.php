@@ -17,6 +17,7 @@ interface StorageDatabaseConstants
      * - Defines DBMS for storage database.
      *
      * @api
+     *
      * @var string
      */
     public const DB_ENGINE = 'STORAGE_DATABASE:DB_ENGINE';
@@ -26,6 +27,7 @@ interface StorageDatabaseConstants
      * - Defines host for storage database.
      *
      * @api
+     *
      * @var string
      */
     public const DB_HOST = 'STORAGE_DATABASE:DB_HOST';
@@ -35,6 +37,7 @@ interface StorageDatabaseConstants
      * - Defines TCP port for accessing storage database.
      *
      * @api
+     *
      * @var string
      */
     public const DB_PORT = 'STORAGE_DATABASE:DB_PORT';
@@ -44,6 +47,7 @@ interface StorageDatabaseConstants
      * - Defines storage database name.
      *
      * @api
+     *
      * @var string
      */
     public const DB_DATABASE = 'STORAGE_DATABASE:DB_DATABASE';
@@ -53,6 +57,7 @@ interface StorageDatabaseConstants
      * - Defines username for accessing storage database.
      *
      * @api
+     *
      * @var string
      */
     public const DB_USERNAME = 'STORAGE_DATABASE:DB_USERNAME';
@@ -62,6 +67,7 @@ interface StorageDatabaseConstants
      * - Defines password for accessing storage database.
      *
      * @api
+     *
      * @var string
      */
     public const DB_PASSWORD = 'STORAGE_DATABASE:DB_PASSWORD';
@@ -71,6 +77,7 @@ interface StorageDatabaseConstants
      * - Defines debug mode for connection to storage database.
      *
      * @api
+     *
      * @var string
      */
     public const DB_DEBUG = 'STORAGE_DATABASE:DB_DEBUG';

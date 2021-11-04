@@ -53,7 +53,7 @@ class SalesOrderThresholdTypeInstaller implements SalesOrderThresholdTypeInstall
     {
         foreach ($this->salesOrderThresholdStrategyPlugins as $salesOrderThresholdStrategy) {
             $this->salesOrderThresholdEntityManager->saveSalesOrderThresholdType(
-                $salesOrderThresholdStrategy->toTransfer()
+                $salesOrderThresholdStrategy->toTransfer(),
             );
         }
     }

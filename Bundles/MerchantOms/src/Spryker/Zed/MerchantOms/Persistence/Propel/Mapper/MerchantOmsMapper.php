@@ -27,7 +27,7 @@ class MerchantOmsMapper
         foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
             $stateMachineItemTransfer = $this->mapMerchantSalesOrderItemEntityToStateMachineItemTransfer(
                 $merchantSalesOrderItemEntity,
-                new StateMachineItemTransfer()
+                new StateMachineItemTransfer(),
             );
 
             $stateMachineItemTransfers[] = $stateMachineItemTransfer;

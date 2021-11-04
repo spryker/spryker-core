@@ -98,7 +98,7 @@ class CustomerProvider implements CustomerProviderInterface
         }
 
         $customerIdentifierTransfer = $this->executeOauthCustomerIdentifierExpanderPlugins(
-            $customerResponseTransfer->getCustomerTransfer()
+            $customerResponseTransfer->getCustomerTransfer(),
         );
 
         return $oauthUserTransfer

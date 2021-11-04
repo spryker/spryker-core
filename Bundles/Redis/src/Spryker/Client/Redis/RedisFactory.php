@@ -25,7 +25,7 @@ class RedisFactory extends AbstractFactory
     public function createRedisAdapterProvider(): RedisAdapterProviderInterface
     {
         return new RedisAdapterProvider(
-            $this->createRedisAdapterFactory()
+            $this->createRedisAdapterFactory(),
         );
     }
 
@@ -36,7 +36,7 @@ class RedisFactory extends AbstractFactory
     {
         return new PredisAdapterFactory(
             $this->getConfig(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

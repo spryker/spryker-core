@@ -58,7 +58,7 @@ class ProductPackagingUnitTypeKeyGenerator implements ProductPackagingUnitTypeKe
 
         return sprintf(
             static::PRODUCT_PACKAGING_UNIT_TYPE_KEY,
-            $this->utilTextService->generateSlug($enTranslation->getName())
+            $this->utilTextService->generateSlug($enTranslation->getName()),
         );
     }
 }

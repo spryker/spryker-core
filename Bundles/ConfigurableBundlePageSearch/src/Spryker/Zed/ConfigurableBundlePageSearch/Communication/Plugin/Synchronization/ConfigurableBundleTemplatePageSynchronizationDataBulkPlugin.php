@@ -61,7 +61,7 @@ class ConfigurableBundleTemplatePageSynchronizationDataBulkPlugin extends Abstra
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->getFacade()->getConfigurableBundleTemplatePageSearchCollection(
             (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($ids)
                 ->setOffset($offset)
-                ->setLimit($limit)
+                ->setLimit($limit),
         );
 
         foreach ($configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches() as $configurableBundleTemplatePageSearchTransfer) {

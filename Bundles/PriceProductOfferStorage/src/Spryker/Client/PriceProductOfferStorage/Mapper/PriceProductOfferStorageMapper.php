@@ -32,7 +32,7 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
                     ->setType(PriceProductOfferStorageConfig::DIMENSION_TYPE_PRODUCT_OFFER)
-                    ->setProductOfferReference($priceProductOfferStorageTransfer->getProductOfferReference())
+                    ->setProductOfferReference($priceProductOfferStorageTransfer->getProductOfferReference()),
             )
             ->setIsMergeable(false)
             ->setPriceTypeName($priceProductOfferStorageTransfer->getPriceType())
@@ -40,10 +40,10 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
                 (new MoneyValueTransfer())
                     ->setPriceData($priceProductOfferStorageTransfer->getPriceData() ?: null)
                     ->setCurrency(
-                        (new CurrencyTransfer())->setCode($priceProductOfferStorageTransfer->getCurrency())
+                        (new CurrencyTransfer())->setCode($priceProductOfferStorageTransfer->getCurrency()),
                     )
                     ->setNetAmount($priceProductOfferStorageTransfer->getNetPrice())
-                    ->setGrossAmount($priceProductOfferStorageTransfer->getGrossPrice())
+                    ->setGrossAmount($priceProductOfferStorageTransfer->getGrossPrice()),
             );
 
         return $priceProductTransfer;

@@ -65,7 +65,7 @@ class CategoryAttributeStorageListener extends AbstractPlugin implements EventBu
             $eventTransfers,
             [
                 SpyCategoryAttributeTableMap::COL_NAME,
-            ]
+            ],
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY);

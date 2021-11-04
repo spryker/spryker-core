@@ -16,7 +16,7 @@ class StockMapper implements StockMapperInterface
     /**
      * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapStoresToWarehouses(array $stockTransfers): array
     {
@@ -32,7 +32,7 @@ class StockMapper implements StockMapperInterface
      * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
      * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapWarehousesToStores(array $stockTransfers, array $storeTransfers): array
     {
@@ -59,9 +59,9 @@ class StockMapper implements StockMapperInterface
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
-     * @param array<string[]> $storeStockMapping
+     * @param array<array<string>> $storeStockMapping
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function mapStockToStores(StockTransfer $stockTransfer, array $storeTransfers, array $storeStockMapping): array
     {

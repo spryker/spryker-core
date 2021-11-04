@@ -10,7 +10,7 @@ namespace Spryker\Shared\Log\Sanitizer;
 class Sanitizer implements SanitizerInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $sanitizeKeys;
 
@@ -20,7 +20,7 @@ class Sanitizer implements SanitizerInterface
     protected $sanitizedValue;
 
     /**
-     * @param array $sanitizeKeys
+     * @param array<string> $sanitizeKeys
      * @param string $sanitizedValue
      */
     public function __construct(array $sanitizeKeys, $sanitizedValue)

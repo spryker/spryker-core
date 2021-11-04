@@ -53,12 +53,12 @@ class IsOauthUserRestrictedTest extends Unit
         //Assert
         $this->assertTrue(
             $oauthUserRestrictionResponseTransfer->getIsRestricted(),
-            'Expected that `IsRestricted` flag equals to true.'
+            'Expected that `IsRestricted` flag equals to true.',
         );
         $this->assertGreaterThan(
             0,
             $oauthUserRestrictionResponseTransfer->getMessages()->count(),
-            'Expected to receive an error message.'
+            'Expected to receive an error message.',
         );
     }
 
@@ -82,12 +82,12 @@ class IsOauthUserRestrictedTest extends Unit
         //Assert
         $this->assertFalse(
             $oauthUserRestrictionResponseTransfer->getIsRestricted(),
-            'Expected that `IsRestricted` flag equals to false.'
+            'Expected that `IsRestricted` flag equals to false.',
         );
         $this->assertSame(
             0,
             $oauthUserRestrictionResponseTransfer->getMessages()->count(),
-            'Expected to not receive any error messages.'
+            'Expected to not receive any error messages.',
         );
     }
 

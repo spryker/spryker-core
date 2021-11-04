@@ -29,7 +29,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     ) {
         $checkoutErrorMessages = $this->getAvailabilityErrorMessages(
             $checkoutResponseTransfer->getErrors(),
-            $this->getCheckoutAvailabilityFailedItems($quoteTransfer)
+            $this->getCheckoutAvailabilityFailedItems($quoteTransfer),
         );
 
         if (count($checkoutErrorMessages) === 0) {
@@ -153,7 +153,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
         $processedErrorMessages = array_merge(
             $processedErrorMessages,
-            $productBundleErrorMessages->getArrayCopy()
+            $productBundleErrorMessages->getArrayCopy(),
         );
 
         return new ArrayObject($processedErrorMessages);

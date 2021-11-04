@@ -21,6 +21,7 @@ class MigrateConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:migrate';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class MigrateConsole extends Console
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
-            $output
+            $output,
         );
     }
 }

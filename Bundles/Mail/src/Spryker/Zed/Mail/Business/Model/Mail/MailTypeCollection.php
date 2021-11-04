@@ -54,7 +54,7 @@ class MailTypeCollection implements MailTypeCollectionAddInterface, MailTypeColl
 
         throw new MailNotFoundException(sprintf(
             'No mail by type "%s" found in MailCollection. Please use MailDependencyProvider to add the expected Mails.',
-            $mailType
+            $mailType,
         ));
     }
 }

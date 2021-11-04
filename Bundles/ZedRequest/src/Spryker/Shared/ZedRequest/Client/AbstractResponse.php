@@ -14,7 +14,7 @@ use Spryker\Shared\ZedRequest\Client\Exception\TransferNotFoundException;
 abstract class AbstractResponse extends AbstractObject implements EmbeddedTransferInterface, ResponseInterface
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $values = [
         ResponseInterface::INFO_MESSAGES => [],
@@ -93,7 +93,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param array $errorMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $errorMessages
      *
      * @return $this
      */
@@ -156,7 +156,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param array $messages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messages
      *
      * @return $this
      */
@@ -195,7 +195,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     }
 
     /**
-     * @param array $successMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $successMessages
      *
      * @return $this
      */
@@ -249,7 +249,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     {
         if (!empty($this->values[ResponseInterface::TRANSFER_CLASSNAME])) {
             $transfer = $this->createTransferObject(
-                $this->values[ResponseInterface::TRANSFER_CLASSNAME]
+                $this->values[ResponseInterface::TRANSFER_CLASSNAME],
             );
             $transfer->fromArray($this->values[ResponseInterface::TRANSFER], true);
 

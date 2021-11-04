@@ -37,7 +37,7 @@ class MerchantSearchFactory extends AbstractFactory
             $this->getSearchClient(),
             $this->getMerchantSearchQueryPlugin(),
             $this->getMerchantSearchQueryExpanderPlugins(),
-            $this->getMerchantSearchResultFormatterPlugins()
+            $this->getMerchantSearchResultFormatterPlugins(),
         );
     }
 
@@ -71,7 +71,7 @@ class MerchantSearchFactory extends AbstractFactory
     public function createMerchantSearchPaginationConfigBuilder(): MerchantSearchPaginationConfigBuilderInterface
     {
         return new MerchantSearchPaginationConfigBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 }

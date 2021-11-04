@@ -90,13 +90,13 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
         $productAbstractIdsToRemove = $this->getProductAbstractIdsToRemove(
             array_keys($productOptions),
-            array_keys($productAbstractOptionStorageEntities)
+            array_keys($productAbstractOptionStorageEntities),
         );
 
         if ($productAbstractIdsToRemove) {
             $deletableProductAbstractOptionStorageEntities = $this->filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
                 $productAbstractOptionStorageEntities,
-                $productAbstractIdsToRemove
+                $productAbstractIdsToRemove,
             );
 
             $this->deleteProductAbstractOptionStorageEntities($deletableProductAbstractOptionStorageEntities);
@@ -133,7 +133,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
      * @param array<int> $productAbstractIds
      *
      * @return array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>
@@ -156,7 +156,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int $idProductAbstract
      * @param array $productOptions
-     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -250,7 +250,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]>
+     * @return array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>>
      */
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
@@ -312,7 +312,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         $priceResponse = $this->productOptionFacade->getAllProductOptionValuePrices(
-            (new ProductOptionValueStorePricesRequestTransfer())->setPrices($moneyValueCollectionWithSpecificStore)
+            (new ProductOptionValueStorePricesRequestTransfer())->setPrices($moneyValueCollectionWithSpecificStore),
         );
 
         return $priceResponse->getStorePrices();
@@ -331,7 +331,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
                 (new MoneyValueTransfer())
                     ->fromArray($price, true)
                     ->setNetAmount($price['net_price'])
-                    ->setGrossAmount($price['gross_price'])
+                    ->setGrossAmount($price['gross_price']),
             );
         }
 

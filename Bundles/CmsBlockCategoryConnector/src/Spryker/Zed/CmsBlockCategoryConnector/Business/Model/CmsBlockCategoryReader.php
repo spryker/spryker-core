@@ -105,7 +105,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
 
         $cmsBlockTransfers = $this->getCmsBlockCollection(
             $categoryTransfer->getIdCategoryOrFail(),
-            $categoryTransfer->getFkCategoryTemplateOrFail()
+            $categoryTransfer->getFkCategoryTemplateOrFail(),
         );
 
         foreach ($cmsBlockTransfers as $cmsBlockTransfer) {

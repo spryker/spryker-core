@@ -34,7 +34,7 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
             ->addJoin(
                 SpyProductDiscontinuedTableMap::COL_FK_PRODUCT,
                 SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addAsColumn(ProductDiscontinuedTransfer::FK_PRODUCT, SpyProductBundleTableMap::COL_FK_PRODUCT);
         $productIds = $productDiscontinuedPropelQuery

@@ -14,7 +14,7 @@ interface ProductOptionStorageReaderInterface
      * @param string $localeName
      * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductOptionsByProductAbstractSkus(
         array $productAbstractSkus,
@@ -34,7 +34,7 @@ interface ProductOptionStorageReaderInterface
      * @param string $localeName
      * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductOptionsByProductConcreteSkus(
         array $productConcreteSkus,

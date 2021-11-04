@@ -31,7 +31,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
      * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
      * @param mixed $resource
      * @param array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface> $routerEnhancerPlugins
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(LoaderInterface $loader, $resource, array $routerEnhancerPlugins, array $options = [])
     {

@@ -55,7 +55,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         }
 
         throw new ProductOptionNotFoundException(
-            sprintf('Product option with id "%d" not found in persistence.', $idProductOptionValue)
+            sprintf('Product option with id "%d" not found in persistence.', $idProductOptionValue),
         );
     }
 
@@ -90,7 +90,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         return $this->hydrateProductOptionCollectionTransfer(
             new ProductOptionCollectionTransfer(),
             $productOptionValueEntities->getArrayCopy(),
-            $productOptionCriteriaTransfer
+            $productOptionCriteriaTransfer,
         );
     }
 
@@ -146,8 +146,8 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
                 $this->hydrateProductOptionTransfer(
                     $productOptionValueEntity,
                     $productOptionCriteriaTransfer->getCurrencyIsoCode(),
-                    $productOptionCriteriaTransfer->getPriceMode()
-                )
+                    $productOptionCriteriaTransfer->getPriceMode(),
+                ),
             );
         }
 

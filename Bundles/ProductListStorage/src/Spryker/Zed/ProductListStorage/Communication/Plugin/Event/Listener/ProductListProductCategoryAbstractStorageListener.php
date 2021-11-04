@@ -37,7 +37,7 @@ class ProductListProductCategoryAbstractStorageListener extends AbstractPlugin i
         $this->preventTransaction();
 
         $productAbstractIds = $this->getFacade()->getProductAbstractIdsByCategoryIds(
-            $this->getProductListCategoryIds($eventEntityTransfers, $eventName)
+            $this->getProductListCategoryIds($eventEntityTransfers, $eventName),
         );
 
         $this->getFacade()->publishProductAbstract(array_unique($productAbstractIds));

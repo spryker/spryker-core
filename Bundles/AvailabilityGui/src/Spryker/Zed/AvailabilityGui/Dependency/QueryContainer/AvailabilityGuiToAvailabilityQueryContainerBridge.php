@@ -97,7 +97,7 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
             $productAbstractIds,
             $idLocale,
             $idStore,
-            $stockNames
+            $stockNames,
         );
     }
 

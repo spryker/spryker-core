@@ -52,7 +52,7 @@ class PrepareLocalizedItemsStep implements DataImportStepInterface
             $localizedProductSetTermParameters[] = [
                 SpyContentLocalizedTableMap::COL_FK_LOCALE => $idLocale,
                 SpyContentLocalizedTableMap::COL_PARAMETERS => $this->utilEncodingService->encodeJson(
-                    (new ContentProductSetTermTransfer())->setIdProductSet($dataSet[$localizedColumnId])->toArray()
+                    (new ContentProductSetTermTransfer())->setIdProductSet($dataSet[$localizedColumnId])->toArray(),
                 ),
             ];
         }

@@ -24,10 +24,12 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
+
     /**
      * @var string
      */
     public const SERVICE_DEBUG = 'debug';
+
     /**
      * @var string
      */

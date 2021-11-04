@@ -13,9 +13,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 class BulkWriter extends Writer implements BulkWriterInterface
 {
     /**
-     * @phpstan-var array<mixed>
-     *
-     * @var array
+     * @var array<mixed>
      */
     protected $recordsToTouch = [];
 

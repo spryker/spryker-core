@@ -49,7 +49,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
             if (!$this->isValidCmsSlot($idCmsSlot)) {
                 $validationResponseTransfer->setIsSuccess(false);
                 $validationResponseTransfer->addErrorMessage(
-                    $this->createMessageTransfer($idCmsSlot)
+                    $this->createMessageTransfer($idCmsSlot),
                 );
             }
         }
@@ -93,7 +93,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
         return (new MessageTransfer())
             ->setValue(sprintf(
                 'CMS slot with ID %s is not valid for saving in CMS slot block relation.',
-                $idCmsSlot
+                $idCmsSlot,
             ));
     }
 }

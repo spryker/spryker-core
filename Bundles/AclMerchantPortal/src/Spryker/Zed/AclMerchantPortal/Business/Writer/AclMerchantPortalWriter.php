@@ -32,14 +32,17 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
      * @var string
      */
     protected const KEY_FK_MERCHANT = 'fk_merchant';
+
     /**
      * @var string
      */
     protected const KEY_FK_MERCHANT_USER = 'fk_merchant_user';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_REFERENCE = 'Merchant reference not found';
+
     /**
      * @var string
      */
@@ -47,6 +50,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
 
     /**
      * @uses \Spryker\Shared\AclEntity\AclEntityConstants::SCOPE_SEGMENT
+     *
      * @var string
      */
     protected const SCOPE_SEGMENT = 'segment';
@@ -102,14 +106,14 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
         if (!$merchantTransfer->getMerchantReference()) {
             return $merchantResponseTransfer->setIsSuccess(false)
                 ->addError(
-                    (new MerchantErrorTransfer())->setMessage(static::ERROR_MESSAGE_MERCHANT_REFERENCE)
+                    (new MerchantErrorTransfer())->setMessage(static::ERROR_MESSAGE_MERCHANT_REFERENCE),
                 );
         }
 
         if (!$merchantTransfer->getName()) {
             return $merchantResponseTransfer->setIsSuccess(false)
                 ->addError(
-                    (new MerchantErrorTransfer())->setMessage(static::ERROR_MESSAGE_MERCHANT_NAME)
+                    (new MerchantErrorTransfer())->setMessage(static::ERROR_MESSAGE_MERCHANT_NAME),
                 );
         }
 
@@ -120,7 +124,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
             $aclMerchantSegmentName,
             $aclMerchantReference,
             SpyMerchant::class,
-            [$merchantTransfer->getIdMerchantOrFail()]
+            [$merchantTransfer->getIdMerchantOrFail()],
         );
         $aclMerchantRoleName = $this->aclMerchantPortalGenerator->generateAclMerchantRoleName($merchantTransfer);
         $roleTransfer = (new RoleTransfer())->setName($aclMerchantRoleName)->setReference($aclMerchantReference);
@@ -129,7 +133,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
             $roleTransfer,
             $aclEntitySegmentResponseTransfer->getAclEntitySegmentOrFail(),
             $this->aclMerchantPortalConfig->getMerchantAclRoleRules(),
-            $this->aclMerchantPortalConfig->getMerchantAclRoleEntityRules()
+            $this->aclMerchantPortalConfig->getMerchantAclRoleEntityRules(),
         );
         $rolesTransfer = (new RolesTransfer())->addRole($roleTransfer);
 
@@ -150,14 +154,14 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
     public function createMerchantUserAclData(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
     {
         $aclMerchantReference = $this->aclMerchantPortalGenerator->generateAclMerchantReference(
-            $merchantUserTransfer->getMerchantOrFail()
+            $merchantUserTransfer->getMerchantOrFail(),
         );
         $aclMerchantUserSegmentName = $this->aclMerchantPortalGenerator->generateAclMerchantUserSegmentName(
             $merchantUserTransfer->getMerchantOrFail(),
-            $merchantUserTransfer->getUserOrFail()
+            $merchantUserTransfer->getUserOrFail(),
         );
         $aclMerchantUserReference = $this->aclMerchantPortalGenerator->generateAclMerchantUserReference(
-            $merchantUserTransfer->getUserOrFail()
+            $merchantUserTransfer->getUserOrFail(),
         );
         $groupCriteriaTransfer = (new GroupCriteriaTransfer())
             ->setReference($aclMerchantReference);
@@ -171,7 +175,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
             $aclMerchantUserSegmentName,
             $aclMerchantUserReference,
             SpyMerchantUser::class,
-            [$merchantUserTransfer->getIdMerchantUserOrFail()]
+            [$merchantUserTransfer->getIdMerchantUserOrFail()],
         );
         $aclMerchantUserRoleName = $this->aclMerchantPortalGenerator->generateAclMerchantUserRoleName($merchantUserTransfer);
         $roleTransfer = (new RoleTransfer())->setName($aclMerchantUserRoleName)->setReference($aclMerchantUserReference);
@@ -180,7 +184,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
             $roleTransfer,
             $aclEntitySegmentResponseTransfer->getAclEntitySegmentOrFail(),
             $this->aclMerchantPortalConfig->getMerchantUserAclRoleRules(),
-            $this->aclMerchantPortalConfig->getMerchantUserAclRoleEntityRules()
+            $this->aclMerchantPortalConfig->getMerchantUserAclRoleEntityRules(),
         );
         $rolesTransfer = (new RolesTransfer())->addRole($roleTransfer);
 
@@ -193,20 +197,20 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
         if ($merchantGroupTransfer) {
             $this->aclFacade->addUserToGroup(
                 $merchantUserTransfer->getIdUserOrFail(),
-                $merchantGroupTransfer->getIdAclGroupOrFail()
+                $merchantGroupTransfer->getIdAclGroupOrFail(),
             );
         }
 
         if ($productViewerGroupTransfer) {
             $this->aclFacade->addUserToGroup(
                 $merchantUserTransfer->getIdUserOrFail(),
-                $productViewerGroupTransfer->getIdAclGroupOrFail()
+                $productViewerGroupTransfer->getIdAclGroupOrFail(),
             );
         }
 
         $this->aclFacade->addUserToGroup(
             $merchantUserTransfer->getIdUserOrFail(),
-            $merchantUserGroupTransfer->getIdAclGroupOrFail()
+            $merchantUserGroupTransfer->getIdAclGroupOrFail(),
         );
 
         return $merchantUserTransfer;

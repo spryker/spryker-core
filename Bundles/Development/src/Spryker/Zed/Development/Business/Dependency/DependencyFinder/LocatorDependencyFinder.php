@@ -57,7 +57,7 @@ class LocatorDependencyFinder implements DependencyFinderInterface
         foreach ($dependencyModules as $module) {
             $dependencyContainer->addDependency(
                 $module,
-                $this->getType()
+                $this->getType(),
             );
         }
 

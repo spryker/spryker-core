@@ -53,7 +53,7 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
         ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
     ): ShoppingListItemResponseTransfer {
         $shoppingListItemResponseTransfer = $this->shoppingListItemReader->findShoppingListItem(
-            $shoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer,
         );
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
@@ -63,14 +63,14 @@ class ShoppingListItemUpdater implements ShoppingListItemUpdaterInterface
         $shoppingListItemTransfer = $shoppingListItemResponseTransfer->getShoppingListItem()
             ->fromArray(
                 $shoppingListItemRequestTransfer->getShoppingListItem()->modifiedToArray(),
-                true
+                true,
             );
 
         $shoppingListItemResponseTransfer = $this->shoppingListFacade->updateShoppingListItemById($shoppingListItemTransfer);
 
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToRestCodes(
-                $shoppingListItemResponseTransfer
+                $shoppingListItemResponseTransfer,
             );
         }
 

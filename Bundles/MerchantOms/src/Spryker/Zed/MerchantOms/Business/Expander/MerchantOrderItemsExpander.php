@@ -58,14 +58,14 @@ class MerchantOrderItemsExpander implements MerchantOrderItemsExpanderInterface
         }
 
         $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemsByStateIds(
-            array_unique($stateMachineItemStateIds)
+            array_unique($stateMachineItemStateIds),
         );
 
         foreach ($merchantOrderItemTransfers as $merchantOrderItemTransfer) {
             foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
                 if ($merchantOrderItemTransfer->getIdMerchantOrderItem() === $stateMachineItemTransfer->getIdentifier()) {
                     $merchantOrderItemTransfer->setManualEvents(
-                        $this->stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer)
+                        $this->stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer),
                     );
                 }
             }

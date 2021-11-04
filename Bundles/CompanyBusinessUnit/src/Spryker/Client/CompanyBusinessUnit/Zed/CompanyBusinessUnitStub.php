@@ -41,7 +41,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer */
         $companyBusinessUnitTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-company-business-unit-by-id',
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         return $companyBusinessUnitTransfer;
@@ -58,7 +58,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
         $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/create',
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         return $companyBusinessUnitResponseTransfer;
@@ -75,7 +75,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
         $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/update',
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         return $companyBusinessUnitResponseTransfer;
@@ -92,7 +92,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
         $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/delete',
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         return $companyBusinessUnitResponseTransfer;
@@ -109,7 +109,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer */
         $companyBusinessUnitCollectionTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-company-business-unit-collection',
-            $companyBusinessUnitCriteriaFilterTransfer
+            $companyBusinessUnitCriteriaFilterTransfer,
         );
 
         return $companyBusinessUnitCollectionTransfer;
@@ -125,7 +125,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeCollectionTransfer $companyBusinessUnitTreeNodeCollection */
         $companyBusinessUnitTreeNodeCollection = $this->zedRequestClient->call(
             '/company-business-unit/gateway/get-customer-company-business-unit-tree',
-            $customerTransfer
+            $customerTransfer,
         );
 
         return $companyBusinessUnitTreeNodeCollection;
@@ -141,7 +141,7 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
         /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
         $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call(
             '/company-business-unit/gateway/find-company-business-unit-by-uuid',
-            $companyBusinessUnitTransfer
+            $companyBusinessUnitTransfer,
         );
 
         return $companyBusinessUnitResponseTransfer;

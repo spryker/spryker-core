@@ -53,7 +53,7 @@ class RootCategoryCreateDataProvider
         $categoryTransfer->setCategoryNode(
             (new NodeTransfer())
                 ->setIsMain(true)
-                ->setIsRoot(true)
+                ->setIsRoot(true),
         );
 
         return $this->categoryExpander->expandCategoryWithLocalizedAttributes($categoryTransfer);

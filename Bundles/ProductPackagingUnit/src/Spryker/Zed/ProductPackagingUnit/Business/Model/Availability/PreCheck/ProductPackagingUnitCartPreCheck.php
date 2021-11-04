@@ -21,14 +21,17 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
      * @var string
      */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
+
     /**
      * @var string
      */
     public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+
     /**
      * @var string
      */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+
     /**
      * @var string
      */
@@ -69,12 +72,12 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
 
             $cartErrorMessages = $this->collectCartErrorMessages(
                 $cartErrorMessages,
-                $this->checkPackagingUnitAvailability($itemTransfer, $cartChangeTransfer)
+                $this->checkPackagingUnitAvailability($itemTransfer, $cartChangeTransfer),
             );
 
             $cartErrorMessages = $this->collectCartErrorMessages(
                 $cartErrorMessages,
-                $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $cartChangeTransfer)
+                $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $cartChangeTransfer),
             );
         }
 
@@ -93,7 +96,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     ): ?MessageTransfer {
         $isPackagingUnitSellable = $this->isPackagingUnitSellable(
             $itemTransfer,
-            $cartChangeTransfer->getQuote()->getStore()
+            $cartChangeTransfer->getQuote()->getStore(),
         );
 
         if ($isPackagingUnitSellable) {
@@ -102,7 +105,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
 
         $productAvailability = $this->findProductConcreteAvailability(
             $itemTransfer,
-            $cartChangeTransfer->getQuote()->getStore()
+            $cartChangeTransfer->getQuote()->getStore(),
         );
 
         return $this->createMessageTransfer(
@@ -110,7 +113,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
             [
                 static::SKU_TRANSLATION_PARAMETER => $itemTransfer->getSku(),
                 static::STOCK_TRANSLATION_PARAMETER => $productAvailability->trim()->toString(),
-            ]
+            ],
         );
     }
 
@@ -127,7 +130,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
         $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
             $itemTransfer,
             clone $cartChangeTransfer->getItems(),
-            $cartChangeTransfer->getQuote()->getStore()
+            $cartChangeTransfer->getQuote()->getStore(),
         );
 
         if ($isPackagingUnitLeadProductSellable) {
@@ -136,7 +139,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
 
         return $this->createMessageTransfer(
             static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
-            ['sku' => $itemTransfer->getSku()]
+            ['sku' => $itemTransfer->getSku()],
         );
     }
 

@@ -22,6 +22,7 @@ class MaintenanceController extends AbstractController
      * @var string
      */
     public const MESSAGE_RESPONSE = 'Response: %s';
+
     /**
      * @var string
      */
@@ -64,7 +65,7 @@ class MaintenanceController extends AbstractController
         $table = $this->getFactory()->createSearchTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 

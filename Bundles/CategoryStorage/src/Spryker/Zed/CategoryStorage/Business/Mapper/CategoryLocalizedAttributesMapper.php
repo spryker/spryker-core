@@ -27,7 +27,7 @@ class CategoryLocalizedAttributesMapper implements CategoryLocalizedAttributesMa
     ): CategoryNodeStorageTransfer {
         $categoryLocalizedAttributesTransfer = $this->findCategoryLocalizedAttributesTransferForLocale(
             $categoryLocalizedAttributesTransfers,
-            $localeName
+            $localeName,
         );
 
         if (!$categoryLocalizedAttributesTransfer) {

@@ -74,7 +74,7 @@ class MoneyValueConverter implements MoneyValueConverterInterface
     protected function convertSinglePrice(ClauseTransfer $clauseTransfer)
     {
         $amountInCents = $this->moneyFacade->convertDecimalToInteger(
-            $this->formatValue($clauseTransfer->getValue())
+            $this->formatValue($clauseTransfer->getValue()),
         );
         $clauseTransfer->setValue($amountInCents);
     }

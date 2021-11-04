@@ -84,7 +84,7 @@ class ConfigurableBundleTranslationWriter implements ConfigurableBundleTranslati
         $this->persistTranslation(
             $translationKey,
             $configurableBundleTemplateTranslationTransfer->getName(),
-            $configurableBundleTemplateTranslationTransfer->getLocale()
+            $configurableBundleTemplateTranslationTransfer->getLocale(),
         );
     }
 
@@ -105,7 +105,7 @@ class ConfigurableBundleTranslationWriter implements ConfigurableBundleTranslati
         $this->persistTranslation(
             $translationKey,
             $configurableBundleTemplateSlotTranslationTransfer->getName(),
-            $configurableBundleTemplateSlotTranslationTransfer->getLocale()
+            $configurableBundleTemplateSlotTranslationTransfer->getLocale(),
         );
     }
 

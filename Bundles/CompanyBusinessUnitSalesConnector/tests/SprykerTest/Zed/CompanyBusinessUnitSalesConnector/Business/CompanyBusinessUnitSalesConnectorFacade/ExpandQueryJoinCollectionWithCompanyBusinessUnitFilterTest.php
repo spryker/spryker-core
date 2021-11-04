@@ -27,12 +27,14 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
 {
     /**
      * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_BUSINESS_UNIT_UUID
+     *
      * @var string
      */
     protected const COLUMN_COMPANY_BUSINESS_UNIT_UUID = 'spy_sales_order.company_business_unit_uuid';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     *
      * @var string
      */
     protected const COMPARISON_EQUAL = '=';
@@ -62,7 +64,7 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert
@@ -100,7 +102,7 @@ class ExpandQueryJoinCollectionWithCompanyBusinessUnitFilterTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCompanyBusinessUnitFilter(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert

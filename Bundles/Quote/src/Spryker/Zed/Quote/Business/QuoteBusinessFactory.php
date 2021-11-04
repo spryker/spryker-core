@@ -48,7 +48,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->createQuoteValidator(),
             $this->createQuoteFieldsConfigurator(),
-            $this->getQuoteExpandBeforeCreatePlugins()
+            $this->getQuoteExpandBeforeCreatePlugins(),
         );
     }
 
@@ -61,7 +61,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteCreateBeforePlugins(),
             $this->getQuoteCreateAfterPlugins(),
             $this->getQuoteUpdateBeforePlugins(),
-            $this->getQuoteUpdateAfterPlugins()
+            $this->getQuoteUpdateAfterPlugins(),
         );
     }
 
@@ -81,7 +81,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
         return new QuoteReader(
             $this->getRepository(),
             $this->getQuoteExpanderPlugins(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -102,7 +102,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getQuoteDeleteBeforePlugins(),
-            $this->getQuoteDeleteAfterPlugins()
+            $this->getQuoteDeleteAfterPlugins(),
         );
     }
 
@@ -115,7 +115,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getQuoteDeleteBeforePlugins()
+            $this->getQuoteDeleteBeforePlugins(),
         );
     }
 
@@ -125,7 +125,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteValidator(): QuoteValidatorInterface
     {
         return new QuoteValidator(
-            $this->getQuoteValidatorPlugins()
+            $this->getQuoteValidatorPlugins(),
         );
     }
 
@@ -136,7 +136,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteFieldsConfigurator(
             $this->getConfig(),
-            $this->getQuoteFieldsAllowedForSavingProviderPlugins()
+            $this->getQuoteFieldsAllowedForSavingProviderPlugins(),
         );
     }
 

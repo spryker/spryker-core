@@ -23,10 +23,12 @@ class MerchantProfileForm extends AbstractType
      * @var string
      */
     protected const FIELD_BUSINESS_INFO_MERCHANT_PROFILE = 'businessInfoMerchantProfile';
+
     /**
      * @var string
      */
     protected const FIELD_ONLINE_PROFILE_MERCHANT_PROFILE = 'onlineProfileMerchantProfile';
+
     /**
      * @var string
      */
@@ -56,7 +58,7 @@ class MerchantProfileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -81,7 +83,7 @@ class MerchantProfileForm extends AbstractType
                 'label' => false,
                 'data' => $builder->getForm()->getData(),
                 'data_class' => MerchantTransfer::class,
-            ]
+            ],
         );
 
         return $this;
@@ -101,7 +103,7 @@ class MerchantProfileForm extends AbstractType
                 'label' => false,
                 'data' => $builder->getForm()->getData(),
                 'data_class' => MerchantTransfer::class,
-            ]
+            ],
         );
 
         return $this;

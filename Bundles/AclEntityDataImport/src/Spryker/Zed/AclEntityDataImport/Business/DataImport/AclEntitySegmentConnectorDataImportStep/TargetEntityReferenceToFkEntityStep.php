@@ -41,7 +41,7 @@ class TargetEntityReferenceToFkEntityStep implements DataImportStepInterface
 
         if (!$targetEntity) {
             throw new EntityNotFoundException(
-                sprintf(static::ENTITY_NOT_FOUND_MESSAGE_TEMPLATE, $dataEntity, $referenceField)
+                sprintf(static::ENTITY_NOT_FOUND_MESSAGE_TEMPLATE, $dataEntity, $referenceField),
             );
         }
 

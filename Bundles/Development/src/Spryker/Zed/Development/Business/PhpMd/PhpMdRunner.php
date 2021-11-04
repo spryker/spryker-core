@@ -28,6 +28,7 @@ class PhpMdRunner
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
@@ -48,7 +49,7 @@ class PhpMdRunner
 
     /**
      * @param string|null $bundle
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \ErrorException
      *
@@ -144,7 +145,7 @@ class PhpMdRunner
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */

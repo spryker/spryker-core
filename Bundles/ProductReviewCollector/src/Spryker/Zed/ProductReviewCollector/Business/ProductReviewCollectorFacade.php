@@ -52,7 +52,7 @@ class ProductReviewCollectorFacade extends AbstractFacade implements ProductRevi
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 
@@ -87,7 +87,7 @@ class ProductReviewCollectorFacade extends AbstractFacade implements ProductRevi
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

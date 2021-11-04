@@ -63,14 +63,14 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
 
             $filteredItemTransfers = $this->executeCartItemFilterPlugins(
                 $quoteTransfer->getItems()->getArrayCopy(),
-                $quoteTransfer
+                $quoteTransfer,
             );
 
             foreach ($filteredItemTransfers as $itemTransfer) {
                 $itemResource = $this->itemResponseBuilder->createCartItemResource(
                     $resource,
                     $itemTransfer,
-                    $restRequest->getMetadata()->getLocale()
+                    $restRequest->getMetadata()->getLocale(),
                 );
 
                 $resource->addRelationship($itemResource);
@@ -97,14 +97,14 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
 
             $filteredItemTransfers = $this->executeCartItemFilterPlugins(
                 $quoteTransfer->getItems()->getArrayCopy(),
-                $quoteTransfer
+                $quoteTransfer,
             );
 
             foreach ($filteredItemTransfers as $itemTransfer) {
                 $itemResource = $this->itemResponseBuilder->createGuestCartItemResource(
                     $resource,
                     $itemTransfer,
-                    $restRequest->getMetadata()->getLocale()
+                    $restRequest->getMetadata()->getLocale(),
                 );
 
                 $resource->addRelationship($itemResource);

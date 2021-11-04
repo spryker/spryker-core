@@ -24,18 +24,22 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_ROLE = 'PROPEL_QUERY_COMPANY_ROLE';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
@@ -68,7 +72,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyRoleGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 
@@ -84,7 +88,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY_ROLE, function (Container $container) {
             return new CompanyRoleGuiToCompanyRoleFacadeBridge(
-                $container->getLocator()->companyRole()->facade()
+                $container->getLocator()->companyRole()->facade(),
             );
         });
 
@@ -114,7 +118,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new CompanyRoleGuiToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
+                $container->getLocator()->glossary()->facade(),
             );
         });
 
@@ -130,7 +134,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new CompanyRoleGuiToPermissionFacadeBridge(
-                $container->getLocator()->permission()->facade()
+                $container->getLocator()->permission()->facade(),
             );
         });
 

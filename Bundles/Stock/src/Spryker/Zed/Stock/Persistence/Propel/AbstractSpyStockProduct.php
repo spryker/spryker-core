@@ -29,7 +29,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     public function decrement(Decimal $amount)
     {
         $this->setQuantity(
-            (new Decimal($this->getQuantity()))->subtract($amount)
+            (new Decimal($this->getQuantity()))->subtract($amount),
         );
     }
 
@@ -41,7 +41,7 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     public function increment(Decimal $amount)
     {
         $this->setQuantity(
-            (new Decimal($this->getQuantity()))->add($amount)
+            (new Decimal($this->getQuantity()))->add($amount),
         );
     }
 }

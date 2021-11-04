@@ -134,12 +134,12 @@ class ProductAttributeFacadeTest extends Test
                 ->addLocalizedValue(
                     (new ProductManagementAttributeValueTranslationTransfer())
                         ->setFkLocale($this->tester->getLocale('aa_AA')->getIdLocale())
-                        ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
+                        ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language'),
                 )
                 ->addLocalizedValue(
                     (new ProductManagementAttributeValueTranslationTransfer())
                         ->setFkLocale($this->tester->getLocale('bb_BB')->getIdLocale())
-                        ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
+                        ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language'),
                 );
 
             $productManagementAttributeTransfer->addValue($productManagementAttributeValueTransfer);
@@ -183,7 +183,7 @@ class ProductAttributeFacadeTest extends Test
         }
 
         $productManagementAttributeTransfer = $this->productAttributeFacade->getProductManagementAttribute(
-            $productManagementAttributeTransfer->getIdProductManagementAttribute()
+            $productManagementAttributeTransfer->getIdProductManagementAttribute(),
         );
 
         $this->assertNotNull($productManagementAttributeTransfer);
@@ -199,7 +199,7 @@ class ProductAttributeFacadeTest extends Test
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
 
         $productAttributesValues = $this->productAttributeFacade->getProductAbstractAttributeValues(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $this->assertSame($this->tester->getSampleLocalizedProductAttributeValues(), $productAttributesValues);
@@ -214,7 +214,7 @@ class ProductAttributeFacadeTest extends Test
         $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU);
 
         $productValues = $this->productAttributeFacade->getProductAttributeValues(
-            $productTransfer->getIdProductConcrete()
+            $productTransfer->getIdProductConcrete(),
         );
 
         $this->assertSame($this->tester->getSampleLocalizedProductAttributeValues(), $productValues);
@@ -228,7 +228,7 @@ class ProductAttributeFacadeTest extends Test
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU);
 
         $metaAttributes = $this->productAttributeFacade->getMetaAttributesForProductAbstract(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $this->assertEmpty($metaAttributes);
@@ -243,7 +243,7 @@ class ProductAttributeFacadeTest extends Test
         $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU);
 
         $metaAttributes = $this->productAttributeFacade->getMetaAttributesForProduct(
-            $productTransfer->getIdProductConcrete()
+            $productTransfer->getIdProductConcrete(),
         );
 
         $this->assertEmpty($metaAttributes);
@@ -258,7 +258,7 @@ class ProductAttributeFacadeTest extends Test
         $productAbstractTransfer = $this->tester->createSampleAbstractProduct(ProductAttributeBusinessTester::ABSTRACT_SKU, $data);
 
         $metaAttributes = $this->productAttributeFacade->getMetaAttributesForProductAbstract(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $this->assertNotEmpty($metaAttributes);
@@ -276,7 +276,7 @@ class ProductAttributeFacadeTest extends Test
         $productTransfer = $this->tester->createSampleProduct($productAbstractTransfer, ProductAttributeBusinessTester::CONCRETE_SKU, $data);
 
         $metaAttributes = $this->productAttributeFacade->getMetaAttributesForProduct(
-            $productTransfer->getIdProductConcrete()
+            $productTransfer->getIdProductConcrete(),
         );
 
         $this->assertNotEmpty($metaAttributes);
@@ -310,11 +310,11 @@ class ProductAttributeFacadeTest extends Test
 
         $this->productAttributeFacade->saveAbstractAttributes(
             $productAbstractTransfer->getIdProductAbstract(),
-            $attributesToSave
+            $attributesToSave,
         );
 
         $productAttributesValues = $this->productAttributeFacade->getProductAbstractAttributeValues(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $expectedResult = [
@@ -370,11 +370,11 @@ class ProductAttributeFacadeTest extends Test
 
         $this->productAttributeFacade->saveConcreteAttributes(
             $productTransfer->getIdProductConcrete(),
-            $attributesToSave
+            $attributesToSave,
         );
 
         $productAttributesValues = $this->productAttributeFacade->getProductAttributeValues(
-            $productTransfer->getIdProductConcrete()
+            $productTransfer->getIdProductConcrete(),
         );
 
         $expectedResult = [

@@ -15,6 +15,7 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = 'net';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';

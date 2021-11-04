@@ -70,7 +70,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
         return $this->getErrorResponse(
             $productConfiguratorResponseProcessorResponseTransfer,
-            static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM
+            static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_VALID_RESPONSE_CHECKSUM,
         );
     }
 

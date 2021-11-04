@@ -44,7 +44,7 @@ class AclEntitySegmentReferenceToAclEntitySegmentIdStep implements DataImportSte
 
             if (!$idAclEntitySegment) {
                 throw new EntityNotFoundException(
-                    sprintf('Could not find AclEntitySegment by reference: "%s"', $aclEntitySegmentReference)
+                    sprintf('Could not find AclEntitySegment by reference: "%s"', $aclEntitySegmentReference),
                 );
             }
 

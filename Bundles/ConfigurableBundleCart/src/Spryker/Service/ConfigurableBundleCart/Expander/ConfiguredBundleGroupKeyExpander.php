@@ -24,7 +24,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
                 ->requireUuid();
 
         $configuredBundleTransfer->setGroupKey(
-            sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true))
+            sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true)),
         );
 
         return $configuredBundleTransfer;

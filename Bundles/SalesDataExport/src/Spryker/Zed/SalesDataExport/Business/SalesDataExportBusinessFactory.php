@@ -31,7 +31,7 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderReader()
+            $this->createOrderReader(),
         );
     }
 
@@ -43,7 +43,7 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderItemReader()
+            $this->createOrderItemReader(),
         );
     }
 
@@ -55,7 +55,7 @@ class SalesDataExportBusinessFactory extends AbstractBusinessFactory
         return new LineExporter(
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->createOrderExpenseReader()
+            $this->createOrderExpenseReader(),
         );
     }
 

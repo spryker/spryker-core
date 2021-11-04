@@ -21,12 +21,14 @@ class TouchWriter implements TouchWriterInterface
 
     /**
      * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+     *
      * @var string
      */
     protected const COL_ITEM_EVENT_DELETED = 'deleted';
 
     /**
      * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ID_TOUCH
+     *
      * @var string
      */
     protected const COL_ID_TOUCH = 'spy_touch.id_touch';
@@ -89,7 +91,7 @@ class TouchWriter implements TouchWriterInterface
     protected function executeCleanTouchEntitiesForDeletedItemEventTransaction(): int
     {
         $touchEntityIds = $this->getTouchEntityIdsForDeletedItemEvent(
-            $this->touchQueryContainer->queryTouchListByItemEvent(static::COL_ITEM_EVENT_DELETED)
+            $this->touchQueryContainer->queryTouchListByItemEvent(static::COL_ITEM_EVENT_DELETED),
         );
 
         $deletedTouchEntitiesCount = $this->touchEntityManager->deleteTouchEntitiesByIds($touchEntityIds);

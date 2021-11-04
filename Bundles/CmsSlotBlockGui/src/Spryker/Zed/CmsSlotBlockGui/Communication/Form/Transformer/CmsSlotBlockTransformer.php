@@ -41,7 +41,7 @@ class CmsSlotBlockTransformer implements DataTransformerInterface
         foreach ($conditions as $conditionKey => $condition) {
             $cmsSlotBlockTransfer->addCondition(
                 $conditionKey,
-                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true),
             );
         }
 

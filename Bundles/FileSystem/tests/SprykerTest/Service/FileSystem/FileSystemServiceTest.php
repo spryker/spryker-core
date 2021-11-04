@@ -55,6 +55,7 @@ class FileSystemServiceTest extends Unit
      * @var string
      */
     public const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+
     /**
      * @var string
      */
@@ -64,10 +65,12 @@ class FileSystemServiceTest extends Unit
      * @var string
      */
     public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+
     /**
      * @var string
      */
     public const PATH_DOCUMENT = 'documents/';
+
     /**
      * @var string
      */
@@ -77,6 +80,7 @@ class FileSystemServiceTest extends Unit
      * @var string
      */
     public const FILE_DOCUMENT = 'customer.txt';
+
     /**
      * @var string
      */

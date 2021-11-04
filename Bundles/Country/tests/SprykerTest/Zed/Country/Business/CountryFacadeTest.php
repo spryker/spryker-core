@@ -39,6 +39,7 @@ class CountryFacadeTest extends Unit
      * @var string
      */
     public const ISO2_CODE = 'qx';
+
     /**
      * @var string
      */
@@ -164,7 +165,7 @@ class CountryFacadeTest extends Unit
         $region->save();
 
         $countryCollectionTransfer = (new CountryCollectionBuilder())->build()->addCountries(
-            (new CountryTransfer())->setIso2Code($country->getIso2Code())
+            (new CountryTransfer())->setIso2Code($country->getIso2Code()),
         );
 
         $countryTransfer = $this->countryFacade->findCountriesByIso2Codes($countryCollectionTransfer);
@@ -193,11 +194,11 @@ class CountryFacadeTest extends Unit
             ->setShippingAddress(null)
             ->addShipment(
                 (new RestShipmentsTransfer())
-                    ->setShippingAddress((new RestAddressTransfer())->setIso2Code(static::ISO2_COUNTRY_DE))
+                    ->setShippingAddress((new RestAddressTransfer())->setIso2Code(static::ISO2_COUNTRY_DE)),
             )
             ->addShipment(
                 (new RestShipmentsTransfer())
-                    ->setShippingAddress(new RestAddressTransfer())
+                    ->setShippingAddress(new RestAddressTransfer()),
             );
 
         $checkoutResponseTransfer = $this->countryFacade->validateCountryCheckoutData($checkoutDataTransfer);

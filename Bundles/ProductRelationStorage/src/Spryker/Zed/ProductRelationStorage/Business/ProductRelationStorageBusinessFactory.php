@@ -34,7 +34,7 @@ class ProductRelationStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductRelationFacade(),
             $this->getEntityManager(),
             $this->getEventBehaviorFacade(),
-            $this->createProductRelationStorageGrouper()
+            $this->createProductRelationStorageGrouper(),
         );
     }
 

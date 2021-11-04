@@ -31,7 +31,8 @@ class WishlistItemsResourceRoutePlugin extends AbstractPlugin implements Resourc
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection->addPost('post')
-            ->addDelete('delete');
+            ->addDelete('delete')
+            ->addPatch('patch');
 
         return $resourceRouteCollection;
     }

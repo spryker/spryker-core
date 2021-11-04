@@ -13,10 +13,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface PriceProductsMergerInterface
 {
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *

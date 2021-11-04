@@ -50,7 +50,7 @@ class ProductImageExpander implements ProductImageExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array<\Generated\Shared\Transfer\ProductImageTransfer[]> $productImages
+     * @param array<array<\Generated\Shared\Transfer\ProductImageTransfer>> $productImages
      *
      * @return void
      */

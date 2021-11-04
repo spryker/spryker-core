@@ -24,7 +24,7 @@ interface ProductReviewReaderInterface
      * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array;
 }

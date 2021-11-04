@@ -21,6 +21,7 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
+
     /**
      * @var string
      */

@@ -57,7 +57,7 @@ class SalesReclamationGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new ReclamationTable(
             $this->getSalesReclamationPropelQuery(),
-            $this->getDateTimeService()
+            $this->getDateTimeService(),
         );
     }
 

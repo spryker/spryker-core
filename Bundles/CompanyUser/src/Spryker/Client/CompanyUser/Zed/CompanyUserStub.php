@@ -92,7 +92,7 @@ class CompanyUserStub implements CompanyUserStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
         $companyUserCollectionTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/get-company-user-collection',
-            $criteriaFilterTransfer
+            $criteriaFilterTransfer,
         );
 
         return $companyUserCollectionTransfer;
@@ -108,7 +108,7 @@ class CompanyUserStub implements CompanyUserStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer */
         $companyUserTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/get-company-user-by-id',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $companyUserTransfer;
@@ -122,7 +122,7 @@ class CompanyUserStub implements CompanyUserStubInterface
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();
         $companyUserResponseTransfer->addMessage(
             (new ResponseMessageTransfer())
-                ->setText(static::ERROR_MESSAGE_PERMISSION_FAILED)
+                ->setText(static::ERROR_MESSAGE_PERMISSION_FAILED),
         );
         $companyUserResponseTransfer->setIsSuccessful(false);
 
@@ -139,7 +139,7 @@ class CompanyUserStub implements CompanyUserStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/enable-company-user',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $companyUserResponseTransfer;
@@ -155,7 +155,7 @@ class CompanyUserStub implements CompanyUserStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/disable-company-user',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $companyUserResponseTransfer;
@@ -171,7 +171,7 @@ class CompanyUserStub implements CompanyUserStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
         $companyUserCollectionTransfer = $this->zedRequestClient->call(
             '/company-user/gateway/get-active-company-users-by-customer-reference',
-            $customerTransfer
+            $customerTransfer,
         );
 
         return $companyUserCollectionTransfer;

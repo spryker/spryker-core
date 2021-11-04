@@ -30,6 +30,7 @@ class ProductConcreteFormAddDataProvider
      * @var string
      */
     public const DEFAULT_INPUT_TYPE = 'text';
+
     /**
      * @var string
      */
@@ -39,38 +40,47 @@ class ProductConcreteFormAddDataProvider
      * @var string
      */
     protected const FORM_FIELD_ID = 'id';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_LABEL = 'label';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_SUPER = 'super';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+
     /**
      * @var string
      */
     protected const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+
     /**
      * @var string
      */
@@ -102,7 +112,7 @@ class ProductConcreteFormAddDataProvider
     protected $productAttributeFacade;
 
     /**
-     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
+     * @var \Everon\Component\Collection\CollectionInterface|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     protected $attributeTransferCollection;
 
@@ -416,7 +426,7 @@ class ProductConcreteFormAddDataProvider
             }
 
             $inputType = static::DEFAULT_INPUT_TYPE;
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
             $shouldBeTextArea = mb_strlen($value) > 255;
 
             if ($shouldBeTextArea) {

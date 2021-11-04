@@ -53,11 +53,11 @@ class AddressRestResponseBuilder implements AddressRestResponseBuilderInterface
             ->createRestResource(
                 CustomersRestApiConfig::RESOURCE_ADDRESSES,
                 $addressUuid,
-                $restAddressAttributesTransfer
+                $restAddressAttributesTransfer,
             )
             ->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($addressUuid, $customerReference)
+                $this->createSelfLink($addressUuid, $customerReference),
             );
     }
 
@@ -74,7 +74,7 @@ class AddressRestResponseBuilder implements AddressRestResponseBuilderInterface
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerReference,
             CustomersRestApiConfig::RESOURCE_ADDRESSES,
-            $addressUuid
+            $addressUuid,
         );
     }
 }

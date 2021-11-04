@@ -42,7 +42,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
 
         foreach ($searchResult->getResults() as $document) {
             $configurableBundleTemplatePageSearchTransfers[] = $this->getMappedConfigurableBundleTemplatePageSearchTransfer(
-                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA]
+                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA],
             );
         }
 

@@ -30,6 +30,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
 {
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON
+     *
      * @var string
      */
     public const FIELD_CUSTOM_REASON = 'customReason';
@@ -48,7 +49,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -79,7 +80,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

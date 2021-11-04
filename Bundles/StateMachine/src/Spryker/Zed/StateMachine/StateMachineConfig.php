@@ -19,7 +19,7 @@ class StateMachineConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getGraphDefaults()
     {

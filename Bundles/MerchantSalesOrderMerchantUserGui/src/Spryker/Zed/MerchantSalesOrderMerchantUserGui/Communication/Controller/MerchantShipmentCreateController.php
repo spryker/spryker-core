@@ -20,25 +20,26 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_REFERENCE_NOT_FOUND = 'Merchant reference not found.';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_NOT_FOUND = 'Shipment for merchant reference %s not found.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -74,7 +75,7 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
         $form = $this->getFactory()
             ->createMerchantShipmentGroupForm(
                 $dataProvider->getData($merchantOrderTransfer, $shipmentTransfer),
-                $dataProvider->getOptions($merchantOrderTransfer)
+                $dataProvider->getOptions($merchantOrderTransfer),
             )
             ->handleRequest($request);
 
@@ -86,7 +87,7 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
 
                 $redirectUrl = Url::generate(
                     static::REDIRECT_URL_DEFAULT,
-                    [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
+                    [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()],
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);

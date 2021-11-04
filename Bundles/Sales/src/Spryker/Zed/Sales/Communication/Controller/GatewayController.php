@@ -60,7 +60,7 @@ class GatewayController extends AbstractGatewayController
         return $this->getFacade()
             ->getPaginatedCustomerOrders(
                 $orderListTransfer,
-                $orderListTransfer->getIdCustomer()
+                $orderListTransfer->getIdCustomer(),
             );
     }
 
@@ -84,7 +84,7 @@ class GatewayController extends AbstractGatewayController
         return $this->getFacade()
             ->getPaginatedCustomerOrdersOverview(
                 $orderListTransfer,
-                $orderListTransfer->getIdCustomer()
+                $orderListTransfer->getIdCustomer(),
             );
     }
 

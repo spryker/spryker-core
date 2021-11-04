@@ -20,8 +20,10 @@ class AddCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
+     *
      * @var string
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
@@ -30,6 +32,7 @@ class AddCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has been created.';
+
     /**
      * @var string
      */
@@ -48,7 +51,7 @@ class AddCompanyBusinessUnitController extends AbstractController
         $form = $this->getFactory()
             ->getCompanyBusinessUnitForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

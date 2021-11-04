@@ -25,10 +25,12 @@ class ItemFormType extends AbstractType
      * @var string
      */
     public const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
+
     /**
      * @var string
      */
     public const FIELD_IS_UPDATED = 'is_updated';
+
     /**
      * @var string
      */
@@ -56,7 +58,7 @@ class ItemFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

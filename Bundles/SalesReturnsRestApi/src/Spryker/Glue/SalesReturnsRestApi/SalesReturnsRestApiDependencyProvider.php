@@ -21,6 +21,7 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_SALES_RETURN = 'CLIENT_SALES_RETURN';
+
     /**
      * @var string
      */
@@ -50,7 +51,7 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_SALES_RETURN, function (Container $container) {
             return new SalesReturnsRestApiToSalesReturnClientBridge(
-                $container->getLocator()->salesReturn()->client()
+                $container->getLocator()->salesReturn()->client(),
             );
         });
 
@@ -66,7 +67,7 @@ class SalesReturnsRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_SALES_RETURN_SEARCH, function (Container $container) {
             return new SalesReturnsRestApiToSalesReturnSearchClientBridge(
-                $container->getLocator()->salesReturnSearch()->client()
+                $container->getLocator()->salesReturnSearch()->client(),
             );
         });
 

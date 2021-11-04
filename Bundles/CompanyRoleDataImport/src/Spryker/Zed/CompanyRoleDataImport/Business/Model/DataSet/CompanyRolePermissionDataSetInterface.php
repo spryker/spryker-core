@@ -13,10 +13,12 @@ interface CompanyRolePermissionDataSetInterface
      * @var string
      */
     public const COLUMN_COMPANY_ROLE_KEY = 'company_role_key';
+
     /**
      * @var string
      */
     public const COLUMN_PERMISSION_KEY = 'permission_key';
+
     /**
      * @var string
      */

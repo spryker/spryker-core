@@ -21,6 +21,7 @@ class ReturnCreateFormDataProvider
      * @var string
      */
     public const CUSTOM_REASON = 'Custom reason';
+
     /**
      * @var string
      */
@@ -166,7 +167,7 @@ class ReturnCreateFormDataProvider
 
             $translatedMessage = $this->glossaryFacade->translate(
                 $returnPolicyMessage->getValue(),
-                $returnPolicyMessage->getParameters()
+                $returnPolicyMessage->getParameters(),
             );
 
             $returnPolicyMessage->setMessage($translatedMessage);

@@ -66,7 +66,7 @@ class AuthenticationStrategyExecutor implements AuthenticationStrategyExecutorIn
 
         throw new AuthenticationStrategyNotFoundException(sprintf(
             'Authentication strategy with name "%s" not found',
-            $authenticationStrategyName
+            $authenticationStrategyName,
         ));
     }
 }

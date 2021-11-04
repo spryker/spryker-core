@@ -131,7 +131,7 @@ class NavigationTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate('/navigation-gui/update', [UpdateController::PARAM_ID_NAVIGATION => $idNavigation]),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -145,7 +145,7 @@ class NavigationTable extends AbstractTable
         return $this->generateRemoveButton(
             Url::generate('/navigation-gui/delete', [DeleteController::PARAM_ID_NAVIGATION => $idNavigation]),
             'Delete',
-            [static::DELETE_FORM_NAME_SUFFIX => $idNavigation]
+            [static::DELETE_FORM_NAME_SUFFIX => $idNavigation],
         );
     }
 
@@ -158,7 +158,7 @@ class NavigationTable extends AbstractTable
     {
         return $this->generateViewButton(
             Url::generate('/navigation-gui/duplicate', [DuplicateController::PARAM_ID_NAVIGATION => $idNavigation]),
-            'Duplicate'
+            'Duplicate',
         );
     }
 

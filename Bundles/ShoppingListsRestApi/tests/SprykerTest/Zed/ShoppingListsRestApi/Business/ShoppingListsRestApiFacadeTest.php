@@ -60,7 +60,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
             ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
             ->setCompanyUserTransfer(
                 (new CompanyUserTransfer())
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
         $restShoppingListCollectionResponseTransfer = $shoppingListsRestApiFacade->getCustomerShoppingListCollection($customerTransfer);
 
@@ -86,7 +86,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess());
         $this->assertSame(
             $this->tester::GOOD_SHOPPING_LIST_NAME,
-            $shoppingListResponseTransfer->getShoppingList()->getName()
+            $shoppingListResponseTransfer->getShoppingList()->getName(),
         );
         $this->assertSame($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
     }
@@ -133,11 +133,11 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess());
         $this->assertSame(
             $this->tester::GOOD_SHOPPING_LIST_NAME,
-            $shoppingListResponseTransfer->getShoppingList()->getName()
+            $shoppingListResponseTransfer->getShoppingList()->getName(),
         );
         $this->assertSame(
             $this->tester::GOOD_SHOPPING_LIST_UUID,
-            $shoppingListResponseTransfer->getShoppingList()->getUuid()
+            $shoppingListResponseTransfer->getShoppingList()->getUuid(),
         );
         $this->assertSame($this->tester::OWNER_NAME, $shoppingListResponseTransfer->getShoppingList()->getOwner());
     }
@@ -268,7 +268,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                     ->setSku($this->tester::GOOD_SKU)
                     ->setQuantity($this->tester::GOOD_QUANTITY)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
@@ -277,15 +277,15 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $this->assertSame($this->tester::GOOD_SKU, $shoppingListItemResponseTransfer->getShoppingListItem()->getSku());
         $this->assertSame(
             $this->tester::GOOD_QUANTITY,
-            $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity(),
         );
         $this->assertSame(
             $this->tester::SHOPPING_LIST_ITEM_UUID,
-            $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid()
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getUuid(),
         );
         $this->assertSame(
             $this->tester::SHOPPING_LIST_ITEM_ID,
-            $shoppingListItemResponseTransfer->getShoppingListItem()->getIdShoppingListItem()
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getIdShoppingListItem(),
         );
     }
 
@@ -305,7 +305,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                     ->setSku($this->tester::GOOD_SKU)
                     ->setQuantity($this->tester::BAD_QUANTITY)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
@@ -332,7 +332,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                     ->setSku($this->tester::BAD_SKU)
                     ->setQuantity($this->tester::GOOD_QUANTITY)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->addShoppingListItem($restShoppingListRequestTransfer);
@@ -377,7 +377,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                     ->setQuantity($this->tester::GOOD_QUANTITY)
                     ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
@@ -385,11 +385,11 @@ class ShoppingListsRestApiFacadeTest extends Unit
         $this->assertTrue($shoppingListItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             $this->tester::GOOD_QUANTITY,
-            $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity()
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getQuantity(),
         );
         $this->assertSame(
             $this->tester::SHOPPING_LIST_ID,
-            $shoppingListItemResponseTransfer->getShoppingListItem()->getFkShoppingList()
+            $shoppingListItemResponseTransfer->getShoppingListItem()->getFkShoppingList(),
         );
     }
 
@@ -410,7 +410,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                     ->setQuantity($this->tester::GOOD_QUANTITY)
                     ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
@@ -438,7 +438,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                     ->setQuantity($this->tester::GOOD_QUANTITY)
                     ->setUuid($this->tester::BAD_SHOPPING_LIST_UUID)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->updateShoppingListItem($restShoppingListRequestTransfer);
@@ -464,7 +464,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 (new ShoppingListItemTransfer())
                     ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingListItem($restShoppingListRequestTransfer);
@@ -487,7 +487,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 (new ShoppingListItemTransfer())
                     ->setUuid($this->tester::SHOPPING_LIST_ITEM_UUID)
                     ->setCustomerReference($this->tester::GOOD_CUSTOMER_REFERENCE)
-                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID)
+                    ->setIdCompanyUser($this->tester::COMPANY_USER_ID),
             );
 
         $shoppingListItemResponseTransfer = $shoppingListsRestApiFacade->deleteShoppingListItem($restShoppingListRequestTransfer);
@@ -503,7 +503,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
             ShoppingListsRestApiBusinessFactory::class,
             [
                 'getShoppingListFacade',
-            ]
+            ],
         );
 
         $mockFactory->method('getShoppingListFacade')
@@ -528,7 +528,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
                 'addShoppingListItem',
                 'updateShoppingListItemById',
                 'removeItemById',
-            ]
+            ],
         );
 
         $mockShoppingListFacade->method('getCustomerShoppingListCollection')
@@ -567,7 +567,7 @@ class ShoppingListsRestApiFacadeTest extends Unit
             CompanyUserFacade::class,
             [
                 'findActiveCompanyUserByUuid',
-            ]
+            ],
         );
 
         $mockCustomerFacade->method('findActiveCompanyUserByUuid')

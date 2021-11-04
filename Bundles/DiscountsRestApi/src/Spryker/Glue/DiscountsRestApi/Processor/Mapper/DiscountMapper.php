@@ -45,13 +45,13 @@ class DiscountMapper implements DiscountMapperInterface
             foreach ($quoteTransfer->getVoucherDiscounts() as $voucherDiscount) {
                 $restQuoteRequestsCartTransfer = $this->addDiscountToRestCartTransfer(
                     $voucherDiscount,
-                    $restQuoteRequestsCartTransfer
+                    $restQuoteRequestsCartTransfer,
                 );
             }
             foreach ($quoteTransfer->getCartRuleDiscounts() as $discountTransfer) {
                 $restQuoteRequestsCartTransfer = $this->addDiscountToRestCartTransfer(
                     $discountTransfer,
-                    $restQuoteRequestsCartTransfer
+                    $restQuoteRequestsCartTransfer,
                 );
             }
         }

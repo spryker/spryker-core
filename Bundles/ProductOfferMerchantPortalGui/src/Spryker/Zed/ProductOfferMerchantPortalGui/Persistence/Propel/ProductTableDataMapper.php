@@ -23,54 +23,62 @@ class ProductTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_NAME
+     *
      * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STATUS
+     *
      * @var string
      */
     protected const COL_KEY_STATUS = 'status';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_IMAGE
+     *
      * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_OFFERS
+     *
      * @var string
      */
     protected const COL_KEY_OFFERS = 'offers';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STORES
+     *
      * @var string
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     *
      * @var string
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     *
      * @var string
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const PRODUCT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
@@ -134,7 +142,7 @@ class ProductTableDataMapper
     protected function prepareProductStoresTableData(array $productTableRowDataArray): array
     {
         $stores = array_filter(
-            explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES])
+            explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES]),
         );
 
         $storeTransfers = array_map(function (string $storeName): StoreTransfer {
@@ -155,13 +163,13 @@ class ProductTableDataMapper
     {
         $productConcreteAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteAttributes = is_array($productConcreteAttributes) ? $productConcreteAttributes : [];
 
         $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteLocalizedAttributes = is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : [];
 

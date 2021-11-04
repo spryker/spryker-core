@@ -81,7 +81,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
 
         $restCheckoutDataResponseTransfer = $this->executeReadCheckoutDataValidatorPlugins(
             $checkoutDataTransfer,
-            $restCheckoutDataResponseTransfer
+            $restCheckoutDataResponseTransfer,
         );
 
         return $this->getRestCheckoutDataResponse($checkoutDataTransfer, $restCheckoutDataResponseTransfer);
@@ -108,7 +108,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
 
         $restCheckoutDataResponseTransfer = $this->executeCheckoutDataValidatorPlugins(
             $checkoutDataTransfer,
-            $restCheckoutResponseTransfer
+            $restCheckoutResponseTransfer,
         );
 
         return $this->getRestCheckoutResponse($checkoutDataTransfer, $restCheckoutDataResponseTransfer);
@@ -130,7 +130,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             if (!$checkoutResponseTransfer->getIsSuccess()) {
                 $restCheckoutDataResponseTransfer = $this->copyCheckoutDataResponseErrors(
                     $checkoutResponseTransfer,
-                    $restCheckoutDataResponseTransfer
+                    $restCheckoutDataResponseTransfer,
                 );
             }
         }
@@ -153,7 +153,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID)
                     ->setDetail($checkoutErrorTransfer->getMessage())
-                    ->setParameters($checkoutErrorTransfer->getParameters())
+                    ->setParameters($checkoutErrorTransfer->getParameters()),
             );
         }
 
@@ -171,7 +171,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
         RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
     ): RestCheckoutDataResponseTransfer {
         $restCheckoutDataResponseTransfer->setCheckoutData(
-            (new RestCheckoutDataTransfer())->fromArray($checkoutDataTransfer->toArray(), true)
+            (new RestCheckoutDataTransfer())->fromArray($checkoutDataTransfer->toArray(), true),
         );
 
         if ($restCheckoutDataResponseTransfer->getIsSuccess() || $restCheckoutDataResponseTransfer->getErrors()->count()) {
@@ -181,7 +181,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
         return $restCheckoutDataResponseTransfer
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID),
             );
     }
 
@@ -216,7 +216,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             if (!$checkoutResponseTransfer->getIsSuccess()) {
                 $restCheckoutResponseTransfer = $this->copyCheckoutResponseErrors(
                     $checkoutResponseTransfer,
-                    $restCheckoutResponseTransfer
+                    $restCheckoutResponseTransfer,
                 );
             }
         }
@@ -239,7 +239,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
                     ->setDetail($checkoutErrorTransfer->getMessage())
-                    ->setParameters($checkoutErrorTransfer->getParameters())
+                    ->setParameters($checkoutErrorTransfer->getParameters()),
             );
         }
 
@@ -265,7 +265,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
         return $restCheckoutResponseTransfer
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED),
             );
     }
 
@@ -289,7 +289,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createQuoteResponseError(
                 $quoteResponseTransfer,
-                CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID
+                CheckoutRestApiConfig::ERROR_IDENTIFIER_CHECKOUT_DATA_INVALID,
             );
         }
 
@@ -306,7 +306,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND),
             );
     }
 
@@ -319,7 +319,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND),
             );
     }
 
@@ -332,7 +332,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             ->setIsSuccess(false)
             ->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_IS_EMPTY)
+                    ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_IS_EMPTY),
             );
     }
 
@@ -352,7 +352,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
         if (!$quoteResponseTransfer->getErrors()->count()) {
             return $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
-                    ->setErrorIdentifier($errorIdentifier)
+                    ->setErrorIdentifier($errorIdentifier),
             );
         }
 
@@ -360,7 +360,7 @@ class CheckoutValidator implements CheckoutValidatorInterface
             $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier($errorIdentifier)
-                    ->setDetail($quoteErrorTransfer->getMessage())
+                    ->setDetail($quoteErrorTransfer->getMessage()),
             );
         }
 

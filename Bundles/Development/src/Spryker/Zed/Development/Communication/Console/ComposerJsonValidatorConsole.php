@@ -70,7 +70,7 @@ class ComposerJsonValidatorConsole extends AbstractCoreModuleAwareConsole
     }
 
     /**
-     * @param array $modulesToValidate
+     * @param array<string, \Generated\Shared\Transfer\ModuleTransfer> $modulesToValidate
      *
      * @return void
      */

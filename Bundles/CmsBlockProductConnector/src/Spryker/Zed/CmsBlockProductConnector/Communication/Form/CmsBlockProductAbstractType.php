@@ -27,10 +27,12 @@ class CmsBlockProductAbstractType extends AbstractType
      * @var string
      */
     public const FIELD_ID_CMS_BLOCK = 'id_cms_block';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+
     /**
      * @var string
      */
@@ -38,6 +40,7 @@ class CmsBlockProductAbstractType extends AbstractType
 
     /**
      * @deprecated Use {@link \Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS} instead.
+     *
      * @var string
      */
     public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-assigned-product-abstracts';
@@ -46,6 +49,7 @@ class CmsBlockProductAbstractType extends AbstractType
      * @var string
      */
     public const OPTION_ASSIGNED_PRODUCT_ABSTRACTS = 'option-assigned-product-abstracts';
+
     /**
      * @var string
      */
@@ -53,7 +57,7 @@ class CmsBlockProductAbstractType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -65,7 +69,7 @@ class CmsBlockProductAbstractType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -129,7 +133,7 @@ class CmsBlockProductAbstractType extends AbstractType
                     'required' => false,
                     'choices' => $data[static::FIELD_ID_PRODUCT_ABSTRACTS],
                     'multiple' => true,
-                ]
+                ],
             );
         };
     }

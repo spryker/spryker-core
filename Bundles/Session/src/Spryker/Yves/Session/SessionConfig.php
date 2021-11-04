@@ -21,6 +21,7 @@ class SessionConfig extends AbstractBundleConfig
      * @var string
      */
     public const DATA_SOURCE_NAME_TEMPLATE_TCP = 'tcp://[host]:[port]?database=[database][authFragment]';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class SessionConfig extends AbstractBundleConfig
      * @var string
      */
     public const DATA_SOURCE_NAME_TEMPLATE_REDIS = 'redis://[authFragment][host]:[port]/[database]';
+
     /**
      * @var string
      */
@@ -45,7 +47,7 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSessionStorageOptions()
     {
@@ -149,7 +151,7 @@ class SessionConfig extends AbstractBundleConfig
             $this->get(SessionConstants::YVES_SESSION_REDIS_HOST),
             $this->get(SessionConstants::YVES_SESSION_REDIS_PORT),
             $this->get(SessionConstants::YVES_SESSION_REDIS_DATABASE, static::DEFAULT_REDIS_DATABASE),
-            $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD, false)
+            $this->get(SessionConstants::YVES_SESSION_REDIS_PASSWORD, false),
         );
     }
 
@@ -158,7 +160,7 @@ class SessionConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getSessionHandlerRedisConnectionOptions(): array
     {
@@ -195,7 +197,7 @@ class SessionConfig extends AbstractBundleConfig
         return str_replace(
             array_keys($dataSourceNameElements),
             array_values($dataSourceNameElements),
-            $dataSourceNameTemplate
+            $dataSourceNameTemplate,
         );
     }
 

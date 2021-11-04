@@ -105,4 +105,16 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="ProductConfigurationFilter">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationCollection">
+        <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
+    </transfer>
+
+    <transfer name="ProductConfiguration">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

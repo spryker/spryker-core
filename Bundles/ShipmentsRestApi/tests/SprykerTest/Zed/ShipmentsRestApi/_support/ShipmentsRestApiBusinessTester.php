@@ -45,6 +45,7 @@ class ShipmentsRestApiBusinessTester extends Actor
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConstants::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';

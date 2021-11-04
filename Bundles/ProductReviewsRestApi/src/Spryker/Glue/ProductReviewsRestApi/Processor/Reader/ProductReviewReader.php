@@ -34,12 +34,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const PRODUCT_REVIEWS = 'productReviews';
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const PAGINATION = 'pagination';
@@ -101,7 +103,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productAbstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $parentResource->getId(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productAbstractData) {
@@ -113,7 +115,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         return $this->productReviewRestResponseBuilder->createProductReviewsCollectionRestResponse(
             $productReviews[static::PRODUCT_REVIEWS],
             $productReviews[static::PAGINATION]->getNumFound(),
-            $restRequest->getPage()->getLimit()
+            $restRequest->getPage()->getLimit(),
         );
     }
 
@@ -121,14 +123,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
      * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array
     {
         /** @var array<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $productAbstractIds,
-            $filterTransfer
+            $filterTransfer,
         )[static::PRODUCT_REVIEWS];
 
         $indexedProductReviewTransfers = [];
@@ -160,7 +162,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($requestParams)
-                ->setIdProductAbstract($idProductAbstract)
+                ->setIdProductAbstract($idProductAbstract),
         );
 
         return $productReviews;
@@ -179,7 +181,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->productReviewClient->getBulkProductReviewsFromSearch(
             (new BulkProductReviewSearchRequestTransfer())
                 ->setFilter($filterTransfer)
-                ->setProductAbstractIds($productAbstractIds)
+                ->setProductAbstractIds($productAbstractIds),
         );
 
         return $productReviews;

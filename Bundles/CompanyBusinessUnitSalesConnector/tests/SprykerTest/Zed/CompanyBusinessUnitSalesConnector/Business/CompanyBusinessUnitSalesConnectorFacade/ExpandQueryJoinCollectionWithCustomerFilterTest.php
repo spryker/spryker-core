@@ -28,24 +28,28 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
+     *
      * @var string
      */
     protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_FULL_NAME
+     *
      * @var string
      */
     protected const COLUMN_FULL_NAME = 'full_name';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_EMAIL
+     *
      * @var string
      */
     protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @see \Spryker\Zed\CompanyBusinessUnitSalesConnector\Business\Expander\OrderSearchQueryExpander::getConcatenatedFullNameColumn()
+     *
      * @var string
      */
     protected const COLUMN_FULL_NAME_EXPRESSION = 'CONCAT(first_name,\' \', last_name)';
@@ -75,7 +79,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCustomerFilter(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert
@@ -89,7 +93,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         $this->assertCount(2, $queryJoinTransfer->getWhereConditions());
         $this->assertSame(
             [static::COLUMN_FULL_NAME => static::COLUMN_FULL_NAME_EXPRESSION],
-            $queryJoinTransfer->getWithColumns()
+            $queryJoinTransfer->getWithColumns(),
         );
 
         $queryWhereConditionIterator = $queryJoinTransfer->getWhereConditions()->getIterator();
@@ -102,7 +106,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         $this->assertQueryWhereConditionTransfer(
             $queryWhereConditionTransfer,
             static::COLUMN_FULL_NAME_EXPRESSION,
-            static::SEARCH_STRING
+            static::SEARCH_STRING,
         );
 
         $queryWhereConditionIterator->next();
@@ -111,7 +115,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         $this->assertQueryWhereConditionTransfer(
             $queryWhereConditionTransfer,
             static::COLUMN_EMAIL,
-            static::SEARCH_STRING
+            static::SEARCH_STRING,
         );
     }
 
@@ -130,7 +134,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
         // Act
         $queryJoinCollectionTransfer = $this->tester->getFacade()->expandQueryJoinCollectionWithCustomerFilter(
             [$filterFieldTransfer],
-            $queryJoinCollectionTransfer
+            $queryJoinCollectionTransfer,
         );
 
         // Assert

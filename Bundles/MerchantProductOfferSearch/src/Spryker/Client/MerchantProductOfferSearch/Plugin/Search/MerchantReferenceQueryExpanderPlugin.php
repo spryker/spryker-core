@@ -74,7 +74,7 @@ class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements Que
             throw new InvalidArgumentException(sprintf(
                 'Merchant Reference query expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

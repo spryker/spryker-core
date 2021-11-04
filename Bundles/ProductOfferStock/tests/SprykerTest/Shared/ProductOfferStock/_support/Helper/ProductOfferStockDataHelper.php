@@ -55,7 +55,7 @@ class ProductOfferStockDataHelper extends Module
     protected function setProductOfferStockDependencies(array $seed, ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer
     {
         $productOfferStockTransfer->setStock(
-            $this->getStockDataHelper()->haveStock($seed[ProductOfferStockTransfer::STOCK] ?? [])
+            $this->getStockDataHelper()->haveStock($seed[ProductOfferStockTransfer::STOCK] ?? []),
         );
 
         return $productOfferStockTransfer;

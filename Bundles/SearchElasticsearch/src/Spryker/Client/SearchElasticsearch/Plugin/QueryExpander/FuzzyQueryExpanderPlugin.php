@@ -85,7 +85,7 @@ class FuzzyQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             throw new InvalidArgumentException(sprintf(
                 'Fuzzy query expander available only with  %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

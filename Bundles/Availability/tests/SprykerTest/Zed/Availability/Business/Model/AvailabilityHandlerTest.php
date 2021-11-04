@@ -38,6 +38,7 @@ class AvailabilityHandlerTest extends Unit
      * @var string
      */
     public const PRODUCT_ABSTRACT_SKU = 'sku-123';
+
     /**
      * @var string
      */
@@ -84,7 +85,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacadeMock,
-            $stockFacadeMock
+            $stockFacadeMock,
         );
 
         $availabilityHandler->updateAvailability($productTransfer->getSku());
@@ -120,7 +121,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacadeMock,
-            $stockFacadeMock
+            $stockFacadeMock,
         );
 
         $availabilityHandler->updateAvailability(static::PRODUCT_SKU);
@@ -158,7 +159,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityCalculatorMock,
             $touchFacade,
             $availabilityToStockFacade,
-            $availabilityToEventFacade
+            $availabilityToEventFacade,
         );
     }
 

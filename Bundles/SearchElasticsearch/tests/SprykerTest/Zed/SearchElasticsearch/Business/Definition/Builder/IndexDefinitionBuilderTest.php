@@ -44,7 +44,7 @@ class IndexDefinitionBuilderTest extends Unit
 
         $indexDefinitionBuilder = new IndexDefinitionBuilder(
             $indexDefinitionLoader,
-            $this->createIndexDefinitionMergerMock()
+            $this->createIndexDefinitionMergerMock(),
         );
 
         $result = $indexDefinitionBuilder->build();
@@ -69,7 +69,7 @@ class IndexDefinitionBuilderTest extends Unit
 
         $indexDefinitionBuilder = new IndexDefinitionBuilder(
             $indexDefinitionLoader,
-            $this->createIndexDefinitionMergerMock()
+            $this->createIndexDefinitionMergerMock(),
         );
 
         $result = $indexDefinitionBuilder->build();

@@ -18,7 +18,7 @@ class UtilDateTimeServiceFactory extends AbstractServiceFactory
     public function createDateFormatter()
     {
         return new DateTimeFormatter(
-            $this->getModuleConfig()
+            $this->getModuleConfig(),
         );
     }
 

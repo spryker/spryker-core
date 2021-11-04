@@ -110,7 +110,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $availableShipmentMethodsTransfer = $this->findAvailableShipmentMethodsByShipmentGroup(
                 $availableShipmentMethodsGroupedByShipment,
-                $shipmentGroupTransfer
+                $shipmentGroupTransfer,
             );
 
             if ($availableShipmentMethodsTransfer === null) {
@@ -159,7 +159,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
 
             $shipmentMethodTransfer = $this->findShipmentMethod(
                 $shipmentGroupTransfer->getAvailableShipmentMethods(),
-                $shipmentTransfer
+                $shipmentTransfer,
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
 

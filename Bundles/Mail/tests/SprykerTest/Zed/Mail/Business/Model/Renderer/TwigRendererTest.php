@@ -35,6 +35,7 @@ class TwigRendererTest extends Unit
      * @var int
      */
     public const INDEX_OF_TEMPLATE_TEXT = 0;
+
     /**
      * @var int
      */

@@ -18,10 +18,12 @@ class ProductCustomerPermissionSearchCollectorQuery extends AbstractPropelCollec
      * @var string
      */
     public const FIELD_ID_PRODUCT_CUSTOMER_PERMISSION = 'id_product_customer_permission';
+
     /**
      * @var string
      */
     public const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var string
      */
@@ -36,7 +38,7 @@ class ProductCustomerPermissionSearchCollectorQuery extends AbstractPropelCollec
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
                 SpyProductCustomerPermissionTableMap::COL_ID_PRODUCT_CUSTOMER_PERMISSION,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
 
         $this->touchQuery

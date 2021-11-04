@@ -63,7 +63,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
         $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient->getProductMeasurementUnitsByMapping(
             static::PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE,
-            [$restRequest->getResource()->getId()]
+            [$restRequest->getResource()->getId()],
         );
 
         if (!$productMeasurementUnitTransfers) {
@@ -73,7 +73,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         $productMeasurementUnitTransfer = $this->productMeasurementUnitNameTranslator
             ->getProductMeasurementUnitTransfersWithTranslatedNames(
                 $productMeasurementUnitTransfers,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             )[0];
 
         return $this->productMeasurementUnitRestResponseBuilder->createProductMeasurementUnitRestResponse($productMeasurementUnitTransfer);

@@ -44,7 +44,7 @@ class CmsSlotBlockCmsConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCmsConnectorConfig::CONDITION_KEY,
-            new CmsSlotBlockConditionTransfer()
+            new CmsSlotBlockConditionTransfer(),
         );
 
         // Act
@@ -63,7 +63,7 @@ class CmsSlotBlockCmsConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             'incorrect-condition-key',
-            new CmsSlotBlockConditionTransfer()
+            new CmsSlotBlockConditionTransfer(),
         );
 
         // Act
@@ -82,7 +82,7 @@ class CmsSlotBlockCmsConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCmsConnectorConfig::CONDITION_KEY,
-            (new CmsSlotBlockConditionTransfer())->setAll(true)
+            (new CmsSlotBlockConditionTransfer())->setAll(true),
         );
 
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
@@ -106,7 +106,7 @@ class CmsSlotBlockCmsConnectorClientTest extends Unit
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCmsConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
-                ->setCmsPageIds([static::ID_CMS_PAGE])
+                ->setCmsPageIds([static::ID_CMS_PAGE]),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_CMS_PAGE => static::ID_CMS_PAGE,
@@ -129,7 +129,7 @@ class CmsSlotBlockCmsConnectorClientTest extends Unit
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCmsConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
-                ->setCmsPageIds([static::ID_CMS_PAGE + 1])
+                ->setCmsPageIds([static::ID_CMS_PAGE + 1]),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_CMS_PAGE => static::ID_CMS_PAGE,

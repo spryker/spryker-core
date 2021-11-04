@@ -54,7 +54,7 @@ class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollecto
                 $dataReader,
                 $dataWriter,
                 $touchUpdater,
-                $output
+                $output,
             );
     }
 }

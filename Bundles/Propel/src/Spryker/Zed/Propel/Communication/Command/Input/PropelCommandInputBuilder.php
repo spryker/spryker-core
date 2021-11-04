@@ -26,11 +26,11 @@ class PropelCommandInputBuilder implements PropelCommandInputBuilderInterface
         string $commandName
     ): InputInterface {
         $wrappedInputDefinition->addArguments(
-            $inputDefinition->getArguments()
+            $inputDefinition->getArguments(),
         );
 
         $wrappedInputDefinition->addOptions(
-            $inputDefinition->getOptions()
+            $inputDefinition->getOptions(),
         );
 
         return new ArrayInput(['command' => $commandName], $wrappedInputDefinition);

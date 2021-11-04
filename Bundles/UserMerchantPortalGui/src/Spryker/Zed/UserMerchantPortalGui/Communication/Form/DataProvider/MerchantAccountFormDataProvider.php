@@ -42,7 +42,7 @@ class MerchantAccountFormDataProvider implements MerchantAccountFormDataProvider
     {
         return [
             MerchantAccountForm::OPTIONS_LOCALE => array_flip(
-                $this->localeFacade->getAvailableLocales()
+                $this->localeFacade->getAvailableLocales(),
             ),
         ];
     }

@@ -19,6 +19,7 @@ class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_COLLECTION_FLYSYSTEM = 'flysystem plugin collection';
+
     /**
      * @var string
      */

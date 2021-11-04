@@ -40,6 +40,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
      * @var string
      */
     protected const ACTION_CREATE = 'create';
+
     /**
      * @var string
      */

@@ -32,7 +32,7 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
     public function createChartPluginCollection(): ChartPluginCollectionInterface
     {
         return new ChartPluginCollection(
-            $this->getChartPlugins()
+            $this->getChartPlugins(),
         );
     }
 

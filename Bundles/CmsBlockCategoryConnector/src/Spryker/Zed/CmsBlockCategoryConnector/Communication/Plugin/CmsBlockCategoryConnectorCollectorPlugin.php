@@ -53,7 +53,7 @@ class CmsBlockCategoryConnectorCollectorPlugin extends AbstractCollectorPlugin
                 $dataReader,
                 $dataWriter,
                 $touchUpdater,
-                $output
+                $output,
             );
     }
 }

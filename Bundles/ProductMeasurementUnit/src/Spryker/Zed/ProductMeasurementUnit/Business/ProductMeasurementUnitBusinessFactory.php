@@ -58,7 +58,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductMeasurementSalesUnitReader(
             $this->getRepository(),
-            $this->getUtilMeasurementUnitConversionService()
+            $this->getUtilMeasurementUnitConversionService(),
         );
     }
 
@@ -100,7 +100,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createCartChangeExpander(): CartChangeExpanderInterface
     {
         return new CartChangeExpander(
-            $this->createProductMeasurementSalesUnitReader()
+            $this->createProductMeasurementSalesUnitReader(),
         );
     }
 
@@ -111,7 +111,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemProductMeasurementSalesUnitChecker(
             $this->getRepository(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -123,7 +123,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductMeasurementUnitInstaller(
             $this->getConfig(),
             $this->getEntityManager(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -136,7 +136,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderExpander(
             $this->getRepository(),
-            $this->createProductMeasurementUnitTranslationExpander()
+            $this->createProductMeasurementUnitTranslationExpander(),
         );
     }
 
@@ -147,7 +147,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItemExpander(
             $this->getRepository(),
-            $this->createProductMeasurementUnitTranslationExpander()
+            $this->createProductMeasurementUnitTranslationExpander(),
         );
     }
 
@@ -157,7 +157,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductMeasurementUnitTranslationExpander(): ProductMeasurementUnitTranslationExpanderInterface
     {
         return new ProductMeasurementUnitTranslationExpander(
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -168,7 +168,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CartChangeSalesUnitExpander(
             $this->getRepository(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 

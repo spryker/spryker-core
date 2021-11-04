@@ -99,7 +99,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
                 'id-price-product-schedule-list' => $item->getFkPriceProductScheduleList(),
             ]),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -115,7 +115,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
                 'id-price-product-schedule-list' => $item->getFkPriceProductScheduleList(),
             ]),
-            'Delete'
+            'Delete',
         );
     }
 }

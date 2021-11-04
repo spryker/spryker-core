@@ -26,7 +26,7 @@ class CompanyUserDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_user.csv']),
-            static::IMPORT_TYPE_COMPANY_USER
+            static::IMPORT_TYPE_COMPANY_USER,
         );
     }
 

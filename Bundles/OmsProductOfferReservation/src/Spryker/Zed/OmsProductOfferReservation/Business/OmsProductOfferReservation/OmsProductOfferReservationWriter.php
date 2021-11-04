@@ -59,7 +59,7 @@ class OmsProductOfferReservationWriter implements OmsProductOfferReservationWrit
             $omsProductOfferReservationTransfer = $this->omsProductOfferReservationMapper
                 ->mapReservationRequestTransferToOmsProductOfferReservationTransfer(
                     $reservationRequestTransfer,
-                    new OmsProductOfferReservationTransfer()
+                    new OmsProductOfferReservationTransfer(),
                 );
 
             $this->omsProductOfferReservationEntityManager->create($omsProductOfferReservationTransfer);

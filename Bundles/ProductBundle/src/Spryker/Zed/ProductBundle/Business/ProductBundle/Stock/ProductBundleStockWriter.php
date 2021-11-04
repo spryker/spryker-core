@@ -25,10 +25,12 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      * @var string
      */
     public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+
     /**
      * @var string
      */
     public const QUANTITY = 'quantity';
+
     /**
      * @var int
      */
@@ -125,7 +127,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     ) {
         $bundleTotalStockPerWarehouse = $this->removeBundleStockFromWarehousesWithoutBundledItems(
             $productConcreteTransfer,
-            $bundleTotalStockPerWarehouse
+            $bundleTotalStockPerWarehouse,
         );
 
         foreach ($bundleTotalStockPerWarehouse as $idStock => $bundleStock) {
@@ -142,7 +144,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      *
      * @return array
      */
@@ -256,7 +258,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
     protected function findBundledItemsByIdBundleProduct($idProductConcrete)
     {
@@ -300,7 +302,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProduct
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Stock\Persistence\SpyStockProduct>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     protected function findProductStocks($idProduct)
     {
@@ -371,7 +373,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $this->productBundleAvailabilityHandler->removeBundleAvailability(
                 $productConcreteTransfer->getSku(),
-                $storeTransfer
+                $storeTransfer,
             );
         }
     }

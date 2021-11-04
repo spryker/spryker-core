@@ -41,7 +41,7 @@ use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
-use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface as SharedCartToStoreFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToStoreFacadeInterface;
 use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
 /**
@@ -74,7 +74,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerShareCartQuoteResponseExpander(
             $this->createQuoteReader(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -110,7 +110,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new QuotePermissionGroupInstaller(
             $this->getConfig(),
             $this->getEntityManager(),
-            $this->getPermissionFacade()
+            $this->getPermissionFacade(),
         );
     }
 
@@ -129,7 +129,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteCompanyUserWriter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -139,7 +139,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -150,7 +150,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteShareDetailsReader(
             $this->getRepository(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -170,7 +170,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new ResourceShareQuoteShare(
             $this->getRepository(),
             $this->getQuoteFacade(),
-            $this->createResourceShareQuoteCompanyUserWriter()
+            $this->createResourceShareQuoteCompanyUserWriter(),
         );
     }
 
@@ -182,7 +182,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new ResourceShareQuoteCompanyUserWriter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createQuoteCompanyUserWriter()
+            $this->createQuoteCompanyUserWriter(),
         );
     }
 
@@ -238,7 +238,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
         return new SharedCartQuoteCollectionExpander(
             $this->createQuoteReader(),
             $this->getStoreFacade(),
-            $this->createQuoteShareDetailsReader()
+            $this->createQuoteShareDetailsReader(),
         );
     }
 
@@ -249,7 +249,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new SharedCartMessenger(
             $this->getRepository(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 

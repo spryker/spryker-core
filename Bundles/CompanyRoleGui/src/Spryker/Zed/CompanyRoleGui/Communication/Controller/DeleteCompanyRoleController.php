@@ -27,14 +27,17 @@ class DeleteCompanyRoleController extends AbstractController
      * @var string
      */
     protected const MESSAGE_DEFAULT_COMPANY_ROLE_DELETE_ERROR = 'You can not delete a default role, please set another default role before delete action';
+
     /**
      * @var string
      */
     protected const MESSAGE_COMPANY_ROLE_DELETE_SUCCESS = 'Company role has been successfully removed';
+
     /**
      * @var string
      */
     protected const MESSAGE_COMPANY_ROLE_DELETE_ERROR = 'Company role can not be removed';
+
     /**
      * @var string
      */
@@ -44,6 +47,7 @@ class DeleteCompanyRoleController extends AbstractController
      * @var string
      */
     protected const PARAM_REFERER = 'referer';
+
     /**
      * @var string
      */
@@ -126,7 +130,7 @@ class DeleteCompanyRoleController extends AbstractController
     protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $this->redirectResponse(
-            $request->headers->get(static::PARAM_REFERER, static::REDIRECT_URL_DEFAULT)
+            $request->headers->get(static::PARAM_REFERER, static::REDIRECT_URL_DEFAULT),
         );
     }
 }

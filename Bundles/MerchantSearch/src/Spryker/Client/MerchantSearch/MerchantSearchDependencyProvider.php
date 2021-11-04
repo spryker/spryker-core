@@ -27,10 +27,12 @@ class MerchantSearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGIN_MERCHANT_SEARCH_QUERY = 'PLUGIN_MERCHANT_SEARCH_QUERY';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_SEARCH_RESULT_FORMATTER = 'PLUGINS_MERCHANT_SEARCH_RESULT_FORMATTER';
+
     /**
      * @var string
      */
@@ -62,7 +64,7 @@ class MerchantSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new MerchantSearchToSearchClientBridge(
-                $container->getLocator()->search()->client()
+                $container->getLocator()->search()->client(),
             );
         });
 

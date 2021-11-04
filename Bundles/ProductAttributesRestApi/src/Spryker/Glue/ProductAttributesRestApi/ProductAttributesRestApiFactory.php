@@ -28,7 +28,7 @@ class ProductAttributesRestApiFactory extends AbstractFactory
     {
         return new ProductAttributeReader(
             $this->getProductAttributeClient(),
-            $this->createRestProductAttributeResponseBuilder()
+            $this->createRestProductAttributeResponseBuilder(),
         );
     }
 
@@ -39,7 +39,7 @@ class ProductAttributesRestApiFactory extends AbstractFactory
     {
         return new RestProductAttributeResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createProductAttributeMapper()
+            $this->createProductAttributeMapper(),
         );
     }
 

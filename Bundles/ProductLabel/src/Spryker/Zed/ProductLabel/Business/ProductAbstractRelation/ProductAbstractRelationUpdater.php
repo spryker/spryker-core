@@ -79,7 +79,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
             $this->debug(sprintf(
                 '%s - Found %d labels to update.',
                 $pluginName,
-                count($productLabelProductAbstractRelationTransfers)
+                count($productLabelProductAbstractRelationTransfers),
             ));
 
             $this->updateRelations($productLabelProductAbstractRelationTransfers, $pluginName, $isTouchEnabled);
@@ -123,13 +123,13 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
             '%s - Deassigning %d products from label #%d.',
             $pluginName,
             $toBeDeAssigned,
-            $productLabelProductAbstractRelationTransfer->getIdProductLabel()
+            $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
         ));
 
         $this->productAbstractRelationDeleter->removeRelations(
             $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
             $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign(),
-            $isTouchEnabled
+            $isTouchEnabled,
         );
     }
 
@@ -155,13 +155,13 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
             '%s - Assigning %d products to label #%d.',
             $pluginName,
             $toBeAssigned,
-            $productLabelProductAbstractRelationTransfer->getIdProductLabel()
+            $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
         ));
 
         $this->productAbstractRelationWriter->addRelations(
             $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
             $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign(),
-            $isTouchEnabled
+            $isTouchEnabled,
         );
     }
 

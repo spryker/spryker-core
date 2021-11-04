@@ -189,7 +189,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             $translationKey = $this->cmsBlockGlossaryKeyGenerator->generateGlossaryKeyName(
                 $glossaryPlaceholderTransfer->getFkCmsBlock(),
                 $glossaryPlaceholderTransfer->getTemplateName(),
-                $glossaryPlaceholderTransfer->getPlaceholder()
+                $glossaryPlaceholderTransfer->getPlaceholder(),
             );
 
             $glossaryPlaceholderTransfer->setTranslationKey($translationKey);
@@ -289,7 +289,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     {
         $this->assertPlaceholderNotAmbiguous(
             $glossaryPlaceholderTransfer->getFkCmsBlock(),
-            $glossaryPlaceholderTransfer->getPlaceholder()
+            $glossaryPlaceholderTransfer->getPlaceholder(),
         );
 
         $cmsGlossaryKeyMappingEntity = new SpyCmsBlockGlossaryKeyMapping();
@@ -319,7 +319,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
         if ($isPlaceholderModified || $isIdCmsBlockModified) {
             $this->assertPlaceholderNotAmbiguous(
                 $glossaryPlaceholderTransfer->getFkCmsBlock(),
-                $glossaryPlaceholderTransfer->getPlaceholder()
+                $glossaryPlaceholderTransfer->getPlaceholder(),
             );
         }
 
@@ -360,7 +360,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 
         if (!$mappingEntity) {
             throw new MissingCmsBlockGlossaryKeyMapping(
-                sprintf('Tried to retrieve a missing glossary key mapping with id %s', $idGlossaryKeyMapping)
+                sprintf('Tried to retrieve a missing glossary key mapping with id %s', $idGlossaryKeyMapping),
             );
         }
 

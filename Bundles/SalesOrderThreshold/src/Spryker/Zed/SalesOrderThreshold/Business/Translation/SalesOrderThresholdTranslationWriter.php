@@ -38,7 +38,7 @@ class SalesOrderThresholdTranslationWriter implements SalesOrderThresholdTransla
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
             $salesOrderThresholdTransfer->getSalesOrderThresholdValue(),
-            $this->createTranslationsLocaleMap($salesOrderThresholdTransfer->getLocalizedMessages())
+            $this->createTranslationsLocaleMap($salesOrderThresholdTransfer->getLocalizedMessages()),
         );
 
         $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
@@ -59,7 +59,7 @@ class SalesOrderThresholdTranslationWriter implements SalesOrderThresholdTransla
 
         $this->saveLocalizedMessages($salesOrderThresholdTransfer);
         $this->glossaryFacade->deleteKey(
-            $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
+            $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
         );
     }
 

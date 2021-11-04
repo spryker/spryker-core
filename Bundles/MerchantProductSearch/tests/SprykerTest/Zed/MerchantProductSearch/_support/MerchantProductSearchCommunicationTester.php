@@ -67,7 +67,7 @@ class MerchantProductSearchCommunicationTester extends Actor
     public function addProductRelatedData(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productAbstractTransfer = $this->getProductFacade()->findProductAbstractById(
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $localizedAttributeTransfers = $this->generateLocalizedAttributes();
@@ -131,21 +131,21 @@ class MerchantProductSearchCommunicationTester extends Actor
             ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER,
             [
                 new MerchantProductAbstractMapExpanderPlugin(),
-            ]
+            ],
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER,
             [
                 new MerchantProductPageDataLoaderPlugin(),
-            ]
+            ],
         );
 
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER,
             [
                 MerchantProductSearchConfig::PLUGIN_MERCHANT_PRODUCT_DATA => new MerchantProductPageDataExpanderPlugin(),
-            ]
+            ],
         );
     }
 
@@ -160,7 +160,7 @@ class MerchantProductSearchCommunicationTester extends Actor
                 'transformPageMapToDocumentByMapperName' => function () {
                     return [];
                 },
-            ]
+            ],
         ));
     }
 

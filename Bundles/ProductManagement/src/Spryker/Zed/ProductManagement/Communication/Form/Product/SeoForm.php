@@ -22,10 +22,12 @@ class SeoForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_META_TITLE = 'meta_title';
+
     /**
      * @var string
      */
     public const FIELD_META_KEYWORDS = 'meta_keywords';
+
     /**
      * @var string
      */
@@ -33,7 +35,7 @@ class SeoForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

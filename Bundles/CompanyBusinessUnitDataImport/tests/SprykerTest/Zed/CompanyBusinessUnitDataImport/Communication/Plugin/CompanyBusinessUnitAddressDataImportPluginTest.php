@@ -31,6 +31,7 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
      * @var string
      */
     protected const COMPANY_ADDRESS_KEY = 'Address--1';
+
     /**
      * @var string
      */
@@ -40,6 +41,7 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
      * @var string
      */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_ADDRESS_CSV = 'import/company_business_unit_address.csv';
+
     /**
      * @var string
      */
@@ -90,13 +92,13 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT,
-            $companyBusinessUnitDataImportPlugin->getImportType()
+            $companyBusinessUnitDataImportPlugin->getImportType(),
         );
 
         $companyBusinessUnitAddressDataImportPlugin = new CompanyBusinessUnitAddressDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS,
-            $companyBusinessUnitAddressDataImportPlugin->getImportType()
+            $companyBusinessUnitAddressDataImportPlugin->getImportType(),
         );
     }
 }

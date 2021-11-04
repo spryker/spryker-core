@@ -15,6 +15,7 @@ class QueryString extends SymfonyConstraint
      * @var string
      */
     public const OPTION_DISCOUNT_FACADE = 'discountFacade';
+
     /**
      * @var string
      */

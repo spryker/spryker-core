@@ -39,7 +39,7 @@ class DeleteMerchantUserController extends AbstractCrudMerchantUserController
         if (!$request->isMethod(Request::METHOD_DELETE)) {
             throw new MethodNotAllowedHttpException(
                 [Request::METHOD_DELETE],
-                'This action requires a DELETE request.'
+                'This action requires a DELETE request.',
             );
         }
 

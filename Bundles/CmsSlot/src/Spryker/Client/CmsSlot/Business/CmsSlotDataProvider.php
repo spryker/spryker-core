@@ -37,7 +37,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         foreach ($dataKeys as $dataKey) {
             $cmsSlotExternalDataTransfer->addValues(
                 $dataKey,
-                $this->executeExternalDataProviderStrategyPlugins($dataKey)
+                $this->executeExternalDataProviderStrategyPlugins($dataKey),
             );
         }
 

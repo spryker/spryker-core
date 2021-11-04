@@ -29,7 +29,7 @@ class SavePriceProductAbstractController extends AbstractSavePriceProductControl
     {
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer->setIdProductAbstract(
-                $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT))
+                $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT)),
             );
         }
 
@@ -51,7 +51,7 @@ class SavePriceProductAbstractController extends AbstractSavePriceProductControl
             ->getPriceProductFacade()
             ->findProductAbstractPricesWithoutPriceExtraction(
                 $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT)),
-                $priceProductCriteriaTransfer
+                $priceProductCriteriaTransfer,
             );
     }
 

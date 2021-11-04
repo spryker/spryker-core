@@ -33,18 +33,22 @@ class ProductLocalizedAttributesForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_NAME = 'Provide a name';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_DESCRIPTION = 'Provide description';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_META_TITLE = 'Provide meta title';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_META_KEYWORDS = 'Provide meta keywords';
+
     /**
      * @var string
      */
@@ -94,7 +98,7 @@ class ProductLocalizedAttributesForm extends AbstractType
     {
         $builder->add(LocalizedAttributesTransfer::LOCALE, HiddenType::class);
         $builder->get(LocalizedAttributesTransfer::LOCALE)->addModelTransformer(
-            $this->getFactory()->createLocaleTransformer()
+            $this->getFactory()->createLocaleTransformer(),
         );
 
         return $this;

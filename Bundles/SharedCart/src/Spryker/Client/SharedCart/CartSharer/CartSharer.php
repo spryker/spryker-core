@@ -128,8 +128,8 @@ class CartSharer implements CartSharerInterface
             ->setShareDetails(
                 $this->filterShareCartToRemove(
                     $quoteTransfer->getShareDetails(),
-                    $shareCartRequestTransfer
-                )
+                    $shareCartRequestTransfer,
+                ),
             );
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
@@ -157,8 +157,8 @@ class CartSharer implements CartSharerInterface
             ->setShareDetails(
                 $this->filterShareCartToRemove(
                     $this->sharedCartStub->getShareDetailsByIdQuoteAction($quoteTransfer)->getShareDetails(),
-                    $shareCartRequestTransfer
-                )
+                    $shareCartRequestTransfer,
+                ),
             );
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
@@ -253,7 +253,7 @@ class CartSharer implements CartSharerInterface
         }
 
         throw new CartNotFoundException(
-            sprintf('Cart with id %s was not found', $idQuote)
+            sprintf('Cart with id %s was not found', $idQuote),
         );
     }
 

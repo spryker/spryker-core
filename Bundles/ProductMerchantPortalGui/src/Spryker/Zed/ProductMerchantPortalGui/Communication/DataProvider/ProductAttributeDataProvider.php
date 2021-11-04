@@ -14,12 +14,10 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationPro
 class ProductAttributeDataProvider implements ProductAttributeDataProviderInterface
 {
     /**
-     * @phpstan-param ArrayObject<string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
      * @param array<string> $attributes
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     * @param \ArrayObject<int|string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getData(array $attributes, ArrayObject $localizedAttributeTransfers): array
     {
@@ -45,8 +43,6 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      * @param int $idLocale
      *
@@ -64,8 +60,6 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $localeName
      *
@@ -84,9 +78,9 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
 
     /**
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function addLocalizedAttributes(
         LocalizedAttributesTransfer $localizedAttributesTransfer,

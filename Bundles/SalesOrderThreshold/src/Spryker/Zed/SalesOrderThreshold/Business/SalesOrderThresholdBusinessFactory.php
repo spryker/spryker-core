@@ -63,7 +63,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdTypeInstaller(
             $this->getSalesOrderThresholdStrategyPlugins(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -74,7 +74,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdTypeReader(
             $this->createSalesOrderThresholdStrategyResolver(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -85,7 +85,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdReader(
             $this->getRepository(),
-            $this->createSalesOrderThresholdTranslationHydrator()
+            $this->createSalesOrderThresholdTranslationHydrator(),
         );
     }
 
@@ -99,7 +99,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createSalesOrderThresholdGlossaryKeyGenerator(),
-            $this->createSalesOrderThresholdTranslationWriter()
+            $this->createSalesOrderThresholdTranslationWriter(),
         );
     }
 
@@ -118,7 +118,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdTranslationReader(
             $this->getGlossaryFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -128,7 +128,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderThresholdTranslationWriter(): SalesOrderThresholdTranslationWriterInterface
     {
         return new SalesOrderThresholdTranslationWriter(
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -138,7 +138,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderThresholdStrategyResolver(): SalesOrderThresholdStrategyResolverInterface
     {
         return new SalesOrderThresholdStrategyResolver(
-            $this->getSalesOrderThresholdStrategyPlugins()
+            $this->getSalesOrderThresholdStrategyPlugins(),
         );
     }
 
@@ -151,7 +151,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
             $this->createSalesOrderThresholdDataSourceStrategyResolver(),
             $this->createSalesOrderThresholdStrategyResolver(),
             $this->getMessengerFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
         );
     }
 
@@ -161,7 +161,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     public function createExpenseSaver(): ExpenseSaverInterface
     {
         return new ExpenseSaver(
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
         );
     }
 
@@ -174,7 +174,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
             $this->getMessengerFacade(),
             $this->getMoneyFacade(),
             $this->createSalesOrderThresholdDataSourceStrategyResolver(),
-            $this->createSalesOrderThresholdStrategyResolver()
+            $this->createSalesOrderThresholdStrategyResolver(),
         );
     }
 
@@ -186,7 +186,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
         return new ExpenseCalculator(
             $this->createSalesOrderThresholdStrategyResolver(),
             $this->createSalesOrderThresholdDataSourceStrategyResolver(),
-            $this->createTaxRateReader()
+            $this->createTaxRateReader(),
         );
     }
 
@@ -205,7 +205,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderThresholdDataSourceStrategyResolver(
             $this->getSalesOrderThresholdDataSourceStrategies(),
-            $this->createSalesOrderThresholdReader()
+            $this->createSalesOrderThresholdReader(),
         );
     }
 
@@ -216,7 +216,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     {
         return new TaxRateReader(
             $this->getTaxFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

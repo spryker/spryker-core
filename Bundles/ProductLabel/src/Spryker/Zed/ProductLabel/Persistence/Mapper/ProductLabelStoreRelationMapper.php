@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductLabelStoreRelationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelStore> $productLabelStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabelStore[] $productLabelStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
@@ -26,7 +26,7 @@ class ProductLabelStoreRelationMapper
     ): StoreRelationTransfer {
         foreach ($productLabelStoreEntities as $productLabelStoreEntity) {
             $storeRelationTransfer->addStores(
-                $this->mapStoreEntityToStoreTransfer($productLabelStoreEntity->getStore(), new StoreTransfer())
+                $this->mapStoreEntityToStoreTransfer($productLabelStoreEntity->getStore(), new StoreTransfer()),
             );
             $storeRelationTransfer->addIdStores($productLabelStoreEntity->getFkStore());
         }

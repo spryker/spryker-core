@@ -14,6 +14,7 @@ interface NavigationEvents
      * - This events will be used for navigation key publishing
      *
      * @api
+     *
      * @var string
      */
     public const NAVIGATION_KEY_PUBLISH = 'Navigation.key.publish';
@@ -23,6 +24,7 @@ interface NavigationEvents
      * - This events will be used for navigation key un-publishing
      *
      * @api
+     *
      * @var string
      */
     public const NAVIGATION_KEY_UNPUBLISH = 'Navigation.key.unpublish';
@@ -32,6 +34,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_CREATE = 'Entity.spy_navigation.create';
@@ -41,6 +44,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_UPDATE = 'Entity.spy_navigation.update';
@@ -50,6 +54,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_DELETE = 'Entity.spy_navigation.delete';
@@ -59,6 +64,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation_node entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_NODE_CREATE = 'Entity.spy_navigation_node.create';
@@ -68,6 +74,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation_node entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_NODE_UPDATE = 'Entity.spy_navigation_node.update';
@@ -77,6 +84,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation_node entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_NODE_DELETE = 'Entity.spy_navigation_node.delete';
@@ -86,6 +94,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation_node_localized_attributes entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_CREATE = 'Entity.spy_navigation_node_localized_attributes.create';
@@ -95,6 +104,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation_node_localized_attributes entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_UPDATE = 'Entity.spy_navigation_node_localized_attributes.update';
@@ -104,6 +114,7 @@ interface NavigationEvents
      * - This events will be used for spy_navigation_node_localized_attributes entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE = 'Entity.spy_navigation_node_localized_attributes.delete';

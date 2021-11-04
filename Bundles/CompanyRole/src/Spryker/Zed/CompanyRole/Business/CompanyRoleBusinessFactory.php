@@ -36,7 +36,7 @@ class CompanyRoleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCompanyRolePermissionWriter(),
             $this->getConfig(),
-            $this->getPermissionFacade()
+            $this->getPermissionFacade(),
         );
     }
 
@@ -55,7 +55,7 @@ class CompanyRoleBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyRolePermissionWriter(
             $this->createCompanyRolePermissionReader(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

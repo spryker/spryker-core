@@ -11,8 +11,7 @@
             "snippet": "                $container->getLocator()->aclEntity()->facade()",
             "selected_text": "aclEntity",
             "error_level": 3,
-            "shortcode": 108,
-            "other_references": null
+            "shortcode": 108
         }
     ],
     "deprecation": []

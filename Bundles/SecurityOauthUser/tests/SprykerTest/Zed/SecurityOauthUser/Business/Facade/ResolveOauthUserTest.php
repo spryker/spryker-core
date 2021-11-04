@@ -30,6 +30,7 @@ class ResolveOauthUserTest extends Unit
      * @var string
      */
     protected const FAKE_EMAIL = 'fake@mail.com';
+
     /**
      * @var string
      */
@@ -47,7 +48,7 @@ class ResolveOauthUserTest extends Unit
     {
         // Arrange
         $securityOauthUserFacade = $this->tester->mockSecurityOauthUserFacade(
-            SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS
+            SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS,
         );
 
         $userTransfer = $this->tester->haveUser();
@@ -69,7 +70,7 @@ class ResolveOauthUserTest extends Unit
     {
         // Arrange
         $securityOauthUserFacade = $this->tester->mockSecurityOauthUserFacade(
-            SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS
+            SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS,
         );
 
         $userCriteriaTransfer = (new UserCriteriaTransfer())
@@ -90,7 +91,7 @@ class ResolveOauthUserTest extends Unit
         // Arrange
         $securityOauthUserFacade = $this->tester->mockSecurityOauthUserFacade(
             SecurityOauthUserConfig::AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN,
-            static::SOME_GROUP
+            static::SOME_GROUP,
         );
 
         $this->tester->haveGroup([GroupTransfer::NAME => static::SOME_GROUP]);
@@ -144,7 +145,7 @@ class ResolveOauthUserTest extends Unit
         $userTransfer = $this->tester->haveUser();
 
         $this->tester->getUserFacade()->deactivateUser(
-            $userTransfer->getIdUser()
+            $userTransfer->getIdUser(),
         );
 
         $userCriteriaTransfer = (new UserCriteriaTransfer())
@@ -158,7 +159,7 @@ class ResolveOauthUserTest extends Unit
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function resolveOauthUserShouldNotResolveOauthUserWithInactiveStatusDataProvider(): array
     {

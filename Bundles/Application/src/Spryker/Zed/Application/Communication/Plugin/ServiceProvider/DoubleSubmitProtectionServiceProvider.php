@@ -10,7 +10,7 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension as DoubleSubmitProtectionExtension;
+use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -50,7 +50,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
         return new DoubleSubmitProtectionExtension(
             $this->createTokenGenerator(),
             $this->createTokenStorage($container),
-            $translator
+            $translator,
         );
     }
 

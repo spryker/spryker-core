@@ -41,6 +41,7 @@ class SessionHandlerFileTest extends Unit
      * @var string
      */
     public const SESSION_ID = 'sessionId';
+
     /**
      * @var string
      */

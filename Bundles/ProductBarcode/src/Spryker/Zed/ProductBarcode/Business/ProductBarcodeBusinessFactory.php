@@ -28,7 +28,7 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBarcodeGenerator(
             $this->getBarcodeService(),
-            $this->createProductSkuProvider()
+            $this->createProductSkuProvider(),
         );
     }
 
@@ -38,7 +38,7 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
     public function createProductSkuProvider(): ProductSkuProviderInterface
     {
         return new ProductSkuProvider(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

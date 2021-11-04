@@ -21,10 +21,12 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var string
      */
@@ -34,14 +36,17 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @var string
      */
     public const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+
     /**
      * @var string
      */
     public const PRODUCT_ABSTRACT_STORAGE_ENTITY = 'PRODUCT_ABSTRACT_STORAGE_ENTITY';
+
     /**
      * @var string
      */
     public const LOCALE_NAME = 'LOCALE_NAME';
+
     /**
      * @var string
      */
@@ -173,12 +178,12 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     {
         $pairedEntities = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntities(
             $productAbstractLocalizedEntities,
-            $productAbstractStorageEntities
+            $productAbstractStorageEntities,
         );
 
         $attributeMapBulk = $this->attributeMap->generateAttributeMapBulk(
             array_column($productAbstractLocalizedEntities, static::COL_FK_PRODUCT_ABSTRACT),
-            array_column($productAbstractLocalizedEntities, static::COL_FK_LOCALE)
+            array_column($productAbstractLocalizedEntities, static::COL_FK_LOCALE),
         );
 
         foreach ($pairedEntities as $pair) {
@@ -196,7 +201,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
                 $productAbstractStorageEntity,
                 $pair[static::STORE_NAME],
                 $pair[static::LOCALE_NAME],
-                $attributeMapBulk
+                $attributeMapBulk,
             );
         }
     }
@@ -226,7 +231,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
                 $productAbstractLocalizedEntity,
                 $mappedProductAbstractStorageEntities,
-                $pairs
+                $pairs,
             );
         }
 
@@ -256,8 +261,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {
             $storeName = $productAbstractStoreEntity['SpyStore']['name'];
 
-            $productAbstractStorageEntity = isset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]) ?
-                $mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName] :
+            $productAbstractStorageEntity = $mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName] ??
                 new SpyProductAbstractStorage();
 
             unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
@@ -327,7 +331,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $productAbstractStorageTransfer = $this->mapToProductAbstractStorageTransfer(
             $productAbstractLocalizedEntity,
             new ProductAbstractStorageTransfer(),
-            $attributeMapBulk
+            $attributeMapBulk,
         );
 
         $productAbstractStorageTransfer = $this->executeProductAbstractStorageExpanderPlugins($productAbstractStorageTransfer);
@@ -373,7 +377,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $attributeMap = $this->attributeMap->getConcreteProductsFromBulk(
             $productAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT],
             $productAbstractLocalizedEntity['Locale']['id_locale'],
-            $attributeMapBulk
+            $attributeMapBulk,
         );
         $productAbstractEntity = $productAbstractLocalizedEntity['SpyProductAbstract'];
         unset($productAbstractLocalizedEntity['attributes']);
@@ -397,10 +401,10 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected function getProductAbstractAttributes(array $productAbstractLocalizedEntity)
     {
         $productAbstractDecodedAttributes = $this->productFacade->decodeProductAttributes(
-            $productAbstractLocalizedEntity['SpyProductAbstract']['attributes']
+            $productAbstractLocalizedEntity['SpyProductAbstract']['attributes'],
         );
         $productAbstractLocalizedDecodedAttributes = $this->productFacade->decodeProductAttributes(
-            $productAbstractLocalizedEntity['attributes']
+            $productAbstractLocalizedEntity['attributes'],
         );
 
         $rawProductAttributesTransfer = (new RawProductAttributesTransfer())

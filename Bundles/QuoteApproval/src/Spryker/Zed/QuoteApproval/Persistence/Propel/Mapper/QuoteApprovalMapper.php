@@ -48,12 +48,12 @@ class QuoteApprovalMapper
 
         $companyUserTransfer = (new CompanyUserTransfer())->fromArray(
             $companyUserEntity->toArray(),
-            true
+            true,
         );
 
         $customerTransfer = (new CustomerTransfer())->fromArray(
             $companyUserEntity->getCustomer()->toArray(),
-            true
+            true,
         );
 
         $companyUserTransfer->setCustomer($customerTransfer);

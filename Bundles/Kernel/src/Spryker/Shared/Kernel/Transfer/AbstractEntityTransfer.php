@@ -13,12 +13,12 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
      * This property is used to map all properties which does not exist in child transfer,
      * it's used for SQL aliases, aggregates, custom fields.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $virtualProperties = [];
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function virtualProperties()
     {
@@ -26,7 +26,7 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param bool $acceptVirtualProperties
      *
      * @return $this

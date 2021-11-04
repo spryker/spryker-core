@@ -24,14 +24,17 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_PRODUCT_REVIEW = 'FACADE_PRODUCT_REVIEW';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */

@@ -121,8 +121,8 @@ class UrlManager implements UrlManagerInterface
             throw new UrlExistsException(
                 sprintf(
                     'Tried to create url %s, but it already exists',
-                    $url
-                )
+                    $url,
+                ),
             );
         }
     }
@@ -166,8 +166,8 @@ class UrlManager implements UrlManagerInterface
             throw new MissingUrlException(
                 sprintf(
                     'Tried to retrieve url %s, but it is missing',
-                    $url
-                )
+                    $url,
+                ),
             );
         }
 
@@ -190,8 +190,8 @@ class UrlManager implements UrlManagerInterface
             throw new MissingUrlException(
                 sprintf(
                     'Tried to retrieve url %s, but it is missing',
-                    $idUrl
-                )
+                    $idUrl,
+                ),
             );
         }
 

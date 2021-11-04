@@ -98,7 +98,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $salesShipmentEntities = $salesShipmentQuery->find();
         $idSalesShipmentExpenseList = array_map(
             'intval',
-            $idSalesShipmentExpenseQuery->find()->getData()
+            $idSalesShipmentExpenseQuery->find()->getData(),
         );
 
         $this->assertCount($countOfNewShipmentExpenses, $idSalesShipmentExpenseList, 'Expected number of shipment expenses does not match the actual number.');

@@ -164,7 +164,7 @@ class StorageStrategyProviderTest extends Unit
             $this->createQuoteLockStatusValidatorMock(),
             $this->createQuoteEditStatusValidatorMock(),
             $this->createQuoteLockerMock(),
-            []
+            [],
         );
     }
 
@@ -177,7 +177,7 @@ class StorageStrategyProviderTest extends Unit
             $this->createQuoteSession(),
             $this->createQuoteLockStatusValidatorMock(),
             $this->createQuoteEditStatusValidatorMock(),
-            $this->createQuoteLockerMock()
+            $this->createQuoteLockerMock(),
         );
     }
 

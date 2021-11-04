@@ -29,10 +29,12 @@ class LoggableZedClientTest extends Unit
      * @var string
      */
     public const MESSAGE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
     public const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
@@ -51,7 +53,7 @@ class LoggableZedClientTest extends Unit
         $zedRequestLoggerMock->expects($this->once())->method('log')->with(
             $uri,
             $payload->toArray(),
-            $expectedResult->toArray()
+            $expectedResult->toArray(),
         );
         $this->tester->mockFactoryMethod('createZedRequestLogger', $zedRequestLoggerMock);
         $this->tester->mockCreateZedClient(['call' => $expectedResult]);

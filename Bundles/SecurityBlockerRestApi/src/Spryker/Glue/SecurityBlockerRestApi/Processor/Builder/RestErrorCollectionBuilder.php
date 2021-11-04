@@ -42,7 +42,7 @@ class RestErrorCollectionBuilder implements RestErrorCollectionBuilderInterface
         $translatedMessage = $this->glossaryStorageClient->translate(
             SecurityBlockerRestApiConfig::ERROR_RESPONSE_DETAIL_ACCOUNT_BLOCKED,
             $localeName,
-            ['%minutes%' => $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)]
+            ['%minutes%' => $this->convertSecondsToReadableTime($securityCheckAuthResponseTransfer)],
         );
 
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())

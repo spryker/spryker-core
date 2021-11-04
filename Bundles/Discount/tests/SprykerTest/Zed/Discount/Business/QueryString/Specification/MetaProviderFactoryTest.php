@@ -49,7 +49,7 @@ class MetaProviderFactoryTest extends Unit
         $metaProviderFactoryMock = $this->createMetaProviderFactory($discountBusinessFactoryMock);
 
         $decisionRuleProvider = $metaProviderFactoryMock->createMetaProviderByType(
-            MetaProviderFactory::TYPE_DECISION_RULE
+            MetaProviderFactory::TYPE_DECISION_RULE,
         );
 
         $this->assertInstanceOf(MetaDataProvider::class, $decisionRuleProvider);
@@ -76,7 +76,7 @@ class MetaProviderFactoryTest extends Unit
         $metaProviderFactoryMock = $this->createMetaProviderFactory($discountBusinessFactoryMock);
 
         $collectorProvider = $metaProviderFactoryMock->createMetaProviderByType(
-            MetaProviderFactory::TYPE_COLLECTOR
+            MetaProviderFactory::TYPE_COLLECTOR,
         );
 
         $this->assertInstanceOf(MetaDataProvider::class, $collectorProvider);

@@ -78,7 +78,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, Su
                     new NotBlank(['groups' => $this->getPropertyPath()]),
                     $this->getFactory()->createDateOfBirthValueConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

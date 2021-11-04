@@ -19,30 +19,35 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_PRICE
+     *
      * @var string
      */
     public const CONTENT_TYPE_PRICE = 'price';
 
     /**
      * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_ORDER_PLACE_SUBMIT
+     *
      * @var string
      */
     public const CONTENT_TYPE_ORDER_PLACE_SUBMIT = 'order-place-submit';
 
     /**
      * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_ADD_TO_CART
+     *
      * @var string
      */
     public const CONTENT_TYPE_ADD_TO_CART = 'add-to-cart';
 
     /**
      * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_WISHLIST
+     *
      * @var string
      */
     public const CONTENT_TYPE_WISHLIST = 'wishlist';
 
     /**
      * @uses \Spryker\Shared\CustomerAccess\CustomerAccessConfig::CONTENT_TYPE_SHOPPING_LIST
+     *
      * @var string
      */
     public const CONTENT_TYPE_SHOPPING_LIST = 'shopping-list';
@@ -50,8 +55,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     /**
      * Constant used to connect zed content type access settings with the content type permission plugin used in yves shop
      *
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const CONTENT_TYPE_PERMISSION_PLUGIN = [
         self::CONTENT_TYPE_PRICE => SeePricePermissionPlugin::KEY,
@@ -62,8 +66,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const CONTENT_TYPE_PERMISSION_ACCESS = [
         self::CONTENT_TYPE_ADD_TO_CART => '|^(/en|/de)?/cart(?!/add)',
@@ -77,6 +80,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Shared\Customer\CustomerConstants::CUSTOMER_SECURED_PATTERN
+     *
      * @var string
      */
     protected const CUSTOMER_SECURED_PATTERN = 'CUSTOMER_SECURED_PATTERN';

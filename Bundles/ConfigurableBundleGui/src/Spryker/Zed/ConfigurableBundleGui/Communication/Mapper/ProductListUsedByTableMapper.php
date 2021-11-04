@@ -24,8 +24,9 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
      * @var string
      */
     protected const EDIT_BUTTON_TITLE = 'Edit Slot';
+
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const EDIT_BUTTON_OPTIONS = [
         'class' => 'btn-edit btn-xs',
@@ -34,9 +35,11 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_SLOT = '/configurable-bundle-gui/slot/edit';
+
     /**
      * @var string
      */
@@ -57,10 +60,10 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
         $productListUsedByTableRowTransfer->setTitle(static::ENTITY_TITLE);
         $productListUsedByTableRowTransfer->setName(
-            $this->createComposedEntityName($configurableBundleTemplateSlotTransfer)
+            $this->createComposedEntityName($configurableBundleTemplateSlotTransfer),
         );
         $productListUsedByTableRowTransfer->setActionButtons(
-            $this->createActionButtons($configurableBundleTemplateSlotTransfer)
+            $this->createActionButtons($configurableBundleTemplateSlotTransfer),
         );
 
         return $productListUsedByTableRowTransfer;
@@ -81,7 +84,7 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
         return sprintf(
             '%s - %s',
             $configurableBundleTemplateName,
-            $configurableBundleTemplateSlotName
+            $configurableBundleTemplateSlotName,
         );
     }
 

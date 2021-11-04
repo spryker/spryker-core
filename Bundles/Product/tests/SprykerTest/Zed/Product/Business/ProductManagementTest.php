@@ -35,7 +35,7 @@ class ProductManagementTest extends FacadeTestAbstract
 
         $idProductAbstract = $this->productFacade->addProduct(
             $this->productAbstractTransfer,
-            [$this->productConcreteTransfer]
+            [$this->productConcreteTransfer],
         );
 
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -56,19 +56,19 @@ class ProductManagementTest extends FacadeTestAbstract
 
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
         foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+                self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
         $idProductAbstract = $this->productFacade->saveProduct(
             $this->productAbstractTransfer,
-            [$this->productConcreteTransfer]
+            [$this->productConcreteTransfer],
         );
 
         $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
@@ -85,7 +85,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()]
+                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -94,7 +94,7 @@ class ProductManagementTest extends FacadeTestAbstract
 
         $idProductAbstract = $this->productFacade->saveProduct(
             $this->productAbstractTransfer,
-            [$this->productConcreteTransfer]
+            [$this->productConcreteTransfer],
         );
 
         $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
@@ -169,7 +169,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $expectedIdStores = [1, 3];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
-                ->setIdStores($expectedIdStores)
+                ->setIdStores($expectedIdStores),
         );
 
         // Act
@@ -192,7 +192,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $expectedIdStores = [1, 3];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
-                ->setIdStores([1])
+                ->setIdStores([1]),
         );
         $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
@@ -218,7 +218,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $expectedIdStores = [1, 3];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
-                ->setIdStores($expectedIdStores)
+                ->setIdStores($expectedIdStores),
         );
         $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
 
@@ -272,7 +272,7 @@ class ProductManagementTest extends FacadeTestAbstract
     protected function assertAddProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $createdProductEntity = $this->getProductConcreteEntityByAbstractId(
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $this->assertNotNull($createdProductEntity);
@@ -287,7 +287,7 @@ class ProductManagementTest extends FacadeTestAbstract
     protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $updatedProductEntity = $this->getProductConcreteEntityByAbstractId(
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $this->assertNotNull($updatedProductEntity);
@@ -295,7 +295,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertEquals($this->productConcreteTransfer->getSku(), $updatedProductEntity->getSku());
 
         $productConcreteCollection = $this->productConcreteManager->getConcreteProductsByAbstractProductId(
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $productConcreteTransferExpected = $productConcreteCollection[0];

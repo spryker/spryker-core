@@ -47,7 +47,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
         foreach ($salesOrderItems as $salesOrderItemEntity) {
             $itemTransfer = $this->findItemTransferOptionsBelongTo(
                 $orderTransfer,
-                $salesOrderItemEntity->getIdSalesOrderItem()
+                $salesOrderItemEntity->getIdSalesOrderItem(),
             );
 
             if ($itemTransfer === null) {
@@ -77,7 +77,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     protected function deriveItemUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
     {
         $itemTransfer->setUnitProductOptionPriceAggregation(
-            (int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity())
+            (int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity()),
         );
     }
 
@@ -147,7 +147,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     protected function getSalesOrderItemsByIdSalesOrder($idSalesOrder)
     {

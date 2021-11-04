@@ -26,14 +26,17 @@ class OmsTriggerForm extends AbstractType
      * @var string
      */
     public const OPTION_OMS_ACTION = 'OPTION_OMS_ACTION';
+
     /**
      * @var string
      */
     public const OPTION_QUERY_PARAMS = 'OPTION_QUERY_PARAMS';
+
     /**
      * @var string
      */
     public const OPTION_EVENT = 'OPTION_EVENT';
+
     /**
      * @var string
      */
@@ -51,7 +54,7 @@ class OmsTriggerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -78,7 +81,7 @@ class OmsTriggerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -101,21 +104,21 @@ class OmsTriggerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->createAction($options)
+            $this->createAction($options),
         );
 
         return $this;
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -123,7 +126,7 @@ class OmsTriggerForm extends AbstractType
     {
         return Url::generate(
             static::ROUTE_OMS_TRIGGER . $options[static::OPTION_OMS_ACTION],
-            $options[static::OPTION_QUERY_PARAMS]
+            $options[static::OPTION_QUERY_PARAMS],
         );
     }
 }

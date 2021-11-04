@@ -30,6 +30,7 @@ class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'OauthUser';
+
     /**
      * @var string
      */
@@ -37,12 +38,14 @@ class OauthUserSecurityPlugin extends AbstractPlugin implements SecurityPluginIn
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::SECURITY_FIREWALL_NAME
+     *
      * @var string
      */
     protected const SECURITY_USER_FIREWALL_NAME = 'User';
 
     /**
      * @uses \Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter::IS_AUTHENTICATED_ANONYMOUSLY
+     *
      * @var string
      */
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';

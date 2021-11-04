@@ -20,6 +20,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      * @var string
      */
     public const NAME = 'facets';
+
     /**
      * @var string
      */
@@ -107,7 +108,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
         if ($facetConfigTransfer->getAggregationParams()) {
             return $this->addNestedFieldPrefix(
                 $facetConfigTransfer->getFieldName(),
-                $facetConfigTransfer->getName()
+                $facetConfigTransfer->getName(),
             );
         }
 

@@ -58,8 +58,8 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
         $categoryNodeIdsToTrigger = array_unique(
             array_merge(
                 $this->categoryRepository->getChildCategoryNodeIdsByCategoryNodeId($idCategoryNode),
-                $this->categoryRepository->getParentCategoryNodeIdsByCategoryNodeId($idCategoryNode)
-            )
+                $this->categoryRepository->getParentCategoryNodeIdsByCategoryNodeId($idCategoryNode),
+            ),
         );
 
         $this->triggerBulk($categoryNodeIdsToTrigger);

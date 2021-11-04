@@ -32,7 +32,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderConfiguredBundleWriter(): SalesOrderConfiguredBundleWriterInterface
     {
         return new SalesOrderConfiguredBundleWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -43,7 +43,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderConfiguredBundleExpander(
             $this->getRepository(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -62,7 +62,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItemExpander(
             $this->getRepository(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 

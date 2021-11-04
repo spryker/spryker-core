@@ -22,18 +22,22 @@ class TransitionLog implements TransitionLogInterface
      * @var string
      */
     public const SAPI_CLI = 'cli';
+
     /**
      * @var string
      */
     public const SAPI_PHPDBG = 'phpdbg';
+
     /**
      * @var string
      */
     public const QUERY_STRING = 'QUERY_STRING';
+
     /**
      * @var string
      */
     public const DOCUMENT_URI = 'DOCUMENT_URI';
+
     /**
      * @var string
      */
@@ -262,7 +266,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order)
     {

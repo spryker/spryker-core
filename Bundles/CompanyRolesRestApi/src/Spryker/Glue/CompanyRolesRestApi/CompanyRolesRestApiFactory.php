@@ -27,7 +27,7 @@ class CompanyRolesRestApiFactory extends AbstractFactory
     {
         return new CompanyRoleResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createCompanyRoleMapper()
+            $this->createCompanyRoleMapper(),
         );
     }
 
@@ -39,7 +39,7 @@ class CompanyRolesRestApiFactory extends AbstractFactory
         return new CompanyRoleReader(
             $this->getCompanyRoleClient(),
             $this->createCompanyRoleMapper(),
-            $this->createCompanyRoleRestResponseBuilder()
+            $this->createCompanyRoleRestResponseBuilder(),
         );
     }
 

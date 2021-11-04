@@ -66,7 +66,7 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
             throw new InvalidArgumentException(sprintf(
                 'Is Active query expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 
@@ -81,7 +81,7 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
         $rangeFromQuery = new Range();
         $rangeFromQuery->addField(
             PageIndexMap::ACTIVE_FROM,
-            ['lte' => 'now']
+            ['lte' => 'now'],
         );
 
         $missingFrom = $this->getFactory()
@@ -106,7 +106,7 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
         $rangeToQuery = new Range();
         $rangeToQuery->addField(
             PageIndexMap::ACTIVE_TO,
-            ['gte' => 'now']
+            ['gte' => 'now'],
         );
 
         $missingTo = $this->getFactory()

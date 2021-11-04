@@ -46,10 +46,12 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      * @var string
      */
     public const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+
     /**
      * @var string
      */
     public const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+
     /**
      * @var string
      */
@@ -198,7 +200,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     protected function getMappingProperties(array $mapping)
     {
-        return isset($mapping[self::PROPERTIES]) ? $mapping[self::PROPERTIES] : [];
+        return $mapping[self::PROPERTIES] ?? [];
     }
 
     /**

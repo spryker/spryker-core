@@ -20,7 +20,7 @@ trait PermissionAwareTrait
      */
     protected function can($permissionKey, $identifier, $context = null)
     {
-        if (interface_exists('\Spryker\Zed\Permission\Business\PermissionFacadeInterface')) {
+        if (interface_exists('Spryker\Zed\Permission\Business\PermissionFacadeInterface')) {
             return Locator::getInstance()->permission()->facade()->can($permissionKey, $identifier, $context);
         }
 

@@ -46,8 +46,8 @@ class QuickOrderQuoteNameExpanderPlugin extends AbstractPlugin implements Persis
         $quoteUpdateRequestAttributes->setName(
             sprintf(
                 $this->getFactory()->getMultiCartConfig()->getQuickOrderQuoteName(),
-                $this->getFactory()->getDateTimeService()->formatDateTime(date('Y-m-d H:i:s'))
-            )
+                $this->getFactory()->getDateTimeService()->formatDateTime(date('Y-m-d H:i:s')),
+            ),
         );
         $cartChangeTransfer->setIdQuote(0)
             ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);

@@ -24,6 +24,7 @@ class DuplicateController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
+     *
      * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
@@ -59,7 +60,7 @@ class DuplicateController extends AbstractController
             if ($navigationResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(
                     'Navigation element %d was duplicated successfully.',
-                    ['%d' => $idNavigation]
+                    ['%d' => $idNavigation],
                 );
 
                 return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);

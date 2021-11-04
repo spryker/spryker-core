@@ -68,7 +68,7 @@ class AvailabilityNotificationUnsubscribedMailTypePlugin extends AbstractPlugin 
             ->getProductName();
         $mailBuilder->setSubject(
             'availability_notification_subscription.mail.unsubscribed.subject',
-            ['%name%' => $productName]
+            ['%name%' => $productName],
         );
 
         return $this;

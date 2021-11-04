@@ -39,6 +39,7 @@ class BlacklistExpandProductBundleTest extends Unit
 
     /**
      * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_BLACKLIST
+     *
      * @var string
      */
     protected const PRODUCT_LIST_TYPE_BLACKLIST = 'blacklist';
@@ -155,7 +156,7 @@ class BlacklistExpandProductBundleTest extends Unit
     {
         return $this->tester->createProductListTransfer(
             $productIds,
-            static::PRODUCT_LIST_TYPE_BLACKLIST
+            static::PRODUCT_LIST_TYPE_BLACKLIST,
         );
     }
 

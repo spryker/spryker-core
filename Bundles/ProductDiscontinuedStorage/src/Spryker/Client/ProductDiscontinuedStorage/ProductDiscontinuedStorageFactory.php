@@ -32,7 +32,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     {
         return new ProductDiscontinuedStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -43,7 +43,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     {
         return new DiscontinuedSuperAttributesProductViewExpander(
             $this->createProductDiscontinuedStorageReader(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 
@@ -53,7 +53,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     public function createProductDiscontinuedChecker(): ProductDiscontinuedCheckerInterface
     {
         return new ProductDiscontinuedChecker(
-            $this->createProductDiscontinuedStorageReader()
+            $this->createProductDiscontinuedStorageReader(),
         );
     }
 
@@ -63,7 +63,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     public function createDiscontinuedAvailabilityProductViewExpander(): DiscontinuedAvailabilityProductViewExpanderInterface
     {
         return new DiscontinuedAvailabilityProductViewExpander(
-            $this->createProductDiscontinuedStorageReader()
+            $this->createProductDiscontinuedStorageReader(),
         );
     }
 
@@ -74,7 +74,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     {
         return new ProductDiscontinuedItemValidator(
             $this->createProductDiscontinuedStorageReader(),
-            $this->getLocaleClient()
+            $this->getLocaleClient(),
         );
     }
 

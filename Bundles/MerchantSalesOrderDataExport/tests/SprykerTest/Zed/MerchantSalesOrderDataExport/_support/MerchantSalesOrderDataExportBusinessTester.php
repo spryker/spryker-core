@@ -40,9 +40,11 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
 
     /**
      * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     *
      * @var string
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
+
     /**
      * @var string
      */
@@ -52,14 +54,17 @@ class MerchantSalesOrderDataExportBusinessTester extends Actor
      * @var string
      */
     protected const DESTINATION_TEMPLATE = 'merchants/{merchant_name}/merchant-orders/{data_entity}s_{store_name}_{timestamp}.{extension}';
+
     /**
      * @var string
      */
     protected const FORMATTER_TYPE = 'csv';
+
     /**
      * @var string
      */
     protected const CONNECTION_TYPE = 'local';
+
     /**
      * @var string
      */

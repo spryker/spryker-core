@@ -20,10 +20,12 @@ class RefundTable extends AbstractTable
      * @var string
      */
     public const ACTIONS = 'Actions';
+
     /**
      * @var string
      */
     public const SPY_SALES_ORDER = 'SpySalesOrder';
+
     /**
      * @var string
      */
@@ -115,7 +117,7 @@ class RefundTable extends AbstractTable
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount(
                     $item[SpyRefundTableMap::COL_AMOUNT],
                     true,
-                    $this->findCurrencyIsoCode($item)
+                    $this->findCurrencyIsoCode($item),
                 ),
                 SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
             ];

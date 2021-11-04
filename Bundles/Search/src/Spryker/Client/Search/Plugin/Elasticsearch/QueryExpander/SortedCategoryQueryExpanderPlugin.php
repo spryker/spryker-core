@@ -113,7 +113,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
         $sortFieldName = sprintf(
             '%s.%s',
             PageIndexMap::INTEGER_SORT,
-            static::buildSortFieldName($idCategoryNode)
+            static::buildSortFieldName($idCategoryNode),
         );
 
         $searchQuery
@@ -147,7 +147,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
         return sprintf(
             '%s:%d',
             PageIndexMap::CATEGORY,
-            $idCategoryNode
+            $idCategoryNode,
         );
     }
 }

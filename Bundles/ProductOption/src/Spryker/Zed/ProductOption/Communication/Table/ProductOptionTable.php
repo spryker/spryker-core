@@ -27,6 +27,7 @@ class ProductOptionTable extends AbstractTable
      * @var string
      */
     public const COL_CHECKBOX = 'checkbox';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class ProductOptionTable extends AbstractTable
      * @var string
      */
     public const TABLE_CONTEXT_EDIT = 'edit';
+
     /**
      * @var string
      */
@@ -106,7 +108,7 @@ class ProductOptionTable extends AbstractTable
             [
                 'id-product-option-group' => $this->idProductOptionGroup,
                 'table-context' => $this->tableContext,
-            ]
+            ],
         )->build();
 
         $config->setUrl($url);
@@ -198,7 +200,7 @@ class ProductOptionTable extends AbstractTable
             '/product-management/view',
             [
                 self::URL_PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewProductOptionUrl, 'View');
@@ -220,7 +222,7 @@ class ProductOptionTable extends AbstractTable
         return sprintf(
             "<input id='product_category_checkbox_%d' class='product_category_checkbox' type='checkbox' checked='checked' data-info='%s'>",
             $productOption['id_product_abstract'],
-            (string)$this->utilEncodingService->encodeJson($info)
+            (string)$this->utilEncodingService->encodeJson($info),
         );
     }
 }

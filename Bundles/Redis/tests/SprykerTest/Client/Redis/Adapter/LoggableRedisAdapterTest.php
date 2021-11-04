@@ -108,7 +108,7 @@ class LoggableRedisAdapterTest extends Unit
                     'expireTTL' => $expireTTL,
                     'flag' => $flag,
                 ],
-                true
+                true,
             );
 
         $this->loggableRedisAdapter->set(
@@ -116,7 +116,7 @@ class LoggableRedisAdapterTest extends Unit
             $value,
             $expireResolution,
             $expireTTL,
-            $flag
+            $flag,
         );
     }
 
@@ -136,7 +136,7 @@ class LoggableRedisAdapterTest extends Unit
                 [
                     'keys' => $keys,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->del($keys);
@@ -162,7 +162,7 @@ class LoggableRedisAdapterTest extends Unit
                     'numKeys' => $numKeys,
                     'keysOrArgs' => $keysOrArgs,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->eval($script, $numKeys, $keysOrArgs);
@@ -184,7 +184,7 @@ class LoggableRedisAdapterTest extends Unit
                 [
                     'keys' => $keys,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->mget($keys);
@@ -206,7 +206,7 @@ class LoggableRedisAdapterTest extends Unit
                 [
                     'dictionary' => $dictionary,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->mset($dictionary);
@@ -228,7 +228,7 @@ class LoggableRedisAdapterTest extends Unit
                 [
                     'section' => $section,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->info($section);
@@ -250,7 +250,7 @@ class LoggableRedisAdapterTest extends Unit
                 [
                     'pattern' => $pattern,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->keys($pattern);
@@ -274,7 +274,7 @@ class LoggableRedisAdapterTest extends Unit
                     'cursor' => $cursor,
                     'options' => $options,
                 ],
-                $returnValue
+                $returnValue,
             );
 
         $this->loggableRedisAdapter->scan($cursor, $options);
@@ -331,7 +331,7 @@ class LoggableRedisAdapterTest extends Unit
     {
         $this->loggableRedisAdapter = new LoggableRedisAdapter(
             $this->redisAdapterMock,
-            $this->redisLoggerMock
+            $this->redisLoggerMock,
         );
     }
 }

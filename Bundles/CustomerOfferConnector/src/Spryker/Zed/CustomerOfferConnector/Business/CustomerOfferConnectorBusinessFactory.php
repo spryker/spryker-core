@@ -21,7 +21,7 @@ class CustomerOfferConnectorBusinessFactory extends AbstractBusinessFactory
     public function createOfferCustomerHydrator(): OfferCustomerHydratorInterface
     {
         return new OfferCustomerHydrator(
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 

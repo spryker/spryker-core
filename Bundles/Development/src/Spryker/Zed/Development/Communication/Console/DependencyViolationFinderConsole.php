@@ -28,18 +28,22 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
      * @var string
      */
     public const COMMAND_NAME = 'dev:dependency:find';
+
     /**
      * @var string
      */
     public const OPTION_DEPENDENCY_TYPE = 'dependency-type';
+
     /**
      * @var string
      */
     public const OPTION_DEPENDENCY_TYPE_SHORT = 'd';
+
     /**
      * @var string
      */
     public const OPTION_STOP_ON_VIOLATION = 'stop-on-violation';
+
     /**
      * @var string
      */
@@ -238,7 +242,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
     }
 
     /**
-     * @param array $modulesToValidate
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $modulesToValidate
      * @param string|null $dependencyType
      *
      * @return void
@@ -253,7 +257,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
             'Checking %d %s for %sdependency issues.',
             count($modulesToValidate),
             (count($modulesToValidate) === 1) ? 'Module <fg=yellow>' . $this->buildModuleKey(current($modulesToValidate)) . '</>' : 'Modules',
-            $typeMessage
+            $typeMessage,
         );
         if ($this->output->isVerbose()) {
             $this->info($message);

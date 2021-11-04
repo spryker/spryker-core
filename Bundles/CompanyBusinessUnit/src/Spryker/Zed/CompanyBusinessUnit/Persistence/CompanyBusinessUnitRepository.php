@@ -31,6 +31,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
 
     /**
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     *
      * @var string
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
@@ -57,8 +58,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             throw new CompanyBusinessUnitNotFoundException(
                 sprintf(
                     'Company business unit with ID `%d` not found.',
-                    $idCompanyBusinessUnit
-                )
+                    $idCompanyBusinessUnit,
+                ),
             );
         }
 
@@ -101,7 +102,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
                 ->createCompanyBusinessUnitMapper()
                 ->mapEntityTransferToBusinessUnitTransfer(
                     $businessUnitEntity,
-                    new CompanyBusinessUnitTransfer()
+                    new CompanyBusinessUnitTransfer(),
                 );
 
             $collectionTransfer->addCompanyBusinessUnit($businessUnitTransfer);
@@ -207,7 +208,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->createCompanyBusinessUnitMapper()
             ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
                 $companyBusinessUnitEntity,
-                new CompanyBusinessUnitTransfer()
+                new CompanyBusinessUnitTransfer(),
             );
     }
 
@@ -215,7 +216,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer>
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer[]
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

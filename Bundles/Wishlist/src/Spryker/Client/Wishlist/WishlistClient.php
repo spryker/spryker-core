@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -254,7 +256,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     {
         return $this->getFactory()->createCartHandler(
             $this->getFactory()->createCartClient(),
-            $this
+            $this,
         );
     }
 
@@ -270,5 +272,33 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getZedStub()->getWishlistByFilter($wishlistFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getZedStub()->getWishlistItem($wishlistItemCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getZedStub()->updateWishlistItem($wishlistItemTransfer);
     }
 }

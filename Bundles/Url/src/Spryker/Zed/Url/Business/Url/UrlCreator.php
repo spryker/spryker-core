@@ -100,7 +100,7 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
         if ($this->urlReader->hasUrl($urlTransfer)) {
             throw new UrlExistsException(sprintf(
                 'Tried to create url "%s", but it already exists.',
-                $urlTransfer->getUrl()
+                $urlTransfer->getUrl(),
             ));
         }
     }

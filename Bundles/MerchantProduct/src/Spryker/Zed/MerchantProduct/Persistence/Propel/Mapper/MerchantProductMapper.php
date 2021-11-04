@@ -48,7 +48,7 @@ class MerchantProductMapper
 
         $this->mapConcreteProductsToMerchantProductTransfer(
             $merchantProductTransfer,
-            $merchantProductAbstractEntity->getProductAbstract()->getSpyProducts()
+            $merchantProductAbstractEntity->getProductAbstract()->getSpyProducts(),
         );
 
         return $merchantProductTransfer;
@@ -73,7 +73,7 @@ class MerchantProductMapper
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntities
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer
      */
@@ -88,7 +88,7 @@ class MerchantProductMapper
 
             foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
                 $productConcreteTransfer->addLocalizedAttributes(
-                    $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer())
+                    $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer()),
                 );
             }
 
@@ -110,11 +110,11 @@ class MerchantProductMapper
     ): LocalizedAttributesTransfer {
         $localizedAttributesTransfer->fromArray(
             $productLocalizedAttributesEntity->toArray(),
-            true
+            true,
         );
 
         $localizedAttributesTransfer->setLocale(
-            $this->mapLocaleEntityToTransfer($productLocalizedAttributesEntity->getLocale(), new LocaleTransfer())
+            $this->mapLocaleEntityToTransfer($productLocalizedAttributesEntity->getLocale(), new LocaleTransfer()),
         );
 
         return $localizedAttributesTransfer;
@@ -130,7 +130,7 @@ class MerchantProductMapper
     {
         return $localeTransfer->fromArray(
             $localeEntity->toArray(),
-            true
+            true,
         );
     }
 }

@@ -21,30 +21,47 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_UPDATE_ITEM_PRE_CHECK = 'PLUGINS_UPDATE_ITEM_PRE_CHECK';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_WISHLIST_PRE_UPDATE_ITEM = 'PLUGINS_WISHLIST_PRE_UPDATE_ITEM';
+
     /**
      * @var string
      */
     public const PLUGINS_WISHLIST_RELOAD_ITEMS = 'PLUGINS_RELOAD_ITEMS';
+
     /**
      * @var string
      */
     public const PLUGINS_WISHLIST_ITEMS_VALIDATOR = 'PLUGINS_WISHLIST_ITEMS_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGINS_WISHLIST_PRE_ADD_ITEM = 'PLUGINS_WISHLIST_PRE_ADD_ITEM';
+
     /**
      * @var string
      */
@@ -65,6 +82,8 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addWishlistItemsValidatorPlugins($container);
         $container = $this->addWishlistPreAddItemPlugins($container);
         $container = $this->addWishlistItemExpanderPlugins($container);
+        $container = $this->addUpdateItemPreCheckPlugins($container);
+        $container = $this->addWishlistPreUpdateItemPlugins($container);
 
         return $container;
     }
@@ -130,6 +149,20 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addUpdateItemPreCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_UPDATE_ITEM_PRE_CHECK, function () {
+            return $this->getUpdateItemPreCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addWishlistReloadItemPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_WISHLIST_RELOAD_ITEMS, function () {
@@ -162,6 +195,20 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_WISHLIST_PRE_ADD_ITEM, function () {
             return $this->getWishlistPreAddItemPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addWishlistPreUpdateItemPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_WISHLIST_PRE_UPDATE_ITEM, function () {
+            return $this->getWishlistPreUpdateItemPlugins();
         });
 
         return $container;
@@ -217,6 +264,22 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface>
      */
     protected function getWishlistPreAddItemPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface>
+     */
+    protected function getWishlistPreUpdateItemPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface>
+     */
+    protected function getUpdateItemPreCheckPlugins(): array
     {
         return [];
     }

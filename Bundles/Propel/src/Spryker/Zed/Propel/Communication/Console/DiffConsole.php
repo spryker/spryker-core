@@ -21,6 +21,7 @@ class DiffConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:diff';
+
     /**
      * @var string
      */
@@ -57,7 +58,7 @@ class DiffConsole extends Console
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
-            $output
+            $output,
         );
     }
 }

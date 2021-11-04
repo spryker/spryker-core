@@ -23,14 +23,17 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE = 'PROPEL_QUERY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE';
+
     /**
      * @var string
      */
@@ -87,7 +90,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantOpeningHoursStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -103,7 +106,7 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantOpeningHoursStorageToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

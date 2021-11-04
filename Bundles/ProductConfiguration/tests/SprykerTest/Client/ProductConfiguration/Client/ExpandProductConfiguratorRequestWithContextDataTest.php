@@ -63,25 +63,25 @@ class ExpandProductConfiguratorRequestWithContextDataTest extends Unit
         $this->assertSame(
             $productConfiguratorRequestDataTransfer->getStoreName(),
             $this->tester->getLocator()->store()->client()->getCurrentStore()->getName(),
-            'Expects store name to be equal to current one.'
+            'Expects store name to be equal to current one.',
         );
 
         $this->assertSame(
             $productConfiguratorRequestDataTransfer->getCurrencyCode(),
             $this->tester->getLocator()->currency()->client()->getCurrent()->getCode(),
-            'Expects currency code to be equal to current one.'
+            'Expects currency code to be equal to current one.',
         );
 
         $this->assertSame(
             $productConfiguratorRequestDataTransfer->getPriceMode(),
             $this->tester->getLocator()->price()->client()->getCurrentPriceMode(),
-            'Expects price mode to be equal to current one.'
+            'Expects price mode to be equal to current one.',
         );
 
         $this->assertSame(
             $productConfiguratorRequestDataTransfer->getLocaleName(),
             $this->tester->getLocator()->locale()->client()->getCurrentLocale(),
-            'Expects locale name to be equal to current one.'
+            'Expects locale name to be equal to current one.',
         );
     }
 
@@ -95,7 +95,7 @@ class ExpandProductConfiguratorRequestWithContextDataTest extends Unit
             ->setProductConfiguratorRequestData(new ProductConfiguratorRequestDataTransfer());
 
         $productConfiguratorRequestExpanderPluginMock = $this->getMockBuilder(
-            ProductConfiguratorRequestExpanderPluginInterface::class
+            ProductConfiguratorRequestExpanderPluginInterface::class,
         )->getMock();
 
         // Assert
@@ -104,7 +104,7 @@ class ExpandProductConfiguratorRequestWithContextDataTest extends Unit
         // Act
         $this->tester->setDependency(
             ProductConfigurationDependencyProvider::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER,
-            [$productConfiguratorRequestExpanderPluginMock]
+            [$productConfiguratorRequestExpanderPluginMock],
         );
 
         $this->tester->getClient()->expandProductConfiguratorRequestWithContextData($productConfiguratorRequestTransfer);

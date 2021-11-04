@@ -60,13 +60,13 @@ class MerchantShipmentRepository extends AbstractRepository implements MerchantS
     ): SpySalesShipmentQuery {
         if ($merchantShipmentCriteriaTransfer->getMerchantReference()) {
             $salesShipmentQuery->filterByMerchantReference(
-                $merchantShipmentCriteriaTransfer->getMerchantReference()
+                $merchantShipmentCriteriaTransfer->getMerchantReference(),
             );
         }
 
         if ($merchantShipmentCriteriaTransfer->getIdShipment()) {
             $salesShipmentQuery->filterByIdSalesShipment(
-                $merchantShipmentCriteriaTransfer->getIdShipment()
+                $merchantShipmentCriteriaTransfer->getIdShipment(),
             );
         }
 

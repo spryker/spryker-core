@@ -36,18 +36,22 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      * @var int
      */
     protected const PRODUCTS_AVAILABILITY_QUANTITY = 10;
+
     /**
      * @var bool
      */
     protected const PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK = false;
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_SKU = '001_25904006';
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_AVAILABILITY_ID = '1';
+
     /**
      * @var string
      */
@@ -70,7 +74,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $attributesTransfer = $mapper
             ->mapProductConcreteAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(
                 $transfer,
-                new RestConcreteProductAvailabilityAttributesTransfer()
+                new RestConcreteProductAvailabilityAttributesTransfer(),
             );
 
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
@@ -91,7 +95,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $attributesTransfer = $mapper
             ->mapProductConcreteAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(
                 $transfer,
-                new RestConcreteProductAvailabilityAttributesTransfer()
+                new RestConcreteProductAvailabilityAttributesTransfer(),
             );
 
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
@@ -112,7 +116,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $attributesTransfer = $mapper
             ->mapProductAbstractAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(
                 $transfer,
-                new RestAbstractProductAvailabilityAttributesTransfer()
+                new RestAbstractProductAvailabilityAttributesTransfer(),
             );
 
         $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
@@ -132,7 +136,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $attributesTransfer = $mapper
             ->mapProductAbstractAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(
                 $transfer,
-                new RestAbstractProductAvailabilityAttributesTransfer()
+                new RestAbstractProductAvailabilityAttributesTransfer(),
             );
 
         $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
@@ -178,7 +182,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $productAbstractAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
         $productAbstractAvailabilityTransfer->setAvailability(static::PRODUCTS_AVAILABILITY_QUANTITY);
         $productAbstractAvailabilityTransfer->addProductConcreteAvailability(
-            $this->getProductConcreteAvailabilityTransferWithAvailableProducts()
+            $this->getProductConcreteAvailabilityTransferWithAvailableProducts(),
         );
 
         return $productAbstractAvailabilityTransfer;
@@ -193,7 +197,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $productAbstractAvailabilityTransfer->setSku(static::PRODUCT_ABSTRACT_SKU);
         $productAbstractAvailabilityTransfer->setAvailability(0);
         $productAbstractAvailabilityTransfer->addProductConcreteAvailability(
-            $this->getProductConcreteAvailabilityTransferWithUnavailableProducts()
+            $this->getProductConcreteAvailabilityTransferWithUnavailableProducts(),
         );
 
         return $productAbstractAvailabilityTransfer;

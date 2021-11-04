@@ -16,6 +16,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_WRITE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const GLOSSARY_KEY_PUBLISH = 'Glossary.key.publish';
@@ -27,6 +28,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::GLOSSARY_KEY_PUBLISH_DELETE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const GLOSSARY_KEY_UNPUBLISH = 'Glossary.key.unpublish';
@@ -38,6 +40,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_CREATE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_GLOSSARY_KEY_CREATE = 'Entity.spy_glossary_key.create';
@@ -49,6 +52,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_UPDATE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_GLOSSARY_KEY_UPDATE = 'Entity.spy_glossary_key.update';
@@ -60,6 +64,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_GLOSSARY_KEY_DELETE = 'Entity.spy_glossary_key.delete';
@@ -71,6 +76,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_KEY_DELETE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE = 'Entity.spy_glossary_translation.create';
@@ -82,6 +88,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE = 'Entity.spy_glossary_translation.update';
@@ -93,6 +100,7 @@ interface GlossaryEvents
      * @deprecated Use {@link \Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_GLOSSARY_TRANSLATION_DELETE = 'Entity.spy_glossary_translation.delete';

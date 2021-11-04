@@ -45,7 +45,7 @@ interface ProductCategoryStorageRepositoryInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>>>
      */
     public function getMappedProductAbstractCategoryStorages(array $productAbstractIds): array;
 

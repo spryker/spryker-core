@@ -55,7 +55,7 @@ class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     $this->getConfig()->getDefaultMultiListGroupTemplatePath(),
                     [
                         'items' => $items,
-                    ]
+                    ],
                 );
             }
 
@@ -63,7 +63,7 @@ class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                 $this->getConfig()->getDefaultListGroupTemplatePath(),
                 [
                     'items' => $items,
-                ]
+                ],
             );
         }, ['is_safe' => ['html']]);
     }

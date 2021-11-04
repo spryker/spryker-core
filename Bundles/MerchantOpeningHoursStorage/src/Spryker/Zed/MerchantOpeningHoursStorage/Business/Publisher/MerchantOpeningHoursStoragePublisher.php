@@ -67,7 +67,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT
+            SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT,
         );
 
         $this->publish($merchantIds);
@@ -82,7 +82,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     {
         $merchantIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyMerchantOpeningHoursDateScheduleTableMap::COL_FK_MERCHANT
+            SpyMerchantOpeningHoursDateScheduleTableMap::COL_FK_MERCHANT,
         );
 
         $this->publish($merchantIds);
@@ -118,11 +118,11 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
             if ($weekdayScheduleTransfers->count() > 0 || $dateScheduleTransfers->count() > 0) {
                 $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer(
                     $weekdayScheduleTransfers,
-                    $dateScheduleTransfers
+                    $dateScheduleTransfers,
                 );
                 $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage(
                     $merchantOpenHoursStorageTransfer,
-                    $merchantTransfer->getIdMerchant()
+                    $merchantTransfer->getIdMerchant(),
                 );
             }
         }
@@ -151,7 +151,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     protected function getMerchants(array $merchantIds): MerchantCollectionTransfer
     {
         return $this->merchantFacade->get(
-            (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds)
+            (new MerchantCriteriaTransfer())->setMerchantIds($merchantIds),
         );
     }
 }

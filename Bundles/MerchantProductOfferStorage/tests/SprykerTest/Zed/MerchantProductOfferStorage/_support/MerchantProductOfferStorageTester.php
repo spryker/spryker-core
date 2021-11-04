@@ -37,7 +37,7 @@ class MerchantProductOfferStorageTester extends Actor
     /**
      * @param string $productOfferReference
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage[]
      */
     public function getProductOfferEntities(string $productOfferReference): ObjectCollection
     {
@@ -45,7 +45,7 @@ class MerchantProductOfferStorageTester extends Actor
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage[]
      */
     public function findAllProductOfferEntities(): ObjectCollection
     {
@@ -55,7 +55,7 @@ class MerchantProductOfferStorageTester extends Actor
     /**
      * @param string $productSku
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage[]
      */
     public function getProductConcreteProductOffersEntities(string $productSku): ObjectCollection
     {

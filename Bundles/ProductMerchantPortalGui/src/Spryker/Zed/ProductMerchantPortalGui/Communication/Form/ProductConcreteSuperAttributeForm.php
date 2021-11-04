@@ -27,10 +27,12 @@ class ProductConcreteSuperAttributeForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */

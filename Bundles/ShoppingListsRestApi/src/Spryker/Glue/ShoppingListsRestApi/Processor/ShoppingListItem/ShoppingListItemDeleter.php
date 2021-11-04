@@ -54,13 +54,13 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
         RestRequestInterface $restRequest
     ): RestResponseInterface {
         $shoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readShoppingListItemRequestTransferByUuid(
-            $restRequest
+            $restRequest,
         );
 
         if (count($shoppingListItemRequestTransfer->getErrorIdentifiers()) > 0) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $shoppingListItemRequestTransfer->getErrorIdentifiers()
+                $shoppingListItemRequestTransfer->getErrorIdentifiers(),
             );
         }
 
@@ -69,7 +69,7 @@ class ShoppingListItemDeleter implements ShoppingListItemDeleterInterface
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $shoppingListItemResponseTransfer->getErrors()
+                $shoppingListItemResponseTransfer->getErrors(),
             );
         }
 

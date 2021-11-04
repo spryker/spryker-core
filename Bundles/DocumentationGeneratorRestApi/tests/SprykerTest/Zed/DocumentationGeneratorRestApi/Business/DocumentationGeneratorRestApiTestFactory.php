@@ -106,7 +106,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         return new YamlOpenApiDocumentationWriter(
             $this->createConfig(),
             $this->createYamlDumper(),
-            $this->createFilesystem()
+            $this->createFilesystem(),
         );
     }
 
@@ -120,7 +120,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         return new GlueControllerFinder(
             $this->createFinder(),
             $this->createInflector(),
-            $sourceDirectories
+            $sourceDirectories,
         );
     }
 
@@ -156,7 +156,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     {
         return new GlueAnnotationAnalyzer(
             $this->createGlueControllerFinder([static::CONTROLLER_SOURCE_DIRECTORY]),
-            $this->createUtilEncodingService()
+            $this->createUtilEncodingService(),
         );
     }
 
@@ -201,11 +201,11 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         $resourceRelationshipCollection = new ResourceRelationshipCollection();
         $resourceRelationshipCollection->addRelationship(
             'test-resource',
-            new TestResourceRelationshipPlugin()
+            new TestResourceRelationshipPlugin(),
         );
         $resourceRelationshipCollection->addRelationship(
             'test-resource-with-all-methods',
-            new TestAnnotationResourceRelationshipPlugin()
+            new TestAnnotationResourceRelationshipPlugin(),
         );
 
         return $resourceRelationshipCollection;
@@ -220,7 +220,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createSchemaRenderer(),
-            $this->createResourceRelationshipProcessor()
+            $this->createResourceRelationshipProcessor(),
         );
     }
 
@@ -234,7 +234,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             [$this->createResourceRoutePluginsProviderPluginMock()],
             $this->createGlueAnnotationAnalyzer(),
             $this->createInflector(),
-            $this->createResourceSchemaNameStorageProcessor()
+            $this->createResourceSchemaNameStorageProcessor(),
         );
     }
 
@@ -248,7 +248,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createResourceTransferAnalyzer(),
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createGlueAnnotationAnalyzer(),
-            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer()
+            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer(),
         );
     }
 
@@ -278,7 +278,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createOpenApiSpecificationSchemaGenerator(),
             $this->createOpenApiSpecificationSecuritySchemeGenerator(),
             $this->createOpenApiSpecificationParameterGenerator(),
-            $this->createOpenApiTagGeneratorInterface()
+            $this->createOpenApiTagGeneratorInterface(),
         );
     }
 
@@ -315,7 +315,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createPathMethodSpecificationComponent(),
             $this->createPathResponseSpecificationComponent(),
             $this->createPathRequestSpecificationComponent(),
-            $this->createPathParameterSpecificationComponent()
+            $this->createPathParameterSpecificationComponent(),
         );
     }
 
@@ -327,7 +327,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
         return new SchemaRenderer(
             $this->createSchemaSpecificationComponent(),
             $this->createSchemaPropertySpecificationComponent(),
-            $this->createSchemaItemsSpecificationComponent()
+            $this->createSchemaItemsSpecificationComponent(),
         );
     }
 
@@ -340,7 +340,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createResourceTransferAnalyzer(),
             $this->createOpenApiSpecificationSchemaBuilder(),
-            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer()
+            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer(),
         );
     }
 
@@ -350,7 +350,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createResourceRelationshipProcessorsPluginAnnotationAnalyzer(): ResourceRelationshipsPluginAnnotationAnalyzerInterface
     {
         return new ResourceRelationshipsPluginAnnotationAnalyzer(
-            $this->createUtilEncodingService()
+            $this->createUtilEncodingService(),
         );
     }
 
@@ -457,7 +457,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     {
         return new OpenApiSpecificationSchemaComponentBuilder(
             $this->createResourceTransferAnalyzer(),
-            $this->createResourceSchemaNameStorage()
+            $this->createResourceSchemaNameStorage(),
         );
     }
 

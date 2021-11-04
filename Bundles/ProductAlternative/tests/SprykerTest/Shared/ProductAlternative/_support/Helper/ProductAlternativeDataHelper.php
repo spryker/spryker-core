@@ -60,7 +60,7 @@ class ProductAlternativeDataHelper extends Module
     {
         foreach ($productConcreteTransfer->getProductAlternatives() as $productAlternativeTransfer) {
             $this->getProductAlternativeFacade()->deleteProductAlternativeByIdProductAlternative(
-                $productAlternativeTransfer->getIdProductAlternative()
+                $productAlternativeTransfer->getIdProductAlternative(),
             );
         }
     }

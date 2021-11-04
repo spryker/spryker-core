@@ -46,7 +46,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new ProductAttribute(
             $this->createProductAttributeReader(),
             $this->createProductAttributeMapper(),
-            $this->createProductReader()
+            $this->createProductReader(),
         );
     }
 
@@ -58,7 +58,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new ProductAttributeReader(
             $this->getQueryContainer(),
             $this->createProductAttributeMapper(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -72,7 +72,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getProductFacade(),
             $this->createProductReader(),
-            $this->getUtilSanitizeXssService()
+            $this->getUtilSanitizeXssService(),
         );
     }
 
@@ -82,7 +82,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     public function createProductAttributeMapper()
     {
         return new ProductAttributeMapper(
-            $this->getEncodingService()
+            $this->getEncodingService(),
         );
     }
 
@@ -96,7 +96,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getGlossaryFacade(),
             $this->createAttributeValueWriter(),
-            $this->createAttributeGlossaryKeyBuilder()
+            $this->createAttributeGlossaryKeyBuilder(),
         );
     }
 
@@ -108,7 +108,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new AttributeReader(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
-            $this->createProductAttributeTransferGenerator()
+            $this->createProductAttributeTransferGenerator(),
         );
     }
 
@@ -121,7 +121,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
+            $this->createAttributeGlossaryKeyBuilder(),
         );
     }
 
@@ -131,7 +131,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     protected function createProductReader()
     {
         return new ProductReader(
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -142,7 +142,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return new AttributeTranslationReader(
             $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder()
+            $this->createAttributeGlossaryKeyBuilder(),
         );
     }
 
@@ -161,7 +161,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductManagementAttributeReader(
             $this->getRepository(),
-            $this->createProductManagementAttributeTranslator()
+            $this->createProductManagementAttributeTranslator(),
         );
     }
 
@@ -174,7 +174,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
             $this->createAttributeGlossaryKeyBuilder(),
-            $this->createTranslationMapper()
+            $this->createTranslationMapper(),
         );
     }
 
@@ -184,7 +184,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     public function createTranslationMapper(): TranslationMapperInterface
     {
         return new TranslationMapper(
-            $this->createAttributeGlossaryKeyBuilder()
+            $this->createAttributeGlossaryKeyBuilder(),
         );
     }
 
@@ -194,7 +194,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     protected function createAttributeValueWriter()
     {
         return new AttributeValueWriter(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -207,7 +207,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
             $this->createAttributeGlossaryKeyBuilder(),
-            $this->createTranslationMapper()
+            $this->createTranslationMapper(),
         );
     }
 

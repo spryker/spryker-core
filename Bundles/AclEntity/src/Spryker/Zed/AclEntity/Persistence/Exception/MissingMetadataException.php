@@ -28,7 +28,7 @@ class MissingMetadataException extends Exception
     {
         return sprintf(
             'No metadata definition found for %s',
-            $entityClass
+            $entityClass,
         );
     }
 }

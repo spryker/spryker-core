@@ -25,6 +25,7 @@ class ProductImageMapExpanderPlugin extends AbstractPlugin implements ProductAbs
      * @var string
      */
     protected const KEY = 'images';
+
     /**
      * @var string
      */

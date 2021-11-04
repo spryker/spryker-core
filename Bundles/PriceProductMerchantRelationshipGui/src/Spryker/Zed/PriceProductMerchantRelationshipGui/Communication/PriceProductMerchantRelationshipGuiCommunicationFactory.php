@@ -23,7 +23,7 @@ class PriceProductMerchantRelationshipGuiCommunicationFactory extends AbstractCo
     public function createMerchantPriceDimensionFormDataProvider(): MerchantRelationshipPriceDimensionFormDataProvider
     {
         return new MerchantRelationshipPriceDimensionFormDataProvider(
-            $this->getMerchantRelationshipFacade()
+            $this->getMerchantRelationshipFacade(),
         );
     }
 

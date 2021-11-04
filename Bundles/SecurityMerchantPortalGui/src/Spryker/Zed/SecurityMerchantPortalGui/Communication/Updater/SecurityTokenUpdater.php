@@ -17,6 +17,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
 {
     /**
      * @uses \Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin::SECURITY_FIREWALL_NAME
+     *
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'MerchantUser';
@@ -58,7 +59,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
     {
         return new MerchantUser(
             $merchantUserTransfer,
-            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER]
+            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],
         );
     }
 
@@ -73,7 +74,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
             $merchantUser,
             $merchantUser->getPassword(),
             static::SECURITY_FIREWALL_NAME,
-            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER]
+            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],
         );
     }
 }

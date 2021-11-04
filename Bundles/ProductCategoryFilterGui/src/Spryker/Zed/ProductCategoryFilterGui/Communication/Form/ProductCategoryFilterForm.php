@@ -23,6 +23,7 @@ class ProductCategoryFilterForm extends AbstractType
      * @var string
      */
     public const FIELD_FILTER_AUTOCOMPLETE = 'filter-autocomplete';
+
     /**
      * @var string
      */
@@ -38,7 +39,7 @@ class ProductCategoryFilterForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

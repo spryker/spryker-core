@@ -27,10 +27,12 @@ class CompanyBusinessUnitForm extends AbstractType
      * @var string
      */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+
     /**
      * @var string
      */
     public const OPTION_PARENT_CHOICES_VALUES = 'parent_choices_values';
+
     /**
      * @var string
      */
@@ -40,22 +42,27 @@ class CompanyBusinessUnitForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+
     /**
      * @var string
      */
     public const FIELD_FK_COMPANY = 'fk_company';
+
     /**
      * @var string
      */
     public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_IBAN = 'iban';
+
     /**
      * @var string
      */
@@ -83,7 +90,7 @@ class CompanyBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -95,7 +102,7 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addParentNameField(
                 $builder,
                 $options[static::OPTION_PARENT_CHOICES_VALUES],
-                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES]
+                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES],
             )
             ->addNameField($builder)
             ->addIbanField($builder)

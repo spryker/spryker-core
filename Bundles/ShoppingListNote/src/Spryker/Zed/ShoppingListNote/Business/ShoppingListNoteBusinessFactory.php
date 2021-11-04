@@ -31,7 +31,7 @@ class ShoppingListNoteBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListNoteReader(): ShoppingListItemNoteReaderInterface
     {
         return new ShoppingListItemNoteReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -41,7 +41,7 @@ class ShoppingListNoteBusinessFactory extends AbstractBusinessFactory
     public function createShoppingListNoteWriter(): ShoppingListItemNoteWriterInterface
     {
         return new ShoppingListItemNoteWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

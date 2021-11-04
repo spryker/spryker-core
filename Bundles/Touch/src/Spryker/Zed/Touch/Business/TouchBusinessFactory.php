@@ -35,7 +35,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilDataReaderService(),
             $this->getQueryContainer(),
             $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -54,7 +54,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     {
         return new Touch(
             $this->getQueryContainer(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -120,7 +120,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getEntityManager(),
             $this->getUtilDataReaderService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 }

@@ -21,6 +21,7 @@ class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      * @var string
      */
     protected const SERVICE_LOCALE = 'locale';
+
     /**
      * @var int
      */
@@ -47,7 +48,7 @@ class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
 
                 $this->setRequestLocale($request);
             },
-            static::EVENT_PRIORITY
+            static::EVENT_PRIORITY,
         );
 
         return $eventDispatcher;

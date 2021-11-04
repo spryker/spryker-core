@@ -74,7 +74,7 @@ class PriceProductReader implements PriceProductReaderInterface
         $localeName = $this->localeClient->getCurrentLocale();
         $productData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,
-            $localeName
+            $localeName,
         );
 
         if (isset($productData[static::STORAGE_KEY_ID_PRODUCT_ABSTRACT]) && $productData[static::STORAGE_KEY_ID_PRODUCT_ABSTRACT]) {

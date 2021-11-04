@@ -41,6 +41,7 @@ class ProductCategoryStorageFacadeTest extends Unit
      * @var string
      */
     protected const STORE_DE = 'DE';
+
     /**
      * @var string
      */
@@ -50,10 +51,12 @@ class ProductCategoryStorageFacadeTest extends Unit
      * @var int
      */
     protected const FAKE_ID_CATEGORY = 6666;
+
     /**
      * @var int
      */
     protected const FAKE_ID_CATEGORY_NODE = 8888;
+
     /**
      * @var int
      */
@@ -100,7 +103,7 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         $this->tester->haveCategoryStoreRelation(
             $this->categoryTransfer->getIdCategory(),
-            $storeTransfer->getIdStore()
+            $storeTransfer->getIdStore(),
         );
     }
 
@@ -123,7 +126,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfers = [
@@ -139,7 +142,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             1,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -152,7 +155,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfers = [
@@ -168,7 +171,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             0,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -182,13 +185,13 @@ class ProductCategoryStorageFacadeTest extends Unit
 
         $this->tester->haveCategoryStoreRelation(
             $this->categoryTransfer->getIdCategory(),
-            $storeTransfer->getIdStore()
+            $storeTransfer->getIdStore(),
         );
 
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfers = [
@@ -204,7 +207,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             2,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -217,7 +220,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfers = [
@@ -231,7 +234,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             1,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -244,7 +247,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfers = [
@@ -258,7 +261,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             0,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -271,7 +274,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfers = [
@@ -287,7 +290,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             0,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -301,7 +304,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -315,7 +318,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -329,7 +332,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -343,7 +346,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -357,7 +360,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())
@@ -375,7 +378,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -390,7 +393,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -404,7 +407,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -418,7 +421,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -432,7 +435,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -446,7 +449,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -460,7 +463,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -474,7 +477,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($this->categoryTransfer->getIdCategory());
@@ -486,7 +489,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -500,7 +503,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(static::FAKE_ID_CATEGORY);
@@ -512,7 +515,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -526,7 +529,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())
@@ -543,7 +546,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -557,7 +560,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($this->categoryTransfer->getIdCategory());
@@ -569,7 +572,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -583,7 +586,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -597,7 +600,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -611,7 +614,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -625,7 +628,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -639,7 +642,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         // Act
@@ -649,7 +652,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -663,7 +666,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())
@@ -682,7 +685,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -696,7 +699,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -710,7 +713,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -724,7 +727,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($productConcreteTransfer->getFkProductAbstract());
@@ -736,7 +739,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -750,7 +753,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(static::FAKE_ID_PRODUCT_ABSTRACT);
@@ -762,7 +765,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -776,7 +779,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -790,7 +793,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -804,7 +807,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(static::FAKE_ID_PRODUCT_ABSTRACT);
@@ -816,7 +819,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $this->tester->assertCount(
             $expectedCount,
             $this->tester->getProductAbstractCategoryStorageEntities($productConcreteTransfer),
-            static::ASSET_MESSAGE_COUNT_IS_WRONG
+            static::ASSET_MESSAGE_COUNT_IS_WRONG,
         );
     }
 
@@ -829,7 +832,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $idProductAbstract = $productConcreteTransfer->getFkProductAbstract();
@@ -839,7 +842,7 @@ class ProductCategoryStorageFacadeTest extends Unit
             static::STORE_DE,
             [
                 static::KEY_ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
-            ]
+            ],
         );
 
         // Act
@@ -866,12 +869,12 @@ class ProductCategoryStorageFacadeTest extends Unit
             $productConcreteTransfer = $this->tester->haveFullProduct();
             $this->tester->assignProductToCategory(
                 $this->categoryTransfer->getIdCategory(),
-                $productConcreteTransfer->getFkProductAbstract()
+                $productConcreteTransfer->getFkProductAbstract(),
             );
 
             $this->tester->haveProductAbstractCategoryStorageEntity(
                 $productConcreteTransfer,
-                static::STORE_DE
+                static::STORE_DE,
             );
         }
 
@@ -893,7 +896,7 @@ class ProductCategoryStorageFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveFullProduct();
         $this->tester->assignProductToCategory(
             $this->categoryTransfer->getIdCategory(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $filterTransfer = (new FilterTransfer())

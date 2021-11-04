@@ -30,7 +30,7 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     {
         return new CompanyBusinessUnitResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createCompanyBusinessUnitMapper()
+            $this->createCompanyBusinessUnitMapper(),
         );
     }
 
@@ -41,7 +41,7 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     {
         return new CompanyBusinessUnitByQuoteRequestResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createCompanyBusinessUnitMapper()
+            $this->createCompanyBusinessUnitMapper(),
         );
     }
 
@@ -53,7 +53,7 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
         return new CompanyBusinessUnitReader(
             $this->createCompanyBusinessUnitMapper(),
             $this->getCompanyBusinessUnitClient(),
-            $this->createCompanyBusinessUnitRestResponseBuilder()
+            $this->createCompanyBusinessUnitRestResponseBuilder(),
         );
     }
 
@@ -63,7 +63,7 @@ class CompanyBusinessUnitsRestApiFactory extends AbstractFactory
     public function createCompanyBusinessUnitMapper(): CompanyBusinessUnitMapperInterface
     {
         return new CompanyBusinessUnitMapper(
-            $this->getCompanyBusinessUnitMapperPlugins()
+            $this->getCompanyBusinessUnitMapperPlugins(),
         );
     }
 

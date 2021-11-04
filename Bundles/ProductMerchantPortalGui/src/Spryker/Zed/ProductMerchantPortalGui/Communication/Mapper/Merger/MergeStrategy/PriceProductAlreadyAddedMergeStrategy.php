@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class PriceProductAlreadyAddedMergeStrategy extends AbstractPriceProductMergeStrategy
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -59,8 +57,6 @@ class PriceProductAlreadyAddedMergeStrategy extends AbstractPriceProductMergeStr
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

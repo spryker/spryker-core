@@ -142,7 +142,7 @@ class DataRequestBuilder implements DataRequestBuilderInterface
         $guiTableDataRequestTransfer
             ->setPage($request->get('page') ? (int)$request->get('page') : 1)
             ->setPageSize(
-                $request->get('pageSize') ? (int)$request->get('pageSize') : $this->getDefaultPageSize($guiTableConfigurationTransfer)
+                $request->get('pageSize') ? (int)$request->get('pageSize') : $this->getDefaultPageSize($guiTableConfigurationTransfer),
             );
 
         return $guiTableDataRequestTransfer;

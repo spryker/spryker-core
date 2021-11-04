@@ -27,10 +27,12 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      * @var string
      */
     public const OPTION_PRODUCT_ARRAY = 'option-product-array';
+
     /**
      * @var string
      */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+
     /**
      * @var string
      */
@@ -47,6 +49,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const FIELD_PRODUCT_CATEGORY = 'productCategory';
@@ -55,6 +58,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      * @var string
      */
     protected const LABEL_PRODUCT_PAGES = 'Products Pages';
+
     /**
      * @var string
      */
@@ -62,7 +66,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -122,7 +126,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -151,7 +155,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -189,14 +193,14 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             $this->replaceProductIdsField(
                 $event->getForm()->getParent(),
                 $assignedProductAbstractIds,
-                $event->getForm()->getConfig()->getOptions()
+                $event->getForm()->getConfig()->getOptions(),
             );
         });
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -215,7 +219,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormInterface $productForm
      * @param array<int> $assignedProductAbstractIds
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

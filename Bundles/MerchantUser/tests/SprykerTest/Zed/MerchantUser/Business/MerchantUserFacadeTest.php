@@ -36,13 +36,16 @@ class MerchantUserFacadeTest extends Unit
 {
     /**
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     *
      * @var string
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
+
     /**
      * @var string
      */
     protected const USER_AUTHENTICATION_TOKEN = 'token';
+
     /**
      * @var string
      */
@@ -107,7 +110,7 @@ class MerchantUserFacadeTest extends Unit
         // Act
         $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUser($merchantUserTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
-            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
+            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser()),
         );
 
         // Assert
@@ -131,7 +134,7 @@ class MerchantUserFacadeTest extends Unit
         // Act
         $merchantUserResponseTransfer = $this->tester->getFacade()->createMerchantUser($merchantUserTransfer);
         $merchantUserEntity = $this->tester->findMerchantUser(
-            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser())
+            (new MerchantUserCriteriaTransfer())->setIdMerchantUser($merchantUserTransfer->getIdMerchantUser()),
         );
 
         // Assert
@@ -166,7 +169,7 @@ class MerchantUserFacadeTest extends Unit
         $this->assertFalse($merchantUserResponseTransfer->getIsSuccessful());
         $this->assertSame(
             'A user with the same email is already connected to another merchant.',
-            $merchantUserResponseTransfer->getErrors()[0]->getMessage()
+            $merchantUserResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -299,7 +302,7 @@ class MerchantUserFacadeTest extends Unit
         ];
         $merchantUserCriteriaData = array_intersect_key(
             $merchantUserCriteriaData,
-            array_flip($merchantUserCriteriaKeys)
+            array_flip($merchantUserCriteriaKeys),
         );
 
         $merchantUserCriteriaTransfer = (new MerchantUserCriteriaTransfer())
@@ -313,7 +316,7 @@ class MerchantUserFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $merchantUserTransfer->getIdMerchantUser(),
-            $foundMerchantUserTransfer->getIdMerchantUser()
+            $foundMerchantUserTransfer->getIdMerchantUser(),
         );
 
         if ($isUserInCriteria) {
@@ -375,7 +378,7 @@ class MerchantUserFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->disableMerchantUsers(
-            (new MerchantUserCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant())
+            (new MerchantUserCriteriaTransfer())->setIdMerchant($merchantTransfer->getIdMerchant()),
         );
     }
 
@@ -410,7 +413,7 @@ class MerchantUserFacadeTest extends Unit
         $userTransfer = $this->tester->haveUser();
         $merchantUserTransfer = $this->tester->haveMerchantUser(
             $this->tester->haveMerchant(),
-            $userTransfer
+            $userTransfer,
         );
 
         // Assert
@@ -452,7 +455,7 @@ class MerchantUserFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->requestPasswordReset(
             (new UserPasswordResetRequestTransfer())
-                ->setEmail($userTransfer->getUsername())
+                ->setEmail($userTransfer->getUsername()),
         );
     }
 
@@ -533,11 +536,11 @@ class MerchantUserFacadeTest extends Unit
     {
         $this->tester->setDependency(
             MerchantUserDependencyProvider::FACADE_USER_PASSWORD_RESET,
-            $this->userPasswordResetFacadeMock
+            $this->userPasswordResetFacadeMock,
         );
         $this->tester->setDependency(
             MerchantUserDependencyProvider::FACADE_USER,
-            $this->userFacadeMock
+            $this->userFacadeMock,
         );
     }
 

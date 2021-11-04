@@ -74,7 +74,7 @@ class CombineProductSetImageSetTest extends Unit
 
         $imageSetTransfers = $this->tester->getFacade()->getCombinedProductSetImageSets(
             $productSetTransfer->getIdProductSet(),
-            $localeTransfer->getIdLocale()
+            $localeTransfer->getIdLocale(),
         );
 
         $this->assertCount(2, $imageSetTransfers, 'Expected number of images sets should have been returned.');
@@ -84,13 +84,13 @@ class CombineProductSetImageSetTest extends Unit
         $this->assertSame(
             $localizedProductImageSetTransfer1->getProductImages()[0]->getExternalUrlSmall(),
             $imageSetTransfers[1]->getProductImages()[0]->getExternalUrlSmall(),
-            'Product image 1/2 should have expected external small URL. ' . $imageSetTransfers[1]->getProductImages()[1]->getExternalUrlSmall()
+            'Product image 1/2 should have expected external small URL. ' . $imageSetTransfers[1]->getProductImages()[1]->getExternalUrlSmall(),
         );
 
         $this->assertSame(
             $localizedProductImageSetTransfer1->getProductImages()[1]->getExternalUrlSmall(),
             $imageSetTransfers[1]->getProductImages()[1]->getExternalUrlSmall(),
-            'Product image 2/2 should have expected external small URL.'
+            'Product image 2/2 should have expected external small URL.',
         );
     }
 }

@@ -27,7 +27,7 @@ class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitStorageWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

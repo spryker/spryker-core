@@ -33,7 +33,7 @@ class IndexController extends AbstractController
     public function tableAction(): JsonResponse
     {
         return $this->jsonResponse(
-            $this->getFactory()->createReturnTable()->fetchData()
+            $this->getFactory()->createReturnTable()->fetchData(),
         );
     }
 }

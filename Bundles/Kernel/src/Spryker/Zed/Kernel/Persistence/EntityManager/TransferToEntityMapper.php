@@ -100,7 +100,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
     }
 
     /**
-     * @param array $transferArray
+     * @param array<string, mixed> $transferArray
      * @param string $entityNamespace
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface

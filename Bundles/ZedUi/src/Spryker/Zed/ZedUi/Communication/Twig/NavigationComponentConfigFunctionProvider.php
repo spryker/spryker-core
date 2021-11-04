@@ -17,6 +17,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const NAVIGATION_COMPONENT_CONFIG_FUNCTION_NAME = 'render_navigation_component_config';
+
     /**
      * @var string
      */
@@ -81,7 +82,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return \Spryker\Zed\ZedUi\Communication\Twig\NavigationItem
      */
@@ -99,7 +100,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $navigationItem
+     * @param array<string, mixed> $navigationItem
      *
      * @return string
      */
@@ -109,7 +110,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $navigationItem
+     * @param array<string, mixed> $navigationItem
      *
      * @return array
      */
@@ -119,7 +120,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $navigationItem
+     * @param array<string, mixed> $navigationItem
      *
      * @return bool
      */

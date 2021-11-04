@@ -33,10 +33,12 @@ abstract class AbstractAttributeKeyForm extends AbstractType
      * @var string
      */
     public const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
+
     /**
      * @var string
      */
     public const OPTION_IS_UPDATE = 'is_update';
+
     /**
      * @var string
      */
@@ -74,7 +76,7 @@ abstract class AbstractAttributeKeyForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

@@ -20,6 +20,7 @@ class ImportErrorListTable extends AbstractTable
      * @var string
      */
     protected const HEADER_ROW_NUMBER = 'Row n°';
+
     /**
      * @var string
      */
@@ -78,7 +79,7 @@ class ImportErrorListTable extends AbstractTable
                 PriceProductScheduleImportMetaDataTransfer::IDENTIFIER => $priceProductScheduleListImportErrorTransfer->getPriceProductScheduleImport()->getMetaData()->getIdentifier(),
                 PriceProductScheduleListImportErrorTransfer::MESSAGE => $this->trans(
                     $priceProductScheduleListImportErrorTransfer->getMessage(),
-                    $priceProductScheduleListImportErrorTransfer->getParameters()
+                    $priceProductScheduleListImportErrorTransfer->getParameters(),
                 ),
             ];
         }

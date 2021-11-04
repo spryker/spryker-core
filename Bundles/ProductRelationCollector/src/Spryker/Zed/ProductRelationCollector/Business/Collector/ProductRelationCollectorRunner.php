@@ -69,7 +69,7 @@ class ProductRelationCollectorRunner implements ProductRelationCollectorRunnerIn
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

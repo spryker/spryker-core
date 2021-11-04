@@ -46,7 +46,7 @@ class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElastics
         return $this->getClient()->formatCategoryTreeFilter(
             $docCountAggregation,
             $this->getFactory()->getLocaleClient()->getCurrentLocale(),
-            APPLICATION_STORE
+            APPLICATION_STORE,
         );
     }
 }

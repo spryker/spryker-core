@@ -70,7 +70,7 @@ class ProductBundlePublishWritePublisherPluginTest extends Unit
 
         $productBundleWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH,
         );
 
         // Assert
@@ -80,23 +80,23 @@ class ProductBundlePublishWritePublisherPluginTest extends Unit
 
         $this->assertSame(
             $productConcreteTransfer->getIdProductConcrete(),
-            $productBundleStorageTransfer->getIdProductConcreteBundle()
+            $productBundleStorageTransfer->getIdProductConcreteBundle(),
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(0)->getIdProductConcrete(),
-            $productForProductBundleStorageTransfers->offsetGet(0)->getIdProductConcrete()
+            $productForProductBundleStorageTransfers->offsetGet(0)->getIdProductConcrete(),
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(0)->getQuantity(),
-            $productForProductBundleStorageTransfers->offsetGet(0)->getQuantity()
+            $productForProductBundleStorageTransfers->offsetGet(0)->getQuantity(),
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(1)->getIdProductConcrete(),
-            $productForProductBundleStorageTransfers->offsetGet(1)->getIdProductConcrete()
+            $productForProductBundleStorageTransfers->offsetGet(1)->getIdProductConcrete(),
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(2)->getIdProductConcrete(),
-            $productForProductBundleStorageTransfers->offsetGet(2)->getIdProductConcrete()
+            $productForProductBundleStorageTransfers->offsetGet(2)->getIdProductConcrete(),
         );
     }
 
@@ -118,7 +118,7 @@ class ProductBundlePublishWritePublisherPluginTest extends Unit
 
         $productBundleWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH,
         );
 
         // Assert
@@ -129,11 +129,11 @@ class ProductBundlePublishWritePublisherPluginTest extends Unit
 
         $this->assertSame(
             $firstProductConcreteTransfer->getIdProductConcrete(),
-            $firstProductBundleStorageTransfer->getIdProductConcreteBundle()
+            $firstProductBundleStorageTransfer->getIdProductConcreteBundle(),
         );
         $this->assertSame(
             $secondProductConcreteTransfer->getIdProductConcrete(),
-            $secondProductBundleStorageTransfer->getIdProductConcreteBundle()
+            $secondProductBundleStorageTransfer->getIdProductConcreteBundle(),
         );
     }
 
@@ -150,7 +150,7 @@ class ProductBundlePublishWritePublisherPluginTest extends Unit
 
         $productBundleWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH,
         );
 
         // Assert

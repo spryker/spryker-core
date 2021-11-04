@@ -62,8 +62,8 @@ class PaymentMethodDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of payment methods is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 }

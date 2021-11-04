@@ -25,6 +25,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::slotProductsTableAction()
+     *
      * @var string
      */
     protected const ROUTE_TABLE_RENDERING = '/slot-products-table?%s=%s';
@@ -104,8 +105,8 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
             sprintf(
                 static::ROUTE_TABLE_RENDERING,
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
-                $this->idConfigurableBundleTemplateSlot
-            )
+                $this->idConfigurableBundleTemplateSlot,
+            ),
         );
 
         return $config;
@@ -121,7 +122,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
         $configurableBundleTemplateSlotProducts = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         return $configurableBundleTemplateSlotProducts->getData();
@@ -141,7 +142,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
             ->where(sprintf(
                 '%s = %s',
                 SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE,
-                $this->localeFacade->getCurrentLocale()->getIdLocale()
+                $this->localeFacade->getCurrentLocale()->getIdLocale(),
             ))
             ->filterByIdProduct_In($configurableBundleTemplateSlotProductIds)
             ->select([

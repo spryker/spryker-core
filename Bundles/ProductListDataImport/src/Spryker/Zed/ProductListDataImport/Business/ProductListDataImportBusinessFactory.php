@@ -27,7 +27,7 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductListDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductListDataImporterConfiguration()
+            $this->getConfig()->getProductListDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -44,7 +44,7 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductListCategoryDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductListCategoryDataImporterConfiguration()
+            $this->getConfig()->getProductListCategoryDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -63,7 +63,7 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     public function createProductListProductConcreteDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductListProductConcreteDataImporterConfiguration()
+            $this->getConfig()->getProductListProductConcreteDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

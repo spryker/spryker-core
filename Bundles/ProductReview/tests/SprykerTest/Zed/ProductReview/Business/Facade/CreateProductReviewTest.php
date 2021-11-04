@@ -99,7 +99,7 @@ class CreateProductReviewTest extends Unit
         $this->assertSame(
             $this->tester->removeProductReviewDateFields($expectedProductReviewTransfer->toArray()),
             $this->tester->removeProductReviewDateFields($actualProductReviewTransfer->toArray()),
-            'Updated product review should have been returned.'
+            'Updated product review should have been returned.',
         );
     }
 

@@ -80,12 +80,12 @@ class RelationResolver implements RelationResolverInterface
         /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $relation */
         foreach ($this->getRelationsByAclEntityMetadata($entity, $aclEntityMetadataTransfer) as $relation) {
             $relationMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-                get_class($relation)
+                get_class($relation),
             );
 
             $rootRelations = array_merge(
                 $rootRelations,
-                $this->getRootRelationsByAclEntityMetadata($relation, $relationMetadataTransfer)->getData()
+                $this->getRootRelationsByAclEntityMetadata($relation, $relationMetadataTransfer)->getData(),
             );
         }
 
@@ -126,14 +126,14 @@ class RelationResolver implements RelationResolverInterface
         AclEntityMetadataTransfer $parentAclEntityMetadataTransfer
     ): ModelCriteria {
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
         while ($aclEntityMetadataTransfer->getEntityNameOrFail() !== $parentAclEntityMetadataTransfer->getEntityNameOrFail()) {
             if (!$this->hasJoinOrAlias($query, $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())) {
                 $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
             }
             $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
         }
 
@@ -160,7 +160,7 @@ class RelationResolver implements RelationResolverInterface
             }
 
             $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
         }
 
@@ -186,7 +186,7 @@ class RelationResolver implements RelationResolverInterface
                 $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
             }
             $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
         }
 

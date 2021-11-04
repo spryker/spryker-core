@@ -68,14 +68,14 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
 
         $productManagementAttributeQuery = $this->applyFilters(
             $productManagementAttributeQuery,
-            $productManagementAttributeFilterTransfer
+            $productManagementAttributeFilterTransfer,
         );
 
         return $this->getFactory()
             ->createProductManagementAttributeMapper()
             ->mapProductManagementAttributeEntityCollectionToTransferCollection(
                 $productManagementAttributeQuery->find(),
-                new ProductManagementAttributeCollectionTransfer()
+                new ProductManagementAttributeCollectionTransfer(),
             )
             ->setPagination($paginationTransfer);
     }
@@ -131,7 +131,7 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
         /** @var \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery $productManagementAttributeQuery */
         $productManagementAttributeQuery = $this->buildQueryFromCriteria(
             $productManagementAttributeQuery,
-            $productManagementAttributeFilterTransfer->getFilter()
+            $productManagementAttributeFilterTransfer->getFilter(),
         );
 
         $productManagementAttributeQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);

@@ -41,7 +41,7 @@ class ProductOptionByProductConcreteSkuExpander implements ProductOptionByProduc
         $productOptionRestResources = $this->productOptionStorageReader->getProductOptionsByProductConcreteSkus(
             $productConcreteSkus,
             $restRequest->getMetadata()->getLocale(),
-            $restRequest->getSort()
+            $restRequest->getSort(),
         );
         foreach ($restResources as $restResource) {
             if (!isset($productOptionRestResources[$restResource->getId()])) {

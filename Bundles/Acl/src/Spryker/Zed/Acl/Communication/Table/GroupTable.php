@@ -20,10 +20,12 @@ class GroupTable extends AbstractTable
      * @var string
      */
     public const ROLES = 'roles';
+
     /**
      * @var string
      */
     public const EDIT = 'Edit';
+
     /**
      * @var string
      */
@@ -127,7 +129,7 @@ class GroupTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate('/acl/group/edit', [self::EDIT_PARAMETER => $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]]),
-            'Edit'
+            'Edit',
         );
     }
 }

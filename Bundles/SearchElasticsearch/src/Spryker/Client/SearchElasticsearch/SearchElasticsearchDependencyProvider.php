@@ -26,10 +26,12 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGINS_SEARCH_CONFIG_EXPANDER = 'PLUGINS_SEARCH_CONFIG_EXPANDER';
+
     /**
      * @var string
      */
@@ -99,7 +102,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container): SearchElasticsearchToStoreClientInterface {
             return new SearchElasticsearchToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -115,7 +118,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container): SearchElasticsearchToLocaleClientInterface {
             return new SearchElasticsearchToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 
@@ -155,7 +158,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_MONEY, function (Container $container): SearchElasticsearchToMoneyClientInterface {
             return new SearchElasticsearchToMoneyClientBridge(
-                $container->getLocator()->money()->client()
+                $container->getLocator()->money()->client(),
             );
         });
 
@@ -171,7 +174,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SearchElasticsearchToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

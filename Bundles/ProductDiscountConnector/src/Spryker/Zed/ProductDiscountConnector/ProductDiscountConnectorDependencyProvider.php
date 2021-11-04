@@ -22,10 +22,12 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

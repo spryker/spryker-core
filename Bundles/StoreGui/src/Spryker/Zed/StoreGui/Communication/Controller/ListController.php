@@ -35,7 +35,7 @@ class ListController extends AbstractController
         $storeTable = $this->getFactory()->createStoreTable();
 
         return $this->jsonResponse(
-            $storeTable->fetchData()
+            $storeTable->fetchData(),
         );
     }
 }

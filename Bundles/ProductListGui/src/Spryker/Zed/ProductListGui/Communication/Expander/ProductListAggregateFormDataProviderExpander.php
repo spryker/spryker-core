@@ -27,7 +27,7 @@ class ProductListAggregateFormDataProviderExpander implements ProductListAggrega
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

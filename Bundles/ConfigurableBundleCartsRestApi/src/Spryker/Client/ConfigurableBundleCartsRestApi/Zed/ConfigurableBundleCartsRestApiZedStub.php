@@ -39,7 +39,7 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/configurable-bundle-carts-rest-api/gateway/add-configured-bundle',
-            $createConfiguredBundleRequestTransfer
+            $createConfiguredBundleRequestTransfer,
         );
 
         return $quoteResponseTransfer;
@@ -57,7 +57,7 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/configurable-bundle-carts-rest-api/gateway/add-configured-bundle-to-guest-cart',
-            $createConfiguredBundleRequestTransfer
+            $createConfiguredBundleRequestTransfer,
         );
 
         return $quoteResponseTransfer;
@@ -75,7 +75,7 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/configurable-bundle-carts-rest-api/gateway/update-configured-bundle-quantity',
-            $updateConfiguredBundleRequestTransfer
+            $updateConfiguredBundleRequestTransfer,
         );
 
         return $quoteResponseTransfer;
@@ -93,7 +93,7 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/configurable-bundle-carts-rest-api/gateway/remove-configured-bundle',
-            $updateConfiguredBundleRequestTransfer
+            $updateConfiguredBundleRequestTransfer,
         );
 
         return $quoteResponseTransfer;

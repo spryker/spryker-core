@@ -197,14 +197,14 @@ class QuoteApprovalFacadeTest extends Unit
 
         // Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
-            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()
+            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote(),
         );
 
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $shareDeatailCollectionTransfer->getShareDetails());
         $this->assertSame(
             $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId(),
-            $shareDeatailCollectionTransfer->getShareDetails()->offsetGet(0)->getIdCompanyUser()
+            $shareDeatailCollectionTransfer->getShareDetails()->offsetGet(0)->getIdCompanyUser(),
         );
     }
 
@@ -313,7 +313,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         // Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
-            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()
+            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote(),
         );
 
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
@@ -329,7 +329,7 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
 
         $quoteApprovalRemoveRequestTransfer = $this->createValidQuoteApprovalRemoveRequestTransfer(
-            $quoteApprovalCreateRequestTransfer
+            $quoteApprovalCreateRequestTransfer,
         );
 
         // Act
@@ -350,7 +350,7 @@ class QuoteApprovalFacadeTest extends Unit
     {
         // Arrange
         $quoteApprovalRemoveRequestTransfer = $this->createValidQuoteApprovalRemoveRequestTransfer(
-            $this->createValidQuoteApprovalCreateRequestTransfer()
+            $this->createValidQuoteApprovalCreateRequestTransfer(),
         );
 
         $notQuoteCompanyUserTransfer = $this->tester->createCompanyUser();
@@ -555,13 +555,13 @@ class QuoteApprovalFacadeTest extends Unit
                         ItemTransfer::SKU => $concreteProductTransfer->getSku(),
                     ],
                 ],
-            ]
+            ],
         );
 
         $companyUserTransfer->setCustomer(null);
 
         $quoteTransfer->getCustomer()->setCompanyUserTransfer(
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $quoteTransfer;
@@ -583,7 +583,7 @@ class QuoteApprovalFacadeTest extends Unit
             QuoteDependencyProvider::PLUGINS_QUOTE_EXPANDER,
             [
                 new QuoteApprovalExpanderPlugin(),
-            ]
+            ],
         );
     }
 
@@ -612,7 +612,7 @@ class QuoteApprovalFacadeTest extends Unit
             ->sharedCart()
             ->facade()
             ->getShareDetailsByIdQuote(
-                (new QuoteTransfer())->setIdQuote($idQuote)
+                (new QuoteTransfer())->setIdQuote($idQuote),
             );
     }
 

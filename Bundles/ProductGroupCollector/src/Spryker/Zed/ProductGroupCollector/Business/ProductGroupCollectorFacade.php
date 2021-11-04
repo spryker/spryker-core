@@ -52,7 +52,7 @@ class ProductGroupCollectorFacade extends AbstractFacade implements ProductGroup
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 
@@ -87,7 +87,7 @@ class ProductGroupCollectorFacade extends AbstractFacade implements ProductGroup
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

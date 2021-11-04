@@ -35,7 +35,7 @@ class IndexController extends AbstractController
         $table = $this->getFactory()->createReclamationTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

@@ -26,6 +26,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
      * @var string
      */
     protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
+
     /**
      * @var string
      */
@@ -72,7 +73,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         if (
             $this->shoppingListRepository->isShoppingListSharedWithCompanyBusinessUnit(
                 $shoppingListTransfer->getIdShoppingList(),
-                $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()
+                $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit(),
             )
         ) {
             return $this->createErrorShareResponse(static::CANNOT_RESHARE_SHOPPING_LIST);
@@ -106,7 +107,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         if (
             $this->shoppingListRepository->isShoppingListSharedWithCompanyUser(
                 $shoppingListTransfer->getIdShoppingList(),
-                $shoppingListShareRequestTransfer->getIdCompanyUser()
+                $shoppingListShareRequestTransfer->getIdCompanyUser(),
             )
         ) {
             return $this->createErrorShareResponse(static::CANNOT_RESHARE_SHOPPING_LIST);
@@ -274,7 +275,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     ): bool {
         $isExists = array_key_exists(
             $shoppingListCompanyBusinessUnitTransfer->getIdShoppingListCompanyBusinessUnit(),
-            $sharedShoppingListCompanyBusinessUnitIds
+            $sharedShoppingListCompanyBusinessUnitIds,
         );
 
         if (!$isExists && !$shoppingListCompanyBusinessUnitTransfer->getIdShoppingListPermissionGroup()) {
@@ -311,7 +312,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($idCompanyBusinessUnit) {
                 return $this->executeRemoveShoppingListCompanyBusinessUnitTransaction($idCompanyBusinessUnit);
-            }
+            },
         );
     }
 
@@ -394,7 +395,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         return $this->can(
             'WriteShoppingListPermissionPlugin',
             $shoppingListTransfer->getIdCompanyUser(),
-            $shoppingListTransfer->getIdShoppingList()
+            $shoppingListTransfer->getIdShoppingList(),
         );
     }
 

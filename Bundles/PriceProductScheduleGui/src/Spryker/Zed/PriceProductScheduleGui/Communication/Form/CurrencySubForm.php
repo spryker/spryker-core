@@ -40,7 +40,7 @@ class CurrencySubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class CurrencySubForm extends AbstractType
         return array_flip(
             $this->getFactory()
                 ->createPriceProductScheduleFormDataProvider()
-                ->getOptions(null, $idStore)[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+                ->getOptions(null, $idStore)[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
         );
     }
 

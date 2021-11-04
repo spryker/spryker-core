@@ -36,7 +36,7 @@ class OauthCompanyUserFactory extends AbstractFactory
     public function createCompanyUserAccessTokenReader(): CompanyUserAccessTokenReaderInterface
     {
         return new CompanyUserAccessTokenReader(
-            $this->createOauthCompanyUserStub()
+            $this->createOauthCompanyUserStub(),
         );
     }
 

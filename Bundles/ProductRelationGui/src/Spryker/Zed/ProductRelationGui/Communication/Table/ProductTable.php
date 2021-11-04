@@ -23,6 +23,7 @@ class ProductTable extends AbstractProductTable
      * @var string
      */
     protected const COL_ACTIONS = 'Actions';
+
     /**
      * @var string
      */
@@ -154,7 +155,7 @@ class ProductTable extends AbstractProductTable
     {
         $config->setDefaultSortField(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-            TableConfiguration::SORT_DESC
+            TableConfiguration::SORT_DESC,
         );
     }
 
@@ -202,7 +203,7 @@ class ProductTable extends AbstractProductTable
         if ($this->idProductRelation !== null) {
             return $this->queryProductsByIdLocaleAndIdRelation(
                 $localeTransfer->getIdLocale(),
-                $this->idProductRelation
+                $this->idProductRelation,
             );
         }
 
@@ -277,7 +278,7 @@ class ProductTable extends AbstractProductTable
                 'data-select-product' => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 'id' => 'select-product-' . $item[SpyProductAbstractTableMap::COL_SKU],
                 'icon' => '',
-            ]
+            ],
         );
     }
 }

@@ -81,7 +81,7 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
     protected function generateUrlByLocale(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer)
     {
         $productName = $this->utilTextService->generateSlug(
-            $this->productAbstractNameGenerator->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer)
+            $this->productAbstractNameGenerator->getLocalizedProductAbstractName($productAbstractTransfer, $localeTransfer),
         );
 
         return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstractTransfer->getIdProductAbstract();

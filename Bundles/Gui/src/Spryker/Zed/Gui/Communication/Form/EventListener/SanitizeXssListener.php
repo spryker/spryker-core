@@ -55,13 +55,13 @@ class SanitizeXssListener implements EventSubscriberInterface
         $data = $this->utilSanitizeXssService->sanitizeXss(
             $data,
             $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_ATTRIBUTES, []),
-            $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, [])
+            $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, []),
         );
 
         $event->setData($this->utilSanitizeXssService->sanitizeXss(
             $data,
             $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_ATTRIBUTES, []),
-            $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, [])
+            $formConfig->getOption(SanitizeXssTypeExtension::OPTION_ALLOWED_HTML_TAGS, []),
         ));
     }
 }

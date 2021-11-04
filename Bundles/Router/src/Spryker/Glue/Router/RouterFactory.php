@@ -49,7 +49,7 @@ class RouterFactory extends AbstractFactory
     {
         return new ArgumentResolver(
             $this->createArgumentMetaDataFactory(),
-            $this->getArgumentValueResolvers()
+            $this->getArgumentValueResolvers(),
         );
     }
 

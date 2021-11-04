@@ -14,6 +14,7 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
 {
     /**
      * @uses \Spryker\Zed\Oms\OmsConfig::EVENT_CANCEL
+     *
      * @var string
      */
     protected const EVENT_CANCEL = 'cancel';

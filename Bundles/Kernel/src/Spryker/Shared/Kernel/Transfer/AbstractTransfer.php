@@ -23,17 +23,17 @@ use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
     /**
-     * @var array
+     * @var array<string, bool>
      */
     protected $modifiedProperties = [];
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [];
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $transferPropertyNameMap = [];
 
@@ -101,12 +101,12 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param array $properties
+     * @param array<string> $properties
      * @param bool $isRecursive
      * @param string $childConvertMethodName
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     private function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName, $camelCasedKeys = false)
     {
@@ -161,7 +161,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param bool $ignoreMissingProperty
      *
      * @return $this
@@ -209,7 +209,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 static::class,
                 $property,
                 TransferInterface::class,
-                gettype($value)
+                gettype($value),
             ));
         }
     }
@@ -267,7 +267,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new RequiredTransferPropertyException(sprintf(
                 'Missing required property "%s" for transfer %s.',
                 $property,
-                static::class
+                static::class,
             ));
         }
     }
@@ -287,7 +287,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             throw new RequiredTransferPropertyException(sprintf(
                 'Empty required collection property "%s" for transfer %s.',
                 $property,
-                static::class
+                static::class,
             ));
         }
     }
@@ -343,19 +343,19 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         throw new InvalidArgumentException(
-            sprintf('Missing property "%s" in "%s"', $property, static::class)
+            sprintf('Missing property "%s" in "%s"', $property, static::class),
         );
     }
 
     /**
-     * @param mixed $value
-     * @param array $values
+     * @param \ArrayObject<string, mixed>|array<string, mixed> $value
+     * @param array<string, mixed> $values
      * @param string $arrayKey
      * @param bool $isRecursive
      * @param string $childConvertMethodName
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     private function addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys = false)
     {
@@ -399,10 +399,10 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 sprintf(
                     'Failed to unserialize %s. Updating or clearing your data source may solve this problem: %s',
                     static::class,
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 ),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
     }
@@ -460,7 +460,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected function throwNullValueException(string $propertyName): void
     {
         throw new NullValueException(
-            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class)
+            sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class),
         );
     }
 }

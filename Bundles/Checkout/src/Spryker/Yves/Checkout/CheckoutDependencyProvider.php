@@ -17,6 +17,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @see \Spryker\Shared\Application\ApplicationConstants::FORM_FACTORY
+     *
      * @var string
      */
     public const FORM_FACTORY = 'FORM_FACTORY';
@@ -25,6 +26,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PAYMENT_METHOD_HANDLER = 'payment method handler';
+
     /**
      * @var string
      */
@@ -34,6 +36,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_PAYMENT_FILTERS = 'PLUGIN_PAYMENT_FILTERS';
+
     /**
      * @var string
      */

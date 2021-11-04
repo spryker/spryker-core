@@ -62,12 +62,12 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
     {
         $salesOrderThresholdValueTransfers = $this->salesOrderThresholdDataSourceStrategyResolver
             ->findApplicableThresholds(
-                $this->prepareCalculatedQuoteTransfer($calculableObjectTransfer)
+                $this->prepareCalculatedQuoteTransfer($calculableObjectTransfer),
             );
 
         $salesOrderThresholdValueTransfers = $this->filterSalesOrderThresholdsByThresholdGroup(
             $salesOrderThresholdValueTransfers,
-            SalesOrderThresholdConfig::GROUP_SOFT
+            SalesOrderThresholdConfig::GROUP_SOFT,
         );
 
         foreach ($salesOrderThresholdValueTransfers as $salesOrderThresholdValueTransfer) {
@@ -155,7 +155,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
         int $fee
     ): void {
         $calculableObjectTransfer->addExpense(
-            $this->createExpenseByPriceMode($salesOrderThresholdValueTransfer, $fee, $calculableObjectTransfer->getPriceMode())
+            $this->createExpenseByPriceMode($salesOrderThresholdValueTransfer, $fee, $calculableObjectTransfer->getPriceMode()),
         );
     }
 
@@ -174,7 +174,7 @@ class ExpenseCalculator implements ExpenseCalculatorInterface
         $expenseTransfer = (new ExpenseTransfer())
             ->setName(sprintf(
                 static::GLOSSARY_KEY_TEMPLATE,
-                $salesOrderThresholdValueTransfer->getSalesOrderThresholdType()->getKey()
+                $salesOrderThresholdValueTransfer->getSalesOrderThresholdType()->getKey(),
             ))->setType(SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE)
             ->setUnitPrice($expensePrice)
             ->setSumPrice($expensePrice)

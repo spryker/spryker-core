@@ -36,7 +36,7 @@ class IndexController extends AbstractController
         $table = $this->getFactory()->createUserTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

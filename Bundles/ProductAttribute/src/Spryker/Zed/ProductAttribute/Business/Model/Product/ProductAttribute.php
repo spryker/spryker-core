@@ -65,7 +65,7 @@ class ProductAttribute implements ProductAttributeInterface
 
         return $this->generateAttributes(
             (array)$productAbstractTransfer->getAttributes(),
-            (array)$productAbstractTransfer->getLocalizedAttributes()
+            (array)$productAbstractTransfer->getLocalizedAttributes(),
         );
     }
 
@@ -92,7 +92,7 @@ class ProductAttribute implements ProductAttributeInterface
 
         return $this->generateAttributes(
             (array)$productTransfer->getAttributes(),
-            (array)$productTransfer->getLocalizedAttributes()
+            (array)$productTransfer->getLocalizedAttributes(),
         );
     }
 

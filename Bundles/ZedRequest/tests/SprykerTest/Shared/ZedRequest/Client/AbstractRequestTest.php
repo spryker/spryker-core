@@ -8,7 +8,9 @@
 namespace SprykerTest\Shared\ZedRequest\Client;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractRequest;
+use SprykerTest\Shared\ZedRequest\Client\Fixture\Transfer;
 
 /**
  * Auto-generated group annotations
@@ -39,12 +41,12 @@ class AbstractRequestTest extends Unit
     public function testGetTransferMustReturnTransferIfTransferClassNameAndDataProvided(): void
     {
         $data = [
-            'transferClassName' => '\\SprykerTest\\Shared\\ZedRequest\\Client\\Fixture\\Transfer',
+            'transferClassName' => Transfer::class,
             'transfer' => ['key' => 'value'],
         ];
         $abstractRequest = new AbstractRequest($data);
 
-        $this->assertInstanceOf('Spryker\Shared\Kernel\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
+        $this->assertInstanceOf(AbstractTransfer::class, $abstractRequest->getTransfer());
     }
 
     /**
@@ -53,10 +55,10 @@ class AbstractRequestTest extends Unit
     public function testGetTransferMustReturnTransferIfTransferClassNameProvidedButNoDataGiven(): void
     {
         $data = [
-            'transferClassName' => '\\SprykerTest\\Shared\\ZedRequest\\Client\\Fixture\\Transfer',
+            'transferClassName' => Transfer::class,
         ];
         $abstractRequest = new AbstractRequest($data);
 
-        $this->assertInstanceOf('Spryker\Shared\Kernel\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
+        $this->assertInstanceOf(AbstractTransfer::class, $abstractRequest->getTransfer());
     }
 }

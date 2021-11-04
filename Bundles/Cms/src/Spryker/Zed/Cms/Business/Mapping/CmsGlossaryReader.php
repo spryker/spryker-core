@@ -21,6 +21,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
     /**
      * @var string
+     *
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::TEMPLATE_PATH
      */
     protected const COLUMN_TEMPLATE_PATH = 'template_path';
@@ -69,7 +70,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         }
 
         $pageTemplatePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
-            $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
+            $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH),
         );
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pageTemplatePlaceholders, $idCmsPage);
 
@@ -192,7 +193,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @param array $placeholders
      * @param int $idCmsPage
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
      */
     protected function getGlossaryMappingCollection(array $placeholders, int $idCmsPage)
     {

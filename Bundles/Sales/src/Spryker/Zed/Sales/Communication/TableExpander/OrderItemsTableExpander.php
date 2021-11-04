@@ -40,7 +40,7 @@ class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<array<string>>
+     * @return array<int, array<string>>
      */
     public function getColumnCellsContent(ArrayObject $itemTransfers): array
     {

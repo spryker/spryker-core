@@ -31,10 +31,12 @@ class ProductsConcreteController extends AbstractController
      * @var string
      */
     protected const PARAM_ACTIVATION_NAME_STATUS = 'activationNameStatus';
+
     /**
      * @var string
      */
     protected const PARAM_ACTIVATION_NAME_VALIDITY = 'activationNameValidity';
+
     /**
      * @var string
      */
@@ -52,7 +54,7 @@ class ProductsConcreteController extends AbstractController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductTableDataProvider($idProductAbstract),
-            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration($idProductAbstract)
+            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration($idProductAbstract),
         );
     }
 
@@ -68,7 +70,7 @@ class ProductsConcreteController extends AbstractController
         }, explode(',', trim($request->get(static::PARAM_PRODUCT_IDS, []), '[]')));
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
         $productConcreteCollectionTransfer = $this->getFactory()->getMerchantProductFacade()->getProductConcreteCollection(
-            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->setProductConcreteIds($productIds)
+            (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->setProductConcreteIds($productIds),
         );
         $productConcreteBulkForm = $this->getFactory()->createProductConcreteBulkForm();
         $productConcreteBulkForm->handleRequest($request);
@@ -84,8 +86,8 @@ class ProductsConcreteController extends AbstractController
                 ->addSuccessNotification(
                     sprintf(
                         static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS,
-                        $productConcreteCollectionTransfer->getProducts()->count()
-                    )
+                        $productConcreteCollectionTransfer->getProducts()->count(),
+                    ),
                 )
                 ->addActionCloseDrawer()
                 ->addActionRefreshTable()
@@ -137,7 +139,7 @@ class ProductsConcreteController extends AbstractController
                     (new ProductConcreteTransfer())
                         ->setIdProductConcrete($idProductConcrete)
                         ->setValidFrom($formData[ProductConcreteTransfer::VALID_FROM])
-                        ->setValidTo($formData[ProductConcreteTransfer::VALID_TO])
+                        ->setValidTo($formData[ProductConcreteTransfer::VALID_TO]),
                 );
             }
         }

@@ -59,7 +59,7 @@ class CompanyUnitAddressLabelRepository extends AbstractRepository implements Co
                 ->filterByFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
             ->endUse()
             ->select(
-                [SpyCompanyUnitAddressLabelTableMap::COL_ID_COMPANY_UNIT_ADDRESS_LABEL]
+                [SpyCompanyUnitAddressLabelTableMap::COL_ID_COMPANY_UNIT_ADDRESS_LABEL],
             )->find()->getData();
     }
 
@@ -78,7 +78,7 @@ class CompanyUnitAddressLabelRepository extends AbstractRepository implements Co
             ->filterByFkCompanyUnitAddress($idCompanyUnitAddress)
             ->filterByFkCompanyUnitAddressLabel_In($labelIds)
             ->select(
-                [SpyCompanyUnitAddressLabelToCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS_LABEL_TO_COMPANY_UNIT_ADDRESS]
+                [SpyCompanyUnitAddressLabelToCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS_LABEL_TO_COMPANY_UNIT_ADDRESS],
             )->find()->getData();
     }
 

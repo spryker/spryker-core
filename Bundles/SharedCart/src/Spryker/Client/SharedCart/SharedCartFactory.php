@@ -39,7 +39,7 @@ class SharedCartFactory extends AbstractFactory
             $this->getPersistentCartClient(),
             $this->getMessengerClient(),
             $this->getCustomerClient(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
         );
     }
 
@@ -49,7 +49,7 @@ class SharedCartFactory extends AbstractFactory
     public function createPermissionResolver(): PermissionResolverInterface
     {
         return new PermissionResolver(
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 
@@ -67,7 +67,7 @@ class SharedCartFactory extends AbstractFactory
     public function createSwitchDefaultCartByResourceShare(): SwitchDefaultCartByResourceShareInterface
     {
         return new SwitchDefaultCartByResourceShare(
-            $this->getMultiCartClient()
+            $this->getMultiCartClient(),
         );
     }
 
@@ -134,7 +134,7 @@ class SharedCartFactory extends AbstractFactory
     {
         return new CartDeleteChecker(
             $this->getMultiCartClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
         );
     }
 }

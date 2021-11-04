@@ -94,7 +94,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductCriteriaBuilder(),
             $this->createPriceProductMapper(),
             $this->getConfig(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
         );
     }
 
@@ -109,7 +109,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getProductFacade(),
             $this->createPriceTypeReader(),
-            $this->createPriceProductStoreWriter()
+            $this->createPriceProductStoreWriter(),
         );
     }
 
@@ -124,7 +124,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getProductFacade(),
             $this->createPriceTypeReader(),
-            $this->createPriceProductStoreWriter()
+            $this->createPriceProductStoreWriter(),
         );
     }
 
@@ -136,7 +136,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductTypeReader(
             $this->getQueryContainer(),
             $this->createPriceTypeMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -146,7 +146,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createCurrencyReader(): CurrencyReaderInterface
     {
         return new CurrencyReaderWithCache(
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -159,7 +159,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->createPriceTypeMapper(),
             $this->getPriceFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -169,7 +169,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductReaderPluginExecutor(): PriceProductReaderPluginExecutor
     {
         return new PriceProductReaderPluginExecutor(
-            $this->getPriceProductPricesExtractorPlugins()
+            $this->getPriceProductPricesExtractorPlugins(),
         );
     }
 
@@ -181,7 +181,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductExpander(
             $this->getPriceProductDimensionExpanderStrategyPlugins(),
             $this->getConfig(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
         );
     }
 
@@ -207,7 +207,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getPriceProductService(),
             $this->createPriceProductExpander(),
-            $this->createPriceProductReaderPluginExecutor()
+            $this->createPriceProductReaderPluginExecutor(),
         );
     }
 
@@ -221,7 +221,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceFacade(),
             $this->getStoreFacade(),
             $this->createPriceTypeReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -238,7 +238,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductService(),
             $this->createPriceProductExpander(),
             $this->createPriceProductReaderPluginExecutor(),
-            $this->getPriceProductExternalProviderPlugins()
+            $this->getPriceProductExternalProviderPlugins(),
         );
     }
 
@@ -258,7 +258,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceGrouper(
             $this->createReaderModel(),
             $this->createPriceProductMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -282,7 +282,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getConfig(),
             $this->createPriceProductStoreWriter(),
-            $this->getPriceDimensionAbstractSaverPlugins()
+            $this->getPriceDimensionAbstractSaverPlugins(),
         );
     }
 
@@ -298,7 +298,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceDimensionConcreteSaverPlugins(),
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->createPriceProductStoreWriter()
+            $this->createPriceProductStoreWriter(),
         );
     }
 
@@ -323,7 +323,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createPriceProductDefaultWriter(),
             $this->createPriceDataChecksumGenerator(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -335,7 +335,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductStoreWriterPluginExecutor(
             $this->getPriceProductStorePreDeletePlugins(),
             $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getPriceDimensionConcreteSaverPlugins()
+            $this->getPriceDimensionConcreteSaverPlugins(),
         );
     }
 
@@ -346,7 +346,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductDefaultWriter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -358,7 +358,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductRemover(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createPriceProductStoreWriterPluginExecutor()
+            $this->createPriceProductStoreWriterPluginExecutor(),
         );
     }
 
@@ -369,7 +369,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductDefaultRemover(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -381,7 +381,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductValidator(
             $this->createPriceProductConstraintProvider(),
             $this->getValidationAdapter(),
-            $this->getPriceProductValidatorPlugins()
+            $this->getPriceProductValidatorPlugins(),
         );
     }
 
@@ -428,7 +428,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductWishlistItemExpander(
             $this->createPriceProductConcreteReader(),
             $this->getConfig(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 

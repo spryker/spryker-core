@@ -39,6 +39,7 @@ class CartCodesRestApiFacadeTest extends Test
 
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+     *
      * @var string
      */
     protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
@@ -84,14 +85,14 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
             $this->tester::CODE,
-            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
+            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode(),
         );
     }
 
@@ -107,13 +108,13 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertEquals(
             CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()[0]->getValue()
+            $cartCodeResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -129,7 +130,7 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -148,14 +149,14 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::NON_EXISTENT_CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertEmpty($cartCodeResponseTransfer->getQuote());
         $this->assertEquals(
             CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()[0]->getValue()
+            $cartCodeResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -171,14 +172,14 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertEmpty($cartCodeResponseTransfer->getQuote());
         $this->assertEquals(
             CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()[0]->getValue()
+            $cartCodeResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -194,7 +195,7 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -214,7 +215,7 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
@@ -234,14 +235,14 @@ class CartCodesRestApiFacadeTest extends Test
         $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
-                ->setQuote($quoteTransfer)
+                ->setQuote($quoteTransfer),
         );
 
         // Assert
         $this->assertEmpty($cartCodeResponseTransfer->getQuote());
         $this->assertEquals(
             CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
-            $cartCodeResponseTransfer->getMessages()->getIterator()->current()->getValue()
+            $cartCodeResponseTransfer->getMessages()->getIterator()->current()->getValue(),
         );
     }
 
@@ -268,7 +269,7 @@ class CartCodesRestApiFacadeTest extends Test
             ->willReturn(
                 (new QuoteResponseTransfer())
                     ->setQuoteTransfer($this->tester->createQuoteTransferWithVouchers())
-                    ->setIsSuccessful(true)
+                    ->setIsSuccessful(true),
             );
 
         return $mockCartsRestApiFacade;

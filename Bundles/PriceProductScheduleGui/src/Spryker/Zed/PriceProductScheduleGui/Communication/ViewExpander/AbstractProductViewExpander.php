@@ -20,6 +20,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
      * @var string
      */
     protected const PRICE_TYPE_TEMPLATE = '@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig';
+
     /**
      * @var string
      */
@@ -73,13 +74,13 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
 
             $priceProductScheduleAbstractTable = $this->viewExpanderTableFactory->createPriceProductScheduleAbstractTable(
                 $viewData['idProductAbstract'],
-                $priceTypeTransfer->getIdPriceType()
+                $priceTypeTransfer->getIdPriceType(),
             );
 
             $tablesByPriceType = $this->addTableByPriceType(
                 $tablesByPriceType,
                 $priceTypeTransfer,
-                $priceProductScheduleAbstractTable
+                $priceProductScheduleAbstractTable,
             );
         }
 

@@ -28,6 +28,7 @@ class TwigToUtilTextServiceBridgeTest extends Unit
      * @var string
      */
     public const STRING_TO_CONVERT = 'StringToConvert';
+
     /**
      * @var string
      */

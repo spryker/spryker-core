@@ -17,18 +17,21 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
 {
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query\PaginatedReturnReasonSearchQueryExpanderPlugin::PARAMETER_OFFSET
+     *
      * @var string
      */
     protected const PARAMETER_OFFSET = 'offset';
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\Query\PaginatedReturnReasonSearchQueryExpanderPlugin::PARAMETER_LIMIT
+     *
      * @var string
      */
     protected const PARAMETER_LIMIT = 'limit';
 
     /**
      * @uses \Spryker\Client\SalesReturnSearch\Plugin\Elasticsearch\ResultFormatter\ReturnReasonSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const KEY_RETURN_REASON_COLLECTION = 'ReturnReasonCollection';
@@ -64,7 +67,7 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
     {
         $returnReasonSearchRequestTransfer = $this->createReturnReasonSearchRequest($restRequest);
         $searchResults = $this->salesReturnSearchClient->searchReturnReasons(
-            $returnReasonSearchRequestTransfer
+            $returnReasonSearchRequestTransfer,
         );
 
         /** @var \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer */
@@ -73,7 +76,7 @@ class ReturnReasonReader implements ReturnReasonReaderInterface
         return $this->restReturnReasonResponseBuilder->createReturnReasonListRestResponse(
             $returnReasonSearchRequestTransfer,
             $returnReasonSearchCollectionTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

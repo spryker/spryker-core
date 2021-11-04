@@ -21,6 +21,7 @@ class BuildNavigationConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'navigation:build-cache';
+
     /**
      * @var string
      */

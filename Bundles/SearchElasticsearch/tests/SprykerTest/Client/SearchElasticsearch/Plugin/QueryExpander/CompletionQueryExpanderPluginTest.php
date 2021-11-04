@@ -29,6 +29,7 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      * @var int
      */
     protected const SIZE = 10;
+
     /**
      * @var string
      */

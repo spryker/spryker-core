@@ -23,10 +23,12 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
      * @var string
      */
     protected const MESSAGE_PARAM_NAME = '%name%';
+
     /**
      * @var string
      */
     protected const MESSAGE_ERROR_CART_ITEM_OPTION_PRE_CHECK = 'cart.item.option.pre.check.validation.error.exists';
+
     /**
      * @var string
      */
@@ -77,7 +79,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
             $cartPreCheckResponseTransfer = $this->addErrorsToCartPreCheckResponse(
                 $cartPreCheckResponseTransfer,
                 $itemTransfer,
-                $notApprovedProductOptionGroupIds
+                $notApprovedProductOptionGroupIds,
             );
         }
 
@@ -118,7 +120,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
             $checkoutResponseTransfer = $this->addErrorsToCheckoutResponse(
                 $checkoutResponseTransfer,
                 $itemTransfer,
-                $notApprovedProductOptionGroupIds
+                $notApprovedProductOptionGroupIds,
             );
         }
 
@@ -126,13 +128,9 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
-     * @phpstan-return array<int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array
+     * @return array<int|null>
      */
     protected function extractProductOptionGroupIdsFromItemTransfers(ArrayObject $itemTransfers): array
     {
@@ -151,14 +149,10 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
-     *
-     * @phpstan-return array<int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      * @param array<int> $productOptionGroupIds
      *
-     * @return array
+     * @return array<int|null>
      */
     protected function extractProductOptionGroupIds(ArrayObject $productOptionTransfers, array $productOptionGroupIds): array
     {

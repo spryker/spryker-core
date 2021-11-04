@@ -80,12 +80,12 @@ class Sellable implements SellableInterface
 
         $sellableItemsResponseTransfer = $this->processSellableItemsRequestSuccessively(
             $sellableItemsRequestTransfer,
-            $sellableItemsResponseTransfer
+            $sellableItemsResponseTransfer,
         );
 
         $sellableItemsResponseTransfer = $this->processSellableItemsRequestInBatch(
             $sellableItemsRequestTransfer,
-            $sellableItemsResponseTransfer
+            $sellableItemsResponseTransfer,
         );
 
         return $sellableItemsResponseTransfer;
@@ -119,7 +119,7 @@ class Sellable implements SellableInterface
         foreach ($this->batchAvailabilityStrategyPlugins as $batchAvailabilityStrategyPlugin) {
             $sellableItemsResponseTransfer = $batchAvailabilityStrategyPlugin->findItemsAvailabilityForStore(
                 $sellableItemsRequestTransfer,
-                $sellableItemsResponseTransfer
+                $sellableItemsResponseTransfer,
             );
         }
 
@@ -140,7 +140,7 @@ class Sellable implements SellableInterface
         foreach ($sellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
             $sellableItemResponseTransfer = $this->processSellableItemRequestForCustomProducts(
                 $sellableItemRequestTransfer,
-                $storeTransfer
+                $storeTransfer,
             );
             if (!$sellableItemResponseTransfer) {
                 continue;
@@ -170,8 +170,8 @@ class Sellable implements SellableInterface
             $sellableItemResponseTransfers = new ArrayObject(
                 array_merge(
                     $sellableItemsResponseTransfer->getSellableItemResponses()->getArrayCopy(),
-                    $sellableItemResponseTransfers
-                )
+                    $sellableItemResponseTransfers,
+                ),
             );
             $sellableItemsResponseTransfer->setSellableItemResponses($sellableItemResponseTransfers);
         }
@@ -201,12 +201,12 @@ class Sellable implements SellableInterface
             $customProductConcreteAvailability = $availabilityStrategyPlugin->findProductConcreteAvailabilityForStore(
                 $concreteSku,
                 $storeTransfer,
-                $productAvailabilityCriteriaTransfer
+                $productAvailabilityCriteriaTransfer,
             );
 
             $sellableItemResponseTransfer = $this->getSellableItemResponseTransfer(
                 $sellableItemRequestTransfer,
-                $customProductConcreteAvailability
+                $customProductConcreteAvailability,
             );
             $sellableItemRequestTransfer->setIsProcessed(true);
 
@@ -237,7 +237,7 @@ class Sellable implements SellableInterface
 
         $sellableItemResponseTransfer->setIsSellable($this->isProductConcreteSellable(
             $productConcreteAvailabilityTransfer,
-            $availableQuantity
+            $availableQuantity,
         ));
 
         return $sellableItemResponseTransfer;
@@ -292,7 +292,7 @@ class Sellable implements SellableInterface
             }
             $sellableItemResponseTransfers[] = $this->getSellableItemResponseTransfer(
                 $sellableItemRequestTransfer,
-                $productConcreteAvailabilityTransfer
+                $productConcreteAvailabilityTransfer,
             );
         }
 
@@ -309,7 +309,7 @@ class Sellable implements SellableInterface
         return array_reduce(
             $productConcreteAvailabilityTransfers,
             [$this, 'mapProductConcreteAvailabilityTransferBySku'],
-            []
+            [],
         );
     }
 

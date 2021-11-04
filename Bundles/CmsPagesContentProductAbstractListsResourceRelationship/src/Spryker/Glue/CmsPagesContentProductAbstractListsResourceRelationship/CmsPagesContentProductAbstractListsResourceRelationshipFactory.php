@@ -26,7 +26,7 @@ class CmsPagesContentProductAbstractListsResourceRelationshipFactory extends Abs
         return new ContentProductAbstractListReader(
             $this->getCmsStorageClient(),
             $this->getStoreClient(),
-            $this->getContentProductAbstractListsRestApiResource()
+            $this->getContentProductAbstractListsRestApiResource(),
         );
     }
 
@@ -36,7 +36,7 @@ class CmsPagesContentProductAbstractListsResourceRelationshipFactory extends Abs
     public function createContentProductAbstractListByCmsPageUuidResourceRelationshipExpander(): ContentProductAbstractListByCmsPageUuidResourceRelationshipExpanderInterface
     {
         return new ContentProductAbstractListByCmsPageUuidResourceRelationshipExpander(
-            $this->createContentProductAbstractListReader()
+            $this->createContentProductAbstractListReader(),
         );
     }
 

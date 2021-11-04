@@ -69,7 +69,7 @@ class ProductSetCollectorRunner implements ProductSetCollectorRunnerInterface
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

@@ -18,6 +18,7 @@ class ProductOptionEditPage
      * @var string
      */
     public const PRODUCT_GROUP_EDIT_SUCCESS_MESSAGE = 'Product option group modified.';
+
     /**
      * @var string
      */

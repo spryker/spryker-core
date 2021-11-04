@@ -44,7 +44,7 @@ class ProductListToProductConcreteWriterStep extends PublishAwareStep implements
 
         $this->addPublishEvents(
             ProductListEvents::PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH,
-            $productListProductConcreteEntity->getFkProduct()
+            $productListProductConcreteEntity->getFkProduct(),
         );
     }
 }

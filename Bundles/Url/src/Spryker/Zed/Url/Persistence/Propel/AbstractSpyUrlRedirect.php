@@ -48,7 +48,7 @@ abstract class AbstractSpyUrlRedirect extends BaseSpyUrlRedirect
                 throw new RedirectLoopException(sprintf(
                     'Redirecting "%s" to "%s" resolves in a URL redirect loop.',
                     $urlEntity->getUrl(),
-                    $this->getToUrl()
+                    $this->getToUrl(),
                 ));
             }
         }

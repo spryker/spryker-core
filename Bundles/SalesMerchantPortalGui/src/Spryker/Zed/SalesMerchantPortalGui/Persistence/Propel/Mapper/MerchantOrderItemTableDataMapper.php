@@ -21,36 +21,41 @@ class MerchantOrderItemTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_IMAGE
+     *
      * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_NAME
+     *
      * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_QUANTITY
+     *
      * @var string
      */
     protected const COL_KEY_QUANTITY = 'quantity';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider::COL_KEY_STATE
+     *
      * @var string
      */
     protected const COL_KEY_STATE = 'state';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const MERCHANT_ORDER_ITEM_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpySalesOrderItemTableMap::COL_SKU,
@@ -86,9 +91,9 @@ class MerchantOrderItemTableDataMapper
         $merchantOrderItemTransfers = [];
 
         foreach ($merchantOrderItemTableDataArray as $merchantOrderItemTableRowDataArray) {
-            $attributes = $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES] ?  $this->utilEncodingService->decodeJson(
+            $attributes = $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES] ? $this->utilEncodingService->decodeJson(
                 $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES],
-                true
+                true,
             ) : [];
             $merchantOrderItemTableRowDataArray[ItemTransfer::CONCRETE_ATTRIBUTES] = $attributes;
 

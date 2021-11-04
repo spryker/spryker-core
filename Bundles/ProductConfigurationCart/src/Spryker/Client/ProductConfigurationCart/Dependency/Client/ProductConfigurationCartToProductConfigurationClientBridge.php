@@ -39,7 +39,7 @@ class ProductConfigurationCartToProductConfigurationClientBridge implements Prod
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         return $this->productConfigurationClient->validateProductConfiguratorCheckSumResponse(
             $productConfiguratorResponseProcessorResponseTransfer,
-            $configuratorResponseData
+            $configuratorResponseData,
         );
     }
 
@@ -55,7 +55,7 @@ class ProductConfigurationCartToProductConfigurationClientBridge implements Prod
     ): ProductConfiguratorResponseTransfer {
         return $this->productConfigurationClient->mapProductConfiguratorCheckSumResponse(
             $configuratorResponseData,
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
         );
     }
 

@@ -21,6 +21,7 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const CLIENT_AVAILABILITY_STORAGE = 'CLIENT_AVAILABILITY_STORAGE';
+
     /**
      * @var string
      */
@@ -50,7 +51,7 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
             return new ProductAvailabilitiesRestApiToAvailabilityStorageClientBridge(
-                $container->getLocator()->availabilityStorage()->client()
+                $container->getLocator()->availabilityStorage()->client(),
             );
         });
 

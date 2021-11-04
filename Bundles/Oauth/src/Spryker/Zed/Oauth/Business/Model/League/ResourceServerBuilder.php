@@ -41,7 +41,7 @@ class ResourceServerBuilder implements ResourceServerBuilderInterface
     {
         return new ResourceServer(
             $this->repositoryBuilder->createAccessTokenRepository(),
-            $this->oauthConfig->getPublicKeyPath()
+            $this->oauthConfig->getPublicKeyPath(),
         );
     }
 }

@@ -25,12 +25,14 @@ class ProductListProductConcreteRelationFormType extends AbstractType
     public const FIELD_ASSIGNED_PRODUCT_IDS = ProductListAggregateFormTransfer::ASSIGNED_PRODUCT_IDS;
     public const FIELD_PRODUCT_IDS_TO_BE_ASSIGNED = ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_ASSIGNED;
     public const FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED = ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_DE_ASSIGNED;
+
     /**
      * @var string
      */
     public const FIELD_FILE_UPLOAD = 'products_upload';
 
     public const PRODUCT_IDS = ProductListProductConcreteRelationTransfer::PRODUCT_IDS;
+
     /**
      * @var string
      */
@@ -61,7 +63,7 @@ class ProductListProductConcreteRelationFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -81,7 +83,7 @@ class ProductListProductConcreteRelationFormType extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_PRODUCT_LIST,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;

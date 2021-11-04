@@ -15,38 +15,47 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
      * @var string
      */
     protected const KEY_ATTRIBUTES = 'attributes';
+
     /**
      * @var string
      */
     protected const KEY_DATA = 'data';
+
     /**
      * @var string
      */
     protected const KEY_ID = 'id';
+
     /**
      * @var string
      */
     protected const KEY_LINKS = 'links';
+
     /**
      * @var string
      */
     protected const KEY_RELATIONSHIPS = 'relationships';
+
     /**
      * @var string
      */
     protected const KEY_INCLUDED = 'included';
+
     /**
      * @var string
      */
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
+
     /**
      * @var string
      */
     protected const KEY_IS_NULLABLE = 'is_nullable';
+
     /**
      * @var string
      */
     protected const KEY_SELF = 'self';
+
     /**
      * @var string
      */
@@ -56,18 +65,22 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
      * @var string
      */
     protected const VALUE_TYPE_STRING = 'string';
+
     /**
      * @var string
      */
     protected const VALUE_TYPE_ARRAY = 'array';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_LINKS = 'RestLinks';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_RELATIONSHIPS = 'RestRelationships';
+
     /**
      * @var string
      */
@@ -77,6 +90,7 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
      * @var string
      */
     protected const REST_REQUEST_BODY_PARAMETER_REQUIRED = 'required';
+
     /**
      * @var string
      */

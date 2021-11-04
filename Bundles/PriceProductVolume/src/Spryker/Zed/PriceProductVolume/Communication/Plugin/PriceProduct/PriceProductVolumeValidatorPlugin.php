@@ -23,8 +23,6 @@ class PriceProductVolumeValidatorPlugin extends AbstractPlugin implements PriceP
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer

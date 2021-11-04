@@ -59,7 +59,7 @@ class UpdateProductRelationTest extends Unit
         $productRelationTransfer = $this->tester->haveProductRelation(
             $productAbstractTransfer->getSku(),
             $relatedProductAbstractTransfer->getIdProductAbstract(),
-            'test'
+            'test',
         );
 
         $storeTransfer = $this->tester->haveStore([

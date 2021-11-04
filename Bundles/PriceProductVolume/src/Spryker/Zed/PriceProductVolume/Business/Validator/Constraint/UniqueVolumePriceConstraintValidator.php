@@ -17,8 +17,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueVolumePriceConstraintValidator extends ConstraintValidator
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
@@ -76,7 +74,7 @@ class UniqueVolumePriceConstraintValidator extends ConstraintValidator
             $moneyValueTransfer->getFkCurrencyOrFail(),
             $moneyValueTransfer->getFkStoreOrFail(),
             $volumePriceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail(),
-            $volumePriceProductTransfer->getVolumeQuantityOrFail()
+            $volumePriceProductTransfer->getVolumeQuantityOrFail(),
         );
     }
 
@@ -96,7 +94,7 @@ class UniqueVolumePriceConstraintValidator extends ConstraintValidator
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::PRICE_DATA,
             PriceProductVolumeConfig::VOLUME_PRICE_TYPE,
-            $volumePriceIndex
+            $volumePriceIndex,
         );
     }
 }

@@ -15,6 +15,7 @@ class SessionRedisConfig extends AbstractSharedConfig
      * @var string
      */
     public const SESSION_HANDLER_REDIS = 'redis';
+
     /**
      * @var string
      */

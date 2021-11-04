@@ -47,7 +47,7 @@ class TwigConfigTest extends Unit
                 $this->tester->getPathSprykerShopShared(),
                 $this->tester->getPathSpryker(),
                 $this->tester->getPathSprykerShared(),
-            ]
+            ],
         );
     }
 
@@ -73,7 +73,7 @@ class TwigConfigTest extends Unit
                 $this->tester->getPathSprykerShopShared(),
                 $this->tester->getPathSpryker(),
                 $this->tester->getPathSprykerShared(),
-            ]
+            ],
         );
     }
 
@@ -104,7 +104,7 @@ class TwigConfigTest extends Unit
                 $this->tester->getPathSprykerShopShared(),
                 $this->tester->getPathSpryker(),
                 $this->tester->getPathSprykerShared(),
-            ]
+            ],
         );
     }
 

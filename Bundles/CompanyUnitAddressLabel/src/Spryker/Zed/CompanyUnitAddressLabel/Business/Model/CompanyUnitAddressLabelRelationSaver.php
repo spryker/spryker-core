@@ -46,7 +46,7 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
         $redundantRelationIds = $this->getRedundantLabelToAddressRelationIds($companyUnitAddressTransfer);
         $isSuccess = true;
         $this->companyUnitAddressEntityManager->deleteRedundantLabelToAddressRelations(
-            $redundantRelationIds
+            $redundantRelationIds,
         );
         $this->companyUnitAddressEntityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
@@ -69,7 +69,7 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
 
         return $this->companyUnitAddressLabelRepository->findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds(
             $companyUnitAddress->getIdCompanyUnitAddress(),
-            $redundantLabelIds
+            $redundantLabelIds,
         );
     }
 

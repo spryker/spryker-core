@@ -62,7 +62,7 @@ class RedisExporter implements RedisExporterInterface
             'redis-cli -h %s -p %s --rdb %s',
             $redisHost ?? $this->config->getDefaultRedisHost(),
             $redisPort,
-            $destination
+            $destination,
         );
     }
 }

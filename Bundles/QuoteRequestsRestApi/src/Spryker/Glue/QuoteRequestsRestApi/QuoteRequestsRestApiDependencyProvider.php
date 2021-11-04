@@ -20,6 +20,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER = 'PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER';
+
     /**
      * @var string
      */
@@ -70,7 +71,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestsRestApiToQuoteRequestClientBridge(
-                $container->getLocator()->quoteRequest()->client()
+                $container->getLocator()->quoteRequest()->client(),
             );
         });
 

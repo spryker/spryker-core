@@ -24,7 +24,7 @@ class TaxProductStorageMapper
         foreach ($spyProductAbstracts as $spyProductAbstract) {
             $taxProductStorageTransfers[] = $this->mapSpyProductAbstractToTaxProductStorageTransfer(
                 $spyProductAbstract,
-                new TaxProductStorageTransfer()
+                new TaxProductStorageTransfer(),
             );
         }
 

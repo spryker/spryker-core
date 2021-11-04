@@ -28,7 +28,7 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
         $categoryImageSetEntity = $this->getFactory()
             ->getCategoryImageSetQuery()
             ->filterByIdCategoryImageSet(
-                $categoryImageSetTransfer->getIdCategoryImageSet()
+                $categoryImageSetTransfer->getIdCategoryImageSet(),
             )
             ->findOneOrCreate();
 
@@ -39,7 +39,7 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
         $categoryImageSetEntity->save();
 
         $categoryImageSetTransfer->setIdCategoryImageSet(
-            $categoryImageSetEntity->getIdCategoryImageSet()
+            $categoryImageSetEntity->getIdCategoryImageSet(),
         );
 
         foreach ($categoryImageSetTransfer->getCategoryImages() as $categoryImageTransfer) {
@@ -62,7 +62,7 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
         $categoryImageEntity = $this->getFactory()
             ->getCategoryImageQuery()
             ->filterByIdCategoryImage(
-                $categoryImageTransfer->getIdCategoryImage()
+                $categoryImageTransfer->getIdCategoryImage(),
             )
             ->findOneOrCreate();
 
@@ -75,7 +75,7 @@ class CategoryImageEntityManager extends AbstractEntityManager implements Catego
         $this->saveCategoryImageToImageSet(
             $categoryImageTransfer->getIdCategoryImage(),
             $idCategoryImageSet,
-            $categoryImageTransfer->getSortOrder()
+            $categoryImageTransfer->getSortOrder(),
         );
 
         return $categoryImageTransfer;

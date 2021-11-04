@@ -29,7 +29,7 @@ class RouterConfig extends AbstractSharedConfig
             APPLICATION_ROOT_DIR,
             ucfirst(strtolower(APPLICATION)),
             APPLICATION_CODE_BUCKET,
-            $projectNamespaces
+            $projectNamespaces,
         );
     }
 }

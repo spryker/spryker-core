@@ -22,7 +22,7 @@ class OauthPermissionFactory extends AbstractFactory
     {
         return new OauthPermissionReader(
             $this->getOauthService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

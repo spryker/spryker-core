@@ -168,7 +168,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->joinSpyProductLocalizedAttributes(null, Criteria::LEFT_JOIN)
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
-                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),
             );
 
         return $this->addCategoriesToProductQuery($productQuery, $localeTransfer);
@@ -192,7 +192,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                         ->joinAttribute(null, Criteria::LEFT_JOIN)
                         ->addJoinCondition(
                             'Attribute',
-                            sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+                            sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),
                         )
                     ->endUse()
                 ->endUse()
@@ -217,7 +217,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->joinSpyProductAbstractLocalizedAttributes(null, Criteria::LEFT_JOIN)
             ->addJoinCondition(
                 'SpyProductAbstractLocalizedAttributes',
-                sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+                sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),
             );
 
         return $this->addCategoriesToProductAbstractQuery($productAbstractQuery, $localeTransfer);
@@ -242,7 +242,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                     ->joinAttribute(null, Criteria::LEFT_JOIN)
                     ->addJoinCondition(
                         'Attribute',
-                        sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+                        sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),
                     )
                 ->endUse()
             ->endUse();

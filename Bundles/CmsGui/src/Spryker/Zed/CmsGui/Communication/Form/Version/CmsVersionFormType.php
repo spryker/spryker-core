@@ -23,6 +23,7 @@ class CmsVersionFormType extends AbstractType
      * @var string
      */
     public const OPTION_VERSION_NAME_CHOICES = 'version_choices';
+
     /**
      * @var string
      */
@@ -30,7 +31,7 @@ class CmsVersionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

@@ -98,7 +98,7 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
         $storeTransfer = $this->getStoreByName($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_STORE]);
         $currencyTransfer = $this->getCurrencyByCode($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_CURRENCY]);
         $merchantRelationshipTransfer = $this->getMerchantRelationshipByKey(
-            $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_MERCHANT_RELATIONSHIP_KEY]
+            $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_MERCHANT_RELATIONSHIP_KEY],
         );
 
         if ($dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_SALES_ORDER_THRESHOLD_TYPE_KEY] && $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_THRESHOLD]) {
@@ -109,11 +109,11 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
                 $currencyTransfer,
                 (int)$dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_THRESHOLD],
                 (int)$dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_FEE],
-                $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_MESSAGE_GLOSSARY_KEY]
+                $dataSet[MerchantRelationshipSalesOrderThresholdDataSetInterface::COLUMN_MESSAGE_GLOSSARY_KEY],
             );
 
             $this->merchantRelationshipSalesOrderThresholdFacade->saveMerchantRelationshipSalesOrderThreshold(
-                $merchantRelationshipSalesOrderThresholdTransfer
+                $merchantRelationshipSalesOrderThresholdTransfer,
             );
         }
     }
@@ -149,8 +149,8 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
                     ->setMessageGlossaryKey($glossaryKey)
                     ->setSalesOrderThresholdType(
                         (new SalesOrderThresholdTypeTransfer())
-                            ->setKey($salesOrderThresholdTypeKey)
-                    )
+                            ->setKey($salesOrderThresholdTypeKey),
+                    ),
             );
     }
 
@@ -170,7 +170,7 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
 
         if (!isset($this->merchantRelationshipsHeap[$merchantRelationshipKey])) {
             $merchantRelationshipTransfer = $this->merchantRelationshipFacade->findMerchantRelationshipByKey(
-                (new MerchantRelationshipTransfer())->setMerchantRelationshipKey($merchantRelationshipKey)
+                (new MerchantRelationshipTransfer())->setMerchantRelationshipKey($merchantRelationshipKey),
             );
 
             if (!$merchantRelationshipTransfer) {

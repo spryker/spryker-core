@@ -27,7 +27,7 @@ class MerchantProductOptionGuiCommunicationFactory extends AbstractCommunication
     {
         return new MerchantProductOptionOptionQueryCriteriaExpander(
             $this->getRepository(),
-            $this->getRequest()
+            $this->getRequest(),
         );
     }
 

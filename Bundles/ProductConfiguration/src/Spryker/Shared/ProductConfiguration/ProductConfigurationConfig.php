@@ -18,6 +18,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      * - Dimension type as used for product configuration price.
      *
      * @api
+     *
      * @var string
      */
     public const PRICE_DIMENSION_PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
@@ -51,7 +52,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
     {
         $hexInitializationVector = $this->get(
             ProductConfigurationConstants::SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR,
-            false
+            false,
         );
 
         if ($hexInitializationVector) {
@@ -59,7 +60,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
         }
 
         throw new HexInitializationVectorNotPreConfigured(
-            'Hex initialization vector is not pre-configured, please update SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR env variable.'
+            'Hex initialization vector is not pre-configured, please update SPRYKER_PRODUCT_CONFIGURATOR_HEX_INITIALIZATION_VECTOR env variable.',
         );
     }
 }

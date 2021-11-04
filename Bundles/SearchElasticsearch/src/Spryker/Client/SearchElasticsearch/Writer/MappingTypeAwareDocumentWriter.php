@@ -147,7 +147,7 @@ class MappingTypeAwareDocumentWriter implements DocumentWriterInterface
             $searchDocumentTransfer->getId(),
             $searchDocumentTransfer->getData(),
             $typeName = $this->getTypeName($searchDocumentTransfer),
-            $indexName = $this->getIndexName($searchDocumentTransfer)
+            $indexName = $this->getIndexName($searchDocumentTransfer),
         );
     }
 }

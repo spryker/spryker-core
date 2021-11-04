@@ -23,7 +23,7 @@ class ConfigurableBundleDataImportHelper extends Module
 
         $this->assertTrue(
             $configurableBundleTemplateQuery->find()->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -36,7 +36,7 @@ class ConfigurableBundleDataImportHelper extends Module
 
         $this->assertTrue(
             $configurableBundleTemplateSlotQuery->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -49,7 +49,7 @@ class ConfigurableBundleDataImportHelper extends Module
 
         $this->assertTrue(
             $productImageSetQuery->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

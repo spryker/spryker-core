@@ -79,12 +79,12 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
 
         $validationResponseTransfer = $this->validatePriceProductOfferTransfers(
             $priceProductOfferCollectionTransfer->getPriceProductOffers(),
-            $validationResponseTransfer
+            $validationResponseTransfer,
         );
 
         $validationResponseTransfer = $this->executePriceProductOfferValidatorPlugins(
             $priceProductOfferCollectionTransfer,
-            $validationResponseTransfer
+            $validationResponseTransfer,
         );
 
         return $validationResponseTransfer;
@@ -105,14 +105,14 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
             ->atPath(sprintf('[%s]', PriceProductOfferCollectionTransfer::PRICE_PRODUCT_OFFERS))
             ->validate(
                 $priceProductOfferTransfers,
-                $this->priceProductOfferConstraintProvider->getConstraints()
+                $this->priceProductOfferConstraintProvider->getConstraints(),
             )->getViolations();
 
         /** @var \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation */
         foreach ($constraintViolationList as $constraintViolation) {
             $validationResponseTransfer
                 ->addValidationError(
-                    $this->mapConstraintViolationToValidationErrorTransfer($constraintViolation)
+                    $this->mapConstraintViolationToValidationErrorTransfer($constraintViolation),
                 )->setIsSuccess(false);
         }
 
@@ -125,7 +125,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
                     $priceProductTransfer,
                     $priceProductOfferIndex,
                     $priceProductIndex,
-                    $validationResponseTransfer
+                    $validationResponseTransfer,
                 );
             }
         }
@@ -195,11 +195,11 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         $priceViolations = $this->validator
             ->startContext()
             ->atPath(
-                $this->createViolationPath($priceProductOfferIndex, $priceProductIndex)
+                $this->createViolationPath($priceProductOfferIndex, $priceProductIndex),
             )
             ->validate(
                 $priceProductTransfer,
-                $this->priceProductConstraintProvider->getConstraints()
+                $this->priceProductConstraintProvider->getConstraints(),
             )
             ->getViolations();
 
@@ -209,8 +209,8 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
             $validationErrorTransfer->setPropertyPath(
                 $this->addPriceTypeToPropertyPath(
                     $priceProductTransfer,
-                    $validationErrorTransfer->getPropertyPathOrFail()
-                )
+                    $validationErrorTransfer->getPropertyPathOrFail(),
+                ),
             );
 
             $validationResponseTransfer->addValidationError($validationErrorTransfer);
@@ -234,7 +234,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
             $priceProductOfferIndex,
             PriceProductOfferTransfer::PRODUCT_OFFER,
             ProductOfferTransfer::PRICES,
-            $priceProductIndex
+            $priceProductIndex,
         );
     }
 
@@ -255,13 +255,13 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         $moneyValueWithType = sprintf(
             '[%s:%s]',
             PriceProductTransfer::MONEY_VALUE,
-            mb_strtolower($priceTypeName)
+            mb_strtolower($priceTypeName),
         );
 
         $propertyPathWithPriceType = mb_ereg_replace(
             sprintf('\[%s\]', PriceProductTransfer::MONEY_VALUE),
             $moneyValueWithType,
-            $propertyPath
+            $propertyPath,
         );
 
         if ($propertyPathWithPriceType === false) {

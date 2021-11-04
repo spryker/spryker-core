@@ -23,18 +23,22 @@ class CmsPageMetaAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_META_TITLE = 'metaTitle';
+
     /**
      * @var string
      */
     public const FIELD_META_KEYWORDS = 'metaKeywords';
+
     /**
      * @var string
      */
     public const FIELD_META_DESCRIPTION = 'metaDescription';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_NAME = 'localeName';
+
     /**
      * @var string
      */
@@ -47,7 +51,7 @@ class CmsPageMetaAttributesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

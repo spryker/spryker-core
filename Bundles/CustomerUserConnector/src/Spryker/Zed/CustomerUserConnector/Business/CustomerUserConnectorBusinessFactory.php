@@ -22,7 +22,7 @@ class CustomerUserConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCustomerUserConnectionUpdater()
     {
         return new CustomerUserConnectionUpdater(
-            $this->getProvidedDependency(CustomerUserConnectorDependencyProvider::QUERY_CONTAINER_CUSTOMER)
+            $this->getProvidedDependency(CustomerUserConnectorDependencyProvider::QUERY_CONTAINER_CUSTOMER),
         );
     }
 }

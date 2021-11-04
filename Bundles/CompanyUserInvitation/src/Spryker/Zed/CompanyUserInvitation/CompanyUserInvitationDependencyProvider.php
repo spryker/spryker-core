@@ -23,14 +23,17 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+
     /**
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_COMPANY_USER_INVITATION_TO_MAIL_FACADE_BRIDGE';
+
     /**
      * @var string
      */
@@ -72,7 +75,7 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserInvitationToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 
@@ -88,7 +91,7 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyUserInvitationToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         });
 
@@ -104,7 +107,7 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_MAIL, function (Container $container) {
             return new CompanyUserInvitationToMailFacadeBridge(
-                $container->getLocator()->mail()->facade()
+                $container->getLocator()->mail()->facade(),
             );
         });
 
@@ -120,7 +123,7 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new CompanyUserInvitationToUtilTextBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

@@ -56,14 +56,14 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $idLocale,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME)
             ->endUse()
             ->addAnd(
                 SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
                 $idProductAbstract,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->groupByFkCategory()
             ->groupBy(SpyCategoryAttributeTableMap::COL_NAME);

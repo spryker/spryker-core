@@ -184,7 +184,7 @@ class DiscountTest extends Unit
         $expectedVoucherDiscount = (new DiscountTransfer())
             ->setVoucherCode('code')
             ->setDecisionRuleQueryString(
-                'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"'
+                'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"',
             )->setIdDiscount(5);
 
         $quoteTransfer = (new QuoteTransfer())

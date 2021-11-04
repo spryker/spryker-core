@@ -25,7 +25,7 @@ class DiscountPromotionCalculationFormDataExpanderPlugin extends AbstractPlugin 
      *
      * @api
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

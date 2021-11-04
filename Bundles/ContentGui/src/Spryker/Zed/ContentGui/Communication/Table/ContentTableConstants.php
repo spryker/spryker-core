@@ -24,14 +24,17 @@ interface ContentTableConstants
      * @var string
      */
     public const REQUEST_ID_CONTENT = 'id-content';
+
     /**
      * @var string
      */
     public const REQUEST_TERM_KEY = 'term-key';
+
     /**
      * @var string
      */
     public const URL_CONTENT_EDIT = '/content-gui/edit-content';
+
     /**
      * @var string
      */

@@ -43,10 +43,12 @@ class TwigHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Twig';
+
     /**
      * @var string
      */
     protected const CONFIG_KEY_TWIG_PLUGINS = 'twigPlugins';
+
     /**
      * @var string
      */
@@ -129,7 +131,7 @@ class TwigHelper extends Module
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new TwigEventDispatcherPlugin());
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getTwigApplicationPluginStub()
+            $this->getTwigApplicationPluginStub(),
         );
 
         $this->addDependencies();

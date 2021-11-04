@@ -30,7 +30,7 @@ class ProductConfigurationToGuzzleHttpClientAdapter implements ProductConfigurat
     /**
      * @param string $method
      * @param string $uri
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Client\ProductConfiguration\Http\Exception\ProductConfigurationHttpRequestException
      *
@@ -44,7 +44,7 @@ class ProductConfigurationToGuzzleHttpClientAdapter implements ProductConfigurat
             throw new ProductConfigurationHttpRequestException(
                 $exception->getMessage(),
                 $exception->getCode(),
-                $exception
+                $exception,
             );
         }
     }

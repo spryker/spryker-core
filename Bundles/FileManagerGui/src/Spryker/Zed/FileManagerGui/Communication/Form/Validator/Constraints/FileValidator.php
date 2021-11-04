@@ -40,7 +40,7 @@ class FileValidator extends SymfonyFileValidator
             (string)$fileUploadTransfer->getRealPath(),
             (string)$fileUploadTransfer->getClientOriginalName(),
             $fileUploadTransfer->getMimeTypeName(),
-            $fileUploadTransfer->getSize()
+            $fileUploadTransfer->getSize(),
         );
     }
 }

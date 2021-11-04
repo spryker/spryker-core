@@ -20,6 +20,7 @@ class InstallPackageManagerConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:install:package-manager';
+
     /**
      * @var string
      */

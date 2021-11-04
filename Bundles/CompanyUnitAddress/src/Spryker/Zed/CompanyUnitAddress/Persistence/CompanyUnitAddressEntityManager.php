@@ -36,14 +36,14 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
         $companyUnitAddressEntity = $companyUnitAddressMapper
             ->mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
                 $companyUnitAddressTransfer,
-                $companyUnitAddressEntity
+                $companyUnitAddressEntity,
             );
 
         $companyUnitAddressEntity->save();
 
         return $companyUnitAddressMapper->mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
             $companyUnitAddressEntity,
-            $companyUnitAddressTransfer
+            $companyUnitAddressTransfer,
         );
     }
 

@@ -69,7 +69,7 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
     ): array {
         return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
             $idProductAbstract,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
     }
 
@@ -88,7 +88,7 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
         return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
             $idProductConcrete,
             $idProductAbstract,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
     }
 

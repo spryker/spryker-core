@@ -70,7 +70,7 @@ class VaultReader implements VaultReaderInterface
         return $this->utilEncryptionService->decryptOpenSsl(
             $vaultDepositTransfer->getCipherText(),
             $this->getInitializingVector($vaultDepositTransfer),
-            $this->vaultConfig->getEncryptionKey()
+            $this->vaultConfig->getEncryptionKey(),
         );
     }
 

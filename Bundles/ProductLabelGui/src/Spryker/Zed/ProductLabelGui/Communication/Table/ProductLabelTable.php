@@ -30,10 +30,12 @@ class ProductLabelTable extends AbstractTable
     public const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
     public const COL_STORES = SpyStoreTableMap::COL_NAME;
     public const COL_PRIORITY = SpyProductLabelTableMap::COL_POSITION;
+
     /**
      * @var string
      */
     public const COL_ABSTRACT_PRODUCT_RELATION_COUNT = 'abstract_product_relation_count';
+
     /**
      * @var string
      */
@@ -46,24 +48,28 @@ class ProductLabelTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_LIST = '/product-label-gui';
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\ViewController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_VIEW = '/product-label-gui/view';
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
 
     /**
      * @uses \Spryker\Zed\ProductLabelGui\Communication\Controller\DeleteController::indexAction()
+     *
      * @var string
      */
     protected const URL_PRODUCT_LABEL_DELETE = '/product-label-gui/delete';
@@ -143,7 +149,7 @@ class ProductLabelTable extends AbstractTable
     {
         $config->setDefaultSortField(
             static::COL_ID_PRODUCT_LABEL,
-            TableConfiguration::SORT_ASC
+            TableConfiguration::SORT_ASC,
         );
 
         $config->setSortable([
@@ -210,7 +216,7 @@ class ProductLabelTable extends AbstractTable
             ->useSpyProductLabelProductAbstractQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
                     sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
-                    static::COL_ABSTRACT_PRODUCT_RELATION_COUNT
+                    static::COL_ABSTRACT_PRODUCT_RELATION_COUNT,
                 )
                 ->groupByFkProductLabel()
             ->endUse();
@@ -225,7 +231,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateLabel(
             $productLabelEntity->getIsExclusive() ? 'Yes' : 'No',
-            null
+            null,
         );
     }
 
@@ -238,7 +244,7 @@ class ProductLabelTable extends AbstractTable
     {
         return $this->generateLabel(
             $productLabelEntity->getIsDynamic() ? 'Yes' : 'No',
-            null
+            null,
         );
     }
 
@@ -299,12 +305,12 @@ class ProductLabelTable extends AbstractTable
                 static::URL_PRODUCT_LABEL_VIEW,
                 [
                     ViewController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                ]
+                ],
             ),
             'View',
             [
                 'icon' => 'fa-eye',
-            ]
+            ],
         );
     }
 
@@ -320,9 +326,9 @@ class ProductLabelTable extends AbstractTable
                 static::URL_PRODUCT_LABEL_EDIT,
                 [
                     EditController::PARAM_ID_PRODUCT_LABEL => $idProductLabel,
-                ]
+                ],
             ),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -339,9 +345,9 @@ class ProductLabelTable extends AbstractTable
                 [
                     DeleteController::URL_PARAM_ID_PRODUCT_LABEL => $idProductLabel,
                     DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_LABEL_LIST,
-                ]
+                ],
             ),
-            'Delete'
+            'Delete',
         );
     }
 }

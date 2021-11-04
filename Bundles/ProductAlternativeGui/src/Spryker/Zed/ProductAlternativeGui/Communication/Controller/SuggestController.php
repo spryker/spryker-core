@@ -20,18 +20,22 @@ class SuggestController extends AbstractController
      * @var string
      */
     protected const PARAM_NAME = 'term';
+
     /**
      * @var string
      */
     protected const KEY_RESULTS = 'results';
+
     /**
      * @var string
      */
     protected const KEY_ID = 'id';
+
     /**
      * @var string
      */
     protected const KEY_TEXT = 'text';
+
     /**
      * @var string
      */
@@ -57,7 +61,7 @@ class SuggestController extends AbstractController
         return $this->jsonResponse([
             static::KEY_RESULTS => array_merge(
                 $this->prepareData($productAbstractSuggestions),
-                $this->prepareData($productConcreteSuggestions)
+                $this->prepareData($productConcreteSuggestions),
             ),
         ]);
     }

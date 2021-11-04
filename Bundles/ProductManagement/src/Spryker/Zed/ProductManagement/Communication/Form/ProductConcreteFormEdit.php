@@ -33,14 +33,17 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */
@@ -50,10 +53,12 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @var string
      */
     public const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
+
     /**
      * @var string
      */
     public const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
+
     /**
      * @var string
      */
@@ -63,6 +68,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @var string
      */
     public const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
+
     /**
      * @var string
      */
@@ -70,7 +76,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -122,7 +128,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     }
 
                     return explode(',', $bundledProductsToBeRemoved);
-                }
+                },
             ));
 
         return $this;
@@ -191,7 +197,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         },
                     ]),
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_FROM, $builder);
@@ -240,7 +246,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         },
                     ]),
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_TO, $builder);
@@ -276,7 +282,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -294,7 +300,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -315,7 +321,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -333,7 +339,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             [
                 'compound' => true,
                 'label' => 'Super attributes',
-            ]
+            ],
         );
 
         foreach ($superAttributes as $attributeKey => $attributeValue) {
@@ -347,7 +353,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         'attr' => [
                             'readonly' => true,
                         ],
-                    ]
+                    ],
                 );
         }
 
@@ -389,7 +395,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     }
 
                     return $dateAsObject->format($timeFormat);
-                }
+                },
             ));
     }
 
@@ -407,7 +413,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -447,7 +453,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

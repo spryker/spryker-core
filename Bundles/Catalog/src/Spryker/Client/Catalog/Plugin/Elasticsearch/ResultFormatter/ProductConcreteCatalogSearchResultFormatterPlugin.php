@@ -21,6 +21,7 @@ class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElastics
      * @var string
      */
     public const NAME = 'ProductConcreteCatalogSearchResultFormatterPlugin';
+
     /**
      * @var string
      */
@@ -48,7 +49,7 @@ class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElastics
 
         foreach ($searchResult->getResults() as $document) {
             $productConcreteSetPageResults[] = $this->mapToTransfer(
-                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA]
+                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA],
             );
         }
 

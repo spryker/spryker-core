@@ -18,6 +18,7 @@ class DescendingNameSortConfigTransferBuilderPlugin extends AbstractPlugin imple
      * @var string
      */
     public const NAME = 'name';
+
     /**
      * @var string
      */

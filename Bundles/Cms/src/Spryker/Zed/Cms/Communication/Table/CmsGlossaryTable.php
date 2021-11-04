@@ -23,14 +23,17 @@ class CmsGlossaryTable extends AbstractTable
      * @var string
      */
     public const ACTIONS = 'Actions';
+
     /**
      * @var string
      */
     public const REQUEST_ID_MAPPING = 'id-mapping';
+
     /**
      * @var string
      */
     public const URL_CMS_GLOSSARY_EDIT = '/cms/glossary/edit';
+
     /**
      * @var string
      */
@@ -42,7 +45,7 @@ class CmsGlossaryTable extends AbstractTable
     protected $glossaryQuery;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $placeholders;
 
@@ -52,15 +55,15 @@ class CmsGlossaryTable extends AbstractTable
     protected $idPage;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $searchArray;
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param int $idPage
-     * @param array $placeholders
-     * @param array $searchArray
+     * @param array<string> $placeholders
+     * @param array<string, mixed> $searchArray
      */
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, int $idPage, array $placeholders = [], array $searchArray = [])
     {
@@ -106,7 +109,7 @@ class CmsGlossaryTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -141,7 +144,7 @@ class CmsGlossaryTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return array<string>
      */
     protected function buildLinks(array $item): array
     {
@@ -152,7 +155,7 @@ class CmsGlossaryTable extends AbstractTable
                 CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
                 self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
             ]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateRemoveButton(self::URL_CMS_GLOSSARY_DELETE, 'Delete', [
             CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
@@ -181,7 +184,7 @@ class CmsGlossaryTable extends AbstractTable
      * @param array $mappedPlaceholders
      * @param array $results
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function addExtractedPlaceholders(array $mappedPlaceholders, array $results): array
     {
@@ -201,9 +204,9 @@ class CmsGlossaryTable extends AbstractTable
     }
 
     /**
-     * @param array $searchItems
+     * @param array<string, mixed> $searchItems
      *
-     * @return array
+     * @return array<string>
      */
     protected function findPlaceholders(array $searchItems): array
     {

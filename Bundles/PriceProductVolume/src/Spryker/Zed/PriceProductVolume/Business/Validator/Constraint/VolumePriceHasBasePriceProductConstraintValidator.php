@@ -19,19 +19,19 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
 {
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
@@ -71,7 +71,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
                 $this->context
                     ->buildViolation($constraint->getMessage())
                     ->atPath(
-                        $this->createViolationPath($priceProductIndex, $volumePriceIndex)
+                        $this->createViolationPath($priceProductIndex, $volumePriceIndex),
                     )
                     ->addViolation();
             }
@@ -94,7 +94,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
             PriceProductTransfer::MONEY_VALUE,
             MoneyValueTransfer::PRICE_DATA,
             PriceProductVolumeConfig::VOLUME_PRICE_TYPE,
-            $volumePriceIndex
+            $volumePriceIndex,
         );
     }
 }

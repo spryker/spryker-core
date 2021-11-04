@@ -41,13 +41,13 @@ class IndexInstallerTest extends AbstractIndexTest
             Request::PUT,
             [
                 'mappings' => $fixtureMappings,
-            ]
+            ],
         );
         $clientMock = $this->createClientMock($indexMock);
 
         $indexInstaller = new IndexInstaller(
             $clientMock,
-            $mappingBuilder
+            $mappingBuilder,
         );
 
         $indexInstaller->run($this->createIndexDefinitionTransfer(), new NullLogger());
@@ -67,12 +67,12 @@ class IndexInstallerTest extends AbstractIndexTest
         /** @var \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject $loggerMock */
         $loggerMock = $this->createMock(LoggerInterface::class);
         $loggerMock->expects($this->once())->method('info')->with(
-            sprintf('Import mappings and settings for index "%s".', $indexName)
+            sprintf('Import mappings and settings for index "%s".', $indexName),
         );
 
         $indexInstaller = new IndexInstaller(
             $clientMock,
-            $mappingBuilder
+            $mappingBuilder,
         );
 
         $indexInstaller->run($this->createIndexDefinitionTransfer(), $loggerMock);
@@ -94,7 +94,7 @@ class IndexInstallerTest extends AbstractIndexTest
 
         $indexInstaller = new IndexInstaller(
             $clientMock,
-            $this->createMappingBuilderMock()
+            $this->createMappingBuilderMock(),
         );
 
         $isAccepted = $indexInstaller->accept($this->createIndexDefinitionTransfer());

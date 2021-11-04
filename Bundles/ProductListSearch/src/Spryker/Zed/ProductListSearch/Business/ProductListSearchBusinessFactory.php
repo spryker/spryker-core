@@ -31,7 +31,7 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -65,7 +65,7 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageDataExpander(): ProductPageDataExpanderInterface
     {
         return new ProductPageDataExpander(
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
         );
     }
 }

@@ -27,6 +27,7 @@ class MyAccountController extends AbstractController
 
     /**
      * @see \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\MyAccountController::indexAction()
+     *
      * @var string
      */
     protected const URL_CHANGE_PASSWORD = '/user-merchant-portal-gui/change-password';
@@ -35,10 +36,12 @@ class MyAccountController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MERCHANT_USER_UPDATE_SUCCESS = 'Success! The Account is updated.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_USER_UPDATE_ERROR = 'Merchant user entity was not updated.';
+
     /**
      * @var string
      */
@@ -57,7 +60,7 @@ class MyAccountController extends AbstractController
         $merchantAccountForm = $this->getFactory()
             ->createMerchantAccountForm(
                 $merchantAccountFormDataProvider->getData(),
-                $merchantAccountFormDataProvider->getOptions()
+                $merchantAccountFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -126,7 +129,7 @@ class MyAccountController extends AbstractController
         if ($this->getIsFkLocaleChanged($merchantAccountForm)) {
             $localeFacade = $this->getFactory()->getLocaleFacade();
             $localeTransfer = $localeFacade->getLocaleById(
-                $merchantUserTransfer->getUserOrFail()->getFkLocaleOrFail()
+                $merchantUserTransfer->getUserOrFail()->getFkLocaleOrFail(),
             );
 
             $localeFacade->setCurrentLocale($localeTransfer);

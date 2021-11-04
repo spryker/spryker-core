@@ -21,6 +21,7 @@ class ContentBannerGuiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_CONTENT_BANNER = 'FACADE_CONTENT_BANNER';
+
     /**
      * @var string
      */

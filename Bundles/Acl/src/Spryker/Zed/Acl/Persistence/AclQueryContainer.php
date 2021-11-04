@@ -29,38 +29,47 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
      * @var string
      */
     public const ROLE_NAME = 'role_name';
+
     /**
      * @var string
      */
     public const TYPE = 'type';
+
     /**
      * @var string
      */
     public const BUNDLE = 'bundle';
+
     /**
      * @var string
      */
     public const CONTROLLER = 'controller';
+
     /**
      * @var string
      */
     public const ACTION = 'action';
+
     /**
      * @var string
      */
     public const HAS_ROLE = 'has_role';
+
     /**
      * @var string
      */
     public const SPY_ACL_GROUPS_HAS_ROLES = 'SpyAclGroupsHasRoles';
+
     /**
      * @var string
      */
     public const GROUP_NAME = 'group_name';
+
     /**
      * @var string
      */
     public const ID_ACL_GROUP = 'id_acl_group';
+
     /**
      * @var string
      */
@@ -236,7 +245,7 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
 
         $join->addCondition(
             SpyUserTableMap::COL_ID_USER,
-            SpyAclUserHasGroupTableMap::COL_FK_USER
+            SpyAclUserHasGroupTableMap::COL_FK_USER,
         );
 
         $query->addJoinObject($join, self::GROUP_JOIN);
@@ -244,7 +253,7 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
         $condition = sprintf('%s = %s', SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
         $query->addJoinCondition(
             self::GROUP_JOIN,
-            $condition
+            $condition,
         );
 
         return $query;
@@ -441,13 +450,13 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
         $query->addJoin(
             SpyUserTableMap::COL_ID_USER,
             SpyAclUserHasGroupTableMap::COL_FK_USER,
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
 
         $query->addJoin(
             SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP,
             SpyAclGroupTableMap::COL_ID_ACL_GROUP,
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
 
         $query->withColumn(SpyAclGroupTableMap::COL_NAME, self::GROUP_NAME);
@@ -474,7 +483,7 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
         $condition = sprintf('%s = %s', SpyAclGroupsHasRolesTableMap::COL_FK_ACL_GROUP, $idGroup);
         $query->addJoinCondition(
             self::SPY_ACL_GROUPS_HAS_ROLES,
-            $condition
+            $condition,
         );
 
         $hasRole = sprintf('COUNT(%s)', SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE);

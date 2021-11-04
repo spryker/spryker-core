@@ -18,18 +18,22 @@ class VoucherValidator implements VoucherValidatorInterface
      * @var string
      */
     public const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';
+
     /**
      * @var string
      */
     public const REASON_VOUCHER_CODE_POOL_MISSING = 'discount.voucher_code.pool_not_set';
+
     /**
      * @var string
      */
     public const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'discount.voucher_code.pool_not_active';
+
     /**
      * @var string
      */
     public const REASON_VOUCHER_CODE_LIMIT_REACHED = 'discount.voucher_code.usage_limit.reached';
+
     /**
      * @var string
      */
@@ -107,7 +111,7 @@ class VoucherValidator implements VoucherValidatorInterface
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
             $this->addErrorMessage(
                 static::REASON_VOUCHER_CODE_LIMIT_REACHED,
-                ['%code%' => $discountVoucherEntity->getCode()]
+                ['%code%' => $discountVoucherEntity->getCode()],
             );
 
             return false;

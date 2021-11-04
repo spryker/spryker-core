@@ -62,7 +62,7 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
 
         if (!$httpRequest->headers->has(RequestConstantsInterface::HEADER_IF_MATCH)) {
             return $restErrorCollectionTransfer->addRestError(
-                $this->entityTagRestResponseBuilder->createPreconditionRequiredError()
+                $this->entityTagRestResponseBuilder->createPreconditionRequiredError(),
             );
         }
 
@@ -70,12 +70,12 @@ class EntityTagRequestValidator implements EntityTagRequestValidatorInterface
 
         $entityTag = $this->entityTagClient->read(
             $restRequest->getResource()->getType(),
-            $restRequest->getResource()->getId()
+            $restRequest->getResource()->getId(),
         );
 
         if (!$this->compareEntityTags($this->getHashFromHeader($headerValue), $entityTag)) {
             return $restErrorCollectionTransfer->addRestError(
-                $this->entityTagRestResponseBuilder->createPreconditionFailedError()
+                $this->entityTagRestResponseBuilder->createPreconditionFailedError(),
             );
         }
 

@@ -23,7 +23,7 @@ class ProductCategoryFilterCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
             SpyProductCategoryFilterTableMap::COL_FK_CATEGORY,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->withColumn(SpyProductCategoryFilterTableMap::COL_FILTER_DATA, ProductCategoryFilterTransfer::FILTER_DATA);

@@ -232,7 +232,7 @@ class RequestBuilder implements RequestBuilderInterface
             $this->parentResources,
             $this->include,
             $this->fields,
-            $this->excludeRelationship
+            $this->excludeRelationship,
         );
     }
 }

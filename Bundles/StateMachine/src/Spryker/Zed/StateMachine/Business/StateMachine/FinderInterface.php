@@ -29,7 +29,7 @@ interface FinderInterface
     /**
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
@@ -63,7 +63,7 @@ interface FinderInterface
      * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
      * @param array<string> $sourceStates
      *
-     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,

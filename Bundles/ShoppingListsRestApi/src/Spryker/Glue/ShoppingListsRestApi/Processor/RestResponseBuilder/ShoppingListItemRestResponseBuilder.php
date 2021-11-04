@@ -62,7 +62,7 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
         foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
             $restResources[] = $this->createShoppingListItemRestResource(
                 $shoppingListItemTransfer,
-                $shoppingListUuid
+                $shoppingListUuid,
             );
         }
 
@@ -80,7 +80,7 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
         string $idShoppingList
     ): RestResponseInterface {
         return $this->createRestResponse()->addResource(
-            $this->createShoppingListItemRestResource($shoppingListItemTransfer, $idShoppingList)
+            $this->createShoppingListItemRestResource($shoppingListItemTransfer, $idShoppingList),
         );
     }
 
@@ -96,21 +96,21 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
     ): RestResourceInterface {
         $restShoppingListItemsAttributesTransfer = $this->shoppingListItemMapper->mapShoppingListItemTransferToRestShoppingListItemsAttributesTransfer(
             $shoppingListItemTransfer,
-            new RestShoppingListItemsAttributesTransfer()
+            new RestShoppingListItemsAttributesTransfer(),
         );
 
         $shoppingListItemResource = $this->restResourceBuilder->createRestResource(
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
             $shoppingListItemTransfer->getUuid(),
-            $restShoppingListItemsAttributesTransfer
+            $restShoppingListItemsAttributesTransfer,
         );
 
         $shoppingListItemResource->addLink(
             RestLinkInterface::LINK_SELF,
             $this->createSelfLinkForShoppingListItem(
                 $idShoppingList,
-                $shoppingListItemTransfer->getUuid()
-            )
+                $shoppingListItemTransfer->getUuid(),
+            ),
         );
 
         return $shoppingListItemResource;
@@ -129,7 +129,7 @@ class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LISTS,
             $idShoppingList,
             ShoppingListsRestApiConfig::RESOURCE_SHOPPING_LIST_ITEMS,
-            $idShoppingListItem
+            $idShoppingListItem,
         );
     }
 }

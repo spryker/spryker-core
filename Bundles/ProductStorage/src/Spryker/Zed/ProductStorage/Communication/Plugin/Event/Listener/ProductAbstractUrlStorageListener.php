@@ -60,7 +60,7 @@ class ProductAbstractUrlStorageListener extends AbstractPlugin implements EventB
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $validEventTransfers,
-            SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT
+            SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT,
         );
     }
 }

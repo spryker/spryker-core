@@ -36,7 +36,7 @@ class ProductAbstractIdOwnedByMerchantConstraintValidator extends AbstractConstr
         $merchantTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getMerchantOrFail();
         $isProductAbstractOwnedByMerchant = $this->getFactory()->getMerchantProductFacade()->isProductAbstractOwnedByMerchant(
             (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract),
-            $merchantTransfer
+            $merchantTransfer,
         );
 
         if (!$isProductAbstractOwnedByMerchant) {

@@ -13,6 +13,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateProductOfferController::priceTableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/create-product-offer/price-table-data';
@@ -38,7 +39,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
         );
 
         return $guiTableConfigurationBuilder->createConfiguration();

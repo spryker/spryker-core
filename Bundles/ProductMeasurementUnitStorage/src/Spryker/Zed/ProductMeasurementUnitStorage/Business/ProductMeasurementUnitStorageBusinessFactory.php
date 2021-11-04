@@ -32,7 +32,7 @@ class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFacto
         return new ProductMeasurementUnitStorageWriter(
             $this->getProductMeasurementUnitFacade(),
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFacto
             $this->getProductMeasurementUnitFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createProductConcreteMeasurementUnitStorageReader()
+            $this->createProductConcreteMeasurementUnitStorageReader(),
         );
     }
 
@@ -55,7 +55,7 @@ class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFacto
     public function createProductConcreteMeasurementUnitStorageReader(): ProductConcreteMeasurementUnitStorageReaderInterface
     {
         return new ProductConcreteMeasurementUnitStorageReader(
-            $this->getProductMeasurementUnitFacade()
+            $this->getProductMeasurementUnitFacade(),
         );
     }
 

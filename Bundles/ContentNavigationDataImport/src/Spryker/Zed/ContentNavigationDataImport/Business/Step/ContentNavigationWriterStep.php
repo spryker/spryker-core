@@ -45,12 +45,12 @@ class ContentNavigationWriterStep extends PublishAwareStep implements DataImport
 
         $this->saveContentLocalizedNavigationTerms(
             $dataSet[ContentNavigationDataSetInterface::CONTENT_LOCALIZED_NAVIGATION_TERMS],
-            $contentNavigationEntity->getIdContent()
+            $contentNavigationEntity->getIdContent(),
         );
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentNavigationEntity->getPrimaryKey()
+            $contentNavigationEntity->getPrimaryKey(),
         );
     }
 
@@ -97,7 +97,7 @@ class ContentNavigationWriterStep extends PublishAwareStep implements DataImport
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
             $localizedContentNavigationEntity->setParameters(
-                $this->getEncodedParameters($localizedNavigationTerm)
+                $this->getEncodedParameters($localizedNavigationTerm),
             );
 
             $localizedContentNavigationEntity->save();

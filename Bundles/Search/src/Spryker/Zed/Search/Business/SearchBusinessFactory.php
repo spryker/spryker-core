@@ -77,7 +77,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new JsonIndexDefinitionLoader(
             $this->createJsonIndexDefinitionFinder(),
             $this->createJsonIndexDefinitionMerger(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -88,7 +88,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return new JsonIndexDefinitionFinder(
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
-            $this->createJsonIndexDefinitionMapper()
+            $this->createJsonIndexDefinitionMapper(),
         );
     }
 
@@ -99,7 +99,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return new JsonIndexDefinitionMapper(
             $this->getUtilEncodingService(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -132,7 +132,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return array_merge(
             $this->getSourceInstallerPlugins(),
-            $this->getMapInstallerPlugins()
+            $this->getMapInstallerPlugins(),
         );
     }
 
@@ -165,7 +165,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->createJsonIndexDefinitionLoader(),
             $this->getElasticsearchClient(),
             $messenger,
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -182,7 +182,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->createJsonIndexDefinitionLoader(),
             $this->createElasticsearchIndexMapCleaner(),
             $this->createElasticsearchIndexMapGenerator(),
-            $messenger
+            $messenger,
         );
     }
 
@@ -215,7 +215,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexMapGenerator(
             $this->getConfig()->getClassTargetDirectory(),
-            $this->getConfig()->getPermissionMode()
+            $this->getConfig()->getPermissionMode(),
         );
     }
 
@@ -301,7 +301,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return new PageDataMapper(
             $this->createPageMapBuilder(),
-            $this->getSearchPageMapPlugins()
+            $this->getSearchPageMapPlugins(),
         );
     }
 
@@ -362,7 +362,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexCopier(
             $this->getGuzzleClient(),
-            $this->getConfig()->getReindexUrl()
+            $this->getConfig()->getReindexUrl(),
         );
     }
 
@@ -380,7 +380,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createSearchHealthChecker(): HealthCheckInterface
     {
         return new SearchHealthCheck(
-            $this->getSearchClient()
+            $this->getSearchClient(),
         );
     }
 
@@ -392,7 +392,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createSearchLegacyModeChecker(): SearchLegacyModeCheckerInterface
     {
         return new SearchLegacyModeChecker(
-            $this->getSourceInstallerPlugins()
+            $this->getSourceInstallerPlugins(),
         );
     }
 

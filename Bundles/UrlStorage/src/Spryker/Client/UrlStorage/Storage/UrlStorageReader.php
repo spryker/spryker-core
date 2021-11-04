@@ -114,7 +114,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     {
         $urlStorageTransfers = $this->getUrlStorageTransferByUrls([$url]);
 
-        return current($urlStorageTransfers) ? current($urlStorageTransfers) : null;
+        return current($urlStorageTransfers) ?: null;
     }
 
     /**
@@ -217,7 +217,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
 
     /**
      * @param array $urlDetails
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer|null
      */

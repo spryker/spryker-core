@@ -149,14 +149,14 @@ class OrderExpander implements OrderExpanderInterface
                 $calculatedItemDiscountsByGroupKey[$itemTransfer->getGroupKey()] = (array)$itemTransfer->getCalculatedDiscounts();
             }
             $itemTransfer->setCalculatedDiscounts(
-                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $itemTransfer->getGroupKey())
+                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $itemTransfer->getGroupKey()),
             );
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 if (!isset($optionCalculatedDiscountsByGroupKey[$itemTransfer->getGroupKey()])) {
                     $optionCalculatedDiscountsByGroupKey[$itemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
                 }
                 $productOptionTransfer->setCalculatedDiscounts(
-                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $itemTransfer->getGroupKey())
+                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $itemTransfer->getGroupKey()),
                 );
             }
         }

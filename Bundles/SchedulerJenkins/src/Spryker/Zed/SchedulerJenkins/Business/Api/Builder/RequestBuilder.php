@@ -34,7 +34,7 @@ class RequestBuilder implements RequestBuilderInterface
             $requestMethod,
             $baseUrl,
             $headers,
-            $body
+            $body,
         );
 
         return $request;

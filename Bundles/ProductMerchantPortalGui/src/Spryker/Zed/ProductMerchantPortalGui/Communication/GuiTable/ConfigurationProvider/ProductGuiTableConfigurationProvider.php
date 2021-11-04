@@ -19,26 +19,32 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+
     /**
      * @var string
      */
     public const COL_KEY_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
@@ -48,6 +54,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
      * @var string
      */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+
     /**
      * @var string
      */
@@ -65,18 +72,21 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/products-concrete/table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::bulkEditAction()
+     *
      * @var string
      */
     protected const BULK_EDIT_URL = '/product-merchant-portal-gui/products-concrete/bulk-edit?product-ids=${rowIds}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::indexAction()
+     *
      * @var string
      */
     protected const ROW_EDIT_URL = '/product-merchant-portal-gui/update-product-concrete?product-id=${row.%s}';
@@ -134,7 +144,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             '%s?%s=%s',
             static::DATA_URL,
             ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
         );
 
         $guiTableConfigurationBuilder
@@ -200,7 +210,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder->addBatchActionDrawerAjaxForm(
             'Edit',
             'Bulk edit',
-            static::BULK_EDIT_URL
+            static::BULK_EDIT_URL,
         );
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);
@@ -220,8 +230,8 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(
                 static::ROW_EDIT_URL,
-                ProductConcreteTransfer::ID_PRODUCT_CONCRETE
-            )
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE,
+            ),
         )->setRowClickAction(static::ROW_EDIT_ID);
 
         return $guiTableConfigurationBuilder;

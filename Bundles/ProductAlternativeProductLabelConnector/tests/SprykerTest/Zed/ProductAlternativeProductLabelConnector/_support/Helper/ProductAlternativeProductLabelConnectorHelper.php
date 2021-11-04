@@ -40,7 +40,7 @@ class ProductAlternativeProductLabelConnectorHelper extends Module
         $this->assertGreaterThan(
             0,
             $query->count(),
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

@@ -40,7 +40,7 @@ class CompanyBusinessUnitFormExpanderPlugin extends AbstractPlugin implements Co
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions($idCompanyBusinessUnit)
+            $dataProvider->getOptions($idCompanyBusinessUnit),
         );
 
         return $builder;

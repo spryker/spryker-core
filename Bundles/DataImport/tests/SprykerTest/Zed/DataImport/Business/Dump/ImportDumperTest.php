@@ -48,7 +48,7 @@ class ImportDumperTest extends Unit
         // Arrange
         $dataImportConfigurationParser = new DataImportConfigurationYamlParser(
             new DataImportToUtilDataReaderServiceBridge($this->tester->getLocator()->utilDataReader()->service()),
-            new DataImportConfigurationMapper()
+            new DataImportConfigurationMapper(),
         );
 
         $configFilePath = Configuration::dataDir() . static::IMPORT_CONFIG_FILE_NAME;
@@ -58,7 +58,7 @@ class ImportDumperTest extends Unit
         $importDumper = new ImporterDumper(
             new DataImporterCollection(),
             $factory,
-            [new DataImportStubPlugin()]
+            [new DataImportStubPlugin()],
         );
 
         // Act
@@ -79,7 +79,7 @@ class ImportDumperTest extends Unit
         // Arrange
         $dataImportConfigurationParser = new DataImportConfigurationYamlParser(
             new DataImportToUtilDataReaderServiceBridge($this->tester->getLocator()->utilDataReader()->service()),
-            new DataImportConfigurationMapper()
+            new DataImportConfigurationMapper(),
         );
 
         $configFilePath = Configuration::dataDir() . static::IMPORT_CONFIG_FILE_NAME;
@@ -89,7 +89,7 @@ class ImportDumperTest extends Unit
         $importDumper = new ImporterDumper(
             new DataImporterCollection(),
             $factory,
-            []
+            [],
         );
 
         // Act

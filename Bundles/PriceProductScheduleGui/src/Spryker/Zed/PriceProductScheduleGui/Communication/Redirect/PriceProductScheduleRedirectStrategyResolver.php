@@ -16,14 +16,17 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
      * @var string
      */
     public const KEY_SCHEDULE_LIST = 'schedule_list';
+
     /**
      * @var string
      */
     public const KEY_ABSTRACT_PRODUCT = 'abstract_product';
+
     /**
      * @var string
      */
     public const KEY_CONCRETE_PRODUCT = 'concrete_product';
+
     /**
      * @var string
      */
@@ -80,7 +83,7 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
             isset(
                 $this->priceProductScheduleStrategyContainer[static::KEY_ABSTRACT_PRODUCT],
                 $this->priceProductScheduleStrategyContainer[static::KEY_CONCRETE_PRODUCT],
-                $this->priceProductScheduleStrategyContainer[static::KEY_SCHEDULE_LIST]
+                $this->priceProductScheduleStrategyContainer[static::KEY_SCHEDULE_LIST],
             )
         ) {
             return;

@@ -25,6 +25,7 @@ class NoteForm extends AbstractType
      * @var string
      */
     protected const FORM_NAME = 'note';
+
     /**
      * @var string
      */
@@ -40,7 +41,7 @@ class NoteForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

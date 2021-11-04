@@ -13,6 +13,7 @@ final class IdeAutoCompletionConstants
      * @var string
      */
     public const APPLICATION_NAME_PLACEHOLDER = '{{APPLICATION_NAME}}';
+
     /**
      * @var string
      */

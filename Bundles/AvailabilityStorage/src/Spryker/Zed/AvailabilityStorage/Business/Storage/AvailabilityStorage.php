@@ -18,18 +18,22 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      * @var string
      */
     public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
+
     /**
      * @var string
      */
     public const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
+
     /**
      * @var string
      */
     public const STORE = 'Store';
+
     /**
      * @var string
      */

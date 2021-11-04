@@ -22,22 +22,24 @@ class MerchantSalesOrderMapper
      * @var string
      */
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
+
     /**
      * @var string
      */
     protected const KEY_ORDER_SALUTATION = 'salutation';
+
     /**
      * @var string
      */
     protected const KEY_BILLING_ADDRESS_SALUTATION = 'billing_address_salutation';
+
     /**
      * @var string
      */
     protected const KEY_PRICE_MODE = 'price_mode';
 
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
@@ -96,9 +98,7 @@ class MerchantSalesOrderMapper
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getFieldMapping(): array
     {
@@ -106,10 +106,10 @@ class MerchantSalesOrderMapper
     }
 
     /**
-     * @param array<mixed[]> $merchantSalesOrderRows
+     * @param array<array<mixed>> $merchantSalesOrderRows
      * @param array<string> $fields
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function mapMerchantSalesOrderDataByField(array $merchantSalesOrderRows, array $fields): array
     {
@@ -129,7 +129,7 @@ class MerchantSalesOrderMapper
             }
             if ($merchantSalesOrderRow[SpySalesOrderAddressTableMap::COL_SALUTATION] !== null) {
                 $orderAddressSalutationValueSet = SpySalesOrderAddressTableMap::getValueSet(
-                    SpySalesOrderAddressTableMap::COL_SALUTATION
+                    SpySalesOrderAddressTableMap::COL_SALUTATION,
                 );
                 $mappedMerchantSalesOrderRow[static::KEY_BILLING_ADDRESS_SALUTATION] = $orderAddressSalutationValueSet[$merchantSalesOrderRow[SpySalesOrderAddressTableMap::COL_SALUTATION]];
             }

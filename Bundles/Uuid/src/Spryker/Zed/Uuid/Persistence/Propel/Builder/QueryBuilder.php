@@ -17,6 +17,7 @@ class QueryBuilder implements QueryBuilderInterface
      * @var string
      */
     protected const TABLE_SEPARATOR = '_';
+
     /**
      * @var string
      */
@@ -33,7 +34,7 @@ class QueryBuilder implements QueryBuilderInterface
     {
         $className = $this->getFullyQualifiedClassName(
             $uuidGeneratorConfigurationTransfer->getModule(),
-            $uuidGeneratorConfigurationTransfer->getTable()
+            $uuidGeneratorConfigurationTransfer->getTable(),
         );
 
         if (!class_exists($className)) {

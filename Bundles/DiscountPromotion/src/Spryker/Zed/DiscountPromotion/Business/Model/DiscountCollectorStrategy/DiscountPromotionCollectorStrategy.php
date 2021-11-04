@@ -70,7 +70,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $promotionMaximumQuantity = $this->promotionAvailabilityCalculator->getMaximumQuantityBasedOnAvailability(
             $discountPromotionEntity->getAbstractSku(),
             $discountPromotionEntity->getQuantity(),
-            $quoteTransfer->getStore()
+            $quoteTransfer->getStore(),
         );
 
         if ($promotionMaximumQuantity === 0) {
@@ -87,7 +87,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
                 $discountTransfer,
                 $quoteTransfer,
                 $discountPromotionEntity,
-                $promotionMaximumQuantity
+                $promotionMaximumQuantity,
             );
 
             $this->storeVoucherCode($discountTransfer, $quoteTransfer);
@@ -119,7 +119,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
                 !$this->isPromotionItem(
                     $discountPromotionEntity->getAbstractSku(),
                     $itemTransfer,
-                    $discountPromotionEntity->getIdDiscountPromotion()
+                    $discountPromotionEntity->getIdDiscountPromotion(),
                 )
             ) {
                 continue;
@@ -258,7 +258,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $promotionItemTransfer = $this->createPromotionItemTransfer(
             $discountPromotionEntity,
             $discountTransfer,
-            $promotionMaximumQuantity
+            $promotionMaximumQuantity,
         );
 
         $quoteTransfer->addPromotionItem($promotionItemTransfer);

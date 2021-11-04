@@ -28,7 +28,7 @@ class PriceProductOfferStorageBusinessFactory extends AbstractBusinessFactory
         return new PriceProductOfferStorageWriter(
             $this->getEventFacade(),
             $this->getPriceProductOfferFacade(),
-            $this->getEventBehaviorFacade()
+            $this->getEventBehaviorFacade(),
         );
     }
 

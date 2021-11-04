@@ -21,6 +21,7 @@ class RemoveDataBuilderConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:databuilder:remove';
+
     /**
      * @var string
      */

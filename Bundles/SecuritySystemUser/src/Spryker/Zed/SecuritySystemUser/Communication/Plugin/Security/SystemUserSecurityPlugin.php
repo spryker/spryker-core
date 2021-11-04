@@ -25,6 +25,7 @@ class SystemUserSecurityPlugin extends AbstractPlugin implements SecurityPluginI
      * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'SystemUser';
+
     /**
      * @var string
      */

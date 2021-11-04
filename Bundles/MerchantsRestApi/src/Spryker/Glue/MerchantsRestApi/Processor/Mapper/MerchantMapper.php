@@ -63,7 +63,7 @@ class MerchantMapper implements MerchantMapperInterface
         $restMerchantsAttributesTransfer = $this->executeMerchantRestAttributesMapperPlugins(
             $merchantStorageTransfer,
             $restMerchantsAttributesTransfer,
-            $localeName
+            $localeName,
         );
 
         return $restMerchantsAttributesTransfer;
@@ -102,7 +102,7 @@ class MerchantMapper implements MerchantMapperInterface
             $restMerchantsAttributesTransfer = $restMerchantAttributesMapperPlugin->mapMerchantStorageTransferToRestMerchantsAttributesTransfer(
                 $merchantStorageTransfer,
                 $restMerchantsAttributesTransfer,
-                $localeName
+                $localeName,
             );
         }
 

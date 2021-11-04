@@ -42,7 +42,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
         $companyRoleResponseTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/create',
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         return $companyRoleResponseTransfer;
@@ -59,7 +59,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer */
         $companyRoleCollectionTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/get-company-role-collection',
-            $criteriaFilterTransfer
+            $criteriaFilterTransfer,
         );
 
         return $companyRoleCollectionTransfer;
@@ -75,7 +75,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer */
         $companyRoleTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/get-company-role-by-id',
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         return $companyRoleTransfer;
@@ -90,7 +90,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     {
         $this->zedRequestClient->call(
             '/company-role/gateway/update-company-role',
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
     }
 
@@ -104,7 +104,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
         $companyRoleResponseTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/delete-company-role',
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         return $companyRoleResponseTransfer;
@@ -120,7 +120,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer */
         $permissionCollectionTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/find-company-role-permissions',
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         return $permissionCollectionTransfer;
@@ -135,7 +135,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     {
         $this->zedRequestClient->call(
             '/company-role/gateway/save-company-user',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
     }
 
@@ -149,7 +149,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer */
         $permissionTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/find-permission-by-id-company-role-by-id-permission',
-            $permissionTransfer
+            $permissionTransfer,
         );
 
         return $permissionTransfer;
@@ -165,7 +165,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer $companyRolePermissionResponseTransfer */
         $companyRolePermissionResponseTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/update-company-role-permission',
-            $permissionTransfer
+            $permissionTransfer,
         );
 
         return $companyRolePermissionResponseTransfer;
@@ -181,7 +181,7 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         /** @var \Generated\Shared\Transfer\CompanyRoleResponseTransfer $companyRoleResponseTransfer */
         $companyRoleResponseTransfer = $this->zedRequestClient->call(
             '/company-role/gateway/find-company-role-by-uuid',
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         return $companyRoleResponseTransfer;

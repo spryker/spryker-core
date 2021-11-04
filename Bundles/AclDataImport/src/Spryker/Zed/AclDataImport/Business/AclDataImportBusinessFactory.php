@@ -78,7 +78,7 @@ class AclDataImportBusinessFactory extends DataImportBusinessFactory
     public function getAclGroupRoleDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getAclGroupRoleDataImporterConfiguration()
+            $this->getConfig()->getAclGroupRoleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

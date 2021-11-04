@@ -42,7 +42,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
             $this->createProductReviewRestResponseBuilder(),
             $this->getProductStorageClient(),
             $this->getProductReviewClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -54,7 +54,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
         return new ProductReviewCreator(
             $this->createProductReviewRestResponseBuilder(),
             $this->getProductReviewClient(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 
@@ -73,7 +73,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     {
         return new ProductReviewsConcreteProductsResourceExpander(
             $this->getProductReviewStorageClient(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 
@@ -93,7 +93,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
         return new ProductAbstractReviewResourceRelationshipExpander(
             $this->createProductReviewReader(),
             $this->getProductStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -105,7 +105,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
         return new ProductConcreteReviewResourceRelationshipExpander(
             $this->createProductReviewReader(),
             $this->getProductStorageClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -116,7 +116,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     {
         return new ProductReviewRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createProductReviewMapper()
+            $this->createProductReviewMapper(),
         );
     }
 

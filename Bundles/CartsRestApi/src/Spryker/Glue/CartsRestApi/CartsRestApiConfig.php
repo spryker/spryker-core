@@ -18,6 +18,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CARTS = 'carts';
+
     /**
      * @var string
      */
@@ -25,6 +26,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CustomersRestApi\CustomersRestApiConfig::RESOURCE_CUSTOMERS
+     *
      * @var string
      */
     public const RESOURCE_CUSTOMERS = 'customers';
@@ -33,6 +35,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_GUEST_CARTS = 'guest-carts';
+
     /**
      * @var string
      */
@@ -42,14 +45,17 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CONTROLLER_CARTS = 'carts-resource';
+
     /**
      * @var string
      */
     public const CONTROLLER_CART_ITEMS = 'cart-items-resource';
+
     /**
      * @var string
      */
     public const CONTROLLER_GUEST_CARTS = 'guest-carts-resource';
+
     /**
      * @var string
      */
@@ -59,74 +65,92 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_ITEM_VALIDATION = '102';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_ITEM_NOT_FOUND = '103';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FAILED_DELETING_CART = '105';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FAILED_DELETING_CART_ITEM = '106';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FAILED_CREATING_CART = '107';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = '109';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CUSTOMER_ALREADY_HAS_CART = '110';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CART_CANT_BE_UPDATED = '111';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_STORE_DATA_IS_INVALID = '112';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FAILED_ADDING_CART_ITEM = '113';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_FAILED_UPDATING_CART_ITEM = '114';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_UNAUTHORIZED_CART_ACTION = '115';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CURRENCY_DATA_IS_MISSING = '116';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_CURRENCY_DATA_IS_INCORRECT = '117';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_PRICE_MODE_DATA_IS_MISSING = '118';
+
     /**
      * @var string
      */
     public const RESPONSE_CODE_PRICE_MODE_DATA_IS_INCORRECT = '119';
+
     /**
      * @var string
      */
@@ -136,66 +160,82 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_CART_ITEM_NOT_FOUND = 'Item with the given group key not found in the cart.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_FAILED_TO_CREATE_CART = 'Failed to create cart.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART = 'Cart could not be deleted.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_FAILED_DELETING_CART_ITEM = 'Cart item could not be deleted.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY = 'Anonymous customer unique id is empty.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_CUSTOMER_ALREADY_HAS_CART = 'Customer already has a cart.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_PRICE_MODE_CANT_BE_CHANGED = 'Can’t switch price mode when there are items in the cart.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_STORE_DATA_IS_INVALID = 'Store data is invalid.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_FAILED_ADDING_CART_ITEM = 'Cart item could not be added.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_FAILED_UPDATING_CART_ITEM = 'Cart item could not be updated.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION = 'Unauthorized cart action.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_MISSING = 'Currency is missing.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_CURRENCY_DATA_IS_INCORRECT = 'Currency is incorrect.';
+
     /**
      * @var string
      */
     public const EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'Price mode is missing.';
+
     /**
      * @var string
      */
@@ -212,7 +252,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const GUEST_CART_RESOURCES = [
         self::RESOURCE_GUEST_CARTS,
@@ -223,6 +263,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
      * @var bool
      */
     protected const ALLOWED_CART_ITEM_EAGER_RELATIONSHIP = true;
+
     /**
      * @var bool
      */
@@ -231,7 +272,7 @@ class CartsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

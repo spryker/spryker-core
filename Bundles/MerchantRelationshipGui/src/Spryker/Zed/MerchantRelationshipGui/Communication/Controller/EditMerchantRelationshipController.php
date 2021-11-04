@@ -27,6 +27,7 @@ class EditMerchantRelationshipController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS = 'Merchant relation updated successfully.';
+
     /**
      * @var string
      */
@@ -54,7 +55,7 @@ class EditMerchantRelationshipController extends AbstractController
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(
                 $merchantRelationshipTransfer,
-                $dataProvider->getOptions(true, $idCompany)
+                $dataProvider->getOptions(true, $idCompany),
             )
             ->handleRequest($request);
         if ($merchantRelationshipForm->isSubmitted() && $merchantRelationshipForm->isValid()) {

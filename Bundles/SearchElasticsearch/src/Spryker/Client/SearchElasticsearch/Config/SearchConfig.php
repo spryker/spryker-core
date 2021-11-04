@@ -133,7 +133,7 @@ class SearchConfig implements SearchConfigInterface
     protected function buildPaginationConfig(SearchConfigurationTransfer $searchConfigurationTransfer): void
     {
         $this->paginationConfig->setPagination(
-            $searchConfigurationTransfer->getPaginationConfig()
+            $searchConfigurationTransfer->getPaginationConfig(),
         );
     }
 

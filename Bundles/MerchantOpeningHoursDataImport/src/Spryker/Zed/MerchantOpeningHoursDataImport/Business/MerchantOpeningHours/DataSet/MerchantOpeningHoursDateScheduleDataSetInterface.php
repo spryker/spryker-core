@@ -13,18 +13,22 @@ interface MerchantOpeningHoursDateScheduleDataSetInterface extends MerchantOpeni
      * @var string
      */
     public const FK_DATE_SCHEDULE = 'fk_date_schedule';
+
     /**
      * @var string
      */
     public const DATE = 'date';
+
     /**
      * @var string
      */
     public const TIME_FROM = 'time_from';
+
     /**
      * @var string
      */
     public const TIME_TO = 'time_to';
+
     /**
      * @var string
      */

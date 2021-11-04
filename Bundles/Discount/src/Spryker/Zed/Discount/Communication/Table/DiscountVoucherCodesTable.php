@@ -82,7 +82,7 @@ class DiscountVoucherCodesTable extends AbstractTable
                 'id-pool' => $this->idPool,
                 'id-discount' => $this->idDiscount,
                 'batch' => $this->batchValue,
-            ]
+            ],
         );
 
         $config->setUrl($url->build());
@@ -169,7 +169,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             [
                 'id-discount' => $this->idDiscount,
                 'id-voucher' => $discountVoucherEntity->getIdDiscountVoucher(),
-            ]
+            ],
         )->build();
 
         $buttons[] = $this->generateRemoveButton($deleteVoucherCodeUrl, 'Delete', [], DeleteVoucherCodeForm::class);

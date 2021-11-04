@@ -42,7 +42,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
      * @param array $defaultSettingsArray
      * @param array $settingsArray
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function mergeSettings(array $defaultSettingsArray, array $settingsArray)
     {
@@ -107,7 +107,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, int>
      */
     public function getSequenceLimits()
     {

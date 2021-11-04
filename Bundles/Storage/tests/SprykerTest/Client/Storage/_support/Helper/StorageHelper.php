@@ -86,7 +86,7 @@ class StorageHelper extends AbstractHelper
 
         $this->assertTrue(in_array($key, $allKeys), $this->format(sprintf(
             '<fg=yellow>%s</> not found in the storage but was expected to be there.',
-            $key
+            $key,
         )));
     }
 
@@ -101,7 +101,7 @@ class StorageHelper extends AbstractHelper
 
         $this->assertFalse(in_array($key, $allKeys), $this->format(sprintf(
             '<fg=yellow>%s</> found in the storage but was not expected to be there.',
-            $key
+            $key,
         )));
     }
 
@@ -158,7 +158,7 @@ class StorageHelper extends AbstractHelper
     {
         $this->getDependencyProviderHelper()->setDependency(
             StorageDependencyProvider::PLUGIN_STORAGE,
-            $this->getInMemoryStoragePlugin()
+            $this->getInMemoryStoragePlugin(),
         );
 
         // Resolves the StorageClientInterface with all mocks from above.

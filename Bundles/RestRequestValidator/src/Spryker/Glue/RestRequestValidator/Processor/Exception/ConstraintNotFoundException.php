@@ -17,6 +17,7 @@ class ConstraintNotFoundException extends Exception
      * @var string
      */
     protected const EXCEPTION_MESSAGE_CLASS_NOT_FOUND = 'Class "%s" not found. Have you forgotten to add your custom validator namespace in %s?';
+
     /**
      * @var string
      */
@@ -44,13 +45,13 @@ class ConstraintNotFoundException extends Exception
             'Glue',
             'RestRequestValidator',
             'RestRequestValidatorConfig',
-            'getAvailableConstraintNamespaces'
+            'getAvailableConstraintNamespaces',
         );
 
         $message = sprintf(
             static::EXCEPTION_MESSAGE_CLASS_NOT_FOUND,
             $constraintName,
-            $configNamespace
+            $configNamespace,
         );
 
         return $message;

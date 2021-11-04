@@ -13,35 +13,41 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      * @var string
      */
     public const KEY_BUNDLE = 'bundle';
+
     /**
      * @var string
      */
     public const KEY_CONTAINING_BUNDLE = 'containing bundle';
+
     /**
      * @var string
      */
     public const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const KEY_PROPERTY = 'property';
+
     /**
      * @var string
      */
     public const KEY_BUNDLES = 'bundles';
+
     /**
      * @var string
      */
     public const KEY_DEPRECATED = 'deprecated';
+
     /**
      * @var string
      */
     public const KEY_STRICT_MODE = 'strict';
 
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<array>
      */
     public function normalizeDefinitions(array $transferDefinitions)
     {
@@ -51,7 +57,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
                 self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
-                self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
+                self::KEY_DEPRECATED => $transferDefinition[self::KEY_DEPRECATED] ?? null,
                 self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY] ?? [], $transferDefinition[self::KEY_BUNDLE]),
                 self::KEY_STRICT_MODE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
             ];
@@ -82,10 +88,10 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $attributes
+     * @param array<array> $attributes
      * @param string $bundle
      *
-     * @return array
+     * @return array<array>
      */
     protected function addBundleToAttributes(array $attributes, $bundle)
     {
@@ -97,9 +103,9 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function normalizeStrictMode(array $transferDefinition): array
     {
@@ -111,7 +117,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
             $propertyDefinitions = isset($propertyDefinitions[0]) ? $propertyDefinitions : [$propertyDefinitions];
             $transferDefinition[static::KEY_PROPERTY] = $this->normalizeTransferPropertyDefinitionStrictMode(
                 $propertyDefinitions,
-                $isTransferInStrictMode
+                $isTransferInStrictMode,
             );
         }
 
@@ -119,9 +125,9 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function normalizeTransferDefinitionStrictMode(array $transferDefinition): array
     {
@@ -137,7 +143,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     }
 
     /**
-     * @param array $propertyDefinitions
+     * @param array<string, mixed> $propertyDefinitions
      * @param bool $isTransferInStrictMode
      *
      * @return array

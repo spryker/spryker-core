@@ -85,7 +85,7 @@ class ConfigurableBundleTemplateImageStoragePublishListenerTest extends Unit
         // Assert
         $this->assertCount(
             count($this->tester->getLocator()->locale()->facade()->getAvailableLocales()),
-            $configurableBundleTemplateImageStorageEntities[$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()]
+            $configurableBundleTemplateImageStorageEntities[$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()],
         );
     }
 
@@ -113,7 +113,7 @@ class ConfigurableBundleTemplateImageStoragePublishListenerTest extends Unit
 
         // Assert
         $this->assertNull(
-            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
     }
 
@@ -137,7 +137,7 @@ class ConfigurableBundleTemplateImageStoragePublishListenerTest extends Unit
 
         // Assert
         $this->assertNull(
-            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
     }
 }

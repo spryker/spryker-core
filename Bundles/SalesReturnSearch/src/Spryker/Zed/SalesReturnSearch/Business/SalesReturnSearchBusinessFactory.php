@@ -43,7 +43,7 @@ class SalesReturnSearchBusinessFactory extends AbstractBusinessFactory
             $this->createGlossaryReader(),
             $this->createReturnReasonSearchMapper(),
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -54,7 +54,7 @@ class SalesReturnSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnReasonSearchDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -65,7 +65,7 @@ class SalesReturnSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new GlossaryReader(
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -84,7 +84,7 @@ class SalesReturnSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ReturnReasonSearchMapper(
             $this->getUtilEncodingService(),
-            $this->createReturnReasonSearchDataMapper()
+            $this->createReturnReasonSearchDataMapper(),
         );
     }
 

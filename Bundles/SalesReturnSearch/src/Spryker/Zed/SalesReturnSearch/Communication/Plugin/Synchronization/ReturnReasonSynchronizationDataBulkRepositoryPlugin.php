@@ -82,7 +82,7 @@ class ReturnReasonSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
     {
         return $this->getFacade()->getReturnReasonSynchronizationDataTransfersByIds(
             (new FilterTransfer())->setLimit($limit)->setOffset($offset),
-            $ids
+            $ids,
         );
     }
 

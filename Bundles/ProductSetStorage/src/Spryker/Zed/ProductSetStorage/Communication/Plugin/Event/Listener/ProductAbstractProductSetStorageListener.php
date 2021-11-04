@@ -35,7 +35,7 @@ class ProductAbstractProductSetStorageListener extends AbstractPlugin implements
         $this->preventTransaction();
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET
+            SpyProductAbstractSetTableMap::COL_FK_PRODUCT_SET,
         );
 
         $this->getFacade()->publish(array_unique($productSetIds));

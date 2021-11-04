@@ -24,6 +24,7 @@ class OrderInvoiceSendConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'order:invoice:send';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class OrderInvoiceSendConsole extends Console
      * @var string
      */
     protected const ARGUMENT_ORDER_IDS = 'order_ids';
+
     /**
      * @var string
      */
@@ -42,6 +44,7 @@ class OrderInvoiceSendConsole extends Console
      * @var string
      */
     protected const ARGUMENT_FORCE_EMAIL_SEND = 'force';
+
     /**
      * @var string
      */
@@ -64,13 +67,13 @@ class OrderInvoiceSendConsole extends Console
         $this->addArgument(
             static::ARGUMENT_ORDER_IDS,
             InputArgument::OPTIONAL,
-            static::ARGUMENT_ORDER_IDS_DESCRIPTION
+            static::ARGUMENT_ORDER_IDS_DESCRIPTION,
         );
         $this->addOption(
             static::ARGUMENT_FORCE_EMAIL_SEND,
             null,
             null,
-            static::ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION
+            static::ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION,
         );
     }
 

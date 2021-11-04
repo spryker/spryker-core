@@ -50,7 +50,7 @@ class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements Chec
         return (new QuoteValidationResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage(
-                (new MessageTransfer())->setValue(static::MESSAGE_CART_REQUIRE_APPROVAL)
+                (new MessageTransfer())->setValue(static::MESSAGE_CART_REQUIRE_APPROVAL),
             );
     }
 }

@@ -79,7 +79,7 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
 
         if (!$productRelationTransfer) {
             return $productRelationResponseTransfer->addMessage(
-                $this->getErrorMessageTransfer(sprintf(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND, $idProductRelation))
+                $this->getErrorMessageTransfer(sprintf(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND, $idProductRelation)),
             );
         }
 
@@ -100,7 +100,7 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
     {
         $this->touchFacade->touchDeleted(
             ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION,
-            $productRelationTransfer->getFkProductAbstract()
+            $productRelationTransfer->getFkProductAbstract(),
         );
     }
 

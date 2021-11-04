@@ -57,7 +57,7 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
 
         throw new NotALockingSessionHandlerException(sprintf(
             'The configured session handler "%s" doesn\'t seem to support locking',
-            $handlerName
+            $handlerName,
         ));
     }
 

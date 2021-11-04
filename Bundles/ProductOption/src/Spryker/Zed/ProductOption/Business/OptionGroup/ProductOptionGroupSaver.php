@@ -131,7 +131,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(
-                sprintf('Product Option Group with id "%d" not found', $idProductOptionGroup)
+                sprintf('Product Option Group with id "%d" not found', $idProductOptionGroup),
             );
         }
 
@@ -153,7 +153,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
             strpos($productOptionGroupTransfer->getName(), ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === false
         ) {
             $productOptionGroupTransfer->setName(
-                ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $productOptionGroupTransfer->getName()
+                ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $productOptionGroupTransfer->getName(),
             );
         }
 
@@ -184,7 +184,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
         foreach ($productOptionGroupEntity->getSpyProductAbstractProductOptionGroups() as $productAbstractProductOptionEntity) {
             $this->touchFacade->touchActive(
                 ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
-                $productAbstractProductOptionEntity->getFkProductAbstract()
+                $productAbstractProductOptionEntity->getFkProductAbstract(),
             );
         }
     }

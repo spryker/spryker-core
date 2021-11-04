@@ -40,7 +40,7 @@ class SelectedPaymentMethodCheckoutDataResponseMapperPlugin extends AbstractPlug
             ->mapRestCheckoutDataResponseTransferToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataTransfer,
                 $restCheckoutRequestAttributesTransfer,
-                $restCheckoutResponseAttributesTransfer
+                $restCheckoutResponseAttributesTransfer,
             );
     }
 }

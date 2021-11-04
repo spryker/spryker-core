@@ -21,6 +21,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvide
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */

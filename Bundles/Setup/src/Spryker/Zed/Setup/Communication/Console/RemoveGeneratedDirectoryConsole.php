@@ -23,6 +23,7 @@ class RemoveGeneratedDirectoryConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'setup:remove-generated-directory';
+
     /**
      * @var string
      */

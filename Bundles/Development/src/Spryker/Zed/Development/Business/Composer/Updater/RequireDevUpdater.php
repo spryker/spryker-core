@@ -15,6 +15,7 @@ class RequireDevUpdater implements UpdaterInterface
      * @var string
      */
     public const KEY_REQUIRE_DEV = 'require-dev';
+
     /**
      * @var string
      */

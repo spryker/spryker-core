@@ -19,12 +19,14 @@ class CmsPageReader implements CmsPageReaderInterface
 {
     /**
      * @uses \Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\ResultFormatter\RawCmsPageSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const SEARCH_RESULT_CMS_PAGES = 'cms_pages';
 
     /**
      * @uses \Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\ResultFormatter\PaginatedCmsPageResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const SEARCH_RESULT_PAGINATION = 'pagination';
@@ -33,14 +35,17 @@ class CmsPageReader implements CmsPageReaderInterface
      * @var string
      */
     protected const ID_CMS_PAGE = 'id_cms_page';
+
     /**
      * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_PARAMETER_NAME_PAGE
+     *
      * @var string
      */
     protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
 
     /**
      * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
+     *
      * @var string
      */
     protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
@@ -104,7 +109,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByIds(
             $this->getCmsPageIds($searchResult[static::SEARCH_RESULT_CMS_PAGES]),
             $restRequest->getMetadata()->getLocale(),
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         return $this->cmsPageRestResponseBuilder->createCmsPageCollectionRestResponse($cmsPageStorageTransfers, $totalPagesFound);
@@ -122,7 +127,7 @@ class CmsPageReader implements CmsPageReaderInterface
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             [$cmsPageUuid],
             $restRequest->getMetadata()->getLocale(),
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         $desiredCmsPageStorageTransfer = reset($cmsPageStorageTransfers);
@@ -138,11 +143,9 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getAllRequestParameters(RestRequestInterface $restRequest): array
     {

@@ -12,8 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesReturnGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const ITEM_STATE_TO_LABEL_CLASS_MAPPING = [
         'refunded' => 'label-danger',

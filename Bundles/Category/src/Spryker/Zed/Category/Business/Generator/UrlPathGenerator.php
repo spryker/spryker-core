@@ -16,18 +16,21 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
 {
     /**
      * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_NAME
+     *
      * @var string
      */
     public const CATEGORY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_ID_CATEGORY_NODE
+     *
      * @var string
      */
     protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
      * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_FK_PARENT_CATEGORY_NODE
+     *
      * @var string
      */
     protected const KEY_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
@@ -121,7 +124,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
                 $idCategoryNode,
                 $categoryUrlPathPart,
                 $indexedCategoryUrlPathParts,
-                $categoryUrlPathParts
+                $categoryUrlPathParts,
             );
         }
 
@@ -154,7 +157,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
             $idCategoryNode,
             $parentCategoryUrlPathPart,
             $indexedCategoryUrlPathParts,
-            $categoryUrlPathParts
+            $categoryUrlPathParts,
         );
     }
 

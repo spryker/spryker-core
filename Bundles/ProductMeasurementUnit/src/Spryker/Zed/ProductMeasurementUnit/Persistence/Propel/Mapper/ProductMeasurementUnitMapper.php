@@ -32,21 +32,21 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         $productMeasurementSalesUnitTransfer->fromArray($productMeasurementSalesUnitEntity->toArray(), true);
 
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit(
-            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->toArray(), true)
+            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->toArray(), true),
         );
 
         $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit(
             $this->mapProductMeasurementBaseUnitTransfer(
                 $productMeasurementSalesUnitEntity->getProductMeasurementBaseUnit(),
-                new ProductMeasurementBaseUnitTransfer()
-            )
+                new ProductMeasurementBaseUnitTransfer(),
+            ),
         );
 
         $productMeasurementSalesUnitTransfer->setStoreRelation(
             $this->mapProductMeasurementSalesUnitStoreRelationTransfer(
                 $productMeasurementSalesUnitEntity,
-                new StoreRelationTransfer()
-            )
+                new StoreRelationTransfer(),
+            ),
         );
 
         return $productMeasurementSalesUnitTransfer;
@@ -65,7 +65,7 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         $productMeasurementBaseUnitTransfer->fromArray($productMeasurementBaseUnitEntity->toArray(), true);
 
         $productMeasurementBaseUnitTransfer->setProductMeasurementUnit(
-            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementBaseUnitEntity->getProductMeasurementUnit()->toArray(), true)
+            (new ProductMeasurementUnitTransfer())->fromArray($productMeasurementBaseUnitEntity->getProductMeasurementUnit()->toArray(), true),
         );
 
         return $productMeasurementBaseUnitTransfer;
@@ -103,7 +103,7 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         foreach ($productMeasurementSalesUnitEntity->getSpyProductMeasurementSalesUnitStores() as $spyProductMeasurementSalesUnitStore) {
             $storeTransfer = (new StoreTransfer())->fromArray(
                 $spyProductMeasurementSalesUnitStore->getSpyStore()->toArray(),
-                true
+                true,
             );
 
             $idStores[] = $storeTransfer->getIdStore();

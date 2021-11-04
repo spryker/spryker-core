@@ -53,17 +53,17 @@ class UniqueDataValidator extends AbstractImportDataValidator
         $priceProductScheduleCriteriaFilterTransfer = $this->priceProductScheduleImportMapper
             ->mapPriceProductScheduleImportTransferToPriceProductScheduleCriteriaFilterTransfer(
                 $priceProductScheduleImportTransfer,
-                new PriceProductScheduleCriteriaFilterTransfer()
+                new PriceProductScheduleCriteriaFilterTransfer(),
             );
 
         $priceProductScheduleTransferCount = $this->priceProductScheduleRepository->findCountPriceProductScheduleByCriteriaFilter(
-            $priceProductScheduleCriteriaFilterTransfer
+            $priceProductScheduleCriteriaFilterTransfer,
         );
 
         if ($priceProductScheduleTransferCount > 0) {
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
-                static::ERROR_MESSAGE_SCHEDULED_PRICE_ALREADY_EXISTS
+                static::ERROR_MESSAGE_SCHEDULED_PRICE_ALREADY_EXISTS,
             );
         }
 

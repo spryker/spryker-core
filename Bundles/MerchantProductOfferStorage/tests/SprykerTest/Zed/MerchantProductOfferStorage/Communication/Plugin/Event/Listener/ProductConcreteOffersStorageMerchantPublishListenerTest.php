@@ -80,7 +80,7 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
 
         $this->productConcreteOffersStorageMerchantPublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
@@ -101,7 +101,7 @@ class ProductConcreteOffersStorageMerchantPublishListenerTest extends AbstractSt
 
         $this->productConcreteOffersStorageMerchantPublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 

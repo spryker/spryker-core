@@ -16,12 +16,14 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
 {
     /**
      * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter::PAGES
+     *
      * @var string
      */
     protected const PAGES = 'pages';
 
     /**
      * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter::BUNDLE
+     *
      * @var string
      */
     protected const BUNDLE = 'bundle';
@@ -52,7 +54,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
 
             $rootNavigationElement = $this->mergeNavigationPages(
                 $rootNavigationElement,
-                $coreNavigationDefinitionData
+                $coreNavigationDefinitionData,
             );
         }
 
@@ -71,7 +73,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
             $foundNavigationElement = $this->getNavigationInNavigationData(
                 $coreNavigationDefinitionData,
                 $childNavigationElement,
-                $navigationName
+                $navigationName,
             );
 
             $childNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childNavigationElement);
@@ -100,7 +102,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
 
         $rootNavigationElement[static::PAGES] = array_merge_recursive(
             $navigationElement[static::PAGES],
-            $rootNavigationElement[static::PAGES]
+            $rootNavigationElement[static::PAGES],
         );
 
         return $rootNavigationElement;
@@ -118,7 +120,7 @@ class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterf
         $iterator = new RecursiveArrayIterator($navigationDefinitionData);
         $navigationRecursiveIterator = new RecursiveIteratorIterator(
             $iterator,
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         );
 
         foreach ($navigationRecursiveIterator as $key => $navigationElement) {

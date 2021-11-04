@@ -27,7 +27,7 @@ class ProductQuantityStorageFactory extends AbstractFactory
     {
         return new ProductQuantityStorageReader(
             $this->getStorage(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -38,7 +38,7 @@ class ProductQuantityStorageFactory extends AbstractFactory
     {
         return new ProductQuantityItemValidator(
             $this->createProductQuantityStorageReader(),
-            $this->createProductQuantityResolver()
+            $this->createProductQuantityResolver(),
         );
     }
 
@@ -65,7 +65,7 @@ class ProductQuantityStorageFactory extends AbstractFactory
     {
         return new ProductQuantityResolver(
             $this->createProductQuantityStorageReader(),
-            $this->getProductQuantityService()
+            $this->getProductQuantityService(),
         );
     }
 

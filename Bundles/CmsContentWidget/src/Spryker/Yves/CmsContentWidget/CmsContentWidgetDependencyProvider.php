@@ -24,12 +24,14 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';

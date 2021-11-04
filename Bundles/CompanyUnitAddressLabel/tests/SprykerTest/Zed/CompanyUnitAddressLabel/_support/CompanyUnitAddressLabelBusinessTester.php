@@ -71,7 +71,7 @@ class CompanyUnitAddressLabelBusinessTester extends Actor
         }
 
         return $this->haveCompanyUnitAddressLabelRelations(
-            $this->haveCompanyUnitAddress($seedData)->toArray(true, true)
+            $this->haveCompanyUnitAddress($seedData)->toArray(true, true),
         );
     }
 }

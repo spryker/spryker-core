@@ -39,7 +39,7 @@ class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImpo
 
         $this->addPublishEvents(
             ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
-            $productDiscontinuedEntity->getIdProductDiscontinued()
+            $productDiscontinuedEntity->getIdProductDiscontinued(),
         );
     }
 

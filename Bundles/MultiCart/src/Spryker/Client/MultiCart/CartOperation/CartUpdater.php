@@ -76,7 +76,7 @@ class CartUpdater implements CartUpdaterInterface
     {
         $quoteTransfer->requireIdQuote();
         $quoteTransfer->setCustomer(
-            $this->customerClient->getCustomer()
+            $this->customerClient->getCustomer(),
         );
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
         $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->fromArray($quoteTransfer->modifiedToArray(), true);
@@ -95,7 +95,7 @@ class CartUpdater implements CartUpdaterInterface
     public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->setCustomer(
-            $this->customerClient->getCustomer()
+            $this->customerClient->getCustomer(),
         );
         $quoteActivationRequestTransfer = new QuoteActivationRequestTransfer();
         $quoteActivationRequestTransfer->setCustomer($quoteTransfer->getCustomer());
@@ -118,7 +118,7 @@ class CartUpdater implements CartUpdaterInterface
     public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->setCustomer(
-            $this->customerClient->getCustomer()
+            $this->customerClient->getCustomer(),
         );
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
         $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()

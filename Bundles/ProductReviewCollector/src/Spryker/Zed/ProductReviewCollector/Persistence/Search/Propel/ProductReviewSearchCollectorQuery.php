@@ -18,34 +18,42 @@ class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
      * @var string
      */
     public const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';
+
     /**
      * @var string
      */
     public const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
+
     /**
      * @var string
      */
     public const FIELD_CREATED_AT = 'created_at';
+
     /**
      * @var string
      */
     public const FIELD_RATING = 'rating';
+
     /**
      * @var string
      */
     public const FIELD_NICKNAME = 'nickname';
+
     /**
      * @var string
      */
     public const FIELD_SUMMARY = 'summary';
+
     /**
      * @var string
      */
@@ -60,13 +68,13 @@ class ProductReviewSearchCollectorQuery extends AbstractPropelCollectorQuery
             ->addJoin(
                 SpyTouchTableMap::COL_ITEM_ID,
                 SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             );
 
         $this->touchQuery
             ->addAnd(
                 SpyProductReviewTableMap::COL_FK_LOCALE,
-                $this->getLocale()->getIdLocale()
+                $this->getLocale()->getIdLocale(),
             );
 
         $this->touchQuery

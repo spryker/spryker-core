@@ -28,14 +28,17 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
      * @var string
      */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
@@ -124,7 +127,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             ->findProductConcreteStorageDataByMapping(
                 static::PRODUCT_CONCRETE_MAPPING_TYPE,
                 $sku,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
         if (!$concreteProductData) {
             return null;
@@ -134,7 +137,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
             ->priceProductStorageClient
             ->getResolvedPriceProductConcreteTransfers(
                 $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
-                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT],
             );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransfer($priceProductTransfers);
@@ -156,14 +159,14 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES,
             $sku,
-            $restProductPricesAttributesTransfer
+            $restProductPricesAttributesTransfer,
         );
 
         $restResourceSelfLink = sprintf(
             static::SELF_LINK_TEMPLATE,
             ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $sku,
-            ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES
+            ProductPricesRestApiConfig::RESOURCE_CONCRETE_PRODUCT_PRICES,
         );
         $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
 

@@ -15,22 +15,27 @@ class QuoteRequestConfig extends AbstractSharedConfig
      * @var string
      */
     public const STATUS_DRAFT = 'draft';
+
     /**
      * @var string
      */
     public const STATUS_WAITING = 'waiting';
+
     /**
      * @var string
      */
     public const STATUS_IN_PROGRESS = 'in-progress';
+
     /**
      * @var string
      */
     public const STATUS_READY = 'ready';
+
     /**
      * @var string
      */
     public const STATUS_CLOSED = 'closed';
+
     /**
      * @var string
      */

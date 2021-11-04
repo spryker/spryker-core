@@ -47,7 +47,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $idCompanyUsers = $this->repository->findActiveCompanyUserIdsByCustomerId($customerTransfer->getIdCustomer());
         foreach ($idCompanyUsers as $idCompanyUser) {
             $companyCollection->addCompanyUser(
-                $this->companyUserFacade->getCompanyUserById($idCompanyUser)
+                $this->companyUserFacade->getCompanyUserById($idCompanyUser),
             );
         }
 

@@ -21,10 +21,12 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE GLOSSARY';
+
     /**
      * @var string
      */

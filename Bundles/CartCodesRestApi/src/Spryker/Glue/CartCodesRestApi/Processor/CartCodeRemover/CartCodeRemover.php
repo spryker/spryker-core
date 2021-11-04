@@ -69,7 +69,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setQuote($quoteTransfer)
-                ->setCartCode($restRequest->getResource()->getId())
+                ->setCartCode($restRequest->getResource()->getId()),
         );
 
         return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
@@ -104,7 +104,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCodeFromQuote(
             (new CartCodeRequestTransfer())
                 ->setQuote($quoteTransfer)
-                ->setCartCode($restRequest->getResource()->getId())
+                ->setCartCode($restRequest->getResource()->getId()),
         );
 
         return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeOperationResultTransfer, $restRequest);

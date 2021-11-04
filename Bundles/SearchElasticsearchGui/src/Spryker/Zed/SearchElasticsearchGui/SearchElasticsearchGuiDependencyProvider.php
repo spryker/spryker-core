@@ -18,6 +18,7 @@ class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const CLIENT_SEARCH_ELASTICSEARCH = 'CLIENT_SEARCH_ELASTICSEARCH';
+
     /**
      * @var string
      */
@@ -57,7 +58,7 @@ class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_SEARCH_ELASTICSEARCH, function (Container $container) {
             return new SearchElasticsearchGuiToSearchElasticsearchClientBridge(
-                $container->getLocator()->searchElasticsearch()->client()
+                $container->getLocator()->searchElasticsearch()->client(),
             );
         });
 
@@ -73,7 +74,7 @@ class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_SEARCH_ELASTICSEARCH, function (Container $container) {
             return new SearchElasticsearchGuiToSearchElasticsearchFacadeBridge(
-                $container->getLocator()->searchElasticsearch()->facade()
+                $container->getLocator()->searchElasticsearch()->facade(),
             );
         });
 

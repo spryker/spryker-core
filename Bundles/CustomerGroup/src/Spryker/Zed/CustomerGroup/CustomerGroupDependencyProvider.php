@@ -22,14 +22,17 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
+
     /**
      * @var string
      */
     public const SERVICE_DATE_FORMATTER = 'date formatter';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
@@ -83,7 +86,7 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_CUSTOMER, function (Container $container) {
             return new CustomerGroupToCustomerQueryContainerBridge(
-                $container->getLocator()->customer()->queryContainer()
+                $container->getLocator()->customer()->queryContainer(),
             );
         });
 

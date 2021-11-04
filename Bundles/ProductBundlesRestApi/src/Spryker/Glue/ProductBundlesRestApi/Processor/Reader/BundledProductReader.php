@@ -60,7 +60,7 @@ class BundledProductReader implements BundledProductReaderInterface
     public function getBundledProducts(RestRequestInterface $restRequest): RestResponseInterface
     {
         $productConcreteResource = $restRequest->findParentResourceByType(
-            ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+            ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
         );
 
         if (!$productConcreteResource || !$productConcreteResource->getId()) {
@@ -70,7 +70,7 @@ class BundledProductReader implements BundledProductReaderInterface
 
         $bundledProductRestResources = $this->getBundledProductRestResourcesByProductConcreteSkus(
             [$productConcreteSku],
-            $restRequest
+            $restRequest,
         );
 
         if (!isset($bundledProductRestResources[$productConcreteSku])) {
@@ -82,12 +82,10 @@ class BundledProductReader implements BundledProductReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
-     *
      * @param array<string> $productConcreteSkus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getBundledProductRestResourcesByProductConcreteSkus(
         array $productConcreteSkus,
@@ -95,7 +93,7 @@ class BundledProductReader implements BundledProductReaderInterface
     ): array {
         $productBundleStorageTransfers = $this->getProductBundlesFromStorage(
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productBundleStorageTransfers) {
@@ -112,19 +110,17 @@ class BundledProductReader implements BundledProductReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
-     *
      * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return array<\Generated\Shared\Transfer\ProductBundleStorageTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
      */
     protected function getProductBundlesFromStorage(array $productConcreteSkus, string $localeName): array
     {
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE_SKU,
             $productConcreteSkus,
-            $localeName
+            $localeName,
         );
 
         if (!$productConcreteIds) {

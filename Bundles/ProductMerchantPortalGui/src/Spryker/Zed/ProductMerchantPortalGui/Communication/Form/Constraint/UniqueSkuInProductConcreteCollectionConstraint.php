@@ -15,6 +15,7 @@ class UniqueSkuInProductConcreteCollectionConstraint extends SymfonyConstraint
      * @var string
      */
     protected const MESSAGE_VALUE_UNIQUE = 'This value needs to be unique.';
+
     /**
      * @var string
      */

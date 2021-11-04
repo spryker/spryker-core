@@ -68,7 +68,7 @@ class CompanyUserRoleByCompanyFormDataProvider
         $companyRoleChoicesValues = [];
 
         $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany())
+            (new CompanyRoleCriteriaFilterTransfer())->setIdCompany($companyUserTransfer->getCompany()->getIdCompany()),
         );
 
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {

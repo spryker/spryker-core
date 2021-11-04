@@ -52,7 +52,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         try {
             $contentBannerTypeTransfer = $this->contentBannerClient->executeBannerTypeByKey(
                 $contentBannerKey,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
         } catch (MissingBannerTermException $bannerTermException) {
             return $this->contentBannerRestResponseBuilder->createContentTypeInvalidErrorResponse();
@@ -66,18 +66,16 @@ class ContentBannerReader implements ContentBannerReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
      * @param array<string> $contentBannerKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getContentBannersResources(array $contentBannerKeys, string $localeName): array
     {
         $contentBannerTypeTransfers = $this->contentBannerClient->executeBannerTypeByKeys(
             $contentBannerKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentBannerTypeTransfers) {

@@ -104,6 +104,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array
     {
+        $localeNames = [];
         $localeNames[] = $storeTransfer->getAvailableLocaleIsoCodes();
 
         foreach ($this->storeFacade->getStoresWithSharedPersistence($storeTransfer) as $store) {
@@ -115,7 +116,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     * @param array<\Generated\Shared\Transfer\ContentStorageTransfer[]> $contentStorageTransfers
+     * @param array<array<\Generated\Shared\Transfer\ContentStorageTransfer>> $contentStorageTransfers
      * @param array<string> $availableLocales
      *
      * @return void
@@ -130,7 +131,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
             $contentStorageTransfer = new ContentStorageTransfer();
             if (!empty($contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale])) {
                 $contentStorageTransfer->fromArray(
-                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale]->toArray()
+                    $contentStorageTransfers[$contentTransfer->getIdContent()][$availableLocale]->toArray(),
                 );
             }
 
@@ -168,7 +169,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param array<\Generated\Shared\Transfer\ContentStorageTransfer> $contentStorageTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ContentStorageTransfer>>
      */
     protected function groupByIdContentAndLocale(iterable $contentStorageTransfers): array
     {

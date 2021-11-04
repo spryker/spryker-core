@@ -42,7 +42,7 @@ class CmsSlotTemplateWriterStep implements DataImportStepInterface
 
         $pathHash = $this->utilTextService->hashValue(
             $dataSet[CmsSlotTemplateDataSetInterface::CMS_SLOT_TEMPLATE_TEMPLATE_PATH],
-            Hash::MD5
+            Hash::MD5,
         );
 
         $cmsSlotTemplateEntity

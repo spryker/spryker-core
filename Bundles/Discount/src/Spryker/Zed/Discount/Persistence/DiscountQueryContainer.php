@@ -26,22 +26,27 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      * @var string
      */
     public const ALIAS_COL_ID_DISCOUNT = 'id_discount';
+
     /**
      * @var string
      */
     public const ALIAS_COL_AMOUNT = 'amount';
+
     /**
      * @var string
      */
     public const ALIAS_COL_TYPE = 'type';
+
     /**
      * @var string
      */
     public const ALIAS_COL_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
     public const ALIAS_COL_VOUCHER_CODE = 'VoucherCode';
+
     /**
      * @var string
      */
@@ -83,11 +88,11 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 [
                     $dateFormatted,
                     $dateFormatted,
-                ]
+                ],
             )
             ->_or()
             ->where(
-                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND ' . SpyDiscountTableMap::COL_VALID_TO . ' IS NULL )'
+                '(' . SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND ' . SpyDiscountTableMap::COL_VALID_TO . ' IS NULL )',
             );
 
         return $query;

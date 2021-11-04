@@ -61,7 +61,7 @@ class ProductSetCollectorToCollectorBridge implements ProductSetCollectorToColle
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

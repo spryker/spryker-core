@@ -42,6 +42,7 @@ class ReturnCreateItemsSubForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     *
      * @var string
      */
     protected const OPTION_RETURN_REASONS = 'option_return_reasons';
@@ -60,10 +61,9 @@ class ReturnCreateItemsSubForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class ReturnCreateItemsSubForm extends AbstractType
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
      *
      * @return $this
      */
@@ -101,10 +101,9 @@ class ReturnCreateItemsSubForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -129,7 +128,7 @@ class ReturnCreateItemsSubForm extends AbstractType
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
      *
      * @return $this
      */

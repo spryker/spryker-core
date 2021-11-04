@@ -46,12 +46,10 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function findPricesBySkuGroupedForCurrentStore(
         string $sku,
@@ -68,11 +66,9 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return array
+     * @return array<string, array>
      */
     public function groupPriceProduct(array $priceProductTransfers)
     {
@@ -85,14 +81,10 @@ class PriceGrouper implements PriceGrouperInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $prices
-     *
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $prices
+     * @param array<string, array> $prices
      *
-     * @return array
+     * @return array<string, array>
      */
     protected function groupPriceByCurrencyAndStore(PriceProductTransfer $priceProductTransfer, array $prices): array
     {

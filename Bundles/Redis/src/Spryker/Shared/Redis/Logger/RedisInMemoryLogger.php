@@ -18,7 +18,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
     protected const DSN_STRING_TEMPLATE_UNKNOWN = 'unknown';
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected static $logs = [];
 
@@ -66,7 +66,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getLogs(): array
     {
@@ -136,7 +136,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
                 $connectionCredentialsTransfer->getScheme() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
                 $connectionCredentialsTransfer->getHost() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
                 $connectionCredentialsTransfer->getPort() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
-                $connectionCredentialsTransfer->getDatabase() ?? static::DSN_STRING_TEMPLATE_UNKNOWN
+                $connectionCredentialsTransfer->getDatabase() ?? static::DSN_STRING_TEMPLATE_UNKNOWN,
             );
         }
 

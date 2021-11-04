@@ -16,6 +16,7 @@ interface DummyPaymentConstants
      * @var string
      */
     public const PROVIDER_NAME = 'DummyPayment';
+
     /**
      * @var string
      */

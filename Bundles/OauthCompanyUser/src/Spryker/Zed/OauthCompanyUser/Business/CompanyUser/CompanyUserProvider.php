@@ -120,7 +120,7 @@ class CompanyUserProvider implements CompanyUserProviderInterface
         foreach ($this->oauthCompanyUserIdentifierExpanderPlugins as $oauthCompanyUserIdentifierExpanderPlugin) {
             $companyUserIdentifierTransfer = $oauthCompanyUserIdentifierExpanderPlugin->expandCompanyUserIdentifier(
                 $companyUserIdentifierTransfer,
-                $companyUserTransfer
+                $companyUserTransfer,
             );
         }
 

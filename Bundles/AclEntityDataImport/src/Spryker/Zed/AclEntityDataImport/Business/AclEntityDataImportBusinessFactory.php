@@ -62,7 +62,7 @@ class AclEntityDataImportBusinessFactory extends DataImportBusinessFactory
     public function getAclEntitySegmentDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getAclEntitySegmentDataImporterConfiguration()
+            $this->getConfig()->getAclEntitySegmentDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -80,7 +80,7 @@ class AclEntityDataImportBusinessFactory extends DataImportBusinessFactory
     public function getAclEntitySegmentConnectorDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getAclEntitySegmentConnectorDataImporterConfiguration()
+            $this->getConfig()->getAclEntitySegmentConnectorDataImporterConfiguration(),
         );
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker

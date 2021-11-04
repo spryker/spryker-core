@@ -29,6 +29,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
      * @var string
      */
     protected const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Default prices';
+
     /**
      * @var string
      */
@@ -41,7 +42,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -68,7 +69,7 @@ class MerchantRelationshipPriceDimensionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

@@ -64,7 +64,7 @@ class ShoppingListProductOptionConnectorRepository extends AbstractRepository im
             ->createShoppingListProductOptionMapper()
             ->mapShoppingListProductOptionEntityCollectionToShoppingListProductOptionCollectionTransfer(
                 $shoppingListProductOptionEntityCollection,
-                new ShoppingListProductOptionCollectionTransfer()
+                new ShoppingListProductOptionCollectionTransfer(),
             );
     }
 }

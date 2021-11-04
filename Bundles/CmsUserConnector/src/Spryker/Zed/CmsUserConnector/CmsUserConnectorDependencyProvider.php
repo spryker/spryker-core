@@ -21,6 +21,7 @@ class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_USER = 'FACADE_USER';
+
     /**
      * @var string
      */

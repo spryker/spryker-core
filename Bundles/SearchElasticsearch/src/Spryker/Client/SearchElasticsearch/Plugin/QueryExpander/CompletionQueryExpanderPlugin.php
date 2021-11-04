@@ -24,10 +24,12 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      * @var string
      */
     protected const AGGREGATION_NAME = 'completion';
+
     /**
      * @var int
      */
     protected const SIZE = 10;
+
     /**
      * @var string
      */
@@ -66,7 +68,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
             throw new InvalidSearchQueryException(sprintf(
                 'The base search query must implement %s in order to use %s.',
                 SearchStringGetterInterface::class,
-                static::class
+                static::class,
             ));
         }
 

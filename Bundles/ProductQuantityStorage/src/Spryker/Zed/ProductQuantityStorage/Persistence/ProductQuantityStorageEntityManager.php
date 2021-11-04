@@ -48,7 +48,7 @@ class ProductQuantityStorageEntityManager extends AbstractEntityManager implemen
             ->createProductQuantityStorageMapper()
             ->hydrateSpyProductQuantityStorageEntity(
                 $spyProductQuantityStorageEntity,
-                $productQuantityStorageEntity
+                $productQuantityStorageEntity,
             );
 
         $spyProductQuantityStorageEntity->save();

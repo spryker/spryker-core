@@ -14,6 +14,7 @@ interface UserPasswordResetConstants
 {
     /**
      * @uses \Spryker\Shared\Application\ApplicationConstants::BASE_URL_ZED
+     *
      * @var string
      */
     public const BASE_URL_ZED = 'APPLICATION:BASE_URL_ZED';

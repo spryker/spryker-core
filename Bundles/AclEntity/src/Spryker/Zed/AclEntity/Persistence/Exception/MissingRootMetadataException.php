@@ -28,7 +28,7 @@ class MissingRootMetadataException extends Exception
     {
         return sprintf(
             'No root metadata definition found for %s',
-            $entityClass
+            $entityClass,
         );
     }
 }

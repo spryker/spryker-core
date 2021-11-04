@@ -22,7 +22,7 @@ class CmsSlotStorageFactory extends AbstractFactory
     {
         return new CmsSlotStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

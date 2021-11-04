@@ -67,7 +67,7 @@ class ConcreteAlternativeProductReader implements ConcreteAlternativeProductRead
         $concreteProductStorageData = $this->productStorage->findProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $concreteProductSku,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
         if (!$concreteProductStorageData) {
             return $this->alternativeProductRestResponseBuilder->createConcreteProductNotFoundError();

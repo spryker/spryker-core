@@ -42,7 +42,7 @@ class CompanyBusinessUnitAssigner implements CompanyBusinessUnitAssignerInterfac
 
             if ($companyBusinessUnit !== null) {
                 $companyUserResponseTransfer->getCompanyUser()->setFkCompanyBusinessUnit(
-                    $companyBusinessUnit->getIdCompanyBusinessUnit()
+                    $companyBusinessUnit->getIdCompanyBusinessUnit(),
                 );
             }
         }

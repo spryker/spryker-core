@@ -34,7 +34,7 @@ class ResourceSharePersistenceFactory extends AbstractPersistenceFactory
     public function createResourceShareMapper(): ResourceShareMapper
     {
         return new ResourceShareMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

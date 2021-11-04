@@ -44,7 +44,7 @@ class ResponseSecurityHeadersEventDispatcherPlugin extends AbstractPlugin implem
                         $event->getResponse()->headers->set($securityHeaderName, $securityHeaderValue);
                     }
                 }
-            }
+            },
         );
 
         return $eventDispatcher;

@@ -29,7 +29,7 @@ class CmsSlotStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotStoragePublisher(
             $this->getCmsSlotFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

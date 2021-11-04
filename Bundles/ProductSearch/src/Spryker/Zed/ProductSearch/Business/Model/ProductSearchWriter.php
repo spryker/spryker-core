@@ -59,12 +59,12 @@ class ProductSearchWriter implements ProductSearchWriterInterface
     {
         $this->productSearchMarker->deactivateProductSearch(
             $productConcreteTransfer->getIdProductConcrete(),
-            $this->getIsSearchableLocales($productConcreteTransfer, false)
+            $this->getIsSearchableLocales($productConcreteTransfer, false),
         );
 
         $this->productSearchMarker->activateProductSearch(
             $productConcreteTransfer->getIdProductConcrete(),
-            $this->getIsSearchableLocales($productConcreteTransfer, true)
+            $this->getIsSearchableLocales($productConcreteTransfer, true),
         );
 
         return $productConcreteTransfer;

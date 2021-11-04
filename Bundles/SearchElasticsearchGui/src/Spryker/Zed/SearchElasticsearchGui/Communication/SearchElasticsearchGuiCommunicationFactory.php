@@ -28,7 +28,7 @@ class SearchElasticsearchGuiCommunicationFactory extends AbstractCommunicationFa
     public function createIndexTable(): AbstractTable
     {
         return new IndexTable(
-            $this->getSearchElasticsearchFacade()
+            $this->getSearchElasticsearchFacade(),
         );
     }
 
@@ -39,7 +39,7 @@ class SearchElasticsearchGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new DocumentTable(
             $this->getSearchElasticsearchClient(),
-            $this->createDocumentListQuery()
+            $this->createDocumentListQuery(),
         );
     }
 

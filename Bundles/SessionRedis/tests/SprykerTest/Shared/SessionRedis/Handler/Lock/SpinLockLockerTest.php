@@ -72,7 +72,7 @@ class SpinLockLockerTest extends Unit
             ->with(
                 $this->anything(),
                 1,
-                $expectedGeneratedKey
+                $expectedGeneratedKey,
             );
         $this->redisClientMock->expects($this->once())
             ->method('set')

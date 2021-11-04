@@ -28,22 +28,27 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT_SET = 'FACADE_ProductSet';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_URL = 'FACADE_URL';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE';
+
     /**
      * @var string
      */
@@ -53,6 +58,7 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+
     /**
      * @var string
      */

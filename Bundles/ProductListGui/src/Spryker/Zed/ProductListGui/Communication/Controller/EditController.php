@@ -38,12 +38,12 @@ class EditController extends ProductListAbstractController
         $productListAggregateForm = $this->createProductListAggregateForm($request);
         $productListTransfer = $this->findProductListTransfer(
             $request,
-            $productListAggregateForm
+            $productListAggregateForm,
         );
 
         if ($productListTransfer === null) {
             $productListTransfer = (new ProductListTransfer())->setIdProductList(
-                $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST))
+                $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST)),
             );
 
             return $this->viewResponse($this->executeEditAction($productListTransfer, $productListAggregateForm));
@@ -63,7 +63,7 @@ class EditController extends ProductListAbstractController
 
         $redirectUrl = Url::generate(
             static::ROUTE_REDIRTECT,
-            [static::URL_PARAM_ID_PRODUCT_LIST => $productListTransfer->getIdProductList()]
+            [static::URL_PARAM_ID_PRODUCT_LIST => $productListTransfer->getIdProductList()],
         )->build();
 
         return $this->redirectResponse($redirectUrl);
@@ -77,7 +77,7 @@ class EditController extends ProductListAbstractController
         $availableProductConcreteTable = $this->getFactory()->createAvailableProductConcreteTable();
 
         return $this->jsonResponse(
-            $availableProductConcreteTable->fetchData()
+            $availableProductConcreteTable->fetchData(),
         );
     }
 
@@ -89,7 +89,7 @@ class EditController extends ProductListAbstractController
         $assignedProductConcreteTable = $this->getFactory()->createAssignedProductConcreteTable();
 
         return $this->jsonResponse(
-            $assignedProductConcreteTable->fetchData()
+            $assignedProductConcreteTable->fetchData(),
         );
     }
 

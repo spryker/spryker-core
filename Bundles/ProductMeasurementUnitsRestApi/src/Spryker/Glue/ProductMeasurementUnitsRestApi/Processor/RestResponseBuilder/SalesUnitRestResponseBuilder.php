@@ -63,7 +63,7 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
         $restProductMeasurementUnitsAttributesTransfer = $this->salesUnitMapper
             ->mapProductMeasurementSalesUnitTransferToRestSalesUnitsAttributesTransfer(
                 $productMeasurementSalesUnitTransfer,
-                new RestSalesUnitsAttributesTransfer()
+                new RestSalesUnitsAttributesTransfer(),
             );
 
         $resourceId = (string)$productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
@@ -71,12 +71,12 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
         $salesUnitResource = $this->restResourceBuilder->createRestResource(
             ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS,
             $resourceId,
-            $restProductMeasurementUnitsAttributesTransfer
+            $restProductMeasurementUnitsAttributesTransfer,
         );
 
         return $salesUnitResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($salesUnitResource->getId(), $concreteProductResourceId)
+            $this->createSelfLink($salesUnitResource->getId(), $concreteProductResourceId),
         );
     }
 
@@ -138,7 +138,7 @@ class SalesUnitRestResponseBuilder implements SalesUnitRestResponseBuilderInterf
             ProductMeasurementUnitsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
             $concreteProductResourceId,
             ProductMeasurementUnitsRestApiConfig::RESOURCE_SALES_UNITS,
-            $resourceId
+            $resourceId,
         );
     }
 }

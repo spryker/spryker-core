@@ -34,10 +34,12 @@ class SearchElasticsearchSharedTester extends Actor
      * @var string
      */
     public const DEFAULT_ELASTICSEARCH_PROTOCOL = 'http';
+
     /**
      * @var string
      */
     public const DEFAULT_ELASTICSEARCH_HOST = 'localhost';
+
     /**
      * @var string
      */
@@ -58,9 +60,9 @@ class SearchElasticsearchSharedTester extends Actor
 
         return new ElasticsearchInMemoryLogger(
             new SearchElasticsearchToUtilEncodingServiceBridge(
-                $this->getLocator()->utilEncoding()->service()
+                $this->getLocator()->utilEncoding()->service(),
             ),
-            $clientConfig
+            $clientConfig,
         );
     }
 }

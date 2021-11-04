@@ -16,9 +16,9 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 
 /**
  * @property-read string $description
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Header[] $headers
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType[] $content
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Link[] $links
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Header> $headers
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType> $content
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Link> $links
  * @property-read bool $required
  */
 class Response extends AbstractObject implements ReferableInterface

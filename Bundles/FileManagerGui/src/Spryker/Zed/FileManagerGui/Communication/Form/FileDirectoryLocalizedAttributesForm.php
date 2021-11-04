@@ -25,10 +25,12 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
@@ -55,7 +57,7 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

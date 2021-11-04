@@ -26,14 +26,17 @@ class CmsDataPageMapBuilder implements PageMapInterface
      * @var string
      */
     public const TYPE_CMS_PAGE = 'cms_page';
+
     /**
      * @var string
      */
     public const TYPE = 'type';
+
     /**
      * @var string
      */
     public const ID_CMS_PAGE = 'id_cms_page';
+
     /**
      * @var string
      */
@@ -100,13 +103,13 @@ class CmsDataPageMapBuilder implements PageMapInterface
     {
         if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]) {
             $pageMapTransfer->setActiveFrom(
-                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d')
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d'),
             );
         }
 
         if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]) {
             $pageMapTransfer->setActiveTo(
-                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d')
+                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d'),
             );
         }
     }

@@ -33,7 +33,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
         return new MerchantUserTable(
             $this->getMerchantUserPropelQuery(),
             $this->getRouterFacade(),
-            $idMerchant
+            $idMerchant,
         );
     }
 
@@ -59,7 +59,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createUniqueEmailConstraint(): UniqueEmailConstraint
     {
         return new UniqueEmailConstraint(
-            [UniqueEmailConstraint::OPTION_MERCHANT_USER_FACADE => $this->getMerchantUserFacade()]
+            [UniqueEmailConstraint::OPTION_MERCHANT_USER_FACADE => $this->getMerchantUserFacade()],
         );
     }
 
@@ -89,7 +89,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -100,7 +100,7 @@ class MerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

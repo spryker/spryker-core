@@ -27,6 +27,7 @@ abstract class CommonCategoryType extends AbstractType
      * @var string
      */
     public const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
+
     /**
      * @var string
      */
@@ -36,34 +37,42 @@ abstract class CommonCategoryType extends AbstractType
      * @var string
      */
     public const FIELD_STORE_RELATION = 'store_relation';
+
     /**
      * @var string
      */
     protected const FIELD_CATEGORY_KEY = 'category_key';
+
     /**
      * @var string
      */
     protected const FIELD_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     protected const FIELD_IS_IN_MENU = 'is_in_menu';
+
     /**
      * @var string
      */
     protected const FIELD_IS_CLICKABLE = 'is_clickable';
+
     /**
      * @var string
      */
     protected const FIELD_IS_SEARCHABLE = 'is_searchable';
+
     /**
      * @var string
      */
     protected const FIELD_IS_MAIN = 'is_main';
+
     /**
      * @var string
      */
     protected const FIELD_TEMPLATE = 'fk_category_template';
+
     /**
      * @var string
      */
@@ -73,14 +82,17 @@ abstract class CommonCategoryType extends AbstractType
      * @var string
      */
     protected const LABEL_IS_ACTIVE = 'Active';
+
     /**
      * @var string
      */
     protected const LABEL_IS_IN_MENU = 'Visible in the category tree';
+
     /**
      * @var string
      */
     protected const LABEL_IS_SEARCHABLE = 'Allow to search for this category';
+
     /**
      * @var string
      */
@@ -113,7 +125,7 @@ abstract class CommonCategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -194,7 +206,7 @@ abstract class CommonCategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -228,7 +240,7 @@ abstract class CommonCategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -240,7 +252,7 @@ abstract class CommonCategoryType extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

@@ -46,38 +46,47 @@ class AbstractProductFormDataProvider
      * @var string
      */
     public const FORM_FIELD_ID = 'id';
+
     /**
      * @var string
      */
     public const FORM_FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
     public const FORM_FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+
     /**
      * @var string
      */
     public const FORM_FIELD_LABEL = 'label';
+
     /**
      * @var string
      */
     public const FORM_FIELD_SUPER = 'super';
+
     /**
      * @var string
      */
     public const FORM_FIELD_INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
     public const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+
     /**
      * @var string
      */
     public const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+
     /**
      * @var string
      */
@@ -92,6 +101,7 @@ class AbstractProductFormDataProvider
      * @var string
      */
     public const DEFAULT_INPUT_TYPE = 'text';
+
     /**
      * @var string
      */
@@ -99,6 +109,7 @@ class AbstractProductFormDataProvider
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
@@ -149,7 +160,7 @@ class AbstractProductFormDataProvider
     protected $priceProductFacade;
 
     /**
-     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
+     * @var \Everon\Component\Collection\CollectionInterface|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     protected $attributeTransferCollection;
 
@@ -525,7 +536,7 @@ class AbstractProductFormDataProvider
     {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $attributeValue = isset($attributes[$type]) ? $attributes[$type] : null;
+            $attributeValue = $attributes[$type] ?? null;
 
             if ($isNew) {
                 $attributeValue = null;
@@ -558,7 +569,7 @@ class AbstractProductFormDataProvider
             $isSuper = $attributeTransfer->getIsSuper();
             $inputType = $attributeTransfer->getInputType();
             $allowInput = $attributeTransfer->getAllowInput();
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
             $checkboxDisabled = false;
             $valueDisabled = true;
 
@@ -603,7 +614,7 @@ class AbstractProductFormDataProvider
             $isSuper = false;
             $inputType = self::DEFAULT_INPUT_TYPE;
             $allowInput = false;
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
             $shouldBeTextArea = mb_strlen($value) > 255;
             $checkboxDisabled = true;
             $valueDisabled = true;
@@ -644,7 +655,7 @@ class AbstractProductFormDataProvider
                 continue;
             }
 
-            $value = isset($productAttributes[$type]) ? $productAttributes[$type] : null;
+            $value = $productAttributes[$type] ?? null;
 
             if ($isNew) {
                 $value = null;
@@ -676,7 +687,7 @@ class AbstractProductFormDataProvider
             foreach ($this->localeProvider->getLocaleCollection() as $localeTransfer) {
                 $productAttributeKeys = array_unique(array_merge(
                     $productAttributeKeys,
-                    $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer)
+                    $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer),
                 ));
             }
         }
@@ -730,7 +741,7 @@ class AbstractProductFormDataProvider
             $id = $attributeTransfer->getIdProductManagementAttribute();
             $allowInput = $attributeTransfer->getAllowInput();
 
-            $value = isset($productAttributeValues[$type]) ? $productAttributeValues[$type] : null;
+            $value = $productAttributeValues[$type] ?? null;
 
             $checkboxDisabled = false;
             $valueDisabled = true;
@@ -859,7 +870,7 @@ class AbstractProductFormDataProvider
 
         $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
             $productAbstractTransfer->getIdProductAbstract(),
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         return new ArrayObject($priceProducts);
@@ -889,7 +900,7 @@ class AbstractProductFormDataProvider
         $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
             $productTransfer->getIdProductConcrete(),
             $productAbstractTransfer->getIdProductAbstract(),
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
 
         return new ArrayObject($priceProducts);

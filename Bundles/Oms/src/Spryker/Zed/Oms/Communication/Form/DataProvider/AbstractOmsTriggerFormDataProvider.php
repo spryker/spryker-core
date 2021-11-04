@@ -13,6 +13,7 @@ abstract class AbstractOmsTriggerFormDataProvider
      * @var string
      */
     public const OMS_ACTION_ITEM_TRIGGER = 'submit-trigger-event-for-order-items';
+
     /**
      * @var string
      */
@@ -22,14 +23,17 @@ abstract class AbstractOmsTriggerFormDataProvider
      * @var string
      */
     public const QUERY_PARAM_EVENT = 'event';
+
     /**
      * @var string
      */
     public const QUERY_PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @var string
      */
     public const QUERY_PARAM_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
+
     /**
      * @var string
      */

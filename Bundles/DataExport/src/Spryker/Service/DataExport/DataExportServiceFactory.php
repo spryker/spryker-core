@@ -39,7 +39,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
     {
         return new DataExportConfigurationYamlParser(
             $this->getUtilDataReaderService(),
-            $this->createDataExportConfigurationMapper()
+            $this->createDataExportConfigurationMapper(),
         );
     }
 
@@ -75,7 +75,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
         return new DataExportWriter(
             $this->getDataExportConnectionPlugins(),
             $this->createDataExportFormatter(),
-            $this->createDataExportLocalWriter()
+            $this->createDataExportLocalWriter(),
         );
     }
 
@@ -86,7 +86,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
     {
         return new DataExportFormatter(
             $this->getDataExportFormatterPlugins(),
-            $this->createDataExportCsvFormatter()
+            $this->createDataExportCsvFormatter(),
         );
     }
 
@@ -114,7 +114,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
         return new DataExportLocalWriter(
             $this->createDataExportFormatter(),
             $this->createDataExportPathResolver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

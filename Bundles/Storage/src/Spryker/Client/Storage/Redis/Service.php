@@ -311,7 +311,7 @@ class Service implements ServiceInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new Exception(
-                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
+                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"',
             );
         }
 
@@ -349,7 +349,7 @@ class Service implements ServiceInterface
         if (!$result) {
             throw new Exception(
                 'could not set redisKeys for items: "[' . implode(',', array_keys($items))
-                . ']" with values: "[' . implode(',', array_values($items)) . ']"'
+                . ']" with values: "[' . implode(',', array_values($items)) . ']"',
             );
         }
     }

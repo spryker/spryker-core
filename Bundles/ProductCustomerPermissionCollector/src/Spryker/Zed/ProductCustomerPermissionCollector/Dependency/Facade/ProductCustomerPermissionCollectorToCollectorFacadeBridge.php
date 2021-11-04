@@ -61,7 +61,7 @@ class ProductCustomerPermissionCollectorToCollectorFacadeBridge implements Produ
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

@@ -107,8 +107,6 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentCollection
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentCollection
      * @param int $idSalesOrder
      *
@@ -133,7 +131,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
         $paymentMethodTypeEntity = $this->paymentQueryContainer
             ->queryPaymentMethodType(
                 $paymentTransfer->getPaymentProvider(),
-                $paymentTransfer->getPaymentMethod()
+                $paymentTransfer->getPaymentMethod(),
             )
             ->findOneOrCreate();
 

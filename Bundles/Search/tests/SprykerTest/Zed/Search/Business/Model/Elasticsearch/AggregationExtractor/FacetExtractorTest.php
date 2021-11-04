@@ -44,7 +44,7 @@ class FacetExtractorTest extends Unit
         $facetValueTransformerFactory = $this->getMockBuilder(FacetValueTransformerFactoryInterface::class)->getMock();
         $facetExtractor = new FacetExtractor(
             $facetConfigTransfer,
-            $facetValueTransformerFactory
+            $facetValueTransformerFactory,
         );
 
         /** @var \Generated\Shared\Transfer\FacetSearchResultTransfer $facetResultTransfer */
@@ -74,7 +74,7 @@ class FacetExtractorTest extends Unit
         $facetValueTransformerFactory = $this->getMockBuilder(FacetValueTransformerFactoryInterface::class)->getMock();
         $facetExtractor = new FacetExtractor(
             $facetConfigTransfer,
-            $facetValueTransformerFactory
+            $facetValueTransformerFactory,
         );
 
         /** @var \Generated\Shared\Transfer\FacetSearchResultTransfer $facetResultTransfer */

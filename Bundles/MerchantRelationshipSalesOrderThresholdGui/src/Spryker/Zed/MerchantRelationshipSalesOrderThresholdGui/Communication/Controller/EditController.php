@@ -31,10 +31,12 @@ class EditController extends AbstractController
      * @var string
      */
     protected const PARAM_STORE_CURRENCY_REQUEST = 'store_currency';
+
     /**
      * @var string
      */
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+
     /**
      * @var string
      */
@@ -56,7 +58,7 @@ class EditController extends AbstractController
         $thresholdForm = $this->getFactory()->createThresholdForm(
             $idMerchantRelationship,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
         $thresholdForm->handleRequest($request);
 
@@ -84,7 +86,7 @@ class EditController extends AbstractController
         $merchantRelationshipTransfer = $this->getFactory()
             ->getMerchantRelationshipFacade()
             ->getMerchantRelationshipById(
-                $this->createMerchantRelationshipTransfer($idMerchantRelationship)
+                $this->createMerchantRelationshipTransfer($idMerchantRelationship),
             );
 
         $companyBusinessUnit = $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit();
@@ -93,8 +95,8 @@ class EditController extends AbstractController
             $this->getFactory()
                 ->getCompanyFacade()
                 ->getCompanyById(
-                    $this->createCompanyTransfer($companyBusinessUnit->getFkCompany())
-                )
+                    $this->createCompanyTransfer($companyBusinessUnit->getFkCompany()),
+                ),
         );
 
         $merchantRelationshipTransfer->setOwnerCompanyBusinessUnit($companyBusinessUnit);
@@ -129,7 +131,7 @@ class EditController extends AbstractController
             MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD,
             $idMerchantRelationship,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $this->handleThresholdData(
@@ -137,7 +139,7 @@ class EditController extends AbstractController
             MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD_MAX,
             $idMerchantRelationship,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $this->handleThresholdData(
@@ -145,7 +147,7 @@ class EditController extends AbstractController
             MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT,
             $idMerchantRelationship,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESSFUL);
@@ -173,7 +175,7 @@ class EditController extends AbstractController
             $thresholdData[AbstractMerchantRelationshipThresholdType::FIELD_ID_THRESHOLD] ?? null,
             $idMerchantRelationship,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         if ($this->canMapThresholdData($thresholdData, $strategyGroup)) {
@@ -201,7 +203,7 @@ class EditController extends AbstractController
         return $this->getFactory()
             ->createMerchantRelationshipThresholdFormMapperResolver()
             ->hasMerchantRelationshipThresholdFormMapperByStrategyGroup(
-                $strategyGroup
+                $strategyGroup,
             );
     }
 
@@ -272,7 +274,7 @@ class EditController extends AbstractController
             ->setCurrency($currencyTransfer)
             ->setSalesOrderThresholdValue(new SalesOrderThresholdValueTransfer())
             ->setMerchantRelationship(
-                $this->createMerchantRelationshipTransfer($idMerchantRelationship)
+                $this->createMerchantRelationshipTransfer($idMerchantRelationship),
             );
     }
 

@@ -65,7 +65,7 @@ class CompanyUnitAddressBusinessTester extends Actor
         $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
         for ($i = 0; $i < $addressesAmount; $i++) {
             $companyUnitAddressCollectionTransfer->addCompanyUnitAddress(
-                $this->haveCompanyUnitAddress()
+                $this->haveCompanyUnitAddress(),
             );
         }
 

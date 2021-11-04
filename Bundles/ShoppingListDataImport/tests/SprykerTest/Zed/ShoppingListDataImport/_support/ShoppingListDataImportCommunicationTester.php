@@ -89,7 +89,7 @@ class ShoppingListDataImportCommunicationTester extends Actor
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                 CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnit->getIdCompanyBusinessUnit(),
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
+            ],
         );
     }
 
@@ -102,7 +102,7 @@ class ShoppingListDataImportCommunicationTester extends Actor
             [
                 CompanyTransfer::STATUS => 'approved',
                 CompanyTransfer::IS_ACTIVE => true,
-            ]
+            ],
         );
     }
 
@@ -116,7 +116,7 @@ class ShoppingListDataImportCommunicationTester extends Actor
         return $this->haveCompanyBusinessUnit(
             [
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
+            ],
         );
     }
 

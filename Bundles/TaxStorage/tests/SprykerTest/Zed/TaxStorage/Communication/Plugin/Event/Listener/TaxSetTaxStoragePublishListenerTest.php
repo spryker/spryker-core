@@ -84,11 +84,11 @@ class TaxSetTaxStoragePublishListenerTest extends Unit
         // Act
         $this->taxSetTaxStoragePublishListener->handleBulk(
             $eventTransfers,
-            TaxEvents::ENTITY_SPY_TAX_SET_TAX_CREATE
+            TaxEvents::ENTITY_SPY_TAX_SET_TAX_CREATE,
         );
         $synchronizationDataTransfers = $this->taxStorageRepository
             ->getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets(
-                [$idTaxSet]
+                [$idTaxSet],
             );
 
         // Assert

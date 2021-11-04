@@ -42,11 +42,11 @@ class ProductConfiguratorRequestExpander implements ProductConfiguratorRequestEx
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRequestTransfer {
         $productConfiguratorRequestDataTransfer = $this->productConfiguratorRequestDataExpanderComposite->expand(
-            $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()
+            $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail(),
         );
 
         $productConfiguratorRequestTransfer->setProductConfiguratorRequestData(
-            $productConfiguratorRequestDataTransfer
+            $productConfiguratorRequestDataTransfer,
         );
 
         return $this->executeProductConfiguratorRequestExpanderPlugins($productConfiguratorRequestTransfer);

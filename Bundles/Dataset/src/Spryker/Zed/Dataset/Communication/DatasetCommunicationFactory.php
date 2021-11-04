@@ -45,7 +45,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             DatasetForm::class,
             $datasetFormProvider->getData($idDataset),
-            $datasetFormProvider->getOptions($idDataset)
+            $datasetFormProvider->getOptions($idDataset),
         );
     }
 

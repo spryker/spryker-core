@@ -18,6 +18,7 @@ class AutoloadUpdater implements UpdaterInterface
      * @var string
      */
     public const AUTOLOAD_KEY = 'autoload';
+
     /**
      * @var string
      */
@@ -27,34 +28,42 @@ class AutoloadUpdater implements UpdaterInterface
      * @var string
      */
     public const BASE_TESTS_DIRECTORY = 'tests';
+
     /**
      * @var string
      */
     public const BASE_SRC_DIRECTORY = 'src';
+
     /**
      * @var string
      */
     public const BASE_SUPPORT_DIRECTORY = '_support';
+
     /**
      * @var string
      */
     public const BASE_HELPER_DIRECTORY = 'Helper';
+
     /**
      * @var string
      */
     protected const BASE_PAGE_OBJECT_DIRECTORY = 'PageObject';
+
     /**
      * @var string
      */
     public const BASE_TESTER_DIRECTORY = 'Tester';
+
     /**
      * @var string
      */
     public const BASE_FIXTURES_DIRECTORY = 'Fixtures';
+
     /**
      * @var string
      */
     public const BASE_STEP_OVERRIDE_DIRECTORY = 'StepOverride';
+
     /**
      * @var string
      */
@@ -64,18 +73,22 @@ class AutoloadUpdater implements UpdaterInterface
      * @var string
      */
     public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
+
     /**
      * @var string
      */
     public const SPRYKER_SDK_TEST_NAMESPACE = 'SprykerSdkTest';
+
     /**
      * @var string
      */
     public const SPRYKER_ECO_TEST_NAMESPACE = 'SprykerEcoTest';
+
     /**
      * @var string
      */
     public const SPRYKER_SHOP_TEST_NAMESPACE = 'SprykerShopTest';
+
     /**
      * @var string
      */
@@ -85,18 +98,22 @@ class AutoloadUpdater implements UpdaterInterface
      * @var string
      */
     public const SPRYKER_NAMESPACE = 'Spryker';
+
     /**
      * @var string
      */
     public const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
+
     /**
      * @var string
      */
     public const SPRYKER_ECO_NAMESPACE = 'SprykerEco';
+
     /**
      * @var string
      */
     public const SPRYKER_SDK_NAMESPACE = 'SprykerSdk';
+
     /**
      * @var string
      */
@@ -106,6 +123,7 @@ class AutoloadUpdater implements UpdaterInterface
      * @var string
      */
     public const PSR_0 = 'psr-0';
+
     /**
      * @var string
      */
@@ -354,7 +372,7 @@ class AutoloadUpdater implements UpdaterInterface
                 rtrim($modulePath, DIRECTORY_SEPARATOR),
                 static::BASE_TESTS_DIRECTORY,
                 $testDirectoryKey,
-            ]
+            ],
         );
 
         if ($this->pathExists($directoryPath)) {
@@ -406,7 +424,7 @@ class AutoloadUpdater implements UpdaterInterface
     }
 
     /**
-     * @param array $pathParts
+     * @param array<string> $pathParts
      *
      * @return string
      */
@@ -479,7 +497,7 @@ class AutoloadUpdater implements UpdaterInterface
                 static::AUTOLOAD_KEY => [$this, 'removeInvalidAutoloadPaths'],
                 static::AUTOLOAD_DEV_KEY => [$this, 'removeInvalidAutoloadNamespaces'],
             ],
-            $modulePath
+            $modulePath,
         );
 
         $composerJson = $this->removeAutoloadDuplicates($composerJson);

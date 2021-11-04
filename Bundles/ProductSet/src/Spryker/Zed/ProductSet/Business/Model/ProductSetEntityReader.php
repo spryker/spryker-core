@@ -44,7 +44,7 @@ class ProductSetEntityReader implements ProductSetEntityReaderInterface
         if (!$productSetEntity) {
             throw new ProductSetNotFoundException(sprintf(
                 'Product set with ID "%d" not found.',
-                $productSetTransfer->getIdProductSet()
+                $productSetTransfer->getIdProductSet(),
             ));
         }
 

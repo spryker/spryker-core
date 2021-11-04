@@ -22,10 +22,12 @@ class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+
     /**
      * @var string
      */
@@ -69,7 +71,7 @@ class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsSlotBlockToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

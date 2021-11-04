@@ -17,14 +17,17 @@ class SkuGenerator implements SkuGeneratorInterface
      * @var string
      */
     public const SKU_ABSTRACT_SEPARATOR = '-';
+
     /**
      * @var string
      */
     public const SKU_TYPE_SEPARATOR = '-';
+
     /**
      * @var string
      */
     public const SKU_VALUE_SEPARATOR = '_';
+
     /**
      * @var int
      */
@@ -116,7 +119,7 @@ class SkuGenerator implements SkuGeneratorInterface
             '%s%s%s',
             $abstractSku,
             static::SKU_ABSTRACT_SEPARATOR,
-            $concreteSku
+            $concreteSku,
         ));
         $formattedSku = substr($formattedSku, 0, static::SKU_MAX_LENGTH);
         $formattedSku = rtrim($formattedSku, implode('', [

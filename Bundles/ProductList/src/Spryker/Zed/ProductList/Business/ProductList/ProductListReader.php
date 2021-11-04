@@ -78,11 +78,11 @@ class ProductListReader implements ProductListReaderInterface
         $productConcreteIdsToProductAbstractIdsMap = $this->productFacade->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
 
         $productConcreteLists = $this->mapProductListIdsByIdProductConcreteAndType(
-            $this->productListRepository->getProductListIdsByProductIds($productConcreteIds)
+            $this->productListRepository->getProductListIdsByProductIds($productConcreteIds),
         );
 
         $productAbstractLists = $this->getProductAbstractListIdsByProductAbstractIds(
-            array_values($productConcreteIdsToProductAbstractIdsMap)
+            array_values($productConcreteIdsToProductAbstractIdsMap),
         );
 
         return $this->mergeProductConcreteAndProductAbstractLists($productConcreteLists, $productAbstractLists, $productConcreteIdsToProductAbstractIdsMap);
@@ -135,13 +135,13 @@ class ProductListReader implements ProductListReaderInterface
             array_merge(
                 $this->productListRepository->getProductConcreteProductListIdsForType(
                     $idProduct,
-                    SpyProductListTableMap::COL_TYPE_BLACKLIST
+                    SpyProductListTableMap::COL_TYPE_BLACKLIST,
                 ),
                 $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
                     $idProduct,
-                    SpyProductListTableMap::COL_TYPE_BLACKLIST
-                )
-            )
+                    SpyProductListTableMap::COL_TYPE_BLACKLIST,
+                ),
+            ),
         );
     }
 
@@ -156,13 +156,13 @@ class ProductListReader implements ProductListReaderInterface
             array_merge(
                 $this->productListRepository->getProductConcreteProductListIdsForType(
                     $idProduct,
-                    SpyProductListTableMap::COL_TYPE_WHITELIST
+                    SpyProductListTableMap::COL_TYPE_WHITELIST,
                 ),
                 $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
                     $idProduct,
-                    SpyProductListTableMap::COL_TYPE_WHITELIST
-                )
-            )
+                    SpyProductListTableMap::COL_TYPE_WHITELIST,
+                ),
+            ),
         );
     }
 
@@ -229,8 +229,8 @@ class ProductListReader implements ProductListReaderInterface
         return array_unique(
             array_merge(
                 $this->productListRepository->getProductAbstractIdsRelatedToProductConcrete($productListIds),
-                $this->productListRepository->getProductAbstractIdsRelatedToCategories($productListIds)
-            )
+                $this->productListRepository->getProductAbstractIdsRelatedToCategories($productListIds),
+            ),
         );
     }
 
@@ -244,8 +244,8 @@ class ProductListReader implements ProductListReaderInterface
         return array_unique(
             array_merge(
                 $this->productListRepository->getProductConcreteIdsRelatedToProductLists($productListIds),
-                $this->productListRepository->getProductConcreteIdsRelatedToProductListsCategories($productListIds)
-            )
+                $this->productListRepository->getProductConcreteIdsRelatedToProductListsCategories($productListIds),
+            ),
         );
     }
 

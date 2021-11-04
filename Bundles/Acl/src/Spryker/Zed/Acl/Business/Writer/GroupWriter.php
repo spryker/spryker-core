@@ -53,7 +53,7 @@ class GroupWriter implements GroupWriterInterface
 
         if ($existedGroupTransfer) {
             throw new GroupExistsException(
-                $this->createGroupExceptionMessage($existedGroupTransfer)
+                $this->createGroupExceptionMessage($existedGroupTransfer),
             );
         }
 

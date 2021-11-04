@@ -96,7 +96,7 @@ class CartItemsMapperBaseTest extends Unit
         $transfer = new StorageAvailabilityTransfer();
         $transfer->fromArray(
             json_decode(file_get_contents(__DIR__ . '/json/' . $jsonFileToLoad), true),
-            true
+            true,
         );
 
         return $transfer;

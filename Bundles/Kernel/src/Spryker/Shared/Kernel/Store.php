@@ -404,8 +404,8 @@ class Store
                 sprintf(
                     '"%s" currency is not a valid value. Please use one of "%s".',
                     $currencyIsoCode,
-                    implode('", "', $this->currencyIsoCodes)
-                )
+                    implode('", "', $this->currencyIsoCodes),
+                ),
             );
         }
 

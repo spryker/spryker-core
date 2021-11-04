@@ -44,7 +44,7 @@ class EditFileController extends AbstractUploadFileController
                 $this->getFactory()->getFileManagerFacade()->saveFile($fileManagerDataTransfer);
 
                 $this->addSuccessMessage(
-                    'The file was edited successfully.'
+                    'The file was edited successfully.',
                 );
                 $redirectUrl = Url::generate(sprintf('/file-manager-gui/edit-file?id-file=%d', $idFile))->build();
 
@@ -74,7 +74,7 @@ class EditFileController extends AbstractUploadFileController
     public function fileInfoTableAction(Request $request)
     {
         $idFile = $this->castId(
-            $request->get(static::URL_PARAM_ID_FILE)
+            $request->get(static::URL_PARAM_ID_FILE),
         );
 
         $fileInfoTable = $this
@@ -82,7 +82,7 @@ class EditFileController extends AbstractUploadFileController
             ->createFileInfoEditTable($idFile);
 
         return $this->jsonResponse(
-            $fileInfoTable->fetchData()
+            $fileInfoTable->fetchData(),
         );
     }
 

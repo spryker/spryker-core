@@ -27,7 +27,7 @@ class ShipmentCarrierMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentCarrier> $shipmentCarrierEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentCarrier[] $shipmentCarrierEntityCollection
      * @param array<\Generated\Shared\Transfer\ShipmentCarrierTransfer> $shipmentCarrierTransferCollection
      *
      * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>

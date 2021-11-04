@@ -52,7 +52,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     protected function existsDatabase()
     {
         return $this->runProcess(
-            $this->getExistsCommand()
+            $this->getExistsCommand(),
         );
     }
 
@@ -62,7 +62,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     protected function createDatabase()
     {
         $this->runProcess(
-            $this->getCreateCommand()
+            $this->getCreateCommand(),
         );
     }
 
@@ -77,7 +77,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
             Config::get(PropelConstants::ZED_DB_DATABASE),
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE),
         );
     }
 
@@ -104,7 +104,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
             Config::get(PropelConstants::ZED_DB_DATABASE),
-            'postgres'
+            'postgres',
         );
     }
 
@@ -115,7 +115,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     {
         return sprintf(
             'sudo createdb %s -E UTF8 -T template0',
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE),
         );
     }
 
@@ -148,7 +148,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     {
         putenv(sprintf(
             'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
         ));
     }
 

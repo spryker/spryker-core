@@ -34,7 +34,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
             $eventListeners,
             $this->createEventQueueProducer(),
             $this->createEventLogger(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -46,7 +46,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
         return new EventQueueProducer(
             $this->getQueueClient(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

@@ -24,9 +24,7 @@ class PaymentConfig extends AbstractBundleConfig
      *    'PAYMENT_METHOD_B' => 'StateMachineProcess02',
      * ]
      *
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getPaymentStatemachineMappings()
     {

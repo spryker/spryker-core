@@ -48,7 +48,7 @@ class StorageRedisExporter implements StorageRedisExporterInterface
         return $this->redisFacade->export(
             $destination,
             $this->redisPort,
-            $this->redisHost
+            $this->redisHost,
         );
     }
 }

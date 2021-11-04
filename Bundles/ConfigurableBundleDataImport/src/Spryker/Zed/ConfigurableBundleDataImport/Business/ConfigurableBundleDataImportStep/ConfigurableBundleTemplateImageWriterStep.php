@@ -42,7 +42,7 @@ class ConfigurableBundleTemplateImageWriterStep extends PublishAwareStep impleme
 
         $this->addPublishEvents(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH,
-            $productImageSetEntity->getFkResourceConfigurableBundleTemplate()
+            $productImageSetEntity->getFkResourceConfigurableBundleTemplate(),
         );
     }
 

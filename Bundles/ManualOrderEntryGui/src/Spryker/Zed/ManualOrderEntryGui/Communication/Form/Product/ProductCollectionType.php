@@ -30,6 +30,7 @@ class ProductCollectionType extends AbstractType
      * @var string
      */
     public const FIELD_PRODUCTS = 'products';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class ProductCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -65,7 +66,7 @@ class ProductCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -88,7 +89,7 @@ class ProductCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

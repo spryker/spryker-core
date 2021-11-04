@@ -55,13 +55,13 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
                 $restPromotionalItemsAttributesTransfer = $this->promotionItemMapper
                     ->mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
                         $promotionItemTransfer,
-                        new RestPromotionalItemsAttributesTransfer()
+                        new RestPromotionalItemsAttributesTransfer(),
                     );
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(
                     DiscountPromotionsRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS,
                     $this->findDiscountPromotionUuid($promotionItemTransfer),
-                    $restPromotionalItemsAttributesTransfer
+                    $restPromotionalItemsAttributesTransfer,
                 );
 
                 $resource->addRelationship($promotionalItemsResource);

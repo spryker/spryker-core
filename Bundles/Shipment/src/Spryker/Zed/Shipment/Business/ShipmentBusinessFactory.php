@@ -106,7 +106,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentCarrierReader()
     {
         return new ShipmentCarrierReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -118,7 +118,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentMethodCreator(
             $this->getEntityManager(),
             $this->createMethodPrice(),
-            $this->createShipmentMethodStoreRelationUpdater()
+            $this->createShipmentMethodStoreRelationUpdater(),
         );
     }
 
@@ -129,7 +129,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodStoreRelationUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -142,7 +142,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createMethodPrice(),
-            $this->createShipmentMethodStoreRelationUpdater()
+            $this->createShipmentMethodStoreRelationUpdater(),
         );
     }
 
@@ -153,7 +153,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodDeleter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -164,7 +164,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodReader(
             $this->getRepository(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -180,7 +180,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createShipmentMethodAvailabilityChecker(),
             $this->createShipmentMethodPriceReader(),
             $this->createShipmentMethodDeliveryTimeReader(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -191,7 +191,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodTransformer(
             $this->getCurrencyFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -210,7 +210,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new MultiShipmentExpenseFilter(
             $this->getShipmentService(),
-            $this->createShipmentExpenseCollectionRemover()
+            $this->createShipmentExpenseCollectionRemover(),
         );
     }
 
@@ -228,7 +228,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function createMethodPrice()
     {
         return new MethodPrice(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -266,7 +266,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new CheckoutShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -280,7 +280,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getSalesFacade(),
             $this->getShipmentService(),
             $this->createExpenseSanitizer(),
-            $this->getShipmentExpenseExpanderPlugins()
+            $this->getShipmentExpenseExpanderPlugins(),
         );
     }
 
@@ -294,7 +294,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentTaxRateCalculator(
             $this->getQueryContainer(),
             $this->getTaxFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -306,7 +306,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentTaxRateCalculatorWithItemShipmentTaxRate(
             $this->getRepository(),
             $this->getTaxFacade(),
-            $this->getShipmentService()
+            $this->getShipmentService(),
         );
     }
 
@@ -426,7 +426,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentFetcher(
             $this->getQueryContainer(),
             $this->getCurrencyFacade(),
-            $this->createShipmentMethodTransformer()
+            $this->createShipmentMethodTransformer(),
         );
     }
 
@@ -437,7 +437,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodExpander(
             $this->createShipmentFetcher(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -448,7 +448,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentReader(
             $this->getSalesFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -461,7 +461,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createCheckoutMultiShipmentOrderSaver(),
             $this->createShipmentMethodExpander(),
             $this->getShipmentService(),
-            $this->createShipmentExpenseCreator()
+            $this->createShipmentExpenseCreator(),
         );
     }
 
@@ -472,7 +472,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentExpenseCreator(
             $this->createShipmentMapper(),
-            $this->createExpenseSanitizer()
+            $this->createExpenseSanitizer(),
         );
     }
 
@@ -501,7 +501,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getPricePlugins(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -600,7 +600,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createExpenseSanitizer(),
             $this->createShipmentMapper(),
             $this->getCalculationFacade(),
-            $this->getShipmentGroupsSanitizerPlugins()
+            $this->getShipmentGroupsSanitizerPlugins(),
         );
     }
 

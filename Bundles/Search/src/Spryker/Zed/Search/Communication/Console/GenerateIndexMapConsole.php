@@ -23,6 +23,7 @@ class GenerateIndexMapConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:setup:index-map';
+
     /**
      * @var string
      */

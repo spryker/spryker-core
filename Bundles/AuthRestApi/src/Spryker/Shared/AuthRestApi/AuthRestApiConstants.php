@@ -21,6 +21,7 @@ interface AuthRestApiConstants
      * @api
      *
      * @see \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER
+     *
      * @var string
      */
     public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
@@ -34,6 +35,7 @@ interface AuthRestApiConstants
      * @api
      *
      * @see \Spryker\Shared\OauthCustomerConnector\OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET
+     *
      * @var string
      */
     public const OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';

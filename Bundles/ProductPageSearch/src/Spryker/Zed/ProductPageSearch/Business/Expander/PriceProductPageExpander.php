@@ -49,7 +49,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
         $pricesByIdProductAbstract = $this->findPricesByIdProductAbstractIn($productAbstractIds);
 
         $productPageLoadTransfer->setPayloadTransfers(
-            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
+            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract),
         );
 
         return $productPageLoadTransfer;
@@ -58,14 +58,14 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\PriceProductTransfer>>>
      */
     protected function findPricesByIdProductAbstractIn(array $productAbstractIds): array
     {
         $productPrices = $this->priceProductFacade
             ->findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
                 $productAbstractIds,
-                $this->getPriceCriteriaTransferForDefaultPriceDimension()
+                $this->getPriceCriteriaTransferForDefaultPriceDimension(),
             );
         $productPricesMappedById = $this->getProductPricesMappedByIdAndStoreName($productPrices);
         $groupedProductPriceCollection = [];
@@ -82,7 +82,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $productPrices
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\PriceProductTransfer>>>
      */
     protected function getProductPricesMappedByIdAndStoreName(array $productPrices): array
     {
@@ -139,7 +139,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(ProductPageSearchConfig::PRICE_DIMENSION_DEFAULT)
+                    ->setType(ProductPageSearchConfig::PRICE_DIMENSION_DEFAULT),
             );
     }
 }

@@ -22,18 +22,22 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
     public const COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS = 'COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS';
+
     /**
      * @var string
      */
@@ -94,7 +98,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         });
 
@@ -110,7 +114,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 

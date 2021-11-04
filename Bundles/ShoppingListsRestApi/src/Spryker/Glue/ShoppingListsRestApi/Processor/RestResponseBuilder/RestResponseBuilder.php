@@ -71,7 +71,7 @@ class RestResponseBuilder implements RestResponseBuilderInterface
 
         $translatedErrors = $this->glossaryStorageClient->translateBulk(
             $errorIdentifiersForTranslation,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         foreach ($translatedErrors as $translatedError) {

@@ -53,14 +53,14 @@ class ExpandPriceProductTransfersWithProductConfigurationPricesTest extends Unit
         $priceProductTransfersResult = $this->tester->getFacade()
             ->expandPriceProductTransfersWithProductConfigurationPrices(
                 [(new PriceProductTransfer())->setSkuProduct('test2')],
-                $cartChangeTransfer
+                $cartChangeTransfer,
             );
 
         //Assert
         $this->assertCount(
             2,
             $priceProductTransfersResult,
-            'Expects that prices will be expanded with product configuration prices.'
+            'Expects that prices will be expanded with product configuration prices.',
         );
     }
 
@@ -78,14 +78,14 @@ class ExpandPriceProductTransfersWithProductConfigurationPricesTest extends Unit
         $priceProductTransfersResult = $this->tester->getFacade()
             ->expandPriceProductTransfersWithProductConfigurationPrices(
                 [(new PriceProductTransfer())->setSkuProduct('test2')],
-                $cartChangeTransfer
+                $cartChangeTransfer,
             );
 
         //Assert
         $this->assertCount(
             1,
             $priceProductTransfersResult,
-            'Expects that prices wont be changed when no product configuration.'
+            'Expects that prices wont be changed when no product configuration.',
         );
     }
 }

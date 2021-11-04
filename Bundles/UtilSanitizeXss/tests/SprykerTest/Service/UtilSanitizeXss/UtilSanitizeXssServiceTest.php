@@ -29,6 +29,7 @@ class UtilSanitizeXssServiceTest extends Unit
      * @var string
      */
     protected const HTML_TAG_IFRAME = 'iframe';
+
     /**
      * @var string
      */
@@ -110,8 +111,8 @@ class UtilSanitizeXssServiceTest extends Unit
             $result,
             $this->logicalOr(
                 '<div style="list-style-image: url(alert&#40;0&#41;); margin=0"></div>',
-                '<div style="list-style-image: url((0)); margin=0"></div>'
-            )
+                '<div style="list-style-image: url((0)); margin=0"></div>',
+            ),
         );
     }
 

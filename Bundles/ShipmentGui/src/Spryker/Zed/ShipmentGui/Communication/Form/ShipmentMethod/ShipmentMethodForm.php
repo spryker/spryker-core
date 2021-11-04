@@ -25,30 +25,37 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
      * @var string
      */
     public const FIELD_NAME_FIELD = 'name';
+
     /**
      * @var string
      */
     public const FIELD_KEY = 'shipmentMethodKey';
+
     /**
      * @var string
      */
     public const FIELD_ID_FIELD = 'idShipmentMethod';
+
     /**
      * @var string
      */
     public const FIELD_IS_ACTIVE = 'isActive';
+
     /**
      * @var string
      */
     public const FIELD_AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
+
     /**
      * @var string
      */
     public const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
+
     /**
      * @var string
      */
     public const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
+
     /**
      * @var string
      */
@@ -56,7 +63,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -93,7 +100,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -113,7 +120,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -151,7 +158,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -169,7 +176,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -187,7 +194,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

@@ -42,7 +42,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new LockedTrigger(
             $this->createStateMachineTrigger(),
-            $this->createItemLock()
+            $this->createItemLock(),
         );
     }
 
@@ -57,7 +57,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createStateMachineFinder(),
             $this->createStateMachinePersistence(),
             $this->createStateMachineCondition(),
-            $this->createStateUpdater()
+            $this->createStateUpdater(),
         );
     }
 
@@ -68,7 +68,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemLock(
             $this->getQueryContainer(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -82,7 +82,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createHandlerResolver(),
             $this->createStateMachineFinder(),
             $this->createStateMachinePersistence(),
-            $this->createStateUpdater()
+            $this->createStateUpdater(),
         );
     }
 
@@ -95,7 +95,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createStateMachineTimeout(),
             $this->createHandlerResolver(),
             $this->createStateMachinePersistence(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -109,7 +109,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -121,7 +121,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
         return new Finder(
             $this->createStateMachineBuilder(),
             $this->createHandlerResolver(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -131,7 +131,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     public function createStateMachineTimeout()
     {
         return new Timeout(
-            $this->createStateMachinePersistence()
+            $this->createStateMachinePersistence(),
         );
     }
 
@@ -142,7 +142,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new TransitionLog(
             $this->createPathFinder(),
-            $this->getUtilNetworkService()
+            $this->getUtilNetworkService(),
         );
     }
 
@@ -203,7 +203,7 @@ class StateMachineBusinessFactory extends AbstractBusinessFactory
     {
         return new Drawer(
             $this->getGraph()->init(StateMachineConfig::GRAPH_NAME, $this->getConfig()->getGraphDefaults(), true, false),
-            $this->createHandlerResolver()->get($stateMachineName)
+            $this->createHandlerResolver()->get($stateMachineName),
         );
     }
 

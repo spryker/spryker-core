@@ -10,9 +10,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service;
 interface ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
 {
     /**
-     * @phpstan-param array<mixed> $value
-     *
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

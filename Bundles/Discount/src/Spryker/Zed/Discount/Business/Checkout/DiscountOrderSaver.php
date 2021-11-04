@@ -80,7 +80,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
             $this->saveOrderItemOptionDiscounts(
                 $orderItemTransfer,
                 $idSalesOrder,
-                $orderItemTransfer->getIdSalesOrderItem()
+                $orderItemTransfer->getIdSalesOrderItem(),
             );
         }
     }
@@ -183,7 +183,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
             $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
             $salesDiscountCodeEntity->fromArray($discountVoucherEntity->toArray());
             $salesDiscountCodeEntity->setCodepoolName(
-                $discountVoucherEntity->getVoucherPool()->getName()
+                $discountVoucherEntity->getVoucherPool()->getName(),
             );
             $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
 

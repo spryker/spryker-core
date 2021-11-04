@@ -76,7 +76,7 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
         if (!$concreteProductEntity) {
             throw new MissingProductException(sprintf(
                 'Concrete product with id %d could not be found.',
-                $idProductConcrete
+                $idProductConcrete,
             ));
         }
 

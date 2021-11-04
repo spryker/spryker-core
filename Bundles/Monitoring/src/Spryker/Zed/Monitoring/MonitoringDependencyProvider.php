@@ -22,14 +22,17 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const MONITORING_SERVICE = 'monitoring service';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'store facade';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'locale facade';
+
     /**
      * @var string
      */
@@ -86,7 +89,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             $monitoringToStoreFacadeBridge = new MonitoringToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
 
             return $monitoringToStoreFacadeBridge;
@@ -104,7 +107,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             $monitoringToLocaleFacadeBridge = new MonitoringToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
 
             return $monitoringToLocaleFacadeBridge;
@@ -122,7 +125,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_NETWORK, function (Container $container) {
             $monitoringToUtilNetworkServiceBridge = new MonitoringToUtilNetworkServiceBridge(
-                $container->getLocator()->utilNetwork()->service()
+                $container->getLocator()->utilNetwork()->service(),
             );
 
             return $monitoringToUtilNetworkServiceBridge;

@@ -39,7 +39,7 @@ class ZedResponseLogPlugin implements MiddlewareInterface
             if ($response->hasHeader(AbstractHttpClient::HEADER_HOST_ZED)) {
                 $message = sprintf(
                     'Transfer response [%s]',
-                    $response->getStatusCode()
+                    $response->getStatusCode(),
                 );
                 $this->getLogger()->info($message, ['guzzle-body' => $response->getBody()->getContents()]);
             }

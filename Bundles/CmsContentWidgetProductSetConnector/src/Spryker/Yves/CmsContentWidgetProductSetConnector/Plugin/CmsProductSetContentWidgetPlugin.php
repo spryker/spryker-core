@@ -52,7 +52,7 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $productSetKeys)
+            $this->getContent($context, $productSetKeys),
         );
     }
 

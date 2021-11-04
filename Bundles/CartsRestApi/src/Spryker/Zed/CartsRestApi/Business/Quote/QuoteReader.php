@@ -118,7 +118,7 @@ class QuoteReader implements QuoteReaderInterface
 
         return $this->executeQuoteCollectionExpanderPlugins(
             $quoteCriteriaFilterTransfer,
-            $quoteCollectionTransfer
+            $quoteCollectionTransfer,
         );
     }
 
@@ -153,7 +153,7 @@ class QuoteReader implements QuoteReaderInterface
         foreach ($this->quoteCollectionExpanderPlugins as $quoteCollectionExpanderPlugin) {
             $quoteCollectionTransfer = $quoteCollectionExpanderPlugin->expandQuoteCollection(
                 $quoteCollectionTransfer,
-                $quoteCriteriaFilterTransfer
+                $quoteCriteriaFilterTransfer,
             );
         }
 

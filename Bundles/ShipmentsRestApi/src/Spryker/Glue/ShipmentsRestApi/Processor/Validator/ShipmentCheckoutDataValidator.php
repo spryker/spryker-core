@@ -26,21 +26,21 @@ class ShipmentCheckoutDataValidator implements ShipmentCheckoutDataValidatorInte
         if ($this->isShipmentLevelMixed($restCheckoutRequestAttributesTransfer)) {
             return $this->buildErrorMessage(
                 ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SINGLE_MULTI_SHIPMENT_MIX,
-                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SINGLE_MULTI_SHIPMENT_MIX
+                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SINGLE_MULTI_SHIPMENT_MIX,
             );
         }
 
         if (!$this->isSingleShipmentLevelValid($restCheckoutRequestAttributesTransfer)) {
             return $this->buildErrorMessage(
                 ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED,
-                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED
+                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED,
             );
         }
 
         if (!$this->isMultiShipmentLevelValid($restCheckoutRequestAttributesTransfer)) {
             return $this->buildErrorMessage(
                 ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED,
-                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED
+                ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED,
             );
         }
 

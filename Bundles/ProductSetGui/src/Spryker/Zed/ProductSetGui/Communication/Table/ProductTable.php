@@ -22,27 +22,33 @@ class ProductTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'product-table';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_PREVIEW = 'preview';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+
     /**
      * @var string
      */
     public const COL_PRICE = 'price';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'status';
+
     /**
      * @var string
      */
@@ -177,7 +183,7 @@ class ProductTable extends AbstractTable
     {
         $checkbox_html = sprintf(
             '<input id="all_products_checkbox_%1$d" class="all-products-checkbox" type="checkbox" data-id="%1$s">',
-            $productAbstractEntity->getIdProductAbstract()
+            $productAbstractEntity->getIdProductAbstract(),
         );
 
         return $checkbox_html;

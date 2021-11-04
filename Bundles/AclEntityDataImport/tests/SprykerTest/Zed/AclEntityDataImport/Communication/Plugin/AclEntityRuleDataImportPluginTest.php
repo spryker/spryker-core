@@ -40,18 +40,22 @@ class AclEntityRuleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ROLE_REFERENCE_1 = 'GK9rS4jIzVP3Jq71iqNY';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_REFERENCE_2 = 'SIfdvYi3rZwxNKJRehEm';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_REFERENCE_3 = 'sCrVK2mGyV77B7uifjPI';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_REFERENCE_4 = 'rV3aEVTp66WBE46c1tPN';
+
     /**
      * @var string
      */
@@ -61,18 +65,22 @@ class AclEntityRuleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ROLE_NAME_1 = 'Role 1';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_NAME_2 = 'Role 2';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_NAME_3 = 'Role 3';
+
     /**
      * @var string
      */
     protected const ACL_ROLE_NAME_4 = 'Role 4';
+
     /**
      * @var string
      */
@@ -82,18 +90,22 @@ class AclEntityRuleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ENTITY_RULE_ENTITY_1 = 'Orm\Zed\Company\Persistence\SpyCompany';
+
     /**
      * @var string
      */
     protected const ACL_ENTITY_RULE_ENTITY_2 = 'Orm\Zed\Product\Persistence\SpyProductAbstract';
+
     /**
      * @var string
      */
     protected const ACL_ENTITY_RULE_ENTITY_3 = 'Orm\Zed\Product\Persistence\SpyProduct';
+
     /**
      * @var string
      */
     protected const ACL_ENTITY_RULE_ENTITY_4 = 'Orm\Zed\CmsBlock\Persistence\SpyCmsBlock';
+
     /**
      * @var string
      */
@@ -103,6 +115,7 @@ class AclEntityRuleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_1 = 'sH9qLMZtt6sxWqRJVYib';
+
     /**
      * @var string
      */
@@ -112,6 +125,7 @@ class AclEntityRuleDataImportPluginTest extends Unit
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_NAME_1 = 'Segment 1';
+
     /**
      * @var string
      */
@@ -169,27 +183,27 @@ class AclEntityRuleDataImportPluginTest extends Unit
         $aclEntityRuleEntity1 = $this->tester->getAclEntityRule(
             $aclRoleEntity1->getIdAclRole(),
             static::ACL_ENTITY_RULE_ENTITY_1,
-            AclEntityConstants::SCOPE_GLOBAL
+            AclEntityConstants::SCOPE_GLOBAL,
         );
         $aclEntityRuleEntity2 = $this->tester->getAclEntityRule(
             $aclRoleEntity2->getIdAclRole(),
             static::ACL_ENTITY_RULE_ENTITY_2,
-            AclEntityConstants::SCOPE_GLOBAL
+            AclEntityConstants::SCOPE_GLOBAL,
         );
         $aclEntityRuleEntity3 = $this->tester->getAclEntityRule(
             $aclRoleEntity3->getIdAclRole(),
             static::ACL_ENTITY_RULE_ENTITY_3,
-            AclEntityConstants::SCOPE_GLOBAL
+            AclEntityConstants::SCOPE_GLOBAL,
         );
         $aclEntityRuleEntity4 = $this->tester->getAclEntityRule(
             $aclRoleEntity4->getIdAclRole(),
             static::ACL_ENTITY_RULE_ENTITY_4,
-            AclEntityConstants::SCOPE_GLOBAL
+            AclEntityConstants::SCOPE_GLOBAL,
         );
         $aclEntityRuleEntity5 = $this->tester->getAclEntityRule(
             $aclRoleEntity5->getIdAclRole(),
             static::ACL_ENTITY_RULE_ENTITY_5,
-            AclEntityConstants::SCOPE_GLOBAL
+            AclEntityConstants::SCOPE_GLOBAL,
         );
 
         $this->assertSame(AclEntityConstants::OPERATION_MASK_CREATE, $aclEntityRuleEntity1->getPermissionMask());
@@ -201,7 +215,7 @@ class AclEntityRuleDataImportPluginTest extends Unit
                 | AclEntityConstants::OPERATION_MASK_READ
                 | AclEntityConstants::OPERATION_MASK_UPDATE
                 | AclEntityConstants::OPERATION_MASK_DELETE,
-            $aclEntityRuleEntity5->getPermissionMask()
+            $aclEntityRuleEntity5->getPermissionMask(),
         );
     }
 
@@ -281,7 +295,7 @@ class AclEntityRuleDataImportPluginTest extends Unit
     }
 
     /**
-     * @return array<\string[]>
+     * @return array<array<\string>>
      */
     public function importImportsAclEntityRuleWithEmptyRequiredFieldProvider(): array
     {
@@ -317,31 +331,31 @@ class AclEntityRuleDataImportPluginTest extends Unit
             [
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_1,
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_1,
-            ]
+            ],
         );
         $this->tester->haveRole(
             [
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_2,
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_2,
-            ]
+            ],
         );
         $this->tester->haveRole(
             [
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_3,
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_3,
-            ]
+            ],
         );
         $this->tester->haveRole(
             [
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_4,
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_4,
-            ]
+            ],
         );
         $this->tester->haveRole(
             [
                 RoleTransfer::REFERENCE => static::ACL_ROLE_REFERENCE_5,
                 RoleTransfer::NAME => static::ACL_ROLE_NAME_5,
-            ]
+            ],
         );
     }
 
@@ -358,8 +372,8 @@ class AclEntityRuleDataImportPluginTest extends Unit
                     static::ACL_ROLE_NAME_3,
                     static::ACL_ROLE_NAME_4,
                     static::ACL_ROLE_NAME_5,
-                ]
-            )
+                ],
+            ),
         );
     }
 

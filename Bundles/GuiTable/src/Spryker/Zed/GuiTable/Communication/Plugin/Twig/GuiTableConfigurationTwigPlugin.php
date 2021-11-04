@@ -39,7 +39,7 @@ class GuiTableConfigurationTwigPlugin extends AbstractTwigExtensionPlugin
         return new TwigFunction(
             $functionProvider->getFunctionName(),
             $functionProvider->getFunction(),
-            $functionProvider->getOptions()
+            $functionProvider->getOptions(),
         );
     }
 }

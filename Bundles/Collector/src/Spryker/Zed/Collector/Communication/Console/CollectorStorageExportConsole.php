@@ -20,6 +20,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
      * @var string
      */
     public const COMMAND_NAME = 'collector:storage:export';
+
     /**
      * @var string
      */
@@ -50,7 +51,7 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
         $collectorInfo = sprintf(
             '<fg=yellow>%d out of %d collectors available.</fg=yellow>',
             count($enabledCollectors),
-            count($allCollectors)
+            count($allCollectors),
         );
 
         $output->write(PHP_EOL);

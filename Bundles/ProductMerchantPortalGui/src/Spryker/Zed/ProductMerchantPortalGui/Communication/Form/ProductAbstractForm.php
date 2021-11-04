@@ -30,6 +30,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
+
     /**
      * @var string
      */
@@ -44,9 +45,11 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     *
      * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';
+
     /**
      * @var string
      */
@@ -56,6 +59,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const LABEL_STORES = 'Stores';
+
     /**
      * @var string
      */
@@ -65,6 +69,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_STORES = 'Select';
+
     /**
      * @var string
      */
@@ -74,6 +79,7 @@ class ProductAbstractForm extends AbstractType
      * @var string
      */
     protected const KEY_OPTIONS_DATA = 'data';
+
     /**
      * @var string
      */
@@ -195,7 +201,7 @@ class ProductAbstractForm extends AbstractType
                     'placeholder' => static::PLACEHOLDER_STORES,
                 ],
                 'property_path' => 'storeRelation.idStores',
-            ]
+            ],
         );
 
         return $this;
@@ -272,7 +278,7 @@ class ProductAbstractForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_CATEGORIES,
                 ],
-            ]
+            ],
         );
 
         return $this;

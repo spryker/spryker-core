@@ -18,24 +18,28 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
 {
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
+     *
      * @var string
      */
     protected const VOLUME_PRICE_KEY = 'volume_prices';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY
+     *
      * @var string
      */
     public const VOLUME_PRICE_QUANTITY_KEY = 'quantity';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE
+     *
      * @var string
      */
     public const VOLUME_PRICE_NET_PRICE_KEY = 'net_price';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE
+     *
      * @var string
      */
     public const VOLUME_PRICE_GROSS_PRICE_KEY = 'gross_price';
@@ -73,7 +77,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
         foreach ($restProductOfferPricesAttributesTransfer->getPrices() as $restProductOfferPriceAttributesTransfer) {
             $restProductPriceVolumesAttributesTransfers = $this->getRestProductPriceVolumesAttributesTransfers(
                 $currentProductPriceTransfer,
-                $restProductOfferPriceAttributesTransfer->getPriceTypeNameOrFail()
+                $restProductOfferPriceAttributesTransfer->getPriceTypeNameOrFail(),
             );
 
             $restProductOfferPriceAttributesTransfer->setVolumePrices($restProductPriceVolumesAttributesTransfers);
@@ -101,17 +105,15 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
 
         return $this->mapVolumePricesDataToRestProductPriceVolumesAttributesTransfers(
             $volumePricesData,
-            $restProductPriceVolumesAttributesTransfers
+            $restProductPriceVolumesAttributesTransfers,
         );
     }
 
     /**
-     * @phpstan-return array<int, array> $volumePriceData
-     *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param string $priceTypeName
      *
-     * @return array|null
+     * @return array<int, array<string, mixed>>|null
      */
     protected function getVolumePricesData(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
@@ -130,7 +132,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @param array<int, array> $volumePricesData
+     * @param array<int, array<string, mixed>> $volumePricesData
      * @param \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer> $restProductPriceVolumesAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
@@ -142,7 +144,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
         foreach ($volumePricesData as $volumePriceData) {
             $restProductPriceVolumesAttributesTransfer = $this->mapVolumePriceDataToRestProductPriceVolumesAttributes(
                 $volumePriceData,
-                new RestProductPriceVolumesAttributesTransfer()
+                new RestProductPriceVolumesAttributesTransfer(),
             );
 
             $restProductPriceVolumesAttributesTransfers->append($restProductPriceVolumesAttributesTransfer);
@@ -152,9 +154,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @phpstan-param array<string, mixed> $volumePriceData
-     *
-     * @param array $volumePriceData
+     * @param array<string, mixed> $volumePriceData
      * @param \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $restProductPriceVolumesAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer

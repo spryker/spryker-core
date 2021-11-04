@@ -18,6 +18,7 @@ class EventConfig extends AbstractBundleConfig
      * @var int
      */
     public const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 500;
+
     /**
      * @var int
      */
@@ -27,6 +28,7 @@ class EventConfig extends AbstractBundleConfig
      * @var int
      */
     public const DEFAULT_MAX_RETRY = 1;
+
     /**
      * @var int
      */
@@ -126,7 +128,7 @@ class EventConfig extends AbstractBundleConfig
         $bundleConfigResolver = new BundleConfigResolver();
         try {
             /** @var \Spryker\Client\RabbitMq\RabbitMqConfig $config */
-            $config = $bundleConfigResolver->resolve('\Spryker\Client\RabbitMq\RabbitMqFactory');
+            $config = $bundleConfigResolver->resolve('Spryker\Client\RabbitMq\RabbitMqFactory');
 
             return $this->hasEventRetryQueueConfig($config);
         } catch (BundleConfigNotFoundException $exception) {

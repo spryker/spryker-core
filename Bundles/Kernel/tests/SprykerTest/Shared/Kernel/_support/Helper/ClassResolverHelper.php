@@ -39,10 +39,12 @@ class ClassResolverHelper extends Module
      * @var string
      */
     protected const PROJECT_ORGANIZATION = 'ProjectOrganization';
+
     /**
      * @var string
      */
     protected const CORE_ORGANIZATION = 'CoreOrganization';
+
     /**
      * @var string
      */

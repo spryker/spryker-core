@@ -69,7 +69,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
 
         for ($offset = 0; $offset <= $productRelationCount; $offset += $productRelationUpdateChunkSize) {
             $this->rebuildProductRelationBatch(
-                $productRelationCriteriaFilterTransfer->setOffset($offset)
+                $productRelationCriteriaFilterTransfer->setOffset($offset),
             );
         }
 

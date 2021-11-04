@@ -21,18 +21,22 @@ class EventItemTriggerFormDataProvider
      * @var string
      */
     protected const URL_PARAM_IDENTIFIER = 'identifier';
+
     /**
      * @var string
      */
     protected const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+
     /**
      * @var string
      */
     protected const URL_PARAM_PROCESS_NAME = 'process-name';
+
     /**
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
+
     /**
      * @var string
      */

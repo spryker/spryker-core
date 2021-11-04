@@ -58,7 +58,7 @@ class ProductLabelAggregateFormDataProvider
     {
         return array_merge(
             $this->productLabelFormDataProvider->getOptions(),
-            $this->relatedProductFormDataProvider->getOptions()
+            $this->relatedProductFormDataProvider->getOptions(),
         );
     }
 }

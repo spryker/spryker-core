@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\Kernel\Transfer;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use InvalidArgumentException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
@@ -61,7 +62,7 @@ class AbstractTransferTest extends Unit
         $transfer->fromArray($data);
 
         $this->assertInstanceOf(TransferInterface::class, $transfer->getTransfer());
-        $this->assertInstanceOf('\ArrayObject', $transfer->getTransferCollection());
+        $this->assertInstanceOf(ArrayObject::class, $transfer->getTransferCollection());
         $this->assertCount(1, $transfer->getTransferCollection());
     }
 
@@ -90,7 +91,7 @@ class AbstractTransferTest extends Unit
      */
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $data = [
             'not existing property key' => '',
         ];
@@ -195,7 +196,7 @@ class AbstractTransferTest extends Unit
             ->setInt(100)
             ->setTransfer(
                 (new AbstractTransfer())
-                    ->setInt(200)
+                    ->setInt(200),
             )
             ->setTransferCollection(new ArrayObject([
                 (new AbstractTransfer())

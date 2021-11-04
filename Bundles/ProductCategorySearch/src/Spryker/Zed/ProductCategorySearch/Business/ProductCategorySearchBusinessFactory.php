@@ -29,7 +29,7 @@ class ProductCategorySearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageCategoryExpander(): ProductPageCategoryExpanderInterface
     {
         return new ProductPageCategoryExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -39,7 +39,7 @@ class ProductCategorySearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageDataExpander(): ProductPageDataExpanderInterface
     {
         return new ProductPageDataExpander(
-            $this->createProductCategoryTreeBuilder()
+            $this->createProductCategoryTreeBuilder(),
         );
     }
 
@@ -57,7 +57,7 @@ class ProductCategorySearchBusinessFactory extends AbstractBusinessFactory
     public function createProductCategoryTreeBuilder(): ProductCategoryTreeBuilderInterface
     {
         return new ProductCategoryTreeBuilder(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

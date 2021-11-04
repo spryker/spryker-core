@@ -18,30 +18,34 @@ class TransferDefinitionFinder implements FinderInterface
 {
     /**
      * @deprecated Will be removed with next major release
+     *
      * @var string
      */
     public const KEY_BUNDLE = 'bundle';
 
     /**
      * @deprecated Will be removed with next major release
+     *
      * @var string
      */
     public const KEY_CONTAINING_BUNDLE = 'containing bundle';
 
     /**
      * @deprecated Will be removed with next major release
+     *
      * @var string
      */
     public const KEY_TRANSFER = 'transfer';
 
     /**
      * @deprecated Will be removed with next major release
+     *
      * @var string
      */
     public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $sourceDirectories;
 
@@ -51,7 +55,7 @@ class TransferDefinitionFinder implements FinderInterface
     protected $fileNamePattern;
 
     /**
-     * @param array $sourceDirectories
+     * @param array<string> $sourceDirectories
      * @param string $fileNamePattern
      */
     public function __construct(array $sourceDirectories, $fileNamePattern = '*.transfer.xml')

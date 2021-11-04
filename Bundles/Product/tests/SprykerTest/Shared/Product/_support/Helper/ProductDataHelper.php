@@ -54,7 +54,7 @@ class ProductDataHelper extends Module
         $this->debug(sprintf(
             'Inserted AbstractProduct: %d, Concrete Product: %d',
             $abstractProductId,
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
@@ -80,7 +80,7 @@ class ProductDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted Concrete Product: %d',
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
@@ -104,7 +104,7 @@ class ProductDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted AbstractProduct: %d',
-            $abstractProductId
+            $abstractProductId,
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer): void {
@@ -151,13 +151,13 @@ class ProductDataHelper extends Module
         $productFacade->createProductConcrete($productConcreteTransfer);
 
         $productFacade->createProductUrl(
-            $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract()),
         );
 
         $this->debug(sprintf(
             'Inserted AbstractProduct: %d, Concrete Product: %d',
             $abstractProductId,
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
@@ -217,7 +217,7 @@ class ProductDataHelper extends Module
     public function addLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer, array $localizedAttributes): void
     {
         $productAbstractTransfer->setLocalizedAttributes(
-            new ArrayObject($localizedAttributes)
+            new ArrayObject($localizedAttributes),
         );
 
         $this->getProductFacade()->saveProductAbstract($productAbstractTransfer);
@@ -232,7 +232,7 @@ class ProductDataHelper extends Module
     public function addLocalizedAttributesToProductConcrete(ProductConcreteTransfer $productConcreteTransfer, array $localizedAttributes): void
     {
         $productConcreteTransfer->setLocalizedAttributes(
-            new ArrayObject($localizedAttributes)
+            new ArrayObject($localizedAttributes),
         );
 
         $this->getProductFacade()->saveProductConcrete($productConcreteTransfer);

@@ -13,6 +13,7 @@ class TableConfiguration
      * @var string
      */
     public const SORT_ASC = 'asc';
+
     /**
      * @var string
      */

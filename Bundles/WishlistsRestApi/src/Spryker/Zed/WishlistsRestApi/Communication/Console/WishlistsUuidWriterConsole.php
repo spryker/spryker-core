@@ -22,6 +22,7 @@ class WishlistsUuidWriterConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'wishlists:uuid:update';
+
     /**
      * @var string
      */

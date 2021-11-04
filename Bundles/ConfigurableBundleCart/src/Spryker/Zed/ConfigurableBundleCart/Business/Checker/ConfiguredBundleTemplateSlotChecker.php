@@ -20,6 +20,7 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
      * @var string
      */
     protected const KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID = 'configurableBundleTemplateUuid';
+
     /**
      * @var string
      */
@@ -56,7 +57,7 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
         foreach ($configuredBundlesData as $configuredBundleData) {
             $isSlotCombinationValid = $this->configurableBundleCartRepository->verifyConfigurableBundleTemplateSlots(
                 $configuredBundleData[static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID],
-                $configuredBundleData[static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS]
+                $configuredBundleData[static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS],
             );
 
             if (!$isSlotCombinationValid) {

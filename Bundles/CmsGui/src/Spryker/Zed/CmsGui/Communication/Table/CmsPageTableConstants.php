@@ -20,10 +20,12 @@ interface CmsPageTableConstants
      * @var string
      */
     public const ACTIONS = 'Actions';
+
     /**
      * @var string
      */
     public const URL_CMS_PAGE_ACTIVATE = '/cms-gui/edit-page/activate';
+
     /**
      * @var string
      */
@@ -31,30 +33,37 @@ interface CmsPageTableConstants
 
     public const COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
     public const COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
+
     /**
      * @var string
      */
     public const COL_URL = 'Url';
+
     /**
      * @var string
      */
     public const COL_TEMPLATE = 'template_name';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_CMS_URLS = 'cmsUrls';
+
     /**
      * @var string
      */
     public const COL_CMS_VERSION_COUNT = 'cmsVersionCount';
+
     /**
      * @var string
      */

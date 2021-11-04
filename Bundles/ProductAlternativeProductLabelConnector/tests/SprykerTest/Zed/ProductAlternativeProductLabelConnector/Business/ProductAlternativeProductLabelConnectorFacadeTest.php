@@ -64,7 +64,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
         $this->assertSame(
             (int)$productConcreteTransfer->getFkProductAbstract(),
             (int)$productLabelProductAbstractRelationTransfers[0]->getIdsProductAbstractToAssign()[0],
-            'Product abstract to be assigned does not match expected ID.'
+            'Product abstract to be assigned does not match expected ID.',
         );
     }
 
@@ -97,7 +97,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
     protected function mockProductAlternativeFacadeDependency(): void
     {
         $productAlternativeFacadeMock = $this->getMockBuilder(
-            ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge::class
+            ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge::class,
         )
             ->setConstructorArgs([$this->tester->getProductAlternativeFacade()])
             ->setMethods(['isAlternativeProductApplicable'])
@@ -108,7 +108,7 @@ class ProductAlternativeProductLabelConnectorFacadeTest extends Unit
 
         $this->tester->setDependency(
             ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_ALTERNATIVE,
-            $productAlternativeFacadeMock
+            $productAlternativeFacadeMock,
         );
     }
 }

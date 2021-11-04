@@ -35,8 +35,10 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
+
     /**
      * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
+     *
      * @var string
      */
     public const HOST_NAME_ERROR =
@@ -46,30 +48,37 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @var string
      */
     public const HEADER_USER_AGENT = 'User-Agent';
+
     /**
      * @var string
      */
     public const HEADER_HOST_YVES = 'X-Yves-Host';
+
     /**
      * @var string
      */
     public const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
+
     /**
      * @var string
      */
     public const HEADER_HOST_ZED = 'X-Zed-Host';
+
     /**
      * @var string
      */
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
+
     /**
      * @var string
      */
     protected const SERVER_PORT = 'SERVER_PORT';
+
     /**
      * @var int
      */
     protected const DEFAULT_PORT = 80;
+
     /**
      * @var int
      */
@@ -79,6 +88,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @var string
      */
     protected const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+
     /**
      * @var string
      */
@@ -102,36 +112,42 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_PATH_INFO = 'path_info';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_FIELD_SUB_TYPE = 'sub_type';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     *
      * @var string
      */
     public const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
@@ -172,14 +188,14 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected $utilNetworkService;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $clientConfiguration;
 
     /**
      * @param string $baseUrl
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
-     * @param array $clientConfiguration
+     * @param array<string, mixed> $clientConfiguration
      */
     public function __construct(
         $baseUrl,
@@ -260,7 +276,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
                 $this->setSslStatusMessage(),
                 $request->getUri()->getHost(),
                 $request->getUri()->getPort(),
-                $this->getConfigFilePathName()
+                $this->getConfigFilePathName(),
             );
             $response = $e->getResponse();
             if ($response) {
@@ -350,7 +366,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function sendRequest(MessageRequestInterface $request, ObjectInterface $requestTransfer, $requestOptions = null)
     {
         $client = $this->getClient(
-            $this->getClientConfiguration()
+            $this->getClientConfiguration(),
         );
 
         $response = $client->send($request, $this->buildRequestOptions($requestTransfer, $requestOptions));
@@ -363,7 +379,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $clientConfiguration
+     * @param array<string, mixed> $clientConfiguration
      *
      * @return \GuzzleHttp\Client
      */
@@ -375,7 +391,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getClientConfiguration()
     {
@@ -387,15 +403,15 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addCookiesToForwardDebugProfiler(array $config): array
     {
         $isProfilerForwardingEnabled = Config::get(
             ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED,
-            false
+            false,
         );
 
         if (!$isProfilerForwardingEnabled) {
@@ -404,7 +420,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
         $profilerName = Config::get(
             ZedRequestConstants::XDEBUG_PROFILER_NAME,
-            static::DEFAULT_XDEBUG_PROFILER_NAME
+            static::DEFAULT_XDEBUG_PROFILER_NAME,
         );
 
         return $this->addCookie($config, $profilerName);
@@ -498,15 +514,15 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addCookiesToForwardDebugSession(array $config): array
     {
         $isSessionForwardingEnabled = Config::get(
             ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED,
-            false
+            false,
         );
 
         if (!$isSessionForwardingEnabled) {
@@ -515,17 +531,17 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
 
         $debugSessionName = Config::get(
             ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME,
-            static::DEFAULT_XDEBUG_SESSIOIN_NAME
+            static::DEFAULT_XDEBUG_SESSIOIN_NAME,
         );
 
         return $this->addCookie($config, $debugSessionName);
     }
 
     /**
-     * @param array $config
+     * @param array<string, mixed> $config
      * @param string $name
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addCookie(array $config, string $name): array
     {

@@ -19,22 +19,27 @@ interface ResponseInterface
      * @var string
      */
     public const INFO_MESSAGES = 'infoMessages';
+
     /**
      * @var string
      */
     public const ERROR_MESSAGES = 'errorMessages';
+
     /**
      * @var string
      */
     public const SUCCESS_MESSAGES = 'successMessages';
+
     /**
      * @var string
      */
     public const SUCCESS = 'success';
+
     /**
      * @var string
      */
     public const TRANSFER_CLASSNAME = 'transferClassName';
+
     /**
      * @var string
      */
@@ -60,7 +65,7 @@ interface ResponseInterface
     public function hasErrorMessage($messageString);
 
     /**
-     * @param array $errorMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $errorMessages
      *
      * @return $this
      */
@@ -93,7 +98,7 @@ interface ResponseInterface
     public function addInfoMessage(MessageTransfer $message);
 
     /**
-     * @param array $messages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messages
      *
      * @return $this
      */
@@ -112,7 +117,7 @@ interface ResponseInterface
     public function hasSuccessMessage($messageString);
 
     /**
-     * @param array $successMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $successMessages
      *
      * @return $this
      */

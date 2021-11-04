@@ -134,7 +134,7 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     }
 
     /**
-     * @param mixed $productListStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
      * @param array $customerBlacklistIds
      * @param array $customerWhitelistIds
      *
@@ -154,7 +154,7 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     }
 
     /**
-     * @param mixed $productListStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|mixed $productListStorageTransfer
      *
      * @throws \Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferTypeException
      *
@@ -181,7 +181,7 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     abstract protected function getProductListStorageTransfers(array $productIds): array;
 
     /**
-     * @param mixed $productListStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|mixed $productListStorageTransfer
      *
      * @return int
      */

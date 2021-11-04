@@ -73,13 +73,13 @@ class ProductOfferPriceRestResponseBuilder implements ProductOfferPriceRestRespo
         $restProductOfferPricesAttributesTransfer = $this->productOfferPriceMapper
             ->mapCurrentProductPriceTransferToRestProductOfferPricesAttributesTransfer(
                 $currentProductPriceTransfer,
-                new RestProductOfferPricesAttributesTransfer()
+                new RestProductOfferPricesAttributesTransfer(),
             );
 
         $productOfferPriceRestResource = $this->restResourceBuilder->createRestResource(
             ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFER_PRICES,
             $productOfferReference,
-            $restProductOfferPricesAttributesTransfer
+            $restProductOfferPricesAttributesTransfer,
         );
 
         $productOfferPriceRestResource->addLink(
@@ -88,8 +88,8 @@ class ProductOfferPriceRestResponseBuilder implements ProductOfferPriceRestRespo
                 '%s/%s/%s',
                 ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFERS,
                 $productOfferReference,
-                ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFER_PRICES
-            )
+                ProductOfferPricesRestApiConfig::RESOURCE_PRODUCT_OFFER_PRICES,
+            ),
         );
 
         return $productOfferPriceRestResource;

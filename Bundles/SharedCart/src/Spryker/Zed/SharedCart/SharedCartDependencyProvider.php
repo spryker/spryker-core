@@ -24,18 +24,22 @@ class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */

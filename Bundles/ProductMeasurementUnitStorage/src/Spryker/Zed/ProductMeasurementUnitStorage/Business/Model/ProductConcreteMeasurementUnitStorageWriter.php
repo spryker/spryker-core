@@ -89,10 +89,6 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     protected function saveStorageEntityTransfer(int $idProduct, array $storageEntityTransfers): void
     {
         $productConcreteMeasurementUnitStorageData = $this->generateProductConcreteMeasurementUnitStorageTransfersByIdProduct($idProduct);
-        /**
-         * @var string $storeName
-         * @var array $storageData
-         */
         foreach ($productConcreteMeasurementUnitStorageData as $storeName => $storageData) {
             if (!isset($storageEntityTransfers[$storeName])) {
                 $storageEntityTransfers[$storeName] = new SpyProductConcreteMeasurementUnitStorageEntityTransfer();
@@ -119,7 +115,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     {
         foreach ($productConcreteMeasurementUnitStorageEntityTransfers as $productConcreteMeasurementUnitStorageEntityTransfer) {
             $this->productMeasurementUnitStorageEntityManager->deleteProductConcreteMeasurementUnitStorage(
-                $productConcreteMeasurementUnitStorageEntityTransfer->getIdProductConcreteMeasurementUnitStorage()
+                $productConcreteMeasurementUnitStorageEntityTransfer->getIdProductConcreteMeasurementUnitStorage(),
             );
         }
     }
@@ -127,7 +123,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return array<\Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer> Keys are store names
+     * @return array<string, \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer> Keys are store names
      */
     protected function generateProductConcreteMeasurementUnitStorageTransfersByIdProduct(int $idProduct): array
     {

@@ -30,7 +30,7 @@ class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin
     {
         return $this->getClient()->isProductDiscontinued(
             $productViewTransfer,
-            $this->getFactory()->getLocaleClient()->getCurrentLocale()
+            $this->getFactory()->getLocaleClient()->getCurrentLocale(),
         );
     }
 }

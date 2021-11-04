@@ -16,10 +16,12 @@ class SchedulerConfig extends AbstractBundleConfig
      * @var string
      */
     public const ROLE_ADMIN = 'admin';
+
     /**
      * @var string
      */
     public const ROLE_REPORTING = 'reporting';
+
     /**
      * @var string
      */

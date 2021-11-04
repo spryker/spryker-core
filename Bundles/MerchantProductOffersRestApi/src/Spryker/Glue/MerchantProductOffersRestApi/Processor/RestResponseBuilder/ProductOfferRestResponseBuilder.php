@@ -74,7 +74,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function createProductOfferRestResources(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
@@ -148,7 +148,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
         return $this->restResourceBuilder->createRestResource(
             MerchantProductOffersRestApiConfig::RESOURCE_PRODUCT_OFFERS,
             $productOfferStorageTransfer->getProductOfferReference(),
-            $restProductOffersAttributesTransfer
+            $restProductOffersAttributesTransfer,
         );
     }
 }

@@ -19,7 +19,7 @@ trait PermissionAwareTrait
      */
     protected function can($permissionKey, $context = null)
     {
-        if (interface_exists('\Spryker\Client\Permission\PermissionClientInterface')) {
+        if (interface_exists('Spryker\Client\Permission\PermissionClientInterface')) {
             return Locator::getInstance()->permission()->client()->can($permissionKey, $context);
         }
 

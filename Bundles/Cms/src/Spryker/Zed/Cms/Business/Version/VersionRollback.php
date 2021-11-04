@@ -73,8 +73,8 @@ class VersionRollback implements VersionRollbackInterface
                 sprintf(
                     'There is no valid Cms page with this id: %d or Cms version with this version: %d for rollback',
                     $idCmsPage,
-                    $version
-                )
+                    $version,
+                ),
             );
         }
 
@@ -116,7 +116,7 @@ class VersionRollback implements VersionRollbackInterface
         $referenceVersion = sprintf(
             '%s (%s)',
             $this->versionGenerator->generateNewCmsVersionName($newVersion),
-            $this->versionGenerator->generateReferenceCmsVersionName($version)
+            $this->versionGenerator->generateReferenceCmsVersionName($version),
         );
 
         return $this->versionPublisher->publishWithVersion($idCmsPage, $referenceVersion);
@@ -137,8 +137,8 @@ class VersionRollback implements VersionRollbackInterface
             throw new MissingPageException(
                 sprintf(
                     'There is no valid Cms version with this id: %d for reverting',
-                    $idCmsPage
-                )
+                    $idCmsPage,
+                ),
             );
         }
 

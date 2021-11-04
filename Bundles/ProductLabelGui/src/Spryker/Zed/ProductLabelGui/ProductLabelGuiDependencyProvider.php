@@ -26,14 +26,17 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
@@ -129,7 +132,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductLabelGuiToProductQueryContainerBridge(
-                $container->getLocator()->product()->queryContainer()
+                $container->getLocator()->product()->queryContainer(),
             );
         });
 
@@ -145,7 +148,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductLabelGuiToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
+                $container->getLocator()->priceProduct()->facade(),
             );
         });
 
@@ -178,8 +181,8 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own ProductLabelGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage product labels.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 }

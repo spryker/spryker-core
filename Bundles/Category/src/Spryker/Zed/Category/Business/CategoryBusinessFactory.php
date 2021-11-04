@@ -92,7 +92,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createCategoryHydrator(),
             $this->createCategoryTreeReader(),
-            $this->getCategoryTransferExpanderPlugins()
+            $this->getCategoryTransferExpanderPlugins(),
         );
     }
 
@@ -105,7 +105,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryRelationshipCreator(),
             $this->getEventFacade(),
-            $this->getCategoryCreateAfterPlugins()
+            $this->getCategoryCreateAfterPlugins(),
         );
     }
 
@@ -119,7 +119,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryNodePublisher(),
             $this->createCategoryClosureTableCreator(),
             $this->createCategoryUrlCreator(),
-            $this->createCategoryToucher()
+            $this->createCategoryToucher(),
         );
     }
 
@@ -132,7 +132,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getUrlFacade(),
             $this->getRepository(),
             $this->createUrlPathGenerator(),
-            $this->getCategoryUrlPathPlugins()
+            $this->getCategoryUrlPathPlugins(),
         );
     }
 
@@ -142,7 +142,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodeReader(): CategoryNodeReaderInterface
     {
         return new CategoryNodeReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -171,7 +171,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryRelationshipUpdater(),
             $this->getEventFacade(),
-            $this->getCategoryUpdateAfterPlugins()
+            $this->getCategoryUpdateAfterPlugins(),
         );
     }
 
@@ -186,7 +186,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryAttributeUpdater(),
             $this->createCategoryTemplateSync(),
             $this->createCategoryStoreRelationUpdater(),
-            $this->getCategoryRelationUpdatePlugins()
+            $this->getCategoryRelationUpdatePlugins(),
         );
     }
 
@@ -200,7 +200,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryReader(),
             $this->getEventFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -210,7 +210,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryStoreRelationUpdater(): CategoryStoreRelationUpdaterInterface
     {
         return new CategoryStoreRelationUpdater(
-            $this->getCategoryStoreAssignerPlugin()
+            $this->getCategoryStoreAssignerPlugin(),
         );
     }
 
@@ -226,7 +226,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryToucher(),
             $this->createCategoryNodePublisher(),
             $this->createCategoryNodeDeleter(),
-            $this->createCategoryNodeCreator()
+            $this->createCategoryNodeCreator(),
         );
     }
 
@@ -255,7 +255,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createUrlPathGenerator(),
             $this->getUrlFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -265,7 +265,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryTreeReader(): CategoryTreeReader
     {
         return new CategoryTreeReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -287,7 +287,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createFacade(),
             $this->createCategoryNodePublisher(),
-            $this->createCategoryToucher()
+            $this->createCategoryToucher(),
         );
     }
 
@@ -306,7 +306,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePublisher(
             $this->getRepository(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -317,7 +317,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new UrlPathGenerator(
             $this->getRepository(),
-            $this->getCategoryUrlPathPlugins()
+            $this->getCategoryUrlPathPlugins(),
         );
     }
 
@@ -328,7 +328,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryTemplateSync(
             $this->getQueryContainer(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -348,7 +348,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryDeleter(
             $this->getEntityManager(),
             $this->createCategoryRelationshipDeleter(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -380,7 +380,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createClosureTableDeleter(),
             $this->createCategoryUrlDeleter(),
             $this->createCategoryToucher(),
-            $this->createCategoryNodePublisher()
+            $this->createCategoryNodePublisher(),
         );
     }
 
@@ -391,7 +391,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryUrlDeleter(
             $this->getRepository(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
         );
     }
 
@@ -402,7 +402,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryStoreCreator(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -417,7 +417,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrlCreator(),
             $this->createCategoryStoreCreator(),
             $this->createCategoryTemplateSync(),
-            $this->getCategoryRelationUpdatePlugins()
+            $this->getCategoryRelationUpdatePlugins(),
         );
     }
 
@@ -431,7 +431,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryUrlDeleter(),
             $this->createCategoryNodeDeleter(),
             $this->createCategoryStoreDeleter(),
-            $this->getCategoryRelationDeletePlugins()
+            $this->getCategoryRelationDeletePlugins(),
         );
     }
 
@@ -441,7 +441,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createCategoryStoreDeleter(): CategoryStoreDeleterInterface
     {
         return new CategoryStoreDeleter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

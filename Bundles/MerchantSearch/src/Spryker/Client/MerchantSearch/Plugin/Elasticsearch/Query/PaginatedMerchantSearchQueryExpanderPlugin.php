@@ -21,6 +21,7 @@ class PaginatedMerchantSearchQueryExpanderPlugin extends AbstractPlugin implemen
      * @var string
      */
     protected const PARAMETER_OFFSET = 'offset';
+
     /**
      * @var string
      */

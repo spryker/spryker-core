@@ -44,7 +44,7 @@ class ProductCategoryStorageByCategoryNodeEventsWriter implements ProductCategor
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCategoryNodeTableMap::COL_FK_CATEGORY
+            SpyCategoryNodeTableMap::COL_FK_CATEGORY,
         );
 
         $this->productCategoryStorageWriter->writeCollectionByRelatedCategories($categoryIds, true);

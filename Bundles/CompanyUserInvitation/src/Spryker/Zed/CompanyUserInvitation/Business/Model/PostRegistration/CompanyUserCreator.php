@@ -71,7 +71,7 @@ class CompanyUserCreator implements CompanyUserCreatorInterface
         if ($companyUserResponseTransfer->getIsSuccessful()) {
             $customerTransfer->setCompanyUserTransfer($companyUserResponseTransfer->getCompanyUser());
             $companyUserInvitationUpdateStatusRequestTransfer = $this->getCompanyUserInvitationUpdateStatusRequestTransfer(
-                $companyUserInvitationTransfer
+                $companyUserInvitationTransfer,
             );
             $this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer);
         }

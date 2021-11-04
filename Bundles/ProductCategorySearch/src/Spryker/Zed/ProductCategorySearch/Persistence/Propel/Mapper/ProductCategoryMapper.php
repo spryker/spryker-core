@@ -13,10 +13,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductCategoryMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
-     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]> $mappedProductCategoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
+     * @param array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>> $mappedProductCategoryEntities
      *
-     * @return array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]>
+     * @return array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>>
      */
     public function mapProductCategoryEntitiesByIdProductAbstractAndStore(
         ObjectCollection $productCategoryEntities,
@@ -25,7 +25,7 @@ class ProductCategoryMapper
         foreach ($productCategoryEntities as $productCategoryEntity) {
             $mappedProductCategoryEntities = $this->mapProductCategoryEntityByIdProductAbstractAndStore(
                 $productCategoryEntity,
-                $mappedProductCategoryEntities
+                $mappedProductCategoryEntities,
             );
         }
 
@@ -34,9 +34,9 @@ class ProductCategoryMapper
 
     /**
      * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory $productCategoryEntity
-     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]> $productCategoryEntities
+     * @param array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>> $productCategoryEntities
      *
-     * @return array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]>
+     * @return array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>>
      */
     protected function mapProductCategoryEntityByIdProductAbstractAndStore(
         SpyProductCategory $productCategoryEntity,

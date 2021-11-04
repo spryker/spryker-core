@@ -26,14 +26,17 @@ class OmsTriggerController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
+
     /**
      * @var string
      */
     protected const URL_PARAM_RETURN_REFERENCE = 'return-reference';
+
     /**
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
+
     /**
      * @var string
      */
@@ -51,6 +54,7 @@ class OmsTriggerController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     *
      * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-return-merchant-user-gui/detail';
@@ -59,6 +63,7 @@ class OmsTriggerController extends AbstractController
      * @var string
      */
     protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Merchant sales return #%d not found.';
+
     /**
      * @var string
      */
@@ -110,7 +115,7 @@ class OmsTriggerController extends AbstractController
             ->triggerEventForMerchantOrderItems(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers))
+                    ->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers)),
             );
 
         if (!$countTriggeredItems) {
@@ -158,7 +163,7 @@ class OmsTriggerController extends AbstractController
             ->triggerEventForMerchantOrderItem(
                 (new MerchantOmsTriggerRequestTransfer())
                     ->setMerchantOmsEventName($event)
-                    ->setMerchantOrderItemReference($merchantSalesOrderItemReference)
+                    ->setMerchantOrderItemReference($merchantSalesOrderItemReference),
             );
 
         if (!$merchantOmsTriggerResponseTransfer->getIsSuccessful()) {
@@ -191,11 +196,9 @@ class OmsTriggerController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, int>
-     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {

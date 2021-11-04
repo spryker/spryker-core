@@ -38,7 +38,7 @@ class ConfigurableBundleMapper
         foreach ($configurableBundleTemplateEntities as $configurableBundleTemplateEntity) {
             $configurableBundleTemplateTransfer = $this->mapTemplateEntityToTemplateTransfer(
                 $configurableBundleTemplateEntity,
-                new ConfigurableBundleTemplateTransfer()
+                new ConfigurableBundleTemplateTransfer(),
             );
 
             $configurableBundleTemplateCollectionTransfer->addConfigurableBundleTemplate($configurableBundleTemplateTransfer);
@@ -60,7 +60,7 @@ class ConfigurableBundleMapper
         foreach ($configurableBundleTemplateSlotEntities as $configurableBundleTemplateSlotEntity) {
             $configurableBundleTemplateSlotTransfer = $this->mapTemplateSlotEntityToTemplateSlotTransfer(
                 $configurableBundleTemplateSlotEntity,
-                new ConfigurableBundleTemplateSlotTransfer()
+                new ConfigurableBundleTemplateSlotTransfer(),
             );
 
             $configurableBundleTemplateSlotCollectionTransfer->addConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
@@ -130,7 +130,7 @@ class ConfigurableBundleMapper
 
         $configurableBundleTemplateTransfer = $this->mapTemplateEntityToTemplateTransfer(
             $configurableBundleTemplateSlotEntity->getSpyConfigurableBundleTemplate(),
-            new ConfigurableBundleTemplateTransfer()
+            new ConfigurableBundleTemplateTransfer(),
         );
 
         $productListTransfer = (new ProductListTransfer())
@@ -153,7 +153,7 @@ class ConfigurableBundleMapper
         foreach ($productImageSetEntities as $productImageSetEntity) {
             $productImageSetTransfer = $this->mapProductImageSetEntityToProductImageSetTransfer(
                 $productImageSetEntity,
-                new ProductImageSetTransfer()
+                new ProductImageSetTransfer(),
             );
 
             $productImageSetTransfers[] = $productImageSetTransfer;
@@ -195,7 +195,7 @@ class ConfigurableBundleMapper
         foreach ($productImageSetEntity->getSpyProductImageSetToProductImages() as $productImageSetToProductImageEntity) {
             $productImageTransfer = $this->mapProductImageEntityToProductImageTransfer(
                 $productImageSetToProductImageEntity->getSpyProductImage(),
-                new ProductImageTransfer()
+                new ProductImageTransfer(),
             );
 
             $productImageTransfer

@@ -42,10 +42,9 @@ class ReturnCreateForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -56,10 +55,9 @@ class ReturnCreateForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -74,7 +72,7 @@ class ReturnCreateForm extends AbstractType
                     static::OPTION_RETURN_REASONS => $options[static::OPTION_RETURN_REASONS],
                 ],
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

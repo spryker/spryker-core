@@ -41,7 +41,7 @@ class CompanyUserRoleByCompanyForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -72,7 +72,7 @@ class CompanyUserRoleByCompanyForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -92,7 +92,7 @@ class CompanyUserRoleByCompanyForm extends AbstractType
 
         $callbackTransformer = new CallbackTransformer(
             $this->getInputDataCallbackRoleCollectionTransformer(),
-            $this->getOutputDataCallbackRoleCollectionTransformer()
+            $this->getOutputDataCallbackRoleCollectionTransformer(),
         );
 
         $builder->get(static::FIELD_COMPANY_ROLE_COLLECTION)

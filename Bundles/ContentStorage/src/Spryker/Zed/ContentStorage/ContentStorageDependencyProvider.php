@@ -24,18 +24,22 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CONTENT = 'PROPEL_QUERY_CONTENT';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
@@ -92,7 +96,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ContentStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -108,7 +112,7 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ContentStorageToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

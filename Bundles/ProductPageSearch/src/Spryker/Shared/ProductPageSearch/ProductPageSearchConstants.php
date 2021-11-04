@@ -17,6 +17,7 @@ class ProductPageSearchConstants
      * - Queue name as used for processing Product messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SYNC_SEARCH_QUEUE = 'sync.search.product';
@@ -26,6 +27,7 @@ class ProductPageSearchConstants
      * - Queue name as used for processing Product messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
@@ -35,6 +37,7 @@ class ProductPageSearchConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
@@ -44,6 +47,7 @@ class ProductPageSearchConstants
      * - Resource name, will be used for key generating
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
@@ -54,6 +58,7 @@ class ProductPageSearchConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
+     *
      * @var string
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';

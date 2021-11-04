@@ -30,10 +30,12 @@ class ResetPassword implements ResetPasswordInterface
      * @var string
      */
     protected const STATUS_ACTIVE = 'active';
+
     /**
      * @var string
      */
     protected const STATUS_EXPIRED = 'expired';
+
     /**
      * @var string
      */
@@ -41,6 +43,7 @@ class ResetPassword implements ResetPasswordInterface
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Controller\PasswordController::PARAM_TOKEN
+     *
      * @var string
      */
     protected const PARAM_TOKEN = 'token';
@@ -119,7 +122,7 @@ class ResetPassword implements ResetPasswordInterface
             (new ResetPasswordTransfer())
                 ->setFkUserId($userTransfer->getIdUser())
                 ->setCode($token)
-                ->setStatus(static::STATUS_ACTIVE)
+                ->setStatus(static::STATUS_ACTIVE),
         );
 
         $userPasswordResetRequestTransfer
@@ -127,7 +130,7 @@ class ResetPassword implements ResetPasswordInterface
             ->setResetPasswordLink($this->createResetPasswordLink($userPasswordResetRequestTransfer, $token));
 
         $this->executeUserPasswordResetRequestStrategyPlugins(
-            $userPasswordResetRequestTransfer
+            $userPasswordResetRequestTransfer,
         );
 
         return (bool)$resetPasswordTransfer->getIdResetPassword();
@@ -141,7 +144,7 @@ class ResetPassword implements ResetPasswordInterface
     public function isValidPasswordResetToken(string $token): bool
     {
         $resetPasswordTransfer = $this->passwordResetRepository->findOne(
-            (new ResetPasswordCriteriaTransfer())->setCode($token)
+            (new ResetPasswordCriteriaTransfer())->setCode($token),
         );
 
         if (!$resetPasswordTransfer) {
@@ -164,7 +167,7 @@ class ResetPassword implements ResetPasswordInterface
     public function setNewPassword(string $token, string $password): bool
     {
         $resetPasswordTransfer = $this->passwordResetRepository->findOne(
-            (new ResetPasswordCriteriaTransfer())->setCode($token)
+            (new ResetPasswordCriteriaTransfer())->setCode($token),
         );
 
         if (!$resetPasswordTransfer) {

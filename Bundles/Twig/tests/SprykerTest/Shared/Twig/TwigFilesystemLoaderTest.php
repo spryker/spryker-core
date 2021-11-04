@@ -32,18 +32,22 @@ class TwigFilesystemLoaderTest extends Unit
 {
     public const PATH_TO_ZED_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';
     public const PATH_TO_ZED_CORE = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Zed/%s/Presentation';
+
     /**
      * @var string
      */
     public const CONTENT_CACHED_FILE = 'cached file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_PROJECT_ZED_FILE = 'project zed file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_CORE_ZED_FILE = 'core zed non split file' . PHP_EOL;
+
     /**
      * @var string
      */
@@ -88,7 +92,7 @@ class TwigFilesystemLoaderTest extends Unit
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function templateNameContentProvider(): array
     {

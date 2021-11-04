@@ -15,6 +15,7 @@ class FileVersion implements FileVersionInterface
      * @var int
      */
     protected const INITIAL_VERSION_NUMBER = 1;
+
     /**
      * @var string
      */

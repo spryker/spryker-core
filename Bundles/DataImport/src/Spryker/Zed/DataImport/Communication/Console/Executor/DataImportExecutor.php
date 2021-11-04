@@ -69,7 +69,7 @@ class DataImportExecutor implements DataImportExecutorInterface
         if ($this->isImporterTypeSpecified($importerType)) {
             $filteredDataImportConfigurationActionTransfers = $this->filterDataImportConfigurationActionTransfersByImporterType(
                 $dataImportConfigurationTransfer->getActions(),
-                $importerType
+                $importerType,
             );
             $dataImportConfigurationTransfer->setActions($filteredDataImportConfigurationActionTransfers);
         }
@@ -154,7 +154,7 @@ class DataImportExecutor implements DataImportExecutorInterface
             $dataImportConfigurationActionTransfers->getArrayCopy(),
             function (DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer) use ($importerType): bool {
                 return $dataImportConfigurationActionTransfer->getDataEntity() === $importerType;
-            }
+            },
         );
 
         return new ArrayObject($filteredDataImportConfigurationActionTransfers);
@@ -184,7 +184,7 @@ class DataImportExecutor implements DataImportExecutorInterface
             $overallDataImporterReportTransfer->addDataImporterReport($innerDataImporterReportTransfer);
         }
         $overallDataImporterReportTransfer->setImportedDataSetCount(
-            $dataImporterReportTransfer->getImportedDataSetCount() + $overallDataImporterReportTransfer->getImportedDataSetCount()
+            $dataImporterReportTransfer->getImportedDataSetCount() + $overallDataImporterReportTransfer->getImportedDataSetCount(),
         );
 
         if (!$dataImporterReportTransfer->getIsSuccess()) {

@@ -59,7 +59,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
             $quoteApprovalTransfers[] = $mapper
                 ->mapQuoteApprovalEntityToTransfer(
                     $quoteApprovalEntity,
-                    new QuoteApprovalTransfer()
+                    new QuoteApprovalTransfer(),
                 );
         }
 
@@ -92,7 +92,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
             $quoteApprovalTransfers[$quoteId][] = $mapper
                 ->mapQuoteApprovalEntityToTransfer(
                     $quoteApprovalEntity,
-                    new QuoteApprovalTransfer()
+                    new QuoteApprovalTransfer(),
                 );
         }
 

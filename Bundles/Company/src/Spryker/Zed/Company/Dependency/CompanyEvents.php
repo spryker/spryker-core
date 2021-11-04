@@ -14,6 +14,7 @@ interface CompanyEvents
      * - This event will be used for company entity update.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_COMPANY_UPDATE = 'Entity.spy_company.update';

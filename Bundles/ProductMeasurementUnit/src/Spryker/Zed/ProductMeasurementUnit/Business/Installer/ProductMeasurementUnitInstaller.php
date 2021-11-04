@@ -86,7 +86,7 @@ class ProductMeasurementUnitInstaller implements ProductMeasurementUnitInstaller
         foreach ($savedEntityIds as $savedEntityId) {
             $this->eventFacade->trigger(
                 ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
-                (new EventEntityTransfer())->setId($savedEntityId)
+                (new EventEntityTransfer())->setId($savedEntityId),
             );
         }
     }

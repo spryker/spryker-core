@@ -29,6 +29,7 @@ class YvesControllerProviderTest extends Unit
      * @var string
      */
     public const METHOD_REQUIRE_HTTP = 'requireHttp';
+
     /**
      * @var string
      */
@@ -120,7 +121,7 @@ class YvesControllerProviderTest extends Unit
             ->method('__call')
             ->with(
                 $this->equalTo($methodName),
-                $this->equalTo([])
+                $this->equalTo([]),
             );
 
         return $controllerMock;

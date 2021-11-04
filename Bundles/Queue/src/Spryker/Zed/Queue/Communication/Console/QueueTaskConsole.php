@@ -25,6 +25,7 @@ class QueueTaskConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'queue:task:start';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class QueueTaskConsole extends Console
      * @var string
      */
     public const OPTION_NO_ACK = 'no-ack';
+
     /**
      * @var string
      */

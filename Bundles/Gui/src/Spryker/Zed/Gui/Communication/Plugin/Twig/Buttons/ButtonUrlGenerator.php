@@ -13,24 +13,29 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
      * @var string
      */
     public const PARAM_ID = 'id';
+
     /**
      * @var string
      */
     public const PARAM_CLASS = 'class';
+
     /**
      * @var string
      */
     public const DEFAULT_CSS_CLASSES = 'default_css_classes';
+
     /**
      * @var string
      */
     public const BUTTON_CLASS = 'button_class';
+
     /**
      * @var string
      */
     public const ICON = 'icon';
+
     /**
-     * @var array
+     * @var array<string>
      */
     public const CUSTOM_OPTIONS = [
         self::PARAM_ID,
@@ -51,14 +56,14 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
     protected $title;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $options = [];
 
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct($url, $title, array $options)
     {

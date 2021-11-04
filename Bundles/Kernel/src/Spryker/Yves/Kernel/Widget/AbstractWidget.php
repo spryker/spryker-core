@@ -30,7 +30,7 @@ abstract class AbstractWidget implements WidgetInterface
     protected const SERVICE_LOCALE = 'locale';
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $parameters = [];
 
@@ -56,7 +56,7 @@ abstract class AbstractWidget implements WidgetInterface
         if (!isset($this->widgets[$name])) {
             throw new MissingWidgetPluginException(sprintf(
                 'Missing "%s" widget plugin. You need to register your sub-widgets in order to use them. You can use $this->addWidgets() and $this->addWidget() methods.',
-                $name
+                $name,
             ));
         }
 

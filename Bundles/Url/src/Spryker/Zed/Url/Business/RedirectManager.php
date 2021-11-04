@@ -210,8 +210,8 @@ class RedirectManager implements RedirectManagerInterface
             throw new MissingRedirectException(
                 sprintf(
                     'Tried to retrieve a missing redirect with id %s',
-                    $idUrlRedirect
-                )
+                    $idUrlRedirect,
+                ),
             );
         }
 

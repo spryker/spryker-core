@@ -13,14 +13,17 @@ interface QueueConfig
      * @var string
      */
     public const CONFIG_QUEUE_ADAPTER = 'queue_adapter';
+
     /**
      * @var string
      */
     public const CONFIG_MAX_WORKER_NUMBER = 'max_worker_number';
+
     /**
      * @var string
      */
     public const CONFIG_QUEUE_OPTION_NO_ACK = 'noAck';
+
     /**
      * @var string
      */

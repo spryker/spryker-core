@@ -105,7 +105,7 @@ class TransferObjectFormatter extends ArrayFormatter
 
     /**
      * @param string $entityName
-     * @param array $rowArray
+     * @param array<string, mixed> $rowArray
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */

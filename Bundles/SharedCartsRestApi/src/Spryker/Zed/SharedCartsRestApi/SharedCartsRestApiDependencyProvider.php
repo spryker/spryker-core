@@ -21,6 +21,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new SharedCartsRestApiToQuoteFacadeBridge(
-                $container->getLocator()->quote()->facade()
+                $container->getLocator()->quote()->facade(),
             );
         });
 
@@ -65,7 +66,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_SHARED_CART, function (Container $container) {
             return new SharedCartsRestApiToSharedCartFacadeBridge(
-                $container->getLocator()->sharedCart()->facade()
+                $container->getLocator()->sharedCart()->facade(),
             );
         });
 

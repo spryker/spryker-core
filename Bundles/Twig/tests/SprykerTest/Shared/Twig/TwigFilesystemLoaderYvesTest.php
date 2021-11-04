@@ -37,18 +37,22 @@ class TwigFilesystemLoaderYvesTest extends Unit
      * @var string
      */
     public const CONTENT_PROJECT_FILE = 'project yves file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_PROJECT_CUSTOM_THEME_FILE = 'project custom theme yves file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_CORE_FILE = 'core yves file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_CORE_NON_SPLIT_FILE = 'core yves non split file' . PHP_EOL;
+
     /**
      * @var string
      */

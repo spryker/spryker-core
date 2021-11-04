@@ -64,7 +64,7 @@ class PersistenceManager implements PersistenceManagerInterface
         if (!$this->isProcessActive($processName)) {
             throw new ProcessNotActiveException(sprintf(
                 'Process with name "%s" is not in active process list. You can add it by modifying your "OmsConstants::ACTIVE_PROCESSES" environment variable constant.',
-                $processName
+                $processName,
             ));
         }
 

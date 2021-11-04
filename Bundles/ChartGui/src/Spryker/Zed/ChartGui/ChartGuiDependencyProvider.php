@@ -19,6 +19,7 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_TWIG_CHART_GUI_FUNCTIONS = 'PLUGIN_TWIG_CHART_GUI_FUNCTIONS';
+
     /**
      * @var string
      */

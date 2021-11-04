@@ -28,6 +28,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var string
      */
     public const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
      * @var string
      */
@@ -37,10 +38,12 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var string
      */
     public const DEFAULT_LEVEL = 'defaultLevel';
+
     /**
      * @var string
      */
     public const MEMORY_LIMIT = '-1';
+
     /**
      * @var int
      */
@@ -50,18 +53,22 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
     public const OPTION_VERBOSE = 'verbose';
+
     /**
      * @var string
      */
     public const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
     public const OPTION_LEVEL = 'level';
+
     /**
      * @var string
      */
@@ -71,6 +78,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @var int
      */
     protected const SUCCESS_EXIT_CODE = 0;
+
     /**
      * @var int
      */
@@ -190,7 +198,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             static::PHPSTAN_MEMORY_LIMIT,
             $configFilePath,
             $path,
-            $level
+            $level,
         );
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
@@ -351,11 +359,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
     }
 
     /**
-     * @param array $paths
+     * @param array<string, string> $paths
      * @param string $moduleDirectoryPath
      * @param string|null $namespace
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function addPath(array $paths, string $moduleDirectoryPath, $namespace = null): array
     {
@@ -383,7 +391,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if ($moduleConfigFile && $vendorConfigFile) {
             return $this->phpstanConfigFileManager->merge(
                 [$moduleConfigFile, $vendorConfigFile],
-                $this->getConfigFilenameForMerge($moduleConfigFile)
+                $this->getConfigFilenameForMerge($moduleConfigFile),
             );
         }
 
@@ -411,9 +419,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 array_slice(
                     explode('/', $moduleConfigFile->getPath()),
                     -3,
-                    3
-                )
-            )
+                    3,
+                ),
+            ),
         );
 
         return $filenameFromPath . '_';
@@ -440,7 +448,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      *
      * @throws \RuntimeException
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function resolveCorePaths($module)
     {
@@ -516,6 +524,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param string $path
      * @param string $fallbackPath
      *
+     * @throws \RuntimeException
+     *
      * @return int
      */
     protected function getDefaultLevel($path, $fallbackPath)
@@ -529,14 +539,27 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $configFile = $directory . 'phpstan.json';
         }
 
+        $neonLevel = $this->neonConfigLevel($path);
         if (!file_exists($configFile)) {
-            return $configLevel;
+            return $neonLevel ?: $configLevel;
         }
 
         $content = file_get_contents($configFile);
         $json = json_decode($content, true);
+        if (!isset($json[static::DEFAULT_LEVEL])) {
+            return $neonLevel ?: $configLevel;
+        }
 
-        return $json[static::DEFAULT_LEVEL];
+        $definedMinimumLevel = $json[static::DEFAULT_LEVEL];
+        if (!$neonLevel && !$definedMinimumLevel) {
+            return $configLevel;
+        }
+
+        if ($neonLevel && $definedMinimumLevel && $neonLevel !== $definedMinimumLevel) {
+            throw new RuntimeException('Can\'t resolve level from both neon and json file, as they differ.');
+        }
+
+        return $neonLevel ?: $definedMinimumLevel;
     }
 
     /**
@@ -582,5 +605,26 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return int|null
+     */
+    protected function neonConfigLevel(string $path): ?int
+    {
+        $file = $path . 'phpstan.neon';
+        if (!file_exists($file)) {
+            return null;
+        }
+
+        $content = file_get_contents($file);
+        preg_match('/\blevel:\s*(\d)\b/', $content, $matches);
+        if (!$matches) {
+            return null;
+        }
+
+        return (int)$matches[1] ?: null;
     }
 }

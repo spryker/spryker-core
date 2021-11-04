@@ -99,7 +99,7 @@ class CartsRestApiTester extends Actor
         foreach ($actualCartsRestResourceAttributesTransfer->getDiscounts() as $actualRestCartsDiscountsTransfer) {
             $foundDiscount = $this->assertDiscountIfFound(
                 $quoteTransfer->getVoucherDiscounts(),
-                $actualRestCartsDiscountsTransfer
+                $actualRestCartsDiscountsTransfer,
             );
 
             if ($foundDiscount) {
@@ -108,7 +108,7 @@ class CartsRestApiTester extends Actor
 
             $foundDiscount = $this->assertDiscountIfFound(
                 $quoteTransfer->getCartRuleDiscounts(),
-                $actualRestCartsDiscountsTransfer
+                $actualRestCartsDiscountsTransfer,
             );
 
             if (!$foundDiscount) {

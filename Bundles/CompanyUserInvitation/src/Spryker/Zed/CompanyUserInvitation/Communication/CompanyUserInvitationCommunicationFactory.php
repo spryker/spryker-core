@@ -28,7 +28,7 @@ class CompanyUserInvitationCommunicationFactory extends AbstractCommunicationFac
         return new CompanyUserCreator(
             $this->getRepository(),
             $this->getCompanyUserFacade(),
-            $this->createInvitationUpdater()
+            $this->createInvitationUpdater(),
         );
     }
 
@@ -39,7 +39,7 @@ class CompanyUserInvitationCommunicationFactory extends AbstractCommunicationFac
     {
         return new InvitationUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

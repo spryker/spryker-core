@@ -36,7 +36,7 @@ class ConfigurableBundleTemplateSlotWriterStep extends PublishAwareStep implemen
 
         $this->addPublishEvents(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH,
-            $configurableBundleTemplateSlotEntity->getFkConfigurableBundleTemplate()
+            $configurableBundleTemplateSlotEntity->getFkConfigurableBundleTemplate(),
         );
     }
 

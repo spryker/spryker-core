@@ -21,13 +21,9 @@ class MerchantProductAvailabilityViewActionViewDataExpanderPlugin extends Abstra
      *
      * @api
      *
-     * @phpstan-param array<string, mixed> $viewData
+     * @param array<string, mixed> $viewData
      *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $viewData
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expand(array $viewData): array
     {

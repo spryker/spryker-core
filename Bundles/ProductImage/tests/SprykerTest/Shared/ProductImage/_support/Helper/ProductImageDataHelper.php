@@ -29,14 +29,17 @@ class ProductImageDataHelper extends Module
      * @var string
      */
     public const URL_SMALL = 'small';
+
     /**
      * @var string
      */
     public const URL_LARGE = 'large';
+
     /**
      * @var string
      */
     public const NAME = 'set';
+
     /**
      * @var int
      */
@@ -81,7 +84,7 @@ class ProductImageDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted Product Image Set: %d',
-            $productImageSetTransfer->getIdProductImageSet()
+            $productImageSetTransfer->getIdProductImageSet(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productImageSetTransfer): void {
@@ -125,7 +128,7 @@ class ProductImageDataHelper extends Module
     private function cleanupProductImageSet(ProductImageSetTransfer $productImageSetTransfer): void
     {
         $this->debug(
-            sprintf('Deleting Product Image Set: %d', $productImageSetTransfer->getIdProductImageSet())
+            sprintf('Deleting Product Image Set: %d', $productImageSetTransfer->getIdProductImageSet()),
         );
 
         $this->getProductImageFacade()->deleteProductImageSet($productImageSetTransfer);

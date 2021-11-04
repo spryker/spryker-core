@@ -61,7 +61,7 @@ class CmsSlotBlockSynchronizationDataBulkPlugin extends AbstractPlugin implement
         return $this->getFacade()
             ->getSynchronizationDataTransfersByCmsSlotBlockStorageIds(
                 $this->createFilterTransfer($offset, $limit),
-                $ids
+                $ids,
             );
     }
 

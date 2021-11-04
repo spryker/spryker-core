@@ -30,10 +30,12 @@ class AddressCollectionType extends AbstractType
      * @var string
      */
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+
     /**
      * @var string
      */
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
+
     /**
      * @var string
      */
@@ -43,6 +45,7 @@ class AddressCollectionType extends AbstractType
      * @var string
      */
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
+
     /**
      * @var string
      */
@@ -78,7 +81,7 @@ class AddressCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -92,7 +95,7 @@ class AddressCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -131,7 +134,7 @@ class AddressCollectionType extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -139,7 +142,7 @@ class AddressCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

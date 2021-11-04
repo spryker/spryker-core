@@ -69,7 +69,7 @@ class PreparePriceDataStep implements DataImportStepInterface
     {
         $volumePrices = $this->utilEncodingService->decodeJson(
             $dataSet[static::PRICE_DATA_VOLUME_PRICES],
-            true
+            true,
         );
 
         return [

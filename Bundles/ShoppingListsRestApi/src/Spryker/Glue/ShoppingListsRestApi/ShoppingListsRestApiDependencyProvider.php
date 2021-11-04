@@ -21,6 +21,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const CLIENT_SHOPPING_LIST = 'CLIENT_SHOPPING_LIST';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_SHOPPING_LIST, function (Container $container) {
             return new ShoppingListsRestApiToShoppingListClientBridge(
-                $container->getLocator()->shoppingList()->client()
+                $container->getLocator()->shoppingList()->client(),
             );
         });
 
@@ -65,7 +66,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ShoppingListsRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

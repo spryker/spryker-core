@@ -57,7 +57,7 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient
             ->findConfigurableBundleTemplateStorageByUuid(
                 $restConfiguredBundlesAttributesTransfer->getTemplateUuid(),
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$configurableBundleTemplateStorageTransfer) {
@@ -67,7 +67,7 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
         return $this->mapCreateConfiguredBundleRequest(
             $restRequest,
             $configurableBundleTemplateStorageTransfer,
-            $restConfiguredBundlesAttributesTransfer
+            $restConfiguredBundlesAttributesTransfer,
         );
     }
 
@@ -122,7 +122,7 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
 
         $configurableBundleTemplateTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),
-            true
+            true,
         );
 
         $createConfiguredBundleRequestTransfer = (new CreateConfiguredBundleRequestTransfer())
@@ -132,7 +132,7 @@ class ConfiguredBundleRequestCreator implements ConfiguredBundleRequestCreatorIn
         return $this->configuredBundleMapper
             ->mapRestConfiguredBundlesAttributesToCreateConfiguredBundleRequest(
                 $restConfiguredBundlesAttributesTransfer,
-                $createConfiguredBundleRequestTransfer
+                $createConfiguredBundleRequestTransfer,
             );
     }
 }

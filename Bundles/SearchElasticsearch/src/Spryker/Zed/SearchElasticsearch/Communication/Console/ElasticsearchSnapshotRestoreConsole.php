@@ -22,10 +22,12 @@ class ElasticsearchSnapshotRestoreConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'elasticsearch:snapshot:restore';
+
     /**
      * @var string
      */
     public const COMMAND_ALIAS = 'search:snapshot:restore';
+
     /**
      * @var string
      */
@@ -35,6 +37,7 @@ class ElasticsearchSnapshotRestoreConsole extends Console
      * @var string
      */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+
     /**
      * @var string
      */

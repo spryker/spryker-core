@@ -18,12 +18,14 @@ class CategoryCreatePage extends Category
      * @var string
      */
     public const FORM_SUBMIT_BUTTON = 'Save';
+
     /**
      * @var string
      */
     public const SUCCESS_MESSAGE = 'The category was added successfully.';
+
     /**
-     * @var array
+     * @var array<string>
      */
     public const CLOSED_IBOX_SELECTORS = [
         '#localizedAttributes-ibox-de_DE .ibox-tools',

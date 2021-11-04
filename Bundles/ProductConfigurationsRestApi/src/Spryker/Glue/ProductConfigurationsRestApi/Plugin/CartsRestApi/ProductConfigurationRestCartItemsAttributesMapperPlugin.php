@@ -39,7 +39,7 @@ class ProductConfigurationRestCartItemsAttributesMapperPlugin extends AbstractPl
             ->createProductConfigurationInstanceMapper()
             ->mapItemTransferToRestItemsAttributesTransfer(
                 $itemTransfer,
-                $restItemsAttributesTransfer
+                $restItemsAttributesTransfer,
             );
     }
 }

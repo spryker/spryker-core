@@ -59,7 +59,7 @@ class ShoppingListDeleter implements ShoppingListDeleterInterface
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $shoppingListResponseTransfer->getErrors()
+                $shoppingListResponseTransfer->getErrors(),
             );
         }
 

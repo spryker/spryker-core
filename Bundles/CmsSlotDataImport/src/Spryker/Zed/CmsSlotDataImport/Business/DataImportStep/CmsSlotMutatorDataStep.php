@@ -32,7 +32,7 @@ class CmsSlotMutatorDataStep implements DataImportStepInterface
     {
         $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE] = filter_var(
             $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE],
-            FILTER_VALIDATE_BOOLEAN
+            FILTER_VALIDATE_BOOLEAN,
         );
     }
 }

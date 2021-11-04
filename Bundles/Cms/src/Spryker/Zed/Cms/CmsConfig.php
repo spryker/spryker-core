@@ -16,14 +16,17 @@ class CmsConfig extends AbstractBundleConfig
      * @var string
      */
     protected const CMS_TWIG_TEMPLATE_PREFIX = '@Cms';
+
     /**
      * @var string
      */
     protected const CMS_PLACEHOLDER_PATTERN = '/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+
     /**
      * @var string
      */
     protected const CMS_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+
     /**
      * @var string
      */
@@ -68,7 +71,7 @@ class CmsConfig extends AbstractBundleConfig
      *
      * @param string $templateRelativePath
      *
-     * @return array
+     * @return array<string>
      */
     public function getTemplateRealPaths(string $templateRelativePath): array
     {
@@ -109,14 +112,14 @@ class CmsConfig extends AbstractBundleConfig
             $this->get(CmsConstants::PROJECT_NAMESPACE),
             $twigLayer,
             $themeName,
-            $templateRelativePath
+            $templateRelativePath,
         );
     }
 
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getThemeNames(): array
     {

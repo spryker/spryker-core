@@ -108,7 +108,7 @@ class SharedCartRepositoryTest extends Unit
             $configuration = $permission->getConfiguration();
             $quoteIds = array_map(
                 'intval',
-                $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION] ?? []
+                $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION] ?? [],
             );
 
             $this->assertNotEmpty($quoteIds);

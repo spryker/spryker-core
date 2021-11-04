@@ -26,6 +26,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
 {
     /**
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     *
      * @var string
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
@@ -196,7 +197,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $companyUserEntityTransfer = $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByIdCompanyUser(
-                $companyUserTransfer->getIdCompanyUser()
+                $companyUserTransfer->getIdCompanyUser(),
             )->findOne();
 
         if ($companyUserEntityTransfer !== null) {
@@ -243,7 +244,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

@@ -23,6 +23,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      * @var string
      */
     public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
+
     /**
      * @var string
      */
@@ -207,7 +208,7 @@ class FormEventSubscriber implements EventSubscriberInterface
             $errorMessage = $this->translator->trans(
                 $this->errorMessage,
                 $this->translationOptions,
-                $this->translationDomain
+                $this->translationDomain,
             );
         }
 

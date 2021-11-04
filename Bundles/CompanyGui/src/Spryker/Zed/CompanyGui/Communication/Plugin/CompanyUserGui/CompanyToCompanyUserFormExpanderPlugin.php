@@ -37,7 +37,7 @@ class CompanyToCompanyUserFormExpanderPlugin extends AbstractPlugin implements C
             ->createCompanyUserCompanyForm()
             ->buildForm(
                 $builder,
-                $dataProvider->getOptions($idCompany)
+                $dataProvider->getOptions($idCompany),
             );
 
         return $builder;

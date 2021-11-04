@@ -80,7 +80,7 @@ class QuoteLocker implements QuoteLockerInterface
 
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()
+            $quoteTransfer->getCustomer(),
         );
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

@@ -35,12 +35,14 @@ class MerchantTableQueryTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     *
      * @var string
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
@@ -81,7 +83,7 @@ class MerchantTableQueryTest extends Unit
             [],
             [],
             [],
-            []
+            [],
         );
 
         // Act

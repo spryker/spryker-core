@@ -45,7 +45,7 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
 
         $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::COL_POSITION]);
         $conditions = $this->utilEncodingService->encodeJson(
-            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? []
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? [],
         );
         $cmsSlotBlockEntity->setConditions($conditions);
 
@@ -53,7 +53,7 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
 
         $this->addPublishEvents(
             CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH,
-            (int)$cmsSlotBlockEntity->getIdCmsSlotBlock()
+            (int)$cmsSlotBlockEntity->getIdCmsSlotBlock(),
         );
     }
 }

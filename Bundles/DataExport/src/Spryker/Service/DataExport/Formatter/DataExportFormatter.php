@@ -18,6 +18,7 @@ class DataExportFormatter implements DataExportFormatterInterface
      * @var string
      */
     protected const MESSAGE_FORMATTER_PLUGIN_NOT_FOUND = 'Formatter plugin not found for format "%s"';
+
     /**
      * @var string
      */
@@ -100,7 +101,7 @@ class DataExportFormatter implements DataExportFormatterInterface
     protected function createFormatterNotFoundResponse(DataExportConfigurationTransfer $dataExportConfigurationTransfer): DataExportFormatResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())->setValue(
-            sprintf(static::MESSAGE_FORMATTER_PLUGIN_NOT_FOUND, $dataExportConfigurationTransfer->getFormatOrFail()->getType())
+            sprintf(static::MESSAGE_FORMATTER_PLUGIN_NOT_FOUND, $dataExportConfigurationTransfer->getFormatOrFail()->getType()),
         );
 
         return (new DataExportFormatResponseTransfer())

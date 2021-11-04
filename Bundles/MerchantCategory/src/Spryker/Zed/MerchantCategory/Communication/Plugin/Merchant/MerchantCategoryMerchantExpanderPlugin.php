@@ -38,7 +38,7 @@ class MerchantCategoryMerchantExpanderPlugin extends AbstractPlugin implements M
         $merchantCategoryResponseTransfer = $this->getFacade()
             ->get(
                 (new MerchantCategoryCriteriaTransfer())
-                    ->setIdMerchant($merchantTransfer->getIdMerchant())
+                    ->setIdMerchant($merchantTransfer->getIdMerchant()),
             );
 
         if (!$merchantCategoryResponseTransfer->getIsSuccessful()) {

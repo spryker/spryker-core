@@ -19,6 +19,7 @@ class CompanyUserRoleFormDataProvider
      * @var string
      */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
+
     /**
      * @var string
      */
@@ -88,7 +89,7 @@ class CompanyUserRoleFormDataProvider
             ->setWithoutExpanders(true);
 
         $companyRoleCollection = $this->companyRoleFacade->getCompanyRoleCollection(
-            $companyRoleCriteriaFilterTransfer
+            $companyRoleCriteriaFilterTransfer,
         );
 
         foreach ($companyRoleCollection->getRoles() as $companyRoleTransfer) {

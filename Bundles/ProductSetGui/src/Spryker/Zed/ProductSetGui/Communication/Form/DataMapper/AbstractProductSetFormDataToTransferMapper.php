@@ -151,7 +151,7 @@ abstract class AbstractProductSetFormDataToTransferMapper
             $imageSetTransfer->setLocale($localeTransfer);
 
             $productImages = $this->mapProductImageCollection(
-                $imageSetForm->get(LocalizedProductImageSetFormType::FIELD_PRODUCT_IMAGE_COLLECTION)->getData()
+                $imageSetForm->get(LocalizedProductImageSetFormType::FIELD_PRODUCT_IMAGE_COLLECTION)->getData(),
             );
 
             if ($productImages) {

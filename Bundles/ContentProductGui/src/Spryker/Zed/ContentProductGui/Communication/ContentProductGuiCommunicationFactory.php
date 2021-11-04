@@ -35,7 +35,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getProductImageFacade(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $identifierSuffix
+            $identifierSuffix,
         );
     }
 
@@ -52,7 +52,7 @@ class ContentProductGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductImageFacade(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $identifierSuffix,
-            $idProductAbstracts
+            $idProductAbstracts,
         );
     }
 

@@ -54,7 +54,7 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
         return new ProductCategorySlotBlockDataProvider(
             $this->createCmsSlotBlockProductCategoryGuiProductReader(),
             $this->createCmsSlotBlockProductCategoryGuiCategoryReader(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
         );
     }
 
@@ -66,7 +66,7 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
         return new ProductReader(
             $this->getRepository(),
             $this->getProductFacade(),
-            $this->createProductLabelFormatter()
+            $this->createProductLabelFormatter(),
         );
     }
 
@@ -77,7 +77,7 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
     {
         return new CategoryReader(
             $this->getCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

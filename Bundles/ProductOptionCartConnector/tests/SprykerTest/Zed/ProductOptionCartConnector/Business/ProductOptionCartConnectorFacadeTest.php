@@ -37,6 +37,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
      * @var int
      */
     public const ID_PRODUCT_OPTION = 5;
+
     /**
      * @var int
      */
@@ -71,7 +72,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $this->mockProductOptionFacade(
             (new ProductOptionTransfer())
                 ->setIdProductOptionValue(static::ID_PRODUCT_OPTION)
-                ->setUnitNetPrice(static::DUMMY_PRICE)
+                ->setUnitNetPrice(static::DUMMY_PRICE),
         );
 
         $cartChangeTransfer = $this->createCartChangeTransferWithDefaultItem($this->getGrossPriceModeIdentifier());
@@ -93,7 +94,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $this->mockProductOptionFacade(
             (new ProductOptionTransfer())
                 ->setIdProductOptionValue(static::ID_PRODUCT_OPTION)
-                ->setUnitGrossPrice(static::DUMMY_PRICE)
+                ->setUnitGrossPrice(static::DUMMY_PRICE),
         );
 
         $cartChangeTransfer = $this->createCartChangeTransferWithDefaultItem($this->getNetPriceModeIdentifier());
@@ -142,17 +143,17 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $productOptionCollection[0] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, null, null),
-            ]
+            ],
         );
         $productOptionCollection[1] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, null, null),
-            ]
+            ],
         );
         $productOptionCollection[2] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, null, null),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->createCartChangeTransfer($cartPriceMode);
@@ -160,12 +161,12 @@ class ProductOptionCartConnectorFacadeTest extends Unit
             (new ItemTransfer())
                 ->setSku('exampleSku1')
                 ->addProductOption($productOptionCollection[0])
-                ->addProductOption($productOptionCollection[1])
+                ->addProductOption($productOptionCollection[1]),
         );
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku('exampleSku2')
-                ->addProductOption($productOptionCollection[2])
+                ->addProductOption($productOptionCollection[2]),
         );
 
         // Act
@@ -190,17 +191,17 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $productOptionCollection[0] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, 100, 200),
-            ]
+            ],
         );
         $productOptionCollection[1] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, 100, 200),
-            ]
+            ],
         );
         $productOptionCollection[2] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, 100, 200),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->createCartChangeTransfer($cartPriceMode);
@@ -208,12 +209,12 @@ class ProductOptionCartConnectorFacadeTest extends Unit
             (new ItemTransfer())
                 ->setSku('exampleSku1')
                 ->addProductOption($productOptionCollection[0])
-                ->addProductOption($productOptionCollection[1])
+                ->addProductOption($productOptionCollection[1]),
         );
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku('exampleSku2')
-                ->addProductOption($productOptionCollection[2])
+                ->addProductOption($productOptionCollection[2]),
         );
 
         // Act
@@ -239,12 +240,12 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $productOptionCollection[0] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, 100, 200),
-            ]
+            ],
         );
         $productOptionCollection[1] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, 100, 200),
-            ]
+            ],
         );
         $productOptionCollection[2] = $this->createProductOption(
             [
@@ -253,9 +254,9 @@ class ProductOptionCartConnectorFacadeTest extends Unit
                     $currentStoreName,
                     // current price mode should not have price, but the other
                     $isCurrentPriceModeNet ? 100 : null,
-                    $isCurrentPriceModeNet ? null : 100
+                    $isCurrentPriceModeNet ? null : 100,
                 ),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->createCartChangeTransfer($cartPriceMode);
@@ -263,12 +264,12 @@ class ProductOptionCartConnectorFacadeTest extends Unit
             (new ItemTransfer())
                 ->setSku('exampleSku1')
                 ->addProductOption($productOptionCollection[0])
-                ->addProductOption($productOptionCollection[1])
+                ->addProductOption($productOptionCollection[1]),
         );
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku('exampleSku2')
-                ->addProductOption($productOptionCollection[2])
+                ->addProductOption($productOptionCollection[2]),
         );
 
         // Act
@@ -298,16 +299,16 @@ class ProductOptionCartConnectorFacadeTest extends Unit
                     $currentStoreName,
                     // only current price mode should have price
                     $isCurrentPriceModeNet ? null : 100,
-                    $isCurrentPriceModeNet ? 100 : null
+                    $isCurrentPriceModeNet ? 100 : null,
                 ),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->createCartChangeTransfer($cartPriceMode);
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku('exampleSku1')
-                ->addProductOption($productOptionCollection[0])
+                ->addProductOption($productOptionCollection[0]),
         );
 
         // Act
@@ -332,14 +333,14 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $productOptionCollection[0] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, null, 100),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->createCartChangeTransfer($cartPriceMode);
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku('exampleSku1')
-                ->addProductOption($productOptionCollection[0])
+                ->addProductOption($productOptionCollection[0]),
         );
 
         // Act
@@ -364,14 +365,14 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $productOptionCollection[0] = $this->createProductOption(
             [
                 $this->createPriceData($currentCurrencyCode, $currentStoreName, 100, null),
-            ]
+            ],
         );
 
         $cartChangeTransfer = $this->createCartChangeTransfer($cartPriceMode);
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku('exampleSku1')
-                ->addProductOption($productOptionCollection[0])
+                ->addProductOption($productOptionCollection[0]),
         );
 
         // Act
@@ -484,7 +485,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
         $this->tester->setDependency(
             ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION,
-            $productOptionFacadeMock
+            $productOptionFacadeMock,
         );
 
         // Reload facade instance to have the new dependency
@@ -547,7 +548,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
                     [],
                     $prices,
                 ],
-            ]
+            ],
         );
 
         $productOptionTransfer = (new ProductOptionTransfer())

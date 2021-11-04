@@ -19,10 +19,12 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
@@ -79,7 +81,7 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return new CompanyRoleToPermissionClientBridge(
-                $container->getLocator()->permission()->client()
+                $container->getLocator()->permission()->client(),
             );
         });
 

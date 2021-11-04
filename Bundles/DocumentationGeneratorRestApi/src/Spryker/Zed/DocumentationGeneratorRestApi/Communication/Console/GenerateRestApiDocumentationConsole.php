@@ -21,6 +21,7 @@ class GenerateRestApiDocumentationConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'rest-api:generate:documentation';
+
     /**
      * @var string
      */

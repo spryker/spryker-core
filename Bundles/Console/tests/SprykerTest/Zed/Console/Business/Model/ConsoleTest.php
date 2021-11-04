@@ -42,8 +42,8 @@ class ConsoleTest extends Unit
         $console->setFactory($this->getCommunicationFactoryMock());
 
         $this->assertInstanceOf(
-            'Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory',
-            $console->getFactory()
+            AbstractCommunicationFactory::class,
+            $console->getFactory(),
         );
     }
 
@@ -111,7 +111,7 @@ class ConsoleTest extends Unit
 
         $this->assertInstanceOf(
             AbstractQueryContainer::class,
-            $console->getQueryContainer()
+            $console->getQueryContainer(),
         );
     }
 

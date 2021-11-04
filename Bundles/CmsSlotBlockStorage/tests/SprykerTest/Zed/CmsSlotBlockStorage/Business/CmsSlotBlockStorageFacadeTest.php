@@ -49,7 +49,7 @@ class CmsSlotBlockStorageFacadeTest extends Unit
                 SpyCmsSlotBlockStorageEntityTransfer::SLOT_TEMPLATE_KEY => sprintf(
                     static::FORMAT_SLOT_TEMPLATE_KEY,
                     'template-path',
-                    $i
+                    $i,
                 ),
             ];
             $cmsSlotBlockStorageIds[] = $this->tester->hasCmsSlotBlockStorage($seedData)->getIdCmsSlotBlockStorage();

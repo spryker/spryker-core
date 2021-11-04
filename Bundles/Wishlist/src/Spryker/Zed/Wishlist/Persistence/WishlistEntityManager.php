@@ -38,7 +38,7 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
             ->fromArray($wishlistItemTransfer->modifiedToArray(), true);
 
         $wishlistItemQuery->filterByArray(
-            $wishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased()
+            $wishlistItemCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased(),
         );
 
         $existedWishlistItemEntity = $wishlistItemQuery->findOne();
@@ -68,6 +68,27 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
 
         $wishlistItemQuery = $this->applyRemoveFilters($wishlistItemQuery, $wishlistItemTransfer);
         $wishlistItemQuery->delete();
+
+        return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        $wishlistItemEntity = $this->getFactory()
+            ->createWishlistItemQuery()
+            ->filterByIdWishlistItem($wishlistItemTransfer->getIdWishlistItemOrFail())
+            ->findOne();
+
+        $wishlistItemEntity = $this->getFactory()
+            ->createWishlistMapper()
+            ->mapWishlistItemTransferToWishlistItemEntity($wishlistItemTransfer, $wishlistItemEntity);
+
+        $wishlistItemEntity->save();
 
         return $wishlistItemTransfer;
     }

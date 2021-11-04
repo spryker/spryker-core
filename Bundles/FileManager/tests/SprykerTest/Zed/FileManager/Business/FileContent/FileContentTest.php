@@ -54,7 +54,7 @@ class FileContentTest extends Unit
 
         $fileContent = new FileContent(
             $fileSystemServiceMock,
-            $this->getConfigMock()
+            $this->getConfigMock(),
         );
 
         $fileTransfer = new FileTransfer();
@@ -76,7 +76,7 @@ class FileContentTest extends Unit
 
         $fileContent = new FileContent(
             $fileSystemServiceMock,
-            $this->getConfigMock()
+            $this->getConfigMock(),
         );
 
         $fileContent->delete('report.txt');
@@ -94,7 +94,7 @@ class FileContentTest extends Unit
 
         $fileContent = new FileContent(
             $fileSystemServiceMock,
-            $this->getConfigMock()
+            $this->getConfigMock(),
         );
 
         $fileContent = $fileContent->read('report.txt');

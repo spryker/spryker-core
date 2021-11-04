@@ -50,7 +50,7 @@ class SecurityHelper extends Module
     public function enableSecurityApplicationPlugin(): void
     {
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getSecurityApplicationPluginStub()
+            $this->getSecurityApplicationPluginStub(),
         );
     }
 

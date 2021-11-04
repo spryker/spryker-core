@@ -65,6 +65,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
      * @var string
      */
     public const INDEX_OPEN_STATE = 'open';
+
     /**
      * @var string
      */
@@ -83,7 +84,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getJsonSchemaDefinitionDirectories(): array
     {
@@ -165,7 +166,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getClientConfig(): array
     {

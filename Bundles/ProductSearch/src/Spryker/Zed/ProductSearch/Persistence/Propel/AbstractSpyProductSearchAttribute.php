@@ -70,7 +70,7 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
             ->query(sprintf(
                 'SELECT MAX(%s) FROM %s',
                 SpyProductSearchAttributeTableMap::COL_POSITION,
-                SpyProductSearchAttributeTableMap::TABLE_NAME
+                SpyProductSearchAttributeTableMap::TABLE_NAME,
             ))
             ->fetchColumn();
 

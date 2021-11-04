@@ -26,6 +26,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      * @var string
      */
     protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Invalid Refresh Token';
+
     /**
      * @var string
      */
@@ -171,7 +172,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 
             $oauthRefreshTokens = array_merge(
                 $oauthRefreshTokens,
-                $receivedOauthRefreshTokens
+                $receivedOauthRefreshTokens,
             );
         }
 

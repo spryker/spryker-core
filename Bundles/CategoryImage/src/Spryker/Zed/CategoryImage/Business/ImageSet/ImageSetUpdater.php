@@ -60,7 +60,7 @@ class ImageSetUpdater implements ImageSetUpdaterInterface
     {
         foreach ($categoryTransfer->getImageSets() as $categoryImageSetTransfer) {
             $categoryImageSetTransfer->setIdCategory(
-                $categoryTransfer->requireIdCategory()->getIdCategory()
+                $categoryTransfer->requireIdCategory()->getIdCategory(),
             );
             $this->categoryImageEntityManager->saveCategoryImageSet($categoryImageSetTransfer);
         }
@@ -85,12 +85,12 @@ class ImageSetUpdater implements ImageSetUpdaterInterface
         $removedCategoryImageSets = $this->categoryImageRepository
             ->getCategoryImageSetsByIdCategory(
                 $categoryTransfer->getIdCategory(),
-                $existingCategoryImageSetIds
+                $existingCategoryImageSetIds,
             );
 
         foreach ($removedCategoryImageSets as $categoryImageSetTransfer) {
             $this->categoryImageEntityManager->deleteCategoryImageSetById(
-                $categoryImageSetTransfer->getIdCategoryImageSet()
+                $categoryImageSetTransfer->getIdCategoryImageSet(),
             );
         }
     }
@@ -123,14 +123,14 @@ class ImageSetUpdater implements ImageSetUpdaterInterface
         $removedCategoryImages = $this->categoryImageRepository
             ->getCategoryImagesByCategoryImageSetId(
                 $categoryImageSetTransfer->getIdCategoryImageSet(),
-                $existingCategoryImageIds
+                $existingCategoryImageIds,
             );
 
         foreach ($removedCategoryImages as $categoryImageTransfer) {
             $this->categoryImageEntityManager
                 ->deleteCategoryImageFromImageSetById(
                     $categoryImageTransfer->getIdCategoryImage(),
-                    $categoryImageSetTransfer->getIdCategoryImageSet()
+                    $categoryImageSetTransfer->getIdCategoryImageSet(),
                 );
         }
     }

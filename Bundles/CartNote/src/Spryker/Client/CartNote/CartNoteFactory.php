@@ -36,7 +36,7 @@ class CartNoteFactory extends AbstractFactory
     {
         return new QuoteStorageStrategyProvider(
             $this->getQuoteClient(),
-            $this->getQuoteStorageStrategyProviders()
+            $this->getQuoteStorageStrategyProviders(),
         );
     }
 
@@ -66,7 +66,7 @@ class CartNoteFactory extends AbstractFactory
     {
         return new DatabaseQuoteStorageStrategy(
             $this->getQuoteClient(),
-            $this->createZedCartNoteStub()
+            $this->createZedCartNoteStub(),
         );
     }
 

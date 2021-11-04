@@ -23,11 +23,12 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 class RestRequestValidator implements RestRequestValidatorInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected const ERROR_DETAIL_REPLACED_SYMBOLS = ['][', '[', ']'];
+
     /**
-     * @var array
+     * @var array<string>
      */
     protected const ERROR_DETAIL_REPLACING_SYMBOLS = ['.', '', ''];
 
@@ -117,7 +118,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
                 (new RestErrorMessageTransfer())
                     ->setCode(RestRequestValidatorConfig::RESPONSE_CODE_REQUEST_INVALID)
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail($this->getFormattedErrorMessage($validationError))
+                    ->setDetail($this->getFormattedErrorMessage($validationError)),
             );
         }
 
@@ -144,7 +145,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         return str_replace(
             static::ERROR_DETAIL_REPLACED_SYMBOLS,
             static::ERROR_DETAIL_REPLACING_SYMBOLS,
-            $validationError->getPropertyPath()
+            $validationError->getPropertyPath(),
         ) . ' => ' . $validationError->getMessage();
     }
 }

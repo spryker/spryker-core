@@ -14,6 +14,7 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     *
      * @var string
      */
     public const OPERATION_REMOVE = 'remove';

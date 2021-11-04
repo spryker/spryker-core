@@ -146,7 +146,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         $productAlternativeTransfer = $this->productAlternativeEntityManager
             ->saveProductAbstractAlternative(
                 $idProduct,
-                $idProductAbstractAlternative
+                $idProductAbstractAlternative,
             );
 
         $this->productAlternativePluginExecutor->executePostProductAlternativeCreatePlugins($productAlternativeTransfer);
@@ -165,7 +165,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         $productAlternativeTransfer = $this->productAlternativeEntityManager
             ->saveProductConcreteAlternative(
                 $idProduct,
-                $idProductConcreteAlternative
+                $idProductConcreteAlternative,
             );
 
         $this->productAlternativePluginExecutor->executePostProductAlternativeCreatePlugins($productAlternativeTransfer);

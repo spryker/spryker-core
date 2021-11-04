@@ -25,18 +25,21 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
 {
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
 
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
 
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Reader::ERROR_MESSAGE_WISHLIST_NOT_FOUND
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
@@ -92,7 +95,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         }
 
         return $restResponse->addResource(
-            $this->createWishlistsResource($wishlistTransfer)
+            $this->createWishlistsResource($wishlistTransfer),
         );
     }
 
@@ -117,11 +120,11 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         $wishlistItemResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
             $idRestWishlistItemsAttributes,
-            $restWishlistItemsAttributesTransfer
+            $restWishlistItemsAttributesTransfer,
         );
         $wishlistItemResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForWishlistItem($idWishlist, $idRestWishlistItemsAttributes)
+            $this->createSelfLinkForWishlistItem($idWishlist, $idRestWishlistItemsAttributes),
         );
 
         return $this->restResourceBuilder
@@ -159,7 +162,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         $wishlistResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistUuid,
-            $restWishlistsAttributesTransfer
+            $restWishlistsAttributesTransfer,
         );
 
         foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
@@ -173,8 +176,8 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
                 $this->createWishlistItemsResource($wishlistItemTransfer)
                     ->addLink(
                         RestLinkInterface::LINK_SELF,
-                        $this->createSelfLinkForWishlistItem($wishlistUuid, $idRestWishlistItemsAttributes)
-                    )
+                        $this->createSelfLinkForWishlistItem($wishlistUuid, $idRestWishlistItemsAttributes),
+                    ),
             );
         }
 
@@ -218,9 +221,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     }
 
     /**
-     * @phpstan-param array<mixed> $errors
-     *
-     * @param array $errors
+     * @param array<string> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -321,7 +322,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         return $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
             $restWishlistsItemAttributesTransfer->getId(),
-            $restWishlistsItemAttributesTransfer
+            $restWishlistsItemAttributesTransfer,
         );
     }
 
@@ -391,7 +392,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistResourceId,
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $wishlistItemResourceId
+            $wishlistItemResourceId,
         );
     }
 }

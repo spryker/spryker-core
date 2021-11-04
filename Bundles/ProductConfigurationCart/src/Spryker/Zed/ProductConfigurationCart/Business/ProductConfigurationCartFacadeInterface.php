@@ -37,6 +37,7 @@ interface ProductConfigurationCartFacadeInterface
     /**
      * Specification:
      * - Returns true if all product configuration items in the quote have complete configuration, false otherwise.
+     * - If the quote item configuration is not available, an error code and message are added to the response.
      * - If the quote item configuration is incomplete, an error code and message are added to the response.
      *
      * @api

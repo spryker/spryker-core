@@ -42,7 +42,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     public function createCalculatorModel()
     {
         return new Calculator(
-            $this->createStockProductReader()
+            $this->createStockProductReader(),
         );
     }
 
@@ -55,7 +55,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createStockMapper(),
             $this->getStoreFacade(),
-            $this->getStockCollectionExpanderPlugins()
+            $this->getStockCollectionExpanderPlugins(),
         );
     }
 
@@ -69,7 +69,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->createStockReader(),
             $this->getQueryContainer(),
             $this->getRepository(),
-            $this->createStockProductTransferMapper()
+            $this->createStockProductTransferMapper(),
         );
     }
 
@@ -83,7 +83,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->createStockReader(),
             $this->createStockProductReader(),
             $this->getTouchFacade(),
-            $this->getStockUpdateHandlerPlugins()
+            $this->getStockUpdateHandlerPlugins(),
         );
     }
 
@@ -96,7 +96,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getTouchFacade(),
             $this->getConnection(),
-            $this->getStockPostCreatePlugins()
+            $this->getStockPostCreatePlugins(),
         );
     }
 
@@ -111,7 +111,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->createStockStoreRelationshipUpdater(),
             $this->createStockProductUpdater(),
             $this->getConnection(),
-            $this->getStockPostUpdatePlugins()
+            $this->getStockPostUpdatePlugins(),
         );
     }
 
@@ -122,7 +122,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return new StockStoreRelationshipUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -133,7 +133,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return new StockProductUpdater(
             $this->getRepository(),
-            $this->getStockUpdateHandlerPlugins()
+            $this->getStockUpdateHandlerPlugins(),
         );
     }
 

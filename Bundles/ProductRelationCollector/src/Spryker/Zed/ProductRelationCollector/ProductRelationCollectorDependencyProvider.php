@@ -23,6 +23,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
     /**
      * @var string
      */
@@ -37,10 +38,12 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
@@ -130,7 +133,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationCollectorToProductRelationBridge(
-                $container->getLocator()->productRelation()->queryContainer()
+                $container->getLocator()->productRelation()->queryContainer(),
             );
         });
 
@@ -146,7 +149,7 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductRelationCollectorCollectorToProductImageBridge(
-                $container->getLocator()->productImage()->queryContainer()
+                $container->getLocator()->productImage()->queryContainer(),
             );
         });
 

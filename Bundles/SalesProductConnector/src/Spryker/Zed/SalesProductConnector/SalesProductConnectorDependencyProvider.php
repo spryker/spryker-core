@@ -79,7 +79,7 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SalesProductConnectorToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

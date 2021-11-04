@@ -44,7 +44,7 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     public function publishByCmsSlotIds(array $cmsSlotIds): void
     {
         $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotsByCriteria(
-            (new CmsSlotCriteriaTransfer())->setCmsSlotIds($cmsSlotIds)
+            (new CmsSlotCriteriaTransfer())->setCmsSlotIds($cmsSlotIds),
         );
 
         $this->saveCmsSlots($cmsSlotTransfers);
@@ -59,7 +59,7 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     {
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
             $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
-                (new CmsSlotStorageTransfer())->fromArray($cmsSlotTransfer->toArray(), true)
+                (new CmsSlotStorageTransfer())->fromArray($cmsSlotTransfer->toArray(), true),
             );
         }
     }

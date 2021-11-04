@@ -100,7 +100,7 @@ class QuoteRequestProductConfigurationValidator implements QuoteRequestProductCo
         return (new QuoteRequestResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE),
             );
     }
 }

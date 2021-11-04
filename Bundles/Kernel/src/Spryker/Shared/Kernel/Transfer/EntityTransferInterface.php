@@ -10,7 +10,7 @@ namespace Spryker\Shared\Kernel\Transfer;
 interface EntityTransferInterface extends TransferInterface
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function virtualProperties();
 }

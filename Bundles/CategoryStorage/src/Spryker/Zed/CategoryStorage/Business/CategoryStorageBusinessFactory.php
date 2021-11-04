@@ -60,7 +60,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getCategoryFacade(),
             $this->getEventBehaviorFacade(),
             $this->createCategoryNodeStorageDeleter(),
-            $this->createCategoryNodeExtractor()
+            $this->createCategoryNodeExtractor(),
         );
     }
 
@@ -73,7 +73,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryStorageNodeTreeBuilder(),
             $this->getCategoryFacade(),
-            $this->createCategoryNodeExtractor()
+            $this->createCategoryNodeExtractor(),
         );
     }
 
@@ -84,7 +84,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryStorageNodeTreeBuilder(
             $this->getStoreFacade(),
-            $this->createCategoryNodeStorageMapper()
+            $this->createCategoryNodeStorageMapper(),
         );
     }
 
@@ -97,7 +97,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getCategoryFacade(),
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeExtractor()
+            $this->createCategoryNodeExtractor(),
         );
     }
 
@@ -148,7 +148,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageWriter()
+            $this->createCategoryNodeStorageWriter(),
         );
     }
 
@@ -159,7 +159,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryAttributeEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageWriter()
+            $this->createCategoryNodeStorageWriter(),
         );
     }
 
@@ -170,7 +170,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryStoreEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageWriter()
+            $this->createCategoryNodeStorageWriter(),
         );
     }
 
@@ -181,7 +181,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryTemplateEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageWriter()
+            $this->createCategoryNodeStorageWriter(),
         );
     }
 
@@ -192,7 +192,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryEventsDeleter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageDeleter()
+            $this->createCategoryNodeStorageDeleter(),
         );
     }
 
@@ -203,7 +203,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryAttributeEventsDeleter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageDeleter()
+            $this->createCategoryNodeStorageDeleter(),
         );
     }
 
@@ -214,7 +214,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeStorageByCategoryTemplateEventsDeleter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeStorageDeleter()
+            $this->createCategoryNodeStorageDeleter(),
         );
     }
 

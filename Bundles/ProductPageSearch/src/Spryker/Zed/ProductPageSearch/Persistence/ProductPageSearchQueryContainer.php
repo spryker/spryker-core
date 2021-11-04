@@ -40,18 +40,22 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      * @var string
      */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
     /**
      * @var string
      */
     public const FK_CATEGORY = 'fkCategory';
+
     /**
      * @var string
      */
     public const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+
     /**
      * @var string
      */
     protected const COLUMN_ID_IMAGE_SET = 'id_image_set';
+
     /**
      * @var int
      */
@@ -506,7 +510,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
                 SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
                 SpyProductImageSetTableMap::COL_FK_LOCALE,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE,
-                SpyProductImageSetTableMap::COL_FK_LOCALE
+                SpyProductImageSetTableMap::COL_FK_LOCALE,
             ))
             ->limit(static::PRODUCT_IMAGE_SET_LIMIT);
 

@@ -36,12 +36,14 @@ class ReturnTableQueryTest extends Unit
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Table\ReturnTable::COL_RETURN_REFERENCE
+     *
      * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
@@ -78,7 +80,7 @@ class ReturnTableQueryTest extends Unit
         $returnTableMock = new ReturnTableMock(
             $this->getUtilDateTimeServiceMock(),
             $this->getSalesReturnGuiConfigMock(),
-            SpySalesReturnQuery::create()
+            SpySalesReturnQuery::create(),
         );
 
         // Act

@@ -24,10 +24,12 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
      * @var string
      */
     protected const REQUEST_PARAMETER_USERNAME = 'username';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_PASSWORD = 'password';
+
     /**
      * @var string
      */

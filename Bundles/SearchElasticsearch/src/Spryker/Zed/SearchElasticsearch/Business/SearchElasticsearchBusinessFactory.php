@@ -65,7 +65,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function getElasticsearchClient(): Client
     {
         return $this->createElasticsearchClientFactory()->createClient(
-            $this->getConfig()->getClientConfig()
+            $this->getConfig()->getClientConfig(),
         );
     }
 
@@ -77,7 +77,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
         return new IndexDefinitionLoader(
             $this->createIndexDefinitionFinder(),
             $this->createIndexDefinitionReader(),
-            $this->createSourceIdentifier()
+            $this->createSourceIdentifier(),
         );
     }
 
@@ -87,7 +87,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createIndexDefinitionFinder(): SchemaDefinitionFinderInterface
     {
         return new SchemaDefinitionFinder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -97,7 +97,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createIndexDefinitionReader(): IndexDefinitionReaderInterface
     {
         return new IndexDefinitionReader(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -123,7 +123,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createSourceIdentifier(): SourceIdentifierInterface
     {
         return new SourceIdentifier(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -134,7 +134,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexInstallBroker(
             $this->createIndexDefinitionBuilder(),
-            $this->getInstaller()
+            $this->getInstaller(),
         );
     }
 
@@ -145,7 +145,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexDefinitionBuilder(
             $this->createIndexDefinitionLoader(),
-            $this->createIndexDefinitionMerger()
+            $this->createIndexDefinitionMerger(),
         );
     }
 
@@ -170,7 +170,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ES6IndexInstaller(
             $this->getElasticsearchClient(),
-            $this->createMappingBuilder()
+            $this->createMappingBuilder(),
         );
     }
 
@@ -190,7 +190,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createMappingBuilderFactory(): MappingBuilderFactoryInterface
     {
         return new MappingBuilderFactory(
-            $this->createMappingTypeSupportDetector()
+            $this->createMappingTypeSupportDetector(),
         );
     }
 
@@ -212,7 +212,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
         return new IndexUpdaterFactory(
             $this->getElasticsearchClient(),
             $this->createMappingBuilder(),
-            $this->createMappingTypeSupportDetector()
+            $this->createMappingTypeSupportDetector(),
         );
     }
 
@@ -224,7 +224,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
         return new IndexSettingsUpdater(
             $this->getElasticsearchClient(),
             $this->getConfig(),
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
         );
     }
 
@@ -236,7 +236,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
         return new IndexMapIndexMapInstaller(
             $this->createIndexDefinitionBuilder(),
             $this->createIndexMapCleaner(),
-            $this->createIndexMapGenerator()
+            $this->createIndexMapGenerator(),
         );
     }
 
@@ -246,7 +246,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createIndexMapCleaner(): IndexMapCleanerInterface
     {
         return new CleanerIndexMapCleaner(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -257,7 +257,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new GeneratorIndexMapGenerator(
             $this->getConfig(),
-            $this->createTwig()
+            $this->createTwig(),
         );
     }
 
@@ -267,7 +267,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createTwig(): Environment
     {
         return new Environment(
-            $this->createFilesystemLoader()
+            $this->createFilesystemLoader(),
         );
     }
 
@@ -303,7 +303,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
         return new Index(
             $this->getElasticsearchClient(),
             $this->createSourceIdentifier(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -313,7 +313,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createSnapshot(): SnapshotInterface
     {
         return new Snapshot(
-            $this->createElasticaSnapshot()
+            $this->createElasticaSnapshot(),
         );
     }
 
@@ -323,7 +323,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createRepository(): RepositoryInterface
     {
         return new Repository(
-            $this->createElasticaSnapshot()
+            $this->createElasticaSnapshot(),
         );
     }
 

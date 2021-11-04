@@ -21,10 +21,12 @@ class SalesConfig extends AbstractBundleConfig
      * @var string
      */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @var string
      */
     public const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
+
     /**
      * @var string
      */
@@ -49,9 +51,7 @@ class SalesConfig extends AbstractBundleConfig
      *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
      * ]
      *
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getPaymentMethodStatemachineMapping()
     {

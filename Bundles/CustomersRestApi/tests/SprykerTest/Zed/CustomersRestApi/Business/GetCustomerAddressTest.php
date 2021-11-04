@@ -32,14 +32,17 @@ class GetCustomerAddressTest extends Unit
      * @var string
      */
     protected const FAKE_ADDRESS_UUID_1 = 'FAKE_ADDRESS_UUID_1';
+
     /**
      * @var string
      */
     protected const FAKE_ADDRESS_UUID_2 = 'FAKE_ADDRESS_UUID_2';
+
     /**
      * @var string
      */
     protected const FAKE_ADDRESS_UUID_3 = 'FAKE_ADDRESS_UUID_3';
+
     /**
      * @var string
      */

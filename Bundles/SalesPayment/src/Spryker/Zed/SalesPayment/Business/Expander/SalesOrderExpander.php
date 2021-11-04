@@ -51,7 +51,7 @@ class SalesOrderExpander implements SalesOrderExpanderInterface
         }
 
         $orderTransfer->getTotalsOrFail()->setPriceToPay(
-            $this->calculatePriceToPay($orderTransfer)
+            $this->calculatePriceToPay($orderTransfer),
         );
 
         return $orderTransfer;

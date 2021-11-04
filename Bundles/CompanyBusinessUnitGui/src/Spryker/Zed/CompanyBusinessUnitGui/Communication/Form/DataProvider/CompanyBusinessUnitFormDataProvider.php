@@ -96,7 +96,7 @@ class CompanyBusinessUnitFormDataProvider
             $key = sprintf(
                 '%s (ID: %d)',
                 $companyTransfer->getName(),
-                $companyTransfer->getIdCompany()
+                $companyTransfer->getIdCompany(),
             );
             $result[$key] = $companyTransfer->getIdCompany();
         }

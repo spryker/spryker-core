@@ -34,7 +34,7 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
         $storeWithCurrencyTransfer = $this->currencyFacade->getStoreWithCurrencies();
         foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
             $moneyValueCollection->append(
-                $this->mapMoneyTransfer($currencyTransfer)
+                $this->mapMoneyTransfer($currencyTransfer),
             );
         }
 
@@ -57,7 +57,7 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
             }
 
             $currentFormMoneyValueCollection->append(
-                $this->mapMoneyTransfer($currencyTransfer)
+                $this->mapMoneyTransfer($currencyTransfer),
             );
         }
 

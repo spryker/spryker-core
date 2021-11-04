@@ -62,17 +62,17 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
 
         $this->tester->setDependency(
             ShipmentDependencyProvider::FACADE_TAX,
-            $this->createShipmentToTaxFacadeBridgeMock('MOON', 0.00)
+            $this->createShipmentToTaxFacadeBridgeMock('MOON', 0.00),
         );
 
         $this->tester->setDependency(
             ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
-            [new TaxSetProductAbstractAfterCreatePlugin()]
+            [new TaxSetProductAbstractAfterCreatePlugin()],
         );
 
         $this->tester->setDependency(
             TaxDependencyProvider::STORE_CONFIG,
-            $this->createTaxStoreMock('MOON')
+            $this->createTaxStoreMock('MOON'),
         );
 
         $this->shipmentMethodTransferList = [];
@@ -97,7 +97,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
             $itemShipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
             $shipmentMethodTransfer = $this->tester->findShipmentMethodByAddressIso2CodeInShipmentMethodTransferList(
                 $itemTransfer->getShipment()->getShippingAddress()->getIso2Code(),
-                $this->shipmentMethodTransferList
+                $this->shipmentMethodTransferList,
             );
             if ($shipmentMethodTransfer !== null) {
                 $itemShipmentMethodTransfer->setIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod());
@@ -121,14 +121,14 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
                 $expectedValue,
                 $itemTransfer->getShipment()->getMethod()->getTaxRate(),
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('The actual shipment method tax rate is invalid (iteration #%d).', $i)
+                sprintf('The actual shipment method tax rate is invalid (iteration #%d).', $i),
             );
 
             $this->assertEqualsWithDelta(
                 $expectedValue,
                 $expenseTransfer->getTaxRate(),
                 static::FLOAT_COMPARISION_DELTA,
-                sprintf('The actual shipment expense tax rate is invalid (iteration #%d).', $i)
+                sprintf('The actual shipment expense tax rate is invalid (iteration #%d).', $i),
             );
         }
     }

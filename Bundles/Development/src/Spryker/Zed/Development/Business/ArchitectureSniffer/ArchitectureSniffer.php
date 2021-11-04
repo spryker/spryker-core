@@ -22,34 +22,42 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @var string
      */
     public const OPTION_PRIORITY = 'priority';
+
     /**
      * @var string
      */
     public const OPTION_STRICT = 'strict';
+
     /**
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
     public const NAME_VISIBLE_VIOLATIONS = 'visible';
+
     /**
      * @var string
      */
     public const NAME_IGNORED_VIOLATIONS = 'ignored';
+
     /**
      * @var string
      */
     public const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
     public const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
+
     /**
      * @var string
      */
     public const VIOLATION_FIELD_NAME_RULE = 'rule';
+
     /**
      * @var string
      */
@@ -59,26 +67,32 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @var string
      */
     protected const SOURCE_FOLDER_NAME = 'src';
+
     /**
      * @var string
      */
     protected const OPTION_MODULE = 'module';
+
     /**
      * @var string
      */
     protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
+
     /**
      * @var string
      */
     protected const OPTION_VERBOSE = 'verbose';
+
     /**
      * @var string
      */
     protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
+
     /**
      * @var string
      */
     protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
+
     /**
      * @var string
      */
@@ -155,7 +169,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      * @param string $directory
      * @param array<string> $options
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function run($directory, array $options = []): array
     {
@@ -187,11 +201,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $fileViolations
+     * @param array<string, array<array<string, mixed>>> $fileViolations
      * @param string $directory
      * @param array<string> $options
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function runAnalyzer(array $fileViolations, $directory, array $options): array
     {
@@ -259,7 +273,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $command
+     * @param array<string> $command
      *
      * @return \Symfony\Component\Process\Process
      */
@@ -270,7 +284,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Exception
      *
@@ -303,9 +317,9 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $array
+     * @param array<string, array<array<string, mixed>>> $array
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function formatViolations(array $array): array
     {
@@ -453,7 +467,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -470,7 +484,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param array $results
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

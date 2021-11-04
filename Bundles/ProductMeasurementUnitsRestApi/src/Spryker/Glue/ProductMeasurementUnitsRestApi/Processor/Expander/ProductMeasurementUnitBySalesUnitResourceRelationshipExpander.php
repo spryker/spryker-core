@@ -63,19 +63,19 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
         $productMeasurementUnitTransfers = $this->productMeasurementUnitStorageClient
             ->getProductMeasurementUnitsByMapping(
                 static::PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE,
-                $productMeasurementUnitCodes
+                $productMeasurementUnitCodes,
             );
 
         $productMeasurementUnitTransfersWithTranslatedNames = $this->productMeasurementUnitNameTranslator
             ->getProductMeasurementUnitTransfersWithTranslatedNames(
                 $productMeasurementUnitTransfers,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         foreach ($resources as $resource) {
             $this->addProductMeasurementUnitResourceRelationships(
                 $resource,
-                $productMeasurementUnitTransfersWithTranslatedNames
+                $productMeasurementUnitTransfersWithTranslatedNames,
             );
         }
     }

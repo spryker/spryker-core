@@ -44,7 +44,7 @@ class CmsSlotBlockCategoryConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY,
-            new CmsSlotBlockConditionTransfer()
+            new CmsSlotBlockConditionTransfer(),
         );
 
         // Act
@@ -63,7 +63,7 @@ class CmsSlotBlockCategoryConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             'incorrect-condition-key',
-            new CmsSlotBlockConditionTransfer()
+            new CmsSlotBlockConditionTransfer(),
         );
 
         // Act
@@ -82,7 +82,7 @@ class CmsSlotBlockCategoryConnectorClientTest extends Unit
         // Arrange
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY,
-            (new CmsSlotBlockConditionTransfer())->setAll(true)
+            (new CmsSlotBlockConditionTransfer())->setAll(true),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_CATEGORY => static::ID_CATEGORY,
@@ -105,7 +105,7 @@ class CmsSlotBlockCategoryConnectorClientTest extends Unit
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
-            ->setCategoryIds([static::ID_CATEGORY])
+            ->setCategoryIds([static::ID_CATEGORY]),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_CATEGORY => static::ID_CATEGORY,
@@ -128,7 +128,7 @@ class CmsSlotBlockCategoryConnectorClientTest extends Unit
         $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->addCondition(
             CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY,
             (new CmsSlotBlockConditionTransfer())->setAll(false)
-                ->setCategoryIds([static::ID_CATEGORY + 1])
+                ->setCategoryIds([static::ID_CATEGORY + 1]),
         );
         $cmsSlotParamsTransfer = $this->haveCmsSlotParams([
             CmsSlotParamsTransfer::ID_CATEGORY => static::ID_CATEGORY,

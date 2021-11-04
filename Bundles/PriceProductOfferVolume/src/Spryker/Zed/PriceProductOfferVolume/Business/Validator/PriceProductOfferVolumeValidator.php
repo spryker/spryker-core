@@ -76,7 +76,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
             ->atPath(sprintf('[%s]', PriceProductOfferCollectionTransfer::PRICE_PRODUCT_OFFERS))
             ->validate(
                 $priceProductOfferCollectionTransfer->getPriceProductOffers(),
-                $this->priceProductOfferConstraintProvider->getConstraints()
+                $this->priceProductOfferConstraintProvider->getConstraints(),
             )
             ->getViolations();
 
@@ -91,7 +91,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
                     $volumePriceProductTransfers,
                     $constraintViolationList,
                     $priceProductOfferIndex,
-                    $priceProductIndex
+                    $priceProductIndex,
                 );
             }
         }
@@ -104,7 +104,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
 
         return $this->mapConstraintViolationListToValidationResponseTransfer(
             $constraintViolationList,
-            $validationResponseTransfer
+            $validationResponseTransfer,
         );
     }
 
@@ -127,7 +127,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
                 $volumePriceProductTransfer,
                 $priceProductOfferIndex,
                 $priceProductIndex,
-                $volumePriceIndex
+                $volumePriceIndex,
             );
 
             $constraintViolationListPriceProduct = $this->validator
@@ -135,7 +135,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
                 ->atPath($violationPath)
                 ->validate(
                     $volumePriceProductTransfer,
-                    $this->priceProductConstraintProvider->getConstraints()
+                    $this->priceProductConstraintProvider->getConstraints(),
                 )->getViolations();
 
             $constraintViolationList->addAll($constraintViolationListPriceProduct);
@@ -161,7 +161,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
         $moneyValueWithPriceType = sprintf(
             '%s:%s',
             PriceProductTransfer::MONEY_VALUE,
-            mb_strtolower($volumePriceProductTransfer->getPriceTypeOrFail()->getNameOrFail())
+            mb_strtolower($volumePriceProductTransfer->getPriceTypeOrFail()->getNameOrFail()),
         );
 
         return sprintf(
@@ -174,7 +174,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
             $moneyValueWithPriceType,
             MoneyValueTransfer::PRICE_DATA,
             PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE,
-            $volumePriceIndex
+            $volumePriceIndex,
         );
     }
 
@@ -191,7 +191,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
         foreach ($constraintViolationList as $constraintViolation) {
             $validationErrorTransfer = $this->mapConstraintViolationToValidationErrorTransfer(
                 $constraintViolation,
-                new ValidationErrorTransfer()
+                new ValidationErrorTransfer(),
             );
 
             $validationResponseTransfer->addValidationError($validationErrorTransfer);

@@ -125,7 +125,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         $salesOrderItemIdsGroupedByShipmentIds = $this->shipmentRepository
             ->getItemIdsGroupedByShipmentIds(
                 $orderTransfer,
-                $this->getDefaultShipmentTransferWithOrderLevelShippingAddress($orderTransfer, $shipmentTransfers)
+                $this->getDefaultShipmentTransferWithOrderLevelShippingAddress($orderTransfer, $shipmentTransfers),
             );
 
         foreach ($shipmentTransfers as $shipmentTransfer) {
@@ -137,7 +137,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             $orderTransfer = $this->addShipmentToOrderItemsSpecifiedByIdSalesOrderItemList(
                 $orderTransfer,
                 $shipmentTransfer,
-                $idSalesOrderItemListForCurrentShipment
+                $idSalesOrderItemListForCurrentShipment,
             );
         }
 

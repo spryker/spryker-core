@@ -83,7 +83,7 @@ class ProductFormHandler implements FormHandlerInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (isset($items[$itemTransfer->getSku()])) {
                 $items[$itemTransfer->getSku()]->setQuantity(
-                    $items[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
+                    $items[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity(),
                 );
 
                 continue;

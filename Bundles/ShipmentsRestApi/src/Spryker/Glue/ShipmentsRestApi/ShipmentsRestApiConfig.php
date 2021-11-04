@@ -15,10 +15,12 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_SHIPMENTS = 'shipments';
+
     /**
      * @var string
      */
     public const RESOURCE_SHIPMENT_METHODS = 'shipment-methods';
+
     /**
      * @var string
      */
@@ -28,6 +30,7 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_RESPONSE_CODE_SINGLE_MULTI_SHIPMENT_MIX = '4301';
+
     /**
      * @var string
      */
@@ -37,6 +40,7 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_RESPONSE_CODE_ADDRESS_NOT_VALID = '4302';
+
     /**
      * @var string
      */
@@ -46,6 +50,7 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_RESPONSE_CODE_SHIPMENT_ATTRIBUTE_NOT_SPECIFIED = '4303';
+
     /**
      * @var string
      */
@@ -55,6 +60,7 @@ class ShipmentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_RESPONSE_CODE_SHIPMENTS_ATTRIBUTE_NOT_SPECIFIED = '4304';
+
     /**
      * @var string
      */

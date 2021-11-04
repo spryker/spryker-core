@@ -132,7 +132,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             ->findProductAbstractPricesBySkuAndCriteria($abstractSku, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities
+            $priceProductStoreEntities,
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
@@ -181,7 +181,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities
+            $priceProductStoreEntities,
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
@@ -254,7 +254,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
         return $this->priceProductMapper->mapProductPriceTransfer(
             $priceProductStoreEntity,
-            $priceProductStoreEntity->getPriceProduct()
+            $priceProductStoreEntity->getPriceProduct(),
         );
     }
 

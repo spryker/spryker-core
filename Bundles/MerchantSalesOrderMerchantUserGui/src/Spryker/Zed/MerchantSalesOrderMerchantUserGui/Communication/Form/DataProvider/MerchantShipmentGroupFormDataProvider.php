@@ -23,42 +23,49 @@ class MerchantShipmentGroupFormDataProvider
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SHIPMENT_METHOD_CHOICES
+     *
      * @var string
      */
     protected const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SALUTATION_CHOICES
+     *
      * @var string
      */
     protected const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_SHIPMENT_ADDRESS_CHOICES
+     *
      * @var string
      */
     protected const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES
+     *
      * @var string
      */
     protected const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_ID_SHIPMENT_METHOD
+     *
      * @var string
      */
     protected const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_ID_SALES_SHIPMENT
+     *
      * @var string
      */
     protected const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS
+     *
      * @var string
      */
     protected const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
@@ -157,12 +164,10 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getOptions(MerchantOrderTransfer $merchantOrderTransfer, ?ShipmentTransfer $shipmentTransfer = null): array
     {
@@ -191,12 +196,10 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getShipmentSelectedItemsIds(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): array
     {
@@ -277,7 +280,7 @@ class MerchantShipmentGroupFormDataProvider
             $addressTransfer->getAddress1(),
             $addressTransfer->getAddress2(),
             $addressTransfer->getZipCode(),
-            $addressTransfer->getCity()
+            $addressTransfer->getCity(),
         );
     }
 
@@ -361,7 +364,7 @@ class MerchantShipmentGroupFormDataProvider
             $shipmentMethodOptionNameCollection[$idShipmentMethod] = sprintf(
                 '%s - %s',
                 $shipmentMethodTransfer->getCarrierName(),
-                $shipmentMethodTransfer->getName()
+                $shipmentMethodTransfer->getName(),
             );
         }
 

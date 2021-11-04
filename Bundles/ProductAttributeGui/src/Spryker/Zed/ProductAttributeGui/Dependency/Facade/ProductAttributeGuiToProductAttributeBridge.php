@@ -151,7 +151,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
             $idLocale,
             $searchText,
             $offset,
-            $limit
+            $limit,
         );
     }
 

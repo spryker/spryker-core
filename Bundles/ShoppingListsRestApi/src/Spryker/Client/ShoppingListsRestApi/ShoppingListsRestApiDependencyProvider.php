@@ -40,7 +40,7 @@ class ShoppingListsRestApiDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ShoppingListsRestApiToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 

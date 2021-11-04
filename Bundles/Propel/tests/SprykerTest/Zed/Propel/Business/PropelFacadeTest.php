@@ -32,14 +32,17 @@ class PropelFacadeTest extends Unit
      * @var string
      */
     protected const POSTGRESQL_ADJUSTER_SCHEMA = 'postgresql_adjuster.spy_foo.schema.xml';
+
     /**
      * @var string
      */
     protected const POSTGRESQL_SCHEMA_DIRECTORY = 'schemas';
+
     /**
      * @var string
      */
     protected const POSTGRESQL_SCHEMA = 'spy_foo.schema.xml';
+
     /**
      * @var string
      */

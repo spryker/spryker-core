@@ -132,7 +132,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
     {
         $this->checkPagePlaceholderNotAmbiguous(
             $cmsGlossaryAttributesTransfer->getFkPage(),
-            $cmsGlossaryAttributesTransfer->getPlaceholder()
+            $cmsGlossaryAttributesTransfer->getPlaceholder(),
         );
 
         $cmsGlossaryKeyMappingEntity = $this->createCmsGlossaryKeyMappingEntity();
@@ -163,7 +163,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
         if ($isPlaceholderModified || $isPageIdModified) {
             $this->checkPagePlaceholderNotAmbiguous(
                 $cmsGlossaryAttributesTransfer->getFkPage(),
-                $cmsGlossaryAttributesTransfer->getPlaceholder()
+                $cmsGlossaryAttributesTransfer->getPlaceholder(),
             );
         }
 
@@ -232,7 +232,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             $translationKey = $this->cmsGlossaryKeyGenerator->generateGlossaryKeyName(
                 $glossaryAttributesTransfer->getFkPage(),
                 $glossaryAttributesTransfer->getTemplateName(),
-                $glossaryAttributesTransfer->getPlaceholder()
+                $glossaryAttributesTransfer->getPlaceholder(),
             );
         }
 

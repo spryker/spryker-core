@@ -26,7 +26,7 @@ class ProductConfigurationServiceFactory extends AbstractServiceFactory
     {
         return new ProductConfigurationInstanceHashGenerator(
             $this->getUtilEncodingService(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 
@@ -60,7 +60,7 @@ class ProductConfigurationServiceFactory extends AbstractServiceFactory
     public function createVolumePriceProductConfigurationFilter(): PriceProductConfigurationVolumeFilterInterface
     {
         return new PriceProductConfigurationVolumeFilter(
-            $this->createPriceProductConfigurationFilter()
+            $this->createPriceProductConfigurationFilter(),
         );
     }
 }

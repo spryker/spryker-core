@@ -204,7 +204,7 @@ class IndexSettingsUpdaterTest extends Unit
         $clientMock = $this->createMock(Client::class);
         $clientMock->method('getIndex')
             ->willReturn(
-                $this->createMock(Index::class)
+                $this->createMock(Index::class),
             );
 
         return $clientMock;

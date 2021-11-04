@@ -62,12 +62,12 @@ class CategoryCreateDataProvider
             ->setStoreRelation(new StoreRelationTransfer());
 
         $categoryTransfer->setCategoryNode(
-            (new NodeTransfer())->setIsMain(false)
+            (new NodeTransfer())->setIsMain(false),
         );
 
         if ($idParentNode) {
             $categoryTransfer->setParentCategoryNode(
-                (new NodeTransfer())->setIdCategoryNode($idParentNode)
+                (new NodeTransfer())->setIdCategoryNode($idParentNode),
             );
         }
 

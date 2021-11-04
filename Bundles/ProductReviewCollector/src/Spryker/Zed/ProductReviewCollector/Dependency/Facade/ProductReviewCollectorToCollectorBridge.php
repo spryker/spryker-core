@@ -61,7 +61,7 @@ class ProductReviewCollectorToCollectorBridge implements ProductReviewCollectorT
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

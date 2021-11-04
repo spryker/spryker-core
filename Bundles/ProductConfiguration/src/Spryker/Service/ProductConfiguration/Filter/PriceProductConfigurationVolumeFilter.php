@@ -47,7 +47,7 @@ class PriceProductConfigurationVolumeFilter implements PriceProductConfiguration
 
         $minPriceProductTransfer = $this->findMinPrice(
             $priceProductTransfers,
-            $priceProductFilterTransfer->getQuantityOrFail()
+            $priceProductFilterTransfer->getQuantityOrFail(),
         );
 
         if (!$minPriceProductTransfer) {

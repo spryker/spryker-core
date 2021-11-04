@@ -34,7 +34,7 @@ class MerchantProductProductAbstractPostCreatePlugin extends AbstractPlugin impl
             $this->getFacade()->create(
                 (new MerchantProductTransfer())
                     ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
-                    ->setIdMerchant($productAbstractTransfer->getIdMerchant())
+                    ->setIdMerchant($productAbstractTransfer->getIdMerchant()),
             );
         }
 

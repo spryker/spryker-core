@@ -74,7 +74,7 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
             ->restResourceBuilder
             ->createRestResponse(
                 $returnCollectionTransfer->getPagination()->getNbResults(),
-                $returnFilterTransfer->getFilter()->getLimit() ?? 0
+                $returnFilterTransfer->getFilter()->getLimit() ?? 0,
             );
 
         foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
@@ -85,8 +85,8 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
                 $this->restResourceBuilder->createRestResource(
                     SalesReturnsRestApiConfig::RESOURCE_RETURNS,
                     $restReturnsAttributesTransfer->getReturnReference(),
-                    $restReturnsAttributesTransfer
-                )->setPayload($returnTransfer)
+                    $restReturnsAttributesTransfer,
+                )->setPayload($returnTransfer),
             );
         }
 
@@ -109,8 +109,8 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
             $this->restResourceBuilder->createRestResource(
                 SalesReturnsRestApiConfig::RESOURCE_RETURNS,
                 $restReturnsAttributesTransfer->getReturnReference(),
-                $restReturnsAttributesTransfer
-            )->setPayload($returnTransfer)
+                $restReturnsAttributesTransfer,
+            )->setPayload($returnTransfer),
         );
 
         return $restResponse;
@@ -183,7 +183,7 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $restResources[] = $this->createReturnItemRestResource(
                 $returnItemTransfer,
-                $returnReference
+                $returnReference,
             );
         }
 
@@ -204,12 +204,12 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
         $returnItemResource = $this->restResourceBuilder->createRestResource(
             SalesReturnsRestApiConfig::RESOURCE_RETURN_ITEMS,
             $returnItemTransfer->getUuid(),
-            $restReturnItemsAttributesTransfer
+            $restReturnItemsAttributesTransfer,
         );
 
         $returnItemResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForReturnItem($returnReference, $returnItemTransfer->getUuid())
+            $this->createSelfLinkForReturnItem($returnReference, $returnItemTransfer->getUuid()),
         );
 
         return $returnItemResource;
@@ -228,7 +228,7 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
             SalesReturnsRestApiConfig::RESOURCE_RETURNS,
             $idReturn,
             SalesReturnsRestApiConfig::RESOURCE_RETURN_ITEMS,
-            $idReturnItem
+            $idReturnItem,
         );
     }
 
@@ -243,8 +243,8 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
         $restResponse->addError(
             $this->returnResourceMapper->mapMessageTransferToRestErrorMessageTransfer(
                 (new MessageTransfer())->setValue($message),
-                new RestErrorMessageTransfer()
-            )
+                new RestErrorMessageTransfer(),
+            ),
         );
 
         return $restResponse;

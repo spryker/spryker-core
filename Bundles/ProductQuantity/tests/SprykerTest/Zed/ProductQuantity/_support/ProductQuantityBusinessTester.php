@@ -74,7 +74,7 @@ class ProductQuantityBusinessTester extends Actor
         return (new CartChangeTransfer())
             ->setQuote(
                 (new QuoteTransfer())
-                    ->setItems(new ArrayObject([]))
+                    ->setItems(new ArrayObject([])),
             )
             ->setItems(new ArrayObject([]));
     }
@@ -92,7 +92,7 @@ class ProductQuantityBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setGroupKey($sku)
-                ->setQuantity($quantity)
+                ->setQuantity($quantity),
         );
 
         return $cartChangeTransfer;
@@ -110,7 +110,7 @@ class ProductQuantityBusinessTester extends Actor
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
                 ->setSku($sku)
-                ->setQuantity($quantity)
+                ->setQuantity($quantity),
         );
 
         return $cartChangeTransfer;
@@ -124,7 +124,7 @@ class ProductQuantityBusinessTester extends Actor
     public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
-            (new ItemTransfer())
+            (new ItemTransfer()),
         );
 
         return $cartChangeTransfer;

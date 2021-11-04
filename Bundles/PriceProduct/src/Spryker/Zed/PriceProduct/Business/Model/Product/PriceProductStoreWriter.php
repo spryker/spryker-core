@@ -136,7 +136,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductStoreEntity = $this->findPriceProductStoreEntity(
             $priceProductTransfer,
-            $moneyValueTransfer
+            $moneyValueTransfer,
         );
 
         $priceProductStoreEntity->fromArray($moneyValueTransfer->toArray());
@@ -348,7 +348,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             ->queryPriceProductStoreByProductCurrencyStore(
                 $idPriceProduct,
                 $idCurrency,
-                $idStore
+                $idStore,
             )
             ->filterByNetPrice($moneyValueTransfer->getNetAmount())
             ->filterByGrossPrice($moneyValueTransfer->getGrossAmount())

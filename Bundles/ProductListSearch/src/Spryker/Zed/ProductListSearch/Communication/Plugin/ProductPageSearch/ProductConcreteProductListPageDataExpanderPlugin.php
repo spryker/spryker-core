@@ -35,7 +35,7 @@ class ProductConcreteProductListPageDataExpanderPlugin extends AbstractPlugin im
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
     ): ProductConcretePageSearchTransfer {
         $productConcretePageSearchTransfer->setFkProduct(
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         );
 
         return $this->getFacade()->expandProductConcretePageSearchTransferWithProductLists($productConcretePageSearchTransfer);

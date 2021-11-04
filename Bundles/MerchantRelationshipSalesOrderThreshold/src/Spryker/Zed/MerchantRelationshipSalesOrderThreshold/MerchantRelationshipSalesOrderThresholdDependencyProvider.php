@@ -22,10 +22,12 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
      * @var string
      */
     public const FACADE_SALES_ORDER_THRESHOLD = 'FACADE_SALES_ORDER_THRESHOLD';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
@@ -56,7 +58,7 @@ class MerchantRelationshipSalesOrderThresholdDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeBridge(
-                $container->getLocator()->salesOrderThreshold()->facade()
+                $container->getLocator()->salesOrderThreshold()->facade(),
             );
         });
 

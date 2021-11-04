@@ -32,6 +32,7 @@ interface DiscountFacadeInterface
      * - Applies discount to exclusive if exists.
      * - Distributes discount amount throw all discountable items.
      * - Adds discount totals to quote discount properties.
+     * - Filters out discounts that cannot be applied.
      *
      * @api
      *

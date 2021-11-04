@@ -74,11 +74,11 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
             $productConfigurationStorageTransfer = $this->productConfigurationStorageMapper
                 ->mapProductConfigurationTransferToProductConfigurationStorageTransfer(
                     $productConfigurationTransfer,
-                    new ProductConfigurationStorageTransfer()
+                    new ProductConfigurationStorageTransfer(),
                 );
 
             $this->productConfigurationStorageEntityManager->saveProductConfigurationStorage(
-                $productConfigurationStorageTransfer
+                $productConfigurationStorageTransfer,
             );
         }
     }

@@ -43,7 +43,7 @@ class ProductPageSearchRepositoryTest extends Unit
         // Act
         $result = array_map(
             'intval',
-            (new ProductPageSearchRepository())->getEligibleForAddToCartProductAbstractsIds($productAbstractIds)
+            (new ProductPageSearchRepository())->getEligibleForAddToCartProductAbstractsIds($productAbstractIds),
         );
 
         // Assert

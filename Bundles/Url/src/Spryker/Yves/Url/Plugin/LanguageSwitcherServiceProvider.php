@@ -35,11 +35,11 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
-                    $this->createRenderLanguageSwitcherTwigFunction($twig)
+                    $this->createRenderLanguageSwitcherTwigFunction($twig),
                 );
 
                 return $twig;
-            })
+            }),
         );
     }
 
@@ -69,7 +69,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
                     [
                     'languages' => $this->attachLocaleUrlsFromStorageToLanguages($locales, $localeUrls, $request),
                     'currentLanguage' => $currentLanguage,
-                    ]
+                    ],
                 );
             }
 
@@ -78,7 +78,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
                 [
                 'languages' => $this->attachLocaleUrlsToLanguages($locales, $request),
                 'currentLanguage' => $currentLanguage,
-                ]
+                ],
             );
         }, $options);
     }

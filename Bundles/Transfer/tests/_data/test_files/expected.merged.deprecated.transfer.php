@@ -68,7 +68,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     protected $projectLevelDeprecatedField;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $transferPropertyNameMap = [
         'scalar_field' => 'scalarField',
@@ -89,7 +89,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [
         self::SCALAR_FIELD => [
@@ -472,7 +472,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param bool $ignoreMissingProperty
      *
      * @throws \InvalidArgumentException
@@ -526,7 +526,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -548,7 +548,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -567,11 +567,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
@@ -589,11 +589,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
@@ -611,7 +611,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayRecursiveCamelCased()
     {
@@ -648,7 +648,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayRecursiveNotCamelCased()
     {
@@ -685,7 +685,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayNotRecursiveNotCamelCased()
     {
@@ -702,7 +702,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayNotRecursiveCamelCased()
     {
@@ -727,7 +727,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayNotRecursiveCamelCased()
     {
@@ -741,7 +741,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayNotRecursiveNotCamelCased()
     {
@@ -755,7 +755,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayRecursiveNotCamelCased()
     {
@@ -769,7 +769,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayRecursiveCamelCased()
     {

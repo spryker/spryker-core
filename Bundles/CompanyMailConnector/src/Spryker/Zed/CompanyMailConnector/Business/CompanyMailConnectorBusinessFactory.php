@@ -23,7 +23,7 @@ class CompanyMailConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyStatusMailer(
             $this->getMailFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 

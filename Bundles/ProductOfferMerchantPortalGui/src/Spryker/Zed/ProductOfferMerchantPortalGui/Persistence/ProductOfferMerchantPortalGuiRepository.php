@@ -50,12 +50,14 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
+     *
      * @var string
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';
@@ -64,6 +66,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
+
     /**
      * @var string
      */
@@ -73,6 +76,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      * @var string
      */
     protected const COL_PRICE_PRODUCT_OFFER_IDS = 'price_product_offer_ids';
+
     /**
      * @var string
      */
@@ -94,14 +98,14 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $propelPager = $productConcreteQuery->paginate(
             $productTableCriteriaTransfer->requirePage()->getPage(),
-            $productTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $productTableCriteriaTransfer->requirePageSize()->getPageSize(),
         );
 
         $paginationTransfer = $this->hydratePaginationTransfer($propelPager);
 
         $productConcreteCollectionTransfer = $productConcreteMapper->mapProductTableDataArrayToProductConcreteCollectionTransfer(
             $propelPager->getResults()->getData(),
-            new ProductConcreteCollectionTransfer()
+            new ProductConcreteCollectionTransfer(),
         );
         $productConcreteCollectionTransfer->setPagination($paginationTransfer);
 
@@ -156,7 +160,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
                 sprintf('%s = ?', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE),
-                $idLocale
+                $idLocale,
             );
 
         return $productConcreteQuery;
@@ -196,7 +200,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 SpyProductImageSetTableMap::COL_FK_PRODUCT,
                 SpyProductTableMap::COL_ID_PRODUCT,
                 SpyProductImageSetTableMap::COL_FK_LOCALE,
-                $idLocale
+                $idLocale,
             ))
             ->addSelectColumn(SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL)
             ->orderBy(SpyProductImageSetTableMap::COL_FK_LOCALE)
@@ -236,7 +240,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
-                $merchantReference
+                $merchantReference,
             ));
     }
 
@@ -402,8 +406,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             sprintf(
                 '(%s) %s 0',
                 $this->createProductOffersCountSubquery($merchantReference),
-                $productConcreteHasOffers ? '>' : '='
-            )
+                $productConcreteHasOffers ? '>' : '=',
+            ),
         );
 
         return $productConcreteQuery;
@@ -424,7 +428,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $propelPager = $productOfferQuery->paginate(
             $productOfferTableCriteriaTransfer->requirePage()->getPage(),
-            $productOfferTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $productOfferTableCriteriaTransfer->requirePageSize()->getPageSize(),
         );
         $paginationTransfer = $this->hydratePaginationTransfer($propelPager);
 
@@ -432,7 +436,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->createProductOfferTableDataMapper()
             ->mapProductOfferTableDataArrayToProductOfferCollectionTransfer(
                 $propelPager->getResults()->getData(),
-                new ProductOfferCollectionTransfer()
+                new ProductOfferCollectionTransfer(),
             );
         $productOfferCollectionTransfer->setPagination($paginationTransfer);
 
@@ -519,7 +523,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->where(sprintf(
                 '%s = %s',
                 SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
-                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER
+                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER,
             ));
         $params = [];
 
@@ -542,7 +546,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addJoinObject($productLocalizedAttributesJoin, $productLocalizedAttributesJoinName)
             ->addJoinCondition(
                 $productLocalizedAttributesJoinName,
-                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale)
+                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale),
             );
 
         return $productOfferQuery;
@@ -560,7 +564,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductLocalizedAttributesTableMap::COL_NAME,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -578,7 +582,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductTableMap::COL_SKU,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -596,7 +600,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -614,7 +618,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $likeCriterion = $criteria->getNewCriterion(
             SpyProductOfferTableMap::COL_MERCHANT_SKU,
             '%' . $searchTerm . '%',
-            Criteria::LIKE
+            Criteria::LIKE,
         );
 
         return $likeCriterion->setIgnoreCase(true);
@@ -656,7 +660,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         }
 
         $productOfferQuery->filterByIsActive(
-            $productOfferTableCriteriaTransfer->getFilterIsActive()
+            $productOfferTableCriteriaTransfer->getFilterIsActive(),
         );
 
         return $productOfferQuery;
@@ -699,8 +703,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             sprintf(
                 '(%s) %s 0',
                 SpyProductOfferStockTableMap::COL_QUANTITY,
-                $productOfferTableCriteriaTransfer->getFilterHasStock() ? '>' : '='
-            )
+                $productOfferTableCriteriaTransfer->getFilterHasStock() ? '>' : '=',
+            ),
         );
 
         if (!$productOfferTableCriteriaTransfer->getFilterHasStock()) {
@@ -789,7 +793,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         if ($criteriaRangeFilterTransfer->getTo()) {
             $productOfferQuery->filterByCreatedAt(
                 $criteriaRangeFilterTransfer->getTo(),
-                Criteria::LESS_THAN
+                Criteria::LESS_THAN,
             );
         }
 
@@ -819,7 +823,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         if ($criteriaRangeFilterTransfer->getTo()) {
             $productOfferQuery->filterByUpdatedAt(
                 $criteriaRangeFilterTransfer->getTo(),
-                Criteria::LESS_THAN
+                Criteria::LESS_THAN,
             );
         }
 
@@ -911,15 +915,15 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(MerchantProductOfferCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::ACTIVE,
-                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . ' IS TRUE THEN 1 END)'
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . ' IS TRUE THEN 1 END)',
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::WITH_STOCK,
-                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 THEN 1 END)'
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 THEN 1 END)',
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::LOW_IN_STOCK,
-                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' < ' . $dashboardLowStockThreshold . ' THEN 1 END)'
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' < ' . $dashboardLowStockThreshold . ' THEN 1 END)',
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
@@ -928,12 +932,12 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                         "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
                     ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
                         "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
-                    ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)'
+                    ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)',
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::EXPIRING,
                 "COUNT(CASE WHEN '" . $currentDateTime . "' < " . SpyProductOfferValidityTableMap::COL_VALID_TO
-                . " AND '" . $expiringOffersDateTime . "' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)'
+                . " AND '" . $expiringOffersDateTime . "' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)',
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::VISIBLE,
@@ -944,7 +948,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                         ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
                             "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
                         ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . " IS NULL
-                    ) THEN 1 END)"
+                    ) THEN 1 END)",
             )
             ->select([
                 MerchantProductOfferCountsTransfer::TOTAL,

@@ -37,7 +37,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -48,7 +48,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -64,7 +64,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserFormDataProvider(
             $this->getCompanyUserFacade(),
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 
@@ -100,7 +100,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CustomerCompanyAttachFormDataProvider(
             $this->getCompanyUserFacade(),
             $this->getCompanyFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -135,13 +135,13 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserTableExpanderPluginExecutor(
             $this->getCompanyUserTableConfigExpanderPlugins(),
-            $this->getCompanyUserTablePrepareDataExpanderPlugins()
+            $this->getCompanyUserTablePrepareDataExpanderPlugins(),
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -167,7 +167,7 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyUserPropelQuery(),
             $this->createCompanyUserTableExpanderPluginExecutor(),
             $this->getCompanyUserTableActionExpanderPlugins(),
-            $this->getCompanyUserTableDeleteActionPlugin()
+            $this->getCompanyUserTableDeleteActionPlugin(),
         );
     }
 

@@ -14,6 +14,7 @@ interface ProductOptionEvents
      * - This events will be used for product_abstract_option publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH = 'ProductOption.product_abstract_option.publish';
@@ -23,6 +24,7 @@ interface ProductOptionEvents
      * - This events will be used for product_abstract_option publishing
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH = 'ProductOption.product_abstract_option.unpublish';
@@ -32,6 +34,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_abstract_product_option_group entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_product_abstract_product_option_group.create';
@@ -41,6 +44,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_abstract_product_option_group entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_product_abstract_product_option_group.update';
@@ -50,6 +54,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_abstract_product_option_group entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE = 'Entity.spy_product_abstract_product_option_group.delete';
@@ -59,6 +64,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_group entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_product_option_group.create';
@@ -68,6 +74,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_group entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_product_option_group.update';
@@ -77,6 +84,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_group entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE = 'Entity.spy_product_option_group.delete';
@@ -86,6 +94,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_value entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE = 'Entity.spy_product_option_value.create';
@@ -95,6 +104,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_value entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE = 'Entity.spy_product_option_value.update';
@@ -104,6 +114,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_value entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
@@ -113,6 +124,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_value_price entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE = 'Entity.spy_product_option_value_price.create';
@@ -122,6 +134,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_value_price entity change
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE = 'Entity.spy_product_option_value_price.update';
@@ -131,6 +144,7 @@ interface ProductOptionEvents
      * - This events will be used for spy_product_option_value_price entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE = 'Entity.spy_product_option_value_price.delete';

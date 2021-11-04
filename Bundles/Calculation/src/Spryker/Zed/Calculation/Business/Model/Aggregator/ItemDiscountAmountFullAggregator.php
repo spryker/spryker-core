@@ -64,12 +64,12 @@ class ItemDiscountAmountFullAggregator implements CalculatorInterface
         foreach ($items as $itemTransfer) {
             $unitProductOptionDiscountAmountAggregation = $this->calculateUnitProductOptionDiscountAmountAggregation($itemTransfer);
             $itemTransfer->setUnitDiscountAmountFullAggregation(
-                $itemTransfer->getUnitDiscountAmountAggregation() + $unitProductOptionDiscountAmountAggregation
+                $itemTransfer->getUnitDiscountAmountAggregation() + $unitProductOptionDiscountAmountAggregation,
             );
 
             $sumProductOptionDiscountAmountAggregation = $this->calculateSumProductOptionDiscountAmountAggregation($itemTransfer);
             $itemTransfer->setSumDiscountAmountFullAggregation(
-                $itemTransfer->getSumDiscountAmountAggregation() + $sumProductOptionDiscountAmountAggregation
+                $itemTransfer->getSumDiscountAmountAggregation() + $sumProductOptionDiscountAmountAggregation,
             );
         }
     }

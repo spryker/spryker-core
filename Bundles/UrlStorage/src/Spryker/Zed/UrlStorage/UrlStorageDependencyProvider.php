@@ -24,6 +24,7 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */

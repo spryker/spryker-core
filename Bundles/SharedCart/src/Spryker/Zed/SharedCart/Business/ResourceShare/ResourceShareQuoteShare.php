@@ -21,6 +21,7 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
+
     /**
      * @var string
      */
@@ -160,7 +161,7 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
             $resourceShareRequestTransfer
                 ->getResourceShare()
                 ->getResourceShareData()
-                ->getIdQuote()
+                ->getIdQuote(),
         );
 
         return $quoteResponseTransfer->getQuoteTransfer();
@@ -177,7 +178,7 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_ACCESS_DENIED),
                 );
         }
 
@@ -187,7 +188,7 @@ class ResourceShareQuoteShare implements ResourceShareQuoteShareInterface
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE),
                 );
         }
 

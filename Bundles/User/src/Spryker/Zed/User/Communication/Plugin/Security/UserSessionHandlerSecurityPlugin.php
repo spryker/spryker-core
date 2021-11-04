@@ -23,6 +23,7 @@ class UserSessionHandlerSecurityPlugin extends AbstractPlugin implements Securit
 {
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
@@ -61,7 +62,7 @@ class UserSessionHandlerSecurityPlugin extends AbstractPlugin implements Securit
                     if (!$container->has($listenerName)) {
                         $container->set(
                             $listenerName,
-                            $container->get('security.authentication_listener.user_session_handler._proto')($firewallName)
+                            $container->get('security.authentication_listener.user_session_handler._proto')($firewallName),
                         );
                     }
 
@@ -71,8 +72,8 @@ class UserSessionHandlerSecurityPlugin extends AbstractPlugin implements Securit
                         null,
                         'user_session_handler',
                     ];
-                }
-            )
+                },
+            ),
         );
 
         return $container;
@@ -89,7 +90,7 @@ class UserSessionHandlerSecurityPlugin extends AbstractPlugin implements Securit
             return function () use ($container) {
                 return new CurrentUserSessionHandlerListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
-                    $this->getFacade()
+                    $this->getFacade(),
                 );
             };
         }));

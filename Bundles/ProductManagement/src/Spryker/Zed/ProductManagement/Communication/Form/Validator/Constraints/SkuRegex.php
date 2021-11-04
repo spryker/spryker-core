@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 class SkuRegex extends Regex
 {
     /**
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct($options = null)
     {

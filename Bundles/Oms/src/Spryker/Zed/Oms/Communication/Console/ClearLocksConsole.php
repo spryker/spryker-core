@@ -23,6 +23,7 @@ class ClearLocksConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'oms:clear-locks';
+
     /**
      * @var string
      */

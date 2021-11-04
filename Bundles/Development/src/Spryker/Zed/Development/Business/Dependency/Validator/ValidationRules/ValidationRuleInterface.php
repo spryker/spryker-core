@@ -15,10 +15,12 @@ interface ValidationRuleInterface
      * @var string
      */
     public const ADD_REQUIRE = 'add-require';
+
     /**
      * @var string
      */
     public const ADD_REQUIRE_DEV = 'add-require-dev';
+
     /**
      * @var string
      */
@@ -28,10 +30,12 @@ interface ValidationRuleInterface
      * @var string
      */
     public const REMOVE_REQUIRE = 'remove-require';
+
     /**
      * @var string
      */
     public const REMOVE_REQUIRE_DEV = 'remove-require-dev';
+
     /**
      * @var string
      */

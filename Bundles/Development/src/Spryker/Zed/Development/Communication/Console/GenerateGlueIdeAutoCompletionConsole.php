@@ -21,6 +21,7 @@ class GenerateGlueIdeAutoCompletionConsole extends Console
      * @var string
      */
     protected const OLD_COMMAND_NAME = 'dev:ide:generate-glue-auto-completion';
+
     /**
      * @var string
      */

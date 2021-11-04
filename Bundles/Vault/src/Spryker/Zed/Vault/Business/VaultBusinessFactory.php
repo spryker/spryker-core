@@ -33,7 +33,7 @@ class VaultBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getUtilEncryptionService(),
             $this->getRepository(),
-            $this->createInitialVectorConverter()
+            $this->createInitialVectorConverter(),
         );
     }
 
@@ -47,7 +47,7 @@ class VaultBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncryptionService(),
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createInitialVectorConverter()
+            $this->createInitialVectorConverter(),
         );
     }
 

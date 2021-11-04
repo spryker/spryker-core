@@ -57,7 +57,7 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->createConcreteProductsReader(),
             $this->getConfig(),
             $this->createAbstractProductAttributeTranslationExpander(),
-            $this->getAbstractProductResourceExpanderPlugins()
+            $this->getAbstractProductResourceExpanderPlugins(),
         );
     }
 
@@ -67,7 +67,7 @@ class ProductsRestApiFactory extends AbstractFactory
     public function createProductAbstractRestUrlResolverAttributesReader(): ProductAbstractRestUrlResolverAttributesReaderInterface
     {
         return new ProductAbstractRestUrlResolverAttributesReader(
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
         );
     }
 
@@ -90,7 +90,7 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createConcreteProductsResourceMapper(),
             $this->createConcreteProductAttributeTranslationExpander(),
-            $this->getConcreteProductResourceExpanderPlugins()
+            $this->getConcreteProductResourceExpanderPlugins(),
         );
     }
 
@@ -100,7 +100,7 @@ class ProductsRestApiFactory extends AbstractFactory
     public function createAbstractProductAttributeTranslationExpander(): AbstractProductAttributeTranslationExpanderInterface
     {
         return new AbstractProductAttributeTranslationExpander(
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 
@@ -110,7 +110,7 @@ class ProductsRestApiFactory extends AbstractFactory
     public function createConcreteProductAttributeTranslationExpander(): ConcreteProductAttributeTranslationExpanderInterface
     {
         return new ConcreteProductAttributeTranslationExpander(
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 

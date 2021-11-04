@@ -51,7 +51,7 @@ class CriteriaMapper implements CriteriaMapperInterface
             $criteria,
             $propelQueryBuilderCriteriaTransfer->getRuleSet(),
             $propelQueryBuilderCriteriaTransfer->getRuleSet()->getCondition(),
-            $mappings
+            $mappings,
         );
     }
 
@@ -76,7 +76,7 @@ class CriteriaMapper implements CriteriaMapperInterface
                     $criteria,
                     $ruleSetTransfer,
                     $currentRuleSetTransfer->getCondition(),
-                    $mappings
+                    $mappings,
                 );
             } else {
                 $criterion = $this->buildCriterion($criteria, $ruleSetTransfer, $mappings);
@@ -186,14 +186,14 @@ class CriteriaMapper implements CriteriaMapperInterface
             return $this->jsonCriterionMapper->createJsonCriterion(
                 $criteria,
                 $ruleSetTransfer,
-                $operator
+                $operator,
             );
         }
 
         return $criteria->getNewCriterion(
             $ruleSetTransfer->getField(),
             $operator->getValue($ruleSetTransfer),
-            $operator->getOperator()
+            $operator->getOperator(),
         );
     }
 

@@ -30,7 +30,7 @@ class ContentProductAbstractListConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 ContentProductAbstractListConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

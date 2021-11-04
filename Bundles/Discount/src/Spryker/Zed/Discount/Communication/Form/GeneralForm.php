@@ -30,34 +30,42 @@ class GeneralForm extends AbstractType
      * @var string
      */
     public const FIELD_STORE_RELATION = 'store_relation';
+
     /**
      * @var string
      */
     public const FIELD_DISCOUNT_TYPE = 'discount_type';
+
     /**
      * @var string
      */
     public const FIELD_DISPLAY_NAME = 'display_name';
+
     /**
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */
     public const FIELD_VALID_TO = 'valid_to';
+
     /**
      * @var string
      */
     public const FIELD_IS_EXCLUSIVE = 'is_exclusive';
+
     /**
      * @var string
      */
     public const NON_EXCLUSIVE = 'Non-Exclusive';
+
     /**
      * @var string
      */
@@ -93,7 +101,7 @@ class GeneralForm extends AbstractType
             $this->getStoreRelationFormTypePlugin()->getType(),
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -168,7 +176,7 @@ class GeneralForm extends AbstractType
             TextareaType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;

@@ -104,7 +104,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
+                $localeTransfer->getIdLocale(),
             );
 
             $localizedUrl = new LocalizedUrlTransfer();
@@ -188,7 +188,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localizedUrlTransfer->getLocale()->getIdLocale()
+                $localizedUrlTransfer->getLocale()->getIdLocale(),
             );
 
             $urlTransfer
@@ -216,7 +216,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
+                $localeTransfer->getIdLocale(),
             );
 
             if ($urlTransfer->getIdUrl()) {
@@ -235,7 +235,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
+                $localeTransfer->getIdLocale(),
             );
 
             $this->urlFacade->activateUrl($urlTransfer);
@@ -252,7 +252,7 @@ class ProductUrlManager implements ProductUrlManagerInterface
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localeTransfer->getIdLocale()
+                $localeTransfer->getIdLocale(),
             );
 
             if (!$urlTransfer->getIdUrl()) {

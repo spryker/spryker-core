@@ -21,19 +21,23 @@ class JenkinsController extends AbstractController
      * @var string
      */
     public const LOGFILE = 'jenkins.log';
+
     /**
      * @var string
      */
     public const ROLE_ADMIN = 'admin';
+
     /**
      * @var string
      */
     public const ROLE_REPORTING = 'reporting';
+
     /**
      * @var string
      */
     public const ROLE_EMPTY = 'empty';
     public const DEFAULT_ROLE = self::ROLE_ADMIN;
+
     /**
      * @var int
      */
@@ -153,7 +157,7 @@ $command</command>";
                 'Zed',
                 'cronjobs',
                 'jobs.php',
-            ]
+            ],
         );
     }
 

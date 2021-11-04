@@ -22,6 +22,7 @@ class SuiteFilterHelper extends Extension
      * @var string
      */
     protected const CONFIG_KEY_INCLUDE = 'groups';
+
     /**
      * @var string
      */
@@ -31,6 +32,7 @@ class SuiteFilterHelper extends Extension
      * @var string
      */
     protected const CONFIG_KEY_INCLUSIVE = 'inclusive';
+
     /**
      * @var string
      */
@@ -126,7 +128,7 @@ class SuiteFilterHelper extends Extension
 
         $filterFactory->addFilter(
             new ReflectionClass(ExcludeGroupFilterIterator::class),
-            $exclusiveGroups
+            $exclusiveGroups,
         );
 
         return $filterFactory;
@@ -149,7 +151,7 @@ class SuiteFilterHelper extends Extension
 
         $filterFactory->addFilter(
             new ReflectionClass(InclusiveGroupFilterIterator::class),
-            $inclusiveGroups
+            $inclusiveGroups,
         );
 
         return $filterFactory;
@@ -172,7 +174,7 @@ class SuiteFilterHelper extends Extension
 
         $filterFactory->addFilter(
             new ReflectionClass(IncludeGroupFilterIterator::class),
-            $groupsFormConfig
+            $groupsFormConfig,
         );
 
         return $filterFactory;
@@ -195,7 +197,7 @@ class SuiteFilterHelper extends Extension
 
         $filterFactory->addFilter(
             new ReflectionClass(ExcludeGroupFilterIterator::class),
-            $groupsFormConfig
+            $groupsFormConfig,
         );
 
         return $filterFactory;

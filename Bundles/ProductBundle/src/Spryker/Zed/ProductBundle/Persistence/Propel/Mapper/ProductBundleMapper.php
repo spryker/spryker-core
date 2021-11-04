@@ -31,7 +31,7 @@ class ProductBundleMapper
         foreach ($productBundleEntities as $productBundleEntity) {
             $productForBundleTransfers[] = (new ProductForBundleTransfer())->fromArray(
                 $productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(),
-                true
+                true,
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
                 ->setIdProductBundle($productBundleEntity->getFkProduct())
@@ -61,7 +61,7 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
@@ -76,7 +76,7 @@ class ProductBundleMapper
             $productBundleCollectionTransfer->addProductBundle(
                 (new ProductBundleTransfer())
                     ->setIdProductConcreteBundle($fkProduct)
-                    ->setBundledProducts(new ArrayObject($productForBundleTransfers))
+                    ->setBundledProducts(new ArrayObject($productForBundleTransfers)),
             );
         }
 
@@ -141,9 +141,9 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
      *
-     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>
      */
     protected function mapProductBundleEntitiesToGroupedProductForBundleTransfers(Collection $productBundleEntities): array
     {

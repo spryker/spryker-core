@@ -14,12 +14,14 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     public const PRICE_TYPE_DEFAULT = 'DEFAULT';
@@ -43,18 +45,22 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+
     /**
      * @var string
      */
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
+
     /**
      * @var string
      */
     protected const KEY_STORE = 'store';
+
     /**
      * @var string
      */
     protected const KEY_CURRENCY = 'currency';
+
     /**
      * @var string
      */
@@ -64,6 +70,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const KEY_VALUE_NET = 'value_net';
+
     /**
      * @var string
      */
@@ -73,6 +80,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
      * @var string
      */
     protected const KEY_FROM_INCLUDED = 'from_included';
+
     /**
      * @var string
      */
@@ -86,7 +94,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getImportFileToTransferFieldsMap(): array
     {

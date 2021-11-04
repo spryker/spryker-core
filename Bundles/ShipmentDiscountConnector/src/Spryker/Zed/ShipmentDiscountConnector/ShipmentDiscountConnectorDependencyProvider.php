@@ -23,10 +23,12 @@ class ShipmentDiscountConnectorDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
     /**
      * @var string
      */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+
     /**
      * @var string
      */

@@ -21,14 +21,17 @@ class ProductDiscontinuedNoteForm extends AbstractType
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
     public const FIELD_NOTE = 'note';
+
     /**
      * @var string
      */
     public const FIELD_FK_PRODUCT_DISCONTINUED = 'fkProductDiscontinued';
+
     /**
      * @var string
      */
@@ -36,7 +39,7 @@ class ProductDiscontinuedNoteForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

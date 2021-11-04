@@ -26,7 +26,7 @@ class PriceProductReader implements PriceProductReaderInterface
 
         $minPriceProductTransfer = $this->findMinPrice(
             $priceProductTransfers,
-            $priceProductFilterTransfer->getQuantity()
+            $priceProductFilterTransfer->getQuantity(),
         );
 
         if (!$minPriceProductTransfer) {

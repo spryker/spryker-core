@@ -32,6 +32,7 @@ abstract class AbstractStepEngineTest extends Unit
      * @var string
      */
     public const ERROR_ROUTE = 'error-route';
+
     /**
      * @var string
      */
@@ -41,6 +42,7 @@ abstract class AbstractStepEngineTest extends Unit
      * @var string
      */
     public const ESCAPE_ROUTE = 'escape-route';
+
     /**
      * @var string
      */
@@ -50,6 +52,7 @@ abstract class AbstractStepEngineTest extends Unit
      * @var string
      */
     public const STEP_ROUTE_A = 'step-route-a';
+
     /**
      * @var string
      */
@@ -59,6 +62,7 @@ abstract class AbstractStepEngineTest extends Unit
      * @var string
      */
     public const STEP_ROUTE_B = 'step-route-b';
+
     /**
      * @var string
      */
@@ -68,6 +72,7 @@ abstract class AbstractStepEngineTest extends Unit
      * @var string
      */
     public const STEP_ROUTE_C = 'step-route-c';
+
     /**
      * @var string
      */
@@ -77,6 +82,7 @@ abstract class AbstractStepEngineTest extends Unit
      * @var string
      */
     public const STEP_ROUTE_D = 'step-route-d';
+
     /**
      * @var string
      */

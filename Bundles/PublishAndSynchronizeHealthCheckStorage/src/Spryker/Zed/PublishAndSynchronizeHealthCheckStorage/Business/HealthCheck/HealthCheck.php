@@ -49,7 +49,7 @@ class HealthCheck implements HealthCheckInterface
             ->setStatus(false);
 
         $publishAndSynchronizeHealthCheckStorageData = $this->storageClient->get(
-            PublishAndSynchronizeHealthCheckStoragePublishAndSynchronizeHealthCheckStorageConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY
+            PublishAndSynchronizeHealthCheckStoragePublishAndSynchronizeHealthCheckStorageConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY,
         );
 
         if ($publishAndSynchronizeHealthCheckStorageData === null) {
@@ -97,7 +97,7 @@ class HealthCheck implements HealthCheckInterface
     ): HealthCheckServiceResponseTransfer {
         $healthCheckServiceResponseTransfer->setMessage(sprintf(
             $message,
-            PublishAndSynchronizeHealthCheckStoragePublishAndSynchronizeHealthCheckStorageConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY
+            PublishAndSynchronizeHealthCheckStoragePublishAndSynchronizeHealthCheckStorageConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY,
         ));
 
         return $healthCheckServiceResponseTransfer;

@@ -18,6 +18,7 @@ class SecurityBlockerStorage implements SecurityBlockerStorageInterface
 {
     /**
      * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_INVALID_LOGIN
+     *
      * @var string
      */
     protected const RESPONSE_INVALID_LOGIN = '003';

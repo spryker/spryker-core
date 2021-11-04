@@ -38,7 +38,7 @@ class ProductListProductConcreteRelationPostSaver implements ProductListPostSave
         if ($productListProductConcreteRelationTransfer) {
             $productListTransfer = $this->saveProductListProductConcreteRelation(
                 $productListTransfer,
-                $productListTransfer->getProductListProductConcreteRelation()
+                $productListTransfer->getProductListProductConcreteRelation(),
             );
         }
 

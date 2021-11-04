@@ -24,10 +24,12 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_SALES_RECLAMATION = 'FACADE_SALES_RECLAMATION';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     *
      * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
@@ -91,7 +94,7 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_DATETIME, function (Container $container) {
             return new SalesReclamationGuiToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

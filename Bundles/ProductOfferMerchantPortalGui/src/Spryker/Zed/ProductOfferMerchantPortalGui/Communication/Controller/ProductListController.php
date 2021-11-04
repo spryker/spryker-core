@@ -39,7 +39,7 @@ class ProductListController extends AbstractController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductTableDataProvider(),
-            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration(),
         );
     }
 }

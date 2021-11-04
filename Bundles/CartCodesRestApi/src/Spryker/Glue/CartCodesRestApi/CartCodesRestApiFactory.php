@@ -39,7 +39,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     {
         return new CartCodeAdder(
             $this->getClient(),
-            $this->createCartCodeRestResponseBuilder()
+            $this->createCartCodeRestResponseBuilder(),
         );
     }
 
@@ -50,7 +50,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     {
         return new CartCodeRemover(
             $this->getClient(),
-            $this->createCartCodeRestResponseBuilder()
+            $this->createCartCodeRestResponseBuilder(),
         );
     }
 
@@ -62,7 +62,7 @@ class CartCodesRestApiFactory extends AbstractFactory
         return new CartCodeRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createCartCodeMapper(),
-            $this->getCartsRestApiResource()
+            $this->getCartsRestApiResource(),
         );
     }
 
@@ -88,7 +88,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function createVoucherByQuoteResourceRelationshipExpander(): VoucherByQuoteResourceRelationshipExpanderInterface
     {
         return new VoucherByQuoteResourceRelationshipExpander(
-            $this->createVoucherRestResponseBuilder()
+            $this->createVoucherRestResponseBuilder(),
         );
     }
 
@@ -99,7 +99,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     {
         return new VoucherRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createDiscountMapper()
+            $this->createDiscountMapper(),
         );
     }
 
@@ -110,7 +110,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     {
         return new CartRuleByQuoteResourceRelationshipExpander(
             $this->getResourceBuilder(),
-            $this->createDiscountMapper()
+            $this->createDiscountMapper(),
         );
     }
 

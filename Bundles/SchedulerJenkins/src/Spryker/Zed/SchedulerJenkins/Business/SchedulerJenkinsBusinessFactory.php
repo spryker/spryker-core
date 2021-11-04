@@ -49,7 +49,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
         return new JenkinsApi(
             $this->createJenkinsApiRequestBuilder(),
             $this->createJenkinsApiRequestExecutor(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -61,9 +61,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
         return new ScheduleProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createUpdateExecutor(),
-                $this->createCreateExecutor()
+                $this->createCreateExecutor(),
             ),
-            $this->createConfigurationProviderBuilder()
+            $this->createConfigurationProviderBuilder(),
         );
     }
 
@@ -75,9 +75,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
         return new ScheduleProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createDeleteExecutor(),
-                $this->createNullExecutor()
+                $this->createNullExecutor(),
             ),
-            $this->createConfigurationProviderBuilder()
+            $this->createConfigurationProviderBuilder(),
         );
     }
 
@@ -89,9 +89,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
         return new ScheduleProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createEnableExecutor(),
-                $this->createNullExecutor()
+                $this->createNullExecutor(),
             ),
-            $this->createConfigurationProviderBuilder()
+            $this->createConfigurationProviderBuilder(),
         );
     }
 
@@ -103,9 +103,9 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
         return new ScheduleProcessor(
             $this->createExecutionStrategyBuilder(
                 $this->createDisableExecutor(),
-                $this->createNullExecutor()
+                $this->createNullExecutor(),
             ),
-            $this->createConfigurationProviderBuilder()
+            $this->createConfigurationProviderBuilder(),
         );
     }
 
@@ -123,7 +123,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
             $this->createJenkinsApi(),
             $this->getUtilEncodingService(),
             $executorForExistingJob,
-            $executorForAbsentJob
+            $executorForAbsentJob,
         );
     }
 
@@ -134,7 +134,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new XmlJenkinsJobTemplateGenerator(
             $this->getTwigEnvironment(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -145,7 +145,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new CreateExecutor(
             $this->createJenkinsApi(),
-            $this->createXmkJenkinsJobTemplateGenerator()
+            $this->createXmkJenkinsJobTemplateGenerator(),
         );
     }
 
@@ -156,7 +156,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new UpdateExecutor(
             $this->createJenkinsApi(),
-            $this->createXmkJenkinsJobTemplateGenerator()
+            $this->createXmkJenkinsJobTemplateGenerator(),
         );
     }
 
@@ -166,7 +166,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createDeleteExecutor(): ExecutorInterface
     {
         return new DeleteExecutor(
-            $this->createJenkinsApi()
+            $this->createJenkinsApi(),
         );
     }
 
@@ -176,7 +176,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createEnableExecutor(): ExecutorInterface
     {
         return new EnableExecutor(
-            $this->createJenkinsApi()
+            $this->createJenkinsApi(),
         );
     }
 
@@ -186,7 +186,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createDisableExecutor(): ExecutorInterface
     {
         return new DisableExecutor(
-            $this->createJenkinsApi()
+            $this->createJenkinsApi(),
         );
     }
 
@@ -207,7 +207,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurationProvider(
             $idScheduler,
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -225,7 +225,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createJenkinsApiRequestExecutor(): RequestExecutorInterface
     {
         return new RequestExecutor(
-            $this->getGuzzleClient()
+            $this->getGuzzleClient(),
         );
     }
 
@@ -235,7 +235,7 @@ class SchedulerJenkinsBusinessFactory extends AbstractBusinessFactory
     public function createConfigurationProviderBuilder(): ConfigurationProviderBuilderInterface
     {
         return new ConfigurationProviderBuilder(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

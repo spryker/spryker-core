@@ -25,18 +25,22 @@ class CmsSlotBlockForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_SLOT_TEMPLATE = 'idSlotTemplate';
+
     /**
      * @var string
      */
     protected const FIELD_ID_SLOT = 'idSlot';
+
     /**
      * @var string
      */
     protected const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+
     /**
      * @var string
      */
     protected const FIELD_POSITION = 'position';
+
     /**
      * @var string
      */
@@ -59,7 +63,7 @@ class CmsSlotBlockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -124,7 +128,7 @@ class CmsSlotBlockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

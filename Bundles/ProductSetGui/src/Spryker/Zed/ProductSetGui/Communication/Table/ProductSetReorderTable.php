@@ -30,14 +30,17 @@ class ProductSetReorderTable extends AbstractTable
      */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+
     /**
      * @var string
      */
     public const COL_PRODUCT_COUNT = 'product_count';
+
     /**
      * @var string
      */
     public const COL_WEIGHT = 'weight';
+
     /**
      * @var string
      */
@@ -166,14 +169,14 @@ class ProductSetReorderTable extends AbstractTable
             Url::generate('/product-set-gui/view', [
                 ViewController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'View'
+            'View',
         );
 
         $actions[] = $this->generateEditButton(
             Url::generate('/product-set-gui/edit', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         $actions[] = $productSetEntity->getIsActive() ? $this->generateDeactivateButton($productSetEntity) : $this->generateActivateButton($productSetEntity);
@@ -182,7 +185,7 @@ class ProductSetReorderTable extends AbstractTable
             Url::generate('/product-set-gui/delete', [
                 DeleteController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Delete'
+            'Delete',
         );
 
         return implode(' ', $actions);
@@ -199,7 +202,7 @@ class ProductSetReorderTable extends AbstractTable
             Url::generate('/product-set-gui/edit/activate', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Activate'
+            'Activate',
         );
     }
 
@@ -214,7 +217,7 @@ class ProductSetReorderTable extends AbstractTable
             Url::generate('/product-set-gui/edit/deactivate', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Deactivate'
+            'Deactivate',
         );
     }
 
@@ -228,7 +231,7 @@ class ProductSetReorderTable extends AbstractTable
         return sprintf(
             '<input type="text" value="%2$d" id="product_set_weight_%1$d" class="product_set_weight" size="4" data-id="%1$s">',
             $productAbstractEntity->getIdProductSet(),
-            $productAbstractEntity->getWeight()
+            $productAbstractEntity->getWeight(),
         );
     }
 }

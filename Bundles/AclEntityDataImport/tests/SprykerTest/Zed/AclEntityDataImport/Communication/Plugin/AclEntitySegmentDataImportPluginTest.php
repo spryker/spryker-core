@@ -110,7 +110,7 @@ class AclEntitySegmentDataImportPluginTest extends Unit
     }
 
     /**
-     * @return array<\string[]>
+     * @return array<array<\string>>
      */
     public function importImportsAclEntitySegmentWithEmptyRequiredFieldProvider(): array
     {

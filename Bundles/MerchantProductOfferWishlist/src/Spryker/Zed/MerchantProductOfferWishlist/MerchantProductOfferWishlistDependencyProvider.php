@@ -21,6 +21,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+
     /**
      * @var string
      */
@@ -31,7 +32,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
@@ -46,7 +47,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
@@ -64,7 +65,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantProductOfferWishlistToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 
@@ -80,7 +81,7 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new MerchantProductOfferWishlistToProductOfferFacadeBridge(
-                $container->getLocator()->productOffer()->facade()
+                $container->getLocator()->productOffer()->facade(),
             );
         });
 

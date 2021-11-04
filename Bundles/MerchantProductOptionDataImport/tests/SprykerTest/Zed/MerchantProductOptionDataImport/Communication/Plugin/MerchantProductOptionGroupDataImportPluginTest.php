@@ -67,7 +67,7 @@ class MerchantProductOptionGroupDataImportPluginTest extends Unit
         // Assert
         $this->assertSame(
             MerchantProductOptionDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OPTION_GROUP,
-            $MerchantProductOptionGroupDataImportPlugin->getImportType()
+            $MerchantProductOptionGroupDataImportPlugin->getImportType(),
         );
     }
 }

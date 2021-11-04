@@ -19,7 +19,7 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
      * - Values are the corresponding exchange ratios.
      * - Conversion ratios are defined both forth and back and also to the same unit.
      *
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected const MEASUREMENT_UNIT_EXCHANGE_RATIO_MAP = [
         'KILO' => [
@@ -302,7 +302,7 @@ class UtilMeasurementUnitConversionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getMeasurementUnitExchangeRatioMap(): array
     {

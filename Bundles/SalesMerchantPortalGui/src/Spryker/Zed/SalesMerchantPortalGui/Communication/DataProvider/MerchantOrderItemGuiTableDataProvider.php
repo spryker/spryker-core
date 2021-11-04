@@ -101,7 +101,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
         $merchantOrderItemCollectionTransfer = $this->salesMerchantPortalGuiRepository
             ->getMerchantOrderItemTableData($criteriaTransfer);
         $merchantOrderItemCollectionTransfer = $this->merchantOmsFacade->expandMerchantOrderItemsWithManualEvents(
-            $merchantOrderItemCollectionTransfer
+            $merchantOrderItemCollectionTransfer,
         );
 
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
@@ -187,7 +187,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
         array $salesOrderItemIds
     ): GuiTableDataResponseTransfer {
         $itemCollectionTransfer = $this->salesFacade->getOrderItems(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds),
         );
 
         $indexedItemTransfers = [];

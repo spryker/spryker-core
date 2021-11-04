@@ -46,7 +46,7 @@ class SearchElasticsearchZedTester extends Actor
     {
         $searchElasticsearchBusinessFactory = new SearchElasticsearchBusinessFactory();
         $searchElasticsearchBusinessFactory->setConfig(
-            $this->getModuleConfig()
+            $this->getModuleConfig(),
         );
 
         return $searchElasticsearchBusinessFactory;

@@ -50,7 +50,7 @@ class DeleteDirectoryController extends AbstractController
             ->deleteFileDirectory($idFileDirectory);
 
         return $this->redirectResponse(
-            Url::generate('/file-manager-gui/directories-tree')->build()
+            Url::generate('/file-manager-gui/directories-tree')->build(),
         );
     }
 }

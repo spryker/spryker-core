@@ -43,7 +43,7 @@ class GroupTableQueryTest extends Unit
         $aclGroupTransfer2 = $this->tester->haveGroup();
         $groupTableMock = new GroupTableMock(
             SpyAclGroupQuery::create(),
-            $this->getUtilDateTimeServiceMock()
+            $this->getUtilDateTimeServiceMock(),
         );
 
         // Act

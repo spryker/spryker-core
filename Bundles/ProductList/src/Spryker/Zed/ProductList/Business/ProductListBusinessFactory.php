@@ -50,7 +50,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new RestrictedItemsFilter(
             $this->getMessengerFacade(),
-            $this->createProductListRestrictionFilter()
+            $this->createProductListRestrictionFilter(),
         );
     }
 
@@ -60,7 +60,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
     {
         return new ProductListRestrictionValidator(
-            $this->createProductListRestrictionFilter()
+            $this->createProductListRestrictionFilter(),
         );
     }
 
@@ -70,7 +70,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListRestrictionFilter(): ProductListRestrictionFilterInterface
     {
         return new ProductListRestrictionFilter(
-            $this->createProductListReader()
+            $this->createProductListReader(),
         );
     }
 
@@ -83,7 +83,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createProductListCategoryRelationReader(),
             $this->createProductListProductConcreteRelationReader(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -98,7 +98,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->getProductListPostSaverCollection(),
             $this->getProductListPreCreatePlugins(),
             $this->getProductListPreUpdatePlugins(),
-            $this->getProductListDeletePreCheckPlugins()
+            $this->getProductListDeletePreCheckPlugins(),
         );
     }
 
@@ -141,7 +141,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListCategoryRelationWriter(
             $this->getEntityManager(),
-            $this->createProductListCategoryRelationReader()
+            $this->createProductListCategoryRelationReader(),
         );
     }
 
@@ -152,7 +152,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListProductConcreteRelationWriter(
             $this->getEntityManager(),
-            $this->createProductListProductConcreteRelationReader()
+            $this->createProductListProductConcreteRelationReader(),
         );
     }
 
@@ -206,7 +206,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListKeyGenerator(
             $this->getRepository(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 

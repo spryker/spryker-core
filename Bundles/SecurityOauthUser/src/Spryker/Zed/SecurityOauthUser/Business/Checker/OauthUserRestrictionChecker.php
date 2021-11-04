@@ -37,7 +37,7 @@ class OauthUserRestrictionChecker implements OauthUserRestrictionCheckerInterfac
 
         foreach ($this->oauthUserRestrictionPlugins as $oauthUserRestrictionPlugin) {
             $oauthUserRestrictionResponseTransfer = $oauthUserRestrictionPlugin->isRestricted(
-                $oauthUserRestrictionRequestTransfer
+                $oauthUserRestrictionRequestTransfer,
             );
 
             if ($oauthUserRestrictionResponseTransfer->getIsRestricted()) {

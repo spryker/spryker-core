@@ -28,7 +28,7 @@ class CartCodesRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new CartCodeAdder(
             $this->getCartCodeFacade(),
-            $this->getCartsRestApiFacade()
+            $this->getCartsRestApiFacade(),
         );
     }
 
@@ -39,7 +39,7 @@ class CartCodesRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new CartCodeRemover(
             $this->getCartCodeFacade(),
-            $this->getCartsRestApiFacade()
+            $this->getCartsRestApiFacade(),
         );
     }
 

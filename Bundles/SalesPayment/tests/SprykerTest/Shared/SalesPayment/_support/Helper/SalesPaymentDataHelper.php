@@ -39,7 +39,7 @@ class SalesPaymentDataHelper extends Module
     {
         $salesPaymentMethodTypeEntity = $this->haveSalesPaymentMethodType(
             $salesPaymentTransfer->getPaymentProvider(),
-            $salesPaymentTransfer->getPaymentMethod()
+            $salesPaymentTransfer->getPaymentMethod(),
         );
 
         $salesPaymentEntity = new SpySalesPayment();

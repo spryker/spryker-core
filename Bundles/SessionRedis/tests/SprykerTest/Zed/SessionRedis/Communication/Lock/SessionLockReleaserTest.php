@@ -52,7 +52,7 @@ class SessionLockReleaserTest extends Unit
 
         $this->sessionLockReleaser = new SessionLockReleaser(
             $this->lockerMock,
-            $this->lockReaderMock
+            $this->lockReaderMock,
         );
     }
 
@@ -89,7 +89,7 @@ class SessionLockReleaserTest extends Unit
             ->method('unlock')
             ->with(
                 $this->equalTo($sessionId),
-                $this->equalTo($lockToken)
+                $this->equalTo($lockToken),
             )
             ->willReturn(true);
 

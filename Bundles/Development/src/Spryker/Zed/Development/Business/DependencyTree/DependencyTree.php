@@ -15,66 +15,82 @@ class DependencyTree extends AbstractDependencyTree
      * @var string
      */
     public const META_FINDER = 'finder';
+
     /**
      * @var string
      */
     public const META_FILE = 'file';
+
     /**
      * @var string
      */
     public const META_IN_TEST = 'in test';
+
     /**
      * @var string
      */
     public const META_IS_OPTIONAL = 'is optional';
+
     /**
      * @var string
      */
     public const META_ORGANIZATION = 'organization';
+
     /**
      * @var string
      */
     public const META_CLASS_NAME = 'class name';
+
     /**
      * @var string
      */
     public const META_FOREIGN_BUNDLE = 'foreign bundle';
+
     /**
      * @var string
      */
     public const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
+
     /**
      * @var string
      */
     public const META_FOREIGN_LAYER = 'foreign layer';
+
     /**
      * @var string
      */
     public const META_FOREIGN_CLASS_NAME = 'foreign class name';
+
     /**
      * @var string
      */
     public const META_FOREIGN_IS_EXTERNAL = 'foreign is external';
+
     /**
      * @var string
      */
     public const META_APPLICATION = 'application';
+
     /**
      * @var string
      */
     public const META_MODULE = 'bundle';
+
     /**
      * @var string
      */
     public const META_MODULE_IS_ENGINE = 'is engine';
+
     /**
      * @var string
      */
     public const META_LAYER = 'layer';
+
     /**
      * @var string
      */
     public const META_COMPOSER_NAME = 'composer name';
+
     /**
      * @var string
      */
@@ -86,13 +102,13 @@ class DependencyTree extends AbstractDependencyTree
     protected $fileInfoExtractor;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $engineBundles;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor
-     * @param array $engineBundles
+     * @param array<string> $engineBundles
      */
     public function __construct(FileInfoExtractor $fileInfoExtractor, array $engineBundles)
     {

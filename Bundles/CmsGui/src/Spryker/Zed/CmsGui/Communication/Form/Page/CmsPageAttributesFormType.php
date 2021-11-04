@@ -27,14 +27,17 @@ class CmsPageAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_URL = 'url';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_NAME = 'localeName';
+
     /**
      * @var string
      */
@@ -52,7 +55,7 @@ class CmsPageAttributesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -65,7 +68,7 @@ class CmsPageAttributesFormType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            [$this, 'updateUrlPrefix']
+            [$this, 'updateUrlPrefix'],
         );
     }
 
@@ -86,7 +89,7 @@ class CmsPageAttributesFormType extends AbstractType
             $url = preg_replace(
                 '#^' . $cmsPageAttributesTransfer->getUrlPrefix() . '#i',
                 '',
-                $cmsPageAttributesTransfer->getUrl()
+                $cmsPageAttributesTransfer->getUrl(),
             );
         }
 

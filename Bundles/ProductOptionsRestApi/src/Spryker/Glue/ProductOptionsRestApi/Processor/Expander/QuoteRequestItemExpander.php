@@ -71,7 +71,7 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
 
         return $this->setTranslations(
             $restQuoteRequestsAttributesTransfers,
-            $translations
+            $translations,
         );
     }
 
@@ -189,8 +189,6 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array<string> $glossaryStorageKeys
      *

@@ -32,10 +32,12 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
      * @var string
      */
     protected const HARD_STRATEGY_KEY = 'hard-minimum-threshold';
+
     /**
      * @var string
      */
     protected const SOFT_STRATEGY_KEY = 'soft-minimum-threshold';
+
     /**
      * @var string
      */
@@ -67,8 +69,8 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
                 $merchantRelationshipTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                10000
-            )
+                10000,
+            ),
         );
 
         $hardThreshold2 = $this->getFacade()->saveMerchantRelationshipSalesOrderThreshold(
@@ -77,8 +79,8 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
                 $merchantRelationshipTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                20000
-            )
+                20000,
+            ),
         );
 
         $softThreshold1 = $this->getFacade()->saveMerchantRelationshipSalesOrderThreshold(
@@ -87,8 +89,8 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
                 $merchantRelationshipTransfer,
                 $storeTransferDE,
                 $currencyTransferEUR,
-                20000
-            )
+                20000,
+            ),
         );
 
         $softThreshold2 = $this->getFacade()->saveMerchantRelationshipSalesOrderThreshold(
@@ -97,8 +99,8 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
                 $merchantRelationshipTransfer,
                 $storeTransferUS,
                 $currencyTransferEUR,
-                20000
-            )
+                20000,
+            ),
         );
 
         $softThreshold3 = $this->getFacade()->saveMerchantRelationshipSalesOrderThreshold(
@@ -107,8 +109,8 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
                 $merchantRelationshipTransfer,
                 $storeTransferUS,
                 $currencyTransferUSD,
-                20000
-            )
+                20000,
+            ),
         );
 
         // Assert

@@ -26,10 +26,12 @@ class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements Co
      * @var string
      */
     protected const CONSTRAINT_NAME = 'security.validator.user_password';
+
     /**
      * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+
     /**
      * @var string
      */

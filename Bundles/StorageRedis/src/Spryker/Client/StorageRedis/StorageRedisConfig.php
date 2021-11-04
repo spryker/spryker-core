@@ -18,10 +18,12 @@ class StorageRedisConfig extends AbstractBundleConfig
      * @var string
      */
     protected const STORAGE_REDIS_CONNECTION_KEY = 'STORAGE_REDIS';
+
     /**
      * @var int
      */
     protected const REDIS_DEFAULT_DATABASE = 0;
+
     /**
      * @var int
      */
@@ -46,13 +48,13 @@ class StorageRedisConfig extends AbstractBundleConfig
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getDataSourceNames()
+                $this->getDataSourceNames(),
             )
             ->setConnectionCredentials(
-                $this->getConnectionCredentials()
+                $this->getConnectionCredentials(),
             )
             ->setClientOptions(
-                $this->getConnectionOptions()
+                $this->getConnectionOptions(),
             );
     }
 
@@ -110,7 +112,7 @@ class StorageRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getConnectionOptions(): array
     {

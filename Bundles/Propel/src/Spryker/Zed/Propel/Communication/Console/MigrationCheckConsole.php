@@ -21,10 +21,12 @@ class MigrationCheckConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:migration:check';
+
     /**
      * @var string
      */
     public const COMMAND_DESCRIPTION = 'propel:migration:check';
+
     /**
      * @var int
      */
@@ -56,7 +58,7 @@ class MigrationCheckConsole extends Console
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
-            $output
+            $output,
         );
     }
 }

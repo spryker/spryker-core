@@ -16,10 +16,12 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
      * @var string
      */
     protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+
     /**
      * @var string
      */
@@ -53,7 +55,7 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
         }
 
         $merchantProductStorageTransfer = $this->merchantProductStorageReader->findOne(
-            $productViewTransfer->getIdProductAbstract()
+            $productViewTransfer->getIdProductAbstract(),
         );
 
         if (!$merchantProductStorageTransfer) {
@@ -68,9 +70,7 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
     }
 
     /**
-     * @phpstan-param array<mixed> $selectedAttributes
-     *
-     * @param array $selectedAttributes
+     * @param array<mixed> $selectedAttributes
      *
      * @return string|null
      */

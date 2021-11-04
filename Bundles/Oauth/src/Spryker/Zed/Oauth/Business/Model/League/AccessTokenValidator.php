@@ -50,7 +50,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
                 '',
                 [
                     'Authorization' => $authAccessTokenValidationRequestTransfer->getType() . ' ' . $authAccessTokenValidationRequestTransfer->getAccessToken(),
-                ]
+                ],
             );
 
             $response = $this->resourceServer->validateAuthenticatedRequest($request);

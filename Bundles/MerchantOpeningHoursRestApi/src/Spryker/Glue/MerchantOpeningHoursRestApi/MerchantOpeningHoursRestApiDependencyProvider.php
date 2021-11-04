@@ -22,10 +22,12 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const CLIENT_MERCHANT_OPENING_HOURS_STORAGE = 'CLIENT_MERCHANT_OPENING_HOURS_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+
     /**
      * @var string
      */
@@ -55,7 +57,7 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_MERCHANT_OPENING_HOURS_STORAGE, function (Container $container) {
             return new MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientBridge(
-                $container->getLocator()->merchantOpeningHoursStorage()->client()
+                $container->getLocator()->merchantOpeningHoursStorage()->client(),
             );
         });
 
@@ -71,7 +73,7 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantOpeningHoursRestApiToMerchantStorageClientBridge(
-                $container->getLocator()->merchantStorage()->client()
+                $container->getLocator()->merchantStorage()->client(),
             );
         });
 
@@ -87,7 +89,7 @@ class MerchantOpeningHoursRestApiDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new MerchantOpeningHoursRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

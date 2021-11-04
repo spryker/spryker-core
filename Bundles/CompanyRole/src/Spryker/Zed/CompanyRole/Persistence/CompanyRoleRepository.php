@@ -68,11 +68,11 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
             $permissionTransfer->setKey($companyRoleToPermissionEntity->getPermission()->getKey());
 
             $permissionTransfer->setConfigurationSignature(
-                $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature())
+                $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature()),
             );
 
             $permissionTransfer->setConfiguration(
-                $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration())
+                $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration()),
             );
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
@@ -108,11 +108,11 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $permissionTransfer->setIdCompanyRole($companyRoleToPermissionEntity->getFkCompanyRole());
 
         $permissionTransfer->setConfigurationSignature(
-            $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature())
+            $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature()),
         );
 
         $permissionTransfer->setConfiguration(
-            $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration())
+            $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration()),
         );
 
         return $permissionTransfer;
@@ -269,7 +269,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
@@ -309,28 +309,28 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
             ->createCompanyRoleMapper()
             ->mapEntityToCompanyRoleTransfer(
                 $spyCompanyRole,
-                new CompanyRoleTransfer()
+                new CompanyRoleTransfer(),
             );
 
         $companyRoleTransfer = $this->getFactory()
             ->createCompanyRolePermissionMapper()
             ->hydratePermissionCollection(
                 $spyCompanyRole,
-                $companyRoleTransfer
+                $companyRoleTransfer,
             );
 
         $companyRoleTransfer = $this->getFactory()
             ->createCompanyRoleCompanyUserMapper()
             ->hydrateCompanyUserCollection(
                 $spyCompanyRole,
-                $companyRoleTransfer
+                $companyRoleTransfer,
             );
 
         $companyRoleTransfer = $this->getFactory()
             ->createCompanyRoleCompanyMapper()
             ->mapCompanyFromCompanyRoleEntityToCompanyRoleTransfer(
                 $spyCompanyRole,
-                $companyRoleTransfer
+                $companyRoleTransfer,
             );
 
         return $companyRoleTransfer;

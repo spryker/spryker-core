@@ -37,7 +37,7 @@ class OrderSourceListType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -45,7 +45,7 @@ class OrderSourceListType extends AbstractType
     {
         $this->addOrderSourceField(
             $builder,
-            $options[static::OPTION_ORDER_SOURCE_ARRAY]
+            $options[static::OPTION_ORDER_SOURCE_ARRAY],
         );
     }
 

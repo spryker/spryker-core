@@ -39,12 +39,14 @@ class QuoteRequestConverterTest extends Unit
 {
     /**
      * @uses \Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
      * @uses \Spryker\Client\QuoteRequest\Converter\QuoteRequestConverter::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.convert.error.wrong_valid_until';
@@ -87,7 +89,7 @@ class QuoteRequestConverterTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->createQuoteRequestTransfer(
             SharedQuoteRequestConfig::STATUS_READY,
-            (new DateTime('+1 hour'))->format('Y-m-d H:i:s')
+            (new DateTime('+1 hour'))->format('Y-m-d H:i:s'),
         );
 
         // Act
@@ -112,7 +114,7 @@ class QuoteRequestConverterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -124,7 +126,7 @@ class QuoteRequestConverterTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->createQuoteRequestTransfer(
             SharedQuoteRequestConfig::STATUS_READY,
-            (new DateTime('-1 hour'))->format('Y-m-d H:i:s')
+            (new DateTime('-1 hour'))->format('Y-m-d H:i:s'),
         );
 
         // Act
@@ -134,7 +136,7 @@ class QuoteRequestConverterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_WRONG_CONVERT_QUOTE_REQUEST_VALID_UNTIL,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -168,7 +170,7 @@ class QuoteRequestConverterTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
-            $quoteResponseTransfer->getErrors()[0]->getMessage()
+            $quoteResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 

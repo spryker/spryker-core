@@ -33,18 +33,22 @@ class FileForm extends AbstractType
      * @var string
      */
     public const FIELD_FILE_NAME = 'fileName';
+
     /**
      * @var string
      */
     public const FILED_FILE_UPLOAD = 'fileUpload';
+
     /**
      * @var string
      */
     public const FIELD_ID_FILE = 'idFile';
+
     /**
      * @var string
      */
     public const FIELD_USE_REAL_NAME = 'useRealName';
+
     /**
      * @var string
      */
@@ -54,10 +58,12 @@ class FileForm extends AbstractType
      * @var string
      */
     public const OPTION_DATA_CLASS = 'data_class';
+
     /**
      * @var string
      */
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+
     /**
      * @var string
      */
@@ -67,14 +73,17 @@ class FileForm extends AbstractType
      * @var string
      */
     protected const ERROR_MIME_TYPE_MESSAGE = 'File type is not allowed for uploading';
+
     /**
      * @var string
      */
     protected const ERROR_FILE_MISSED_EDIT_MESSAGE = 'Upload a file or specify a new file name';
+
     /**
      * @var string
      */
     protected const ERROR_FILE_MISSED_ADD_MESSAGE = 'Upload a file';
+
     /**
      * @var string
      */
@@ -82,7 +91,7 @@ class FileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -157,7 +166,7 @@ class FileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -183,8 +192,8 @@ class FileForm extends AbstractType
                     },
                     function (?UploadedFile $uploadedFile = null) {
                         return $this->mapUploadedFileToTransfer($uploadedFile);
-                    }
-                )
+                    },
+                ),
             );
 
         return $this;

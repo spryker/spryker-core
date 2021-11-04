@@ -15,6 +15,7 @@ class MoneyFormatterCollection implements MoneyFormatterCollectionInterface
      * @var string
      */
     public const FORMATTER_WITH_SYMBOL = 'FORMATTER_WITH_CURRENCY';
+
     /**
      * @var string
      */
@@ -54,8 +55,8 @@ class MoneyFormatterCollection implements MoneyFormatterCollectionInterface
         throw new FormatterNotFoundException(
             sprintf(
                 'Could not find a formatter by type "%s". Maybe type is misspelled or type was not added?',
-                $type
-            )
+                $type,
+            ),
         );
     }
 }

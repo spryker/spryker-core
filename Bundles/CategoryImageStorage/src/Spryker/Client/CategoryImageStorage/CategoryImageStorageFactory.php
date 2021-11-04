@@ -22,7 +22,7 @@ class CategoryImageStorageFactory extends AbstractFactory
     {
         return new CategoryImageStorageReader(
             $this->getSynchronizationService(),
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 

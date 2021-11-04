@@ -22,14 +22,17 @@ class MerchantUserCreateForm extends AbstractType
      * @var string
      */
     public const FIELD_USERNAME = 'username';
+
     /**
      * @var string
      */
     public const FIELD_FIRST_NAME = 'firstName';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'lastName';
+
     /**
      * @var string
      */
@@ -50,7 +53,7 @@ class MerchantUserCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

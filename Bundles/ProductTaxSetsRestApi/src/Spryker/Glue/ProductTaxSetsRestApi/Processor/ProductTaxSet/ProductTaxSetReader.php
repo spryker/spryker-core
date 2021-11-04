@@ -104,7 +104,7 @@ class ProductTaxSetReader implements ProductTaxSetReaderInterface
 
         $restProductTaxSetsAttributesTransfer = $this->productTaxSetsResourceMapper->mapTaxSetStorageTransferToRestProductTaxSetsAttributesTransfer(
             $taxStorageTransfer,
-            new RestProductTaxSetsAttributesTransfer()
+            new RestProductTaxSetsAttributesTransfer(),
         );
 
         return $this->formatRestResource($restProductTaxSetsAttributesTransfer, $taxStorageTransfer->getUuid(), $productAbstractSku);
@@ -125,14 +125,14 @@ class ProductTaxSetReader implements ProductTaxSetReaderInterface
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS,
             $uuid,
-            $restTaxSetsAttributesTransfer
+            $restTaxSetsAttributesTransfer,
         );
 
         $selfLink = sprintf(
             '%s/%s/%s',
             ProductTaxSetsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $parentResourceId,
-            ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS
+            ProductTaxSetsRestApiConfig::RESOURCE_PRODUCT_TAX_SETS,
         );
 
         $restResource->addLink(RestLinkInterface::LINK_SELF, $selfLink);

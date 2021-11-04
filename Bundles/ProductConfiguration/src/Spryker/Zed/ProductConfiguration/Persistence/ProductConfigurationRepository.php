@@ -30,17 +30,19 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
 
         $productConfigurationQuery = $this->setProductConfigurationFilters(
             $productConfigurationQuery,
-            $productConfigurationFilterTransfer
+            $productConfigurationFilterTransfer,
         );
 
         return $this->getFactory()->createProductConfigurationMapper()
             ->mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection(
                 new ProductConfigurationCollectionTransfer(),
-                $productConfigurationQuery->find()
+                $productConfigurationQuery->find(),
             );
     }
 
     /**
+     * @module Product
+     *
      * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationQuery
      * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
      *
@@ -56,11 +58,18 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
             $productConfigurationQuery->filterByIdProductConfiguration_In($productConfigurationIds);
         }
 
+        if ($productConfigurationFilterTransfer->getSkus()) {
+            $productConfigurationQuery
+                ->useSpyProductQuery()
+                    ->filterBySku_In(array_unique($productConfigurationFilterTransfer->getSkus()))
+                ->endUse();
+        }
+
         if ($productConfigurationFilterTransfer->getFilter()) {
             /** @var \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationQuery */
             $productConfigurationQuery = $this->buildQueryFromCriteria(
                 $productConfigurationQuery,
-                $productConfigurationFilterTransfer->getFilter()
+                $productConfigurationFilterTransfer->getFilter(),
             );
 
             $productConfigurationQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);

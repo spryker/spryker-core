@@ -40,7 +40,7 @@ class ProductBundleCartsRestApiToCartsRestApiResourceBridge implements ProductBu
         return $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
             $itemTransfer,
             $restItemsAttributesTransfer,
-            $localeName
+            $localeName,
         );
     }
 }

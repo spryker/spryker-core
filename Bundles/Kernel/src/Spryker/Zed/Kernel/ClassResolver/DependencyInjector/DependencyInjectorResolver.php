@@ -18,6 +18,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
      * @var string
      */
     public const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
+
     /**
      * @var string
      */
@@ -76,7 +77,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
             self::KEY_NAMESPACE,
             self::KEY_FROM_BUNDLE,
             static::KEY_CODE_BUCKET,
-            self::KEY_BUNDLE
+            self::KEY_BUNDLE,
         );
     }
 
@@ -98,7 +99,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $className = str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
 
         return $className;

@@ -19,6 +19,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
      * @var string
      */
     protected const KEY_OPTION_ALL_CMS_PAGES = 'All CMS Pages';
+
     /**
      * @var string
      */
@@ -26,6 +27,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
 
     /**
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::CMS_NAME
+     *
      * @var string
      */
     protected const CMS_PAGE_NAME = 'name';
@@ -95,7 +97,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntityCollection
      *
      * @return array<int>
      */

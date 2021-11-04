@@ -66,7 +66,7 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
         $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByIdCompanyUser(
-                $companyUserTransfer->getIdCompanyUser()
+                $companyUserTransfer->getIdCompanyUser(),
             )->update([
                 static::COLUMN_COMPANY_USER_IS_ACTIVE => $companyUserTransfer->getIsActive(),
             ]);

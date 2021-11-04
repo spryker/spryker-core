@@ -22,6 +22,7 @@ class CatalogViewModePersistence implements CatalogViewModePersistenceInterface
      * @var string
      */
     public const VIEW_MODE_GRID = 'grid';
+
     /**
      * @var string
      */

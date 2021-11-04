@@ -43,7 +43,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->createFileVersion(),
             $this->createFileContent(),
             $this->createLocalizedAttributesSaver(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -54,7 +54,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     {
         return new FileReader(
             $this->getRepository(),
-            $this->createFileContent()
+            $this->createFileContent(),
         );
     }
 
@@ -66,7 +66,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
         return new FileRollback(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createFileVersion()
+            $this->createFileVersion(),
         );
     }
 
@@ -78,7 +78,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
         return new FileRemover(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createFileContent()
+            $this->createFileContent(),
         );
     }
 
@@ -90,7 +90,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
         return new FileDirectorySaver(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createFileDirectoryLocalizedAttributesSaver()
+            $this->createFileDirectoryLocalizedAttributesSaver(),
         );
     }
 
@@ -111,7 +111,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getFileSystemService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -146,7 +146,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     {
         return new FileContent(
             $this->getFileSystemService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -173,7 +173,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     {
         return new FileDirectoryTreeHierarchyUpdater(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -184,7 +184,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     {
         return new MimeTypeSaver(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

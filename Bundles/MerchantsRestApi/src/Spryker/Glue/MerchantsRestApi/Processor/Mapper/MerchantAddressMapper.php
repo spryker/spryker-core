@@ -26,7 +26,7 @@ class MerchantAddressMapper implements MerchantAddressMapperInterface
         foreach ($merchantStorageProfileAddressTransfers as $merchantStorageProfileAddressTransfer) {
             $restMerchantAddressTransfer = (new RestMerchantAddressTransfer())->fromArray(
                 $merchantStorageProfileAddressTransfer->toArray(),
-                true
+                true,
             );
             $restMerchantAddressesAttributesTransfer->addAddress($restMerchantAddressTransfer);
         }

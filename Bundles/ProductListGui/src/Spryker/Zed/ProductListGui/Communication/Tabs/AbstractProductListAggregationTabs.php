@@ -18,10 +18,12 @@ abstract class AbstractProductListAggregationTabs extends AbstractTabs
      * @var string
      */
     public const GENERAL_TAB_NAME = 'general';
+
     /**
      * @var string
      */
     public const GENERAL_TAB_TITLE = 'General Information';
+
     /**
      * @var string
      */

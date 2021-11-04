@@ -32,10 +32,12 @@ class CategoryLocalizedAttributeType extends AbstractType
      * @var string
      */
     protected const OPTION_DATA_CLASS = 'data_class';
+
     /**
      * @var string
      */
     protected const OPTION_PROPERTY_PATH_LOCALE_ID_LOCALE = 'locale.idLocale';
+
     /**
      * @var string
      */
@@ -45,26 +47,32 @@ class CategoryLocalizedAttributeType extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     protected const FIELD_LOCALE_NAME = 'locale_name';
+
     /**
      * @var string
      */
     protected const FIELD_META_TITLE = 'meta_title';
+
     /**
      * @var string
      */
     protected const FIELD_META_DESCRIPTION = 'meta_description';
+
     /**
      * @var string
      */
     protected const FIELD_META_KEYWORDS = 'meta_keywords';
+
     /**
      * @var string
      */
@@ -74,10 +82,12 @@ class CategoryLocalizedAttributeType extends AbstractType
      * @var string
      */
     protected const LABEL_META_TITLE = 'Meta Title';
+
     /**
      * @var string
      */
     protected const LABEL_META_DESCRIPTION = 'Meta Description';
+
     /**
      * @var string
      */
@@ -118,7 +128,7 @@ class CategoryLocalizedAttributeType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -206,7 +216,7 @@ class CategoryLocalizedAttributeType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

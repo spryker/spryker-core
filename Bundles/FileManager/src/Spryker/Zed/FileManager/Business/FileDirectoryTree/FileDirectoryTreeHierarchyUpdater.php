@@ -50,7 +50,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
         $this->getTransactionHandler()->handleTransaction(
             function () use ($fileDirectoryTreeTransfer) {
                 return $this->executeUpdateFileDirectoryTreeHierarchyTransaction($fileDirectoryTreeTransfer);
-            }
+            },
         );
     }
 
@@ -108,7 +108,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     protected function persistFileDirectoryTreeNodeRecursively(FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer, ?int $fkParentFileDirectory = null)
     {
         $fileDirectoryTransfer = $this->getFileDirectoryTransfer(
-            $fileDirectoryTreeNodeTransfer->getFileDirectoryOrFail()->getIdFileDirectoryOrFail()
+            $fileDirectoryTreeNodeTransfer->getFileDirectoryOrFail()->getIdFileDirectoryOrFail(),
         );
         $fileDirectoryTransfer->setPosition($fileDirectoryTransfer->getPosition());
         $fileDirectoryTransfer->setFkParentFileDirectory($fkParentFileDirectory);
@@ -135,8 +135,8 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
             throw new FileDirectoryNotFoundException(
                 sprintf(
                     'File directory entity not found with ID %d.',
-                    $idFileDirectory
-                )
+                    $idFileDirectory,
+                ),
             );
         }
 

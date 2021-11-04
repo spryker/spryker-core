@@ -32,18 +32,22 @@ class SystemUnderTestBootstrap
      * @var string
      */
     public const APPLICATION_ZED = 'Zed';
+
     /**
      * @var string
      */
     public const APPLICATION_YVES = 'Yves';
+
     /**
      * @var string
      */
     public const APPLICATION_SHARED = 'Shared';
+
     /**
      * @var string
      */
     public const APPLICATION_CLIENT = 'Client';
+
     /**
      * @var string
      */
@@ -175,8 +179,8 @@ class SystemUnderTestBootstrap
             throw new InvalidArgumentException(
                 sprintf(
                     'Could not find a configured bootstrap class for config key "%s". You need to add the class name of your bootstrap class in your test configuration.',
-                    $configKey
-                )
+                    $configKey,
+                ),
             );
         }
         $bootstrapClassName = Config::get($configKey);

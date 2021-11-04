@@ -33,6 +33,7 @@ class CodeStyleSniffer
      * @var array
      */
     protected const APPLICATION_NAMESPACES = ['Orm'];
+
     /**
      * @var array
      */
@@ -42,6 +43,7 @@ class CodeStyleSniffer
      * @var string
      */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
      * @var string
      */
@@ -69,7 +71,7 @@ class CodeStyleSniffer
 
     /**
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -80,7 +82,7 @@ class CodeStyleSniffer
             [$namespace, $module] = explode('.', $module, 2);
         }
 
-        $pathOption = isset($options['path']) ? $options['path'] : null;
+        $pathOption = $options['path'] ?? null;
         $defaults = [
             static::OPTION_IGNORE => $namespace || $pathOption ? null : 'vendor/',
         ];
@@ -162,7 +164,7 @@ class CodeStyleSniffer
         $message = sprintf(
             'Could not find a valid path to your module "%s". Expected path "%s". Maybe there is a typo in the module name?',
             $module,
-            $path
+            $path,
         );
 
         throw new PathDoesNotExistException($message);
@@ -274,7 +276,7 @@ class CodeStyleSniffer
             'vendor/bin/%s %s%s',
             $optionFix ? 'phpcbf' : 'phpcs',
             $path,
-            $processConfig
+            $processConfig,
         );
 
         $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();

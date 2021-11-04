@@ -105,7 +105,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
             ->createMerchantRelationshipQuery()
             ->withColumn(
                 sprintf('MAX(%s)', SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP),
-                static::COL_MAX_ID
+                static::COL_MAX_ID,
             )
             ->select([
                 static::COL_MAX_ID,
@@ -125,7 +125,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      */
     public function getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship> $merchantRelationshipEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship[] $merchantRelationshipEntities */
         $merchantRelationshipEntities = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->joinWithCompanyBusinessUnit()
@@ -195,12 +195,12 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     ): SpyMerchantRelationshipQuery {
         if ($merchantRelationshipFilterTransfer->getMerchantRelationshipIds()) {
             $merchantRelationshipQuery->filterByIdMerchantRelationship_In(
-                $merchantRelationshipFilterTransfer->getMerchantRelationshipIds()
+                $merchantRelationshipFilterTransfer->getMerchantRelationshipIds(),
             );
         }
         if ($merchantRelationshipFilterTransfer->getMerchantIds()) {
             $merchantRelationshipQuery->filterByFkMerchant_In(
-                $merchantRelationshipFilterTransfer->getMerchantIds()
+                $merchantRelationshipFilterTransfer->getMerchantIds(),
             );
         }
 

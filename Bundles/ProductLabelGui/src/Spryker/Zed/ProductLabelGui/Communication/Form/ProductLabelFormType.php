@@ -32,38 +32,47 @@ class ProductLabelFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_EXCLUSIVE_FLAG = 'isExclusive';
+
     /**
      * @var string
      */
     public const FIELD_DYNAMIC_FLAG = 'isDynamic';
+
     /**
      * @var string
      */
     public const FIELD_PRIORITY = 'position';
+
     /**
      * @var string
      */
     public const FIELD_STORE_RELATION = 'storeRelation';
+
     /**
      * @var string
      */
     public const FIELD_STATUS_FLAG = 'isActive';
+
     /**
      * @var string
      */
     public const FIELD_VALID_FROM_DATE = 'validFrom';
+
     /**
      * @var string
      */
     public const FIELD_VALID_TO_DATE = 'validTo';
+
     /**
      * @var string
      */
     public const FIELD_FRONT_END_REFERENCE = 'frontEndReference';
+
     /**
      * @var string
      */
@@ -93,7 +102,7 @@ class ProductLabelFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -128,7 +137,7 @@ class ProductLabelFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -147,7 +156,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Is Exclusive',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -166,7 +175,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Is Active',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -189,7 +198,7 @@ class ProductLabelFormType extends AbstractType
               'attr' => [
                   'readonly' => true,
               ],
-            ]
+            ],
         );
 
         return $this;
@@ -212,7 +221,7 @@ class ProductLabelFormType extends AbstractType
                     new NotBlank(),
                     new GreaterThanOrEqual(['value' => 1]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -231,7 +240,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -254,7 +263,7 @@ class ProductLabelFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-valid-from-date-picker safe-datetime',
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_FROM_DATE, $builder);
@@ -279,7 +288,7 @@ class ProductLabelFormType extends AbstractType
                 'attr' => [
                     'class' => 'js-valid-to-date-picker safe-datetime',
                 ],
-            ]
+            ],
         );
 
         $this->addDateTimeTransformer(static::FIELD_VALID_TO_DATE, $builder);
@@ -311,7 +320,7 @@ class ProductLabelFormType extends AbstractType
                     }
 
                     return $dateAsObject->format(static::VALIDITY_DATE_FORMAT);
-                }
+                },
             ));
     }
 
@@ -328,7 +337,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'label' => 'Front-end Reference',
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -347,7 +356,7 @@ class ProductLabelFormType extends AbstractType
             [
                 'entry_type' => ProductLabelLocalizedAttributesFormType::class,
                 'property_path' => 'localizedAttributesCollection',
-            ]
+            ],
         );
 
         return $this;

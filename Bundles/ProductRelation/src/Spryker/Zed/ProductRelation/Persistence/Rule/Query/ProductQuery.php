@@ -26,6 +26,7 @@ class ProductQuery implements QueryInterface
      * @var string
      */
     public const COL_CATEGORY_NAME = 'category_name';
+
     /**
      * @var string
      */
@@ -144,12 +145,12 @@ class ProductQuery implements QueryInterface
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
                 SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [
@@ -160,7 +161,7 @@ class ProductQuery implements QueryInterface
                     SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
                     $idLocale,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [
@@ -171,7 +172,7 @@ class ProductQuery implements QueryInterface
                     SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
                     $idLocale,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->addJoin(
                 [
@@ -182,12 +183,12 @@ class ProductQuery implements QueryInterface
                     SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                     $idLocale,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->groupByIdProductAbstract()
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-                static::COL_CATEGORY_NAME
+                static::COL_CATEGORY_NAME,
             );
 
         return $this->filterProductAbstractId($query, $dataProviderTransfer);
@@ -215,7 +216,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAttributeKey>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAttributeKey[]
      */
     protected function findProductAttributes()
     {

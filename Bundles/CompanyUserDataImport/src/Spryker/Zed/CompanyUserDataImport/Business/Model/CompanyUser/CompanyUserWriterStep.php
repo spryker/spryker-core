@@ -55,7 +55,7 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
 
         $this->addPublishEvents(
             CompanyUserEvents::COMPANY_USER_PUBLISH,
-            $companyUserEntity->getIdCompanyUser()
+            $companyUserEntity->getIdCompanyUser(),
         );
     }
 

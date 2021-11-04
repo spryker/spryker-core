@@ -42,7 +42,7 @@ class ProductConcreteSearchDataMapperTest extends Unit
         // Arrange
         $productConcreteSearchDataMapper = new ProductConcreteSearchDataMapper(
             new PageMapBuilder(),
-            []
+            [],
         );
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($localeName);

@@ -18,62 +18,77 @@ class MenuFormatter implements MenuFormatterInterface
      * @var string
      */
     public const VISIBLE = 'visible';
+
     /**
      * @var string
      */
     public const URI = 'uri';
+
     /**
      * @var string
      */
     public const ID = 'id';
+
     /**
      * @var string
      */
     public const ATTRIBUTES = 'attributes';
+
     /**
      * @var string
      */
     public const LABEL = 'label';
+
     /**
      * @var string
      */
     public const PAGES = 'pages';
+
     /**
      * @var string
      */
     public const CONTROLLER = 'controller';
+
     /**
      * @var string
      */
     public const INDEX = 'index';
+
     /**
      * @var string
      */
     public const ACTION = 'action';
+
     /**
      * @var string
      */
     public const BUNDLE = 'bundle';
+
     /**
      * @var string
      */
     public const CHILDREN = 'children';
+
     /**
      * @var string
      */
     public const TITLE = 'title';
+
     /**
      * @var string
      */
     public const ICON = 'icon';
+
     /**
      * @var string
      */
     public const SHORTCUT = 'shortcut';
+
     /**
      * @var string
      */
     public const IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
@@ -238,8 +253,8 @@ class MenuFormatter implements MenuFormatterInterface
         }
 
         return [
-            self::LABEL => $label !== null ? $label : $title,
-            self::TITLE => $title !== null ? $title : $label,
+            self::LABEL => $label ?? $title,
+            self::TITLE => $title ?? $label,
         ];
     }
 
@@ -250,7 +265,7 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageLabel(array $page)
     {
-        return isset($page[self::LABEL]) ? $page[self::LABEL] : null;
+        return $page[self::LABEL] ?? null;
     }
 
     /**
@@ -260,7 +275,7 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageTitle(array $page)
     {
-        return isset($page[self::TITLE]) ? $page[self::TITLE] : null;
+        return $page[self::TITLE] ?? null;
     }
 
     /**

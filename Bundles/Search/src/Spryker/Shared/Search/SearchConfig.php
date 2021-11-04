@@ -17,14 +17,17 @@ class SearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const FACET_TYPE_ENUMERATION = 'enumeration';
+
     /**
      * @var string
      */
     public const FACET_TYPE_RANGE = 'range';
+
     /**
      * @var string
      */
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
+
     /**
      * @var string
      */

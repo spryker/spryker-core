@@ -28,10 +28,12 @@ class StockSubForm extends AbstractType
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_STOCK_TYPE = 'stockType';
+
     /**
      * @var string
      */
@@ -44,7 +46,7 @@ class StockSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -113,7 +115,7 @@ class StockSubForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

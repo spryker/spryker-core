@@ -35,10 +35,12 @@ class ValidatorHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Validator';
+
     /**
      * @var string
      */
     protected const CONFIG_KEY_VALIDATOR_PLUGINS = 'validatorPlugins';
+
     /**
      * @var string
      */
@@ -55,7 +57,7 @@ class ValidatorHelper extends Module
     protected $constraintPlugins = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config = [
         self::CONFIG_KEY_VALIDATOR_PLUGINS => [],
@@ -96,7 +98,7 @@ class ValidatorHelper extends Module
         $this->addDependencies();
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getValidatorApplicationPluginStub()
+            $this->getValidatorApplicationPluginStub(),
         );
     }
 

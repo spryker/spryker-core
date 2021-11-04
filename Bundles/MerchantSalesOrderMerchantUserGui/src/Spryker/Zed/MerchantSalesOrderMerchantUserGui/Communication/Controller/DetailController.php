@@ -34,6 +34,7 @@ class DetailController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     *
      * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
@@ -42,22 +43,21 @@ class DetailController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $this->castId(
-            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER)
+            $request->query->getInt(static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER),
         );
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
@@ -82,21 +82,21 @@ class DetailController extends AbstractController
             ->getMerchantOmsFacade()
             ->expandMerchantOrderItemsWithManualEvents(
                 (new MerchantOrderItemCollectionTransfer())
-                ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
+                ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems()),
             );
         $merchantOrderTransfer->setMerchantOrderItems($merchantOrderItemCollectionTransfer->getMerchantOrderItems());
 
         $blockData = $this->renderActions(
             $request,
             $this->getFactory()->getMerchantSalesOrderDetailExternalBlocksUrls(),
-            $merchantOrderTransfer
+            $merchantOrderTransfer,
         );
 
         /** @var \Generated\Shared\Transfer\OrderTransfer $salesOrder */
         $salesOrder = $merchantOrderTransfer->requireOrder()->getOrder();
 
         $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment(
-            $salesOrder->getItems()
+            $salesOrder->getItems(),
         );
 
         $groupedMerchantOrderItems = $this->groupMerchantOrderItemsByIdSalesOrderItem($merchantOrderTransfer);
@@ -105,7 +105,7 @@ class DetailController extends AbstractController
             'merchantOrder' => $merchantOrderTransfer,
             'groupedMerchantOrderItemsByShipment' => $groupedMerchantOrderItemsByShipment,
             'totalMerchantOrderCount' => $this->getFactory()->getMerchantSalesOrderFacade()->getMerchantOrdersCount(
-                (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+                (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             ),
             'changeStatusRedirectUrl' => $this->createRedirectLink($idMerchantSalesOrder),
             'groupedMerchantOrderItems' => $groupedMerchantOrderItems,
@@ -143,15 +143,13 @@ class DetailController extends AbstractController
 
         return $this->mapMerchantOrderItemsStateHistoryToMerchantOrderItems(
             $merchantOrderTransfer,
-            $merchantOrderItemsStateHistory
+            $merchantOrderItemsStateHistory,
         );
     }
 
     /**
-     * @phpstan-param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
-     * @param array $merchantOrderItemsStateHistory
+     * @param array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>> $merchantOrderItemsStateHistory
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
@@ -165,7 +163,7 @@ class DetailController extends AbstractController
             }
 
             $merchantOrderItemTransfer->setStateHistory(
-                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+                new ArrayObject($merchantOrderItemsStateHistory[$merchantOrderItemTransfer->getIdMerchantOrderItem()]),
             );
         }
 
@@ -173,13 +171,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
-     *
-     * @phpstan-return array<array-key, int|null>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @return array<int>
+     * @return array<int|null>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {
@@ -187,20 +181,15 @@ class DetailController extends AbstractController
             function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
                 return $merchantOrderItemTransfer->getIdMerchantOrderItem();
             },
-            $merchantOrderItems->getArrayCopy()
+            $merchantOrderItems->getArrayCopy(),
         );
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
-     * @phpstan-param array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
-     *
-     * @phpstan-return array<int|string, array<int|string, string>>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
-     * @param array $merchantOrderItemsWithOrderItemIdKey
+     * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
      *
-     * @return array
+     * @return array<array<string>>
      */
     protected function extractUniqueEvents(ArrayObject $groupedMerchantOrderItemsByShipment, array $merchantOrderItemsWithOrderItemIdKey): array
     {
@@ -243,15 +232,11 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-param array <string, string> $data
-     *
-     * @phpstan-return array <string, string>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function renderActions(Request $request, array $data, MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -286,11 +271,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array
+     * @return array<int|string, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function groupMerchantOrderItemsByIdSalesOrderItem(MerchantOrderTransfer $merchantOrderTransfer): array
     {

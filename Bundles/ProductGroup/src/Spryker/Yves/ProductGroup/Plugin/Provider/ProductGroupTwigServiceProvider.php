@@ -31,7 +31,7 @@ class ProductGroupTwigServiceProvider extends AbstractPlugin implements ServiceP
                 $twig->addExtension($twigExtension);
 
                 return $twig;
-            })
+            }),
         );
     }
 

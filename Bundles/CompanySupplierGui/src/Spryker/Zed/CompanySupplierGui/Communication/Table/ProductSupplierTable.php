@@ -26,38 +26,47 @@ class ProductSupplierTable extends AbstractTable
      * @var string
      */
     protected const TABLE_IDENTIFIER = 'product-suppliers-table';
+
     /**
      * @var string
      */
     protected const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const COL_SUPPLIER_PRICE = 'supplier_price';
+
     /**
      * @var string
      */
     protected const COL_DEFAULT_PRICE = 'default_price';
+
     /**
      * @var string
      */
     protected const PRICE_FORMAT = '%s: %s%s';
+
     /**
      * @var string
      */
     protected const TABLE_URL_DEFAULT_FORMAT = 'table?%s=%d';
+
     /**
      * @var string
      */
     protected const PRICE_SEPARATOR = '<br/>';
+
     /**
      * @var string
      */
     protected const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
+
     /**
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
     /**
      * @var string
      */
@@ -112,7 +121,7 @@ class ProductSupplierTable extends AbstractTable
         $this->defaultUrl = sprintf(
             static::TABLE_URL_DEFAULT_FORMAT,
             static::PARAM_ID_COMPANY,
-            $idCompany
+            $idCompany,
         );
     }
 
@@ -148,11 +157,11 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productSupplierCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productSupplierCollection */
         $productSupplierCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         if ($productSupplierCollection->count() < 1) {
@@ -177,7 +186,7 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $spyProductCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $spyProductCollection
      *
      * @return array
      */
@@ -248,7 +257,7 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductCollection
      *
      * @return string
      */
@@ -261,7 +270,7 @@ class ProductSupplierTable extends AbstractTable
                     static::PRICE_FORMAT,
                     $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),
                     $this->currencyFacade->getByIdCurrency($priceProductEntity->getFkCurrency())->getSymbol(),
-                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice())
+                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice()),
                 );
             }
         }

@@ -57,18 +57,18 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): PriceProductScheduleTransfer {
         $priceProductTransfer = $this->mapPriceProductScheduleEntityToPriceProductTransfer(
             $priceProductScheduleEntity,
-            new PriceProductTransfer()
+            new PriceProductTransfer(),
         );
 
         $priceProductScheduleListTransfer = $this->priceProductScheduleListMapper
             ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
                 $priceProductScheduleEntity->getPriceProductScheduleList(),
-                new PriceProductScheduleListTransfer()
+                new PriceProductScheduleListTransfer(),
             );
 
         $storeTransfer = $this->mapStoreEntityToStoreTransfer(
             $priceProductScheduleEntity->getStore(),
-            new StoreTransfer()
+            new StoreTransfer(),
         );
 
         return $priceProductScheduleTransfer
@@ -107,7 +107,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         $priceProductScheduleEntity = $this->addProductIdentifierToPriceProductScheduleEntityFromPriceProduct(
             $priceProductTransfer,
-            $priceProductScheduleEntity
+            $priceProductScheduleEntity,
         );
 
         if ($idStore === null && $moneyValueTransfer->getStore() !== null) {
@@ -166,7 +166,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         foreach ($priceProductScheduleEntities as $priceProductScheduleEntity) {
             $productPriceScheduleCollection[] = $this->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
                 $priceProductScheduleEntity,
-                new PriceProductScheduleTransfer()
+                new PriceProductScheduleTransfer(),
             );
         }
 
@@ -185,17 +185,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): PriceProductTransfer {
         $moneyValueTransfer = $this->mapPriceProductScheduleEntityToMoneyValueTransfer(
             $priceProductScheduleEntity,
-            new MoneyValueTransfer()
+            new MoneyValueTransfer(),
         );
 
         $priceTypeTransfer = $this->mapPriceTypeEntityToPriceTypeTransfer(
             $priceProductScheduleEntity->getPriceType(),
-            new PriceTypeTransfer()
+            new PriceTypeTransfer(),
         );
 
         $priceProductDimensionTransfer = $this->mapPriceProductScheduleEntityToPriceProductDimensionTransfer(
             $priceProductScheduleEntity,
-            new PriceProductDimensionTransfer()
+            new PriceProductDimensionTransfer(),
         );
 
         $priceProductTransfer
@@ -238,12 +238,12 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): MoneyValueTransfer {
         $currencyTransfer = $this->mapCurrencyEntityToCurrencyTransfer(
             $priceProductScheduleEntity->getCurrency(),
-            new CurrencyTransfer()
+            new CurrencyTransfer(),
         );
 
         $storeTransfer = $this->mapStoreEntityToStoreTransfer(
             $priceProductScheduleEntity->getStore(),
-            new StoreTransfer()
+            new StoreTransfer(),
         );
 
         return $moneyValueTransfer

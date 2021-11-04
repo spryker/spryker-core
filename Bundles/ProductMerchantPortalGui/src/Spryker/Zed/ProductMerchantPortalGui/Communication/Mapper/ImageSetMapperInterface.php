@@ -14,7 +14,7 @@ interface ImageSetMapperInterface
     /**
      * @param \Symfony\Component\Form\FormErrorIterator $errors
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapErrorsToImageSetValidationData(FormErrorIterator $errors): array;
 }

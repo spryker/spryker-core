@@ -22,29 +22,35 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ID_PRODUCT_CONCRETE
+     *
      * @var string
      */
     protected const PARAM_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductConcreteAttributeTableDataProvider::COL_KEY_ID_IS_SUPER
+     *
      * @var string
      */
     protected const COL_KEY_ID_IS_SUPER = 'is_super';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM = 'productConcreteEdit';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
@@ -53,22 +59,27 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
      * @var string
      */
     protected const COL_KEY_COLUMN_TYPE = 'columnType';
+
     /**
      * @var string
      */
     protected const COL_KEY_COLUMN_TYPE_OPTIONS = 'columnTypeOptions';
+
     /**
      * @var string
      */
     protected const COL_KEY_ALLOW_INPUT = 'allowInput';
+
     /**
      * @var string
      */
     protected const COL_KEY_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
     /**
      * @var string
      */
     protected const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
+
     /**
      * @var string
      */
@@ -78,6 +89,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
      * @var string
      */
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+
     /**
      * @var string
      */
@@ -87,6 +99,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
      * @var string
      */
     protected const ID_ROW_ACTION_DELETE = 'delete-attribute';
+
     /**
      * @var string
      */
@@ -99,24 +112,28 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::attributeDataAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTES_DATA_URL = '/product-merchant-portal-gui/product-attributes/attribute-data/';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::saveAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTE_SAVE_DATA_URL = '/product-merchant-portal-gui/product-attributes/save-product-concrete-attribute';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::deleteAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTE_DELETE_URL = '/product-merchant-portal-gui/product-attributes/delete-concrete-product-attribute';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::tableDataAction()
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTES_TABLE_DATA_URL = '/product-merchant-portal-gui/product-attributes/concrete-table-data';
@@ -130,6 +147,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
      * @var string
      */
     protected const COLOR_GREY = 'gray';
+
     /**
      * @var string
      */
@@ -194,13 +212,13 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 true,
-                true
+                true,
             );
             $guiTableConfigurationBuilder->addEditableColumnDynamic(
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 static::COL_KEY_ATTRIBUTE_NAME,
-                static::PRODUCT_ATTRIBUTES_DATA_URL
+                static::PRODUCT_ATTRIBUTES_DATA_URL,
             );
         }
 
@@ -208,7 +226,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             static::FORMAT_STRING_DATA_URL,
             static::PRODUCT_ATTRIBUTES_TABLE_DATA_URL,
             static::COL_KEY_ID_PRODUCT_CONCRETE,
-            $idProductConcrete
+            $idProductConcrete,
         );
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
@@ -236,7 +254,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
         array $attributesInitialData
     ): GuiTableConfigurationBuilderInterface {
         $allAttributes = $this->productAttributeFacade->getProductManagementAttributes(
-            new ProductManagementAttributeFilterTransfer()
+            new ProductManagementAttributeFilterTransfer(),
         );
 
         $options = $this->getNonSuperAttributeKeysIndexedByKeys($allAttributes);
@@ -246,12 +264,12 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             static::TITLE_COLUMN_ATTRIBUTE_NAME,
             false,
             $options,
-            static::PLACEHOLDER_SELECT_ATTRIBUTE
+            static::PLACEHOLDER_SELECT_ATTRIBUTE,
         )->addEditableColumnDynamic(
             static::COL_KEY_ATTRIBUTE_DEFAULT,
             static::TITLE_COLUMN_ATTRIBUTE_DEFAULT,
             static::COL_KEY_ATTRIBUTE_NAME,
-            static::PRODUCT_ATTRIBUTES_DATA_URL
+            static::PRODUCT_ATTRIBUTES_DATA_URL,
         );
 
         $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL), 'POST');
@@ -260,7 +278,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             '%s[%s][%s]',
             static::BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM,
             static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM,
-            ProductAbstractTransfer::ATTRIBUTES
+            ProductAbstractTransfer::ATTRIBUTES,
         );
 
         $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $attributesInitialData, [GuiTableEditableButtonTransfer::TITLE => 'Add']);
@@ -278,7 +296,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
         $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL)
+            $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL),
         );
 
         return $guiTableConfigurationBuilder;
@@ -319,11 +337,9 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
     }
 
     /**
-     * @phpstan-return array<string, string|null>
-     *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer
      *
-     * @return array<string>
+     * @return array<string, string|null>
      */
     protected function getNonSuperAttributeKeysIndexedByKeys(ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer): array
     {

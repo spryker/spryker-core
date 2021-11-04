@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Api\Business\Model\Processor\Pre\RestApiResource;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceActionPreProcessor;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Auto-generated group annotations
@@ -70,7 +71,7 @@ class ResourceActionPreProcessorTest extends Unit
      */
     public function testProcessPostInvalid(): void
     {
-        $this->expectException('Symfony\Component\HttpKernel\Exception\BadRequestHttpException');
+        $this->expectException(BadRequestHttpException::class);
         $processor = new ResourceActionPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();

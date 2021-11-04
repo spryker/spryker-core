@@ -157,7 +157,7 @@ class FormEventSubscriber implements EventSubscriberInterface
             $errorMessage = $this->translator->trans(
                 $this->errorMessage,
                 $this->translationOptions,
-                $this->translationDomain
+                $this->translationDomain,
             );
         }
 

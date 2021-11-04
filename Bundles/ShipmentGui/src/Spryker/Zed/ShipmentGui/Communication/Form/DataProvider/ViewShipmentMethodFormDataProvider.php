@@ -16,14 +16,17 @@ class ViewShipmentMethodFormDataProvider
      * @var string
      */
     public const OPTION_TAX_SET_CHOICES = 'option_tax_set_choices';
+
     /**
      * @var string
      */
     public const OPTION_STORE_RELATION_DISABLED = 'option_store_relation_disabled';
+
     /**
      * @var string
      */
     public const OPTION_PRICES_DISABLED = 'option_prices_disabled';
+
     /**
      * @var string
      */

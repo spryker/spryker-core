@@ -52,7 +52,7 @@ class ProductCustomerPermissionCollectorStoragePlugin extends AbstractCollectorP
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

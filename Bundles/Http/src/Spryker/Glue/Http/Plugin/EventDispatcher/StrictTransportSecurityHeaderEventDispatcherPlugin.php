@@ -26,14 +26,17 @@ class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin 
      * @var string
      */
     protected const HEADER_STS = 'Strict-Transport-Security';
+
     /**
      * @var string
      */
     protected const HEADER_STS_MAX_AGE = 'max_age';
+
     /**
      * @var string
      */
     protected const HEADER_STS_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+
     /**
      * @var string
      */
@@ -79,9 +82,7 @@ class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin 
     }
 
     /**
-     * @phpstan-param array<string, mixed> $strictTransportSecurityConfig
-     *
-     * @param array<string> $strictTransportSecurityConfig
+     * @param array<string, mixed> $strictTransportSecurityConfig
      *
      * @return string
      */

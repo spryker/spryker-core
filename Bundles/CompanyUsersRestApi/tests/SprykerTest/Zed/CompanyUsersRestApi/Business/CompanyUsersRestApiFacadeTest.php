@@ -54,7 +54,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Act
         $expandedCustomerIdentifierTransfer = $this->tester->getFacade()->expandCustomerIdentifier(
             (new CustomerIdentifierTransfer()),
-            $customerTransfer
+            $customerTransfer,
         );
 
         // Assert
@@ -72,7 +72,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Act
         $expandedCustomerIdentifierTransfer = $this->tester->getFacade()->expandCustomerIdentifier(
             (new CustomerIdentifierTransfer()),
-            $customerTransfer
+            $customerTransfer,
         );
 
         // Assert
@@ -105,7 +105,7 @@ class CompanyUsersRestApiFacadeTest extends Test
 
         // Act
         $companyUserCollectionTransfer = $this->tester->getFacade()->getCompanyUserCollection(
-            $companyUserCriteriaFilterTransfer
+            $companyUserCriteriaFilterTransfer,
         );
 
         // Assert
@@ -130,7 +130,7 @@ class CompanyUsersRestApiFacadeTest extends Test
 
         // Act
         $companyUserCollectionTransfer = $this->tester->getFacade()->getCompanyUserCollection(
-            $companyUserCriteriaFilterTransfer
+            $companyUserCriteriaFilterTransfer,
         );
 
         // Assert
@@ -153,8 +153,8 @@ class CompanyUsersRestApiFacadeTest extends Test
                 (new CustomerTransfer())
                     ->setCompanyUserTransfer(
                         (new CompanyUserTransfer())
-                            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-                    )
+                            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser()),
+                    ),
             );
 
         // Act
@@ -164,17 +164,17 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Assert
         $this->assertNotNull(
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
-            'Company user should be set.'
+            'Company user should be set.',
         );
         $this->assertSame(
             $companyUserTransfer->getIdCompanyUser(),
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
-            'Company user ID should be the same.'
+            'Company user ID should be the same.',
         );
         $this->assertSame(
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getFkCompanyBusinessUnit(),
-            'Company business unit ID should be the same.'
+            'Company business unit ID should be the same.',
         );
     }
 
@@ -194,7 +194,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Assert
         $this->assertNull(
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
-            'Company user should not be set.'
+            'Company user should not be set.',
         );
     }
 
@@ -207,7 +207,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer(
                 (new CustomerTransfer())
-                    ->setCompanyUserTransfer(new CompanyUserTransfer())
+                    ->setCompanyUserTransfer(new CompanyUserTransfer()),
             );
 
         // Act
@@ -217,11 +217,11 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Assert
         $this->assertNotNull(
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
-            'Company user should be set.'
+            'Company user should be set.',
         );
         $this->assertNull(
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
-            'Company user ID should not be set.'
+            'Company user ID should not be set.',
         );
     }
 
@@ -241,14 +241,14 @@ class CompanyUsersRestApiFacadeTest extends Test
                 (new CustomerTransfer())
                     ->setCompanyUserTransfer(
                         (new CompanyUserTransfer())
-                            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-                    )
+                            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser()),
+                    ),
             );
 
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesTransfer())
             ->setCustomer(
                 (new RestCustomerTransfer())
-                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+                    ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser()),
             );
 
         // Act
@@ -258,17 +258,17 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Assert
         $this->assertNotNull(
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
-            'Company user should be set.'
+            'Company user should be set.',
         );
         $this->assertSame(
             $companyUserTransfer->getIdCompanyUser(),
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
-            'Company user ID should be the same.'
+            'Company user ID should be the same.',
         );
         $this->assertSame(
             $companyUserTransfer->getFkCompanyBusinessUnit(),
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer()->getFkCompanyBusinessUnit(),
-            'Company business unit ID should be the same.'
+            'Company business unit ID should be the same.',
         );
     }
 
@@ -290,7 +290,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         // Assert
         $this->assertNull(
             $actualQuoteTransfer->getCustomer()->getCompanyUserTransfer(),
-            'Company user should be set.'
+            'Company user should be set.',
         );
     }
 }

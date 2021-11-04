@@ -28,7 +28,7 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
     protected $keyBuilder;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $blackList = [
         'id_navigation',

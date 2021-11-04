@@ -53,7 +53,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
             $conditions[$conditionKey] = $cmsSlotBlockConditionTransfer->modifiedToArray(true, true);
         }
         $cmsSlotBlockEntity->setConditions(
-            $this->utilEncodingService->encodeJson($conditions)
+            $this->utilEncodingService->encodeJson($conditions),
         );
 
         return $cmsSlotBlockEntity;
@@ -71,7 +71,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
     ): CmsSlotBlockCollectionTransfer {
         foreach ($cmsSlotBlockEntities as $cmsSlotBlockEntity) {
             $cmsSlotBlockCollectionTransfer->addCmsSlotBlock(
-                $this->mapCmsSlotBlockEntityToTransfer($cmsSlotBlockEntity, new CmsSlotBlockTransfer())
+                $this->mapCmsSlotBlockEntityToTransfer($cmsSlotBlockEntity, new CmsSlotBlockTransfer()),
             );
         }
 
@@ -125,8 +125,8 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         $cmsBlockTransfer->setCmsSlotBlockCollection(
             $this->mapCmsSlotBlockEntityCollectionToTransferCollection(
                 $cmsBlockEntity->getSpyCmsSlotBlocks(),
-                new CmsSlotBlockCollectionTransfer()
-            )
+                new CmsSlotBlockCollectionTransfer(),
+            ),
         );
 
         return $cmsBlockTransfer;
@@ -154,7 +154,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         foreach ($conditions as $conditionKey => $condition) {
             $cmsSlotBlockTransfer->addCondition(
                 $conditionKey,
-                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true),
             );
         }
 

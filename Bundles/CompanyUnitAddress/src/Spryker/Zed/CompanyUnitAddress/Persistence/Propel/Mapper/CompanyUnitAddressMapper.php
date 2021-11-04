@@ -29,7 +29,7 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     ): CompanyUnitAddressTransfer {
         $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->fromArray(
             $unitAddressEntityTransfer->toArray(),
-            true
+            true,
         );
 
         $companyUnitAddressTransfer->setIso2Code($unitAddressEntityTransfer->getCountry()->getIso2Code());
@@ -73,7 +73,7 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     ): SpyCompanyUnitAddressEntityTransfer {
         $companyUnitAddressEntityTransfer = (new SpyCompanyUnitAddressEntityTransfer())->fromArray(
             $companyUnitAddressTransfer->modifiedToArray(),
-            true
+            true,
         );
 
         return $companyUnitAddressEntityTransfer;
@@ -91,13 +91,13 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     ): CompanyUnitAddressTransfer {
         $companyUnitAddressTransfer = $companyUnitAddressTransfer->fromArray(
             $companyUnitAddressEntity->toArray(),
-            true
+            true,
         );
 
         $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntity->getCountry()->getIso2Code());
         if ($companyUnitAddressEntity->getFkCompany()) {
             $companyUnitAddressTransfer->setCompany(
-                (new CompanyTransfer())->fromArray($companyUnitAddressEntity->getCompany()->toArray(), true)
+                (new CompanyTransfer())->fromArray($companyUnitAddressEntity->getCompany()->toArray(), true),
             );
         }
 

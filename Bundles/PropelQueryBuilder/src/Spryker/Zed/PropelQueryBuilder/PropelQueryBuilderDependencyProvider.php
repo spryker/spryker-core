@@ -25,6 +25,7 @@ class PropelQueryBuilderDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PLUGINS_QUERY_STRING_DECISION_RULE = 'PLUGINS_QUERY_STRING_DECISION_RULE';
+
     /**
      * @var string
      */

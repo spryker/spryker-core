@@ -46,6 +46,7 @@ class RouterHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Router';
+
     /**
      * @var string
      */
@@ -57,7 +58,7 @@ class RouterHelper extends Module
     protected $routerPlugins = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config = [
         self::CONFIG_KEY_ROUTER_PLUGINS => [],
@@ -65,6 +66,7 @@ class RouterHelper extends Module
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
@@ -125,7 +127,7 @@ class RouterHelper extends Module
      * @param callable $controller
      * @param array $defaults
      * @param array $requirements
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string|null $host
      * @param array $schemes
      * @param array $methods
@@ -174,7 +176,7 @@ class RouterHelper extends Module
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new RouterListenerEventDispatcherPlugin());
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getRouterApplicationPluginStub()
+            $this->getRouterApplicationPluginStub(),
         );
     }
 

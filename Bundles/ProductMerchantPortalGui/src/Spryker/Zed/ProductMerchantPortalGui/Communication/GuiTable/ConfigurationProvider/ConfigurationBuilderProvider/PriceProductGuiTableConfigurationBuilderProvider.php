@@ -22,18 +22,22 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
      * @var string
      */
     protected const TITLE_COLUMN_STORE = 'Store';
+
     /**
      * @var string
      */
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
+
     /**
      * @var string
      */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
+
     /**
      * @var string
      */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
+
     /**
      * @var string
      */
@@ -43,6 +47,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
      * @var string
      */
     protected const TITLE_FILTER_IN_STORES = 'Stores';
+
     /**
      * @var string
      */
@@ -133,13 +138,13 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             static::TITLE_COLUMN_STORE,
             true,
             false,
-            'gray'
+            'gray',
         )->addColumnChip(
             PriceProductTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             true,
             false,
-            'blue'
+            'blue',
         );
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
@@ -149,26 +154,26 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
                 static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
-                MoneyValueTransfer::NET_AMOUNT
+                MoneyValueTransfer::NET_AMOUNT,
             );
 
             $idGrossColumn = sprintf(
                 static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
-                MoneyValueTransfer::GROSS_AMOUNT
+                MoneyValueTransfer::GROSS_AMOUNT,
             );
 
             $guiTableConfigurationBuilder->addColumnText(
                 $idNetColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
                 true,
-                false
+                false,
             )->addColumnText(
                 $idGrossColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
                 true,
-                false
+                false,
             );
         }
 
@@ -176,7 +181,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
             static::TITLE_COLUMN_QUANTITY,
             true,
-            false
+            false,
         );
 
         return $guiTableConfigurationBuilder;
@@ -193,12 +198,12 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             PriceProductTableViewTransfer::STORE,
             static::TITLE_COLUMN_STORE,
             false,
-            $this->storeFilterOptionsProvider->getStoreOptions()
+            $this->storeFilterOptionsProvider->getStoreOptions(),
         )->addEditableColumnSelect(
             PriceProductTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,
             false,
-            $this->currencyFilterConfigurationProvider->getCurrencyOptions()
+            $this->currencyFilterConfigurationProvider->getCurrencyOptions(),
         );
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
@@ -208,13 +213,13 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
                 static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
-                MoneyValueTransfer::NET_AMOUNT
+                MoneyValueTransfer::NET_AMOUNT,
             );
             $idGrossColumn = sprintf(
                 static::FORMAT_STRING_PRICE_KEY,
                 $idPriceTypeName,
                 PriceProductTransfer::MONEY_VALUE,
-                MoneyValueTransfer::GROSS_AMOUNT
+                MoneyValueTransfer::GROSS_AMOUNT,
             );
             $fieldOptions = [
                 'attrs' => [
@@ -226,12 +231,12 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
                 $idNetColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
                 static::INPUT_TYPE_NUMBER,
-                $fieldOptions
+                $fieldOptions,
             )->addEditableColumnInput(
                 $idGrossColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
                 static::INPUT_TYPE_NUMBER,
-                $fieldOptions
+                $fieldOptions,
             );
         }
 
@@ -239,7 +244,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
             static::TITLE_COLUMN_QUANTITY,
             static::INPUT_TYPE_NUMBER,
-            $this->getVolumeQuantityColumnOptions()
+            $this->getVolumeQuantityColumnOptions(),
         );
 
         return $guiTableConfigurationBuilder;
@@ -257,13 +262,13 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
                 'inStores',
                 static::TITLE_FILTER_IN_STORES,
                 true,
-                $this->storeFilterOptionsProvider->getStoreOptions()
+                $this->storeFilterOptionsProvider->getStoreOptions(),
             )
             ->addFilterSelect(
                 'inCurrencies',
                 static::TITLE_FILTER_IN_CURRENCIES,
                 true,
-                $this->currencyFilterConfigurationProvider->getCurrencyOptions()
+                $this->currencyFilterConfigurationProvider->getCurrencyOptions(),
             );
 
         return $guiTableConfigurationBuilder;

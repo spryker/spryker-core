@@ -16,6 +16,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      * @var string
      */
     public const KEY = 'PlaceOrderPermissionPlugin';
+
     /**
      * @var string
      */

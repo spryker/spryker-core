@@ -27,6 +27,7 @@ class CompanyUnitAddressForm extends AbstractType
      * @var string
      */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+
     /**
      * @var string
      */
@@ -45,7 +46,7 @@ class CompanyUnitAddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

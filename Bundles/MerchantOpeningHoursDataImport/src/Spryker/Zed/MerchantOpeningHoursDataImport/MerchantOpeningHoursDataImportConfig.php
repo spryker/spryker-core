@@ -16,6 +16,7 @@ class MerchantOpeningHoursDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE = 'merchant-opening-hours-weekday-schedule';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class MerchantOpeningHoursDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'merchant_open_hours_week_day_schedule.csv',
-            static::IMPORT_TYPE_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE
+            static::IMPORT_TYPE_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE,
         );
     }
 
@@ -47,7 +48,7 @@ class MerchantOpeningHoursDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'merchant_open_hours_date_schedule.csv',
-            static::IMPORT_TYPE_MERCHANT_OPENING_HOURS_DATE_SCHEDULE
+            static::IMPORT_TYPE_MERCHANT_OPENING_HOURS_DATE_SCHEDULE,
         );
     }
 
@@ -61,7 +62,7 @@ class MerchantOpeningHoursDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

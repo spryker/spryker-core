@@ -101,8 +101,8 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
             $restResponse->addResource(
                 $this->createCartResourceWithItems(
                     $quoteTransfer,
-                    $restRequest->getMetadata()->getLocale()
-                )
+                    $restRequest->getMetadata()->getLocale(),
+                ),
             );
         }
 
@@ -122,8 +122,8 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
             $restResponse->addError(
                 $this->cartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
-                    new RestErrorMessageTransfer()
-                )
+                    new RestErrorMessageTransfer(),
+                ),
             );
         }
 
@@ -141,7 +141,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_CARTS,
             $quoteTransfer->getUuid(),
-            $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
+            $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer),
         );
 
         $cartResource->setPayload($quoteTransfer);
@@ -182,14 +182,14 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
         $filteredItemTransfers = $this->executeCartItemFilterPlugins(
             $quoteTransfer->getItems()->getArrayCopy(),
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         foreach ($filteredItemTransfers as $itemTransfer) {
             $itemResource = $this->itemResponseBuilder->createCartItemResource(
                 $cartResource,
                 $itemTransfer,
-                $localeName
+                $localeName,
             );
 
             $cartResource->addRelationship($itemResource);

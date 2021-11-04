@@ -124,8 +124,8 @@ class WorkerProgressBar implements WorkerProgressBarInterface
                 $rowId,
                 $newProcessNumber,
                 $busyProcessNumber,
-                $queueName
-            )
+                $queueName,
+            ),
         );
     }
 

@@ -36,6 +36,7 @@ class ProductStorageFacadeTest extends Unit
      * @var string
      */
     protected const IS_SUPER_ATTRIBUTE_KEY = 'is_super';
+
     /**
      * @var string
      */
@@ -45,6 +46,7 @@ class ProductStorageFacadeTest extends Unit
      * @var string
      */
     protected const FORMAT_SUPER_ATTRIBUTE = 'attribute_%d';
+
     /**
      * @var string
      */
@@ -54,10 +56,12 @@ class ProductStorageFacadeTest extends Unit
      * @var string
      */
     protected const ATTRIBUTE_MAP_KEY = 'attribute_map';
+
     /**
      * @var string
      */
     protected const ATTRIBUTE_VARIANTS_KEY = 'attribute_variants';
+
     /**
      * @var string
      */
@@ -131,14 +135,14 @@ class ProductStorageFacadeTest extends Unit
 
         $expectedAttributeVariantsMap = $expectedAttributeVariantsMapClosure(
             $productConcreteTransfer1->getIdProductConcrete(),
-            $productConcreteTransfer2->getIdProductConcrete()
+            $productConcreteTransfer2->getIdProductConcrete(),
         );
 
         // Assert
         $this->assertEqualsCanonicalizing(
             $expectedAttributeVariantsMap,
             $attributeVariantsMap,
-            'Expected that generated attribute variants map match'
+            'Expected that generated attribute variants map match',
         );
     }
 
@@ -160,7 +164,7 @@ class ProductStorageFacadeTest extends Unit
         $productConcreteAttributes[sprintf(static::FORMAT_SUPER_ATTRIBUTE, $superAttributeKeyNumberToReplace)] = sprintf(
             static::FORMAT_SUPER_ATTRIBUTE_VALUE,
             $superAttributeKeyNumberToReplace,
-            2
+            2,
         );
 
         $productConcreteTransfer2
@@ -194,7 +198,7 @@ class ProductStorageFacadeTest extends Unit
             'isProductAttributesWithSingleValueIncluded',
             function () use ($isProductAttributesWithSingleValueIncluded) {
                 return $isProductAttributesWithSingleValueIncluded;
-            }
+            },
         );
 
         $productStorageBusinessFactory = new ProductStorageBusinessFactory();

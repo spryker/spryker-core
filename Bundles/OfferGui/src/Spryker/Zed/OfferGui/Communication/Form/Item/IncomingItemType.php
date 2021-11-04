@@ -23,6 +23,7 @@ class IncomingItemType extends AbstractType
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -35,7 +36,7 @@ class IncomingItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -48,7 +49,7 @@ class IncomingItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -64,7 +65,7 @@ class IncomingItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -83,7 +84,7 @@ class IncomingItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
@@ -99,7 +100,7 @@ class IncomingItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

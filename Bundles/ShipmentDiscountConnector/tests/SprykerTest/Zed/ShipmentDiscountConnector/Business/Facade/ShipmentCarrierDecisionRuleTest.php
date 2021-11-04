@@ -65,7 +65,7 @@ class ShipmentCarrierDecisionRuleTest extends Test
             $this->assertEquals(
                 $expectedValues[$sku],
                 $isSatisfied,
-                sprintf('The actual item shipment\'s carrier does not satisfied the rule (iteration #%d).', $i++)
+                sprintf('The actual item shipment\'s carrier does not satisfied the rule (iteration #%d).', $i++),
             );
         }
     }

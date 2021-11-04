@@ -17,7 +17,9 @@ interface TwigConstants
      * - Configuration options for Yves's twig.
      *
      * @api
+     *
      * @see http://twig.sensiolabs.org/doc/api.html#environment-options
+     *
      * @var string
      */
     public const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
@@ -30,6 +32,7 @@ interface TwigConstants
      * - Default theme name is "default".
      *
      * @api
+     *
      * @var string
      */
     public const YVES_THEME = 'YVES_THEME';
@@ -41,6 +44,7 @@ interface TwigConstants
      * @deprecated Use {@link \Spryker\Yves\Twig\TwigConfig::getCacheFilePath()} instead.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_PATH_CACHE_FILE = 'YVES_PATH_CACHE_FILE';
@@ -50,6 +54,7 @@ interface TwigConstants
      * - Defines if the path cache is enabled.
      *
      * @api
+     *
      * @var string
      */
     public const YVES_PATH_CACHE_ENABLED = 'YVES_PATH_CACHE_ENABLED';
@@ -59,7 +64,9 @@ interface TwigConstants
      * - Configuration options for Yves's twig.
      *
      * @api
+     *
      * @see http://twig.sensiolabs.org/doc/api.html#environment-options
+     *
      * @var string
      */
     public const ZED_TWIG_OPTIONS = 'ZED_TWIG_OPTIONS';
@@ -71,6 +78,7 @@ interface TwigConstants
      * @deprecated Use {@link \Spryker\Zed\Twig\TwigConfig::getCacheFilePath()} instead.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_PATH_CACHE_FILE = 'ZED_PATH_CACHE_FILE';
@@ -80,6 +88,7 @@ interface TwigConstants
      * - Defines if the path cache is enabled.
      *
      * @api
+     *
      * @var string
      */
     public const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
@@ -89,6 +98,7 @@ interface TwigConstants
      * - Sets the permission mode for generated directories.
      *
      * @api
+     *
      * @var string
      */
     public const DIRECTORY_PERMISSION = 'TWIG:DIRECTORY_PERMISSION';

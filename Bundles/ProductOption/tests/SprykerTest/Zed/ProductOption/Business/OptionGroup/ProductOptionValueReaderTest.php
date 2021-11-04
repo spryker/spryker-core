@@ -98,7 +98,7 @@ class ProductOptionValueReaderTest extends MockProvider
                 [
                     $productOptionValuePriceReaderMock,
                     $productOptionQueryContainerMock,
-                ]
+                ],
             )
             ->setMethods(['findOptionValueById'])
             ->getMock();

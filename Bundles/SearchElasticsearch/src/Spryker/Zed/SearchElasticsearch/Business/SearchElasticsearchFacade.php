@@ -185,7 +185,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -261,7 +261,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

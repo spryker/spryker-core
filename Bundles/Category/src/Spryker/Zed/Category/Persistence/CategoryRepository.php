@@ -39,26 +39,32 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @var string
      */
     protected const KEY_FK_CATEGORY = 'fk_category';
+
     /**
      * @var string
      */
     protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
+
     /**
      * @var string
      */
     protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_CATEGORY_KEY = 'category_key';
+
     /**
      * @var string
      */
     protected const COL_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
@@ -68,22 +74,27 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @var string
      */
     public const NODE_PATH_GLUE = '/';
+
     /**
      * @var string
      */
     public const CATEGORY_NODE_PATH_GLUE = ' / ';
+
     /**
      * @var int|null
      */
     public const NODE_PATH_NULL_DEPTH = null;
+
     /**
      * @var int
      */
     public const NODE_PATH_ZERO_DEPTH = 0;
+
     /**
      * @var int
      */
     public const IS_NOT_ROOT_NODE = 0;
+
     /**
      * @var string
      */
@@ -91,6 +102,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
     /**
      * @uses \Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap::COL_LOCALE_NAME
+     *
      * @var string
      */
     protected const COL_LOCALE_NAME = 'spy_locale.locale_name';
@@ -114,7 +126,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $localeTransfer->getIdLocale(),
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->find();
 
@@ -134,7 +146,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryMapper()
             ->mapCategoryCollection(
                 $this->applyCategoryFilters($this->getFactory()->createCategoryQuery(), $categoryCriteriaTransfer)->find(),
-                new CategoryCollectionTransfer()
+                new CategoryCollectionTransfer(),
             );
     }
 
@@ -149,7 +161,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $nodePathQuery = $this->queryNodePathWithRootNode(
             $idCategoryNode,
             $localeTransfer->getIdLocaleOrFail(),
-            static::NODE_PATH_ZERO_DEPTH
+            static::NODE_PATH_ZERO_DEPTH,
         );
 
         return $this->generateNodePathString($nodePathQuery, static::NODE_PATH_GLUE);
@@ -166,7 +178,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $nodePathQuery = $this->queryNodePathWithoutRootNode(
             $idNode,
             $localeTransfer->getIdLocaleOrFail(),
-            static::NODE_PATH_NULL_DEPTH
+            static::NODE_PATH_NULL_DEPTH,
         );
 
         return $this->generateNodePathString($nodePathQuery, static::CATEGORY_NODE_PATH_GLUE);
@@ -278,7 +290,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         return $this->getFactory()->createCategoryMapper()->mapCategoryWithRelations(
             $spyCategoryEntity,
-            new CategoryTransfer()
+            new CategoryTransfer(),
         );
     }
 
@@ -362,7 +374,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     ): array {
         $categoryClosureTableQuery = $this->buildCategoryClosureTableQueryByIdCategory(
             $categoryTransfer,
-            $categoryCriteriaTransfer
+            $categoryCriteriaTransfer,
         );
 
         $categoryIds = [];
@@ -391,7 +403,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     ): array {
         $categoryClosureTableQuery = $this->buildCategoryClosureTableQueryByIdCategory(
             $categoryTransfer,
-            $categoryCriteriaTransfer
+            $categoryCriteriaTransfer,
         );
 
         $categoryNodeIds = [];
@@ -412,7 +424,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\NodeTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\NodeTransfer>>
      */
     public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
         CategoryTransfer $categoryTransfer,
@@ -445,7 +457,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         foreach ($categoryClosureTableEntities as $categoryClosureTableEntity) {
             $nodeTransfer = $categoryMapper->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
                 $categoryClosureTableEntity->getDescendantNode(),
-                new NodeTransfer()
+                new NodeTransfer(),
             );
             $categoryNodes[$nodeTransfer->getFkParentCategoryNode()][] = $nodeTransfer;
         }
@@ -589,7 +601,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 SpyCategoryClosureTableTableMap::TABLE_NAME,
                 sprintf('%s = %s', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE),
                 null,
-                Criteria::LOGICAL_OR
+                Criteria::LOGICAL_OR,
             )
             ->leftJoinWithSpyUrl()
             ->leftJoinWithCategory()
@@ -677,7 +689,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryMapper()
             ->mapCategoryNodeEntitiesToNodeCollectionTransferWithCategoryRelation(
                 $categoryNodeQuery->find(),
-                new NodeCollectionTransfer()
+                new NodeCollectionTransfer(),
             );
     }
 
@@ -741,7 +753,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $storeRelationTransfer = new StoreRelationTransfer();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryStore[] $categoryStoreEntities */
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
             ->joinWithSpyCategory()
@@ -761,7 +773,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->createCategoryStoreRelationMapper()
             ->mapCategoryStoreEntitiesToStoreRelationTransfer(
                 $categoryStoreEntities,
-                $storeRelationTransfer
+                $storeRelationTransfer,
             );
     }
 

@@ -14,6 +14,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_CREATE = 'Entity.spy_shopping_list.create';
@@ -23,6 +24,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list entity update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_UPDATE = 'Entity.spy_shopping_list.update';
@@ -32,6 +34,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list entity delete.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_DELETE = 'Entity.spy_shopping_list.delete';
@@ -41,6 +44,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_item entity create.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_ITEM_CREATE = 'Entity.spy_shopping_list_item.create';
@@ -50,6 +54,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_item entity update.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_ITEM_UPDATE = 'Entity.spy_shopping_list_item.update';
@@ -59,6 +64,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_item entity delete.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_ITEM_DELETE = 'Entity.spy_shopping_list_item.delete';
@@ -68,6 +74,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_company_user entity create.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_CREATE = 'Entity.spy_shopping_list_company_user.create';
@@ -77,6 +84,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_company_user entity update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_UPDATE = 'Entity.spy_shopping_list_company_user.update';
@@ -86,6 +94,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_company_user entity delete
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_USER_DELETE = 'Entity.spy_shopping_list_company_user.delete';
@@ -95,6 +104,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_company_business_unit entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_CREATE = 'Entity.spy_shopping_list_company_business_unit.create';
@@ -104,6 +114,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_company_business_unit entity update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_UPDATE = 'Entity.spy_shopping_list_company_business_unit.update';
@@ -113,6 +124,7 @@ interface ShoppingListEvents
      * - This event will be used for spy_shopping_list_company_business_unit entity delete
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_SHOPPING_LIST_COMPANY_BUSINESS_UNIT_DELETE = 'Entity.spy_shopping_list_company_business_unit.delete';
@@ -122,6 +134,7 @@ interface ShoppingListEvents
      * - This event is used for shopping_list unpublishing.
      *
      * @api
+     *
      * @var string
      */
     public const SHOPPING_LIST_UNPUBLISH = 'ShoppingList.shopping_list.unpublish';

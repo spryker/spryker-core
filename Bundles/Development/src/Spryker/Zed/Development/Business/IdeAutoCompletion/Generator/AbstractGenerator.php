@@ -32,7 +32,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     /**
      * @param \Twig\Environment $twig
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface $fileWriter
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(Environment $twig, FileWriterInterface $fileWriter, array $options)
     {
@@ -75,7 +75,7 @@ abstract class AbstractGenerator implements GeneratorInterface
         return str_replace(
             IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
             $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN]
+            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN],
         );
     }
 }

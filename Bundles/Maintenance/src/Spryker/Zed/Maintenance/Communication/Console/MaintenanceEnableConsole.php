@@ -20,6 +20,7 @@ class MaintenanceEnableConsole extends AbstractMaintenanceConsole
      * @var string
      */
     public const COMMAND_NAME = 'maintenance:enable';
+
     /**
      * @var string
      */

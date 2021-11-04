@@ -24,12 +24,12 @@ class MerchantRelationshipHardMaximumThresholdFormMapper extends AbstractMerchan
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         $merchantRelationshipSalesOrderThresholdTransfer
             ->setIdMerchantRelationshipSalesOrderThreshold(
-                $data[MerchantRelationshipHardMaximumThresholdType::FIELD_ID_THRESHOLD] ?? null
+                $data[MerchantRelationshipHardMaximumThresholdType::FIELD_ID_THRESHOLD] ?? null,
             );
 
         $merchantRelationshipSalesOrderThresholdTransfer = $this->setLocalizedMessagesToSalesOrderThresholdTransfer(
             $data,
-            $merchantRelationshipSalesOrderThresholdTransfer
+            $merchantRelationshipSalesOrderThresholdTransfer,
         );
 
         $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()
@@ -41,7 +41,7 @@ class MerchantRelationshipHardMaximumThresholdFormMapper extends AbstractMerchan
             }
 
             $merchantRelationshipSalesOrderThresholdTransfer->setSalesOrderThresholdValue(
-                $formExpanderPlugin->mapFormDataToTransfer($data, $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue())
+                $formExpanderPlugin->mapFormDataToTransfer($data, $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()),
             );
         }
 

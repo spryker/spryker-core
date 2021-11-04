@@ -92,7 +92,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
                     $this->touchKeyTableName,
                     $key,
                     $this->touchKeyIdColumnName,
-                    $idKey
+                    $idKey,
                 );
             } else {
                 /** @var \Orm\Zed\Touch\Persistence\SpyTouchStorage|\Orm\Zed\Touch\Persistence\SpyTouchSearch $entity */
@@ -132,7 +132,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
                 ->addQuery(
                     $this->touchKeyTableName,
                     static::FK_TOUCH,
-                    $idsToDelete
+                    $idsToDelete,
                 )
                 ->getRawSqlString();
             $this->bulkTouchDeleteQuery->flushQueries();

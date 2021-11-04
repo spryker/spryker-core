@@ -44,6 +44,7 @@ class Customer implements CustomerInterface
      * @var int
      */
     protected const BCRYPT_FACTOR = 12;
+
     /**
      * @var string
      */
@@ -53,10 +54,12 @@ class Customer implements CustomerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
+
     /**
      * @var string
      */
@@ -591,21 +594,21 @@ class Customer implements CustomerInterface
         if (!$this->emailValidator->isFormatValid($customerEntity->getEmail())) {
             $customerResponseTransfer = $this->addErrorToCustomerResponseTransfer(
                 $customerResponseTransfer,
-                Messages::CUSTOMER_EMAIL_FORMAT_INVALID
+                Messages::CUSTOMER_EMAIL_FORMAT_INVALID,
             );
         }
 
         if (!$this->emailValidator->isEmailAvailableForCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())) {
             $customerResponseTransfer = $this->addErrorToCustomerResponseTransfer(
                 $customerResponseTransfer,
-                Messages::CUSTOMER_EMAIL_ALREADY_USED
+                Messages::CUSTOMER_EMAIL_ALREADY_USED,
             );
         }
 
         if (!$this->emailValidator->isEmailLengthValid($customerEntity->getEmail())) {
             $customerResponseTransfer = $this->addErrorToCustomerResponseTransfer(
                 $customerResponseTransfer,
-                Messages::CUSTOMER_EMAIL_TOO_LONG
+                Messages::CUSTOMER_EMAIL_TOO_LONG,
             );
         }
 
@@ -774,7 +777,7 @@ class Customer implements CustomerInterface
             'Customer not found by either ID `%s`, email `%s` or restore password key `%s`.',
             $customerTransfer->getIdCustomer(),
             $customerTransfer->getEmail(),
-            $customerTransfer->getRestorePasswordKey()
+            $customerTransfer->getRestorePasswordKey(),
         ));
     }
 
@@ -993,7 +996,7 @@ class Customer implements CustomerInterface
     {
         $customerResponseTransfer->setIsSuccess(false);
         $customerResponseTransfer->addError(
-            $this->createErrorCustomerResponseTransfer($message)
+            $this->createErrorCustomerResponseTransfer($message),
         );
 
         return $customerResponseTransfer;
@@ -1021,7 +1024,7 @@ class Customer implements CustomerInterface
                 "%d out of %d emails sent \r%s",
                 ++$index,
                 $customersCount,
-                $index === $customersCount ? PHP_EOL : ''
+                $index === $customersCount ? PHP_EOL : '',
             ));
         }
     }

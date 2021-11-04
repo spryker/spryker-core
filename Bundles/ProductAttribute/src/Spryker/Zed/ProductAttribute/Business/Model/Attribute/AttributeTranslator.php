@@ -102,7 +102,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
                 $attributeGlossaryKey,
                 $localeTransfer,
                 $keyTranslation,
-                true
+                true,
             );
 
             return;
@@ -112,7 +112,7 @@ class AttributeTranslator implements AttributeTranslatorInterface
             $attributeGlossaryKey,
             $localeTransfer,
             $keyTranslation,
-            true
+            true,
         );
     }
 

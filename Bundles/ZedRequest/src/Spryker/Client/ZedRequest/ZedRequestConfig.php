@@ -70,7 +70,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getClientConfiguration()
     {
@@ -90,7 +90,7 @@ class ZedRequestConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getTokenOptions()
     {

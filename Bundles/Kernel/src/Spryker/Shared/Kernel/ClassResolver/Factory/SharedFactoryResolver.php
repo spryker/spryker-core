@@ -54,7 +54,7 @@ class SharedFactoryResolver extends AbstractClassResolver
         return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
     }
 }

@@ -102,7 +102,7 @@ class CustomerRestorePasswordMailTypePlugin extends AbstractPlugin implements Ma
 
         $mailBuilder->addRecipient(
             $customerTransfer->getEmail(),
-            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()
+            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),
         );
 
         return $this;

@@ -84,7 +84,7 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
         OrderTransfer $orderTransfer
     ): OrderInvoiceTransfer {
         return $orderInvoiceTransfer->setRenderedInvoice(
-            $this->orderInvoiceRenderer->renderOrderInvoice($orderInvoiceTransfer, $orderTransfer)
+            $this->orderInvoiceRenderer->renderOrderInvoice($orderInvoiceTransfer, $orderTransfer),
         );
     }
 

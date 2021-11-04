@@ -81,7 +81,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
                     $composerName,
                     $this->getType(),
                     $this->isOptional($filePath, $composerName),
-                    $this->isTestFile($filePath)
+                    $this->isTestFile($filePath),
                 );
             }
         }
@@ -120,7 +120,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
-     * @param array $useStatements
+     * @param array<string> $useStatements
      * @param string $module
      *
      * @return array
@@ -152,7 +152,7 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
     }
 
     /**
-     * @param array $useStatementFragments
+     * @param array<int, string> $useStatementFragments
      *
      * @return bool
      */

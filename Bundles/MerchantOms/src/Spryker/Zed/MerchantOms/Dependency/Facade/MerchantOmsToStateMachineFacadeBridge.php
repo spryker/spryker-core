@@ -38,10 +38,8 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     }
 
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
-     *
      * @param string $eventName
-     * @param array $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return int
      */
@@ -74,7 +72,7 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     /**
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {

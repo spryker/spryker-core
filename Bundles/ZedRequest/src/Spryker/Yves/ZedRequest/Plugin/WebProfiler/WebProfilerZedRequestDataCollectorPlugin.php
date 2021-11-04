@@ -21,6 +21,7 @@ class WebProfilerZedRequestDataCollectorPlugin extends AbstractPlugin implements
      * @var string
      */
     protected const DATA_COLLECTOR_NAME = 'zed_request';
+
     /**
      * @var string
      */

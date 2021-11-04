@@ -61,7 +61,7 @@ class CmsBlockCollectorToCollectorBridge implements CmsBlockCollectorToCollector
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

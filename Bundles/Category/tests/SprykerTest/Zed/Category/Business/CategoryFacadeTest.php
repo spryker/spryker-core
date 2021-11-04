@@ -54,10 +54,12 @@ class CategoryFacadeTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE = 'en_US';
+
     /**
      * @var string
      */
     protected const TEST_STORE_DE = 'DE';
+
     /**
      * @var string
      */
@@ -77,7 +79,7 @@ class CategoryFacadeTest extends Unit
 
         $this->tester->setDependency(
             CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
-            new MainChildrenPropagationCategoryStoreAssignerPlugin()
+            new MainChildrenPropagationCategoryStoreAssignerPlugin(),
         );
     }
 
@@ -256,7 +258,7 @@ class CategoryFacadeTest extends Unit
         $this->assertCount(1, $resultCategoryTransfer->getLocalizedAttributes());
         $this->assertEquals(
             $localeTransfer1->getLocaleName(),
-            $resultCategoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName()
+            $resultCategoryTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName(),
         );
     }
 
@@ -493,12 +495,12 @@ class CategoryFacadeTest extends Unit
         $this->assertSame(
             $categoryTransfer1->getCategoryNode()->getIdCategoryNode(),
             $nodeCollectionTransfer->getNodes()->offsetGet(0)->getIdCategoryNode(),
-            'Returned category nodes id do not equal expected value.'
+            'Returned category nodes id do not equal expected value.',
         );
         $this->assertSame(
             $categoryTransfer2->getCategoryNode()->getIdCategoryNode(),
             $nodeCollectionTransfer->getNodes()->offsetGet(1)->getIdCategoryNode(),
-            'Returned category nodes id do not equal expected value.'
+            'Returned category nodes id do not equal expected value.',
         );
     }
 
@@ -522,7 +524,7 @@ class CategoryFacadeTest extends Unit
         $nodeCollectionTransfer = $this->getFacade()->getCategoryNodes(
             (new CategoryNodeCriteriaTransfer())
                 ->setCategoryNodeIds($nodeTransferIds)
-                ->setWithRelations(true)
+                ->setWithRelations(true),
         );
 
         // Assert
@@ -532,22 +534,22 @@ class CategoryFacadeTest extends Unit
         $this->assertInstanceOf(
             NodeTransfer::class,
             $resultNodeTransfer1,
-            'The class of returned category node does not equal to an expected value.'
+            'The class of returned category node does not equal to an expected value.',
         );
         $this->assertTrue(
             in_array($resultNodeTransfer1->getIdCategoryNode(), $nodeTransferIds, true),
-            'The returned category node id does not present in the list of expected category node ids.'
+            'The returned category node id does not present in the list of expected category node ids.',
         );
 
         $resultNodeTransfer2 = $nodeCollectionTransfer->getNodes()->offsetGet(1);
         $this->assertInstanceOf(
             NodeTransfer::class,
             $resultNodeTransfer2,
-            'The class of returned category node does not equal to an expected value.'
+            'The class of returned category node does not equal to an expected value.',
         );
         $this->assertTrue(
             in_array($resultNodeTransfer2->getIdCategoryNode(), $nodeTransferIds, true),
-            'The returned category node id does not present in the list of expected category node ids.'
+            'The returned category node id does not present in the list of expected category node ids.',
         );
     }
 
@@ -585,11 +587,11 @@ class CategoryFacadeTest extends Unit
 
         $this->assertEmpty(
             array_diff([$deStoreTransfer->getIdStore(), $atStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
-            'Category store relations are different from expecting value.'
+            'Category store relations are different from expecting value.',
         );
         $this->assertEmpty(
             array_diff([$atStoreTransfer->getIdStore()], $childCategoryStoreRelationStoreIds),
-            'Category store relations are different from expecting value.'
+            'Category store relations are different from expecting value.',
         );
     }
 
@@ -628,7 +630,7 @@ class CategoryFacadeTest extends Unit
 
         $this->assertEmpty(
             array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
-            'Category store relations are different from expecting value.'
+            'Category store relations are different from expecting value.',
         );
     }
 
@@ -667,10 +669,10 @@ class CategoryFacadeTest extends Unit
 
         $this->assertEmpty(
             array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
-            'Category store relations are different from expecting value.'
+            'Category store relations are different from expecting value.',
         );$this->assertEmpty(
             array_diff([$deStoreTransfer->getIdStore()], $parentCategoryStoreRelationStoreIds),
-            'Category store relations are different from expecting value.'
+            'Category store relations are different from expecting value.',
         );
     }
 
@@ -682,7 +684,7 @@ class CategoryFacadeTest extends Unit
         // Arrange
         $this->tester->setDependency(
             CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
-            $this->getCategoryStoreAssignerPluginMock()
+            $this->getCategoryStoreAssignerPluginMock(),
         );
 
         // Act

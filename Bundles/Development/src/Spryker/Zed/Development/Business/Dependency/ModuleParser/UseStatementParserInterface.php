@@ -14,7 +14,7 @@ interface UseStatementParserInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
-     * @return array
+     * @return array<string>
      */
     public function getUseStatements(SplFileInfo $fileInfo): array;
 }

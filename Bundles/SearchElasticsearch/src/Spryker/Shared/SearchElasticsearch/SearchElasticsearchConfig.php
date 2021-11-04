@@ -17,30 +17,31 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const FACET_TYPE_ENUMERATION = 'enumeration';
+
     /**
      * @var string
      */
     public const FACET_TYPE_RANGE = 'range';
+
     /**
      * @var string
      */
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
+
     /**
      * @var string
      */
     public const FACET_TYPE_CATEGORY = 'category';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const SUPPORTED_SOURCE_IDENTIFIERS = [];
 
     /**
      * @api
      *
-     * @phpstan-return array<mixed>
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getClientConfig(): array
     {

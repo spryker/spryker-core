@@ -16,7 +16,7 @@ class CompanyUserInvitationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCompanyUserInvitationStatusKeys(): array
     {

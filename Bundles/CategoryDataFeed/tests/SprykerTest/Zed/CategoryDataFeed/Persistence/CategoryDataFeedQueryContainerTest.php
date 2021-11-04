@@ -78,7 +78,7 @@ class CategoryDataFeedQueryContainerTest extends Unit
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getProductJoinedTables()
+            $this->getProductJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);

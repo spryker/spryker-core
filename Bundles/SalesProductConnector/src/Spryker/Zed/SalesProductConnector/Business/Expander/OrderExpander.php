@@ -53,7 +53,7 @@ class OrderExpander implements OrderExpanderInterface
         foreach ($orderTransfers as $orderTransfer) {
             $itemTransfers = array_merge(
                 $itemTransfers,
-                $orderTransfer->getItems()->getArrayCopy()
+                $orderTransfer->getItems()->getArrayCopy(),
             );
         }
 
@@ -63,7 +63,7 @@ class OrderExpander implements OrderExpanderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function groupItemTransfersByIdSalesOrder(array $itemTransfers): array
     {
@@ -80,7 +80,7 @@ class OrderExpander implements OrderExpanderInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
-     * @param array<\Generated\Shared\Transfer\ItemTransfer[]> $groupedItemTransfers
+     * @param array<array<\Generated\Shared\Transfer\ItemTransfer>> $groupedItemTransfers
      *
      * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
@@ -90,7 +90,7 @@ class OrderExpander implements OrderExpanderInterface
             $orderTransfer->requireIdSalesOrder();
 
             $orderTransfer->getItems()->exchangeArray(
-                $groupedItemTransfers[$orderTransfer->getIdSalesOrder()]
+                $groupedItemTransfers[$orderTransfer->getIdSalesOrder()],
             );
         }
 

@@ -87,7 +87,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->createUtilReservation(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -100,7 +100,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new LockedOrderStateMachine(
             $this->createOrderStateMachine($logContext),
-            $this->createTriggerLocker()
+            $this->createTriggerLocker(),
         );
     }
 
@@ -115,7 +115,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessTransition(),
             $this->createProcessProcess(),
             $this->getConfig()->getProcessDefinitionLocation(),
-            $this->getConfig()->getSubProcessPrefixDelimiter()
+            $this->getConfig()->getSubProcessPrefixDelimiter(),
         );
     }
 
@@ -129,7 +129,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Finder(
             $this->getQueryContainer(),
             $this->createOrderStateMachineBuilder(),
-            $config->getActiveProcesses()
+            $config->getActiveProcesses(),
         );
     }
 
@@ -141,7 +141,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new ManualEventReader(
             $this->createOrderItemManualEventReader(),
             $this->getSalesFacade(),
-            $this->getOmsManualEventGrouperPlugins()
+            $this->getOmsManualEventGrouperPlugins(),
         );
     }
 
@@ -153,7 +153,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new Timeout(
             $this->getQueryContainer(),
             $this->createTimeoutProcessorCollection(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -219,7 +219,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
             $this->getUtilTextService(),
-            $this->createTimeoutProcessorCollection()
+            $this->createTimeoutProcessorCollection(),
         );
     }
 
@@ -240,7 +240,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig(),
             $this->getUtilSanitizeService(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -251,7 +251,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new TriggerLocker(
             $this->getQueryContainer(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -267,7 +267,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getOmsReservationWriterStrategyPlugins(),
-            $this->getReservationHandlerTerminationAwareStrategyPlugins()
+            $this->getReservationHandlerTerminationAwareStrategyPlugins(),
         );
     }
 
@@ -282,7 +282,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createActiveProcessFetcher(),
             $this->getOmsReservationReaderStrategyPlugins(),
             $this->getReservationAggregationStrategyPlugins(),
-            $this->getOmsReservationAggregationPlugins()
+            $this->getOmsReservationAggregationPlugins(),
         );
     }
 
@@ -358,7 +358,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         $mailHandler = new MailHandler(
             $this->getSalesFacade(),
             $this->getMailFacade(),
-            $this->getOmsOrderMailExpanderPlugins()
+            $this->getOmsOrderMailExpanderPlugins(),
         );
 
         return $mailHandler;
@@ -371,7 +371,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new ActiveProcessFetcher(
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
-            $this->createOrderStateMachineBuilder()
+            $this->createOrderStateMachineBuilder(),
         );
     }
 
@@ -390,7 +390,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderExpander(
             $this->createFlagChecker(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -409,7 +409,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderAggregatedItemStateExpander(
             $this->createOrderItemStateExpander(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -420,7 +420,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new StateMachineReader(
             $this->getRepository(),
-            $this->createOrderStateMachineBuilder()
+            $this->createOrderStateMachineBuilder(),
         );
     }
 
@@ -432,7 +432,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new OrderItemStateExpander(
             $this->createOrderStateMachineFinder(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -466,7 +466,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderStateMachineFlagReader()
     {
         return new OrderStateMachineFlagReader(
-            $this->createOrderStateMachineBuilder()
+            $this->createOrderStateMachineBuilder(),
         );
     }
 
@@ -476,7 +476,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemManualEventReader(): OrderItemManualEventReaderInterface
     {
         return new OrderItemManualEventReader(
-            $this->createOrderStateMachineBuilder()
+            $this->createOrderStateMachineBuilder(),
         );
     }
 

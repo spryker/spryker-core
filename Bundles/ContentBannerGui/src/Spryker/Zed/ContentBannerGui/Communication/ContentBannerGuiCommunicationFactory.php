@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint
      */
@@ -30,7 +30,7 @@ class ContentBannerGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentBannerConstraint(
             $this->getContentBannerFacade(),
             $this->getUtilEncoding(),
-            $options
+            $options,
         );
     }
 

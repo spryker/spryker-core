@@ -20,6 +20,7 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_PRODUCT_OFFER_STOCK = 'FACADE_PRODUCT_OFFER_STOCK';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::FACADE_PRODUCT_OFFER_STOCK, function (Container $container) {
             return new ProductOfferStockGuiToProductOfferStockFacadeBridge(
-                $container->getLocator()->productOfferStock()->facade()
+                $container->getLocator()->productOfferStock()->facade(),
             );
         });
 

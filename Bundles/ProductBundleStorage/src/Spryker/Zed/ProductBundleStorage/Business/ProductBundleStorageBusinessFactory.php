@@ -29,7 +29,7 @@ class ProductBundleStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getProductBundleFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

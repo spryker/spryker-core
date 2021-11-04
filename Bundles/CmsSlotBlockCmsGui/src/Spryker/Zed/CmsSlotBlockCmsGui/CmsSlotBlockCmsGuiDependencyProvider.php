@@ -20,14 +20,17 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -71,7 +74,7 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CmsSlotBlockCmsGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 
@@ -87,7 +90,7 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsSlotBlockCmsGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -103,7 +106,7 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsSlotBlockCmsGuiToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

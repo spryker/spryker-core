@@ -45,12 +45,12 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
 
         $this->saveContentLocalizedBannerTerms(
             $dataSet[ContentBannerDataSetInterface::CONTENT_LOCALIZED_BANNER_TERMS],
-            $contentBannerEntity->getIdContent()
+            $contentBannerEntity->getIdContent(),
         );
 
         $this->addPublishEvents(
             ContentEvents::CONTENT_PUBLISH,
-            $contentBannerEntity->getPrimaryKey()
+            $contentBannerEntity->getPrimaryKey(),
         );
     }
 
@@ -97,7 +97,7 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
             $localizedContentBannerEntity->setParameters(
-                $this->getEncodedParameters($localizedBannerTerm)
+                $this->getEncodedParameters($localizedBannerTerm),
             );
 
             $localizedContentBannerEntity->save();

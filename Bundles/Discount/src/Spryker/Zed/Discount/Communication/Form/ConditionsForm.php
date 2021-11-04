@@ -31,6 +31,7 @@ class ConditionsForm extends AbstractType
      * @var string
      */
     public const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
+
     /**
      * @var string
      */
@@ -71,7 +72,7 @@ class ConditionsForm extends AbstractType
                     '/discount/query-string/rule-fields',
                     [
                         'type' => MetaProviderFactory::TYPE_DECISION_RULE,
-                    ]
+                    ],
                 )->build(),
             ],
         ]);

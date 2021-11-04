@@ -27,8 +27,8 @@ class AclEntityMetadataConfigWithWrongEntityExpanderPluginMock implements AclEnt
                 ->addAclEntityMetadata(
                     'test',
                     (new AclEntityMetadataTransfer())
-                        ->setEntityName('test')
-                )
+                        ->setEntityName('test'),
+                ),
         );
     }
 }

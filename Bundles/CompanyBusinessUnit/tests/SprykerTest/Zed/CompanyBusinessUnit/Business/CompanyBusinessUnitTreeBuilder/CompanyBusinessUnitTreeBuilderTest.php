@@ -44,7 +44,7 @@ class CompanyBusinessUnitTreeBuilderTest extends Test
         // Arrange
         $companyBusinessUnitTreeBuilder = new ReflectionMethod(
             '\Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder',
-            'buildTree'
+            'buildTree',
         );
         $companyBusinessUnitTreeBuilder->setAccessible(true);
         $companyBusinessUnitRepositoryMock = $this->createCompanyBusinessUnitRepositoryMock();
@@ -54,7 +54,7 @@ class CompanyBusinessUnitTreeBuilderTest extends Test
             new CompanyBusinessUnitTreeBuilder($companyBusinessUnitRepositoryMock),
             $companyBusinessUnits,
             null,
-            0
+            0,
         );
 
         // Assert

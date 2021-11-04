@@ -40,9 +40,9 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
                     sprintf(
                         'Invalid argument for hydration: expected %s, but %s found',
                         PropertyValueInterface::class,
-                        get_class($element)
+                        get_class($element),
                     ),
-                    E_USER_WARNING
+                    E_USER_WARNING,
                 );
 
                 continue;

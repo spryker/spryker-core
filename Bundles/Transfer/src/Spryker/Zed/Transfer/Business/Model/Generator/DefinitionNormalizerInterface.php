@@ -10,9 +10,9 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 interface DefinitionNormalizerInterface
 {
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<array>
      */
     public function normalizeDefinitions(array $transferDefinitions);
 }

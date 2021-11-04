@@ -20,6 +20,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
     /**
      * @var string
      */

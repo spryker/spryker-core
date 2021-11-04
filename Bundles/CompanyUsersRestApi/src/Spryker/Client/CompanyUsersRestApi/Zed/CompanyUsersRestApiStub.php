@@ -37,7 +37,7 @@ class CompanyUsersRestApiStub implements CompanyUsersRestApiStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
         $companyUserCollectionTransfer = $this->zedRequestClient->call(
             '/company-users-rest-api/gateway/get-company-user-collection',
-            $companyUserCriteriaFilterTransfer
+            $companyUserCriteriaFilterTransfer,
         );
 
         return $companyUserCollectionTransfer;

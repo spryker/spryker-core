@@ -39,7 +39,7 @@ class WishlistMerchantProductPostMoveToCartCollectionExpanderPlugin extends Abst
             ->expandWishlistMoveToCartRequestCollectionTransfer(
                 $wishlistMoveToCartRequestCollectionTransfer,
                 $quoteTransfer,
-                $wishlistMoveToCartRequestCollectionDiffTransfer
+                $wishlistMoveToCartRequestCollectionDiffTransfer,
             );
     }
 }

@@ -52,12 +52,12 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
         foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $integerRequestParameterName) {
             $requestParameterValue = $this->getArrayElementByDotNotation(
                 $integerRequestParameterName,
-                $requestParameters
+                $requestParameters,
             );
 
             if (!$this->isValidInteger($requestParameterValue)) {
                 $restErrorCollectionTransfer->addRestError(
-                    $this->createErrorMessageTransfer($integerRequestParameterName)
+                    $this->createErrorMessageTransfer($integerRequestParameterName),
                 );
             }
         }

@@ -37,7 +37,7 @@ class ProductOfferCheckoutPreConditionPlugin extends AbstractPlugin implements C
     ): bool {
         return $this->getFacade()->isQuoteReadyForCheckout(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
     }
 }

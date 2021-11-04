@@ -209,7 +209,7 @@ class ResourceRouteLoaderTest extends Unit
             ->willReturn(
                 (new RestVersionTransfer())
                     ->setMajor($major)
-                    ->setMinor($minor)
+                    ->setMinor($minor),
             );
 
         return $versionResolverMock;
@@ -245,7 +245,7 @@ class ResourceRouteLoaderTest extends Unit
                     $resourceRouteCollection->addGet('get', true, [1 => 1]);
 
                     return $resourceRouteCollection;
-                }
+                },
             );
     }
 }

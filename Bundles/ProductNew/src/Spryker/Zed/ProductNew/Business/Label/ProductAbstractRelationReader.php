@@ -60,8 +60,8 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @param array<int[]> $relationsToDeAssign
-     * @param array<int[]> $relationsToAssign
+     * @param array<array<int>> $relationsToDeAssign
+     * @param array<array<int>> $relationsToAssign
      *
      * @return array<int>
      */
@@ -85,7 +85,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         if (!$productLabelNewEntity) {
             throw new ProductLabelNewNotFoundException(sprintf(
                 'Product Label "%1$s" doesn\'t exists. You can fix this problem by persisting a new Product Label entity into your database with "%1$s" name.',
-                $labelNewName
+                $labelNewName,
             ));
         }
 

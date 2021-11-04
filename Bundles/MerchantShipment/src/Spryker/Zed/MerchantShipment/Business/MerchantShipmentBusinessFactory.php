@@ -28,7 +28,7 @@ class MerchantShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantShipmentReader(
             $this->getRepository(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 

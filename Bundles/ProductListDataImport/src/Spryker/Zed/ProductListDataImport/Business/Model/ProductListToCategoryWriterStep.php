@@ -44,7 +44,7 @@ class ProductListToCategoryWriterStep extends PublishAwareStep implements DataIm
 
         $this->addPublishEvents(
             ProductListEvents::PRODUCT_LIST_CATEGORY_PUBLISH,
-            $productListCategoryEntity->getFkCategory()
+            $productListCategoryEntity->getFkCategory(),
         );
     }
 }

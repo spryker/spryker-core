@@ -40,7 +40,7 @@ class ProductListCategoryProductConcretePageSearchPublishListener extends Abstra
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductListCategoryTableMap::COL_FK_CATEGORY);
 
         $this->getFactory()->getProductPageSearchFacade()->publishProductConcretes(
-            $this->getFactory()->getProductCategoryFacade()->getProductConcreteIdsByCategoryIds($productListCategoryIds)
+            $this->getFactory()->getProductCategoryFacade()->getProductConcreteIdsByCategoryIds($productListCategoryIds),
         );
     }
 }

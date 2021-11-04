@@ -47,6 +47,7 @@ class CodeTester
      * @var int
      */
     protected const CODE_SUCCESS = 0;
+
     /**
      * @var int
      */
@@ -87,7 +88,7 @@ class CodeTester
      * If module is given, it will run over this (core) module. Otherwise runs over project level.
      *
      * @param string|null $moduleName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \RuntimeException
      *
@@ -126,7 +127,7 @@ class CodeTester
      * If module is given, it will run over this (core) module. Otherwise runs over project level.
      *
      * @param string|null $moduleName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \RuntimeException
      *
@@ -214,7 +215,7 @@ class CodeTester
 
     /**
      * @param string|null $path
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -233,7 +234,7 @@ class CodeTester
             $commandLine,
             $this->argumentBuilder
                 ->build($options)
-                ->getArguments()
+                ->getArguments(),
         );
 
         if ($options[static::OPTION_DRY_RUN]) {
@@ -250,7 +251,7 @@ class CodeTester
 
     /**
      * @param string|null $path
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -269,7 +270,7 @@ class CodeTester
             $commandLine,
             $this->argumentBuilder
                 ->build($options)
-                ->getArguments()
+                ->getArguments(),
         );
 
         $process = new Process($commandLine, $this->config->getPathToRoot(), null, null, $this->config->getProcessTimeout());
@@ -281,7 +282,7 @@ class CodeTester
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

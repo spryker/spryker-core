@@ -79,7 +79,7 @@ class ConfigurableBundleTemplateCreator implements ConfigurableBundleTemplateCre
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
         $configurableBundleTemplateTransfer->setName(
-            $this->configurableBundleNameGenerator->generateTemplateName($configurableBundleTemplateTransfer)
+            $this->configurableBundleNameGenerator->generateTemplateName($configurableBundleTemplateTransfer),
         );
 
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);

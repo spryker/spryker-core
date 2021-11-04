@@ -41,7 +41,7 @@ class SummaryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class SummaryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -66,7 +66,7 @@ class SummaryType extends AbstractType
                 'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_SUBMIT_ORDER,
                 'label' => 'Submit order',
                 'required' => true,
-            ]
+            ],
         );
 
         return $this;

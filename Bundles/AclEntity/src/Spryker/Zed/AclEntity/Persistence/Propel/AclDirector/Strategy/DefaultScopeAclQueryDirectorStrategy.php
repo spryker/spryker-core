@@ -96,7 +96,7 @@ class DefaultScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     public function isCreatable(ActiveRecordInterface $entity): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            get_class($entity)
+            get_class($entity),
         );
         if ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_CREATE) {
             return true;
@@ -113,7 +113,7 @@ class DefaultScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     public function isUpdatable(ActiveRecordInterface $entity): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            get_class($entity)
+            get_class($entity),
         );
         if ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_UPDATE) {
             return true;
@@ -130,7 +130,7 @@ class DefaultScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     public function isDeletable(ActiveRecordInterface $entity): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            get_class($entity)
+            get_class($entity),
         );
         if ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_DELETE) {
             return true;
@@ -149,7 +149,7 @@ class DefaultScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     public function isReadableQuery(ModelCriteria $query): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
 
         return ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_READ) > 0;
@@ -165,7 +165,7 @@ class DefaultScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     public function isUpdatableQuery(ModelCriteria $query): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
 
         return ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_UPDATE) > 0;
@@ -181,7 +181,7 @@ class DefaultScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     public function isDeletableQuery(ModelCriteria $query): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            $query->getModelName()
+            $query->getModelName(),
         );
 
         return ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_DELETE) > 0;

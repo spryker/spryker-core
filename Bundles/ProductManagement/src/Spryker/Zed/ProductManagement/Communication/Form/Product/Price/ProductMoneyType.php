@@ -44,7 +44,7 @@ class ProductMoneyType extends AbstractType
             $this->getFactory()->getMoneyFormTypePlugin()->getType(),
             [
                 'data_class' => MoneyValueTransfer::class,
-            ]
+            ],
         );
     }
 
@@ -63,7 +63,7 @@ class ProductMoneyType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

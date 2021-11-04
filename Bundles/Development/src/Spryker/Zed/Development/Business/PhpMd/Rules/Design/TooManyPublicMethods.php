@@ -18,6 +18,7 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
      * @var string
      */
     public const NUMBER_OF_PUBLIC_METHODS = 'npm';
+
     /**
      * @var string
      */

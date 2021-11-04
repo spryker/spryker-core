@@ -54,7 +54,7 @@ class ContentProductDataImportPluginTest extends Unit
     public function testImportProductAbstractListsData(): void
     {
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_abstract_list.csv'
+            'import/content_product_abstract_list.csv',
         );
 
         // Act
@@ -74,7 +74,7 @@ class ContentProductDataImportPluginTest extends Unit
     public function testImportProductAbstractListsDataWrongSkus(): void
     {
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_abstract_list_wrong_skus.csv'
+            'import/content_product_abstract_list_wrong_skus.csv',
         )->setThrowException(true);
 
         // Assert
@@ -102,7 +102,7 @@ class ContentProductDataImportPluginTest extends Unit
     public function testUpdateLocale(): void
     {
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_abstract_list(update).csv'
+            'import/content_product_abstract_list(update).csv',
         );
 
         // Act
@@ -122,7 +122,7 @@ class ContentProductDataImportPluginTest extends Unit
     public function testUpdateLocaleFromDefault(): void
     {
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_abstract_list(update_locale_from_default).csv'
+            'import/content_product_abstract_list(update_locale_from_default).csv',
         );
 
         // Act
@@ -142,7 +142,7 @@ class ContentProductDataImportPluginTest extends Unit
     public function testUpdateLocaleToDefault(): void
     {
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
-            'import/content_product_abstract_list(update_locale_to_default).csv'
+            'import/content_product_abstract_list(update_locale_to_default).csv',
         );
 
         // Act

@@ -21,6 +21,7 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */

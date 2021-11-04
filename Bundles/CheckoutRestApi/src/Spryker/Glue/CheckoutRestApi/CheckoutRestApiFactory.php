@@ -49,7 +49,7 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->createCheckoutDataMapper(),
             $this->createCheckoutRequestAttributesExpander(),
             $this->createCheckoutRequestValidator(),
-            $this->createRestCheckoutErrorMapper()
+            $this->createRestCheckoutErrorMapper(),
         );
     }
 
@@ -60,7 +60,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new CheckoutDataMapper(
             $this->getCheckoutDataResponseMappers(),
-            $this->getCheckoutDataResponseMapperPlugins()
+            $this->getCheckoutDataResponseMapperPlugins(),
         );
     }
 
@@ -75,7 +75,7 @@ class CheckoutRestApiFactory extends AbstractFactory
             $this->createCheckoutRequestAttributesExpander(),
             $this->createCheckoutRequestValidator(),
             $this->createRestCheckoutErrorMapper(),
-            $this->createCheckoutResponseMapper()
+            $this->createCheckoutResponseMapper(),
         );
     }
 
@@ -87,7 +87,7 @@ class CheckoutRestApiFactory extends AbstractFactory
         return new CheckoutRequestAttributesExpander(
             $this->createCustomerMapper(),
             $this->getConfig(),
-            $this->getCheckoutRequestExpanderPlugins()
+            $this->getCheckoutRequestExpanderPlugins(),
         );
     }
 
@@ -105,7 +105,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     public function createCheckoutResponseMapper(): CheckoutResponseMapperInterface
     {
         return new CheckoutResponseMapper(
-            $this->getCheckoutResponseMapperPlugins()
+            $this->getCheckoutResponseMapperPlugins(),
         );
     }
 
@@ -117,7 +117,7 @@ class CheckoutRestApiFactory extends AbstractFactory
         return new CheckoutRequestValidator(
             $this->getCheckoutRequestAttributesValidatorPlugins(),
             $this->getCheckoutRequestValidatorPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -136,7 +136,7 @@ class CheckoutRestApiFactory extends AbstractFactory
     {
         return new RestCheckoutErrorMapper(
             $this->getConfig(),
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 

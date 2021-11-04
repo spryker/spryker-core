@@ -68,7 +68,7 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
         $productLabelDictionaryStorageEntity = $this->getFactory()->createProductLabelDictionaryStorageMapper()
             ->mapProductLabelDictionaryStorageTransferToProductLabelDictionaryStorageEntity(
                 $productLabelDictionaryStorageTransfer,
-                new SpyProductLabelDictionaryStorage()
+                new SpyProductLabelDictionaryStorage(),
             );
 
         $productLabelDictionaryStorageEntity->save();
@@ -89,7 +89,7 @@ class ProductLabelStorageEntityManager extends AbstractEntityManager implements 
         $productLabelDictionaryStorageEntity = $this->getFactory()->createProductLabelDictionaryStorageMapper()
             ->mapProductLabelDictionaryStorageTransferToProductLabelDictionaryStorageEntity(
                 $productLabelDictionaryStorageTransfer,
-                $productLabelDictionaryStorageEntity ?? new SpyProductLabelDictionaryStorage()
+                $productLabelDictionaryStorageEntity ?? new SpyProductLabelDictionaryStorage(),
             );
 
         $productLabelDictionaryStorageEntity->save();

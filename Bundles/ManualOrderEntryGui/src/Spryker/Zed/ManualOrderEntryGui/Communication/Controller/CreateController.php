@@ -28,6 +28,7 @@ class CreateController extends AbstractController
      * @var string
      */
     public const PARAM_TYPE = 'type';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class CreateController extends AbstractController
      * @var string
      */
     public const PREVIOUS_STEP_NAME = 'previous-step';
+
     /**
      * @var string
      */
@@ -46,10 +48,12 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+
     /**
      * @var string
      */
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
+
     /**
      * @var string
      */
@@ -142,7 +146,7 @@ class CreateController extends AbstractController
                     $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_CUSTOMER_CREATED);
                     $redirectUrl = $this->createRedirectUrlAfterUserCreation(
                         $customerResponseTransfer->getCustomerTransfer(),
-                        $request
+                        $request,
                     );
 
                     return $this->redirectResponse($redirectUrl);
@@ -223,7 +227,7 @@ class CreateController extends AbstractController
 
         return Url::generate(
             '/manual-order-entry-gui/create',
-            $params
+            $params,
         )
             ->build();
     }
@@ -244,7 +248,7 @@ class CreateController extends AbstractController
 
         return Url::generate(
             '/sales/detail',
-            [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()]
+            [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()],
         )->build();
     }
 

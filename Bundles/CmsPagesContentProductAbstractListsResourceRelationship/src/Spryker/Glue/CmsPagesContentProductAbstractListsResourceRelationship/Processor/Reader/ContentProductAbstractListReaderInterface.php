@@ -12,12 +12,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ContentProductAbstractListReaderInterface
 {
     /**
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
-     *
      * @param array<string> $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getContentProductAbstractListsResources(array $cmsPageUuids, RestRequestInterface $restRequest): array;
 }

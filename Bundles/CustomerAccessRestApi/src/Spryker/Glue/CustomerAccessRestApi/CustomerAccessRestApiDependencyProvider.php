@@ -43,7 +43,7 @@ class CustomerAccessRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_CUSTOMER_ACCESS_STORAGE, function (Container $container) {
             return new CustomerAccessRestApiToCustomerAccessStorageClientBridge(
-                $container->getLocator()->customerAccessStorage()->client()
+                $container->getLocator()->customerAccessStorage()->client(),
             );
         });
 

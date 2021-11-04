@@ -44,7 +44,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getPaymentMethodFilterPlugins(),
             $this->getConfig(),
             $this->getStoreFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -79,7 +79,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new PaymentMethodStoreRelationUpdater(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -90,7 +90,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new PaymentMethodUpdater(
             $this->getEntityManager(),
-            $this->createPaymentMethodStoreRelationUpdater()
+            $this->createPaymentMethodStoreRelationUpdater(),
         );
     }
 
@@ -157,7 +157,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesPaymentHydrator(
             $this->getPaymentHydrationPlugins(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -179,7 +179,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function createSalesPaymentReader()
     {
         return new SalesPaymentReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 }

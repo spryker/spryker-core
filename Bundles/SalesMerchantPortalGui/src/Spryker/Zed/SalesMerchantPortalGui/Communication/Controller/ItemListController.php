@@ -23,6 +23,7 @@ class ItemListController extends AbstractController
      * @var string
      */
     protected const PARAM_MERCHANT_ORDER_ITEM_IDS = 'merchant-order-item-ids';
+
     /**
      * @var string
      */
@@ -45,7 +46,7 @@ class ItemListController extends AbstractController
             ->findMerchantOrder(
                 (new MerchantOrderCriteriaTransfer())
                     ->setIdMerchantOrder($idMerchantOrder)
-                    ->setWithItems(true)
+                    ->setWithItems(true),
             );
 
         if (!$merchantOrderTransfer) {
@@ -55,7 +56,7 @@ class ItemListController extends AbstractController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createMerchantOrderItemGuiTableDataProvider($merchantOrderItemIds),
-            $this->getFactory()->createMerchantOrderItemGuiTableConfigurationProvider()->getConfiguration($merchantOrderTransfer)
+            $this->getFactory()->createMerchantOrderItemGuiTableConfigurationProvider()->getConfiguration($merchantOrderTransfer),
         );
     }
 

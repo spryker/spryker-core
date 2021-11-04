@@ -73,7 +73,7 @@ class PublishAndSynchronizeHealthCheckStoragePluginTest extends Unit
 
         $this->tester->mockStorageData(
             PublishAndSynchronizeHealthCheckStorageConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY,
-            json_encode($publishAndSynchronizeHealthCheckData)
+            json_encode($publishAndSynchronizeHealthCheckData),
         );
 
         // Act
@@ -100,7 +100,7 @@ class PublishAndSynchronizeHealthCheckStoragePluginTest extends Unit
 
         $this->tester->mockStorageData(
             PublishAndSynchronizeHealthCheckStorageConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY,
-            json_encode($publishAndSynchronizeHealthCheckData)
+            json_encode($publishAndSynchronizeHealthCheckData),
         );
 
         // Act

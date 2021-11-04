@@ -29,30 +29,37 @@ class PriceVolumeCollectionFormType extends AbstractType
      * @var string
      */
     public const FIELD_VOLUMES = 'volumes';
+
     /**
      * @var string
      */
     public const FIELD_ID_STORE = 'idStore';
+
     /**
      * @var string
      */
     public const FIELD_ID_CURRENCY = 'idCurrency';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
     /**
      * @var string
      */
     public const FIELD_NET_PRICE = 'net_price';
+
     /**
      * @var string
      */
     public const FIELD_GROSS_PRICE = 'gross_price';
+
     /**
      * @var string
      */
@@ -60,7 +67,7 @@ class PriceVolumeCollectionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -92,7 +99,7 @@ class PriceVolumeCollectionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -116,7 +123,7 @@ class PriceVolumeCollectionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -129,7 +136,7 @@ class PriceVolumeCollectionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -142,7 +149,7 @@ class PriceVolumeCollectionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $name
      *
      * @return $this

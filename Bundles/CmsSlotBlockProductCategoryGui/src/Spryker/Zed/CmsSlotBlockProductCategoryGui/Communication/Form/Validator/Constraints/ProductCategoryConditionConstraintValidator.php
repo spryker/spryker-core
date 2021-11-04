@@ -28,7 +28,7 @@ class ProductCategoryConditionConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 ProductCategoryConditionConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

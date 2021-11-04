@@ -27,10 +27,12 @@ class CustomerApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
+
     /**
      * @var string
      */

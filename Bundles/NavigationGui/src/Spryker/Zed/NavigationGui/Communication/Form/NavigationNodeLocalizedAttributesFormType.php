@@ -35,26 +35,32 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     public const FIELD_LINK = 'link';
+
     /**
      * @var string
      */
     public const FIELD_EXTERNAL_URL = 'external_url';
+
     /**
      * @var string
      */
     public const FIELD_CMS_PAGE_URL = 'cms_page_url';
+
     /**
      * @var string
      */
     public const FIELD_CATEGORY_URL = 'category_url';
+
     /**
      * @var string
      */
@@ -64,14 +70,17 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      * @var string
      */
     public const GROUP_CMS = 'cms_page';
+
     /**
      * @var string
      */
     public const GROUP_CATEGORY = 'category';
+
     /**
      * @var string
      */
     public const GROUP_LINK = 'link';
+
     /**
      * @var string
      */
@@ -116,7 +125,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -170,7 +179,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             ],
         ])->addModelTransformer(new CallbackTransformer(
             [$this, 'transformCmsPageUrlField'],
-            [$this, 'reverseTransformCmsPageUrlField']
+            [$this, 'reverseTransformCmsPageUrlField'],
         ));
 
         return $this;
@@ -195,7 +204,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             ],
         ])->addModelTransformer(new CallbackTransformer(
             [$this, 'transformCategoryUrlField'],
-            [$this, 'reverseTransformCategoryUrlField']
+            [$this, 'reverseTransformCategoryUrlField'],
         ));
 
         return $this;

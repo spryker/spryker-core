@@ -262,7 +262,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     {
         $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
         $salesOrderAddressEntity->setFkCountry(
-            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code())
+            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code()),
         );
     }
 

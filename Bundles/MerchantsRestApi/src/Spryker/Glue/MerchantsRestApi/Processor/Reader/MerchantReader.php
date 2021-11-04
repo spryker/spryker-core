@@ -21,18 +21,21 @@ class MerchantReader implements MerchantReaderInterface
 {
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query\PaginatedMerchantSearchQueryExpanderPlugin::PARAMETER_OFFSET
+     *
      * @var string
      */
     protected const PARAMETER_OFFSET = 'offset';
 
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\Query\PaginatedMerchantSearchQueryExpanderPlugin::PARAMETER_LIMIT
+     *
      * @var string
      */
     protected const PARAMETER_LIMIT = 'limit';
 
     /**
      * @uses \Spryker\Client\MerchantSearch\Plugin\Elasticsearch\ResultFormatter\MerchantSearchResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const KEY_MERCHANT_SEARCH_COLLECTION = 'MerchantSearchCollection';
@@ -84,12 +87,12 @@ class MerchantReader implements MerchantReaderInterface
     public function getMerchantsResources(array $merchantReferences, string $localeName): array
     {
         $merchantStorageTransfers = $this->merchantStorageClient->get(
-            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences),
         );
 
         $translatedMerchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,
-            $localeName
+            $localeName,
         );
 
         return $this->merchantRestResponseBuilder->createMerchantRestResources($translatedMerchantStorageTransfers, $localeName);
@@ -107,7 +110,7 @@ class MerchantReader implements MerchantReaderInterface
          */
         $merchantReference = $restRequest->getResource()->getId();
         $merchantStorageTransfer = $this->merchantStorageClient->findOne(
-            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference),
         );
 
         if (!$merchantStorageTransfer) {
@@ -116,12 +119,12 @@ class MerchantReader implements MerchantReaderInterface
 
         $translatedMerchantStorageTransfer = $this->merchantTranslator->translateMerchantStorageTransfer(
             $merchantStorageTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         return $this->merchantRestResponseBuilder->createMerchantsRestResponse(
             $translatedMerchantStorageTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 
@@ -134,28 +137,28 @@ class MerchantReader implements MerchantReaderInterface
     {
         $merchantSearchRequestTransfer = $this->createMerchantSearchRequest($restRequest);
         $searchResult = $this->merchantSearchClient->search(
-            $merchantSearchRequestTransfer
+            $merchantSearchRequestTransfer,
         );
 
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
         $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_SEARCH_COLLECTION];
 
         $merchantStorageCriteriaTransfer = (new MerchantStorageCriteriaTransfer())->setMerchantIds(
-            $this->extractMerchantIds($merchantSearchCollectionTransfer)
+            $this->extractMerchantIds($merchantSearchCollectionTransfer),
         );
 
         $merchantStorageTransfers = $this->merchantStorageClient->get($merchantStorageCriteriaTransfer);
 
         $merchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         return $this->merchantRestResponseBuilder->createMerchantListRestResponse(
             $merchantSearchRequestTransfer,
             $merchantSearchCollectionTransfer,
             $merchantStorageTransfers,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

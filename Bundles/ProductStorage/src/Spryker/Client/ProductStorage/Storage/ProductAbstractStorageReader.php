@@ -27,22 +27,27 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_PRICES = 'prices';
+
     /**
      * @var string
      */
     protected const KEY_CATEGORIES = 'categories';
+
     /**
      * @var string
      */
     protected const KEY_IMAGE_SETS = 'imageSets';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+
     /**
      * @var string
      */
@@ -50,6 +55,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
     /**
      * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     *
      * @var string
      */
     protected const KV_PREFIX = 'kv:';
@@ -236,7 +242,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             $storageKeys[$identifier] = $this->getStorageKey(
                 sprintf('%s:%s', $mappingType, $identifier),
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 
@@ -597,7 +603,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
                 $idProductAbstract,
                 $localeName,
                 $storeName,
-                $filteredProductData
+                $filteredProductData,
             );
         }
 

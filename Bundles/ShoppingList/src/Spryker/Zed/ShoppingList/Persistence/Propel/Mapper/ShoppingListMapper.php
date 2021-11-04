@@ -24,14 +24,17 @@ class ShoppingListMapper implements ShoppingListMapperInterface
      * @var string
      */
     public const FIELD_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     public const FIELD_CREATED_AT = 'created_at';
+
     /**
      * @var string
      */
@@ -66,7 +69,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
 
         return $this->mapShoppingListItemCollectionTransferToShoppingListTransfer(
             $this->shoppingListItemMapper->mapItemCollectionTransfer($shoppingListEntityTransfer->getSpyShoppingListItems()->getArrayCopy()),
-            $shoppingListTransfer
+            $shoppingListTransfer,
         );
     }
 
@@ -200,7 +203,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
             return trim(sprintf(
                 '%s %s',
                 $virtualPropertiesCollection[static::FIELD_FIRST_NAME] ?? '',
-                $virtualPropertiesCollection[static::FIELD_LAST_NAME] ?? ''
+                $virtualPropertiesCollection[static::FIELD_LAST_NAME] ?? '',
             ));
         }
 

@@ -16,30 +16,37 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
      * @var string
      */
     public const KEY_TABLE = 'table';
+
     /**
      * @var string
      */
     public const KEY_COLUMN = 'column';
+
     /**
      * @var string
      */
     public const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
+
     /**
      * @var string
      */
     public const ENTITY_PREFIX = 'spy_';
+
     /**
      * @var int
      */
     public const PREFIX_LENGTH = 4;
+
     /**
      * @var string
      */
     public const ENTITY_NAMESPACE = 'entity-namespace';
+
     /**
      * @var string
      */
@@ -66,7 +73,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      * @param string $module
      * @param string $containingModule
      *
@@ -96,7 +103,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      * @param string $transferDefinitionFilePath
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\EmptyEntityTransferDefinitionException
@@ -110,8 +117,8 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
                 sprintf(
                     'Schema definition file `%s` doesn\'t contain any column definition for `%s` table, please add at least one column to it.',
                     $transferDefinitionFilePath,
-                    $definition[static::KEY_NAME]
-                )
+                    $definition[static::KEY_NAME],
+                ),
             );
         }
     }

@@ -71,7 +71,7 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
         foreach ($this->availabilityStorageStrategyPlugins as $availabilityStorageStrategyPlugin) {
             if ($availabilityStorageStrategyPlugin->isApplicable($productViewTransfer)) {
                 $productViewTransfer->setAvailable(
-                    $availabilityStorageStrategyPlugin->isProductAvailable($productViewTransfer)
+                    $availabilityStorageStrategyPlugin->isProductAvailable($productViewTransfer),
                 );
 
                 break;

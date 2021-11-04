@@ -26,6 +26,7 @@ class SetOrderIsCancellableByItemStateTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS = 'Test05';
+
     /**
      * @var string
      */
@@ -98,7 +99,7 @@ class SetOrderIsCancellableByItemStateTest extends Unit
 
         $this->tester->setItemState(
             $orderTransfer->getItems()->getIterator()->current()->getIdSalesOrderItem(),
-            static::SHIPPED_STATE_NAME
+            static::SHIPPED_STATE_NAME,
         );
 
         // Act

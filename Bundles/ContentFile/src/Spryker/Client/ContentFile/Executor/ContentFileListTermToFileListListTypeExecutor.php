@@ -21,7 +21,7 @@ class ContentFileListTermToFileListListTypeExecutor implements ContentFileListTe
     public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentFileListTypeTransfer
     {
         $contentFileListTermTransfer = $this->mapContentTypeContextTransferToContentFileListTermTransfer(
-            $contentTypeContextTransfer
+            $contentTypeContextTransfer,
         );
 
         $contentFileListTypeTransfer = new ContentFileListTypeTransfer();

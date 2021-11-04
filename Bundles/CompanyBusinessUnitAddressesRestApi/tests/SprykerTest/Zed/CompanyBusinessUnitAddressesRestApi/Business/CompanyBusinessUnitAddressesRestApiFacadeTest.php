@@ -40,12 +40,14 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidator::GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.company_address.not_found';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Business\Validator\CompanyBusinessUnitAddressValidator::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY = 'checkout.validation.company_address.not_applicable';
@@ -63,26 +65,26 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         // Arrange
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
         $companyBusinessUnitAddressesRestApiFacade->setFactory(
-            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
+            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock(),
         );
 
         // Act
         $restCheckoutDataTransfer = $companyBusinessUnitAddressesRestApiFacade->expandCheckoutDataWithCompanyBusinessUnitAddresses(
             $this->tester->createRestCheckoutDataTransfer(),
-            $this->tester->createRestCheckoutRequestAttributesTransfer()
+            $this->tester->createRestCheckoutRequestAttributesTransfer(),
         );
 
         // Assert
         $this->assertInstanceOf(
             CompanyUnitAddressCollectionTransfer::class,
             $restCheckoutDataTransfer->getCompanyBusinessUnitAddresses(),
-            'Expected `RestCheckoutDataTransfer` to contain `CompanyUnitAddressCollectionTransfer`.'
+            'Expected `RestCheckoutDataTransfer` to contain `CompanyUnitAddressCollectionTransfer`.',
         );
 
         $this->assertCount(
             2,
             $restCheckoutDataTransfer->getCompanyBusinessUnitAddresses()->getCompanyUnitAddresses(),
-            'Expected `CompanyUnitAddressCollectionTransfer` to contain two `CompanyUnitAddressTransfer`.'
+            'Expected `CompanyUnitAddressCollectionTransfer` to contain two `CompanyUnitAddressTransfer`.',
         );
     }
 
@@ -94,13 +96,13 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         // Arrange
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
         $companyBusinessUnitAddressesRestApiFacade->setFactory(
-            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
+            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock(),
         );
 
         // Act
         $quoteTransfer = $companyBusinessUnitAddressesRestApiFacade->mapCompanyBusinessUnitAddressesToQuote(
             $this->tester->createRestCheckoutRequestAttributesTransfer(),
-            $this->tester->createQuoteTransfer()
+            $this->tester->createQuoteTransfer(),
         );
 
         // Assert
@@ -109,7 +111,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertCompanyBusinessUnitAddress(
                 $itemTransfer->getShipment()->getShippingAddress(),
-                $quoteTransfer
+                $quoteTransfer,
             );
         }
     }
@@ -152,7 +154,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
 
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
         $companyBusinessUnitAddressesRestApiFacade->setFactory(
-            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
+            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock(),
         );
 
         // Act
@@ -188,7 +190,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -214,7 +216,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
 
         $companyBusinessUnitAddressesRestApiFacade = $this->tester->getFacade();
         $companyBusinessUnitAddressesRestApiFacade->setFactory(
-            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock()
+            $this->getCompanyBusinessUnitAddressesRestApiBusinessFactoryMock(),
         );
 
         // Act
@@ -225,7 +227,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -239,31 +241,31 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     {
         $this->assertIsInt(
             $addressTransfer->getIdCompanyUnitAddress(),
-            'Expected company unit address has idCompanyUnitAddress set.'
+            'Expected company unit address has idCompanyUnitAddress set.',
         );
         $this->assertTrue(
             $addressTransfer->getIsAddressSavingSkipped(),
-            'Expected company business unit address will not be saved.'
+            'Expected company business unit address will not be saved.',
         );
         $this->assertSame(
             $quoteTransfer->getCustomer()->getFirstName(),
             $addressTransfer->getFirstName(),
-            'Expected address first name has taken from customer.'
+            'Expected address first name has taken from customer.',
         );
         $this->assertSame(
             $quoteTransfer->getCustomer()->getLastName(),
             $addressTransfer->getLastName(),
-            'Expected address last name has taken from customer.'
+            'Expected address last name has taken from customer.',
         );
         $this->assertSame(
             CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS1,
             $addressTransfer->getAddress1(),
-            'Expected `Address1` field has taken from company business unit address.'
+            'Expected `Address1` field has taken from company business unit address.',
         );
         $this->assertSame(
             CompanyBusinessUnitAddressesRestApiBusinessTester::FAKE_COMPANY_BUSINESS_UNIT_ADDRESS2,
             $addressTransfer->getAddress2(),
-            'Expected `Address2` field has taken from company business unit address.'
+            'Expected `Address2` field has taken from company business unit address.',
         );
     }
 
@@ -274,7 +276,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
     {
         $mockCompanyBusinessUnitAddressesRestApiBusinessFactory = $this->createPartialMock(
             CompanyBusinessUnitAddressesRestApiBusinessFactory::class,
-            ['getCompanyUnitAddressFacade']
+            ['getCompanyUnitAddressFacade'],
         );
 
         $mockCompanyBusinessUnitAddressesRestApiBusinessFactory
@@ -294,7 +296,7 @@ class CompanyBusinessUnitAddressesRestApiFacadeTest extends Unit
             [
                 'getCompanyUnitAddressCollection',
                 'findCompanyBusinessUnitAddressByUuid',
-            ]
+            ],
         );
 
         $mockCompanyUnitAddressFacade

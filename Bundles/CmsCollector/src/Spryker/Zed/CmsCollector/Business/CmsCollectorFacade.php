@@ -52,7 +52,7 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 
@@ -87,7 +87,7 @@ class CmsCollectorFacade extends AbstractFacade implements CmsCollectorFacadeInt
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

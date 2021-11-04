@@ -31,6 +31,7 @@ class GetCustomerOrderTest extends Test
      * @var int
      */
     protected const FAKE_CUSTOMER_ID = 6666;
+
     /**
      * @var string
      */
@@ -117,7 +118,7 @@ class GetCustomerOrderTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK,
-            [$this->getCustomerOrderAccessCheckPluginMock()]
+            [$this->getCustomerOrderAccessCheckPluginMock()],
         );
 
         $customerTransfer = $this->tester->haveCustomer();

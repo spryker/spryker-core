@@ -31,6 +31,7 @@ class ProductAbstractAssertionTest extends Unit
      * @var string
      */
     public const SKU = 'sku';
+
     /**
      * @var int
      */
@@ -84,7 +85,7 @@ class ProductAbstractAssertionTest extends Unit
         $this->expectException(ProductAbstractExistsException::class);
         $this->expectExceptionMessage(sprintf(
             'Product abstract with sku %s already exists',
-            self::SKU
+            self::SKU,
         ));
 
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -144,7 +145,7 @@ class ProductAbstractAssertionTest extends Unit
         $this->expectException(ProductAbstractExistsException::class);
         $this->expectExceptionMessage(sprintf(
             'Product abstract with sku %s already exists',
-            self::SKU
+            self::SKU,
         ));
 
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -209,7 +210,7 @@ class ProductAbstractAssertionTest extends Unit
         $this->expectException(MissingProductException::class);
         $this->expectExceptionMessage(sprintf(
             'Product abstract with id "%s" does not exist.',
-            self::ID_PRODUCT_ABSTRACT
+            self::ID_PRODUCT_ABSTRACT,
         ));
 
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)

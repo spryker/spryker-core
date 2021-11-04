@@ -31,7 +31,7 @@ class MerchantCategoryBusinessFactory extends AbstractBusinessFactory
     public function createMerchantCategoryReader(): MerchantCategoryReaderInterface
     {
         return new MerchantCategoryReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -43,7 +43,7 @@ class MerchantCategoryBusinessFactory extends AbstractBusinessFactory
         return new MerchantCategoryPublisher(
             $this->getFacadeEvent(),
             $this->getFacadeEventBehavior(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

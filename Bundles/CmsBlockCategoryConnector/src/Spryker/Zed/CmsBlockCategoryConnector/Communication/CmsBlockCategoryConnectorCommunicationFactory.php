@@ -37,7 +37,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
         return new CmsBlockDataProvider(
             $this->getQueryContainer(),
             $this->getCategoryQueryContainer(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -49,7 +49,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
         return new CategoryDataProvider(
             $this->getQueryContainer(),
             $this->getCmsBlockQueryContainer(),
-            $this->getCategoryQueryContainer()
+            $this->getCategoryQueryContainer(),
         );
     }
 
@@ -129,7 +129,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     {
         return new CmsBlockCategoryFormExpander(
             $this->createCategoryType(),
-            $this->createCategoryDataProvider()
+            $this->createCategoryDataProvider(),
         );
     }
 }

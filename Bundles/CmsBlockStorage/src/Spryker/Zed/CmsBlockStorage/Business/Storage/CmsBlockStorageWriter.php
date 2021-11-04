@@ -18,26 +18,32 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      * @var string
      */
     protected const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+
     /**
      * @var string
      */
     protected const RELATION_STORE = 'SpyStore';
+
     /**
      * @var string
      */
     protected const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+
     /**
      * @var string
      */
     protected const COLUMN_STORE_NAME = 'name';
+
     /**
      * @var string
      */
     protected const COLUMN_CMS_BLOCK_NAME = 'name';
+
     /**
      * @var string
      */
     protected const COLUMN_CMS_BLOCK_KEY = 'key';
+
     /**
      * @var string
      */
@@ -47,14 +53,17 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      * @var string
      */
     protected const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
+
     /**
      * @var string
      */
     protected const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
+
     /**
      * @var string
      */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+
     /**
      * @var string
      */
@@ -153,7 +162,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     {
         $pairedEntities = $this->pairCmsBlockEntitiesWithCmsBlockStorageEntities(
             $cmsBlockEntities,
-            $cmsBlockStorageEntities
+            $cmsBlockStorageEntities,
         );
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
@@ -182,7 +191,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 $cmsBlockEntity,
                 $cmsBlockStorageEntity,
                 $pair[static::STORE_NAME],
-                $pair[static::LOCALE_NAME]
+                $pair[static::LOCALE_NAME],
             );
         }
     }
@@ -266,7 +275,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 $cmsBlockEntity[static::RELATION_CMS_BLOCK_STORES],
                 $cmsBlockEntity,
                 $mappedCmsBlockStorageEntities,
-                $pairs
+                $pairs,
             );
         }
 
@@ -332,7 +341,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
     /**
      * @param int $idCmsBlock
-     * @param array<string[]> $localeNameMap
+     * @param array<array<string>> $localeNameMap
      * @param array $cmsBlockStores
      * @param array $cmsBlockEntity
      * @param array $mappedCmsBlockStorageEntities
@@ -370,7 +379,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

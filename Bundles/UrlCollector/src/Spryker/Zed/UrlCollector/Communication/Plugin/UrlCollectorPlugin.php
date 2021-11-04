@@ -52,7 +52,7 @@ class UrlCollectorPlugin extends AbstractCollectorPlugin
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

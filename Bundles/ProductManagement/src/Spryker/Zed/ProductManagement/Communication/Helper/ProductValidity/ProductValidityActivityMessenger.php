@@ -74,13 +74,13 @@ EOD;
         if ($validTo > (new DateTime())) {
             return sprintf(
                 static::DEACTIVATION_IN_FUTURE_MESSAGE,
-                $validTo->format($this->config->getValidityTimeFormat())
+                $validTo->format($this->config->getValidityTimeFormat()),
             );
         }
 
         return sprintf(
             static::DEACTIVATION_NOW_MESSAGE,
-            $validTo->format($this->config->getValidityTimeFormat())
+            $validTo->format($this->config->getValidityTimeFormat()),
         );
     }
 
@@ -105,7 +105,7 @@ EOD;
         if ($validFrom > (new DateTime())) {
             return sprintf(
                 static::ACTIVATION_IN_FUTURE_MESSAGE,
-                $validFrom->format($this->config->getValidityTimeFormat())
+                $validFrom->format($this->config->getValidityTimeFormat()),
             );
         }
 
@@ -118,7 +118,7 @@ EOD;
 
         return sprintf(
             static::ACTIVATION_NOW_MESSAGE,
-            $validFrom->format($this->config->getValidityTimeFormat())
+            $validFrom->format($this->config->getValidityTimeFormat()),
         );
     }
 }

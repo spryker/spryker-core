@@ -29,6 +29,7 @@ class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
      * @var string
      */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+
     /**
      * @var string
      */
@@ -50,7 +51,7 @@ class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
         // Act
         $itemTransfers = $this->tester->getFacade()->expandUniqueOrderItemsWithProductBundles(
             $orderTransfer->getItems()->getArrayCopy(),
-            $orderTransfer
+            $orderTransfer,
         );
 
         // Assert
@@ -69,7 +70,7 @@ class ExpandUniqueOrderItemsWithProductBundlesTest extends Unit
         // Act
         $itemTransfers = $this->tester->getFacade()->expandUniqueOrderItemsWithProductBundles(
             $orderTransfer->getItems()->getArrayCopy(),
-            $orderTransfer
+            $orderTransfer,
         );
 
         // Assert

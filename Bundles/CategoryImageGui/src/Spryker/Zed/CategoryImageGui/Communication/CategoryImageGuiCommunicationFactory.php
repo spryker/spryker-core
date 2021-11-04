@@ -30,7 +30,7 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createImageSetCollectionTransformer(): DataTransformerInterface
     {
         return new ImageSetCollectionTransformer(
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -40,7 +40,7 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createLocaleTransformer(): DataTransformerInterface
     {
         return new LocaleTransformer(
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -75,7 +75,7 @@ class CategoryImageGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CategoryImageFormExpander(
             $this->getLocaleFacade(),
-            $this->createImageSetCollectionTransformer()
+            $this->createImageSetCollectionTransformer(),
         );
     }
 }

@@ -54,7 +54,7 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
         foreach ($merchantSearchEntityCollection as $merchantSearchEntity) {
             $merchantSearchEntity = $merchantSearchMapper->mapMerchantSearchTransferToMerchantSearchEntity(
                 $merchantSearchTransferIdMerchantMap[$merchantSearchEntity->getFkMerchant()],
-                $merchantSearchEntity
+                $merchantSearchEntity,
             );
 
             unset($merchantSearchTransferIdMerchantMap[$merchantSearchEntity->getFkMerchant()]);
@@ -63,7 +63,7 @@ class MerchantSearchEntityManager extends AbstractEntityManager implements Merch
         foreach ($merchantSearchTransferIdMerchantMap as $merchantSearchTransfer) {
             $merchantSearchEntity = $merchantSearchMapper->mapMerchantSearchTransferToMerchantSearchEntity(
                 $merchantSearchTransfer,
-                new SpyMerchantSearch()
+                new SpyMerchantSearch(),
             );
 
             $merchantSearchEntityCollection->append($merchantSearchEntity);

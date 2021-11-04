@@ -59,7 +59,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
 
         if (empty($extractedPrices) && !empty($priceProductTransfers)) {
             $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
-                $idProductConcrete
+                $idProductConcrete,
             );
             $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
         }
@@ -168,8 +168,8 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
                 sprintf(
                     '%s-%s',
                     $volumePriceTransfer->getGroupKey(),
-                    $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]
-                )
+                    $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY],
+                ),
             )
             ->setIsMergeable(false)
             ->getMoneyValue()

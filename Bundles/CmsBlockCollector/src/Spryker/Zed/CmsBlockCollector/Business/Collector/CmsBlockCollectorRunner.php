@@ -67,7 +67,7 @@ class CmsBlockCollectorRunner implements CmsBlockCollectorRunnerInterface
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

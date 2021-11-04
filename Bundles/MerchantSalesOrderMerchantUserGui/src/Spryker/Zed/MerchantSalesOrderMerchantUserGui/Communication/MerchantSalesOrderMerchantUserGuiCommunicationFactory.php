@@ -49,7 +49,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
             $this->getUtilSanitizeService(),
             $this->getDateTimeService(),
             $this->getCustomerFacade(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
         );
     }
 
@@ -70,11 +70,9 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -84,11 +82,9 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -98,9 +94,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-return array <string, string>
-     *
-     * @return array
+     * @return array<string, string>
      */
     public function getMerchantSalesOrderDetailExternalBlocksUrls(): array
     {
@@ -114,17 +108,15 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     {
         return new MerchantShipmentGroupFormDataProvider(
             $this->getCustomerFacade(),
-            $this->getShipmentFacade()
+            $this->getShipmentFacade(),
         );
     }
 
     /**
-     * @phpstan-param array<mixed> $formOptions
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param array $formOptions
+     * @param array<string, mixed> $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */

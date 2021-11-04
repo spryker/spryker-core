@@ -16,6 +16,7 @@ class EventConfig extends AbstractSharedConfig
      * - Routing key for forwarding message to retry queue
      *
      * @api
+     *
      * @var string
      */
     public const EVENT_ROUTING_KEY_RETRY = 'retry';
@@ -25,6 +26,7 @@ class EventConfig extends AbstractSharedConfig
      * - Routing key for forwarding message to error queue
      *
      * @api
+     *
      * @var string
      */
     public const EVENT_ROUTING_KEY_ERROR = 'error';

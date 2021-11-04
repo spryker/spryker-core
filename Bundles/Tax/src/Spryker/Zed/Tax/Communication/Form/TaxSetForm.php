@@ -33,10 +33,12 @@ class TaxSetForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_TAX_RATES = 'taxRates';
+
     /**
      * @var string
      */
@@ -71,7 +73,7 @@ class TaxSetForm extends AbstractType
                     new NotBlank(),
                     $this->createUniqueTaxSetNameConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -116,7 +118,7 @@ class TaxSetForm extends AbstractType
     {
         return new CallbackTransformer(
             $this->createTransformCallback(),
-            $this->createReverseTransformCallback()
+            $this->createReverseTransformCallback(),
         );
     }
 

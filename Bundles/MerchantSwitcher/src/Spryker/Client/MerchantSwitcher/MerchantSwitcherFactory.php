@@ -20,7 +20,7 @@ class MerchantSwitcherFactory extends AbstractFactory
     public function createMerchantSwitcherStub(): MerchantSwitcherStubInterface
     {
         return new MerchantSwitcherStub(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 

@@ -55,7 +55,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->endUse()
             ->addAsColumn(
                 'abstract_attributes',
-                SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES
+                SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES,
             );
 
         return $query;

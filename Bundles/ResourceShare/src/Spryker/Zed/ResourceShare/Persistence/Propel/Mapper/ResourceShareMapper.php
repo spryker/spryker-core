@@ -42,7 +42,7 @@ class ResourceShareMapper
         }
 
         return $resourceShareTransfer->setResourceShareData(
-            $this->mapResourceDataToResourceShareDataTransfer($resourceShareEntity->getResourceData())
+            $this->mapResourceDataToResourceShareDataTransfer($resourceShareEntity->getResourceData()),
         );
     }
 
@@ -59,7 +59,7 @@ class ResourceShareMapper
         $resourceShareDataTransfer = $resourceShareTransfer->getResourceShareData();
         if ($resourceShareDataTransfer) {
             $resourceShareEntity->setResourceData(
-                $this->mapResourceShareDataTransferToResourceData($resourceShareDataTransfer)
+                $this->mapResourceShareDataTransferToResourceData($resourceShareDataTransfer),
             );
         }
 
@@ -74,7 +74,7 @@ class ResourceShareMapper
     protected function mapResourceShareDataTransferToResourceData(ResourceShareDataTransfer $resourceShareDataTransfer): ?string
     {
         return $this->utilEncodingService->encodeJson(
-            $resourceShareDataTransfer->modifiedToArray()
+            $resourceShareDataTransfer->modifiedToArray(),
         );
     }
 

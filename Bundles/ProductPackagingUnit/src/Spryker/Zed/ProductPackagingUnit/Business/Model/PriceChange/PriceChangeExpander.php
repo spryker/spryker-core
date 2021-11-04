@@ -16,9 +16,11 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
 {
     /**
      * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_NET
+     *
      * @var string
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
+
     /**
      * @var int
      */

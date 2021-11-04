@@ -23,21 +23,25 @@ class OrderReturnTable extends AbstractTable
 {
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnController::PARAM_ID_ORDER
+     *
      * @var string
      */
     public const PARAM_ID_ORDER = 'id-order';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     *
      * @var string
      */
     protected const PARAM_ID_RETURN = 'id-return';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const URL_RETURN_DETAIL = '/sales-return-gui/detail';
+
     /**
      * @var string
      */
@@ -45,6 +49,7 @@ class OrderReturnTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\SalesController
+     *
      * @var string
      */
     protected const BASE_URL = '/sales-return-gui/sales/';
@@ -53,18 +58,22 @@ class OrderReturnTable extends AbstractTable
      * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
+
     /**
      * @var string
      */
     protected const COL_ITEMS = 'items';
+
     /**
      * @var string
      */
     protected const COL_REMUNERATION_TOTAL = 'remuneration_total';
+
     /**
      * @var string
      */
     protected const COL_CURRENCY = 'currency';
+
     /**
      * @var string
      */
@@ -143,7 +152,7 @@ class OrderReturnTable extends AbstractTable
 
         $returnResults = $this->runQuery(
             $this->prepareQuery(),
-            $config
+            $config,
         );
 
         foreach ($returnResults as $return) {
@@ -203,7 +212,7 @@ class OrderReturnTable extends AbstractTable
     {
         $moneyTransfer = $this->moneyFacade->fromInteger(
             (int)$return[static::COL_REMUNERATION_TOTAL],
-            $return[static::COL_CURRENCY]
+            $return[static::COL_CURRENCY],
         );
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
@@ -220,7 +229,7 @@ class OrderReturnTable extends AbstractTable
 
         $buttons[] = $this->generateViewButton(
             Url::generate(static::URL_RETURN_DETAIL, [static::PARAM_ID_RETURN => $return[SpySalesReturnTableMap::COL_ID_SALES_RETURN]]),
-            static::BUTTON_VIEW
+            static::BUTTON_VIEW,
         );
 
         return implode(' ', $buttons);

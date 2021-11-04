@@ -17,14 +17,17 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
+
     /**
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */
     public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
+
     /**
      * @var string
      */

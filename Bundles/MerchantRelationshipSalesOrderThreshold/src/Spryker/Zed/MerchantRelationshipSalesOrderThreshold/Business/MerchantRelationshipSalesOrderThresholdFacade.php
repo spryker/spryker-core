@@ -51,7 +51,7 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
         return $this->getFactory()
             ->createMerchantRelationshipThresholdWriter()
             ->saveMerchantRelationshipSalesOrderThreshold(
-                $merchantRelationshipSalesOrderThresholdTransfer
+                $merchantRelationshipSalesOrderThresholdTransfer,
             );
     }
 
@@ -70,7 +70,7 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
         return $this->getFactory()
             ->createMerchantRelationshipThresholdWriter()
             ->deleteMerchantRelationshipSalesOrderThreshold(
-                $merchantRelationshipSalesOrderThresholdTransfer
+                $merchantRelationshipSalesOrderThresholdTransfer,
             );
     }
 
@@ -95,7 +95,7 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
             ->getMerchantRelationshipSalesOrderThresholds(
                 $storeTransfer,
                 $currencyTransfer,
-                $merchantRelationshipIds
+                $merchantRelationshipIds,
             );
     }
 }

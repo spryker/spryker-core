@@ -183,7 +183,7 @@ class Dispatcher implements DispatcherInterface
 
         return $this->validator->validate(
             $apiRequestTransfer->getResource(),
-            $apiDataTransfer
+            $apiDataTransfer,
         );
     }
 }

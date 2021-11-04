@@ -27,7 +27,7 @@ class CompanyUserAuthRestApiFactory extends AbstractFactory
     {
         return new CompanyUserAccessTokenReader(
             $this->getOauthClient(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 

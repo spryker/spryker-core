@@ -21,8 +21,8 @@ class ProductSearchAttributeMarker extends AbstractAttributeMarker
             $this->queryAttributeKeys($this->productSearchQueryContainer->queryProductSearchAttributeBySynced(static::NOT_SYNCED)),
             $this->queryArchivedAttributeKeys(
                 $this->productSearchQueryContainer->queryProductSearchAttributeArchive(),
-                SpyProductSearchAttributeArchiveTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY
-            )
+                SpyProductSearchAttributeArchiveTableMap::COL_FK_PRODUCT_ATTRIBUTE_KEY,
+            ),
         );
     }
 

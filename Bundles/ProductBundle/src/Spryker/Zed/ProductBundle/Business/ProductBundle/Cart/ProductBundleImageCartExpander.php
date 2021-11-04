@@ -69,7 +69,7 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
         $imageSets = $this->productImageFacade->getCombinedConcreteImageSets(
             $itemTransfer->getId(),
             $itemTransfer->getIdProductAbstract(),
-            $localeTransfer->getIdLocale()
+            $localeTransfer->getIdLocale(),
         );
 
         if (!$imageSets) {

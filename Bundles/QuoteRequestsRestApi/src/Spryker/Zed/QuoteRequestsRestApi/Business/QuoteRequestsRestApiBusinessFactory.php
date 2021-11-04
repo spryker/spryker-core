@@ -36,7 +36,7 @@ class QuoteRequestsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestCreator(
             $this->createQuoteReader(),
-            $this->getQuoteRequestFacade()
+            $this->getQuoteRequestFacade(),
         );
     }
 

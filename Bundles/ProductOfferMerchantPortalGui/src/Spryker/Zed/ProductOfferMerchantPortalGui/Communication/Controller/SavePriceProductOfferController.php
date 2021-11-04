@@ -26,10 +26,12 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
      * @var string
      */
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
+
     /**
      * @var string
      */
     protected const PARAM_VOLUME_QUANTITY = 'volume_quantity';
+
     /**
      * @var string
      */
@@ -59,7 +61,7 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
         $idProductOffer = $this->castId($request->get(static::PARAM_PRODUCT_OFFER_ID));
 
         $productOfferTransfer = $this->getFactory()->getProductOfferFacade()->findOne(
-            (new ProductOfferCriteriaTransfer())->setIdProductOffer($idProductOffer)
+            (new ProductOfferCriteriaTransfer())->setIdProductOffer($idProductOffer),
         );
 
         if (!$productOfferTransfer) {
@@ -82,7 +84,7 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
             $typePriceProductOfferIds,
             $requestData,
             $volumeQuantity,
-            $idProductOffer
+            $idProductOffer,
         );
 
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())
@@ -100,7 +102,7 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
                 $validationResponseTransfer
                     ->getValidationErrors()
                     ->offsetGet(0)
-                    ->getMessage()
+                    ->getMessage(),
             );
         }
 

@@ -18,10 +18,11 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
     /**
      * @var int
      */
-    protected const  DEFAULT_PRECISION = 1;
+    protected const DEFAULT_PRECISION = 1;
 
     /**
      * @see \Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH
+     *
      * @var string
      */
     protected const PRODUCT_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_measurement_unit.publish';
@@ -37,7 +38,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
 
         $this->addPublishEvents(
             static::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
-            $productMeasurementUnitEntity->getIdProductMeasurementUnit()
+            $productMeasurementUnitEntity->getIdProductMeasurementUnit(),
         );
     }
 

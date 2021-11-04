@@ -22,10 +22,12 @@ class ValidatorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:validate';
+
     /**
      * @var string
      */
     public const COMMAND_DESCRIPTION = 'Validates transfer XML definition files.';
+
     /**
      * @var string
      */

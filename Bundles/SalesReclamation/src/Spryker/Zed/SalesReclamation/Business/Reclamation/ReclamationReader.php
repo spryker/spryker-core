@@ -53,7 +53,7 @@ class ReclamationReader implements ReclamationReaderInterface
 
         if (!$reclamationTransfer) {
             throw new ReclamationNotFoundException(
-                sprintf('There is no reclamation with id %s', $idSalesReclamation)
+                sprintf('There is no reclamation with id %s', $idSalesReclamation),
             );
         }
 
@@ -76,7 +76,7 @@ class ReclamationReader implements ReclamationReaderInterface
         foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
             $itemTransfer = $this->findOrderItemById(
                 $reclamationTransfer->getOrder(),
-                $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem()
+                $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem(),
             );
 
             $reclamationItemTransfer->setOrderItem($itemTransfer);

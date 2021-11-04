@@ -35,6 +35,7 @@ class QuoteCompanyUserTest extends Unit
      * @var string
      */
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */
@@ -95,7 +96,7 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         //Act
@@ -125,7 +126,7 @@ class QuoteCompanyUserTest extends Unit
 
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $this->readOnlyQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
@@ -156,7 +157,7 @@ class QuoteCompanyUserTest extends Unit
 
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $this->readOnlyQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer);
@@ -220,7 +221,7 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
@@ -229,7 +230,7 @@ class QuoteCompanyUserTest extends Unit
         ]);
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $fullAccessQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
@@ -260,7 +261,7 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $shareDetailTransfer = (new ShareDetailTransfer())
@@ -296,7 +297,7 @@ class QuoteCompanyUserTest extends Unit
 
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $this->readOnlyQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer);
@@ -317,7 +318,7 @@ class QuoteCompanyUserTest extends Unit
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $shareDetailTransfer = (new ShareDetailTransfer())

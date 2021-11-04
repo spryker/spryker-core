@@ -26,7 +26,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer
     {
         $customerAccessEntity = $this->getFactory()
-            ->customerAccessQuery()
+            ->createCustomerAccessQuery()
             ->filterByContentType($contentType)
             ->findOne();
 
@@ -47,7 +47,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     public function getUnrestrictedContentTypes(): CustomerAccessTransfer
     {
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
-            ->customerAccessQuery()
+            ->createCustomerAccessQuery()
             ->filterByIsRestricted(false)
             ->find();
 
@@ -64,7 +64,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     public function getAllContentTypes(): CustomerAccessTransfer
     {
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
-            ->customerAccessQuery()
+            ->createCustomerAccessQuery()
             ->orderByIdUnauthenticatedCustomerAccess()
             ->find();
 
@@ -81,7 +81,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     public function getRestrictedContentTypes(): CustomerAccessTransfer
     {
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
-            ->customerAccessQuery()
+            ->createCustomerAccessQuery()
             ->filterByIsRestricted(true)
             ->find();
 

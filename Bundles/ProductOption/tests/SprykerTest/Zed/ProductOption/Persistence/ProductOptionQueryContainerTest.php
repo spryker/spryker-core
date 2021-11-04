@@ -34,6 +34,7 @@ class ProductOptionQueryContainerTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE_NAME = 'xxx';
+
     /**
      * @var string
      */
@@ -113,7 +114,7 @@ class ProductOptionQueryContainerTest extends Unit
         $result = $productOptionQueryContainer->queryProductsAbstractBySearchTermForAssignment(
             static::TEST_LOCALIZED_PRODUCT_NAME,
             $productOptionGroupTransfer->getIdProductOptionGroup(),
-            $localeTransfer
+            $localeTransfer,
         )->find();
 
         // Assert

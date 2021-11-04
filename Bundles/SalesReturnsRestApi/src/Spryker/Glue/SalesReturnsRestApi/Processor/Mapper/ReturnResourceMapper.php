@@ -65,7 +65,7 @@ class ReturnResourceMapper implements ReturnResourceMapperInterface
             ->fromArray($returnTransfer->toArray(), true)
             ->setReturnTotals(
                 (new RestReturnTotalsAttributesTransfer())
-                    ->fromArray($returnTransfer->getReturnTotals()->toArray(), true)
+                    ->fromArray($returnTransfer->getReturnTotals()->toArray(), true),
             );
     }
 

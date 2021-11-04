@@ -97,7 +97,7 @@ interface RedisAdapterInterface
 
     /**
      * @param int $cursor
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array [string, string[]]
      */

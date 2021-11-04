@@ -31,7 +31,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getCategoryFacade(),
             $this->getProductFacade(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -66,7 +66,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryReader(
             $this->getRepository(),
-            $this->getCategoryFacade()
+            $this->getCategoryFacade(),
         );
     }
 
@@ -76,7 +76,7 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     public function createProductCategoryReader(): ProductCategoryReaderInterface
     {
         return new ProductCategoryReader(
-            $this->createProductCategoryManager()
+            $this->createProductCategoryManager(),
         );
     }
 }

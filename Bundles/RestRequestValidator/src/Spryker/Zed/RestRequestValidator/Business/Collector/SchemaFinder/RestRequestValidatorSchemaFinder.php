@@ -148,7 +148,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
             $currentLevelPaths = array_filter($currentLevelPaths, function ($pathItem) {
                 return !preg_match(
                     $this->addStoreCodesToPath($this->config->getStoreModulesPattern()),
-                    $pathItem
+                    $pathItem,
                 );
             });
         }

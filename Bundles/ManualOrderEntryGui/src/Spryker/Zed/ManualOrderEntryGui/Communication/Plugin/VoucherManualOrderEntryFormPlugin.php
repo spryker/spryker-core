@@ -27,6 +27,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      * @var string
      */
     protected const MESSAGE_ERROR = 'Voucher code \'%s\' has not been applied';
+
     /**
      * @var string
      */

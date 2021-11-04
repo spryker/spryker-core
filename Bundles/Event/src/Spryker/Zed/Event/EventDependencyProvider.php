@@ -23,6 +23,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const EVENT_LISTENERS = 'event_listeners';
+
     /**
      * @var string
      */

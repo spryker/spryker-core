@@ -24,6 +24,7 @@ class SearchCloseIndexConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:index:close';
+
     /**
      * @var string
      */
@@ -33,10 +34,12 @@ class SearchCloseIndexConsole extends Console
      * @var string
      */
     public const OPTION_ALL = 'all';
+
     /**
      * @var string
      */
     public const OPTION_ALL_SHORT = 'a';
+
     /**
      * @var string
      */

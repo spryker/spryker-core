@@ -15,6 +15,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * @var int
      */
     protected const PRODUCT_LIST_PRODUCT_ABSTRACT_PUBLISH_CHUNK_SIZE = 500;
+
     /**
      * @var int
      */

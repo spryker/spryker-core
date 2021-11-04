@@ -38,7 +38,7 @@ class DataReader implements DataReaderInterface
     ): PublishAndSynchronizeHealthCheckTransfer {
         $publishAndSynchronizeHealthCheckTransfer = $this->publishAndSynchronizeHealthCheckRepository
             ->findPublishAndSynchronizeHealthCheckByKey(
-                $publishAndSynchronizeHealthCheckTransfer->getHealthCheckKeyOrFail()
+                $publishAndSynchronizeHealthCheckTransfer->getHealthCheckKeyOrFail(),
             );
 
         if (!$publishAndSynchronizeHealthCheckTransfer) {

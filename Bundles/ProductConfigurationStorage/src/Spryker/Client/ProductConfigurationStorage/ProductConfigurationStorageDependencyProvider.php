@@ -24,14 +24,17 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
@@ -96,7 +99,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductConfigurationStorageToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -112,7 +115,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductConfigurationStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

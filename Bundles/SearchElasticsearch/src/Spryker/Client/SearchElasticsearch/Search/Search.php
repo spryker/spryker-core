@@ -82,7 +82,7 @@ class Search implements SearchInterface
         try {
             $index = $this->getIndexForQueryFromSearchContext($searchContext);
             $rawSearchResult = $index->search(
-                $query->getSearchQuery()
+                $query->getSearchQuery(),
             );
         } catch (ResponseException $e) {
             $rawQuery = json_encode($query->getSearchQuery()->toArray());
@@ -90,7 +90,7 @@ class Search implements SearchInterface
             throw new SearchResponseException(
                 sprintf('Search failed with the following reason: %s. Query: %s', $e->getMessage(), $rawQuery),
                 $e->getCode(),
-                $e
+                $e,
             );
         }
 
@@ -113,8 +113,8 @@ class Search implements SearchInterface
                 sprintf(
                     'Query class %s doesn\'t implement %s interface.',
                     get_class($searchQuery),
-                    SearchContextAwareQueryInterface::class
-                )
+                    SearchContextAwareQueryInterface::class,
+                ),
             );
         }
 

@@ -44,14 +44,17 @@ class CatalogSearchResourceMapperTest extends Unit
      * @var string
      */
     protected const REQUESTED_CURRENCY = 'CHF';
+
     /**
      * @var string
      */
     protected const GROSS_AMOUNT = 'grossAmount';
+
     /**
      * @var string
      */
     protected const GROSS_MODE = 'GROSS_MODE';
+
     /**
      * @var string
      */
@@ -59,9 +62,11 @@ class CatalogSearchResourceMapperTest extends Unit
 
     /**
      * @deprecated Will be removed in next major release.
+     *
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var string
      */
@@ -93,7 +98,7 @@ class CatalogSearchResourceMapperTest extends Unit
 
         $this->restSearchAttributesTransfer = new RestCatalogSearchAttributesTransfer();
         $this->catalogSearchResourceMapper = new CatalogSearchResourceMapper(
-            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock)
+            new CatalogSearchRestApiToCurrencyClientBridge($this->currencyClientMock),
         );
     }
 
@@ -105,7 +110,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer(
-                $this->mockRestSearchResponseTransfer()
+                $this->mockRestSearchResponseTransfer(),
             );
 
         $this->restSearchAttributesTransfer = $this->restSearchAttributesTransfer = $this
@@ -173,7 +178,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->restSearchAttributesTransfer = $this
             ->catalogSearchResourceMapper
             ->mapSearchResultToRestAttributesTransfer(
-                $this->mockEmptyRestSearchResponseTransfer()
+                $this->mockEmptyRestSearchResponseTransfer(),
             );
 
         $this->assertEmpty($this->getProductsFromRestCatalogSearchAttributesTransfer());
@@ -184,9 +189,7 @@ class CatalogSearchResourceMapperTest extends Unit
      */
     protected function getProductsFromRestCatalogSearchAttributesTransfer(): ArrayObject
     {
-        return isset($this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS])
-            ? $this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS]
-            : $this->restSearchAttributesTransfer[static::KEY_PRODUCTS];
+        return $this->restSearchAttributesTransfer[static::KEY_ABSTRACT_PRODUCTS] ?? $this->restSearchAttributesTransfer[static::KEY_PRODUCTS];
     }
 
     /**

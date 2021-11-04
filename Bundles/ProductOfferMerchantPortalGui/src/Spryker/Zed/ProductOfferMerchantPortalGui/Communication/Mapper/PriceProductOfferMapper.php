@@ -114,7 +114,7 @@ class PriceProductOfferMapper
             $initialData = $this->addInitialDataErrors(
                 $validationErrorTransfer,
                 $priceProductOfferCollectionTransfer,
-                $initialData
+                $initialData,
             );
         }
 
@@ -161,8 +161,8 @@ class PriceProductOfferMapper
                 $this->priceProductVolumeService->addVolumePrice(
                     $priceProductTransfer,
                     (new PriceProductTransfer())->setVolumeQuantity((int)$value)->setMoneyValue(
-                        (new MoneyValueTransfer())->setNetAmount($netAmount)->setGrossAmount($grossAmount)
-                    )
+                        (new MoneyValueTransfer())->setNetAmount($netAmount)->setGrossAmount($grossAmount),
+                    ),
                 );
 
                 continue;
@@ -229,7 +229,7 @@ class PriceProductOfferMapper
         $priceProductTransfer = $this->extractInvalidPriceProduct(
             $priceProductOfferCollectionTransfer,
             $propertyPath,
-            $isVolumePriceViolation
+            $isVolumePriceViolation,
         );
 
         $errorMessage = $validationErrorTransfer->getMessage();
@@ -282,12 +282,12 @@ class PriceProductOfferMapper
     ): PriceProductTransfer {
         $priceProductOfferTransfer = $this->extractMatchingPriceProductOfferFromCollection(
             $priceProductOfferCollectionTransfer,
-            $propertyPath
+            $propertyPath,
         );
 
         $priceProductTransfer = $this->extractMatchingPriceProductFromPriceProductOffer(
             $priceProductOfferTransfer,
-            $propertyPath
+            $propertyPath,
         );
 
         if (!$isVolumePriceViolation) {
@@ -394,10 +394,10 @@ class PriceProductOfferMapper
         $priceTypeName = $priceProductTransfer->getPriceTypeOrFail()->getNameOrFail();
 
         $grossPrice = $this->convertDecimalToInteger(
-            $initialDataRow[$this->columnIdCreator->createGrossAmountColumnId($priceTypeName)]
+            $initialDataRow[$this->columnIdCreator->createGrossAmountColumnId($priceTypeName)],
         );
         $netPrice = $this->convertDecimalToInteger(
-            $initialDataRow[$this->columnIdCreator->createNetAmountColumnId($priceTypeName)]
+            $initialDataRow[$this->columnIdCreator->createNetAmountColumnId($priceTypeName)],
         );
 
         return (

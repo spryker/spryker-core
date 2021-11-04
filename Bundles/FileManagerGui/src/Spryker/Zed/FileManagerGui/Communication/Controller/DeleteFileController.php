@@ -20,14 +20,17 @@ class DeleteFileController extends AbstractController
      * @var string
      */
     protected const URL_REDIRECT_BASE = '/file-manager-gui';
+
     /**
      * @var string
      */
     protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+
     /**
      * @var string
      */
     protected const URL_PARAM_ID_FILE = 'id-file';
+
     /**
      * @var string
      */

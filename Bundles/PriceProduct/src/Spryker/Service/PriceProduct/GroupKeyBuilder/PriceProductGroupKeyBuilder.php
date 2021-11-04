@@ -23,11 +23,9 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getGroupKeyParts(PriceProductTransfer $priceProductTransfer): array
     {
@@ -60,11 +58,9 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getPriceDimensionGroupKeys(PriceProductDimensionTransfer $priceProductDimensionTransfer): array
     {

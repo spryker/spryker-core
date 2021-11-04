@@ -63,7 +63,7 @@ class MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrder
         return $this->merchantRelationshipSalesOrderThresholdFacade->getMerchantRelationshipSalesOrderThresholds(
             $storeTransfer,
             $currencyTransfer,
-            $merchantRelationshipIds
+            $merchantRelationshipIds,
         );
     }
 }

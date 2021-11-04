@@ -25,7 +25,7 @@ class OfferGuiToOmsFacadeBridge implements OfferGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsByIdSalesOrder(int $idSalesOrder): array
     {

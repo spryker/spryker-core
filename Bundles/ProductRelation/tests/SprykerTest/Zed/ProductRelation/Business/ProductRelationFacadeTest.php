@@ -109,7 +109,7 @@ class ProductRelationFacadeTest extends Unit
         $this->assertCount(2, $productRelationFacade->getProductRelationTypeList());
         $this->assertSame(
             $productRelationTransfer->getProductRelationType()->getKey(),
-            $productRelationFacade->getProductRelationTypeList()[0]->getKey()
+            $productRelationFacade->getProductRelationTypeList()[0]->getKey(),
         );
     }
 

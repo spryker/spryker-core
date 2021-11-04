@@ -20,6 +20,7 @@ class MerchantProductMerchantNameSearchConfigExpanderPlugin extends AbstractPlug
      * @var string
      */
     protected const FACET_CONFIG_NAME = 'merchant_name';
+
     /**
      * @var string
      */

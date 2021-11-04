@@ -86,11 +86,9 @@ class AvailabilityReader implements AvailabilityReaderInterface
     }
 
     /**
-     * @phpstan-return array<int, int|null>
-     *
      * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return array
+     * @return array<int, int|null>
      */
     protected function extractProductConcreteIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
     {

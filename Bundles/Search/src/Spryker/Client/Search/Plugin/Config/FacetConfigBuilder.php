@@ -42,7 +42,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
      */
     public function get($facetName)
     {
-        return isset($this->facetConfigTransfers[$facetName]) ? $this->facetConfigTransfers[$facetName] : null;
+        return $this->facetConfigTransfers[$facetName] ?? null;
     }
 
     /**

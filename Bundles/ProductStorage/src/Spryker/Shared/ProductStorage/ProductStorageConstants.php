@@ -17,6 +17,7 @@ class ProductStorageConstants
      * - Queue name as used for processing Product messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
@@ -26,6 +27,7 @@ class ProductStorageConstants
      * - Queue name as used for processing Product messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
@@ -35,6 +37,7 @@ class ProductStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
@@ -44,6 +47,7 @@ class ProductStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';

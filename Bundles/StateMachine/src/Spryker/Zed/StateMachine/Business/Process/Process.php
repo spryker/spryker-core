@@ -172,8 +172,8 @@ class Process implements ProcessInterface
         throw new StateMachineException(
             sprintf(
                 'State "%s" not found in any of state machine processes. Is state defined in xml definition file?',
-                $stateName
-            )
+                $stateName,
+            ),
         );
     }
 
@@ -310,7 +310,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManuallyExecutableEventsBySource()
     {
@@ -322,7 +322,7 @@ class Process implements ProcessInterface
             $eventsBySource = $this->groupTransitionsBySourceName(
                 $transitions,
                 $eventsBySource,
-                $event
+                $event,
             );
         }
 
@@ -334,7 +334,7 @@ class Process implements ProcessInterface
      * @param array $eventsBySource
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function groupTransitionsBySourceName(array $transitions, array $eventsBySource, EventInterface $event)
     {

@@ -25,14 +25,17 @@ class CompanyRoleTable extends AbstractTable
      * @var string
      */
     protected const HEADER_ID_COMPANY_ROLE = 'Role ID';
+
     /**
      * @var string
      */
     protected const HEADER_NAME_COMPANY_ROLE = 'Name';
+
     /**
      * @var string
      */
     protected const HEADER_NAME_COMPANY = 'Company Name';
+
     /**
      * @var string
      */
@@ -47,6 +50,7 @@ class CompanyRoleTable extends AbstractTable
      * @var string
      */
     protected const UPDATE_ROLE_URL = '/company-role-gui/edit-company-role';
+
     /**
      * @var string
      */
@@ -56,6 +60,7 @@ class CompanyRoleTable extends AbstractTable
      * @var string
      */
     protected const BUTTON_TITLE_DELETE = 'Delete';
+
     /**
      * @var string
      */
@@ -138,12 +143,12 @@ class CompanyRoleTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(self::UPDATE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]]),
-            static::BUTTON_TITLE_EDIT
+            static::BUTTON_TITLE_EDIT,
         );
 
         $buttons[] = $this->generateRemoveButton(
             Url::generate(self::DELETE_ROLE_URL, [self::PARAM_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]]),
-            static::BUTTON_TITLE_DELETE
+            static::BUTTON_TITLE_DELETE,
         );
 
         return $buttons;

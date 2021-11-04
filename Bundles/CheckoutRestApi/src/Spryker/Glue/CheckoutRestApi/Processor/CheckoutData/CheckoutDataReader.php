@@ -100,7 +100,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
         $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData(
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
         );
 
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
@@ -110,7 +110,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
             ->mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataResponseTransfer->getCheckoutData(),
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
 
         return $this->createRestResponse($restCheckoutResponseAttributesTransfer, $restCheckoutDataResponseTransfer->getCheckoutData());
@@ -129,7 +129,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $checkoutDataResource = $this->restResourceBuilder->createRestResource(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
             null,
-            $restCheckoutResponseAttributesTransfer
+            $restCheckoutResponseAttributesTransfer,
         );
 
         $checkoutDataResource->setPayload($restCheckoutDataTransfer);
@@ -157,8 +157,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 $this->restCheckoutErrorMapper->mapLocalizedRestCheckoutErrorTransferToRestErrorTransfer(
                     $restCheckoutErrorTransfer,
                     new RestErrorMessageTransfer(),
-                    $localeName
-                )
+                    $localeName,
+                ),
             );
         }
 

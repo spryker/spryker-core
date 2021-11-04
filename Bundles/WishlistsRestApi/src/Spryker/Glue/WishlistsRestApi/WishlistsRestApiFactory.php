@@ -21,6 +21,8 @@ use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemAdder;
 use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemAdderInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemDeleter;
 use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemDeleterInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemUpdater;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemUpdaterInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreator;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreatorInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistDeleter;
@@ -43,7 +45,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistReader(
             $this->getWishlistClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -55,7 +57,7 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistCreator(
             $this->getWishlistClient(),
             $this->createWishlistMapper(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -66,7 +68,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistDeleter(
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -78,7 +80,7 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistUpdater(
             $this->createWishlistMapper(),
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -89,7 +91,20 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistItemAdder(
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
+            $this->createWishlistItemMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemUpdaterInterface
+     */
+    public function createWishlistItemUpdater(): WishlistItemUpdaterInterface
+    {
+        return new WishlistItemUpdater(
+            $this->getClient(),
+            $this->createWishlistRestResponseBuilder(),
+            $this->createWishlistItemMapper(),
         );
     }
 
@@ -100,7 +115,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistItemDeleter(
             $this->getClient(),
-            $this->createWishlistRestResponseBuilder()
+            $this->createWishlistRestResponseBuilder(),
         );
     }
 
@@ -113,7 +128,7 @@ class WishlistsRestApiFactory extends AbstractFactory
             $this->getConfig(),
             $this->getResourceBuilder(),
             $this->createWishlistMapper(),
-            $this->createWishlistItemMapper()
+            $this->createWishlistItemMapper(),
         );
     }
 
@@ -131,7 +146,8 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function createWishlistItemMapper(): WishlistItemMapperInterface
     {
         return new WishlistItemMapper(
-            $this->getRestWishlistItemsAttributesMapperPlugins()
+            $this->getRestWishlistItemsAttributesMapperPlugins(),
+            $this->getWishlistItemRequestMapperPlugins(),
         );
     }
 
@@ -157,5 +173,13 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function getRestWishlistItemsAttributesMapperPlugins(): array
     {
         return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\WishlistItemRequestMapperPluginInterface>
+     */
+    public function getWishlistItemRequestMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PLUGINS_WISHLIST_ITEM_REQUEST_MAPPER);
     }
 }

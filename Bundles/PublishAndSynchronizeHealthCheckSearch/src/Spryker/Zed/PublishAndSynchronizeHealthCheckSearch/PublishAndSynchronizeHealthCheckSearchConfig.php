@@ -16,6 +16,7 @@ class PublishAndSynchronizeHealthCheckSearchConfig extends AbstractBundleConfig
      * - The name of the source inside the search.
      *
      * @api
+     *
      * @var string
      */
     public const SOURCE_IDENTIFIER = 'page';

@@ -69,7 +69,7 @@ class UuidGenerator implements UuidGeneratorInterface
 
         return $this->entityManager->fillEmptyUuids(
             $uuidGeneratorConfigurationTransfer,
-            $this->config->getUuidGeneratorBatchSize()
+            $this->config->getUuidGeneratorBatchSize(),
         );
     }
 }

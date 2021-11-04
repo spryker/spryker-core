@@ -43,7 +43,7 @@ class StoreDataValidator extends AbstractImportDataValidator
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_STORE_NOT_FOUND,
-                ['%name%' => $priceProductScheduleImportTransfer->getStoreName()]
+                ['%name%' => $priceProductScheduleImportTransfer->getStoreName()],
             );
         }
 

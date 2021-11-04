@@ -43,7 +43,7 @@ class QuoteApprovalShipmentConnectorDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_QUOTE_APPROVAL, function (Container $container) {
             return new QuoteApprovalShipmentConnectorToQuoteApprovalFacadeBridge(
-                $container->getLocator()->quoteApproval()->facade()
+                $container->getLocator()->quoteApproval()->facade(),
             );
         });
 

@@ -20,6 +20,7 @@ class TargetEntityValidatorStep implements DataImportStepInterface
      * @var string
      */
     protected const ENTITY_NOT_FOUND_TEMPLATE = 'Failed to find %s by %s: "%s"';
+
     /**
      * @var string
      */
@@ -50,8 +51,8 @@ class TargetEntityValidatorStep implements DataImportStepInterface
                     static::ENTITY_NOT_FOUND_TEMPLATE,
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::DATA_ENTITY],
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::REFERENCE_FIELD],
-                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE]
-                )
+                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
+                ),
             );
         }
 
@@ -61,8 +62,8 @@ class TargetEntityValidatorStep implements DataImportStepInterface
                     static::MULTIPLE_ENTITIES_FOUND_TEMPLATE,
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::DATA_ENTITY],
                     $dataSet[AclEntitySegmentConnectorDataSetInterface::REFERENCE_FIELD],
-                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE]
-                )
+                    $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
+                ),
             );
         }
     }

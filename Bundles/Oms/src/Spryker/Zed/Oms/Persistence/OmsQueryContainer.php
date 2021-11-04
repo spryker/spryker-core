@@ -30,34 +30,42 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @var string
      */
     public const VERSION = 'version';
+
     /**
      * @var string
      */
     public const ID_OMS_PRODUCT_RESERVATION = 'idOmsProductReservation';
+
     /**
      * @var string
      */
     public const RESERVATION_QUANTITY = 'reservationQuantity';
+
     /**
      * @var string
      */
     public const SKU = 'sku';
+
     /**
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */
     public const ID_OMS_PRODUCT_RESERVATION_STORE = 'idOmsProductReservationStore';
+
     /**
      * @var string
      */
     public const LAST_UPDATE = 'lastUpdate';
+
     /**
      * @var string
      */
     public const ITEMS_COUNT = 'itemsCount';
+
     /**
      * @var string
      */
@@ -622,7 +630,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
                 SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
                 (new DateTime('-1 day'))->format('Y-m-d H:i:s'),
                 SpySalesOrderItemTableMap::COL_LAST_STATE_CHANGE,
-                (new DateTime('-7 day'))->format('Y-m-d H:i:s')
+                (new DateTime('-7 day'))->format('Y-m-d H:i:s'),
             ), static::DATE_WINDOW)
             ->select([
                 SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE,
@@ -771,9 +779,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->withColumn(
                 sprintf(
                     'MAX(%s)',
-                    SpyOmsProductReservationChangeVersionTableMap::COL_VERSION
+                    SpyOmsProductReservationChangeVersionTableMap::COL_VERSION,
                 ),
-                static::VERSION
+                static::VERSION,
             )
             ->select([static::VERSION]);
     }
@@ -796,7 +804,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->addJoin(
                 SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION,
                 SpyOmsProductReservationChangeVersionTableMap::COL_ID_OMS_PRODUCT_RESERVATION_ID,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION, static::ID_OMS_PRODUCT_RESERVATION)
             ->withColumn(SpyOmsProductReservationTableMap::COL_SKU, static::SKU)

@@ -51,7 +51,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
             ->addJoin(
                 [SpyCmsPageLocalizedAttributesTableMap::COL_FK_CMS_PAGE, SpyCmsPageLocalizedAttributesTableMap::COL_FK_LOCALE],
                 [SpyUrlTableMap::COL_FK_RESOURCE_PAGE, SpyUrlTableMap::COL_FK_LOCALE],
-                Criteria::RIGHT_JOIN
+                Criteria::RIGHT_JOIN,
             )
             ->filterByFkLocale($idLocale)
             ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, 'name')
@@ -59,7 +59,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
             ->setFormatter(new PropelArraySetFormatter())
             ->where(
                 'LOWER(' . SpyCmsPageLocalizedAttributesTableMap::COL_NAME . ') LIKE ?',
-                '%' . mb_strtolower($searchText) . '%'
+                '%' . mb_strtolower($searchText) . '%',
             );
 
         return $query;
@@ -84,12 +84,12 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
             ->addJoin(
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY,
-                Criteria::RIGHT_JOIN
+                Criteria::RIGHT_JOIN,
             )
             ->addJoin(
                 [SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
                 [SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, SpyUrlTableMap::COL_FK_LOCALE],
-                Criteria::RIGHT_JOIN
+                Criteria::RIGHT_JOIN,
             )
             ->filterByFkLocale($idLocale)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
@@ -97,7 +97,7 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
             ->setFormatter(new PropelArraySetFormatter())
             ->where(
                 'LOWER(' . SpyCategoryAttributeTableMap::COL_NAME . ') LIKE ?',
-                '%' . mb_strtolower($searchText) . '%'
+                '%' . mb_strtolower($searchText) . '%',
             );
 
         return $query;

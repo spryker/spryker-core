@@ -31,7 +31,7 @@ class CategoriesRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->getCategoryStorageClient(),
             $this->createCategoryMapper(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 

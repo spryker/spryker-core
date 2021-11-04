@@ -42,7 +42,7 @@ class ProductListDataImportPluginTest extends Unit
         // Act
         $productListDataImportPlugin = new ProductListDataImportPlugin();
         $dataImporterReportTransfer = $productListDataImportPlugin->import(
-            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list.csv')
+            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list.csv'),
         );
 
         // Assert

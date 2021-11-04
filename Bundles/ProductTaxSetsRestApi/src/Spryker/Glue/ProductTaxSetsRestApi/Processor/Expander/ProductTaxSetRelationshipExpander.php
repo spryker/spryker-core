@@ -36,7 +36,7 @@ class ProductTaxSetRelationshipExpander implements ProductTaxSetRelationshipExpa
         foreach ($resources as $resource) {
             $productTaxSetsResource = $this->productTaxSetReader->findProductAbstractTaxSetsByProductAbstractSku(
                 $resource->getId(),
-                $restRequest
+                $restRequest,
             );
 
             if ($productTaxSetsResource) {

@@ -56,7 +56,7 @@ abstract class AbstractCompanyBusinessUnitAddressCollectionResourceRelationshipE
 
             foreach ($addressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
                 $resource->addRelationship(
-                    $this->createCompanyBusinessUnitAddressResource($companyUnitAddress)
+                    $this->createCompanyBusinessUnitAddressResource($companyUnitAddress),
                 );
             }
         }
@@ -82,12 +82,12 @@ abstract class AbstractCompanyBusinessUnitAddressCollectionResourceRelationshipE
         $restCompanyBusinessUnitAddressesAttributesTransfer = $this->companyBusinessUnitAddressMapper
             ->mapCompanyUnitAddressTransferToRestCompanyBusinessUnitAddressesAttributesTransfer(
                 $companyUnitAddressTransfer,
-                new RestCompanyBusinessUnitAddressesAttributesTransfer()
+                new RestCompanyBusinessUnitAddressesAttributesTransfer(),
             );
 
         return $this->companyBusinessUnitAddressRestResponseBuilder->createCompanyBusinessUnitAddressRestResource(
             $companyUnitAddressTransfer->getUuid(),
-            $restCompanyBusinessUnitAddressesAttributesTransfer
+            $restCompanyBusinessUnitAddressesAttributesTransfer,
         );
     }
 }

@@ -23,7 +23,7 @@ interface ProductAbstractReaderInterface
      * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductAbstractRestResources(array $contentProductAbstractListKeys, string $localeName): array;
 }

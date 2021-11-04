@@ -52,7 +52,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             ->expects($this->once())
             ->method('isProductSellableForStore')
             ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(new Decimal(15))]
+                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(new Decimal(15))],
             )
             ->willReturn(true);
 

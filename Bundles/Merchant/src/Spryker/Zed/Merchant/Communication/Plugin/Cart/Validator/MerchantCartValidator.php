@@ -20,14 +20,17 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_INACTIVE_MERCHANT = 'merchant.message.inactive';
+
     /**
      * @var string
      */
@@ -114,7 +117,7 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         $merchantCollectionTransfer = $this->merchantFacade->get(
             (new MerchantCriteriaTransfer())
                 ->setMerchantReferences($merchantReferences)
-                ->setStore($quoteTransfer->getStore())
+                ->setStore($quoteTransfer->getStore()),
         );
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
             $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;

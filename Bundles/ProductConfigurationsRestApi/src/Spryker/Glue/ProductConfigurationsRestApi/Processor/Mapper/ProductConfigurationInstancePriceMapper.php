@@ -33,7 +33,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         foreach ($restProductConfigurationPriceAttributesTransfers as $restProductConfigurationPriceAttributesTransfer) {
             $priceProductTransfer = $this->mapRestProductConfigurationPriceAttributesTransferToPriceProductTransfer(
                 $restProductConfigurationPriceAttributesTransfer,
-                new PriceProductTransfer()
+                new PriceProductTransfer(),
             );
 
             $priceProductTransfers->append($priceProductTransfer);
@@ -59,7 +59,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $restProductConfigurationPriceAttributesTransfer = $this->mapPriceProductTransferToRestProductConfigurationPriceAttributesTransfer(
                 $priceProductTransfer,
-                new RestProductConfigurationPriceAttributesTransfer()
+                new RestProductConfigurationPriceAttributesTransfer(),
             );
 
             $restProductConfigurationPriceAttributesTransfers->append($restProductConfigurationPriceAttributesTransfer);

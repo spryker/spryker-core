@@ -29,26 +29,32 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */
     public const FACADE_PRICE_PRODUCT_SCHEDULE = 'FACADE_PRICE_PRODUCT_SCHEDULE';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
@@ -58,6 +64,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE';
+
     /**
      * @var string
      */
@@ -98,7 +105,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::SERVICE_UTIL_CSV, function (Container $container) {
             return new PriceProductScheduleGuiToUtilCsvServiceBridge(
-                $container->getLocator()->utilCsv()->service()
+                $container->getLocator()->utilCsv()->service(),
             );
         });
 
@@ -114,7 +121,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new PriceProductScheduleGuiToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -130,7 +137,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new PriceProductScheduleGuiToCurrencyFacadeBridge(
-                $container->getLocator()->currency()->facade()
+                $container->getLocator()->currency()->facade(),
             );
         });
 
@@ -146,7 +153,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductScheduleGuiToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
+                $container->getLocator()->priceProduct()->facade(),
             );
         });
 
@@ -162,7 +169,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new PriceProductScheduleGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -178,7 +185,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new PriceProductScheduleGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 
@@ -194,7 +201,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new PriceProductScheduleGuiToMoneyFacadeBridge(
-                $container->getLocator()->money()->facade()
+                $container->getLocator()->money()->facade(),
             );
         });
 
@@ -210,7 +217,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_PRICE_PRODUCT_SCHEDULE, function (Container $container) {
             return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge(
-                $container->getLocator()->priceProductSchedule()->facade()
+                $container->getLocator()->priceProductSchedule()->facade(),
             );
         });
 

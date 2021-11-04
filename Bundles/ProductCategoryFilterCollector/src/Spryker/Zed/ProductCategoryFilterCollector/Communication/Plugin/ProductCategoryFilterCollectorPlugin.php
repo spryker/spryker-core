@@ -52,7 +52,7 @@ class ProductCategoryFilterCollectorPlugin extends AbstractCollectorPlugin
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

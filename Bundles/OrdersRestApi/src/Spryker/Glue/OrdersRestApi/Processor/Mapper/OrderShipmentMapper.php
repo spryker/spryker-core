@@ -29,8 +29,8 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
                 $this->createRestShipmentMethodTransfer(
                     $shipmentMethodTransfer,
                     $orderTransfer->getExpenses(),
-                    $orderTransfer->getCurrencyIsoCode()
-                )
+                    $orderTransfer->getCurrencyIsoCode(),
+                ),
             );
         }
 

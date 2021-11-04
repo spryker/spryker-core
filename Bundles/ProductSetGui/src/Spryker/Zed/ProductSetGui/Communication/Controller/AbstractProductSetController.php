@@ -39,7 +39,7 @@ abstract class AbstractProductSetController extends AbstractController
         return $this->jsonResponse(
             $this->getFactory()
                 ->createProductTable($localeTransfer, $idProductSet)
-                ->fetchData()
+                ->fetchData(),
         );
     }
 
@@ -59,7 +59,7 @@ abstract class AbstractProductSetController extends AbstractController
         return $this->jsonResponse(
             $this->getFactory()
                 ->createProductAbstractSetUpdateTable($localeTransfer, $idProductSet)
-                ->fetchData()
+                ->fetchData(),
         );
     }
 }

@@ -25,7 +25,7 @@ class DuplicatedAclEntityRuleException extends Exception
         $message = sprintf(
             static::MESSAGE_TEMPLATE,
             $entity,
-            $idRole
+            $idRole,
         );
         parent::__construct($message);
     }

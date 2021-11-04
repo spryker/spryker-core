@@ -36,7 +36,7 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
         return new PostAuthenticationGuardToken(
             $user,
             $providerKey,
-            $user->getRoles()
+            $user->getRoles(),
         );
     }
 
@@ -106,7 +106,7 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
         $user = $token->getUser();
         $this->getFactory()->getUserFacade()->setCurrentUser(
             (new UserTransfer())->setUsername($user->getUsername())
-                ->setIsSystemUser(true)
+                ->setIsSystemUser(true),
         );
 
         return null;

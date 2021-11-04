@@ -48,7 +48,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCustomerFacade(),
             $this->getUtilSanitize(),
             $this->getUtilDateTimeService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -106,7 +106,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createOffersTableQueryBuilder(): OffersTableQueryBuilderInterface
     {
         return new OffersTableQueryBuilder(
-            $this->getPropelQueryOffer()
+            $this->getPropelQueryOffer(),
         );
     }
 
@@ -139,7 +139,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         $form = $this->getFormFactory()->create(
             $this->getOfferType(),
             $offerDataProvider->getData($offerTransfer),
-            $offerDataProvider->getOptions()
+            $offerDataProvider->getOptions(),
         );
 
         return $form;
@@ -163,7 +163,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return new OfferDataProvider(
             $this->getCurrencyFacade(),
             $this->getCustomerFacade(),
-            $request
+            $request,
         );
     }
 
@@ -205,7 +205,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCreateRequestHandler()
     {
         return new CreateRequestHandler(
-            $this->getCartFacade()
+            $this->getCartFacade(),
         );
     }
 

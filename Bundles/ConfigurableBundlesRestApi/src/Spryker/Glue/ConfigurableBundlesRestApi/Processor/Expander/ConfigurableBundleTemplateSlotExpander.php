@@ -45,7 +45,7 @@ class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleRestRe
                 $configurableBundleTemplateSlotRestResource = $this->configurableBundleSlotRestResourceBuilder
                     ->buildConfigurableBundleTemplateSlotRestResource(
                         $configurableBundleTemplateSlotStorageTransfer,
-                        $resource->getId()
+                        $resource->getId(),
                     );
 
                 $resource->addRelationship($configurableBundleTemplateSlotRestResource);

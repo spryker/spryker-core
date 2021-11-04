@@ -15,10 +15,12 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_VALUE = 'value';
+
     /**
      * @var string
      */

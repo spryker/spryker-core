@@ -108,7 +108,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
             new ProductAbstractStoreProductConcretePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getProductConcretePageEventQueueName()
+            $this->getConfig()->getProductConcretePageEventQueueName(),
         );
     }
 
@@ -124,7 +124,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
             new ProductAbstractStoreProductConcretePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getProductConcretePageEventQueueName()
+            $this->getConfig()->getProductConcretePageEventQueueName(),
         );
     }
 
@@ -140,7 +140,7 @@ class ProductConcretePageSearchProductEventSubscriber extends AbstractPlugin imp
             new ProductAbstractStoreProductConcretePageSearchUnpublishListener(),
             0,
             null,
-            $this->getConfig()->getProductConcretePageEventQueueName()
+            $this->getConfig()->getProductConcretePageEventQueueName(),
         );
     }
 }

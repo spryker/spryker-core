@@ -48,7 +48,7 @@ interface MerchantOmsToStateMachineFacadeInterface
     /**
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 

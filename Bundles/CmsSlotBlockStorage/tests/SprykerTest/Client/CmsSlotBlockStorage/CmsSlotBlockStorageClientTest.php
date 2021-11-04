@@ -28,10 +28,12 @@ class CmsSlotBlockStorageClientTest extends Unit
      * @var string
      */
     protected const SLOT_KEY = 'cms-slot-key';
+
     /**
      * @var string
      */
     protected const BLOCK_KEY = 'cms-block-key';
+
     /**
      * @var string
      */

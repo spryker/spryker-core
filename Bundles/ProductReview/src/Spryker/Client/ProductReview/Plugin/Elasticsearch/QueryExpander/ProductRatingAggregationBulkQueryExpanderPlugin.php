@@ -22,6 +22,7 @@ class ProductRatingAggregationBulkQueryExpanderPlugin extends AbstractPlugin imp
      * @var string
      */
     public const PRODUCT_AGGREGATOIN_NAME = 'product-aggregation';
+
     /**
      * @var string
      */

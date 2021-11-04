@@ -127,11 +127,9 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @api
      *
-     * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
-     *
      * @param array<int> $merchantOrderItemIds
      *
-     * @return array
+     * @return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      */
     public function getMerchantOrderItemsStateHistory(array $merchantOrderItemIds): array
     {
@@ -153,7 +151,7 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
         MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
     ): MerchantOrderItemCollectionTransfer {
         return $this->getFactory()->createMerchantOrderItemsExpander()->expandMerchantOrderItemsWithManualEvents(
-            $merchantOrderItemCollectionTransfer
+            $merchantOrderItemCollectionTransfer,
         );
     }
 }

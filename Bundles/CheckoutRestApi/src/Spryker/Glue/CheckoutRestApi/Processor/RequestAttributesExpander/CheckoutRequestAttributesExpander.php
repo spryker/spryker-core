@@ -109,7 +109,7 @@ class CheckoutRequestAttributesExpander implements CheckoutRequestAttributesExpa
         foreach ($this->checkoutRequestExpanderPlugins as $checkoutRequestExpanderPlugin) {
             $restCheckoutRequestAttributesTransfer = $checkoutRequestExpanderPlugin->expand(
                 $restRequest,
-                $restCheckoutRequestAttributesTransfer
+                $restCheckoutRequestAttributesTransfer,
             );
         }
 

@@ -61,7 +61,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
     {
         return $this->generateMerchantNameToMerchantUserNameConjunction(
             $merchantUserTransfer->getMerchantOrFail(),
-            $merchantUserTransfer->getUserOrFail()
+            $merchantUserTransfer->getUserOrFail(),
         );
     }
 
@@ -74,7 +74,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
     {
         return $this->generateMerchantNameToMerchantUserNameConjunction(
             $merchantUserTransfer->getMerchantOrFail(),
-            $merchantUserTransfer->getUserOrFail()
+            $merchantUserTransfer->getUserOrFail(),
         );
     }
 
@@ -88,7 +88,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
         return sprintf(
             '%s%s',
             $this->aclMerchantPortalConfig->getMerchantAclReferencePrefix(),
-            $merchantTransfer->getMerchantReferenceOrFail()
+            $merchantTransfer->getMerchantReferenceOrFail(),
         );
     }
 
@@ -123,7 +123,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
         return sprintf(
             '%s%d',
             $this->aclMerchantPortalConfig->getMerchantUserAclReferencePrefix(),
-            $userTransfer->getIdUserOrFail()
+            $userTransfer->getIdUserOrFail(),
         );
     }
 
@@ -137,7 +137,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
         return sprintf(
             '%s - %s',
             $merchantTransfer->getNameOrFail(),
-            static::KEY_MERCHANT_PORTAL
+            static::KEY_MERCHANT_PORTAL,
         );
     }
 
@@ -154,7 +154,7 @@ class AclMerchantPortalGenerator implements AclMerchantPortalGeneratorInterface
             $merchantTransfer->getNameOrFail(),
             static::KEY_MERCHANT_PORTAL,
             $userTransfer->getFirstNameOrFail(),
-            $userTransfer->getLastNameOrFail()
+            $userTransfer->getLastNameOrFail(),
         );
     }
 }

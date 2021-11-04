@@ -18,6 +18,7 @@ class ModuleBuilder
      * @var string
      */
     protected const OPTION_FILE = 'file';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class ModuleBuilder
      * @var string
      */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+
     /**
      * @var string
      */
@@ -67,7 +69,7 @@ class ModuleBuilder
 
     /**
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -124,7 +126,7 @@ class ModuleBuilder
     /**
      * @param string $namespace
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -156,7 +158,7 @@ class ModuleBuilder
     protected function getTemplateContent($templateName)
     {
         return file_get_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl'
+            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl',
         );
     }
 
@@ -188,7 +190,7 @@ class ModuleBuilder
         $templateContent = str_replace(
             $from,
             $to,
-            $templateContent
+            $templateContent,
         );
 
         return $templateContent;

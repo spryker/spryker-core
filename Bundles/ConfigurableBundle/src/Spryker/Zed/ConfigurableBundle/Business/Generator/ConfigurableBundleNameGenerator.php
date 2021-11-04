@@ -17,14 +17,17 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
      * @var string
      */
     protected const PREFIX_TEMPLATE_NAME = 'configurable_bundle.templates';
+
     /**
      * @var string
      */
     protected const PREFIX_TEMPLATE_SLOT_NAME = 'configurable_bundle.template_slots';
+
     /**
      * @var string
      */
     protected const POSTFIX_NAME = 'name';
+
     /**
      * @var string
      */
@@ -54,7 +57,7 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
 
         return $this->generateName(
             $configurableBundleTemplateTransfer->getTranslations()[0]->getName(),
-            static::PREFIX_TEMPLATE_NAME
+            static::PREFIX_TEMPLATE_NAME,
         );
     }
 
@@ -69,7 +72,7 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
 
         return $this->generateName(
             $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName(),
-            static::PREFIX_TEMPLATE_SLOT_NAME
+            static::PREFIX_TEMPLATE_SLOT_NAME,
         );
     }
 

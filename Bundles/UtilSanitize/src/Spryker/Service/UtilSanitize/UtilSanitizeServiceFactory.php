@@ -41,7 +41,7 @@ class UtilSanitizeServiceFactory extends AbstractServiceFactory
     {
         return new StringSanitizer(
             $this->getStringSanitizerPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

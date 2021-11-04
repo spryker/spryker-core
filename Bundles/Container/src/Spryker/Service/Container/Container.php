@@ -76,7 +76,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * This is a storage for services which should be extended, but at the point where extend was called the service was not found.
      *
-     * @var array<\Closure[]>
+     * @var array<array<\Closure>>
      */
     protected $toBeExtended = [];
 
@@ -342,7 +342,7 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * @param string $id
-     * @param array $aliases
+     * @param array<string> $aliases
      *
      * @return void
      */
@@ -368,7 +368,7 @@ class Container implements ContainerInterface, ArrayAccess
                 'The alias "%s" is already in use for the "%s" service and can\'t be reused for the service "%s".',
                 $alias,
                 static::$aliases[$alias],
-                $id
+                $id,
             ));
         }
 
@@ -517,7 +517,7 @@ class Container implements ContainerInterface, ArrayAccess
             unset(
                 $this->services[$id],
                 $this->frozenServices[$id],
-                $this->serviceIdentifier[$id]
+                $this->serviceIdentifier[$id],
             );
         }
     }
@@ -533,7 +533,7 @@ class Container implements ContainerInterface, ArrayAccess
             unset(
                 static::$globalServices[$id],
                 static::$globalFrozenServices[$id],
-                static::$globalServiceIdentifier[$id]
+                static::$globalServiceIdentifier[$id],
             );
         }
     }
@@ -613,6 +613,7 @@ class Container implements ContainerInterface, ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         $this->triggerError(sprintf('ArrayAccess for the container in Spryker (e.g. `$foo = $container[\'%s\']`) is no longer supported! Please use `ContainerInterface:get()` instead.', $offset));

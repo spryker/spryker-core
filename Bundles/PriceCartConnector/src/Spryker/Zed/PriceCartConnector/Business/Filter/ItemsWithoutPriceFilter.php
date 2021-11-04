@@ -23,6 +23,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      * @var string
      */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+
     /**
      * @var string
      */
@@ -134,7 +135,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
 
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
             (new PriceProductFilterTransfer()),
-            $itemTransfer
+            $itemTransfer,
         );
 
         $priceProductFilterTransfer->setStoreName($storeName)

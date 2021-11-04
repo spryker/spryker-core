@@ -17,12 +17,14 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
 {
     /**
      * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_ID_STORE
+     *
      * @var string
      */
     protected const COL_ID_STORE = 'spy_store.id_store';
 
     /**
      * @uses \Orm\Zed\Store\Persistence\Map\SpyStoreTableMap::COL_NAME
+     *
      * @var string
      */
     protected const COL_STORE_NAME = 'spy_store.name';
@@ -106,8 +108,8 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
             ->buildViolation(
                 sprintf(
                     'Other product relations of this type are already assigned to this stores: %s',
-                    implode(',', $storeData)
-                )
+                    implode(',', $storeData),
+                ),
             )
             ->addViolation();
     }

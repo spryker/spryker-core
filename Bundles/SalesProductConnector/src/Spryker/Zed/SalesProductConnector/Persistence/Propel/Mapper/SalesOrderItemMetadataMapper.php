@@ -27,7 +27,7 @@ class SalesOrderItemMetadataMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata> $salesOrderItemMetadataEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata[] $salesOrderItemMetadataEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemMetadataTransfer>
      */

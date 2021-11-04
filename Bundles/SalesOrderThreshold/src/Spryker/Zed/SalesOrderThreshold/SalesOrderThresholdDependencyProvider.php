@@ -26,34 +26,42 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const SALES_ORDER_THRESHOLD_DATA_SOURCE_STRATEGIES = 'SALES_ORDER_THRESHOLD_DATA_SOURCE_STRATEGIES';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
     public const FACADE_TAX = 'FACADE_TAX';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

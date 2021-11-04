@@ -105,7 +105,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     ->setStore('DE')
                     ->setEnable(true)
                     ->setRepeatPattern('* * * * *')
-                    ->setPayload([])
+                    ->setPayload([]),
             )
             ->addJob(
                 (new SchedulerJobTransfer())
@@ -113,7 +113,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     ->setStore('DE')
                     ->setEnable(true)
                     ->setRepeatPattern('* * * * *')
-                    ->setPayload([])
+                    ->setPayload([]),
             )
             ->setIdScheduler(static::ID_SCHEDULER);
     }
@@ -139,7 +139,7 @@ class SchedulerJenkinsFacadeTest extends Unit
                     'createJenkinsApi',
                     'getUtilEncodingService',
                     'createConfigurationProviderBuilder',
-                ]
+                ],
             )
             ->getMock();
 
@@ -252,7 +252,7 @@ class SchedulerJenkinsFacadeTest extends Unit
     protected function createUtilEncodingServiceBridge(): SchedulerJenkinsToUtilEncodingServiceBridge
     {
         return new SchedulerJenkinsToUtilEncodingServiceBridge(
-            new UtilEncodingService()
+            new UtilEncodingService(),
         );
     }
 }

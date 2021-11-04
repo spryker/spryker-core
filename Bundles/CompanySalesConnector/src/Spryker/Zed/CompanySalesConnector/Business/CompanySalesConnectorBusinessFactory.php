@@ -29,7 +29,7 @@ class CompanySalesConnectorBusinessFactory extends AbstractBusinessFactory
     public function createOrderWriter(): OrderWriterInterface
     {
         return new OrderWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

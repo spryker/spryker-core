@@ -37,7 +37,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
     {
         $this->calculateTaxAverageAggregationForItems(
             $calculableObjectTransfer->getItems(),
-            $calculableObjectTransfer->getPriceMode()
+            $calculableObjectTransfer->getPriceMode(),
         );
     }
 
@@ -92,7 +92,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
 
         return round(
             ($itemTransfer->getSumPriceToPayAggregation() / $netSumPriceToPayAggregation - 1) * 100,
-            2
+            2,
         );
     }
 

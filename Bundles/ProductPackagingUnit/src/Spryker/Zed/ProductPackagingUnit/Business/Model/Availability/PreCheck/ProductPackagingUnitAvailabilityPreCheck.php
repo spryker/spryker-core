@@ -42,7 +42,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
         return $this->isProductSellableForStore(
             $itemTransfer->getSku(),
             new Decimal($itemTransfer->getQuantity()),
-            $storeTransfer
+            $storeTransfer,
         );
     }
 
@@ -89,7 +89,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
         return $this->isProductSellableForStore(
             $itemLeadProductSku,
             $accumulatedItemLeadProductQuantity,
-            $storeTransfer
+            $storeTransfer,
         );
     }
 

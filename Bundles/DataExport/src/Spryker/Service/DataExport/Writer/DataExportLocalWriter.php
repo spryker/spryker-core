@@ -21,6 +21,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
      * @var string
      */
     protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
+
     /**
      * @var string
      */
@@ -85,7 +86,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
 
         $filePath = $this->dataExportPathResolver->resolvePath(
             $dataExportConfigurationTransfer,
-            $dataExportConfigurationTransfer->getConnectionOrFail()->getParams()[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR]
+            $dataExportConfigurationTransfer->getConnectionOrFail()->getParams()[static::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR],
         );
 
         if (!$this->createDirectory($filePath)) {
@@ -155,7 +156,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
     {
         return (new MessageTransfer())
             ->setValue(
-                sprintf('Failed to write file "%s".', $filePath)
+                sprintf('Failed to write file "%s".', $filePath),
             );
     }
 
@@ -168,7 +169,7 @@ class DataExportLocalWriter implements DataExportWriterInterface
     {
         return (new MessageTransfer())
             ->setValue(
-                sprintf('Missing local connection parameter (export_root_dir) for data_entity "%s".', $dataExportConfigurationTransfer->getDataEntity())
+                sprintf('Missing local connection parameter (export_root_dir) for data_entity "%s".', $dataExportConfigurationTransfer->getDataEntity()),
             );
     }
 }

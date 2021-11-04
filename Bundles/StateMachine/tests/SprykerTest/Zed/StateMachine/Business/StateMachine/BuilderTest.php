@@ -151,7 +151,7 @@ class BuilderTest extends Unit
             $this->createState(),
             $this->createTransition(),
             $this->createProcess(),
-            $this->createStateMachineConfig()
+            $this->createStateMachineConfig(),
         );
     }
 

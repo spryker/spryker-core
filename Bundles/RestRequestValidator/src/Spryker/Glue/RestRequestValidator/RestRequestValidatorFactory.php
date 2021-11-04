@@ -33,7 +33,7 @@ class RestRequestValidatorFactory extends AbstractFactory
         return new RestRequestValidator(
             $this->createRestRequestValidatorConstraintResolver(),
             $this->getValidatorAdapter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -46,7 +46,7 @@ class RestRequestValidatorFactory extends AbstractFactory
             $this->getFilesystemAdapter(),
             $this->getYamlAdapter(),
             $this->getStoreClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -58,7 +58,7 @@ class RestRequestValidatorFactory extends AbstractFactory
         return new RestRequestValidatorConstraintResolver(
             $this->getConstraintCollectionAdapter(),
             $this->createRestRequestValidatorConfigReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

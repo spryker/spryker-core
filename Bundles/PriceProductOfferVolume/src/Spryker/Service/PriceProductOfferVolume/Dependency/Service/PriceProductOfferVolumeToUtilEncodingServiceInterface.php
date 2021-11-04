@@ -20,9 +20,7 @@ interface PriceProductOfferVolumeToUtilEncodingServiceInterface
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 
     /**
-     * @phpstan-param array<mixed> $value
-     *
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

@@ -28,6 +28,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      * @var string
      */
     public const URI_SUFFIX_INDEX = '\/index$';
+
     /**
      * @var string
      */
@@ -51,7 +52,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
                 $twig->addFunction($this->getBreadcrumbFunction($application));
 
                 return $twig;
-            })
+            }),
         );
 
         $this->addBackwardCompatibility($application);
@@ -153,7 +154,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
                 $variables['breadcrumbs'] = $breadcrumbs;
 
                 return $variables;
-            })
+            }),
         );
     }
 

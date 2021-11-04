@@ -38,7 +38,7 @@ class WishlistProductOfferCollectionToRemoveExpanderPlugin extends AbstractPlugi
             ->expandWishlistItemCollectionTransfer(
                 $wishlistMoveToCartRequestCollectionTransfer,
                 $failedWishlistMoveToCartRequestCollectionTransfer,
-                $wishlistItemCollectionTransfer
+                $wishlistItemCollectionTransfer,
             );
     }
 }

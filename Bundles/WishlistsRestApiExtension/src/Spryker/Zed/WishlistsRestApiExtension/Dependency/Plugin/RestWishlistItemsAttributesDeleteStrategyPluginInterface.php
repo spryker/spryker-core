@@ -21,8 +21,6 @@ interface RestWishlistItemsAttributesDeleteStrategyPluginInterface
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
@@ -35,8 +33,6 @@ interface RestWishlistItemsAttributesDeleteStrategyPluginInterface
      * - Deletes Wishlist item by given `WishlistItemRequest` transfer object and collection of `WishlistItem` transfer objects.
      *
      * @api
-     *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers

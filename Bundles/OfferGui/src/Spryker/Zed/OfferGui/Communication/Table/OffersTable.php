@@ -25,22 +25,27 @@ class OffersTable extends AbstractTable
      * @var string
      */
     protected const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
+
     /**
      * @var string
      */
     protected const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
+
     /**
      * @var string
      */
     protected const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
+
     /**
      * @var string
      */
     protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/create';
+
     /**
      * @var string
      */
     protected const URL_OFFER_GUI_PLACE_ORDER = '/offer-gui/place-order/';
+
     /**
      * @var string
      */
@@ -49,10 +54,12 @@ class OffersTable extends AbstractTable
     protected const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
     protected const COL_CREATED_AT = SpyOfferTableMap::COL_CREATED_AT;
     protected const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
+
     /**
      * @var string
      */
     protected const COL_EMAIL = 'email';
+
     /**
      * @var string
      */
@@ -60,10 +67,12 @@ class OffersTable extends AbstractTable
     protected const COL_CONTACT_DATE = SpyOfferTableMap::COL_CONTACT_DATE;
     protected const COL_CONTACT_PERSON = SpyOfferTableMap::COL_CONTACT_PERSON;
     protected const COL_NOTE = SpyOfferTableMap::COL_NOTE;
+
     /**
      * @var string
      */
     protected const COL_URL = 'url';
+
     /**
      * @var string
      */
@@ -188,7 +197,7 @@ class OffersTable extends AbstractTable
             '%s. %s %s',
             $customerTransfer->getSalutation(),
             $customerTransfer->getFirstName(),
-            $customerTransfer->getLastName()
+            $customerTransfer->getLastName(),
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
@@ -268,7 +277,7 @@ class OffersTable extends AbstractTable
                 Url::generate(static::URL_OFFER_GUI_EDIT, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 ]),
-                'Edit'
+                'Edit',
             );
         }
 
@@ -276,7 +285,7 @@ class OffersTable extends AbstractTable
             Url::generate(static::URL_OFFER_GUI_VIEW_DETAILS, [
                 static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateViewButton(
@@ -284,14 +293,14 @@ class OffersTable extends AbstractTable
                 static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
             'Print version',
-            ['target' => '_blank']
+            ['target' => '_blank'],
         );
 
         $urls[] = $this->generateCreateButton(
             Url::generate(static::URL_OFFER_GUI_SUGGEST, [
                 static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
-            'Suggest to'
+            'Suggest to',
         );
 
         if ($this->isClosed($item)) {
@@ -299,7 +308,7 @@ class OffersTable extends AbstractTable
                 Url::generate(static::URL_OFFER_GUI_PLACE_ORDER, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 ]),
-                'Place order'
+                'Place order',
             );
         }
 
@@ -421,7 +430,7 @@ class OffersTable extends AbstractTable
     protected function getCustomerByReference(array $item): ?CustomerTransfer
     {
         return $this->customerFacade->findCustomerByReference(
-            $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE]
+            $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE],
         );
     }
 

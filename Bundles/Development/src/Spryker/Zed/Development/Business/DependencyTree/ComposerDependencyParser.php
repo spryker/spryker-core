@@ -27,14 +27,17 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      * @var string
      */
     public const TYPE_INCLUDE = 'include';
+
     /**
      * @var string
      */
     public const TYPE_EXCLUDE = 'exclude';
+
     /**
      * @var string
      */
     public const TYPE_INCLUDE_DEV = 'include-dev';
+
     /**
      * @var string
      */
@@ -323,7 +326,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             throw new InvalidComposerJsonException(sprintf(
                 'Unable to parse %s: %s.',
                 $dependencyJsonFilePath,
-                json_last_error_msg()
+                json_last_error_msg(),
             ));
         }
 
@@ -359,24 +362,24 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             throw new InvalidComposerJsonException(sprintf(
                 'Unable to parse %s: %s.',
                 $composerJsonFilePath,
-                json_last_error_msg()
+                json_last_error_msg(),
             ));
         }
 
-        $require = isset($content['require']) ? $content['require'] : [];
+        $require = $content['require'] ?? [];
         $this->addComposerDependencies($require, $composerDependencies);
 
-        $requireDev = isset($content['require-dev']) ? $content['require-dev'] : [];
+        $requireDev = $content['require-dev'] ?? [];
         $this->addComposerDependencies($requireDev, $composerDependencies, true);
 
-        $suggested = isset($content['suggest']) ? $content['suggest'] : [];
+        $suggested = $content['suggest'] ?? [];
         $this->addSuggestedDependencies($suggested, $composerDependencies);
 
         return $composerDependencies;
     }
 
     /**
-     * @param array $require
+     * @param array<string, string> $require
      * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
      * @param bool $isDev
      *
@@ -401,7 +404,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     }
 
     /**
-     * @param array $suggested
+     * @param array<string, string> $suggested
      * @param \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer
      *
      * @return void

@@ -37,12 +37,12 @@ class LocaleFacadeTest extends Unit
     protected $localeQueryContainer;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $availableLocales = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $localeNames = [];
 
@@ -74,7 +74,7 @@ class LocaleFacadeTest extends Unit
     {
         $this->assertSame(
             array_values($this->availableLocales),
-            array_values($this->localeNames)
+            array_values($this->localeNames),
         );
     }
 
@@ -85,7 +85,7 @@ class LocaleFacadeTest extends Unit
     {
         $this->assertNotSame(
             array_keys($this->availableLocales),
-            array_keys($this->localeNames)
+            array_keys($this->localeNames),
         );
     }
 

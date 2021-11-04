@@ -49,14 +49,17 @@ class AvailabilityFacadeTest extends Unit
      * @var string
      */
     public const ABSTRACT_SKU = '123_availability_test';
+
     /**
      * @var string
      */
     public const CONCRETE_SKU = '123_availability_test-concrete';
+
     /**
      * @var int
      */
     public const ID_STORE = 1;
+
     /**
      * @var string
      */
@@ -79,7 +82,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['is_never_out_of_stock' => true],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -101,7 +104,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 0],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -123,7 +126,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 5],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -149,7 +152,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => $quantity->toString()],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -183,7 +186,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 5],
-            $quoteTransfer->getStore()
+            $quoteTransfer->getStore(),
         );
 
         // Act
@@ -206,7 +209,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 0],
-            $quoteTransfer->getStore()
+            $quoteTransfer->getStore(),
         );
 
         // Act
@@ -228,7 +231,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 5],
-            $storeTransfer
+            $storeTransfer,
         );
 
         $stockProductEntity->setQuantity(50);
@@ -258,7 +261,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 50],
-            $storeTransfer
+            $storeTransfer,
         );
         $this->createProductAvailability(static::ABSTRACT_SKU, static::CONCRETE_SKU, new Decimal(0), $storeTransfer);
 
@@ -310,7 +313,7 @@ class AvailabilityFacadeTest extends Unit
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductAbstractAvailabilityBySkuForStore(
                 $productTransfer->getAbstractSku(),
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -330,7 +333,7 @@ class AvailabilityFacadeTest extends Unit
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductAbstractAvailabilityBySkuForStore(
                 'xyz' . rand(100, 1000),
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -353,28 +356,28 @@ class AvailabilityFacadeTest extends Unit
             $abstractSku,
             $concreteSku1,
             ['quantity' => $productQuantity1],
-            $storeTransfer
+            $storeTransfer,
         );
 
         $this->createProductWithStock(
             $abstractSku,
             $concreteSku2,
             ['quantity' => $productQuantity2],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductAbstractAvailabilityBySkuForStore(
                 $abstractSku,
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
         $this->assertNotNull($productAbstractAvailabilityTransfer);
         $this->assertSame(
             $productAbstractAvailabilityTransfer->getAvailability()->trim()->toInt(),
-            ($productQuantity1 + $productQuantity2)
+            ($productQuantity1 + $productQuantity2),
         );
     }
 
@@ -393,7 +396,7 @@ class AvailabilityFacadeTest extends Unit
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 $productTransfer->getSku(),
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -413,14 +416,14 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => $productQuantity],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 static::CONCRETE_SKU,
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -440,7 +443,7 @@ class AvailabilityFacadeTest extends Unit
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 'xyz' . rand(100, 1000),
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -458,7 +461,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 0],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -469,7 +472,7 @@ class AvailabilityFacadeTest extends Unit
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findProductConcreteAvailability(
                 (new ProductConcreteAvailabilityRequestTransfer())
-                    ->setSku(static::CONCRETE_SKU)
+                    ->setSku(static::CONCRETE_SKU),
             );
 
         $this->assertTrue($productConcreteAvailabilityTransfer->getAvailability()->equals(2));
@@ -488,7 +491,7 @@ class AvailabilityFacadeTest extends Unit
         $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
             $productConcreteTransfer->getSku(),
             new Decimal('1.1'),
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -515,7 +518,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['is_never_out_of_stock' => true],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -538,7 +541,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 2],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -561,7 +564,7 @@ class AvailabilityFacadeTest extends Unit
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
             ['quantity' => 0],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -602,7 +605,7 @@ class AvailabilityFacadeTest extends Unit
             $firstProductConcreteTransfer->getAbstractSku(),
             $firstProductConcreteTransfer->getSku(),
             ['quantity' => 0],
-            $storeTransfer
+            $storeTransfer,
         );
 
         $secondProductConcreteTransfer = $this->tester->haveProduct();
@@ -610,7 +613,7 @@ class AvailabilityFacadeTest extends Unit
             $firstProductConcreteTransfer->getAbstractSku(),
             $firstProductConcreteTransfer->getSku(),
             ['quantity' => 2],
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -638,7 +641,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
-            new ProductAvailabilityCriteriaTransfer()
+            new ProductAvailabilityCriteriaTransfer(),
         );
 
         // Assert
@@ -660,18 +663,18 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
-            (new ProductAvailabilityCriteriaTransfer())->addProductConcreteSku($productTransfer2->getSku())
+            (new ProductAvailabilityCriteriaTransfer())->addProductConcreteSku($productTransfer2->getSku()),
         );
 
         // Assert
         $this->assertCount(1, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
         $this->assertSame(
             $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getSku(),
-            $productTransfer2->getSku()
+            $productTransfer2->getSku(),
         );
         $this->assertSame(
             $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getAvailability()->toInt(),
-            2
+            2,
         );
     }
 
@@ -691,18 +694,18 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
-            (new ProductAvailabilityCriteriaTransfer())->addIdStore($storeTransfer1->getIdStore())
+            (new ProductAvailabilityCriteriaTransfer())->addIdStore($storeTransfer1->getIdStore()),
         );
 
         // Assert
         $this->assertCount(1, $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities());
         $this->assertSame(
             $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getSku(),
-            $productTransfer1->getSku()
+            $productTransfer1->getSku(),
         );
         $this->assertSame(
             $productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities()[0]->getAvailability()->toInt(),
-            1
+            1,
         );
     }
 
@@ -723,7 +726,7 @@ class AvailabilityFacadeTest extends Unit
         $productConcreteAvailabilityCollectionTransfer = $this->getAvailabilityFacade()->getProductConcreteAvailabilityCollection(
             (new ProductAvailabilityCriteriaTransfer())
                 ->addIdStore($storeTransfer->getIdStore() + 1)
-                ->addProductConcreteSku(static::CONCRETE_SKU . 2)
+                ->addProductConcreteSku(static::CONCRETE_SKU . 2),
         );
 
         // Assert

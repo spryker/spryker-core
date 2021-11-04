@@ -28,14 +28,17 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      * @var string
      */
     public const COL_CONCRETE_PRODUCT_COUNT = 'concrete_product_count';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'col_id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_TYPE = 'col_type';
+
     /**
      * @var string
      */
@@ -86,7 +89,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         $blacklistIds = array_merge(
             $blacklistIds,
             $this->getProductBlacklistIdsByIdAbstractProduct($idProductAbstract),
-            $this->getCategoryBlacklistIdsByIdAbstractProduct($idProductAbstract)
+            $this->getCategoryBlacklistIdsByIdAbstractProduct($idProductAbstract),
         );
 
         return array_unique($blacklistIds);
@@ -103,7 +106,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         $whitelistIds = array_merge(
             $whitelistIds,
             $this->getProductWhitelistIdsByIdAbstractProduct($idProductAbstract),
-            $this->getCategoryWhitelistIdsByIdAbstractProduct($idProductAbstract)
+            $this->getCategoryWhitelistIdsByIdAbstractProduct($idProductAbstract),
         );
 
         return array_unique($whitelistIds);
@@ -156,7 +159,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         return $this->getConcreteProductSkusInList(
             $productConcreteSkus,
             SpyProductListTableMap::COL_TYPE_BLACKLIST,
-            $blackListIds
+            $blackListIds,
         );
     }
 
@@ -171,7 +174,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         return $this->getConcreteProductSkusInList(
             $productConcreteSkus,
             SpyProductListTableMap::COL_TYPE_WHITELIST,
-            $whiteListIds
+            $whiteListIds,
         );
     }
 
@@ -491,7 +494,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->having(sprintf(
                 'COUNT(DISTINCT %s) = COUNT(DISTINCT %s)',
                 SpyProductListProductConcreteTableMap::COL_FK_PRODUCT,
-                SpyProductTableMap::alias($spyProductTableAlias, SpyProductTableMap::COL_ID_PRODUCT)
+                SpyProductTableMap::alias($spyProductTableAlias, SpyProductTableMap::COL_ID_PRODUCT),
             ))
             ->setFormatter(SimpleArrayFormatter::class)
             ->find()

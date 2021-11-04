@@ -23,14 +23,17 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
@@ -61,7 +64,7 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductLabelBridge(
-                $container->getLocator()->productLabel()->facade()
+                $container->getLocator()->productLabel()->facade(),
             );
         });
 
@@ -77,7 +80,7 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 
@@ -93,7 +96,7 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_PRODUCT_ALTERNATIVE, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge(
-                $container->getLocator()->productAlternative()->facade()
+                $container->getLocator()->productAlternative()->facade(),
             );
         });
 
@@ -109,7 +112,7 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

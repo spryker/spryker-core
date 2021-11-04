@@ -27,14 +27,17 @@ class MimeTypeForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_MIME_TYPE = 'idMimeType';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_COMMENT = 'comment';
+
     /**
      * @var string
      */
@@ -54,7 +57,7 @@ class MimeTypeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -62,7 +65,7 @@ class MimeTypeForm extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_MIME_TYPE,
-            HiddenType::class
+            HiddenType::class,
         );
 
         $builder->add(
@@ -73,7 +76,7 @@ class MimeTypeForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -81,7 +84,7 @@ class MimeTypeForm extends AbstractType
             TextareaType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         $builder->add(
@@ -89,7 +92,7 @@ class MimeTypeForm extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
     }
 }

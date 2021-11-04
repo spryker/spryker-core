@@ -79,7 +79,7 @@ class MerchantProductBusinessTester extends Actor
         $merchantProductAbstractQuery = SpyMerchantProductAbstractQuery::create();
         if (count($merchantProductCriteriaTransfer->getMerchantProductAbstractIds())) {
             $merchantProductAbstractQuery->filterByIdMerchantProductAbstract_In(
-                $merchantProductCriteriaTransfer->getMerchantProductAbstractIds()
+                $merchantProductCriteriaTransfer->getMerchantProductAbstractIds(),
             );
         }
 

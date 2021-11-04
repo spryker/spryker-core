@@ -19,6 +19,7 @@
         <property name="moneyValueCollection" type="MoneyValue[]" singular="moneyValue"/>
         <property name="currency" type="Currency"/>
         <property name="priceMode" type="string"/>
+        <property name="discountType" type="string"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -49,6 +50,7 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="id" type="int"/>
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>

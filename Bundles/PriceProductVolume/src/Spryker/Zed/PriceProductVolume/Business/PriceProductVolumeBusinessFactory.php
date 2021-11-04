@@ -31,7 +31,7 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     {
         return new VolumePriceExtractor(
             $this->getUtilEncodingService(),
-            $this->createPriceProductReader()
+            $this->createPriceProductReader(),
         );
     }
 
@@ -43,7 +43,7 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
         return new PriceProductVolumeValidator(
             $this->getValidationAdapter(),
             $this->createVolumePriceExtractor(),
-            $this->getPriceVolumeCollectionConstraints()
+            $this->getPriceVolumeCollectionConstraints(),
         );
     }
 
@@ -53,7 +53,7 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductReader(): PriceProductReaderInterface
     {
         return new PriceProductReader(
-            $this->getPriceProductFacade()
+            $this->getPriceProductFacade(),
         );
     }
 
@@ -63,7 +63,7 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function createUniqueVolumePriceConstraint(): Constraint
     {
         return new UniqueVolumePriceConstraint(
-            $this->createVolumePriceExtractor()
+            $this->createVolumePriceExtractor(),
         );
     }
 
@@ -73,7 +73,7 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function createVolumePriceHasBasePriceProductConstraint(): Constraint
     {
         return new VolumePriceHasBasePriceProductConstraint(
-            $this->createVolumePriceExtractor()
+            $this->createVolumePriceExtractor(),
         );
     }
 

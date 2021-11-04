@@ -29,7 +29,7 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     public function getMerchantProductOfferDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProductOfferDataImporterConfiguration()
+            $this->getConfig()->getMerchantProductOfferDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -51,7 +51,7 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     public function getMerchantProductOfferStoreDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProductOfferStoreDataImporterConfiguration()
+            $this->getConfig()->getMerchantProductOfferStoreDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

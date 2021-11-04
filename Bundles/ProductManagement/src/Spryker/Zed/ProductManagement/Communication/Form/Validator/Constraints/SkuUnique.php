@@ -24,7 +24,7 @@ class SkuUnique extends Constraint
 
     /**
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(ProductManagementToProductInterface $productFacade, array $options = [])
     {

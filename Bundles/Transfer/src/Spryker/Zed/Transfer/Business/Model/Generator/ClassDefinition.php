@@ -24,6 +24,7 @@ class ClassDefinition implements ClassDefinitionInterface
      * @var string
      */
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
+
     /**
      * @var string
      */
@@ -33,8 +34,9 @@ class ClassDefinition implements ClassDefinitionInterface
      * @var string
      */
     protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
+
     /**
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const SUPPORTED_VALUE_OBJECTS = [
         'decimal' => [
@@ -54,22 +56,22 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $name;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $constants = [];
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $properties = [];
 
     /**
-     * @var array
+     * @var array<array>
      */
     protected $normalizedProperties = [];
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $methods = [];
 
@@ -84,12 +86,12 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $deprecationDescription;
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $useStatements = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $propertyNameMap = [];
 
@@ -112,7 +114,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return $this
      */
@@ -209,7 +211,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -238,7 +240,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -311,7 +313,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return array
      */
@@ -334,7 +336,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return array
      */
@@ -357,7 +359,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -367,7 +369,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -403,7 +405,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -413,7 +415,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -427,7 +429,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return sprintf(
                 '%s|\%s',
                 static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS],
-                $this->getValueObjectFullyQualifiedClassName($property)
+                $this->getValueObjectFullyQualifiedClassName($property),
             );
         }
 
@@ -457,7 +459,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -495,7 +497,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getPropertyNameMap(): array
     {
@@ -515,7 +517,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -532,7 +534,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -580,7 +582,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -595,7 +597,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -617,7 +619,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -629,7 +631,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -641,7 +643,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -677,7 +679,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -687,7 +689,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -697,7 +699,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -711,7 +713,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -725,7 +727,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -735,7 +737,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -745,7 +747,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -783,7 +785,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -801,7 +803,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -815,7 +817,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -835,7 +837,7 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildTypeShimNotice(
                 $property['type'],
-                $this->getPropertyTypeShim($property)
+                $this->getPropertyTypeShim($property),
             );
         }
 
@@ -845,7 +847,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -879,13 +881,13 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildTypeShimNotice(
                 $property['type'],
-                $this->getPropertyTypeShim($property)
+                $this->getPropertyTypeShim($property),
             );
         }
 
         if ($this->isValueObject($property)) {
             $method['valueObject'] = $this->getShortClassName(
-                $this->getValueObjectFullyQualifiedClassName($property)
+                $this->getValueObjectFullyQualifiedClassName($property),
             );
         }
 
@@ -893,7 +895,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -918,7 +920,7 @@ class ClassDefinition implements ClassDefinitionInterface
         if ($this->propertyHasTypeShim($property)) {
             $method['typeShimNotice'] = $this->buildAddTypeShimNotice(
                 $property['type'],
-                $this->getPropertyTypeShim($property)
+                $this->getPropertyTypeShim($property),
             );
         }
 
@@ -939,10 +941,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addSetTypeHint(array $method, array $property): array
     {
@@ -956,10 +958,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addDefaultNull(array $method, array $property): array
     {
@@ -973,7 +975,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -993,7 +995,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -1003,7 +1005,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -1026,13 +1028,13 @@ class ClassDefinition implements ClassDefinitionInterface
             throw new InvalidNameException(sprintf(
                 'Transfer property "%s" needs to be alpha-numeric and camel-case formatted in "%s"!',
                 $propertyName,
-                $this->name
+                $this->name,
             ));
         }
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -1045,7 +1047,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
      *
@@ -1055,13 +1057,13 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if (!preg_match('(true|false|1|0)', $property['associative'])) {
             throw new InvalidAssociativeValueException(
-                'Transfer property "associative" has invalid value. The value has to be "true" or "false".'
+                'Transfer property "associative" has invalid value. The value has to be "true" or "false".',
             );
         }
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
      *
@@ -1072,23 +1074,23 @@ class ClassDefinition implements ClassDefinitionInterface
         if (!$this->isArray($property) && !$this->isCollection($property)) {
             throw new InvalidAssociativeTypeException(sprintf(
                 'Transfer property "associative" cannot be defined to type: "%s"!',
-                $property['type']
+                $property['type'],
             ));
         }
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|null
      */
     protected function getPropertyDeprecationDescription(array $property): ?string
     {
-        return isset($property['deprecated']) ? $property['deprecated'] : null;
+        return $property['deprecated'] ?? null;
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      *
      * @return void
      */
@@ -1119,13 +1121,13 @@ class ClassDefinition implements ClassDefinitionInterface
         if (preg_match('/Transfer$/', $name)) {
             throw new InvalidNameException(sprintf(
                 'Transfer names must not be suffixed with the word "Transfer", it will be auto-appended on generation: `%s`. Please remove the suffix.',
-                $name
+                $name,
             ));
         }
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1168,9 +1170,9 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function shimTransferDefinitionPropertyTypes(array $transferDefinition): array
     {
@@ -1196,7 +1198,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $propertyDefinition
+     * @param array<string, mixed> $propertyDefinition
      * @param array<string> $shimChange
      *
      * @return array
@@ -1213,7 +1215,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|null
      */
@@ -1223,7 +1225,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -1233,7 +1235,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1241,12 +1243,12 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return $this->buildType(
             $this->getPropertyType($property),
-            $this->getPropertyTypeShim($property)
+            $this->getPropertyTypeShim($property),
         );
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1254,12 +1256,12 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return $this->buildType(
             $this->getSetVar($property),
-            $this->getPropertyTypeShim($property)
+            $this->getPropertyTypeShim($property),
         );
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1267,12 +1269,12 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         return $this->buildType(
             $this->getReturnType($property),
-            $this->getPropertyTypeShim($property)
+            $this->getPropertyTypeShim($property),
         );
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1329,9 +1331,9 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
+     * @param array<string, mixed> $method
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function setTypeAssertionMode(array $method): array
     {
@@ -1359,10 +1361,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addGetReturnTypeHint(array $method, array $property): array
     {
@@ -1374,10 +1376,10 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $method
-     * @param array $property
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addGetOrFailTypeHint(array $method, array $property): array
     {
@@ -1389,7 +1391,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1411,7 +1413,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isValueObject($property)) {
             $type = $this->getShortClassName(
-                $this->getValueObjectFullyQualifiedClassName($property)
+                $this->getValueObjectFullyQualifiedClassName($property),
             );
         }
 
@@ -1419,7 +1421,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string|bool
      */
@@ -1449,7 +1451,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return void
      */
@@ -1481,7 +1483,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
@@ -1501,7 +1503,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidSingularPropertyNameException
      *
@@ -1514,8 +1516,8 @@ class ClassDefinition implements ClassDefinitionInterface
                 sprintf(
                     'No singular form for the property %s.%s is found. Please add "singular" attribute to this property\'s definition.',
                     $this->name,
-                    $property['name']
-                )
+                    $property['name'],
+                ),
             );
         }
 
@@ -1524,26 +1526,26 @@ class ClassDefinition implements ClassDefinitionInterface
                 sprintf(
                     'Values of the "name" and "singular" attributes of the property %s.%s must not match.',
                     $this->name,
-                    $property['name']
-                )
+                    $property['name'],
+                ),
             );
         }
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return string
      */
     protected function getPropertySingularName(array $property): string
     {
-        $property['name'] = isset($property['singular']) ? $property['singular'] : $property['name'];
+        $property['name'] = $property['singular'] ?? $property['name'];
 
         return $this->getPropertyName($property);
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */

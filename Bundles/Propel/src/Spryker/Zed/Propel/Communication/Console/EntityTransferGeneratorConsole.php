@@ -21,6 +21,7 @@ class EntityTransferGeneratorConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'transfer:entity:generate';
+
     /**
      * @var string
      */

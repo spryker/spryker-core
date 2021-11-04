@@ -23,6 +23,7 @@ class VoucherType extends AbstractType
      * @var string
      */
     public const FIELD_VOUCHER_CODE = 'voucherCode';
+
     /**
      * @var string
      */
@@ -30,7 +31,7 @@ class VoucherType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -71,7 +72,7 @@ class VoucherType extends AbstractType
 
         $builder->get(static::FIELD_AMOUNT)
             ->addModelTransformer(
-                $this->createMoneyModelTransformer()
+                $this->createMoneyModelTransformer(),
             );
 
         return $this;
@@ -90,7 +91,7 @@ class VoucherType extends AbstractType
             },
             function ($value) {
                 return $value * 100;
-            }
+            },
         );
     }
 }

@@ -18,6 +18,7 @@ class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPl
      * @var string
      */
     protected const NAME = 'memory';
+
     /**
      * @var string
      */

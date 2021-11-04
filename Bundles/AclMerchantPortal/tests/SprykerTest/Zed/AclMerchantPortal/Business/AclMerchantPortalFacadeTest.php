@@ -80,12 +80,14 @@ class AclMerchantPortalFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\AclMerchantPortal\Business\Writer\AclMerchantPortalWriter::ERROR_MESSAGE_MERCHANT_REFERENCE
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_REFERENCE = 'Merchant reference not found';
 
     /**
      * @uses \Spryker\Zed\AclMerchantPortal\Business\Writer\AclMerchantPortalWriter::ERROR_MESSAGE_MERCHANT_NAME
+     *
      * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_NAME = 'Merchant name not found';
@@ -94,18 +96,22 @@ class AclMerchantPortalFacadeTest extends Unit
      * @var string
      */
     protected const MERCHANT_REFERENCE = 'testMerchantReference';
+
     /**
      * @var string
      */
     protected const MERCHANT_NAME = 'Test Merchant';
+
     /**
      * @var int
      */
     protected const ID_USER = 1;
+
     /**
      * @var string
      */
     protected const USER_FIRST_NAME = 'Fname';
+
     /**
      * @var string
      */
@@ -124,7 +130,7 @@ class AclMerchantPortalFacadeTest extends Unit
         parent::setUp();
         $this->tester->setDependency(
             AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER,
-            [new MerchantPortalAclEntityMetadataConfigExpanderPlugin()]
+            [new MerchantPortalAclEntityMetadataConfigExpanderPlugin()],
         );
     }
 
@@ -144,7 +150,7 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertCount(1, $merchantResponseTransfer->getErrors());
         $this->assertSame(
             static::ERROR_MESSAGE_MERCHANT_REFERENCE,
-            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage()
+            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage(),
         );
     }
 
@@ -164,7 +170,7 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertCount(1, $merchantResponseTransfer->getErrors());
         $this->assertSame(
             static::ERROR_MESSAGE_MERCHANT_NAME,
-            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage()
+            $merchantResponseTransfer->getErrors()->getIterator()->current()->getMessage(),
         );
     }
 
@@ -220,7 +226,7 @@ class AclMerchantPortalFacadeTest extends Unit
         // Act
         $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
         $aclEntityMetadataConfigTransfer = $this->tester->getFacade()->expandAclEntityMetadataConfig(
-            $aclEntityMetadataConfigTransfer
+            $aclEntityMetadataConfigTransfer,
         );
 
         $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();

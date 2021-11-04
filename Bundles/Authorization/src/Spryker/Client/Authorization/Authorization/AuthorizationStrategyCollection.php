@@ -40,7 +40,7 @@ class AuthorizationStrategyCollection implements AuthorizationStrategyCollection
         if ($this->has($name)) {
             throw new RuntimeException(sprintf(
                 'A strategy with the name `%s` is already present in the collection.',
-                $name
+                $name,
             ));
         }
 
@@ -67,7 +67,7 @@ class AuthorizationStrategyCollection implements AuthorizationStrategyCollection
         if (!$this->has($name)) {
             throw new RuntimeException(sprintf(
                 'A strategy with the name `%s` does not exist.',
-                $name
+                $name,
             ));
         }
 

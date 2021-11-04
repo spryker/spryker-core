@@ -36,7 +36,7 @@ class ProductOptionCartItemMapperPlugin extends AbstractPlugin implements CartIt
         return $this->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

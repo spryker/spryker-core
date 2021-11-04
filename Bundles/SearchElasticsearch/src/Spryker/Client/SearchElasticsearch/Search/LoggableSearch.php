@@ -48,7 +48,7 @@ class LoggableSearch implements SearchInterface
                 'query' => $searchQuery->getSearchQuery()->toArray(),
                 'parameters' => $requestParameters,
             ],
-            $result
+            $result,
         );
 
         return $result;

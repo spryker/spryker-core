@@ -42,18 +42,22 @@ class RestRequestValidatorPluginsTest extends Unit
      * @var string
      */
     protected const VALIDATION_CACHE_FILENAME_PATTERN = '%s/result.validation.yaml';
+
     /**
      * @var string
      */
     protected const VALIDATION_CACHE_WRONG_FILENAME_PATTERN = '%s/wrong.validation.yaml';
+
     /**
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var array
      */
@@ -66,6 +70,7 @@ class RestRequestValidatorPluginsTest extends Unit
             'test_email' => 'tester@test.com',
         ],
     ];
+
     /**
      * @var array
      */
@@ -89,7 +94,7 @@ class RestRequestValidatorPluginsTest extends Unit
 
         $errorTransfer = $mockRestRequestValidator->validate(
             new Request(),
-            $mockRestRequest
+            $mockRestRequest,
         );
 
         $this->assertNull($errorTransfer);
@@ -105,7 +110,7 @@ class RestRequestValidatorPluginsTest extends Unit
 
         $errorTransfer = $mockRestRequestValidator->validate(
             new Request(),
-            $mockRestRequest
+            $mockRestRequest,
         );
 
         $this->assertNotNull($errorTransfer);
@@ -128,7 +133,7 @@ class RestRequestValidatorPluginsTest extends Unit
 
         $mockRestRequestValidator->validate(
             new Request(),
-            $mockRestRequest
+            $mockRestRequest,
         );
     }
 
@@ -143,7 +148,7 @@ class RestRequestValidatorPluginsTest extends Unit
         $mockRestRequest = $mockRestRequestObject->createRestRequest(Request::METHOD_GET);
         $errorTransfer = $mockRestRequestValidator->validate(
             new Request(),
-            $mockRestRequest
+            $mockRestRequest,
         );
 
         $this->assertNull($errorTransfer);
@@ -179,7 +184,7 @@ class RestRequestValidatorPluginsTest extends Unit
             [
                 'getAvailableConstraintNamespaces',
                 'getValidationCodeBucketCacheFilenamePattern',
-            ]
+            ],
         );
 
         $mockConfig
@@ -187,12 +192,12 @@ class RestRequestValidatorPluginsTest extends Unit
             ->willReturn(
                 [
                     '\\Symfony\\Component\\Validator\\Constraints\\',
-                ]
+                ],
             );
         $mockConfig
             ->method('getValidationCodeBucketCacheFilenamePattern')
             ->willReturn(
-                $this->getFixtureDirectory() . static::VALIDATION_CACHE_FILENAME_PATTERN
+                $this->getFixtureDirectory() . static::VALIDATION_CACHE_FILENAME_PATTERN,
             );
 
         return $mockConfig;
@@ -208,7 +213,7 @@ class RestRequestValidatorPluginsTest extends Unit
             [
                 'getAvailableConstraintNamespaces',
                 'getValidationCodeBucketCacheFilenamePattern',
-            ]
+            ],
         );
 
         $mockConfig
@@ -216,12 +221,12 @@ class RestRequestValidatorPluginsTest extends Unit
             ->willReturn(
                 [
                     '\\Symfony\\Component\\Validator\\Constraints\\',
-                ]
+                ],
             );
         $mockConfig
             ->method('getValidationCodeBucketCacheFilenamePattern')
             ->willReturn(
-                $this->getFixtureDirectory() . static::VALIDATION_CACHE_WRONG_FILENAME_PATTERN
+                $this->getFixtureDirectory() . static::VALIDATION_CACHE_WRONG_FILENAME_PATTERN,
             );
 
         return $mockConfig;
@@ -238,7 +243,7 @@ class RestRequestValidatorPluginsTest extends Unit
             RestRequestValidatorToStoreClientInterface::class,
             [
                 'getCurrentStore',
-            ]
+            ],
         );
 
         $mockStoreClient
@@ -269,7 +274,7 @@ class RestRequestValidatorPluginsTest extends Unit
         $mockRestRequest = $mockRestRequestObject->createRestRequest(
             Request::METHOD_POST,
             'endpoint',
-            (new EndpointTransfer())->fromArray($endpointAttributes, true)
+            (new EndpointTransfer())->fromArray($endpointAttributes, true),
         );
 
         return $mockRestRequest;
@@ -287,7 +292,7 @@ class RestRequestValidatorPluginsTest extends Unit
             new RestRequestValidatorToFilesystemAdapter(),
             new RestRequestValidatorToYamlAdapter(),
             $this->createMockStoreClient($storeName),
-            $mockConfig
+            $mockConfig,
         );
 
         return $mockConfigReader;
@@ -303,7 +308,7 @@ class RestRequestValidatorPluginsTest extends Unit
         $restRequestValidatorPlugin = new RestRequestValidator(
             $this->createMockConfigResolver($mockConfig),
             new RestRequestValidatorToValidationAdapter(),
-            $mockConfig
+            $mockConfig,
         );
 
         return $restRequestValidatorPlugin;
@@ -319,7 +324,7 @@ class RestRequestValidatorPluginsTest extends Unit
         $restRequestValidatorPlugin = new RestRequestValidator(
             $this->createMockConfigResolver($mockConfig),
             new RestRequestValidatorToValidationAdapter(),
-            $mockConfig
+            $mockConfig,
         );
 
         return $restRequestValidatorPlugin;
@@ -335,7 +340,7 @@ class RestRequestValidatorPluginsTest extends Unit
         return new RestRequestValidatorConstraintResolver(
             new RestRequestValidatorToConstraintCollectionAdapter(),
             $this->createMockConfigReader(static::STORE_NAME_DE, $mockConfig),
-            $mockConfig
+            $mockConfig,
         );
     }
 }

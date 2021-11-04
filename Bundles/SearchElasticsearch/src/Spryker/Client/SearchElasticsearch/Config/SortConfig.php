@@ -15,6 +15,7 @@ class SortConfig implements SortConfigInterface
      * @var string
      */
     public const DIRECTION_ASC = 'asc';
+
     /**
      * @var string
      */

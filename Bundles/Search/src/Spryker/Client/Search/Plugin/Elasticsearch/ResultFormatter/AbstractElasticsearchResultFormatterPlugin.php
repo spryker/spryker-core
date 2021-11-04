@@ -43,7 +43,7 @@ abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin
             throw new InvalidSearchResultTypeException(sprintf(
                 'Expected search result type was "%s", got "%s" instead.',
                 ResultSet::class,
-                get_class($searchResult)
+                get_class($searchResult),
             ));
         }
     }

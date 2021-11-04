@@ -17,6 +17,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      * @var int
      */
     public const MINIMUM_RATING = 1;
+
     /**
      * @var int
      */

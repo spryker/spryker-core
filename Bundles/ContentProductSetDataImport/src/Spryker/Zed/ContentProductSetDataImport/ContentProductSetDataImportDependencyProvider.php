@@ -22,10 +22,12 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
      * @var string
      */
     public const FACADE_CONTENT = 'FACADE_CONTENT';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
@@ -56,7 +58,7 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentProductSetDataImportToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

@@ -161,7 +161,7 @@ class ProductOfferValidityFacadeTest extends Unit
 
         // Act
         $productOfferValidityTransfer = $this->tester->getFacade()->expandProductOfferWithProductOfferValidity(
-            $productOfferTransfer
+            $productOfferTransfer,
         )->getProductOfferValidity();
         $productOfferValidityTransferFromDb = $this->tester->getProductOfferValidityRepository()
             ->findProductOfferValidityByIdProductOffer($productOfferTransfer->getIdProductOffer());

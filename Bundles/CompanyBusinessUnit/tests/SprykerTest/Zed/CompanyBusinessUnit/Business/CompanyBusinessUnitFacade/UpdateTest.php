@@ -27,6 +27,7 @@ class UpdateTest extends Test
      * @var string
      */
     protected const INITIAL_NAME = 'Initial Name';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class UpdateTest extends Test
 
     /**
      * @var string
+     *
      * @uses \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE
      */
     protected const ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE = 'message.business_unit.update.cycle_dependency_error';
@@ -78,11 +80,11 @@ class UpdateTest extends Test
         $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessfulOrFail());
         $this->assertSame(
             static::FINAL_NAME,
-            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getNameOrFail()
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getNameOrFail(),
         );
         $this->assertSame(
             $regionalCompanyBusinessUnitTransfer->getIdCompanyBusinessUnitOrFail(),
-            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getFkParentCompanyBusinessUnit()
+            $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransferOrFail()->getFkParentCompanyBusinessUnit(),
         );
     }
 
@@ -120,7 +122,7 @@ class UpdateTest extends Test
         $this->assertFalse($companyBusinessUnitResponseTransfer->getIsSuccessfulOrFail());
         $this->assertSame(
             static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE,
-            $companyBusinessUnitResponseTransfer->getMessages()[0]->getText()
+            $companyBusinessUnitResponseTransfer->getMessages()[0]->getText(),
         );
     }
 }

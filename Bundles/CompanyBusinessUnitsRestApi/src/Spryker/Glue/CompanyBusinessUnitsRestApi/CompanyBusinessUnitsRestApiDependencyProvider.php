@@ -49,7 +49,7 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientBridge(
-                $container->getLocator()->companyBusinessUnit()->client()
+                $container->getLocator()->companyBusinessUnit()->client(),
             );
         });
 

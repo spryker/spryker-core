@@ -20,6 +20,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
      * @var string
      */
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
+
     /**
      * @var string
      */
@@ -29,6 +30,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
      * @var string
      */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+
     /**
      * @var string
      */
@@ -36,18 +38,21 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/update-product-abstract/table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\SavePriceProductAbstractController::indexAction()
+     *
      * @var string
      */
     protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/save-price-product-abstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\DeletePriceProductAbstractController::indexAction()
+     *
      * @var string
      */
     protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-abstract';
@@ -84,7 +89,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             static::FORMAT_STRING_DATA_URL,
             static::DATA_URL,
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
         );
         $deletePriceUrl = sprintf(
             static::FORMAT_STRING_PRICES_URL,
@@ -94,7 +99,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
-            PriceProductTableViewTransfer::VOLUME_QUANTITY
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
         );
         $savePricesUrl = sprintf(
             static::FORMAT_STRING_PRICES_URL,
@@ -104,7 +109,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
-            PriceProductTableViewTransfer::VOLUME_QUANTITY
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
         );
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::PRICES);
 

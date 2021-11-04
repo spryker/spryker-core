@@ -25,6 +25,7 @@ class CompanySupplierForm extends AbstractType
      * @var string
      */
     public const OPTION_VALUES_COMPANY_SUPPLIER = 'OPTION_VALUES_COMPANY_SUPPLIER';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class CompanySupplierForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -56,7 +57,7 @@ class CompanySupplierForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -70,7 +71,7 @@ class CompanySupplierForm extends AbstractType
                 'required' => false,
                 'choices' => $options[static::OPTION_VALUES_COMPANY_SUPPLIER],
                 'multiple' => true,
-            ]
+            ],
         );
 
         $this->addModelTransformer($builder);
@@ -105,8 +106,8 @@ class CompanySupplierForm extends AbstractType
                     }
 
                     return new ArrayObject($suppliers);
-                }
-            )
+                },
+            ),
         );
     }
 }

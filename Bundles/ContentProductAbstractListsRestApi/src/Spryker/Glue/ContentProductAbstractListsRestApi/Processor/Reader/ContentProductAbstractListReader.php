@@ -37,18 +37,16 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     }
 
     /**
-     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
-     *
      * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     * @return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, string $localeName): array
     {
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentProductAbstractListTypeTransfers) {
@@ -72,7 +70,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
 
         $contentProductAbstractListsResources = $this->getContentProductAbstractListsResources(
             [$restRequest->getResource()->getId()],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!isset($contentProductAbstractListsResources[$restRequest->getResource()->getId()])) {

@@ -30,7 +30,7 @@ class AbstractGatewayControllerTest extends Unit
     {
         $this->assertInstanceOf(
             AbstractGatewayController::class,
-            new FixtureGatewayController()
+            new FixtureGatewayController(),
         );
     }
 }

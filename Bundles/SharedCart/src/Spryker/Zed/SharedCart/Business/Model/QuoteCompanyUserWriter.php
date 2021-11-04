@@ -99,7 +99,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
             ->requireIdCompanyUser();
 
         $quoteCompanyUserTransfer = $this->sharedCartEntityManager->createQuoteCompanyUser(
-            $this->createQuoteCompanyUserTransfer($shareCartRequestTransfer)
+            $this->createQuoteCompanyUserTransfer($shareCartRequestTransfer),
         );
 
         if (!$quoteCompanyUserTransfer->getIdQuoteCompanyUser()) {
@@ -192,12 +192,12 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
         $commonQuoteCompanyUserIdIndexes = array_intersect(
             $formQuoteCompanyUserIdIndexes,
-            $storedQuoteCompanyUserIdIndexes
+            $storedQuoteCompanyUserIdIndexes,
         );
 
         $quoteTransfer->requireIdQuote();
         $storedQuotePermissionGroupIdIndexes = $this->sharedCartRepository->findAllCompanyUserQuotePermissionGroupIdIndexes(
-            $quoteTransfer->getIdQuote()
+            $quoteTransfer->getIdQuote(),
         );
 
         foreach ($quoteShareDetails as $shareDetailTransfer) {
@@ -280,7 +280,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
             ->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser())
             ->setFkQuote($idQuote)
             ->setFkQuotePermissionGroup(
-                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
             );
 
         $this->sharedCartEntityManager->saveQuoteCompanyUser($companyUserEntityTransfer);
@@ -345,7 +345,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
             ->setFkQuote($shareCartRequestTransfer->getIdQuote())
             ->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser())
             ->setFkQuotePermissionGroup(
-                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
             );
     }
 }

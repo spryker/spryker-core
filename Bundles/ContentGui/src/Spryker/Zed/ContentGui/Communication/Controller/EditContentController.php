@@ -21,22 +21,27 @@ class EditContentController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_CONTENT = 'id-content';
+
     /**
      * @var string
      */
     protected const PARAM_TERM_KEY = 'term-key';
+
     /**
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
     protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS_CONTENT_UPDATE = 'Content item has been successfully updated.';
+
     /**
      * @var string
      */
@@ -62,7 +67,7 @@ class EditContentController extends AbstractController
         $contentForm = $this->getFactory()
             ->getContentForm(
                 $contentTransfer,
-                $dataProvider->getOptions('', $contentTransfer)
+                $dataProvider->getOptions('', $contentTransfer),
             )
             ->handleRequest($request);
 
@@ -77,7 +82,7 @@ class EditContentController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_UPDATE);
 
             return $this->redirectResponse(
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE)
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE),
             );
         }
         $contentTabs = $this->getFactory()->createContentTabs();

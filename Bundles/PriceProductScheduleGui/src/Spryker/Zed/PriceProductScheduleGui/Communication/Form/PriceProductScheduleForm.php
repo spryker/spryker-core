@@ -28,26 +28,32 @@ class PriceProductScheduleForm extends AbstractType
      * @var string
      */
     public const FIELD_PRICE_PRODUCT = 'priceProduct';
+
     /**
      * @var string
      */
     public const FIELD_SUBMIT = 'submit';
+
     /**
      * @var string
      */
     public const FIELD_ACTIVE_FROM = 'activeFrom';
+
     /**
      * @var string
      */
     public const FIELD_ACTIVE_TO = 'activeTo';
+
     /**
      * @var string
      */
     protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var string
      */
     public const GROUP_AFTER = 'After';
+
     /**
      * @var string
      */
@@ -89,7 +95,7 @@ class PriceProductScheduleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -103,7 +109,7 @@ class PriceProductScheduleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

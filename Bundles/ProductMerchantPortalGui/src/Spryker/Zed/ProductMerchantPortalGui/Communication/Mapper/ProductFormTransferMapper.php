@@ -17,48 +17,56 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_PRODUCTS
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_PRODUCTS = 'products';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteSuperAttributeForm::FIELD_SKU
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteSuperAttributeForm::FIELD_NAME
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteSuperAttributeForm::FIELD_SUPER_ATTRIBUTES
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\SuperAttributeForm::FIELD_VALUE
+     *
      * @var string
      */
     protected const SUPER_ATTRIBUTE_FORM_FIELD_VALUE = 'value';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\SuperAttributeForm::FIELD_ATTRIBUTE
+     *
      * @var string
      */
     protected const SUPER_ATTRIBUTE_FORM_FIELD_ATTRIBUTE = 'attribute';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAttributeValueForm::FIELD_VALUE
+     *
      * @var string
      */
     protected const PRODUCT_ATTRIBUTE_VALUE_FORM_FIELD_VALUE = 'value';
@@ -100,7 +108,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
                 $productConcreteTransfer,
                 $defaultStoreDefaultLocaleTransfer,
                 $localeTransfers,
-                $productConcreteFormData
+                $productConcreteFormData,
             );
             $productConcreteTransfer = $this->addAttributesToProductConcrete($productConcreteTransfer, $productConcreteFormData);
 
@@ -129,7 +137,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             $localizedAttributesTransfer->setName(
                 $localeTransfer->getIdLocaleOrFail() === $defaultStoreDefaultLocaleTransfer->getIdLocaleOrFail()
                     ? $productConcreteFormData[static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_NAME]
-                    : ''
+                    : '',
             );
 
             $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);

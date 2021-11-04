@@ -24,58 +24,72 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_RESOURCE_ROUTES = 'PLUGIN_RESOURCE_ROUTES';
+
     /**
      * @var string
      */
     public const PLUGIN_RESOURCE_RELATIONSHIP = 'PLUGIN_RESOURCE_RELATIONSHIP';
+
     /**
      * @var string
      */
     public const PLUGIN_VALIDATE_HTTP_REQUEST = 'PLUGIN_VALIDATE_HTTP_REQUEST';
+
     /**
      * @var string
      */
     public const PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION = 'PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION';
+
     /**
      * @var string
      */
     public const PLUGIN_VALIDATE_REST_REQUEST = 'PLUGIN_VALIDATE_REST_REQUEST';
+
     /**
      * @var string
      */
     public const PLUGINS_VALIDATE_REST_USER = 'PLUGIN_VALIDATE_REST_USER';
+
     /**
      * @var string
      */
     public const PLUGIN_REST_REQUEST_VALIDATOR = 'PLUGIN_REST_REQUEST_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGIN_FORMAT_REQUEST = 'PLUGIN_FORMAT_REQUEST';
+
     /**
      * @var string
      */
     public const PLUGIN_FORMAT_RESPONSE_DATA = 'PLUGIN_FORMAT_RESPONSE_DATA';
+
     /**
      * @var string
      */
     public const PLUGIN_FORMAT_RESPONSE_HEADERS = 'PLUGIN_FORMAT_RESPONSE_HEADERS';
+
     /**
      * @var string
      */
     public const PLUGIN_CONTROLLER_BEFORE_ACTION = 'PLUGIN_CONTROLLER_BEFORE_ACTION';
+
     /**
      * @var string
      */
     public const PLUGIN_CONTROLLER_AFTER_ACTION = 'PLUGIN_CONTROLLER_AFTER_ACTION';
+
     /**
      * @var string
      */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+
     /**
      * @var string
      */
     public const PLUGINS_REST_USER_FINDER = 'PLUGINS_REST_USER_FINDER';
+
     /**
      * @var string
      */
@@ -85,10 +99,12 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */

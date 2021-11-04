@@ -59,8 +59,8 @@ class KeyManager implements KeyManagerInterface
             throw new MissingKeyException(
                 sprintf(
                     'Tried to update key %s, but it does not exist',
-                    $keyName
-                )
+                    $keyName,
+                ),
             );
         }
     }
@@ -156,8 +156,8 @@ class KeyManager implements KeyManagerInterface
             throw new KeyExistsException(
                 sprintf(
                     'Tried to create key %s, but it already exists',
-                    $keyName
-                )
+                    $keyName,
+                ),
             );
         }
     }

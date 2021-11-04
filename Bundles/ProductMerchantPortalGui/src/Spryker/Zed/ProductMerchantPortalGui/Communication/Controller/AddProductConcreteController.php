@@ -27,14 +27,17 @@ class AddProductConcreteController extends AbstractController
      * @var string
      */
     protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_TYPE = 'type';
+
     /**
      * @var string
      */
@@ -44,14 +47,17 @@ class AddProductConcreteController extends AbstractController
      * @var string
      */
     protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+
     /**
      * @var string
      */
     protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
+
     /**
      * @var string
      */
     protected const RESPONSE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
@@ -61,10 +67,12 @@ class AddProductConcreteController extends AbstractController
      * @var string
      */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCTS_SAVED = 'Success! %d Concrete Products are saved.';
+
     /**
      * @var string
      */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCT_SAVED = 'Success! %d Concrete Product is saved.';
+
     /**
      * @var string
      */
@@ -77,18 +85,21 @@ class AddProductConcreteController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_EXISTING_ATTRIBUTES
+     *
      * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_EXISTING_ATTRIBUTES = 'existing_attributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_PRODUCTS
+     *
      * @var string
      */
     protected const FIELD_PRODUCTS = 'products';
@@ -106,7 +117,7 @@ class AddProductConcreteController extends AbstractController
 
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
         $merchantProductTransfer = $this->getFactory()->getMerchantProductFacade()->findMerchantProduct(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
+            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract),
         );
 
         if (!$merchantProductTransfer) {
@@ -136,7 +147,7 @@ class AddProductConcreteController extends AbstractController
         if ($addProductConcreteForm->isSubmitted() && $addProductConcreteForm->isValid()) {
             $productConcreteCollectionTransfer = $this->getProductConcreteCollection(
                 $addProductConcreteForm,
-                $defaultStoreDefaultLocaleTransfer
+                $defaultStoreDefaultLocaleTransfer,
             );
             $this->getFactory()->getProductFacade()->createProductConcreteCollection($productConcreteCollectionTransfer);
         }
@@ -146,7 +157,7 @@ class AddProductConcreteController extends AbstractController
             $merchantProductTransfer,
             $productConcreteCollectionTransfer ?? new ProductConcreteCollectionTransfer(),
             $defaultStoreDefaultLocaleTransfer,
-            $productManagementAttributeTransfers
+            $productManagementAttributeTransfers,
         );
     }
 
@@ -166,7 +177,7 @@ class AddProductConcreteController extends AbstractController
             ->mapAddProductConcreteFormDataToProductConcreteCollectionTransfer(
                 $formData,
                 new ProductConcreteCollectionTransfer(),
-                $localeTransfer
+                $localeTransfer,
             );
 
         $this->getFactory()
@@ -198,7 +209,7 @@ class AddProductConcreteController extends AbstractController
             $addProductConcreteForm,
             $merchantProductTransfer,
             $defaultStoreDefaultLocaleTransfer,
-            $productManagementAttributeTransfers
+            $productManagementAttributeTransfers,
         );
 
         if (!$addProductConcreteForm->isSubmitted()) {
@@ -236,11 +247,11 @@ class AddProductConcreteController extends AbstractController
         $productAbstractTransfer = $merchantProductTransfer->getProductAbstractOrFail();
         $localizedAttributesTransfer = $localizedAttributesExtractor->extractLocalizedAttributes(
             $productAbstractTransfer->getLocalizedAttributes(),
-            $this->getFactory()->getLocaleFacade()->getCurrentLocale()
+            $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
         );
         $defaultLocalizedAttributesTransfer = $localizedAttributesExtractor->extractLocalizedAttributes(
             $productAbstractTransfer->getLocalizedAttributes(),
-            $defaultStoreDefaultLocaleTransfer
+            $defaultStoreDefaultLocaleTransfer,
         );
 
         return [
@@ -251,7 +262,7 @@ class AddProductConcreteController extends AbstractController
                 'existingProducts' => $attributesDataProvider->getExistingConcreteProductData(
                     $merchantProductTransfer,
                     $productManagementAttributeTransfers,
-                    $defaultStoreDefaultLocaleTransfer
+                    $defaultStoreDefaultLocaleTransfer,
                 ),
                 'generatedProducts' => $addProductConcreteForm->getData()[static::FIELD_PRODUCTS] ?? [],
                 'errors' => $this->getErrors($addProductConcreteForm),
@@ -285,7 +296,7 @@ class AddProductConcreteController extends AbstractController
 
         $message = sprintf(
             $this->getFactory()->getTranslatorFacade()->trans($messageTemplate),
-            $productsNumber
+            $productsNumber,
         );
 
         $zedUiFormResponseTransfer = $this->getFactory()
@@ -338,7 +349,7 @@ class AddProductConcreteController extends AbstractController
 
         return $this->getFactory()->createFormErrorsMapper()->mapAddProductConcreteFormErrorsToErrorsData(
             $addProductConcreteForm,
-            $errors
+            $errors,
         );
     }
 }

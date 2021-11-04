@@ -13,6 +13,7 @@ interface MerchantCategoryDataSetInterface
      * @var string
      */
     public const MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface MerchantCategoryDataSetInterface
      * @var string
      */
     public const FK_MERCHANT = 'fk_merchant';
+
     /**
      * @var string
      */

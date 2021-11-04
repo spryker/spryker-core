@@ -34,7 +34,7 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
             $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER),
             $userTransfer,
             $this->getUtilSanitizeService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -49,7 +49,7 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
             $this->getProvidedDependency(CustomerUserConnectorGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER),
             $userTransfer,
             $this->getUtilSanitizeService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -63,7 +63,7 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
         return $this->getFormFactory()->create(
             CustomerUserConnectorForm::class,
             $this->createUserConnectionTransfer($idUser),
-            $this->createCustomerUserConnectorFormDataProvider()->getOptions()
+            $this->createCustomerUserConnectorFormDataProvider()->getOptions(),
         );
     }
 

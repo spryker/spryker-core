@@ -27,22 +27,27 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_SALES_RETURN = 'FACADE_SALES_RETURN';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
@@ -52,6 +57,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
+
     /**
      * @var string
      */
@@ -128,7 +134,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new SalesReturnGuiToCustomerFacadeBridge(
-                $container->getLocator()->customer()->facade()
+                $container->getLocator()->customer()->facade(),
             );
         });
 
@@ -144,7 +150,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_OMS, function (Container $container) {
             return new SalesReturnGuiToOmsFacadeBridge(
-                $container->getLocator()->oms()->facade()
+                $container->getLocator()->oms()->facade(),
             );
         });
 
@@ -188,7 +194,7 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new SalesReturnGuiToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

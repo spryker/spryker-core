@@ -27,6 +27,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
 
     /**
      * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander::CATEGORY_KEYS
+     *
      * @var string
      */
     protected const CATEGORY_KEYS = 'category-keys';
@@ -90,7 +91,7 @@ class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin i
             throw new InvalidArgumentException(sprintf(
                 'Merchant Category query expander available only with %s, got: %s',
                 BoolQuery::class,
-                is_object($boolQuery) ? get_class($boolQuery) : gettype($boolQuery)
+                is_object($boolQuery) ? get_class($boolQuery) : gettype($boolQuery),
             ));
         }
 

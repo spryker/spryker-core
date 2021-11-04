@@ -72,7 +72,7 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
     {
         $merchantOpeningHoursStorageData = $this->storageClient->get(
-            $this->generateKey($idMerchant)
+            $this->generateKey($idMerchant),
         );
 
         if (!$merchantOpeningHoursStorageData) {
@@ -93,7 +93,7 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array
     {
         $merchantOpeningHoursStorageData = $this->storageClient->getMulti(
-            $this->generateKeys($merchantIds)
+            $this->generateKeys($merchantIds),
         );
 
         if (!$merchantOpeningHoursStorageData) {
@@ -114,7 +114,7 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
             $merchantOpeningHoursStorageTransfers[$this->getIdMerchant($storageKey)] = $this->merchantOpeningHoursMapper
                 ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer(
                     $merchantOpeningHoursStorageData,
-                    new MerchantOpeningHoursStorageTransfer()
+                    new MerchantOpeningHoursStorageTransfer(),
                 );
         }
 

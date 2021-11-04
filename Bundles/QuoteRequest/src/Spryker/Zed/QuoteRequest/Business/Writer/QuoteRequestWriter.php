@@ -30,14 +30,17 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
     /**
      * @var string
      */
@@ -215,7 +218,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         }
 
         $this->quoteRequestEntityManager->updateQuoteRequestVersion(
-            $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestTransfer->getLatestVersion())
+            $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestTransfer->getLatestVersion()),
         );
 
         return $this->createSuccessfulResponse($quoteRequestTransfer);
@@ -288,7 +291,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setFkQuoteRequest($quoteRequestTransfer->getIdQuoteRequest());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer),
         );
 
         return $this->quoteRequestEntityManager->createQuoteRequestVersion($quoteRequestVersionTransfer);
@@ -314,7 +317,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
             ->setMetadata($latestQuoteRequestVersionTransfer->getMetadata());
 
         $quoteRequestVersionTransfer->setVersionReference(
-            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer)
+            $this->quoteRequestReferenceGenerator->generateQuoteRequestVersionReference($quoteRequestTransfer, $quoteRequestVersionTransfer),
         );
 
         $quoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->cleanUpQuoteRequestVersionQuote($quoteRequestVersionTransfer);
@@ -333,7 +336,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestTransfer->getStatus(),
-            SharedQuoteRequestConfig::STATUS_DRAFT
+            SharedQuoteRequestConfig::STATUS_DRAFT,
         );
     }
 

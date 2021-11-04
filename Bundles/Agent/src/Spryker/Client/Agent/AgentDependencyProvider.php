@@ -24,10 +24,12 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */
@@ -65,7 +67,7 @@ class AgentDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container): AgentToZedRequestClientInterface {
             return new AgentToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 
@@ -81,7 +83,7 @@ class AgentDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_SESSION, function (Container $container): AgentToSessionClientInterface {
             return new AgentToSessionClientBridge(
-                $container->getLocator()->session()->client()
+                $container->getLocator()->session()->client(),
             );
         });
 
@@ -97,7 +99,7 @@ class AgentDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new AgentToCustomerClientBridge(
-                $container->getLocator()->customer()->client()
+                $container->getLocator()->customer()->client(),
             );
         });
 

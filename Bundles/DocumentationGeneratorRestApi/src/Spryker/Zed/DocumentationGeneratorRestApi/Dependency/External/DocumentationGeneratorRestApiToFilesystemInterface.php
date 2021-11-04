@@ -25,9 +25,7 @@ interface DocumentationGeneratorRestApiToFilesystemInterface
     public function dumpFile(string $filename, string $content): void;
 
     /**
-     * @phpstan-param iterable<array, \Traversable>|string $dirs
-     *
-     * @param iterable|string $dirs
+     * @param iterable<string>|string $dirs
      * @param int $mode
      *
      * @throws \Symfony\Component\Filesystem\Exception\IOException

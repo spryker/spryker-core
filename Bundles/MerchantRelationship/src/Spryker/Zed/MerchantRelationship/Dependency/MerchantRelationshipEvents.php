@@ -14,6 +14,7 @@ interface MerchantRelationshipEvents
      * - This event will be used for spy_merchant_relationship_to_company_business_unit entity creation
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_CREATE = 'Entity.spy_merchant_relationship_to_company_business_unit.create';
@@ -23,6 +24,7 @@ interface MerchantRelationshipEvents
      * - This event will be used for spy_merchant_relationship_to_company_business_unit entity update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_UPDATE = 'Entity.spy_merchant_relationship_to_company_business_unit.update';
@@ -32,6 +34,7 @@ interface MerchantRelationshipEvents
      * - This event will be used for spy_merchant_relationship_to_company_business_unit entity delete
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_DELETE = 'Entity.spy_merchant_relationship_to_company_business_unit.delete';

@@ -12,7 +12,7 @@ interface ProductLabelMapperInterface
     /**
      * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(array $productLabelTransfers): array;
 }

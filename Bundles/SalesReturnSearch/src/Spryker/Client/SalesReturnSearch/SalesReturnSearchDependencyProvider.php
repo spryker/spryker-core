@@ -27,10 +27,12 @@ class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGIN_RETURN_REASON_SEARCH_QUERY = 'PLUGIN_RETURN_REASON_SEARCH_QUERY';
+
     /**
      * @var string
      */
     public const PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER = 'PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER';
+
     /**
      * @var string
      */
@@ -61,7 +63,7 @@ class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new SalesReturnSearchToSearchClientBridge(
-                $container->getLocator()->search()->client()
+                $container->getLocator()->search()->client(),
             );
         });
 

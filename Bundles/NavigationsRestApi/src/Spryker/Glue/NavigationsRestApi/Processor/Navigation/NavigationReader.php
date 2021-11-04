@@ -90,7 +90,7 @@ class NavigationReader implements NavigationReaderInterface
     {
         $navigationStorageTransfer = $this->navigationStorageClient->findNavigationTreeByKey(
             $restRequest->getResource()->getId(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$navigationStorageTransfer || !$navigationStorageTransfer->getKey()) {
@@ -111,14 +111,14 @@ class NavigationReader implements NavigationReaderInterface
         $restNavigationAttributesTransfer = $this->navigationMapper
             ->mapNavigationStorageTransferToRestNavigationAttributesTransfer(
                 $navigationStorageTransfer,
-                new RestNavigationAttributesTransfer()
+                new RestNavigationAttributesTransfer(),
             );
         $restNavigationAttributesTransfer = $this->navigationNodeExpander->expand($restNavigationAttributesTransfer);
 
         return $this->restResourceBuilder->createRestResource(
             NavigationsRestApiConfig::RESOURCE_NAVIGATIONS,
             $navigationStorageTransfer->getKey(),
-            $restNavigationAttributesTransfer
+            $restNavigationAttributesTransfer,
         );
     }
 

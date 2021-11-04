@@ -43,7 +43,7 @@ class InMemoryStoragePlugin implements InMemoryStoragePluginInterface
     {
         codecept_debug($this->format(sprintf(
             '<fg=green>%s::setMulti()</> was triggered with: (originally an array for debugging output converted to json)',
-            StorageClientInterface::class
+            StorageClientInterface::class,
         )));
 
         codecept_debug($this->format(sprintf('<fg=yellow>%s</>', json_encode($items, JSON_PRETTY_PRINT))));
@@ -77,7 +77,7 @@ class InMemoryStoragePlugin implements InMemoryStoragePluginInterface
     {
         codecept_debug($this->format(sprintf(
             '<fg=green>%s::deleteMulti()</> was triggered with: (originally an array for debugging output converted to json)',
-            StorageClientInterface::class
+            StorageClientInterface::class,
         )));
 
         codecept_debug($this->format(sprintf('<fg=yellow>%s</>', json_encode($keys, JSON_PRETTY_PRINT))));

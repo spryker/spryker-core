@@ -60,13 +60,13 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
     {
         if (is_object($adapterName)) {
             throw new GraphAdapterNameIsAnObjectException(
-                'Your config returned an object instance, this is not allowed.'
+                'Your config returned an object instance, this is not allowed.',
             );
         }
 
         if (!class_exists($adapterName)) {
             throw new InvalidGraphAdapterNameException(
-                sprintf('Invalid GraphAdapterName provided. "%s" can not be instanced.', $adapterName)
+                sprintf('Invalid GraphAdapterName provided. "%s" can not be instanced.', $adapterName),
             );
         }
     }
@@ -84,7 +84,7 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
             $message = sprintf(
                 'Provided "%s" must be an instanceof "%s"',
                 get_class($adapter),
-                GraphAdapterInterface::class
+                GraphAdapterInterface::class,
             );
 
             throw new InvalidGraphAdapterException($message);

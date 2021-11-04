@@ -16,10 +16,12 @@ class OpenApiSpecificationSecuritySchemeGenerator implements SecuritySchemeGener
      * @var string
      */
     protected const DEFAULT_BEARER_AUTH_SCHEME_NAME = 'BearerAuth';
+
     /**
      * @var string
      */
     protected const DEFAULT_BEARER_AUTH_SCHEME_TYPE = 'http';
+
     /**
      * @var string
      */
@@ -71,7 +73,7 @@ class OpenApiSpecificationSecuritySchemeGenerator implements SecuritySchemeGener
         $bearerAuthSchema = $this->createSecurityScheme(
             static::DEFAULT_BEARER_AUTH_SCHEME_NAME,
             static::DEFAULT_BEARER_AUTH_SCHEME_TYPE,
-            static::DEFAULT_BEARER_AUTH_SCHEME
+            static::DEFAULT_BEARER_AUTH_SCHEME,
         );
 
         $this->addSecurityScheme($bearerAuthSchema);

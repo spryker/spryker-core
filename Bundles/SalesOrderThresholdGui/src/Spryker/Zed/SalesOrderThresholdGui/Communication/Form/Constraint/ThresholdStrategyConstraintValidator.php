@@ -20,6 +20,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
      * @var string
      */
     protected const MESSAGE_UPDATE_SOFT_STRATEGY_ERROR = 'To save {{strategy_group}} threshold - enter value that is higher than 0 in this field. To delete threshold set all fields equal to 0 or left them empty and save.';
+
     /**
      * @var string
      */
@@ -75,7 +76,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
         array $formData
     ): bool {
         if (
-            !$salesOrderThresholdFormExpanderPlugin instanceof  SalesOrderThresholdFormFieldDependenciesPluginInterface
+            !$salesOrderThresholdFormExpanderPlugin instanceof SalesOrderThresholdFormFieldDependenciesPluginInterface
             || $salesOrderThresholdFormExpanderPlugin->getThresholdKey() !== $formData[AbstractGlobalThresholdType::FIELD_STRATEGY]
             || !$salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames()
         ) {

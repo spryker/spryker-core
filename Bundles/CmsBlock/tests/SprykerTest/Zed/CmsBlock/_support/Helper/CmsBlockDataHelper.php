@@ -54,7 +54,7 @@ class CmsBlockDataHelper extends Module
 
         $cmsBlockTransfer->setStoreRelation(
             (new StoreRelationTransfer())
-                ->fromArray($seedData[CmsBlockTransfer::STORE_RELATION])
+                ->fromArray($seedData[CmsBlockTransfer::STORE_RELATION]),
         );
     }
 

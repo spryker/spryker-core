@@ -36,26 +36,32 @@ class SearchElasticsearchFacadeTest extends Unit
      * @var string
      */
     protected const CURRENT_STORE = 'DE';
+
     /**
      * @var string
      */
     protected const FIXTURE_SOURCE_IDENTIFIER = 'index-name';
+
     /**
      * @var string
      */
     protected const DOCUMENT_CONTENT_KEY = '_source';
+
     /**
      * @var string
      */
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+
     /**
      * @var string
      */
     protected const REPOSITORY_NAME = 'search_test_repository';
+
     /**
      * @var string
      */
     protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
+
     /**
      * @var string
      */
@@ -106,7 +112,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Act
         $result = $this->tester->getFacade()->closeIndex(
-            $this->tester->buildSearchContextTransferFromIndexName($index->getName())
+            $this->tester->buildSearchContextTransferFromIndexName($index->getName()),
         );
 
         // Assert
@@ -278,7 +284,7 @@ class SearchElasticsearchFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->copyIndex(
             $this->tester->buildSearchContextTransferFromIndexName($sourceIndex->getName()),
-            $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
+            $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName()),
         );
 
         $destIndex->refresh();
@@ -352,7 +358,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
             return array_merge(
                 $settings,
-                ['location' => $this->tester->getVirtualRepositoryLocation()]
+                ['location' => $this->tester->getVirtualRepositoryLocation()],
             );
         });
 
@@ -367,7 +373,7 @@ class SearchElasticsearchFacadeTest extends Unit
     protected function assertRepositoryExists(string $repositoryName): void
     {
         $this->assertTrue(
-            $this->createRepositoryMock()->existsSnapshotRepository($repositoryName)
+            $this->createRepositoryMock()->existsSnapshotRepository($repositoryName),
         );
     }
 

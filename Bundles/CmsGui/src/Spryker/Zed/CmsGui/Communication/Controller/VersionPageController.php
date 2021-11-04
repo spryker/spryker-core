@@ -26,10 +26,12 @@ class VersionPageController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
+
     /**
      * @var string
      */
     public const URL_PARAM_VERSION = 'version';
+
     /**
      * @var string
      */
@@ -129,7 +131,7 @@ class VersionPageController extends AbstractController
 
         if ($cmsCurrentVersionTransfer === null) {
             throw new NotFoundHttpException(
-                sprintf('Cms published page with id "%d" not found.', $idCmsPage)
+                sprintf('Cms published page with id "%d" not found.', $idCmsPage),
             );
         }
 
@@ -167,7 +169,7 @@ class VersionPageController extends AbstractController
 
         $redirectUrl = Url::generate(
             '/cms-gui/version-page/history',
-            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+            [static::URL_PARAM_ID_CMS_PAGE => $idCmsPage],
         )
             ->build();
 

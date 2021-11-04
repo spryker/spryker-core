@@ -29,10 +29,12 @@ class ShipmentCarrierFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_IS_ACTIVE = 'isActive';
+
     /**
      * @var string
      */
@@ -42,10 +44,12 @@ class ShipmentCarrierFormType extends AbstractType
      * @var string
      */
     protected const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const LABEL_IS_ACTIVE_FIELD = 'Enabled?';
+
     /**
      * @var string
      */
@@ -73,7 +77,7 @@ class ShipmentCarrierFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -146,7 +150,7 @@ class ShipmentCarrierFormType extends AbstractType
     protected function createShipmentCarrierRequestTransfer(string $carrierName, ExecutionContextInterface $context): ShipmentCarrierRequestTransfer
     {
         $formData = $context->getRoot()->getData();
-        $carrierId = isset($formData[static::FIELD_CARRIER_ID]) ? $formData[static::FIELD_CARRIER_ID] : null;
+        $carrierId = $formData[static::FIELD_CARRIER_ID] ?? null;
 
         return (new ShipmentCarrierRequestTransfer())
             ->setCarrierName($carrierName)

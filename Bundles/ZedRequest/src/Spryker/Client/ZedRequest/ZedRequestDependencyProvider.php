@@ -21,22 +21,27 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_NETWORK = 'util network service';
+
     /**
      * @var string
      */
     public const SERVICE_TEXT = 'util text service';
+
     /**
      * @var string
      */
     public const META_DATA_PROVIDER_PLUGINS = 'META_DATA_PROVIDER_PLUGINS';
+
     /**
      * @var string
      */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+
     /**
      * @var string
      */
     public const PLUGINS_HEADER_EXPANDER = 'PLUGINS_HEADER_EXPANDER';
+
     /**
      * @var string
      */
@@ -110,7 +115,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ZedRequestToMessengerClientBridge(
-                $container->getLocator()->messenger()->client()
+                $container->getLocator()->messenger()->client(),
             );
         });
 
@@ -159,7 +164,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ZedRequestToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

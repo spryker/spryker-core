@@ -106,7 +106,7 @@ class CustomerNoteFacadeTest extends Unit
     {
         $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
             $this->userTransfer->getIdUser(),
-            $this->customerTransfer->getIdCustomer()
+            $this->customerTransfer->getIdCustomer(),
         ));
 
         $this->assertTrue((bool)$note->getIdCustomerNote());
@@ -119,7 +119,7 @@ class CustomerNoteFacadeTest extends Unit
     {
         $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
             $this->userTransfer->getIdUser(),
-            $this->customerTransfer->getIdCustomer()
+            $this->customerTransfer->getIdCustomer(),
         ));
 
         $this->assertTrue((bool)$note->getIdCustomerNote());
@@ -133,7 +133,7 @@ class CustomerNoteFacadeTest extends Unit
         $this->createCustomerNotesWithFkUserAndFkCustomer(
             $this->userTransfer->getIdUser(),
             $this->customerTransfer->getIdCustomer(),
-            static::NOTES_COUNT
+            static::NOTES_COUNT,
         );
         $customerNoteCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTransfer->getIdCustomer());
 
@@ -167,7 +167,7 @@ class CustomerNoteFacadeTest extends Unit
     {
         for ($i = 0; $i < $number; $i++) {
             $this->customerNoteFacade->addNote(
-                $this->tester->getCustomerNoteTransfer($fkUser, $fkCustomer)
+                $this->tester->getCustomerNoteTransfer($fkUser, $fkCustomer),
             );
         }
     }

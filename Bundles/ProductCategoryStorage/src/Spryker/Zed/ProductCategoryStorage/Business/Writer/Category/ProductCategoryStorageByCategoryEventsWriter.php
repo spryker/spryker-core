@@ -59,7 +59,7 @@ class ProductCategoryStorageByCategoryEventsWriter implements ProductCategorySto
             [
                 SpyCategoryTableMap::COL_IS_ACTIVE,
                 SpyCategoryTableMap::COL_CATEGORY_KEY,
-            ]
+            ],
         );
 
         $this->writeCollectionByCategoryEvents($modifiedColumnsEventTransfer);

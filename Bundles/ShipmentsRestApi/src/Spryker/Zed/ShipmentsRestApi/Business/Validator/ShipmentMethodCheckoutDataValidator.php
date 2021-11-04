@@ -46,7 +46,7 @@ class ShipmentMethodCheckoutDataValidator implements ShipmentMethodCheckoutDataV
         if (!$shipmentMethodTransfer) {
             return $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
-                'shipment.validation.not_found'
+                'shipment.validation.not_found',
             );
         }
 

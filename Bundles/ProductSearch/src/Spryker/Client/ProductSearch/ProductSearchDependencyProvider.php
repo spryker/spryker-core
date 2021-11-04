@@ -17,6 +17,7 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */

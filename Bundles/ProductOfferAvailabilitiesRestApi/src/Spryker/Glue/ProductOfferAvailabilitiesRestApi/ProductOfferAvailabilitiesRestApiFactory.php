@@ -29,7 +29,7 @@ class ProductOfferAvailabilitiesRestApiFactory extends AbstractFactory
         return new ProductOfferAvailabilityReader(
             $this->getProductOfferAvailabilityStorageClient(),
             $this->getStoreClient(),
-            $this->createProductOfferAvailabilityRestResponseBuilder()
+            $this->createProductOfferAvailabilityRestResponseBuilder(),
         );
     }
 
@@ -48,7 +48,7 @@ class ProductOfferAvailabilitiesRestApiFactory extends AbstractFactory
     {
         return new ProductOfferAvailabilityRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createProductOfferAvailabilityMapper()
+            $this->createProductOfferAvailabilityMapper(),
         );
     }
 
@@ -74,7 +74,7 @@ class ProductOfferAvailabilitiesRestApiFactory extends AbstractFactory
     public function createProductOfferAvailabilityExpander(): ProductOfferAvailabilityExpanderInterface
     {
         return new ProductOfferAvailabilityExpander(
-            $this->createProductOfferAvailabilityReader()
+            $this->createProductOfferAvailabilityReader(),
         );
     }
 }

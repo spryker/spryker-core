@@ -29,6 +29,7 @@ class StockForm extends AbstractType
      * @var string
      */
     public const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
+
     /**
      * @var string
      */
@@ -38,10 +39,12 @@ class StockForm extends AbstractType
      * @var string
      */
     public const FIELD_TYPE = 'type';
+
     /**
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
@@ -49,7 +52,7 @@ class StockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -65,7 +68,7 @@ class StockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -78,7 +81,7 @@ class StockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -91,7 +94,7 @@ class StockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -113,7 +116,7 @@ class StockForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -147,7 +150,7 @@ class StockForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

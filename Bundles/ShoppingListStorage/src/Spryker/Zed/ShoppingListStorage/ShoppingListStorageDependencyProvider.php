@@ -24,18 +24,22 @@ class ShoppingListStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_SHOPPING_LIST = 'PROPEL_QUERY_SHOPPING_LIST';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_SHOPPING_LIST_ITEM = 'PROPEL_QUERY_SHOPPING_LIST_ITEM';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
     /**
      * @var string
      */

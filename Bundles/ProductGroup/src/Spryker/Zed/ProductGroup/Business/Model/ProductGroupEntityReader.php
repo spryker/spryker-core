@@ -42,7 +42,7 @@ class ProductGroupEntityReader implements ProductGroupEntityReaderInterface
         if (!$productGroupEntity) {
             throw new ProductGroupNotFoundException(sprintf(
                 'Product group with ID "%d" not found.',
-                $productGroupTransfer->getIdProductGroup()
+                $productGroupTransfer->getIdProductGroup(),
             ));
         }
 

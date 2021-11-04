@@ -22,10 +22,12 @@ class UpdatePaymentMethodController extends AbstractController
      * @var string
      */
     protected const REDIRECT_URL = '/payment-gui/payment-method/index';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Payment method has been successfully updated';
+
     /**
      * @var string
      */
@@ -39,7 +41,7 @@ class UpdatePaymentMethodController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPaymentMethod = $this->castId(
-            $request->query->getInt(static::PARAMETER_ID_PAYMENT_METHOD)
+            $request->query->getInt(static::PARAMETER_ID_PAYMENT_METHOD),
         );
 
         $paymentMethodResponseTransfer = $this->getFactory()
@@ -60,7 +62,7 @@ class UpdatePaymentMethodController extends AbstractController
         $paymentMethodForm = $this->getFactory()
             ->createPaymentMethodForm(
                 $dataProvider->getData($paymentMethodTransfer),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             );
         $paymentMethodForm->handleRequest($request);
 

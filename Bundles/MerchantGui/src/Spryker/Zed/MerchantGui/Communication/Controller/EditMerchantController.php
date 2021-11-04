@@ -23,6 +23,7 @@ class EditMerchantController extends AbstractController
      * @var string
      */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
@@ -32,10 +33,12 @@ class EditMerchantController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_DEACTIVATE = 'merchant.deactivated';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS_ACTIVATE = 'merchant.activated';
+
     /**
      * @var string
      */
@@ -67,7 +70,7 @@ class EditMerchantController extends AbstractController
         $merchantForm = $this->getFactory()
             ->getMerchantUpdateForm(
                 $merchantTransfer,
-                $dataProvider->getOptions($idMerchant)
+                $dataProvider->getOptions($idMerchant),
             )
             ->handleRequest($request);
 
@@ -157,7 +160,7 @@ class EditMerchantController extends AbstractController
 
         $merchantTransfer = $merchantFacade->findOne(
             (new MerchantCriteriaTransfer())
-                ->setIdMerchant($idMerchant)
+                ->setIdMerchant($idMerchant),
         );
 
         if (!$merchantTransfer) {

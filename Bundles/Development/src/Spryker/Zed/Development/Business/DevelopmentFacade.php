@@ -31,7 +31,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */
@@ -46,7 +46,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -61,7 +61,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -76,7 +76,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */
@@ -94,7 +94,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $module
      * @param string $toModule
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @deprecated Use Spryk tool instead.
      *
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -230,7 +230,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string $moduleToView
-     * @param array $excludedModules
+     * @param array<string> $excludedModules
      * @param bool $showIncomingDependencies
      *
      * @return string
@@ -475,7 +475,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @api
      *
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

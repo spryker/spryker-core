@@ -52,7 +52,7 @@ class ProductListWriterStep extends PublishAwareStep implements DataImportStepIn
 
         $this->addPublishEvents(
             ProductListEvents::PRODUCT_LIST_PUBLISH,
-            $productListEntity->getIdProductList()
+            $productListEntity->getIdProductList(),
         );
     }
 }

@@ -57,7 +57,7 @@ class SprykerLoggerConfig implements LoggerConfigInterface
     {
         $sanitizer = new Sanitizer(
             Config::get(LogConstants::LOG_SANITIZE_FIELDS, []),
-            Config::get(LogConstants::LOG_SANITIZED_VALUE, '***')
+            Config::get(LogConstants::LOG_SANITIZED_VALUE, '***'),
         );
 
         return [
@@ -78,7 +78,7 @@ class SprykerLoggerConfig implements LoggerConfigInterface
     {
         $streamHandler = new StreamHandler(
             Config::get(LogConstants::LOG_FILE_PATH),
-            Config::get(LogConstants::LOG_LEVEL, Logger::INFO)
+            Config::get(LogConstants::LOG_LEVEL, Logger::INFO),
         );
         $formatter = new LogstashFormatter('Spryker');
         $streamHandler->setFormatter($formatter);

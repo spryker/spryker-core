@@ -27,7 +27,7 @@ class PersistentCartShareFactory extends AbstractFactory
     public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader(
-            $this->createZedPersistentCartShareStub()
+            $this->createZedPersistentCartShareStub(),
         );
     }
 
@@ -45,7 +45,7 @@ class PersistentCartShareFactory extends AbstractFactory
     public function createCartShareOptionReader(): CartShareOptionReaderInterface
     {
         return new CartShareOptionReader(
-            $this->getCartShareOptionPlugins()
+            $this->getCartShareOptionPlugins(),
         );
     }
 

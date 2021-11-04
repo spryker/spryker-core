@@ -25,7 +25,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
             }
 
             $itemTransfer->setGroupKey(
-                $this->getItemTransferConfiguredBundleGroupKey($itemTransfer)
+                $this->getItemTransferConfiguredBundleGroupKey($itemTransfer),
             );
         }
 
@@ -58,7 +58,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
         return sprintf(
             '%s-%s',
             $itemTransfer->getConfiguredBundle()->getGroupKey(),
-            $itemTransfer->getGroupKey()
+            $itemTransfer->getGroupKey(),
         );
     }
 }

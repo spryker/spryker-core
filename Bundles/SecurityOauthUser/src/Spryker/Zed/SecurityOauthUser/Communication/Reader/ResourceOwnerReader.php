@@ -43,7 +43,7 @@ class ResourceOwnerReader implements ResourceOwnerReaderInterface
         }
 
         $resourceOwnerResponseTransfer = $this->securityOauthUserFacade->getResourceOwner(
-            $this->createResourceOwnerRequestTransfer($request)
+            $this->createResourceOwnerRequestTransfer($request),
         );
 
         if (!$resourceOwnerResponseTransfer->getIsSuccessful()) {

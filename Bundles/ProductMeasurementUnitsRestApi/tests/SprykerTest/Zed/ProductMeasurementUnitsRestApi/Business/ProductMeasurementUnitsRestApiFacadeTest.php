@@ -40,20 +40,20 @@ class ProductMeasurementUnitsRestApiFacadeTest extends Unit
         $persistentCartChangeTransfer = $this->tester->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
 
         // Assert
         $this->tester->assertNotNull(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getAmountSalesUnit()
+                ->getAmountSalesUnit(),
         );
 
         $this->tester->assertNotNull(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getAmount()
+                ->getAmount(),
         );
     }
 
@@ -70,20 +70,20 @@ class ProductMeasurementUnitsRestApiFacadeTest extends Unit
         $persistentCartChangeTransfer = $this->tester->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
 
         // Assert
         $this->tester->assertNull(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getAmountSalesUnit()
+                ->getAmountSalesUnit(),
         );
 
         $this->tester->assertNull(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getAmount()
+                ->getAmount(),
         );
     }
 
@@ -100,20 +100,20 @@ class ProductMeasurementUnitsRestApiFacadeTest extends Unit
         $persistentCartChangeTransfer = $this->tester->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
 
         // Assert
         $this->tester->assertNull(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getAmountSalesUnit()
+                ->getAmountSalesUnit(),
         );
 
         $this->tester->assertNull(
             $persistentCartChangeTransfer->getItems()
                 ->offsetGet(0)
-                ->getAmount()
+                ->getAmount(),
         );
     }
 }

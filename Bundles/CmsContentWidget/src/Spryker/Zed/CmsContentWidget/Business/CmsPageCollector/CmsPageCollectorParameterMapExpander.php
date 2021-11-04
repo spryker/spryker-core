@@ -35,7 +35,7 @@ class CmsPageCollectorParameterMapExpander implements CmsPageCollectorParameterM
     public function map(array $collectedData, LocaleTransfer $localeTransfer)
     {
         $collectedData[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP] = $this->extractContentWidgetFunctionParameterMap(
-            $collectedData['placeholders']
+            $collectedData['placeholders'],
         );
 
         return $collectedData;
@@ -52,7 +52,7 @@ class CmsPageCollectorParameterMapExpander implements CmsPageCollectorParameterM
         foreach ($contentPlaceholders as $content) {
             $contentWidgetParameterMap = array_replace_recursive(
                 $contentWidgetParameterMap,
-                $this->contentWidgetParameterMapper->map($content)
+                $this->contentWidgetParameterMapper->map($content),
             );
         }
 

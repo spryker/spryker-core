@@ -63,8 +63,8 @@ class CheckLocalizedContentNavigationTermStep implements DataImportStepInterface
                     sprintf(
                         static::ERROR_MESSAGE,
                         $idLocale,
-                        implode(';', $errorMessages)
-                    )
+                        implode(';', $errorMessages),
+                    ),
                 );
             }
             $validatedContentNavigationTerms[$idLocale] = $contentNavigationTermTransfer;

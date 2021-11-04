@@ -24,7 +24,7 @@ class ProductBundleStorageFactory extends AbstractFactory
         return new ProductBundleStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

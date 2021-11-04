@@ -75,7 +75,7 @@ class BundleGeneratorTest extends Unit
             IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN => '/',
             IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN => sprintf(
                 'Generated\%s\Ide',
-                IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER
+                IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
             ),
         ];
     }

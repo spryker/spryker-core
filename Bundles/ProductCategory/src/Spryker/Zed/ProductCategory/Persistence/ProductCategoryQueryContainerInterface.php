@@ -80,11 +80,11 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      *
      * @param string|null $term
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductsAbstractBySearchTermForAssignment($term, $idCategory, LocaleTransfer $locale);
+    public function queryProductsAbstractBySearchTermForAssignment($term, $idCategory, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:

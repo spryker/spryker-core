@@ -24,10 +24,12 @@ class ViewScheduleListController extends AbstractController
      * @var string
      */
     public const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
+
     /**
      * @var string
      */
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
+
     /**
      * @var string
      */
@@ -41,7 +43,7 @@ class ViewScheduleListController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPriceProductScheduleList = $this->castId(
-            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST)
+            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST),
         );
         $priceProductScheduleListTransfer = $this->createPriceProductScheduleListTransfer($idPriceProductScheduleList);
 
@@ -116,14 +118,14 @@ class ViewScheduleListController extends AbstractController
     public function tableAction(Request $request): JsonResponse
     {
         $idPriceProductScheduleList = $this->castId(
-            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST)
+            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST),
         );
 
         $priceProductScheduleTable = $this->getFactory()
             ->createPriceProductScheduleTable($idPriceProductScheduleList);
 
         return $this->jsonResponse(
-            $priceProductScheduleTable->fetchData()
+            $priceProductScheduleTable->fetchData(),
         );
     }
 }

@@ -35,7 +35,7 @@ class TemplateListController extends AbstractController
     public function tableAction(): JsonResponse
     {
         return $this->jsonResponse(
-            $this->getFactory()->createTemplateListTable()->fetchData()
+            $this->getFactory()->createTemplateListTable()->fetchData(),
         );
     }
 }

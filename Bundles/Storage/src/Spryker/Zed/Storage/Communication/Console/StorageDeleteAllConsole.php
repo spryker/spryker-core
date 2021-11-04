@@ -21,6 +21,7 @@ class StorageDeleteAllConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'storage:delete';
+
     /**
      * @var string
      */

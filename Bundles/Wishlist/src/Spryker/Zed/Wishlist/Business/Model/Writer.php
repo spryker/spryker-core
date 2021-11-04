@@ -34,6 +34,7 @@ class Writer implements WriterInterface
      * @var string
      */
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+
     /**
      * @var string
      */
@@ -264,7 +265,7 @@ class Writer implements WriterInterface
     {
         $wishListEntity = $this->reader->getWishlistEntityByCustomerIdAndWishlistName(
             $wishlistTransfer->getFkCustomer(),
-            $wishlistTransfer->getName()
+            $wishlistTransfer->getName(),
         );
         $wishlistTransfer->fromArray($wishListEntity->toArray(), true);
 
@@ -331,7 +332,7 @@ class Writer implements WriterInterface
 
         $idWishlist = $this->getDefaultWishlistIdByName(
             $wishlistItemTransfer->getWishlistName(),
-            $wishlistItemTransfer->getFkCustomer()
+            $wishlistItemTransfer->getFkCustomer(),
         );
 
         $wishlistItemTransfer->setFkWishlist($idWishlist);
@@ -459,7 +460,7 @@ class Writer implements WriterInterface
             throw new WishlistExistsException(sprintf(
                 'Wishlist with name "%s" for customer "%s" already exists',
                 $wishlistTransfer->getName(),
-                $wishlistTransfer->getFkCustomer()
+                $wishlistTransfer->getFkCustomer(),
             ));
         }
     }

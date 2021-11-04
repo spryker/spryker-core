@@ -15,14 +15,17 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_IDENTIFIER_WISHLIST_NOT_FOUND = 'ERROR_IDENTIFIER_WISHLIST_NOT_FOUND';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST = 'ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST';
+
     /**
      * @var string
      */
     public const ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT = 'ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT';
+
     /**
      * @var string
      */
@@ -32,6 +35,7 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED = 'ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED';
+
     /**
      * @var string
      */

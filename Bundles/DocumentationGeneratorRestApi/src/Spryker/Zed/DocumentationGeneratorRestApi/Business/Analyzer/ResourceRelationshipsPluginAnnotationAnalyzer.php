@@ -17,12 +17,14 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
 {
     /**
      * @uses \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer::PATTERN_REGEX_GLUE_ANNOTATION
+     *
      * @var string
      */
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
 
     /**
      * @uses \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT
+     *
      * @var string
      */
     protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
@@ -148,7 +150,7 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
             $annotationDecoded = $this->utilEncodingService->decodeJson($annotation, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new InvalidAnnotationFormatException(
-                    sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation)
+                    sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation),
                 );
             }
             $annotationsTransformed[] = $annotationDecoded;

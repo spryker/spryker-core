@@ -16,6 +16,7 @@ interface SecuritySystemUserConstants
      * @var string
      */
     public const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
+
     /**
      * @var string
      */

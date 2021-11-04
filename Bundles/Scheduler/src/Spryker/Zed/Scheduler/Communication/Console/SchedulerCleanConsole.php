@@ -21,6 +21,7 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
      * @var string
      */
     public const COMMAND_NAME = 'scheduler:clean';
+
     /**
      * @var string
      */
@@ -30,10 +31,12 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
      * @var string
      */
     protected const ROLES_OPTION = 'roles';
+
     /**
      * @var string
      */
     protected const ROLES_OPTION_SHORTCUT = 'r';
+
     /**
      * @var string
      */
@@ -43,10 +46,12 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
      * @var string
      */
     protected const SCHEDULERS_OPTION = 'schedulers';
+
     /**
      * @var string
      */
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
+
     /**
      * @var string
      */
@@ -65,7 +70,7 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
             static::ROLES_OPTION_SHORTCUT,
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             static::ROLES_OPTION_DESCRIPTION,
-            []
+            [],
         );
 
         $this->addOption(
@@ -73,7 +78,7 @@ class SchedulerCleanConsole extends AbstractSchedulerConsole
             static::SCHEDULERS_OPTION_SHORTCUT,
             InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             static::SCHEDULERS_OPTION_DESCRIPTION,
-            []
+            [],
         );
 
         parent::configure();

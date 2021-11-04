@@ -19,7 +19,7 @@ class ModuleFinderConfig extends AbstractBundleConfig
         'spryker-shop',
         'spryker-eco',
         'spryker-sdk',
-        'spryker-merchant-portal',
+        'spryker-middleware',
     ];
 
     /**
@@ -32,16 +32,15 @@ class ModuleFinderConfig extends AbstractBundleConfig
         return [
             'Spryker',
             'SprykerShop',
-            'SprykerMerchantPortal',
         ];
     }
 
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
-    public function getApplications()
+    public function getApplications(): array
     {
         return [
             'Client',
@@ -63,7 +62,6 @@ class ModuleFinderConfig extends AbstractBundleConfig
         return [
             'spryker',
             'spryker-shop',
-            'spryker-merchant-portal',
         ];
     }
 

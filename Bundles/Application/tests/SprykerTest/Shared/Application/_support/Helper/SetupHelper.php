@@ -24,6 +24,7 @@ class SetupHelper extends Module
 
     /**
      * @deprecated Use the spryker/deploy module.
+     *
      * @var string
      */
     public const TEST_ENV_SCRIPT = './setup_test';

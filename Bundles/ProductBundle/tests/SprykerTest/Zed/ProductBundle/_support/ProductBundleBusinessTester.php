@@ -48,18 +48,22 @@ class ProductBundleBusinessTester extends Actor
      * @var string
      */
     public const SKU_BUNDLED_1 = 'sku-1-test-tester';
+
     /**
      * @var string
      */
     public const SKU_BUNDLED_2 = 'sku-2-test-tester';
+
     /**
      * @var string
      */
     public const BUNDLE_SKU_3 = 'sku-3-test-tester';
+
     /**
      * @var int
      */
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
+
     /**
      * @var int
      */
@@ -69,6 +73,7 @@ class ProductBundleBusinessTester extends Actor
      * @var string
      */
     public const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+
     /**
      * @var string
      */
@@ -78,6 +83,7 @@ class ProductBundleBusinessTester extends Actor
      * @var string
      */
     public const FAKE_PRODUCT_OPTION_SKU_1 = 'FAKE_PRODUCT_OPTION_SKU_1';
+
     /**
      * @var string
      */
@@ -108,13 +114,13 @@ class ProductBundleBusinessTester extends Actor
                     static::BUNDLED_PRODUCT_PRICE_1,
                     static::SKU_BUNDLED_1,
                     $isAlwaysAvailable,
-                    $isNeverOutOfStock
+                    $isNeverOutOfStock,
                 ),
                 $this->createProduct(
                     static::BUNDLED_PRODUCT_PRICE_2,
                     static::SKU_BUNDLED_2,
                     $isAlwaysAvailable,
-                    $isNeverOutOfStock
+                    $isNeverOutOfStock,
                 ),
             ];
         }
@@ -213,7 +219,7 @@ class ProductBundleBusinessTester extends Actor
         $saveOrderTransfer = $this->haveOrderFromQuote(
             $quoteTransfer,
             BusinessHelper::DEFAULT_OMS_PROCESS_NAME,
-            [new ProductBundleOrderSaverPlugin()]
+            [new ProductBundleOrderSaverPlugin()],
         );
 
         return (new OrderTransfer())

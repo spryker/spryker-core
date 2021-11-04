@@ -32,22 +32,27 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
      * @var string
      */
     public const FIELD_SKU_AUTOGENERATE_CHECKBOX = 'sku_autogenerate_checkbox';
+
     /**
      * @var string
      */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
+
     /**
      * @var string
      */
     public const CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'container_product_concrete_super_attributes';
+
     /**
      * @var string
      */
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
+
     /**
      * @var string
      */
     public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
+
     /**
      * @var string
      */
@@ -55,7 +60,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -95,7 +100,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -153,7 +158,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -169,7 +174,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             [
                 static::OPTION_SUPER_ATTRIBUTES => $options[static::OPTION_SUPER_ATTRIBUTES],
                 static::OPTION_ID_PRODUCT_ABSTRACT => $options[static::OPTION_ID_PRODUCT_ABSTRACT],
-            ]
+            ],
         );
 
         return $this;
@@ -177,7 +182,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
 
     /**
      * @param array $formData
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string|null
      */
@@ -194,7 +199,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
         $productConcreteTransfer = new ProductConcreteTransfer();
         if (isset($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])) {
             $productConcreteTransfer->setAttributes(
-                $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
+                $this->getNonEmptyTransformedSubmittedSuperAttributes($formData[static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]),
             );
         }
 
@@ -212,7 +217,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()->getTransformedSubmittedSuperAttributes($submittedAttributes),
             function ($submittedAttribute) {
                 return $submittedAttribute !== null && $submittedAttribute !== '';
-            }
+            },
         );
     }
 

@@ -32,7 +32,7 @@ class CustomerAccessBusinessFactory extends AbstractBusinessFactory
         return new CustomerAccessInstaller(
             $this->getConfig(),
             $this->createCustomerAccessCreator(),
-            $this->createCustomerAccessReader()
+            $this->createCustomerAccessReader(),
         );
     }
 

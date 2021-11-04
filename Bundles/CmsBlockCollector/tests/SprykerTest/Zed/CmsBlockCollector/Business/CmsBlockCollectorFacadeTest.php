@@ -85,7 +85,7 @@ class CmsBlockCollectorFacadeTest extends Unit
                 [
                     'getCollectorFacade',
                     'createStorageCmsBlockCollector',
-                ]
+                ],
             )
             ->disableOriginalConstructor()
             ->getMock();
@@ -105,7 +105,7 @@ class CmsBlockCollectorFacadeTest extends Unit
             ->setMethods(
                 [
                     'getFactory',
-                ]
+                ],
             )
             ->disableOriginalConstructor()
             ->getMock();
@@ -134,7 +134,7 @@ class CmsBlockCollectorFacadeTest extends Unit
             $this->getMockBuilder(ReaderInterface::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(WriterInterface::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(TouchUpdaterInterface::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(OutputInterface::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(OutputInterface::class)->disableOriginalConstructor()->getMock(),
         );
     }
 }

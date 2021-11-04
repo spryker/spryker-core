@@ -50,7 +50,7 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
                 'One of "%s" or "%s" must be in the data set. Given: "%s"',
                 PriceProductDataSet::KEY_ABSTRACT_SKU,
                 PriceProductDataSet::KEY_CONCRETE_SKU,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 

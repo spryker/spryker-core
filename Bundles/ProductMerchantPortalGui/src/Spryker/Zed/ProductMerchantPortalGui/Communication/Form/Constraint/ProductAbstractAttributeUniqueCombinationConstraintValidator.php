@@ -22,12 +22,13 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
 {
     /**
      * @uses \Spryker\Zed\ProductAttribute\ProductAttributeConfig::DEFAULT_LOCALE
+     *
      * @var string
      */
     public const DEFAULT_LOCALE = '_';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const LOCALE_NAME_MAP = [
         self::DEFAULT_LOCALE => ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,
@@ -49,7 +50,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     }
 
     /**
-     * @param array<string[]> $attributes
+     * @param array<array<string>> $attributes
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractAttributeUniqueCombinationConstraint $constraint
      *
      * @return void
@@ -71,11 +72,11 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
 
             if ($productConcreteTransfer) {
                 $attributesGroupedByLocaleName = $this->getAttributesGroupedByLocaleName(
-                    $productConcreteTransfer->getLocalizedAttributes()
+                    $productConcreteTransfer->getLocalizedAttributes(),
                 );
                 $existingAttributes = $this->appendAttributesWithDefaultAttributes(
                     $attributesGroupedByLocaleName,
-                    $productConcreteTransfer->getAttributes()
+                    $productConcreteTransfer->getAttributes(),
                 );
             }
         }
@@ -109,11 +110,9 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getAttributesGroupedByLocaleName(ArrayObject $localizedAttributesTransfers): array
     {
@@ -128,10 +127,10 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     }
 
     /**
-     * @param array<string[]> $attributes
+     * @param array<array<string>> $attributes
      * @param array<string> $defaultAttributes
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function appendAttributesWithDefaultAttributes(array $attributes, array $defaultAttributes): array
     {

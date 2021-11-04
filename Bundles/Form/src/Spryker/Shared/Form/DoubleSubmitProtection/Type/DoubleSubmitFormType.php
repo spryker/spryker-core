@@ -25,6 +25,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      * @var string
      */
     protected const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      * @var string
      */
     protected const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+
     /**
      * @var string
      */
@@ -84,7 +86,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */
@@ -98,7 +100,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormView $view The form view
      * @param \Symfony\Component\Form\FormInterface $form The form
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */
@@ -118,7 +120,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             $fieldName,
             HiddenType::class,
             $token,
-            ['mapped' => false]
+            ['mapped' => false],
         );
 
         $view->children[$fieldName] = $tokenForm->createView($view);
@@ -164,7 +166,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             static::DEFAULT_TOKEN_FIELD_NAME,
             static::DEFAULT_ERROR_MESSAGE,
             $this->translator,
-            $this->translationDomain
+            $this->translationDomain,
         );
     }
 }

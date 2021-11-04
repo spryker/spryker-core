@@ -48,7 +48,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
-            $this->getProductOptionGroupExpanderPlugins()
+            $this->getProductOptionGroupExpanderPlugins(),
         );
     }
 
@@ -63,7 +63,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->createTranslationSaver(),
             $this->createAbstractProductOptionSaver(),
             $this->createProductOptionValueSaver(),
-            $this->getProductOptionValuesPreRemovePlugins()
+            $this->getProductOptionValuesPreRemovePlugins(),
         );
     }
 
@@ -76,7 +76,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
             $this->createProductOptionPriceSaver(),
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->createTranslationSaver()
+            $this->createTranslationSaver(),
         );
     }
 
@@ -87,7 +87,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new TranslationSaver(
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -99,7 +99,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new AbstractProductOptionSaver(
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -117,7 +117,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createPlaceOrderProductOptionOrderSaver()
     {
         return new ProductOptionOrderSaver(
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -128,7 +128,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionValueReader(
             $this->createProductOptionValuePriceReader(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -149,7 +149,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator(
             $this->getQueryContainer(),
-            $this->getTaxFacade()
+            $this->getTaxFacade(),
         );
     }
 
@@ -277,7 +277,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionValuePriceReader(
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
         );
     }
 

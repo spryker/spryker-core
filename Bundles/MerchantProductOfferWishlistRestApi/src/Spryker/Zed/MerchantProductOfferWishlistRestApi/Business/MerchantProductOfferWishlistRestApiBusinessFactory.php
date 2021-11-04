@@ -26,7 +26,7 @@ class MerchantProductOfferWishlistRestApiBusinessFactory extends AbstractBusines
     public function createMerchantProductOfferWishlistRestApiDeleter(): MerchantProductOfferWishlistRestApiDeleterInterface
     {
         return new MerchantProductOfferWishlistRestApiDeleter(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 

@@ -27,7 +27,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         return $this->getService()->getMimeType(
             $fileSystemQueryTransfer->getFileSystemNameOrFail(),
-            $fileSystemQueryTransfer->getPathOrFail()
+            $fileSystemQueryTransfer->getPathOrFail(),
         );
     }
 
@@ -40,7 +40,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         return $this->getService()->getTimestamp(
             $fileSystemQueryTransfer->getFileSystemNameOrFail(),
-            $fileSystemQueryTransfer->getPathOrFail()
+            $fileSystemQueryTransfer->getPathOrFail(),
         );
     }
 
@@ -53,7 +53,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         return $this->getService()->getSize(
             $fileSystemQueryTransfer->getFileSystemNameOrFail(),
-            $fileSystemQueryTransfer->getPathOrFail()
+            $fileSystemQueryTransfer->getPathOrFail(),
         );
     }
 
@@ -66,7 +66,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         return $this->getService()->isPrivate(
             $fileSystemQueryTransfer->getFileSystemNameOrFail(),
-            $fileSystemQueryTransfer->getPathOrFail()
+            $fileSystemQueryTransfer->getPathOrFail(),
         );
     }
 
@@ -79,7 +79,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         return $this->getService()->has(
             $fileSystemQueryTransfer->getFileSystemNameOrFail(),
-            $fileSystemQueryTransfer->getPathOrFail()
+            $fileSystemQueryTransfer->getPathOrFail(),
         );
     }
 
@@ -92,7 +92,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
     {
         return $this->getService()->read(
             $fileSystemQueryTransfer->getFileSystemNameOrFail(),
-            $fileSystemQueryTransfer->getPathOrFail()
+            $fileSystemQueryTransfer->getPathOrFail(),
         );
     }
 
@@ -106,7 +106,7 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
         $flysystemTransferCollection = $this->getService()->listContents(
             $fileSystemListTransfer->getFileSystemNameOrFail(),
             $fileSystemListTransfer->getPathOrFail(),
-            $fileSystemListTransfer->getRecursiveOrFail()
+            $fileSystemListTransfer->getRecursiveOrFail(),
         );
 
         $collection = [];

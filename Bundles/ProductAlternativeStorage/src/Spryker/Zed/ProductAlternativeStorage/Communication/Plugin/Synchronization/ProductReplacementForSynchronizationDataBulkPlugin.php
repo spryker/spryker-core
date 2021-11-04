@@ -99,7 +99,7 @@ class ProductReplacementForSynchronizationDataBulkPlugin extends AbstractPlugin 
         return $this->getFacade()
             ->getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
                 $this->createFilterTransfer($offset, $limit),
-                $ids
+                $ids,
             );
     }
 

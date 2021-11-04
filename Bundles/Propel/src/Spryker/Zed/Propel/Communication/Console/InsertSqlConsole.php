@@ -21,6 +21,7 @@ class InsertSqlConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:sql:insert';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class InsertSqlConsole extends Console
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
-            $output
+            $output,
         );
     }
 }

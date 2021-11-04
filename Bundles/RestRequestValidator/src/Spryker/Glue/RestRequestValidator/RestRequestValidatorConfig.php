@@ -24,10 +24,12 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
      * @var string
      */
     protected const CONSTRAINTS_NAMESPACE_SYMFONY_COMPONENT_VALIDATOR = 'Symfony\\Component\\Validator\\Constraints\\';
+
     /**
      * @var string
      */
     protected const CONSTRAINTS_NAMESPACE_PROJECT_STORE_REST_REQUEST_VALIDATOR = '\\Glue\\RestRequestValidator%s\\Constraints\\';
+
     /**
      * @var string
      */
@@ -81,7 +83,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getConstraintCollectionOptions(): array
     {
@@ -92,7 +94,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getCoreNamespaces(): array
     {
@@ -107,7 +109,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getProjectNamespaces(): array
     {

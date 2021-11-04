@@ -31,14 +31,17 @@ class ReturnReader implements ReturnReaderInterface
      * @var string
      */
     protected const ID_SALES_RETURN_SORT_FIELD = 'id_sales_return';
+
     /**
      * @var string
      */
     protected const DEFAULT_SORT_DIRECTION = 'DESC';
+
     /**
      * @var int
      */
     protected const DEFAULT_OFFSET = 1;
+
     /**
      * @var int
      */
@@ -165,7 +168,7 @@ class ReturnReader implements ReturnReaderInterface
 
         foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
             $returnTransfer->setReturnItems(
-                new ArrayObject($mappedReturnItemTransfers[$returnTransfer->getIdSalesReturn()] ?? [])
+                new ArrayObject($mappedReturnItemTransfers[$returnTransfer->getIdSalesReturn()] ?? []),
             );
 
             $this->expandReturnWithOrderItems($returnTransfer);
@@ -205,7 +208,7 @@ class ReturnReader implements ReturnReaderInterface
 
         foreach ($returnTransfer->getReturnItems() as $returnItemTransfer) {
             $returnItemTransfer->setOrderItem(
-                $mappedItemTransfers[$returnItemTransfer->getOrderItem()->getIdSalesOrderItem()] ?? null
+                $mappedItemTransfers[$returnItemTransfer->getOrderItem()->getIdSalesOrderItem()] ?? null,
             );
         }
 
@@ -247,7 +250,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ReturnItemTransfer> $returnItemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ReturnItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ReturnItemTransfer>>
      */
     protected function mapReturnItemsByIdReturn(array $returnItemTransfers): array
     {
@@ -269,7 +272,7 @@ class ReturnReader implements ReturnReaderInterface
     {
         foreach ($returnCollectionTransfer->getReturns() as $returnTransfer) {
             $returnTransfer->setReturnTotals(
-                $this->returnTotalCalculator->calculateReturnTotals($returnTransfer)
+                $this->returnTotalCalculator->calculateReturnTotals($returnTransfer),
             );
         }
 

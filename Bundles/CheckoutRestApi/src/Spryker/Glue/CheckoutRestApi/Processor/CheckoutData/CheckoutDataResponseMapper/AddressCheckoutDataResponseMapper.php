@@ -61,8 +61,8 @@ class AddressCheckoutDataResponseMapper implements CheckoutDataResponseMapperInt
             $restCheckoutDataResponseAttributesTransfer->addAddress(
                 (new RestAddressTransfer())->fromArray(
                     $addressTransfer->toArray(),
-                    true
-                )->setId($addressTransfer->getUuid())
+                    true,
+                )->setId($addressTransfer->getUuid()),
             );
         }
 

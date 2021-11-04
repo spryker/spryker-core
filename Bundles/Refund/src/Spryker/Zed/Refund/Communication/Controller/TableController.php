@@ -34,7 +34,7 @@ class TableController extends AbstractController
         $table = $this->getFactory()->createRefundTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 }

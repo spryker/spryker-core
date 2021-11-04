@@ -56,7 +56,7 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
 
         [, $currencyCode] = explode(
             SalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
-            $storeCurrencyRequestParam
+            $storeCurrencyRequestParam,
         );
 
         return $this->currencyFacade->fromIsoCode($currencyCode);
@@ -75,7 +75,7 @@ class StoreCurrencyFinder implements StoreCurrencyFinderInterface
 
         [$storeName] = explode(
             SalesOrderThresholdGuiConfig::STORE_CURRENCY_DELIMITER,
-            $storeCurrencyRequestParam
+            $storeCurrencyRequestParam,
         );
 
         return $this->storeFacade->getStoreByName($storeName);

@@ -31,6 +31,7 @@ class RouterResource implements ResourceInterface
      * @var int
      */
     public const MODULE_NAME_POSITION = 2;
+
     /**
      * @var int
      */
@@ -160,7 +161,7 @@ class RouterResource implements ResourceInterface
             '%s/%s/%s',
             $module,
             $controller,
-            $this->getFilterChain()->filter($action)
+            $this->getFilterChain()->filter($action),
         );
 
         return $template;

@@ -41,7 +41,7 @@ class CategoryExpander implements CategoryExpanderInterface
             }
 
             $categoryTransfer->addLocalizedAttributes(
-                (new CategoryLocalizedAttributesTransfer())->setLocale($localeTransfer)
+                (new CategoryLocalizedAttributesTransfer())->setLocale($localeTransfer),
             );
         }
 

@@ -25,7 +25,7 @@ class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
     public function createOrderSourceReader(): OrderSourceReaderInterface
     {
         return new OrderSourceReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

@@ -38,7 +38,7 @@ class ProductPackagingUnitOmsReservationAggregationPlugin extends AbstractPlugin
         return $this->getFacade()->aggregateProductPackagingUnitReservation(
             $reservationRequestTransfer->getSku(),
             $reservationRequestTransfer->getReservedStates(),
-            $reservationRequestTransfer->getStore()
+            $reservationRequestTransfer->getStore(),
         );
     }
 }

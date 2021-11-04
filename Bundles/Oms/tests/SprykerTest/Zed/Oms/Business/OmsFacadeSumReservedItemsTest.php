@@ -38,18 +38,22 @@ class OmsFacadeSumReservedItemsTest extends Unit
      * @var string
      */
     public const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
+
     /**
      * @var string
      */
     public const NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3 = 'paid';
+
     /**
      * @var string
      */
     public const NOT_RESERVED_SUBPROCESS_ITEM_STATE = 'awaiting approval';
+
     /**
      * @var string
      */
     public const RESERVED_SUBPROCESS_ITEM_STATE = 'payment preparations';
+
     /**
      * @var string
      */
@@ -93,14 +97,14 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(100)
+                ->equals(100),
         );
 
         $order3 = $this->createTestOrder('789', 'Test03', 'new');
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(150)
+                ->equals(150),
         );
 
         foreach ($order3->getItems() as $orderItem) {
@@ -110,7 +114,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->assertTrue(
             $this->getOmsFacade()
                 ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
-                ->equals(100)
+                ->equals(100),
         );
     }
 
@@ -136,12 +140,12 @@ class OmsFacadeSumReservedItemsTest extends Unit
         // Assert
         $this->assertTrue(
             $sumReservedProductQuantitiesForSkuBefore->equals(0),
-            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.'
+            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.',
         );
 
         $this->assertTrue(
             $sumReservedProductQuantitiesForSkuAfter->equals(50),
-            'Expected reserved product quantity to be 50 for reserved state of subprocess.'
+            'Expected reserved product quantity to be 50 for reserved state of subprocess.',
         );
     }
 

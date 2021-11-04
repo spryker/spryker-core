@@ -37,6 +37,7 @@ class ProductLabelStorageFacadeTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
@@ -82,7 +83,7 @@ class ProductLabelStorageFacadeTest extends Unit
         $this->tester->assertEquals(
             0,
             $productLabelDictionaryStorageAfterCount,
-            'Product Label Dictionary Storage record count does not equals to an expected value.'
+            'Product Label Dictionary Storage record count does not equals to an expected value.',
         );
     }
 
@@ -106,7 +107,7 @@ class ProductLabelStorageFacadeTest extends Unit
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $this->tester->getFacade()->deleteProductLabelDictionaryStorageCollection();
@@ -119,7 +120,7 @@ class ProductLabelStorageFacadeTest extends Unit
         $this->tester->assertGreaterThan(
             0,
             $productLabelDictionaryStorageCount,
-            'Product Label Dictionary Storage record count is less then expected value.'
+            'Product Label Dictionary Storage record count is less then expected value.',
         );
     }
 
@@ -133,7 +134,7 @@ class ProductLabelStorageFacadeTest extends Unit
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $eventTransfers = [
@@ -147,7 +148,7 @@ class ProductLabelStorageFacadeTest extends Unit
         //Assert
         $this->assertTrue(
             $this->tester->isProductAbstractLabelStorageRecordExists($productAbstractTransfer->getIdProductAbstract()),
-            'Product abstract label storage record should exists.'
+            'Product abstract label storage record should exists.',
         );
     }
 
@@ -161,7 +162,7 @@ class ProductLabelStorageFacadeTest extends Unit
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $eventTransfers = [
@@ -176,7 +177,7 @@ class ProductLabelStorageFacadeTest extends Unit
         //Assert
         $this->assertTrue(
             $this->tester->isProductAbstractLabelStorageRecordExists($productAbstractTransfer->getIdProductAbstract()),
-            'Product abstract label storage record should exists.'
+            'Product abstract label storage record should exists.',
         );
     }
 
@@ -191,7 +192,7 @@ class ProductLabelStorageFacadeTest extends Unit
             ProductAbstractLabelStorageTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
         ]);
         $productAbstractLabelStorageIds = $this->tester->getProductAbstractLabelStorageIdsByIdProductAbstract(
-            $productAbstractLabelTransfer->getIdProductAbstract()
+            $productAbstractLabelTransfer->getIdProductAbstract(),
         );
 
         $filterTransfer = $this->createFilterTransfer();
@@ -199,13 +200,13 @@ class ProductLabelStorageFacadeTest extends Unit
         //Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getProductAbstractLabelStorageDataTransfersByIds(
             $filterTransfer,
-            $productAbstractLabelStorageIds
+            $productAbstractLabelStorageIds,
         );
 
         $this->assertCount(
             1,
             $synchronizationDataTransfers,
-            'Number of synchronisation data transfers is not equals to an expected value.'
+            'Number of synchronisation data transfers is not equals to an expected value.',
         );
     }
 
@@ -227,13 +228,13 @@ class ProductLabelStorageFacadeTest extends Unit
         //Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getProductLabelDictionaryStorageDataTransfersByIds(
             $filterTransfer,
-            [$productLabelDictionaryStorageTransfer->getIdProductLabelDictionaryStorage()]
+            [$productLabelDictionaryStorageTransfer->getIdProductLabelDictionaryStorage()],
         );
 
         $this->assertCount(
             1,
             $synchronizationDataTransfers,
-            'Number of synchronisation data transfers is not equals to an expected value.'
+            'Number of synchronisation data transfers is not equals to an expected value.',
         );
     }
 

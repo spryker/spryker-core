@@ -14,6 +14,7 @@ interface ProductPackagingUnitEvents
      * - This event is used for product_packaging_unit publishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_PACKAGING_UNIT_PUBLISH = 'ProductPackagingUnit.product_packaging_unit.publish';
@@ -23,6 +24,7 @@ interface ProductPackagingUnitEvents
      * - This event is used for product_packaging_unit unpublishing.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_PACKAGING_UNIT_UNPUBLISH = 'ProductPackagingUnit.product_packaging_unit.unpublish';
@@ -32,6 +34,7 @@ interface ProductPackagingUnitEvents
      * - This events will be used for spy_product_packaging_unit_type update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE = 'Entity.spy_product_packaging_unit_type.create';
@@ -41,6 +44,7 @@ interface ProductPackagingUnitEvents
      * - This events will be used for spy_product_packaging_unit_type update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE = 'Entity.spy_product_packaging_unit_type.update';
@@ -50,6 +54,7 @@ interface ProductPackagingUnitEvents
      * - This events will be used for spy_product_packaging_unit_type delete
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE = 'Entity.spy_product_packaging_unit_type.delete';
@@ -59,6 +64,7 @@ interface ProductPackagingUnitEvents
      * - This events will be used for spy_product_packaging_unit update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_PACKAGING_UNIT_CREATE = 'Entity.spy_product_packaging_unit.create';
@@ -68,6 +74,7 @@ interface ProductPackagingUnitEvents
      * - This events will be used for spy_product_packaging_unit update
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_PACKAGING_UNIT_UPDATE = 'Entity.spy_product_packaging_unit.update';
@@ -77,6 +84,7 @@ interface ProductPackagingUnitEvents
      * - This events will be used for spy_product_packaging_unit delete
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE = 'Entity.spy_product_packaging_unit.delete';

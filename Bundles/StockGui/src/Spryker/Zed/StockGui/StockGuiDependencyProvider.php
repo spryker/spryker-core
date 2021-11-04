@@ -100,8 +100,8 @@ class StockGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own StockGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage stocks.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 }

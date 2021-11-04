@@ -22,7 +22,7 @@ class RedisFactory extends AbstractFactory
     public function createRedisDataCollector(): DataCollector
     {
         return new RedisDataCollector(
-            $this->createRedisLogger()
+            $this->createRedisLogger(),
         );
     }
 
@@ -32,7 +32,7 @@ class RedisFactory extends AbstractFactory
     public function createRedisLogger(): RedisLoggerInterface
     {
         return new RedisInMemoryLogger(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

@@ -25,7 +25,7 @@ abstract class AbstractCheckDataStep
                 $messages[] = sprintf(
                     '"%s" property: %s',
                     $constraintViolationTransfer->getPropertyName(),
-                    $constraintViolationMessageTransfer->getValue()
+                    $constraintViolationMessageTransfer->getValue(),
                 );
             }
         }

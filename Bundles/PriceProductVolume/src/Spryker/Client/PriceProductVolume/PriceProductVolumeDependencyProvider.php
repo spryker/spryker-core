@@ -25,10 +25,12 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
@@ -59,7 +61,7 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -75,7 +77,7 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductVolumeToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -91,7 +93,7 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new PriceProductVolumeToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 
@@ -107,7 +109,7 @@ class PriceProductVolumeDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new PriceProductVolumeToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 

@@ -102,7 +102,7 @@ class CategoryTree implements CategoryTreeInterface
             ->toArray();
 
         $destinationCategoryTransfer = $this->categoryFacade->findCategory(
-            (new CategoryCriteriaTransfer())->setIdCategoryNode($idDestinationCategoryNode)
+            (new CategoryCriteriaTransfer())->setIdCategoryNode($idDestinationCategoryNode),
         );
 
         if ($destinationCategoryTransfer === null) {
@@ -137,7 +137,7 @@ class CategoryTree implements CategoryTreeInterface
             $this->moveExtraParentCategoryNodeSubTree(
                 $categoryTransfer,
                 $idDestinationCategoryNode,
-                $idSourceCategoryNode
+                $idSourceCategoryNode,
             );
         }
 
@@ -181,7 +181,7 @@ class CategoryTree implements CategoryTreeInterface
         do {
             $childrenMoved = $this->moveSubTree(
                 $nodeTransfer->getIdCategoryNodeOrFail(),
-                $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail()
+                $idDestinationCategoryNode ?? $nodeTransfer->getFkParentCategoryNodeOrFail(),
             );
         } while ($childrenMoved > 0);
 

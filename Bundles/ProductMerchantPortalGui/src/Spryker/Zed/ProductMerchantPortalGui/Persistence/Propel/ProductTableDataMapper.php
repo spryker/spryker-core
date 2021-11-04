@@ -23,48 +23,55 @@ class ProductTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_NAME
+     *
      * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_STATUS
+     *
      * @var string
      */
     protected const COL_KEY_STATUS = 'status';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_IMAGE
+     *
      * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
+     *
      * @var string
      */
     protected const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_FROM
+     *
      * @var string
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO
+     *
      * @var string
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const PRODUCT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductTableMap::COL_SKU,
@@ -90,9 +97,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableDataArray
-     *
-     * @param array $productTableDataArray
+     * @param array<mixed> $productTableDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -118,26 +123,22 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
-     *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareProductAttributesTableData(array $productTableRowDataArray, LocaleTransfer $localeTransfer): array
     {
         $productConcreteAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteAttributes = is_array($productConcreteAttributes) ? $productConcreteAttributes : [];
 
         $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
             $productTableRowDataArray[ProductConcreteTransfer::LOCALIZED_ATTRIBUTES] ?? null,
-            true
+            true,
         );
         $productConcreteLocalizedAttributes = is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : [];
 
@@ -153,9 +154,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
-     *
-     * @param array $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -166,7 +165,7 @@ class ProductTableDataMapper
     ): ProductConcreteTransfer {
         $productImageSetTransfer = (new ProductImageSetTransfer())
             ->addProductImage((new ProductImageTransfer())->setExternalUrlSmall(
-                $productTableRowDataArray[ProductImageTransfer::EXTERNAL_URL_SMALL]
+                $productTableRowDataArray[ProductImageTransfer::EXTERNAL_URL_SMALL],
             ));
 
         $productConcreteTransfer->setImageSets(new ArrayObject([$productImageSetTransfer]));

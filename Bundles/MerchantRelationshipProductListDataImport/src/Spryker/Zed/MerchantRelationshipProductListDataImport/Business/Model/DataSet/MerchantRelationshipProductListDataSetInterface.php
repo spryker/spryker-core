@@ -13,6 +13,7 @@ interface MerchantRelationshipProductListDataSetInterface
      * @var string
      */
     public const MERCHANT_RELATION_KEY = 'merchant_relation_key';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface MerchantRelationshipProductListDataSetInterface
      * @var string
      */
     public const ID_MERCHANT_RELATIONSHIP = 'id_merchant_relationship';
+
     /**
      * @var string
      */

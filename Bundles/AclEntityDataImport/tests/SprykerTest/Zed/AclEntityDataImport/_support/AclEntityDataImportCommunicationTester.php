@@ -43,6 +43,7 @@ class AclEntityDataImportCommunicationTester extends Actor
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_1 = 'sH9qLMZtt6sxWqRJVYib';
+
     /**
      * @var string
      */
@@ -52,6 +53,7 @@ class AclEntityDataImportCommunicationTester extends Actor
      * @var string
      */
     protected const ACL_ENTITY_SEGMENT_NAME_1 = 'Segment 1';
+
     /**
      * @var string
      */
@@ -71,7 +73,7 @@ class AclEntityDataImportCommunicationTester extends Actor
             [
                 static::ACL_ENTITY_SEGMENT_REFERENCE_1,
                 static::ACL_ENTITY_SEGMENT_REFERENCE_2,
-            ]
+            ],
         )->delete();
     }
 
@@ -153,7 +155,7 @@ class AclEntityDataImportCommunicationTester extends Actor
                 AclEntitySegmentRequestTransfer::ENTITY_IDS => [$merchantTransfer1->getIdMerchant()],
                 AclEntitySegmentRequestTransfer::NAME => static::ACL_ENTITY_SEGMENT_NAME_1,
                 AclEntitySegmentRequestTransfer::REFERENCE => static::ACL_ENTITY_SEGMENT_REFERENCE_1,
-            ]
+            ],
         );
 
         $merchantTransfer2 = $this->haveMerchant();
@@ -163,7 +165,7 @@ class AclEntityDataImportCommunicationTester extends Actor
                 AclEntitySegmentRequestTransfer::ENTITY_IDS => [$merchantTransfer2->getIdMerchant()],
                 AclEntitySegmentTransfer::NAME => static::ACL_ENTITY_SEGMENT_NAME_2,
                 AclEntitySegmentTransfer::REFERENCE => static::ACL_ENTITY_SEGMENT_REFERENCE_2,
-            ]
+            ],
         );
     }
 

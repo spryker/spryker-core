@@ -29,30 +29,35 @@ class MerchantUserSecurityPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     *
      * @var string
      */
     protected const SERVICE_SESSION = 'session';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     *
      * @var string
      */
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
@@ -117,7 +122,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'password' => 'foo',
                     '_token' => $csrfToken->getValue(),
                 ],
-            ]
+            ],
         );
 
         // Assert
@@ -161,7 +166,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'username' => $userTransfer->getUsername(),
                     'password' => 'bar',
                 ],
-            ]
+            ],
         );
 
         // Assert
@@ -210,7 +215,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'username' => $userTransfer->getUsername(),
                     'password' => 'foo',
                 ],
-            ]
+            ],
         );
 
         // Assert
@@ -253,7 +258,7 @@ class MerchantUserSecurityPluginTest extends Unit
                     'username' => $userTransfer->getUsername(),
                     'password' => 'foo',
                 ],
-            ]
+            ],
         );
 
         // Assert

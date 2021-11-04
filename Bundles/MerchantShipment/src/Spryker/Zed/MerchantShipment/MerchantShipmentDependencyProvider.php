@@ -44,7 +44,7 @@ class MerchantShipmentDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new MerchantShipmentToShipmentFacadeBridge(
-                $container->getLocator()->shipment()->facade()
+                $container->getLocator()->shipment()->facade(),
             );
         });
 

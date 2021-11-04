@@ -44,7 +44,7 @@ class MerchantDataImportDependencyProvider extends DataImportDependencyProvider
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantDataImportToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

@@ -13,6 +13,7 @@ class DummyMarketplacePaymentConfig
      * @var string
      */
     public const PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
+
     /**
      * @var string
      */

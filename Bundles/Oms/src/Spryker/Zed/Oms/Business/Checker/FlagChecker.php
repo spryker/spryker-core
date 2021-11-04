@@ -40,7 +40,7 @@ class FlagChecker implements FlagCheckerInterface
 
         $filteredItemTransfers = $this->filterOrderItemsByStateWithFlag(
             $itemTransfers,
-            $this->getStatesByFlag($processName, $flag)
+            $this->getStatesByFlag($processName, $flag),
         );
 
         return count($itemTransfers) === count($filteredItemTransfers);

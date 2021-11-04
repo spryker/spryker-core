@@ -115,10 +115,10 @@ class TransferFacadeTest extends Unit
 
         // Assert
         $this->assertTrue(
-            $this->tester->isEntityTransfersExist($transferDestinationDirectory)
+            $this->tester->isEntityTransfersExist($transferDestinationDirectory),
         );
         $this->assertFalse(
-            $this->tester->isDataTransfersExist($transferDestinationDirectory)
+            $this->tester->isDataTransfersExist($transferDestinationDirectory),
         );
     }
 
@@ -135,10 +135,10 @@ class TransferFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($this->tester->isDataTransfersExist(
-            $this->tester->getTransferDestinationDir()
+            $this->tester->getTransferDestinationDir(),
         ));
         $this->assertFalse($this->tester->isEntityTransfersExist(
-            $this->tester->getTransferDestinationDir()
+            $this->tester->getTransferDestinationDir(),
         ));
     }
 

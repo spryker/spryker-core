@@ -36,7 +36,7 @@ class AclEntityHelper extends Module
             ->aclEntity()
             ->facade()
             ->createAclEntitySegment(
-                (new AclEntitySegmentRequestBuilder($seedData))->build()
+                (new AclEntitySegmentRequestBuilder($seedData))->build(),
             )
             ->getAclEntitySegmentOrFail();
 

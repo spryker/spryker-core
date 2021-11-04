@@ -27,7 +27,7 @@ class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFa
     public function getMerchantOpeningHoursWeekdayScheduleDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantOpeningHoursWeekdayScheduleDataImporterConfiguration()
+            $this->getConfig()->getMerchantOpeningHoursWeekdayScheduleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -47,7 +47,7 @@ class MerchantOpeningHoursDataImportBusinessFactory extends DataImportBusinessFa
     public function getMerchantOpeningHoursDateScheduleDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantOpeningHoursDateScheduleDataImporterConfiguration()
+            $this->getConfig()->getMerchantOpeningHoursDateScheduleDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

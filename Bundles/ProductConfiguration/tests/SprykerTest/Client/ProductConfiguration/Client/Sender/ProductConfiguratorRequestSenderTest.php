@@ -36,6 +36,7 @@ class ProductConfiguratorRequestSenderTest extends Unit
 {
     /**
      * @uses \Spryker\Client\ProductConfiguration\Sender\ProductConfiguratorRequestSender::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN = 'product_configuration.access_token.request.error.can_not_obtain_access_token';
@@ -57,18 +58,18 @@ class ProductConfiguratorRequestSenderTest extends Unit
     {
         // Arrange
         $productConfiguratorRequestTransfer = (new ProductConfiguratorRequestTransfer())->setProductConfiguratorRequestData(
-            (new ProductConfiguratorRequestDataTransfer())->setConfiguratorKey(static::DATE_TIME_CONFIGURATOR_KEY)
+            (new ProductConfiguratorRequestDataTransfer())->setConfiguratorKey(static::DATE_TIME_CONFIGURATOR_KEY),
         )->setAccessTokenRequestUrl(getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST'));
 
         $httpClientMock = $this->getHttpClientMock();
 
         $httpClientMock->method('request')->willReturn(
-            $this->createConfiguratorResponse()
+            $this->createConfiguratorResponse(),
         );
 
         $productConfiguratorRequestSenderMock = $this->getProductConfiguratorRequestSenderMock(
             $httpClientMock,
-            $this->createProductConfigurationToUtilEncodingServiceBridge()
+            $this->createProductConfigurationToUtilEncodingServiceBridge(),
         );
 
         // Act
@@ -87,18 +88,18 @@ class ProductConfiguratorRequestSenderTest extends Unit
     {
         // Arrange
         $productConfiguratorRequestTransfer = (new ProductConfiguratorRequestTransfer())->setProductConfiguratorRequestData(
-            (new ProductConfiguratorRequestDataTransfer())->setConfiguratorKey(static::DATE_TIME_CONFIGURATOR_KEY)
+            (new ProductConfiguratorRequestDataTransfer())->setConfiguratorKey(static::DATE_TIME_CONFIGURATOR_KEY),
         );
 
         $httpClientMock = $this->getHttpClientMock();
 
         $httpClientMock->method('request')->willReturn(
-            $this->createConfiguratorResponse()
+            $this->createConfiguratorResponse(),
         );
 
         $productConfiguratorRequestSenderMock = $this->getProductConfiguratorRequestSenderMock(
             $httpClientMock,
-            $this->createProductConfigurationToUtilEncodingServiceBridge()
+            $this->createProductConfigurationToUtilEncodingServiceBridge(),
         );
 
         // Assert
@@ -115,18 +116,18 @@ class ProductConfiguratorRequestSenderTest extends Unit
     {
         // Arrange
         $productConfiguratorRequestTransfer = (new ProductConfiguratorRequestTransfer())->setProductConfiguratorRequestData(
-            (new ProductConfiguratorRequestDataTransfer())->setConfiguratorKey(static::DATE_TIME_CONFIGURATOR_KEY)
+            (new ProductConfiguratorRequestDataTransfer())->setConfiguratorKey(static::DATE_TIME_CONFIGURATOR_KEY),
         )->setAccessTokenRequestUrl(getenv('SPRYKER_PRODUCT_CONFIGURATOR_HOST'));
 
         $httpClientMock = $this->getHttpClientMock();
 
         $httpClientMock->method('request')->willThrowException(
-            new ProductConfigurationHttpRequestException()
+            new ProductConfigurationHttpRequestException(),
         );
 
         $productConfiguratorRequestSenderMock = $this->getProductConfiguratorRequestSenderMock(
             $httpClientMock,
-            $this->createProductConfigurationToUtilEncodingServiceBridge()
+            $this->createProductConfigurationToUtilEncodingServiceBridge(),
         );
 
         // Act
@@ -138,7 +139,7 @@ class ProductConfiguratorRequestSenderTest extends Unit
         $this->assertSame(
             $productConfiguratorRedirectTransfer->getMessages()->getIterator()->current()->getValue(),
             static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN,
-            'Expects error message to be provided.'
+            'Expects error message to be provided.',
         );
     }
 
@@ -158,7 +159,7 @@ class ProductConfiguratorRequestSenderTest extends Unit
         return new Response(
             SymfonyResponse::HTTP_OK,
             [],
-            $responseBody
+            $responseBody,
         );
     }
 
@@ -178,7 +179,7 @@ class ProductConfiguratorRequestSenderTest extends Unit
     protected function createProductConfigurationToUtilEncodingServiceBridge(): ProductConfigurationToUtilEncodingServiceInterface
     {
         return new ProductConfigurationToUtilEncodingServiceBridge(
-            $this->tester->getLocator()->utilEncoding()->service()
+            $this->tester->getLocator()->utilEncoding()->service(),
         );
     }
 

@@ -114,7 +114,7 @@ class TransferValidatorTest extends Unit
     {
         $this->output = new ConsoleOutput();
         $definitionFinder = new TransferDefinitionFinder(
-            $sourceDirectories
+            $sourceDirectories,
         );
 
         return $definitionFinder;

@@ -21,6 +21,7 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
+
     /**
      * @var string
      */

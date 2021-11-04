@@ -70,8 +70,8 @@ class DecisionRuleProvider implements SpecificationProviderInterface
             sprintf(
                 'Could not find decision rule plugin for "%s" field. Have you registered it in "%s::getDecisionRulePlugins" plugins stack?',
                 $clauseTransfer->getField(),
-                DiscountDependencyProvider::class
-            )
+                DiscountDependencyProvider::class,
+            ),
         );
     }
 }

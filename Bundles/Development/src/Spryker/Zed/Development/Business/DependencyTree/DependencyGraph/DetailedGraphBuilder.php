@@ -184,7 +184,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
             [
                 'label' => $this->getForeignUsage($dependencyInformation[DependencyTree::META_FINDER]) . ' : ' . $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME],
                 'fontsize' => 8,
-            ]
+            ],
         );
     }
 
@@ -200,7 +200,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
             [
                 $dependencyInformation[DependencyTree::META_FOREIGN_BUNDLE],
                 $dependencyInformation[DependencyTree::META_FOREIGN_LAYER],
-            ]
+            ],
         );
     }
 

@@ -75,7 +75,7 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
             $redisClient,
             $this->createSessionKeyBuilder(),
             $this->monitoringService,
-            $this->sessionRedisLifeTimeCalculator
+            $this->sessionRedisLifeTimeCalculator,
         );
     }
 
@@ -90,7 +90,7 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
             $redisClient,
             $this->createSessionSpinLockLocker($redisClient),
             $this->createSessionKeyBuilder(),
-            $this->sessionRedisLifeTimeCalculator
+            $this->sessionRedisLifeTimeCalculator,
         );
     }
 
@@ -106,7 +106,7 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
             $this->createSessionKeyBuilder(),
             $this->lockingTimeoutMilliseconds,
             $this->lockingRetryDelayMilliseconds,
-            $this->lockingLockTtlMilliseconds
+            $this->lockingLockTtlMilliseconds,
         );
     }
 

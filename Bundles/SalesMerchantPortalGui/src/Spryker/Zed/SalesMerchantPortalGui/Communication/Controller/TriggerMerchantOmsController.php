@@ -26,10 +26,12 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
      * @var string
      */
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
+
     /**
      * @var string
      */
     protected const PARAM_MERCHANT_ORDER_IDS = 'merchant-order-ids';
+
     /**
      * @var string
      */
@@ -59,7 +61,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
             ->findMerchantOrder(
                 (new MerchantOrderCriteriaTransfer())
                     ->setIdMerchantOrder($idMerchantOrder)
-                    ->setWithItems(true)
+                    ->setWithItems(true),
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
@@ -102,7 +104,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
             ->getMerchantSalesOrderFacade()
             ->findMerchantOrder(
                 (new MerchantOrderCriteriaTransfer())
-                    ->setIdMerchantOrder($idMerchantOrder)
+                    ->setIdMerchantOrder($idMerchantOrder),
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
@@ -113,7 +115,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
             ->getMerchantSalesOrderFacade()
             ->getMerchantOrderItemCollection(
                 (new MerchantOrderItemCriteriaTransfer())
-                    ->setMerchantOrderItemIds($merchantOrderIds)
+                    ->setMerchantOrderItemIds($merchantOrderIds),
             );
 
         $this->triggerEventFormMerchantOrderItems($eventName, $this->filterMerchantOrderItems($merchantOrderItemCollectionTransfer, $idMerchantOrder));
@@ -122,8 +124,6 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
-     *
      * @param string $eventName
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *

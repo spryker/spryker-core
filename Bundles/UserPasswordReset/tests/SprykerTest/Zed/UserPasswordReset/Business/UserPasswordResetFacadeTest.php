@@ -30,6 +30,7 @@ class UserPasswordResetFacadeTest extends Unit
      * @var string
      */
     public const TEST_MAIL = 'username@example.com';
+
     /**
      * @var string
      */
@@ -58,7 +59,7 @@ class UserPasswordResetFacadeTest extends Unit
         // Act
         $result = $this->tester->getUserPasswordReset()->requestPasswordReset(
             (new UserPasswordResetRequestTransfer())
-                ->setEmail($userTransfer->getUsername())
+                ->setEmail($userTransfer->getUsername()),
         );
 
         // Assert
@@ -79,7 +80,7 @@ class UserPasswordResetFacadeTest extends Unit
         // Act
         $result = $this->tester->getUserPasswordReset()->requestPasswordReset(
             (new UserPasswordResetRequestTransfer())
-                ->setEmail($fakeUsername)
+                ->setEmail($fakeUsername),
         );
 
         // Assert
@@ -97,7 +98,7 @@ class UserPasswordResetFacadeTest extends Unit
         ]);
         $this->tester->getUserPasswordReset()->requestPasswordReset(
             (new UserPasswordResetRequestTransfer())
-                ->setEmail($userTransfer->getUsername())
+                ->setEmail($userTransfer->getUsername()),
         );
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
 
@@ -121,7 +122,7 @@ class UserPasswordResetFacadeTest extends Unit
         ]);
         $this->tester->getUserPasswordReset()->requestPasswordReset(
             (new UserPasswordResetRequestTransfer())
-                ->setEmail($userTransfer->getUsername())
+                ->setEmail($userTransfer->getUsername()),
         );
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
 
@@ -143,15 +144,15 @@ class UserPasswordResetFacadeTest extends Unit
         ]);
         $this->tester->getUserPasswordReset()->requestPasswordReset(
             (new UserPasswordResetRequestTransfer())
-                ->setEmail($userTransfer->getUsername())
+                ->setEmail($userTransfer->getUsername()),
         );
         $resetPasswordTransfer = $this->tester->findResetPasswordTransferByIdUser($userTransfer->getIdUser());
         $resetPasswordTransfer->setCreatedAt(
-            (new DateTime('last year'))->format('Y-m-d H:i:s')
+            (new DateTime('last year'))->format('Y-m-d H:i:s'),
         );
         $this->tester->updateResetPasswordByIdAuthResetPassword(
             $resetPasswordTransfer->getIdResetPassword(),
-            $resetPasswordTransfer
+            $resetPasswordTransfer,
         );
 
         // Act

@@ -76,7 +76,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
         if ($sessionQuoteTransfer->getIdQuote() === $quoteTransfer->getIdQuote()) {
             $quoteTransfer = $sessionQuoteTransfer->fromArray(
                 $quoteTransfer->modifiedToArray(),
-                true
+                true,
             );
         }
 

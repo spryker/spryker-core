@@ -240,7 +240,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             }
 
             $priceProductTransfer->setPriceDimension(
-                $priceDimension->fromArray($priceProductDimensionTransfer->modifiedToArray())
+                $priceDimension->fromArray($priceProductDimensionTransfer->modifiedToArray()),
             );
         }
 
@@ -524,7 +524,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             return $this
                 ->productConcreteSuperAttributeFilterHelperInterface
                 ->getTransformedSubmittedSuperAttributes(
-                    $formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES]
+                    $formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES],
                 );
         }
 
@@ -627,7 +627,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         foreach ($abstractProductPriceProductTransfers as $abstractProductPriceProductTransfer) {
             $concreteProductPriceProductTransfer = $this->createPriceProductTransfer(
                 $productConcreteTransfer,
-                $abstractProductPriceProductTransfer
+                $abstractProductPriceProductTransfer,
             );
 
             $concreteProductPriceProductTransfers->append($concreteProductPriceProductTransfer);

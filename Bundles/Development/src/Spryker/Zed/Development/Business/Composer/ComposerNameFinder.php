@@ -23,7 +23,7 @@ class ComposerNameFinder implements ComposerNameFinderInterface
     protected $moduleTransferCollection = [];
 
     /**
-     * @var array<\Generated\Shared\Transfer\ModuleTransfer[]>|null
+     * @var array<array<\Generated\Shared\Transfer\ModuleTransfer>>|null
      */
     protected $moduleTransferCollectionGroupedByModuleName;
 
@@ -134,7 +134,7 @@ class ComposerNameFinder implements ComposerNameFinderInterface
     }
 
     /**
-     * @param array $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $moduleTransferCollection
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer
      */
@@ -144,7 +144,7 @@ class ComposerNameFinder implements ComposerNameFinderInterface
     }
 
     /**
-     * @return array<\Generated\Shared\Transfer\ModuleTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ModuleTransfer>>
      */
     protected function getModuleTransferCollectionGroupedByModuleName(): array
     {

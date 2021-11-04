@@ -29,7 +29,7 @@ class FacadeMethodBuilder extends AbstractBundleMethodBuilder
         return sprintf(
             '%s%s/Business/',
             $bundleTransfer->getDirectory(),
-            $bundleTransfer->getName()
+            $bundleTransfer->getName(),
         );
     }
 }

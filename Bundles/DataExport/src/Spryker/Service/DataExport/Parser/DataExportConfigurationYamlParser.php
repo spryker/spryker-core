@@ -18,6 +18,7 @@ class DataExportConfigurationYamlParser implements DataExportConfigurationParser
      * @var string
      */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+
     /**
      * @var string
      */
@@ -58,7 +59,7 @@ class DataExportConfigurationYamlParser implements DataExportConfigurationParser
         $dataExportConfigurationsTransfer = $this->dataExportConfigurationMapper
             ->mapDataExportConfigurationDataToDataExportConfigurationsTransfer(
                 $configData,
-                new DataExportConfigurationsTransfer()
+                new DataExportConfigurationsTransfer(),
             );
 
         return $this->addDataExportConfigurationHooks($dataExportConfigurationsTransfer);

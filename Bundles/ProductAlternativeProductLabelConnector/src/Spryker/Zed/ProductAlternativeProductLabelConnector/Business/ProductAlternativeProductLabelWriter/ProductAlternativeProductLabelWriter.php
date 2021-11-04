@@ -105,7 +105,7 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
     protected function findProductAlternativeProductLabel(): ?ProductLabelTransfer
     {
         return $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductAlternativesLabelName()
+            $this->config->getProductAlternativesLabelName(),
         );
     }
 

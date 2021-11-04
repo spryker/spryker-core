@@ -24,10 +24,12 @@ class ShipmentMethodFormType extends AbstractType
      * @var string
      */
     public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
+
     /**
      * @var string
      */
     public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+
     /**
      * @var string
      */
@@ -50,7 +52,7 @@ class ShipmentMethodFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -61,7 +63,7 @@ class ShipmentMethodFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

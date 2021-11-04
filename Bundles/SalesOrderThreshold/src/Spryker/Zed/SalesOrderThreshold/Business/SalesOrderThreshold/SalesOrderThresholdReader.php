@@ -52,7 +52,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
         $salesOrderThresholdTransfers = $this->salesOrderThresholdRepository
             ->getSalesOrderThresholds(
                 $storeTransfer,
-                $currencyTransfer
+                $currencyTransfer,
             );
 
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {

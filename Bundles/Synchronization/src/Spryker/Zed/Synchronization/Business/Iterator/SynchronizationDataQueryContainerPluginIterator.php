@@ -60,7 +60,7 @@ class SynchronizationDataQueryContainerPluginIterator extends AbstractSynchroniz
 
         $query = $this->synchronizationDataQueryExpanderStrategyPlugin->expandQuery(
             $query,
-            $synchronizationDataQueryExpanderStrategyConfigurationTransfer
+            $synchronizationDataQueryExpanderStrategyConfigurationTransfer,
         );
 
         $this->current = $query->find()->getData();

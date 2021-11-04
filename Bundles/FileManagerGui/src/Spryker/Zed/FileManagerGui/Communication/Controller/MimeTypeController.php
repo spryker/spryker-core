@@ -34,14 +34,17 @@ class MimeTypeController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MIME_TYPE_SAVING_SUCCESS = 'MIME type was successfully saved';
+
     /**
      * @var string
      */
     protected const MESSAGE_MIME_TYPE_SAVING_ERROR = 'MIME type already exists';
+
     /**
      * @var string
      */
     protected const MESSAGE_MIME_TYPE_DELETING_SUCCESS = 'MIME type was successfully deleted';
+
     /**
      * @var string
      */
@@ -66,7 +69,7 @@ class MimeTypeController extends AbstractController
                 $this->getFactory()
                     ->getFileManagerFacade()
                     ->updateMimeTypeSettings(
-                        $this->createMimeTypeCollectionTransfer($formData)
+                        $this->createMimeTypeCollectionTransfer($formData),
                     );
             }
         }
@@ -104,7 +107,7 @@ class MimeTypeController extends AbstractController
 
             if ($mimeTypeResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponse(
-                    Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build()
+                    Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build(),
                 );
             }
         }
@@ -130,7 +133,7 @@ class MimeTypeController extends AbstractController
 
             if ($mimeTypeResponseTransfer->getIsSuccessful()) {
                 return $this->redirectResponse(
-                    Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build()
+                    Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build(),
                 );
             }
         }
@@ -159,7 +162,7 @@ class MimeTypeController extends AbstractController
             $this->addErrorMessage(static::MESSAGE_MIME_TYPE_DELETING_ERROR);
 
         return $this->redirectResponse(
-            Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build()
+            Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build(),
         );
     }
 
@@ -173,7 +176,7 @@ class MimeTypeController extends AbstractController
         $mimeTypeResponseTransfer = $this->getFactory()
             ->getFileManagerFacade()
             ->saveMimeType(
-                $form->getData()
+                $form->getData(),
             );
 
         $mimeTypeResponseTransfer->getIsSuccessful() ?

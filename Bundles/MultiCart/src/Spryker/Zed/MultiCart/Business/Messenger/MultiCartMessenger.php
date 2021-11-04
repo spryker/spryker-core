@@ -18,6 +18,7 @@ class MultiCartMessenger implements MultiCartMessengerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
+
     /**
      * @var string
      */
@@ -58,7 +59,7 @@ class MultiCartMessenger implements MultiCartMessengerInterface
 
         $isQuoteDefault = $this->multiCartRepository->isQuoteDefault(
             $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()->getCustomerReference()
+            $quoteTransfer->getCustomer()->getCustomerReference(),
         );
 
         if ($isQuoteDefault) {

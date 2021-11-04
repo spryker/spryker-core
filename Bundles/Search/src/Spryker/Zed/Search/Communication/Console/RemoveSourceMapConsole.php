@@ -21,6 +21,7 @@ class RemoveSourceMapConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'search:source-map:remove';
+
     /**
      * @var string
      */

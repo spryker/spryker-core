@@ -24,7 +24,7 @@ class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactor
     public function createDiscountCalculator(): DiscountCalculatorInterface
     {
         return new DiscountCalculator(
-            $this->getDiscountFacade()
+            $this->getDiscountFacade(),
         );
     }
 

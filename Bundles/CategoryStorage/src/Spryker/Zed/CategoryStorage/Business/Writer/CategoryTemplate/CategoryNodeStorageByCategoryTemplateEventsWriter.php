@@ -45,7 +45,7 @@ class CategoryNodeStorageByCategoryTemplateEventsWriter implements CategoryNodeS
         $categoryTemplateIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->categoryNodeStorageWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryTemplateIds($categoryTemplateIds),
         );
     }
 }

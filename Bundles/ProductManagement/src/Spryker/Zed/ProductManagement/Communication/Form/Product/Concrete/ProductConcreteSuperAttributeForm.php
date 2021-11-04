@@ -29,14 +29,17 @@ class ProductConcreteSuperAttributeForm extends AbstractType
      * @var string
      */
     public const FIELD_DROPDOWN = 'dropdown';
+
     /**
      * @var string
      */
     public const FIELD_INPUT = 'input';
+
     /**
      * @var string
      */
     public const FIELD_CHECKBOX = 'checkbox';
+
     /**
      * @var string
      */
@@ -56,7 +59,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
      * @retun void
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -67,7 +70,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -85,7 +88,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'attr' => [
                     'class' => 'super-attribute-dropdown-input',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -93,7 +96,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -113,7 +116,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'attr' => [
                     'class' => 'super-attribute-checkbox-input',
                 ],
-            ]
+            ],
         );
 
         $builder->add(
@@ -124,7 +127,7 @@ class ProductConcreteSuperAttributeForm extends AbstractType
                 'attr' => [
                     'class' => 'hidden super-attribute-text-input',
                 ],
-            ]
+            ],
         );
 
         return $this;

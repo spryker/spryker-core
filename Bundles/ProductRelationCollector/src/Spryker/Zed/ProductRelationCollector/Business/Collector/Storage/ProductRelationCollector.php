@@ -111,7 +111,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
             StorageProductAbstractRelationTransfer::URL => $relationProduct[SpyUrlTableMap::COL_URL],
             StorageProductAbstractRelationTransfer::ORDER => $relationProduct[SpyProductRelationProductAbstractTableMap::COL_ORDER],
             StorageProductAbstractRelationTransfer::IMAGE_SETS => $this->generateProductAbstractImageSets(
-                $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT]
+                $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             ),
         ];
     }
@@ -119,14 +119,14 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param int $idProductRelation
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
      */
     protected function findRelationProducts($idProductRelation)
     {
         return $this->productRelationQueryContainer
             ->queryProductRelationWithProductAbstractByIdRelationAndLocale(
                 $idProductRelation,
-                $this->locale->getIdLocale()
+                $this->locale->getIdLocale(),
             )
             ->find();
     }

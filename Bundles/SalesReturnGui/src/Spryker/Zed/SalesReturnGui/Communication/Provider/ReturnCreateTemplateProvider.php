@@ -16,6 +16,7 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
      * @var string
      */
     protected const FIELD_RETURN_CREATE_FORM = 'returnCreateForm';
+
     /**
      * @var string
      */
@@ -37,12 +38,10 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $returnCreateForm
      *
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function provide(FormInterface $returnCreateForm, OrderTransfer $orderTransfer): array
     {
@@ -60,7 +59,7 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
         foreach ($this->returnCreateTemplatePlugins as $returnCreateTemplatePlugin) {
             $templates[$returnCreateTemplatePlugin->getTemplatePath()] = array_merge(
                 $templateData,
-                $returnCreateTemplatePlugin->getTemplateData($orderTransfer)
+                $returnCreateTemplatePlugin->getTemplateData($orderTransfer),
             );
         }
 

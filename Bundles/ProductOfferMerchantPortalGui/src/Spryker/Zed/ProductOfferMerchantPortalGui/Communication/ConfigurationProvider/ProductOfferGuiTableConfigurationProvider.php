@@ -20,50 +20,62 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
      * @var string
      */
     public const COL_KEY_OFFER_REFERENCE = 'offerReference';
+
     /**
      * @var string
      */
     public const COL_KEY_MERCHANT_SKU = 'merchantSku';
+
     /**
      * @var string
      */
     public const COL_KEY_CONCRETE_SKU = 'concreteSku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_PRODUCT_NAME = 'productName';
+
     /**
      * @var string
      */
     public const COL_KEY_STORES = 'stores';
+
     /**
      * @var string
      */
     public const COL_KEY_STOCK = 'stock';
+
     /**
      * @var string
      */
     public const COL_KEY_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_TO = 'validTo';
+
     /**
      * @var string
      */
     public const COL_KEY_CREATED_AT = 'createdAt';
+
     /**
      * @var string
      */
@@ -73,6 +85,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
      * @var string
      */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+
     /**
      * @var string
      */
@@ -80,30 +93,35 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider::COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'Pending';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     *
      * @var string
      */
     protected const APPROVAL_STATUS_DENIED = 'denied';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductOffersController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product-offers/table-data';
@@ -251,8 +269,8 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
             'Manage Offer',
             sprintf(
                 '/product-offer-merchant-portal-gui/update-product-offer?product-offer-id=${row.%s}',
-                ProductOfferTransfer::ID_PRODUCT_OFFER
-            )
+                ProductOfferTransfer::ID_PRODUCT_OFFER,
+            ),
         )->setRowClickAction('update-offer');
 
         return $guiTableConfigurationBuilder;

@@ -116,7 +116,7 @@ class CommentThreadWriter implements CommentThreadWriterInterface
 
         foreach ($commentTransfers as $commentTransfer) {
             $commentThreadTransfer->addComment(
-                $this->duplicateComment($commentTransfer, $commentThreadTransfer)
+                $this->duplicateComment($commentTransfer, $commentThreadTransfer),
             );
         }
 

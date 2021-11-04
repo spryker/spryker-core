@@ -54,9 +54,9 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
                     SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
                     $reservationRequestTransfer->getSku(),
                     SpySalesOrderItemTableMap::COL_AMOUNT,
-                    SpySalesOrderItemTableMap::COL_QUANTITY
+                    SpySalesOrderItemTableMap::COL_QUANTITY,
                 ),
-                SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
+                SalesOrderItemStateAggregationTransfer::SUM_AMOUNT,
             );
             $salesOrderItemQuery = $salesOrderItemQuery->condition('sku', 'spy_sales_order_item.sku = ?', $reservationRequestTransfer->getSku())
                 ->condition('amount_sku', 'spy_sales_order_item.amount_sku = ?', $reservationRequestTransfer->getSku())

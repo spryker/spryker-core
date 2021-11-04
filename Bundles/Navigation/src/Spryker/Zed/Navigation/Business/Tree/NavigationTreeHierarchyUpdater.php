@@ -144,7 +144,7 @@ class NavigationTreeHierarchyUpdater implements NavigationTreeHierarchyUpdaterIn
         if (!$navigationNodeEntity) {
             throw new NavigationNodeNotFoundException(sprintf(
                 'Navigation node entity not found with ID %d.',
-                $navigationNodeTransfer->getIdNavigationNode()
+                $navigationNodeTransfer->getIdNavigationNode(),
             ));
         }
 

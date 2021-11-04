@@ -123,7 +123,7 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
                         ->createAvailabilityNotificationSubscriptionMapper()
                         ->mapAvailabilityNotificationSubscriptionEntitiesToAvailabilityNotificationCollectionTransfer(
                             $availabilityNotificationSubscriptionEntities,
-                            new AvailabilityNotificationSubscriptionCollectionTransfer()
+                            new AvailabilityNotificationSubscriptionCollectionTransfer(),
                         );
         $availabilityNotificationSubscriptionCollectionTransfer->setPagination($availabilityNotificationCriteriaTransfer->getPagination());
 

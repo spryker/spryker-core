@@ -65,14 +65,14 @@ class PasswordGrant implements GrantInterface
             $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
             $passwordGrant = new LeaguePasswordGrant(
                 $this->repositoryBuilder->createUserRepository(),
-                $this->repositoryBuilder->createRefreshTokenRepository()
+                $this->repositoryBuilder->createRefreshTokenRepository(),
             );
             $passwordGrant->setRefreshTokenTTL(
-                new DateInterval($this->oauthConfig->getRefreshTokenTTL())
+                new DateInterval($this->oauthConfig->getRefreshTokenTTL()),
             );
             $this->authorizationServer->enableGrantType(
                 $passwordGrant,
-                new DateInterval($this->oauthConfig->getAccessTokenTTL())
+                new DateInterval($this->oauthConfig->getAccessTokenTTL()),
             );
             $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());
             $data = (string)$response->getBody();

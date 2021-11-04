@@ -30,10 +30,12 @@ class ProductAbstractGroupsCollectorQueryTest extends Unit
      * @var string
      */
     protected const ITEM_TYPE_PRODUCT_GROUP = 'product_abstract_groups';
+
     /**
      * @var string
      */
     protected const KEY_ITEM_TYPE = 'ItemType';
+
     /**
      * @var string
      */
@@ -82,14 +84,14 @@ class ProductAbstractGroupsCollectorQueryTest extends Unit
         $this->assertNotNull($resultProductAbstractGroupData1);
         $this->assertEquals(
             implode(',', [$productGroupTransfer1->getIdProductGroup(), $productGroupTransfer2->getIdProductGroup()]),
-            $resultProductAbstractGroupData1[ProductAbstractGroupsCollectorQuery::FIELD_ID_PRODUCT_GROUPS]
+            $resultProductAbstractGroupData1[ProductAbstractGroupsCollectorQuery::FIELD_ID_PRODUCT_GROUPS],
         );
 
         $resultProductAbstractGroupData2 = $this->findResultProductAbstractGroupData($result, $productAbstractTransfer2->getIdProductAbstract());
         $this->assertNotNull($resultProductAbstractGroupData2);
         $this->assertEquals(
             $productGroupTransfer1->getIdProductGroup(),
-            $resultProductAbstractGroupData2[ProductAbstractGroupsCollectorQuery::FIELD_ID_PRODUCT_GROUPS]
+            $resultProductAbstractGroupData2[ProductAbstractGroupsCollectorQuery::FIELD_ID_PRODUCT_GROUPS],
         );
     }
 

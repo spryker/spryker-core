@@ -28,7 +28,7 @@ class ProductOfferStockDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_offer_stock.csv',
-            static::IMPORT_TYPE_PRODUCT_OFFER_STOCK
+            static::IMPORT_TYPE_PRODUCT_OFFER_STOCK,
         );
     }
 
@@ -42,7 +42,7 @@ class ProductOfferStockDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

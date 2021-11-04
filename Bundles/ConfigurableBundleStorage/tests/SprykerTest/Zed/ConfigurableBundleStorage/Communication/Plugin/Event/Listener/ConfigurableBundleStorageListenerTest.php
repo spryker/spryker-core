@@ -77,7 +77,7 @@ class ConfigurableBundleStorageListenerTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
     }
 
@@ -101,7 +101,7 @@ class ConfigurableBundleStorageListenerTest extends Unit
 
         // Assert
         $this->assertNull(
-            $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
     }
 
@@ -127,7 +127,7 @@ class ConfigurableBundleStorageListenerTest extends Unit
 
         // Assert
         $this->assertNotNull(
-            $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         );
     }
 }

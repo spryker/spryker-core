@@ -34,11 +34,11 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
     public function testGetSchemasShouldReturnArrayWithOneEntryGroupedByFileNameIfFileWithSameNameOnlyExistsOnce(): void
     {
         $schemaFinder = new PropelSchemaFinder(
-            [$this->getFixtureDirectory()]
+            [$this->getFixtureDirectory()],
         );
 
         $schemaGrouper = new PropelGroupedSchemaFinder(
-            $schemaFinder
+            $schemaFinder,
         );
 
         $groupedSchemaFiles = $schemaGrouper->getGroupedSchemaFiles();
@@ -59,11 +59,11 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
         touch($subDirectory . DIRECTORY_SEPARATOR . self::NAME_OF_SCHEMA_FILE_GROUP);
 
         $schemaFinder = new PropelSchemaFinder(
-            [$this->getFixtureDirectory(), $subDirectory]
+            [$this->getFixtureDirectory(), $subDirectory],
         );
 
         $schemaGrouper = new PropelGroupedSchemaFinder(
-            $schemaFinder
+            $schemaFinder,
         );
 
         $groupedSchemaFiles = $schemaGrouper->getGroupedSchemaFiles();

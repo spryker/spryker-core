@@ -57,7 +57,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getEventBehaviorFacade(),
             $this->createCategoryNodePageSearchDeleter(),
-            $this->createCategoryNodeExtractor()
+            $this->createCategoryNodeExtractor(),
         );
     }
 
@@ -86,7 +86,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getCategoryFacade(),
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodeExtractor()
+            $this->createCategoryNodeExtractor(),
         );
     }
 
@@ -121,7 +121,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryAttributeEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchWriter()
+            $this->createCategoryNodePageSearchWriter(),
         );
     }
 
@@ -132,7 +132,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchWriter()
+            $this->createCategoryNodePageSearchWriter(),
         );
     }
 
@@ -143,7 +143,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryStoreEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchWriter()
+            $this->createCategoryNodePageSearchWriter(),
         );
     }
 
@@ -154,7 +154,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryTemplateEventsWriter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchWriter()
+            $this->createCategoryNodePageSearchWriter(),
         );
     }
 
@@ -165,7 +165,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryAttributeEventsDeleter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchDeleter()
+            $this->createCategoryNodePageSearchDeleter(),
         );
     }
 
@@ -176,7 +176,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryEventsDeleter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchDeleter()
+            $this->createCategoryNodePageSearchDeleter(),
         );
     }
 
@@ -187,7 +187,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearchByCategoryTemplateEventsDeleter(
             $this->getEventBehaviorFacade(),
-            $this->createCategoryNodePageSearchDeleter()
+            $this->createCategoryNodePageSearchDeleter(),
         );
     }
 

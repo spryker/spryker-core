@@ -67,7 +67,7 @@ class SalesUnitReader implements SalesUnitReaderInterface
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             [$concreteProductResourceId],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
         if (!$productConcreteIds) {
             return $this->salesUnitRestResponseBuilder->createProductConcreteNotFoundErrorResponse();
@@ -81,7 +81,7 @@ class SalesUnitReader implements SalesUnitReaderInterface
 
         return $this->salesUnitRestResponseBuilder->createSalesUnitResourceCollectionResponse(
             $productConcreteProductMeasurementSalesUnitTransfers[0]->getProductMeasurementSalesUnits()->getArrayCopy(),
-            $concreteProductResourceId
+            $concreteProductResourceId,
         );
     }
 }

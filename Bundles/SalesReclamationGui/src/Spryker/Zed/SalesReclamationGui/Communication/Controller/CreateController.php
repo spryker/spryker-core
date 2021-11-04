@@ -31,14 +31,17 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
+
     /**
      * @var string
      */
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
+
     /**
      * @var string
      */
     protected const PARAM_TOKEN = '_token';
+
     /**
      * @var string
      */
@@ -99,8 +102,8 @@ class CreateController extends AbstractController
                     '/sales-reclamation-gui/detail',
                     [
                         static::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
-                    ]
-                )->build()
+                    ],
+                )->build(),
             );
         }
 

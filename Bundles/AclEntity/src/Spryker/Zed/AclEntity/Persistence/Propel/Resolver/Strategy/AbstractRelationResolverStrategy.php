@@ -21,10 +21,12 @@ abstract class AbstractRelationResolverStrategy
      * @var string
      */
     protected const RELATION_TEMPLATE = '%s.%s';
+
     /**
      * @var string
      */
     protected const RELATION_ALIAS_TEMPLATE = '%s%s';
+
     /**
      * @var string
      */

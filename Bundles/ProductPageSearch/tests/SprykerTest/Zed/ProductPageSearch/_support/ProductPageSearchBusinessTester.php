@@ -105,7 +105,7 @@ class ProductPageSearchBusinessTester extends Actor
     {
         $this->productConcreteTransfer = $this->haveProduct();
         $this->productAbstractTransfer = $this->getProductFacade()->findProductAbstractById(
-            $this->productConcreteTransfer->getFkProductAbstract()
+            $this->productConcreteTransfer->getFkProductAbstract(),
         );
 
         $localizedAttributes = $this->generateLocalizedAttributes();

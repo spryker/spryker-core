@@ -20,14 +20,17 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      * @var string
      */
     protected const ERROR_AMOUNT_MIN_NOT_FULFILLED = 'cart.pre.check.amount.min.failed';
+
     /**
      * @var string
      */
     protected const ERROR_AMOUNT_MAX_NOT_FULFILLED = 'cart.pre.check.amount.max.failed';
+
     /**
      * @var string
      */
     protected const ERROR_AMOUNT_INTERVAL_NOT_FULFILLED = 'cart.pre.check.amount.interval.failed';
+
     /**
      * @var string
      */
@@ -63,7 +66,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         $cartPreCheckResponseTransfer = $this->validateItemsAmounts($cartChangeTransfer, $cartPreCheckResponseTransfer);
 
         return $cartPreCheckResponseTransfer->setIsSuccess(
-            $cartPreCheckResponseTransfer->getMessages()->count() === 0
+            $cartPreCheckResponseTransfer->getMessages()->count() === 0,
         );
     }
 
@@ -154,7 +157,7 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
                 $cartAmountMap[$productGroupKey] = $cartAmountMap[$productGroupKey]->add(
-                    $quoteAmountMapByGroupKey[$productGroupKey]
+                    $quoteAmountMapByGroupKey[$productGroupKey],
                 );
             }
         }

@@ -43,7 +43,7 @@ class BaseCollector
         $discountableItemTransfer = $this->createDiscountableItemTransfer(
             $itemTransfer->getUnitPrice(),
             $itemTransfer->getQuantity(),
-            $itemTransfer->getCalculatedDiscounts()
+            $itemTransfer->getCalculatedDiscounts(),
         );
         $discountableItemTransfer->setOriginalItem($itemTransfer);
 

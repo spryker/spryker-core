@@ -13,6 +13,7 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
 {
     /**
      * @uses \Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter::IS_AUTHENTICATED_FULLY
+     *
      * @var string
      */
     protected const IS_AUTHENTICATED_FULLY = 'IS_AUTHENTICATED_FULLY';

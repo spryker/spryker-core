@@ -42,7 +42,7 @@ class UpdateController extends AbstractController
         $navigationForm = $this->getFactory()
             ->getUpdateNavigationForm(
                 $navigationFormData,
-                $navigationFormDataProvider->getOptions()
+                $navigationFormDataProvider->getOptions(),
             )
             ->handleRequest($request);
 

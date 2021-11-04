@@ -16,9 +16,11 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
 {
     /**
      * @deprecated Will be removed in next major release.
+     *
      * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+
     /**
      * @var string
      */
@@ -79,7 +81,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
 
             if ($attributes && $attributes->offsetExists(static::KEY_ABSTRACT_PRODUCTS)) {
                 $productAbstractSkus[$this->getRestResourceIdentifier($resource)] = $this->getProductAbstractSkusForRestResource(
-                    $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS)
+                    $attributes->offsetGet(static::KEY_ABSTRACT_PRODUCTS),
                 );
 
                 continue;
@@ -87,7 +89,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
 
             if ($attributes && $attributes->offsetExists(static::KEY_PRODUCTS)) {
                 $productAbstractSkus[$this->getRestResourceIdentifier($resource)] = $this->getProductAbstractSkusForRestResource(
-                    $attributes->offsetGet(static::KEY_PRODUCTS)
+                    $attributes->offsetGet(static::KEY_PRODUCTS),
                 );
             }
         }

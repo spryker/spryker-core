@@ -31,6 +31,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      * @var string
      */
     protected const SOURCE_IDENTIFIER = 'page';
+
     /**
      * @var string
      */

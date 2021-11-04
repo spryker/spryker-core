@@ -60,7 +60,7 @@ class ErrorLogger implements ErrorLoggerInterface
             get_class($exception),
             $exception->getMessage(),
             $exception->getFile(),
-            $exception->getLine()
+            $exception->getLine(),
         );
     }
 

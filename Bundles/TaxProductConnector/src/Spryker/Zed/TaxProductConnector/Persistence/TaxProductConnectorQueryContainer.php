@@ -25,10 +25,12 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      * @var string
      */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+
     /**
      * @var string
      */
     public const COL_ID_ABSTRACT_PRODUCT = 'IdProductAbstract';
+
     /**
      * @var string
      */
@@ -77,7 +79,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
             ->addJoin(
                 SpyProductAbstractTableMap::COL_FK_TAX_SET,
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
-                Criteria::INNER_JOIN
+                Criteria::INNER_JOIN,
             )
             ->filterByFkTaxSet($idTaxSet)
             ->select([

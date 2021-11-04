@@ -20,6 +20,7 @@ class CustomerNoteDataHelper extends Module
      * @var string
      */
     public const TEST_NOTE_AUTHOR = 'test_author';
+
     /**
      * @var string
      */
@@ -59,7 +60,7 @@ class CustomerNoteDataHelper extends Module
     public function haveCustomerNote(int $fkUser, int $fkCustomer): SpyCustomerNoteEntityTransfer
     {
         return $this->getCustomerNoteFacade()->addNote(
-            $this->getCustomerNoteTransfer($fkUser, $fkCustomer)
+            $this->getCustomerNoteTransfer($fkUser, $fkCustomer),
         );
     }
 }

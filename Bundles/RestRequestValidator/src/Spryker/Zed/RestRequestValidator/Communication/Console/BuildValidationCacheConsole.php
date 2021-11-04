@@ -22,6 +22,7 @@ class BuildValidationCacheConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'glue:rest:build-request-validation-cache';
+
     /**
      * @var string
      */

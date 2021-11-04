@@ -19,30 +19,37 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+
     /**
      * @var string
      */
     public const COL_KEY_VARIANTS = 'variants';
+
     /**
      * @var string
      */
     public const COL_KEY_CATEGORIES = 'categories';
+
     /**
      * @var string
      */
     public const COL_KEY_STORES = 'stores';
+
     /**
      * @var string
      */
@@ -52,6 +59,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
      * @var string
      */
     public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
+
     /**
      * @var string
      */
@@ -69,12 +77,14 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::indexAction()
+     *
      * @var string
      */
     protected const URL_ROW_ACTION_UPDATE_PRODUCT = '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/products/table-data';
@@ -168,7 +178,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             'inCategories',
             'Categories',
             true,
-            $this->categoryFilterOptionsProvider->getCategoryFilterOptionsTree()
+            $this->categoryFilterOptionsProvider->getCategoryFilterOptionsTree(),
         )
         ->addFilterSelect('isVisible', 'Visibility', false, [
             '1' => static::COLUMN_DATA_VISIBILITY_ONLINE,
@@ -191,8 +201,8 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(
                 static::URL_ROW_ACTION_UPDATE_PRODUCT,
-                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT
-            )
+                ProductAbstractTransfer::ID_PRODUCT_ABSTRACT,
+            ),
         )->setRowClickAction('update-product');
 
         return $guiTableConfigurationBuilder;

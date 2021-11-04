@@ -55,7 +55,7 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertTrue(
             $hasProductConfigurationInstance,
-            'Expects that product will have product configuration instance in session.'
+            'Expects that product will have product configuration instance in session.',
         );
     }
 
@@ -88,7 +88,7 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertTrue(
             $hasProductConfigurationInstance,
-            'Expects that product will have product configuration instance in storage.'
+            'Expects that product will have product configuration instance in storage.',
         );
     }
 
@@ -112,7 +112,7 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertFalse(
             $hasProductConfigurationInstance,
-            'Expects that product wont have product configuration instance.'
+            'Expects that product wont have product configuration instance.',
         );
     }
 
@@ -138,7 +138,7 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertTrue(
             $hasProductConfigurationInstance,
-            'Expects that product will have product configuration instance in product view transfer.'
+            'Expects that product will have product configuration instance in product view transfer.',
         );
     }
 
@@ -163,7 +163,7 @@ class IsProductHasProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertFalse(
             $hasProductConfigurationInstance,
-            'Expects that product wont have product configuration instance when product is not concrete product.'
+            'Expects that product wont have product configuration instance when product is not concrete product.',
         );
     }
 

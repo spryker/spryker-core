@@ -24,7 +24,7 @@ class UrlsRestApiFactory extends AbstractFactory
         return new UrlResolver(
             $this->getUrlStorageClient(),
             $this->createUrlResponseBuilder(),
-            $this->getRestUrlResolverAttributesTransferProviderPlugins()
+            $this->getRestUrlResolverAttributesTransferProviderPlugins(),
         );
     }
 

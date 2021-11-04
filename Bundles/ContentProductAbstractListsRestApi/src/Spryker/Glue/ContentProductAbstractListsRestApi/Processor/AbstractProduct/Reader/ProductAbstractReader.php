@@ -64,7 +64,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     public function getProductAbstractByContentProductAbstractListId(RestRequestInterface $restRequest): RestResponseInterface
     {
         $parentResource = $restRequest->findParentResourceByType(
-            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS
+            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS,
         );
 
         if (!$parentResource || !$parentResource->getId()) {
@@ -75,7 +75,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         try {
             $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey(
                 $parentResource->getId(),
-                $localeName
+                $localeName,
             );
         } catch (Throwable $e) {
             return $this->contentProductAbstractListRestResponseBuilder->createContentTypeInvalidErrorResponse();
@@ -88,7 +88,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds(
             $contentProductAbstractListTypeTransfer->getIdProductAbstracts(),
             $localeName,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         return $this->contentProductAbstractListRestResponseBuilder
@@ -96,18 +96,16 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
-     *
      * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function getProductAbstractRestResources(array $contentProductAbstractListKeys, string $localeName): array
     {
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentProductAbstractListTypeTransfers) {
@@ -122,20 +120,20 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $productAbstractRestResources = $this->productsRestApiResource->getProductAbstractsByIds(
             array_merge(...array_values($productAbstractIds)),
             $localeName,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
 
         return $this->groupProductAbstractsByContentProductAbstractListKey(
             $productAbstractRestResources,
-            $productAbstractIds
+            $productAbstractIds,
         );
     }
 
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productAbstractRestResources
-     * @param array<int[]> $contentProductAbstractListIds
+     * @param array<array<int>> $contentProductAbstractListIds
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     protected function groupProductAbstractsByContentProductAbstractListKey(
         array $productAbstractRestResources,

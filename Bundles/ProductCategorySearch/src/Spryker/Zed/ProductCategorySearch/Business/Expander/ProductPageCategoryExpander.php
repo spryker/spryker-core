@@ -34,7 +34,7 @@ class ProductPageCategoryExpander implements ProductPageCategoryExpanderInterfac
     {
         $payloadTransfers = $this->setProductCategories(
             $productPageLoadTransfer->getProductAbstractIds(),
-            $productPageLoadTransfer->getPayloadTransfers()
+            $productPageLoadTransfer->getPayloadTransfers(),
         );
 
         $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);

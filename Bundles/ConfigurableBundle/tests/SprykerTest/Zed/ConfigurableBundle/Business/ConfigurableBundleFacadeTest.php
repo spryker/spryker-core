@@ -40,10 +40,12 @@ class ConfigurableBundleFacadeTest extends Unit
      * @var int
      */
     protected const FAKE_TEMPLATE_ID = 666;
+
     /**
      * @var int
      */
     protected const FAKE_TEMPLATE_SLOT_ID = 666;
+
     /**
      * @var int
      */
@@ -53,6 +55,7 @@ class ConfigurableBundleFacadeTest extends Unit
      * @var string
      */
     protected const FAKE_PRODUCT_IMAGE_SET_NAME_1 = 'FAKE_PRODUCT_IMAGE_SET_NAME_1';
+
     /**
      * @var string
      */
@@ -60,24 +63,28 @@ class ConfigurableBundleFacadeTest extends Unit
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable_bundle.template.validation.error.not_exists';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable_bundle.template.validation.error.already_activated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable_bundle.template.validation.error.already_deactivated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable_bundle.slot.validation.error.not_exists';
@@ -107,7 +114,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
-            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getIdConfigurableBundleTemplate()
+            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getIdConfigurableBundleTemplate(),
         );
     }
 
@@ -122,14 +129,14 @@ class ConfigurableBundleFacadeTest extends Unit
         $configurableBundleTemplateResponseTransfer = $this->tester
             ->getFacade()
             ->getConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID)
+                (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -153,7 +160,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $configurableBundleTemplateTransfer->getTranslations(),
-            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getTranslations()
+            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getTranslations(),
         );
     }
 
@@ -167,12 +174,12 @@ class ConfigurableBundleFacadeTest extends Unit
             ->addConfigurableBundleTemplateId(
                 $this->tester
                     ->createActiveConfigurableBundleTemplate()
-                    ->getIdConfigurableBundleTemplate()
+                    ->getIdConfigurableBundleTemplate(),
             )
             ->addConfigurableBundleTemplateId(
                 $this->tester
                     ->createActiveConfigurableBundleTemplate()
-                    ->getIdConfigurableBundleTemplate()
+                    ->getIdConfigurableBundleTemplate(),
             );
 
         // Act
@@ -221,7 +228,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Assert
         $this->assertEquals(
             $configurableBundleTemplateTransfer->getTranslations(),
-            $configurableBundleTemplateCollectionTransfer->getConfigurableBundleTemplates()->offsetGet(0)->getTranslations()
+            $configurableBundleTemplateCollectionTransfer->getConfigurableBundleTemplates()->offsetGet(0)->getTranslations(),
         );
     }
 
@@ -243,7 +250,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertNotNull($configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getIdConfigurableBundleTemplate());
         $this->assertSame(
             $configurableBundleTemplateTransfer->getName(),
-            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getName()
+            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getName(),
         );
     }
 
@@ -276,7 +283,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $configurableBundleTemplateTransfer->setTranslations(
             $this->tester->createTemplateTranslationTransfersForAvailableLocales([
                 ConfigurableBundleTemplateTranslationTransfer::NAME => 'template new name',
-            ])
+            ]),
         );
 
         // Act
@@ -288,7 +295,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $configurableBundleTemplateTransfer->getTranslations(),
-            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getTranslations()
+            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()->getTranslations(),
         );
     }
 
@@ -311,7 +318,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -347,7 +354,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->activateConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
             );
 
         // Assert
@@ -367,14 +374,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->activateConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID)
+                    ->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -391,14 +398,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->activateConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -415,7 +422,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deactivateConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
             );
 
         // Assert
@@ -435,14 +442,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deactivateConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID)
+                    ->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -459,14 +466,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deactivateConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -483,7 +490,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deleteConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
             );
 
         // Assert
@@ -502,14 +509,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deleteConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID)
+                    ->setIdConfigurableBundleTemplate(static::FAKE_TEMPLATE_ID),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS,
-            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -529,7 +536,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deleteConfigurableBundleTemplate(
                 (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
             );
 
         // Assert
@@ -537,7 +544,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
@@ -560,14 +567,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
         $this->assertTrue($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertSame(
             $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot(),
-            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getIdConfigurableBundleTemplateSlot()
+            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getIdConfigurableBundleTemplateSlot(),
         );
     }
 
@@ -583,14 +590,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot(static::FAKE_TEMPLATE_SLOT_ID)
+                    ->setIdConfigurableBundleTemplateSlot(static::FAKE_TEMPLATE_SLOT_ID),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS,
-            $configurableBundleTemplateSlotResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateSlotResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -610,14 +617,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
         $this->assertTrue($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate()
+            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate(),
         );
     }
 
@@ -637,14 +644,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
         $this->assertTrue($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $configurableBundleTemplateSlotTransfer->getProductList(),
-            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getProductList()
+            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getProductList(),
         );
     }
 
@@ -664,14 +671,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
         $this->assertTrue($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $configurableBundleTemplateSlotTransfer->getTranslations(),
-            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getTranslations()
+            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getTranslations(),
         );
     }
 
@@ -732,13 +739,13 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlotCollection(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
         $this->assertEquals(
             $configurableBundleTemplateSlotTransfer->getProductList(),
-            $configurableBundleTemplateSlotCollectionTransfer->getConfigurableBundleTemplateSlots()->offsetGet(0)->getProductList()
+            $configurableBundleTemplateSlotCollectionTransfer->getConfigurableBundleTemplateSlots()->offsetGet(0)->getProductList(),
         );
     }
 
@@ -758,13 +765,13 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateSlotCollection(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
         $this->assertEquals(
             $configurableBundleTemplateSlotTransfer->getTranslations(),
-            $configurableBundleTemplateSlotCollectionTransfer->getConfigurableBundleTemplateSlots()->offsetGet(0)->getTranslations()
+            $configurableBundleTemplateSlotCollectionTransfer->getConfigurableBundleTemplateSlots()->offsetGet(0)->getTranslations(),
         );
     }
 
@@ -789,7 +796,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertNotNull($configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getIdConfigurableBundleTemplateSlot());
         $this->assertSame(
             $configurableBundleTemplateSlotTransfer->getName(),
-            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getName()
+            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getName(),
         );
     }
 
@@ -847,7 +854,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $configurableBundleTemplateSlotTransfer->setTranslations(
             $this->tester->createSlotTranslationTransfersForAvailableLocales([
                 ConfigurableBundleTemplateSlotTranslationTransfer::NAME => 'slot new name',
-            ])
+            ]),
         );
 
         // Act
@@ -859,7 +866,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertTrue($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertSame(
             $configurableBundleTemplateSlotTransfer->getTranslations(),
-            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getTranslations()
+            $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getTranslations(),
         );
     }
 
@@ -884,7 +891,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertFalse($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS,
-            $configurableBundleTemplateSlotResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateSlotResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -904,7 +911,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deleteConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+                    ->setIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()),
             );
 
         // Assert
@@ -923,14 +930,14 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->deleteConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot(static::FAKE_TEMPLATE_SLOT_ID)
+                    ->setIdConfigurableBundleTemplateSlot(static::FAKE_TEMPLATE_SLOT_ID),
             );
 
         // Assert
         $this->assertFalse($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS,
-            $configurableBundleTemplateSlotResponseTransfer->getMessages()[0]->getValue()
+            $configurableBundleTemplateSlotResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -947,22 +954,22 @@ class ConfigurableBundleFacadeTest extends Unit
                 (new ItemTransfer())
                     ->setConfiguredBundle(
                         (new ConfiguredBundleTransfer())
-                            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($activatedConfigurableBundleTemplateTransfer->getUuid()))
-                    )
+                            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($activatedConfigurableBundleTemplateTransfer->getUuid())),
+                    ),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundle(
                         (new ConfiguredBundleTransfer())
-                            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($deactivatedConfigurableBundleTemplateTransfer->getUuid()))
-                    )
+                            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($deactivatedConfigurableBundleTemplateTransfer->getUuid())),
+                    ),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundle(
                         (new ConfiguredBundleTransfer())
-                            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(static::FAKE_TEMPLATE_SLOT_ID))
-                    )
+                            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(static::FAKE_TEMPLATE_SLOT_ID)),
+                    ),
             );
 
         // Act
@@ -974,7 +981,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertCount(1, $quoteTransfer->getItems());
         $this->assertSame(
             $activatedConfigurableBundleTemplateTransfer->getUuid(),
-            $quoteTransfer->getItems()->offsetGet(0)->getConfiguredBundle()->getTemplate()->getUuid()
+            $quoteTransfer->getItems()->offsetGet(0)->getConfiguredBundle()->getTemplate()->getUuid(),
         );
     }
 
@@ -1015,7 +1022,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->isProductListDeletable(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
                     ->setProductList($configurableBundleTemplateSlotTransfer->getProductList())
-                    ->setTranslationLocales(new ArrayObject([$this->tester->getLocaleFacade()->getCurrentLocale()]))
+                    ->setTranslationLocales(new ArrayObject([$this->tester->getLocaleFacade()->getCurrentLocale()])),
             );
 
         // Assert
@@ -1039,7 +1046,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->isProductListDeletable(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
                     ->setProductList(new ProductListTransfer())
-                    ->setTranslationLocales(new ArrayObject([$this->tester->getLocaleFacade()->getCurrentLocale()]))
+                    ->setTranslationLocales(new ArrayObject([$this->tester->getLocaleFacade()->getCurrentLocale()])),
             );
     }
 
@@ -1056,7 +1063,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->isProductListDeletable(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())
                     ->setProductList((new ProductListTransfer())->setIdProductList(static::FAKE_PRODUCT_LIST_ID))
-                    ->setTranslationLocales(new ArrayObject([$this->tester->getLocaleFacade()->getCurrentLocale()]))
+                    ->setTranslationLocales(new ArrayObject([$this->tester->getLocaleFacade()->getCurrentLocale()])),
             );
 
         // Assert
@@ -1233,7 +1240,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertCount(1, $configurableBundleTemplateCollectionTransfer->getConfigurableBundleTemplates());
         $this->assertEquals(
             $productImageSetTransfer->toArray(),
-            $configurableBundleTemplateTransfer->getProductImageSets()->offsetGet(0)->toArray()
+            $configurableBundleTemplateTransfer->getProductImageSets()->offsetGet(0)->toArray(),
         );
     }
 

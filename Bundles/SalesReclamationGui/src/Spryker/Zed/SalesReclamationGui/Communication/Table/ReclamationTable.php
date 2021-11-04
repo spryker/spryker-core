@@ -31,6 +31,7 @@ class ReclamationTable extends AbstractTable
      * @var string
      */
     protected const URL_RECLAMATION_DETAIL = '/sales-reclamation-gui/detail';
+
     /**
      * @var string
      */
@@ -127,12 +128,12 @@ class ReclamationTable extends AbstractTable
             $results[] = [
                 SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => $item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION],
                 SpySalesReclamationTableMap::COL_CREATED_AT => $this->dateTimeService->formatDateTime(
-                    $item[SpySalesReclamationTableMap::COL_CREATED_AT]
+                    $item[SpySalesReclamationTableMap::COL_CREATED_AT],
                 ),
                 SpySalesReclamationTableMap::COL_CUSTOMER_NAME => $item[SpySalesReclamationTableMap::COL_CUSTOMER_NAME],
                 SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL => $item[SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL],
                 SpySalesReclamationTableMap::COL_IS_OPEN => $this->createStateLabel(
-                    $item[SpySalesReclamationTableMap::COL_IS_OPEN]
+                    $item[SpySalesReclamationTableMap::COL_IS_OPEN],
                 ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
                 static::COL_ACTIONS => $this->createActions($item),
@@ -186,7 +187,7 @@ class ReclamationTable extends AbstractTable
             Url::generate(static::URL_RECLAMATION_DETAIL, [
                 static::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
-            'View'
+            'View',
         );
     }
 
@@ -206,7 +207,7 @@ class ReclamationTable extends AbstractTable
             [
                 static::BUTTON_CLASS => 'btn-remove',
                 static::BUTTON_ICON => 'fa-close',
-            ]
+            ],
         );
     }
 }

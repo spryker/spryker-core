@@ -30,22 +30,27 @@ class RestApiDocumentationPathGeneratorTest extends Unit
      * @var string
      */
     protected const METHOD_PATCH = 'patch';
+
     /**
      * @var string
      */
     protected const TEST_PATH_WITH_ID = '/test-path/{test-resource-id}';
+
     /**
      * @var string
      */
     protected const TEST_PATH = '/test-path';
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_OK = 200;
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_CREATED = 201;
+
     /**
      * @var int
      */

@@ -85,7 +85,7 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
             ->where(sprintf(
                 '%s IN (%s)',
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                $productAbstractIds
+                $productAbstractIds,
             ))
             ->select([static::FIELD_POPULARITY])
             ->groupBy(SpySalesOrderItemTableMap::COL_SKU)
@@ -138,7 +138,7 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
         $query->where(sprintf(
             "%s >= '%s'",
             SpySalesOrderItemTableMap::COL_CREATED_AT,
-            $dateFrom->format('Y-m-d H:i:s')
+            $dateFrom->format('Y-m-d H:i:s'),
         ));
     }
 }

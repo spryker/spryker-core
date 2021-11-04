@@ -133,7 +133,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
 
         if (!$cmsBlockTransfer->getKey()) {
             $cmsBlockTransfer->setKey(
-                $this->cmsBlockKeyProvider->generateKeyByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock())
+                $this->cmsBlockKeyProvider->generateKeyByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock()),
             );
         }
 
@@ -181,7 +181,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
 
         if (!$spyCmsBlock) {
             throw new CmsBlockNotFoundException(
-                sprintf('CMS Block with id "%d" was not found', $idCmsBlock)
+                sprintf('CMS Block with id "%d" was not found', $idCmsBlock),
             );
         }
 

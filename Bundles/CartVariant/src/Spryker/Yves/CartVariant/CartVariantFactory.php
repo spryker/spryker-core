@@ -36,7 +36,7 @@ class CartVariantFactory extends AbstractFactory
     {
         return new CartItemsAttributeMapper(
             $this->getProductClient(),
-            $this->createCartItemsAvailabilityMapper()
+            $this->createCartItemsAvailabilityMapper(),
         );
     }
 

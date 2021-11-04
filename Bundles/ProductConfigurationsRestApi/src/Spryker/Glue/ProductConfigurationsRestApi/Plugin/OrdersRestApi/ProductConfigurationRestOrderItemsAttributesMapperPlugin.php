@@ -36,7 +36,7 @@ class ProductConfigurationRestOrderItemsAttributesMapperPlugin extends AbstractP
             ->createProductConfigurationRestOrderAttributesMapper()
             ->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
-                $restOrderItemsAttributesTransfer
+                $restOrderItemsAttributesTransfer,
             );
     }
 }

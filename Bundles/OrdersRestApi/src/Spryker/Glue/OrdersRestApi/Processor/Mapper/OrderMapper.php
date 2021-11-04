@@ -82,14 +82,14 @@ class OrderMapper implements OrderMapperInterface
         $restOrderDetailsAttributesTransfer = $this->mapOrderShippingAddressTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
 
         $restOrderDetailsAttributesTransfer->setShipments(
-            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
+            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject()),
         );
 
         $restOrderItemsAttributesTransfers = [];
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $restOrderItemsAttributesTransfers[] = $this->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
-                new RestOrderItemsAttributesTransfer()
+                new RestOrderItemsAttributesTransfer(),
             );
         }
 
@@ -113,7 +113,7 @@ class OrderMapper implements OrderMapperInterface
         foreach ($this->restOrderItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
             $restOrderItemsAttributesTransfer = $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
-                $restOrderItemsAttributesTransfer
+                $restOrderItemsAttributesTransfer,
             );
         }
 

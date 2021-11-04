@@ -54,7 +54,7 @@ class DataExportCsvFormatterTest extends Unit
                 ->setOffset(0)
                 ->setData(static::CSV_DATA)
                 ->setFields(array_keys(static::CSV_DATA)),
-            $dataExportConfigurationTransfer
+            $dataExportConfigurationTransfer,
         );
 
         //Arrange
@@ -63,7 +63,7 @@ class DataExportCsvFormatterTest extends Unit
         $this->assertSame(
             $this->getExpectedCsvString(static::CSV_DATA),
             $csvString,
-            'Formatted csv data does not equals to an expected csv string.'
+            'Formatted csv data does not equals to an expected csv string.',
         );
     }
 
@@ -83,7 +83,7 @@ class DataExportCsvFormatterTest extends Unit
                 ->setOffset(0)
                 ->setData($invalidData)
                 ->setFields([]),
-            $dataExportConfigurationTransfer
+            $dataExportConfigurationTransfer,
         );
 
         //Arrange

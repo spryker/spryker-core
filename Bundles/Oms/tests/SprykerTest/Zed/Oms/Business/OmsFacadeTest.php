@@ -183,7 +183,7 @@ class OmsFacadeTest extends Unit
         $this->assertTrue(
             $this->createOmsFacade()
                 ->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
-                ->equals($reservationQuantity)
+                ->equals($reservationQuantity),
         );
     }
 
@@ -230,12 +230,12 @@ class OmsFacadeTest extends Unit
         $this->assertEquals(
             $orderItems->offsetGet(0)->getFkOmsOrderItemState(),
             $processedOrderItems->offsetGet(0)->getFkOmsOrderItemState(),
-            'Order item state ID does not equal to an expected value.'
+            'Order item state ID does not equal to an expected value.',
         );
         $this->assertNotEquals(
             $orderItems->offsetGet(1)->getFkOmsOrderItemState(),
             $processedOrderItems->offsetGet(1)->getFkOmsOrderItemState(),
-            'Order item state ID does not equal to an expected value.'
+            'Order item state ID does not equal to an expected value.',
         );
     }
 
@@ -360,7 +360,7 @@ class OmsFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $omsProductReservationTransfer->getReservationQuantity()->toInt(),
-            $reservationResponseTransfer->getReservationQuantity()->toInt()
+            $reservationResponseTransfer->getReservationQuantity()->toInt(),
         );
     }
 

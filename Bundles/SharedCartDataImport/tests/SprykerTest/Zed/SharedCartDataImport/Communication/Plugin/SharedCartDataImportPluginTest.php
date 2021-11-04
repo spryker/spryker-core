@@ -41,6 +41,7 @@ class SharedCartDataImportPluginTest extends Unit
      * @var string
      */
     protected const TEST_QUOTE_KEY = 'test-shared-cart';
+
     /**
      * @var string
      */
@@ -79,7 +80,7 @@ class SharedCartDataImportPluginTest extends Unit
             QuoteDependencyProvider::PLUGINS_QUOTE_DELETE_BEFORE,
             [
             new RemoveSharedQuoteBeforeQuoteDeletePlugin(),
-            ]
+            ],
         );
 
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();

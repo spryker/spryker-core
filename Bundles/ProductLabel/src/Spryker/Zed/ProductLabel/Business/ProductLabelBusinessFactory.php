@@ -44,7 +44,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->createLocalizedAttributesCollectionWriter(),
             $this->getEntityManager(),
             $this->createLabelDictionaryTouchManager(),
-            $this->createProductLabelStoreRelationUpdater()
+            $this->createProductLabelStoreRelationUpdater(),
         );
     }
 
@@ -59,7 +59,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->createLabelDictionaryTouchManager(),
             $this->createProductAbstractRelationTouchManager(),
             $this->getEntityManager(),
-            $this->createProductLabelStoreRelationUpdater()
+            $this->createProductLabelStoreRelationUpdater(),
         );
     }
 
@@ -70,7 +70,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     {
         return new LabelDeleter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -81,7 +81,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     {
         return new LocalizedAttributesCollectionWriter(
             $this->getQueryContainer(),
-            $this->createLabelDictionaryTouchManager()
+            $this->createLabelDictionaryTouchManager(),
         );
     }
 
@@ -124,7 +124,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractRelationWriter(
             $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
         );
     }
 
@@ -137,7 +137,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractRelationTouchManager(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -156,7 +156,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     {
         return new ValidityUpdater(
             $this->getQueryContainer(),
-            $this->createLabelDictionaryTouchManager()
+            $this->createLabelDictionaryTouchManager(),
         );
     }
 
@@ -171,7 +171,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractRelationDeleter(),
             $this->createProductAbstractRelationWriter(),
             $this->getProductLabelRelationUpdaterPlugins(),
-            $logger
+            $logger,
         );
     }
 

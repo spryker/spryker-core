@@ -13,14 +13,17 @@ class CategoryEditPage extends Category
      * @var string
      */
     public const URL = '/category-gui/edit?id-category=';
+
     /**
      * @var string
      */
     public const TITLE = 'Edit category';
+
     /**
      * @var string
      */
     public const SUCCESS_MESSAGE = 'The category was updated successfully.';
+
     /**
      * @var string
      */

@@ -35,36 +35,42 @@ class ServiceTest extends Unit
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
      *
      * @deprecated Use {@link \SprykerTest\Client\Storage\Redis\ServiceTest::REDIS_SCHEME} instead.
+     *
      * @var string
      */
     protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME
+     *
      * @var string
      */
     protected const REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST
+     *
      * @var string
      */
     protected const REDIS_HOST = 'STORAGE_REDIS:STORAGE_REDIS_HOST';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PORT
+     *
      * @var string
      */
     protected const REDIS_PORT = 'STORAGE_REDIS:STORAGE_REDIS_PORT';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATABASE
+     *
      * @var string
      */
     protected const REDIS_DATABASE = 'STORAGE_REDIS:STORAGE_REDIS_DATABASE';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD
+     *
      * @var string
      */
     protected const REDIS_PASSWORD = 'STORAGE_REDIS:STORAGE_REDIS_PASSWORD';
@@ -138,7 +144,7 @@ class ServiceTest extends Unit
             ->getMock();
 
         $this->redisService = new Service(
-            $this->clientMock
+            $this->clientMock,
         );
     }
 
@@ -249,7 +255,7 @@ class ServiceTest extends Unit
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
             $this->fixtures['multi'],
-            $this->expected['multi']
+            $this->expected['multi'],
         );
     }
 
@@ -265,7 +271,7 @@ class ServiceTest extends Unit
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             $this->fixtures['multi'],
-            $this->expected['multi']
+            $this->expected['multi'],
         );
     }
 
@@ -281,7 +287,7 @@ class ServiceTest extends Unit
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             'test.replace.key',
-            'test.replace.value'
+            'test.replace.value',
         );
     }
 
@@ -297,7 +303,7 @@ class ServiceTest extends Unit
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
             'test.incremental.key',
-            'test.incremental.value'
+            'test.incremental.value',
         );
     }
 
@@ -346,8 +352,8 @@ class ServiceTest extends Unit
      */
     protected function setupServerVariable(): void
     {
-        $_SERVER['SERVER_NAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost';
-        $_SERVER['REQUEST_URI'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/test/url';
+        $_SERVER['SERVER_NAME'] = $_SERVER['SERVER_NAME'] ?? 'localhost';
+        $_SERVER['REQUEST_URI'] = $_SERVER['REQUEST_URI'] ?? '/test/url';
     }
 
     /**

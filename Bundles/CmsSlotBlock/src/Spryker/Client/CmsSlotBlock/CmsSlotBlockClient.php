@@ -34,7 +34,7 @@ class CmsSlotBlockClient extends AbstractClient implements CmsSlotBlockClientInt
             ->createCmsSlotBlockVisibilityResolver()
             ->isCmsBlockVisibleInSlot(
                 $cmsSlotBlockTransfer,
-                $cmsSlotParamsTransfer
+                $cmsSlotParamsTransfer,
             );
     }
 }

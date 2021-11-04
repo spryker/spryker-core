@@ -117,7 +117,7 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
     {
         $productReviewsFilter = new Terms(
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT,
-            $this->getSearchTermsForProductReviewsFilter()
+            $this->getSearchTermsForProductReviewsFilter(),
         );
         $query->addFilter($productReviewsFilter);
 

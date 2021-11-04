@@ -13,6 +13,7 @@ use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 
@@ -29,15 +30,23 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     protected $wishlistRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface
+     */
+    protected $wishlistItemMapper;
+
+    /**
      * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistRestApiClient
      * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface $wishlistItemMapper
      */
     public function __construct(
         WishlistsRestApiClientInterface $wishlistRestApiClient,
-        WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
+        WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder,
+        WishlistItemMapperInterface $wishlistItemMapper
     ) {
         $this->wishlistRestApiClient = $wishlistRestApiClient;
         $this->wishlistRestResponseBuilder = $wishlistRestResponseBuilder;
+        $this->wishlistItemMapper = $wishlistItemMapper;
     }
 
     /**
@@ -58,7 +67,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         $wishlistItemRequest = $this->createWishlistItemRequest(
             $restRequest,
             $wishlistResource,
-            $restWishlistItemsAttributesRequestTransfer
+            $restWishlistItemsAttributesRequestTransfer,
         );
         $wishlistItemResponse = $this->wishlistRestApiClient->addWishlistItem($wishlistItemRequest);
 
@@ -90,11 +99,11 @@ class WishlistItemAdder implements WishlistItemAdderInterface
 
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setIdCustomer($restUser->getSurrogateIdentifier())
-            ->setUuidWishlist($wishlistResource->getId())
-            ->setSku($restWishlistItemsAttributesRequestTransfer->getSku());
+            ->setUuidWishlist($wishlistResource->getId());
 
-        $wishlistItemRequestTransfer->fromArray($restWishlistItemsAttributesRequestTransfer->toArray(), true);
-
-        return $wishlistItemRequestTransfer;
+        return $this->wishlistItemMapper->mapRestWishlistItemsAttributesToWishlistItemRequest(
+            $restWishlistItemsAttributesRequestTransfer,
+            $wishlistItemRequestTransfer,
+        );
     }
 }

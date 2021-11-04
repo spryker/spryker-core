@@ -60,7 +60,7 @@ class MerchantProductStorageReader implements MerchantProductStorageReaderInterf
 
         return $this->merchantProductStorageMapper->mapProductStorageDataToMerchantProductStorageTransfer(
             $productStorageData,
-            new MerchantProductStorageTransfer()
+            new MerchantProductStorageTransfer(),
         );
     }
 }

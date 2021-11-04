@@ -19,7 +19,7 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
      * @param array<int> $urlIds
      * @param array<string> $localeNames
      *
-     * @return array<\Orm\Zed\Url\Persistence\SpyUrl[]>
+     * @return array<array<\Orm\Zed\Url\Persistence\SpyUrl>>
      */
     public function findLocalizedUrlsByUrlIds(array $urlIds, array $localeNames): array
     {

@@ -19,6 +19,7 @@ class ProductCategorySlotBlockConditionFormPlugin extends AbstractPlugin impleme
 {
     /**
      * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const CONDITION_KEY = 'productCategory';

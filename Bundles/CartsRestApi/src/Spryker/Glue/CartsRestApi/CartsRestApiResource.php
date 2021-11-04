@@ -72,7 +72,7 @@ class CartsRestApiResource extends AbstractRestResource implements CartsRestApiR
         return $this->getFactory()->createCartItemMapper()->mapItemTransferToRestItemsAttributesTransfer(
             $itemTransfer,
             $restItemsAttributesTransfer,
-            $localeName
+            $localeName,
         );
     }
 }

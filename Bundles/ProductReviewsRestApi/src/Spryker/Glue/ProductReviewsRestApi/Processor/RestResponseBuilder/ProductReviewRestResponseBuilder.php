@@ -70,7 +70,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $totalItems,
-            $pageLimit
+            $pageLimit,
         );
 
         foreach ($productReviewTransfers as $productReviewTransfer) {
@@ -83,9 +83,9 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductReviewTransfer[]> $indexedProductReviewTransfers
+     * @param array<array<\Generated\Shared\Transfer\ProductReviewTransfer>> $indexedProductReviewTransfers
      *
-     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
+     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
     public function createRestResourceCollection(array $indexedProductReviewTransfers): array
     {
@@ -164,7 +164,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
         $restProductReviewsAttributesTransfer = $this->productReviewMapper
             ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
                 $productReviewTransfer,
-                new RestProductReviewsAttributesTransfer()
+                new RestProductReviewsAttributesTransfer(),
             );
 
         $resourceId = (string)$productReviewTransfer->getIdProductReview();
@@ -172,10 +172,10 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
         return $this->restResourceBuilder->createRestResource(
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
             $resourceId,
-            $restProductReviewsAttributesTransfer
+            $restProductReviewsAttributesTransfer,
         )->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($resourceId)
+            $this->createSelfLink($resourceId),
         );
     }
 
@@ -189,7 +189,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
         return sprintf(
             '%s/%s',
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $resourceId
+            $resourceId,
         );
     }
 }

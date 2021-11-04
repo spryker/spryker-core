@@ -51,7 +51,7 @@ class ProductOptionQuoteItemToItemMapperPluginTest extends Unit
 
         $actualResult = $productOptionQuoteItemToItemMapperPlugin->map(
             $quoteItemTransfer,
-            $itemTransfer
+            $itemTransfer,
         );
 
         // Assert
@@ -76,7 +76,7 @@ class ProductOptionQuoteItemToItemMapperPluginTest extends Unit
 
         $actualResult = $productOptionQuoteItemToItemMapperPlugin->map(
             $quoteItemTransfer,
-            $itemTransfer
+            $itemTransfer,
         );
 
         // Assert
@@ -101,7 +101,7 @@ class ProductOptionQuoteItemToItemMapperPluginTest extends Unit
 
         $actualResult = $productOptionQuoteItemToItemMapperPlugin->map(
             $quoteItemTransfer,
-            $itemTransfer
+            $itemTransfer,
         );
 
         // Assert

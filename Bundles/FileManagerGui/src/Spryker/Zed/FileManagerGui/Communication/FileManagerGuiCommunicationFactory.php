@@ -40,7 +40,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FileTable(
             $this->getFileQuery(),
-            $fileDirectoryId
+            $fileDirectoryId,
         );
     }
 
@@ -53,7 +53,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FileInfoEditTable(
             $this->getFileInfoQuery(),
-            $idFile
+            $idFile,
         );
     }
 
@@ -66,7 +66,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FileInfoViewTable(
             $this->getFileInfoQuery(),
-            $idFile
+            $idFile,
         );
     }
 
@@ -76,7 +76,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMimeTypeSettingsTable()
     {
         return new MimeTypeSettingsTable(
-            $this->getMimeTypeQuery()
+            $this->getMimeTypeQuery(),
         );
     }
 
@@ -92,7 +92,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             FileForm::class,
             $dataProvider->getData($idFile),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 
@@ -111,7 +111,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FileFormDataProvider(
             $this->getLocaleFacade(),
-            $this->getFileManagerFacade()
+            $this->getFileManagerFacade(),
         );
     }
 
@@ -146,7 +146,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FileDirectoryFormDataProvider(
             $this->getFileManagerFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -160,7 +160,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             FileDirectoryForm::class,
             $dataProvider->getData(),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 
@@ -175,7 +175,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             MimeTypeForm::class,
-            $dataProvider->getData($idMimeType)
+            $dataProvider->getData($idMimeType),
         );
     }
 
@@ -185,7 +185,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMimeTypeFormDataProvider()
     {
         return new MimeTypeFormDataProvider(
-            $this->getFileManagerFacade()
+            $this->getFileManagerFacade(),
         );
     }
 
@@ -195,7 +195,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMimeTypeSettingsForm()
     {
         return $this->getFormFactory()->create(
-            MimeTypeSettingsForm::class
+            MimeTypeSettingsForm::class,
         );
     }
 

@@ -28,7 +28,7 @@ class IntegerToDecimalConverter implements IntegerToDecimalConverterInterface
         if (!is_int($value)) {
             throw new InvalidConverterArgumentException(sprintf(
                 'Only integer values allowed for conversion to float. Current type is "%s"',
-                gettype($value)
+                gettype($value),
             ));
         }
 

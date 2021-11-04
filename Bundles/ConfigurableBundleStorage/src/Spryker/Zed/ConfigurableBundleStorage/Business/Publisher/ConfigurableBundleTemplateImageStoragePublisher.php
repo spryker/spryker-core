@@ -102,7 +102,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
             $localizedConfigurableBundleTemplateImageStorageEntityMap = $this->saveConfigurableBundleTemplateImages(
                 $configurableBundleTemplateTransfer,
                 $localizedConfigurableBundleTemplateImageStorageEntityMap,
-                $localeTransfers
+                $localeTransfers,
             );
         }
 
@@ -111,10 +111,10 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]> $localizedConfigurableBundleTemplateImageStorageEntityMap
+     * @param array<array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage>> $localizedConfigurableBundleTemplateImageStorageEntityMap
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]>
+     * @return array<array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage>>
      */
     protected function saveConfigurableBundleTemplateImages(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
@@ -129,14 +129,14 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
 
             $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
                 $configurableBundleTemplateTransfer->getProductImageSets(),
-                $localeName
+                $localeName,
             );
 
             $this->saveConfigurableBundleTemplateImageStorageEntity(
                 $localeName,
                 $productImageSetTransfers->getArrayCopy(),
                 $configurableBundleTemplateTransfer,
-                $configurableBundleTemplateImageStorageEntity
+                $configurableBundleTemplateImageStorageEntity,
             );
 
             if (!$configurableBundleTemplateImageStorageEntity->isNew()) {
@@ -216,7 +216,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     }
 
     /**
-     * @param array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]> $localizedConfigurableBundleTemplateImageStorageEntityMap
+     * @param array<array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage>> $localizedConfigurableBundleTemplateImageStorageEntityMap
      *
      * @return void
      */

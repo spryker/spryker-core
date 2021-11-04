@@ -209,8 +209,8 @@ class StockProductReader implements StockProductReaderInterface
                 sprintf(
                     'There is no Stock %s for a product with sku: %s',
                     $stockType,
-                    $sku
-                )
+                    $sku,
+                ),
             );
         }
 
@@ -372,7 +372,7 @@ class StockProductReader implements StockProductReaderInterface
 
         if ($stockProductQuery->count() > 0) {
             throw new StockProductAlreadyExistsException(
-                'Cannot duplicate entry: this stock type is already set for this product'
+                'Cannot duplicate entry: this stock type is already set for this product',
             );
         }
     }

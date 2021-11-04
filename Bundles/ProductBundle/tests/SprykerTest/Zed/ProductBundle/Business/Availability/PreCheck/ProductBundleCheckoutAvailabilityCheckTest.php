@@ -54,7 +54,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
 
         $productBundleAvailabilityCheckMock->checkCheckoutAvailability(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
 
         $this->assertCount(0, $checkoutResponseTransfer->getErrors());
@@ -82,7 +82,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
 
         $productBundleAvailabilityCheckMock->checkCheckoutAvailability(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
 
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());

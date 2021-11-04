@@ -26,7 +26,7 @@ class SalesSplitBusinessFactory extends AbstractBusinessFactory
         return new OrderItemSplit(
             $this->createSplitValidator(),
             $this->getSalesQueryContainer(),
-            $this->createCalculator()
+            $this->createCalculator(),
         );
     }
 

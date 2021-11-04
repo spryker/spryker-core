@@ -57,7 +57,7 @@ class QuoteMapperTest extends Unit
         $updatedQuoteEntity = $quoteMapper->mapTransferToEntity(
             $quoteTransfer,
             $this->tester->createQuotePropelEntity(),
-            $quoteFieldsAllowedForSaving
+            $quoteFieldsAllowedForSaving,
         );
         $decodedQuoteData = $utilEncodingService->decodeJson($updatedQuoteEntity->getQuoteData(), true);
 

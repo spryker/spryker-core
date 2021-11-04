@@ -30,7 +30,7 @@ class ExportController extends AbstractController
     public function indexAction(Request $request): Response
     {
         $response = $this->getFactory()->createProductListExporter()->exportToCsvFile(
-            $this->getProductList($request)
+            $this->getProductList($request),
         );
 
         return $response->send();

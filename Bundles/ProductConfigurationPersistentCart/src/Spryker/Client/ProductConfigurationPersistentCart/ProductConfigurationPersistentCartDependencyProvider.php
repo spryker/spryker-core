@@ -41,7 +41,7 @@ class ProductConfigurationPersistentCartDependencyProvider extends AbstractDepen
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
             return new ProductConfigurationPersistentCartToProductConfigurationStorageClientBridge(
-                $container->getLocator()->productConfigurationStorage()->client()
+                $container->getLocator()->productConfigurationStorage()->client(),
             );
         });
 

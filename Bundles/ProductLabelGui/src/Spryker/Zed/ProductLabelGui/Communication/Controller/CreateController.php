@@ -24,6 +24,7 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const ROUTE_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
+
     /**
      * @var string
      */
@@ -42,7 +43,7 @@ class CreateController extends AbstractController
         if ($productLabelTransfer) {
             $redirectUrl = Url::generate(
                 static::ROUTE_PRODUCT_LABEL_EDIT,
-                [static::PARAM_ID_PRODUCT_LABEL => $productLabelTransfer->getIdProductLabel()]
+                [static::PARAM_ID_PRODUCT_LABEL => $productLabelTransfer->getIdProductLabel()],
             )->build();
 
             return $this->redirectResponse($redirectUrl);
@@ -69,7 +70,7 @@ class CreateController extends AbstractController
             ->getFactory()
             ->getProductLabelAggregateForm(
                 $aggregateFormDataProvider->getData(),
-                $aggregateFormDataProvider->getOptions()
+                $aggregateFormDataProvider->getOptions(),
             );
 
         return $aggregateForm;
@@ -96,7 +97,7 @@ class CreateController extends AbstractController
         if (!$productLabelTransfer->getIsDynamic()) {
             $this->storeRelatedProduct(
                 $aggregateFormTransfer->getProductAbstractRelations(),
-                $productLabelTransfer->getIdProductLabel()
+                $productLabelTransfer->getIdProductLabel(),
             );
         }
 
@@ -141,7 +142,7 @@ class CreateController extends AbstractController
             ->getProductLabelFacade()
             ->addAbstractProductRelationsForLabel(
                 $idProductLabel,
-                $relationsTransfer->getIdsProductAbstractToAssign()
+                $relationsTransfer->getIdsProductAbstractToAssign(),
             );
     }
 

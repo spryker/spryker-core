@@ -84,7 +84,7 @@ class ConfigurableBundleTemplateSlotUpdater implements ConfigurableBundleTemplat
         $configurableBundleTemplateSlotTransfer
             ->setName($this->configurableBundleNameGenerator->generateTemplateSlotName($configurableBundleTemplateSlotTransfer))
             ->setConfigurableBundleTemplate(
-                $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate()
+                $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate(),
             );
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateSlotTransfer) {

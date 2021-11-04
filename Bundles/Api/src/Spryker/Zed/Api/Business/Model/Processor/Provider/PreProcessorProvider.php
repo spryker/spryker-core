@@ -102,7 +102,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     public function buildPaginationByHeaderFilterPreProcessor()
     {
         return new PaginationByHeaderFilterPreProcessor(
-            $this->apiConfig
+            $this->apiConfig,
         );
     }
 
@@ -120,7 +120,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     public function buildPaginationByQueryFilterPreProcessor()
     {
         return new PaginationByQueryFilterPreProcessor(
-            $this->apiConfig
+            $this->apiConfig,
         );
     }
 

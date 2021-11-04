@@ -22,6 +22,7 @@ class ViewController extends AbstractController
      * @var string
      */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+
     /**
      * @var string
      */
@@ -35,7 +36,7 @@ class ViewController extends AbstractController
     public function productAbstractAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT_ABSTRACT
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $dataProvider = $this->getFactory()->createAttributeKeyFormDataProvider();
@@ -43,7 +44,7 @@ class ViewController extends AbstractController
             ->getFactory()
             ->getAttributeKeyForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -93,7 +94,7 @@ class ViewController extends AbstractController
     public function productAction(Request $request)
     {
         $idProduct = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT
+            static::PARAM_ID_PRODUCT,
         ));
 
         $dataProvider = $this->getFactory()->createAttributeKeyFormDataProvider();
@@ -101,7 +102,7 @@ class ViewController extends AbstractController
             ->getFactory()
             ->getAttributeKeyForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -117,7 +118,7 @@ class ViewController extends AbstractController
 
         $productTransfer = $this->getProductTransfer($idProduct);
         $productAbstractTransfer = $this->getProductAbstractTransfer(
-            $productTransfer->requireFkProductAbstract()->getFkProductAbstract()
+            $productTransfer->requireFkProductAbstract()->getFkProductAbstract(),
         );
 
         $metaAttributes = $this

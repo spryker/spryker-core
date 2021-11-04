@@ -16,6 +16,7 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
      * @var string
      */
     protected const GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX = 'catalog.sort.';
+
     /**
      * @var string
      */

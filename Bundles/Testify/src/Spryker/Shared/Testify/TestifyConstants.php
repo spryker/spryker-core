@@ -16,6 +16,7 @@ class TestifyConstants
      * @var string
      */
     public const BOOTSTRAP_CLASS_YVES = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_YVES';
+
     /**
      * @var string
      */
@@ -26,6 +27,7 @@ class TestifyConstants
      * - Glue application domain to test end to end against.
      *
      * @api
+     *
      * @var string
      */
     public const GLUE_APPLICATION_DOMAIN = 'TESTIFY_CONSTANTS:GLUE_APPLICATION_DOMAIN';

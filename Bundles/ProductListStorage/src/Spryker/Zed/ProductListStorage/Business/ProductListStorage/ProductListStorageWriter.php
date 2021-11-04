@@ -76,8 +76,8 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
         return array_unique(
             array_merge(
                 $this->productListStorageRepository->findProductConcreteIdsByProductAbstractIds($productAbstractIds),
-                $this->productListStorageRepository->findProductConcreteIdsByProductListIds($productListIds)
-            )
+                $this->productListStorageRepository->findProductConcreteIdsByProductListIds($productListIds),
+            ),
         );
     }
 

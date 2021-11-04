@@ -29,14 +29,18 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const ATTRIBUTES_DEFAULT_SORT_FIELD = 'attribute_name';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProvider::COL_KEY_ID_PRODUCT_CONCRETE
+     *
      * @var string
      */
     protected const COL_KEY_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
     /**
      * @var string
      */
@@ -120,14 +124,14 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
             $attributes = $this->appendAttributes(
                 $localizedAttributesTransfer->getAttributes(),
                 $localizedAttributesTransfer->getLocaleOrFail()->getLocaleNameOrFail(),
-                $attributes
+                $attributes,
             );
         }
 
         $attributes = $this->appendAttributes(
             $productConcreteTransfer->getAttributes(),
             ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,
-            $attributes
+            $attributes,
         );
 
         foreach ($attributes as $attributeName => $values) {
@@ -138,7 +142,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
         $attributes = $this->sortAttributesArray(
             $attributes,
             $criteriaTransfer->getOrderBy() ?? static::ATTRIBUTES_DEFAULT_SORT_FIELD,
-            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC
+            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC,
         );
 
         return $this->getGuiTableDataResponseTransfer($attributes);
@@ -147,9 +151,9 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     /**
      * @param array $attributes
      * @param string $columnName
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function appendAttributes(
         array $attributes,
@@ -173,7 +177,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
      * @param string $orderBy
      * @param string $orderDirection
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function sortAttributesArray(array $attributes, string $orderBy, string $orderDirection): array
     {
@@ -191,9 +195,9 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
 
                 return $direction ? strcasecmp($comparableValue, $comparatorValue) : strcasecmp(
                     $comparatorValue,
-                    $comparableValue
+                    $comparableValue,
                 );
-            }
+            },
         );
 
         return $attributes;
@@ -229,7 +233,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
         return $this->localizedAttributesExtractor->extractCombinedSuperAttributeNames(
             $productConcreteTransfer->getAttributes(),
             $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
+            $localeTransfer,
         );
     }
 }

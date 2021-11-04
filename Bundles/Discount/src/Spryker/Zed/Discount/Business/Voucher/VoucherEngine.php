@@ -82,7 +82,7 @@ class VoucherEngine implements VoucherEngineInterface
         $this->getConnection()->beginTransaction();
         $voucherCodesAreValid = $this->generateAndSaveVoucherCodes(
             $discountVoucherTransfer,
-            $discountVoucherTransfer->getQuantity()
+            $discountVoucherTransfer->getQuantity(),
         );
 
         return $this->acceptVoucherCodesTransaction($voucherCodesAreValid);
@@ -210,7 +210,7 @@ class VoucherEngine implements VoucherEngineInterface
 
         if (!$allowedCharacters) {
             throw new VoucherEngineException(
-                'Configuration for voucher code characters missing.'
+                'Configuration for voucher code characters missing.',
             );
         }
 

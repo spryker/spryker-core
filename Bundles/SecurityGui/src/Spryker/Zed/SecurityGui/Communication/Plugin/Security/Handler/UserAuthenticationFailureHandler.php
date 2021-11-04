@@ -33,7 +33,7 @@ class UserAuthenticationFailureHandler extends AbstractPlugin implements Authent
             ->getMessengerFacade()
             ->addErrorMessage(
                 (new MessageTransfer())
-                ->setValue('Authentication failed!')
+                ->setValue('Authentication failed!'),
             );
 
         return new RedirectResponse($this->getConfig()->getUrlLogin());

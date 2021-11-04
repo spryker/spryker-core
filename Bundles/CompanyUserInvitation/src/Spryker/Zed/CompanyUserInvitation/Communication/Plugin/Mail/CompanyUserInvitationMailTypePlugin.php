@@ -27,6 +27,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      * @var string
      */
     protected const HTML_TEMPLATE = 'company-user-invitation/mail/invitation.html.twig';
+
     /**
      * @var string
      */
@@ -121,7 +122,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
         $mailTransfer = $mailBuilder->getMailTransfer()->getCompanyUserInvitation();
         $mailBuilder->addRecipient(
             $mailTransfer->getEmail(),
-            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName())
+            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName()),
         );
 
         return $this;

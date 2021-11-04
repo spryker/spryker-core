@@ -18,13 +18,16 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     protected const KEY_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -73,7 +76,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
         $productConcreteDataCollection = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_MAPPING_TYPE,
             $productConcreteSkus,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productConcreteDataCollection) {
@@ -88,7 +91,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
         $productReviewsRestResourcesCollection = $this->productReviewReader
             ->getProductReviewsResourceCollection(
                 $productAbstractIds,
-                $this->createFilterTransfer()
+                $this->createFilterTransfer(),
             );
 
         foreach ($resources as $resource) {

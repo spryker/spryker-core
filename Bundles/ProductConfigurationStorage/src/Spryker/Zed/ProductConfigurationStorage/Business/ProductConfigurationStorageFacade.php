@@ -66,7 +66,7 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
     ): array {
         return $this->getRepository()->getFilteredProductConfigurationStorageDataTransfers(
             $filterTransfer,
-            $productConfigurationStorageIds
+            $productConfigurationStorageIds,
         );
     }
 }

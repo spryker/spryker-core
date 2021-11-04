@@ -28,14 +28,17 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @var string
      */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     protected const KEY_PRICES = 'prices';
+
     /**
      * @var string
      */
     protected const KEY_IMAGE_SETS = 'imageSets';
+
     /**
      * @var string
      */
@@ -43,6 +46,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     *
      * @var string
      */
     protected const KV_PREFIX = 'kv:';
@@ -203,7 +207,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         foreach ($identifiers as $identifier) {
             $storageKeys[$identifier] = $this->getStorageKey(
                 sprintf('%s:%s', $mappingType, $identifier),
-                $localeName
+                $localeName,
             );
         }
 
@@ -375,7 +379,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         return $this->findProductConcreteStorageDataByMapping(
             $mappingType,
             $identifier,
-            $this->localeClient->getCurrentLocale()
+            $this->localeClient->getCurrentLocale(),
         );
     }
 

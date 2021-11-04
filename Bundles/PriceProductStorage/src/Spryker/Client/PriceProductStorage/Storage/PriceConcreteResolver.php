@@ -68,7 +68,7 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
 
         return $this->priceProductService->mergeConcreteAndAbstractPrices(
             $abstractPriceProductTransfers,
-            $concretePriceProductTransfers
+            $concretePriceProductTransfers,
         );
     }
 
@@ -85,12 +85,12 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
 
         $priceProductTransfers = $this->resolvePriceProductConcrete(
             $priceProductFilterTransfer->getIdProduct(),
-            $priceProductFilterTransfer->getIdProductAbstract()
+            $priceProductFilterTransfer->getIdProductAbstract(),
         );
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // In case no $priceProductTransfers are provided for price resolving, the quantity is not copied in the result but required in the further process

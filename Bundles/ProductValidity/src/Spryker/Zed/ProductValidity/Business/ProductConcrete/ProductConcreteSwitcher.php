@@ -130,7 +130,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
         foreach ($productValidityEntities as $productValidityEntity) {
             $this->productFacade
                 ->activateProductConcrete(
-                    $productValidityEntity->getFkProduct()
+                    $productValidityEntity->getFkProduct(),
                 );
         }
     }
@@ -145,7 +145,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
         foreach ($productValidityEntities as $productValidityEntity) {
             $this->productFacade
                 ->deactivateProductConcrete(
-                    $productValidityEntity->getFkProduct()
+                    $productValidityEntity->getFkProduct(),
                 );
         }
     }

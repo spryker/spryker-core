@@ -19,6 +19,7 @@ class GlueBootstrap extends Framework
 {
     /**
      * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     *
      * @var string
      */
     protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
@@ -43,8 +44,8 @@ class GlueBootstrap extends Framework
 
         (new SessionClient())->setContainer(
             new Session(
-                new MockArraySessionStorage()
-            )
+                new MockArraySessionStorage(),
+            ),
         );
     }
 }

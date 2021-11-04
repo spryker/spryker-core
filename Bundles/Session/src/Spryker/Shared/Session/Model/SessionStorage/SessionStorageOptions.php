@@ -15,7 +15,7 @@ class SessionStorageOptions implements SessionStorageOptionsInterface
     protected $options;
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $options)
     {

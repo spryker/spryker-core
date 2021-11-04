@@ -19,6 +19,7 @@ class WebProfilerTimeDataCollectorPlugin implements WebProfilerDataCollectorPlug
      * @var string
      */
     protected const NAME = 'time';
+
     /**
      * @var string
      */

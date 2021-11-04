@@ -38,7 +38,7 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
     ): MerchantProfileTransfer {
         $merchantProfileTransfer->fromArray(
             $merchantProfileEntity->toArray(),
-            true
+            true,
         );
 
         $merchantProfileTransfer->setMerchantName($merchantProfileEntity->getSpyMerchant()->getName());
@@ -47,7 +47,7 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         $merchantProfileAddressTransfers = $this->merchantProfileAddressMapper
             ->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfers(
                 $merchantProfileEntity->getSpyMerchantProfileAddresses(),
-                new ArrayObject()
+                new ArrayObject(),
             );
         $merchantProfileTransfer->setAddressCollection($merchantProfileAddressTransfers);
 
@@ -65,7 +65,7 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         SpyMerchantProfile $spyMerchantProfile
     ): SpyMerchantProfile {
         $spyMerchantProfile->fromArray(
-            $merchantProfileTransfer->modifiedToArray(false)
+            $merchantProfileTransfer->modifiedToArray(false),
         );
 
         return $spyMerchantProfile;

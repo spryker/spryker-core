@@ -19,12 +19,13 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
 {
     /**
      * @uses \Spryker\Zed\ProductAttribute\ProductAttributeConfig::DEFAULT_LOCALE
+     *
      * @var string
      */
     public const DEFAULT_LOCALE = '_';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const LOCALE_NAME_MAP = [
         self::DEFAULT_LOCALE => ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,
@@ -47,7 +48,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param array<string[]> $attributes
+     * @param array<array<string>> $attributes
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraint $constraint
      *
      * @return void
@@ -73,11 +74,11 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
 
             if ($productConcrete) {
                 $localizedAttributesGroupedByLocaleName = $this->getLocalizedAttributesGroupedByLocaleName(
-                    $productConcrete->requireLocalizedAttributes()->getLocalizedAttributes()
+                    $productConcrete->requireLocalizedAttributes()->getLocalizedAttributes(),
                 );
                 $existingAttributes = $this->appendDefaultAttributes(
                     $localizedAttributesGroupedByLocaleName,
-                    $productConcrete->requireAttributes()->getAttributes()
+                    $productConcrete->requireAttributes()->getAttributes(),
                 );
             }
         }
@@ -111,7 +112,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param array<string[]> $existingAttributes
+     * @param array<array<string>> $existingAttributes
      *
      * @return array<string>
      */
@@ -155,8 +156,6 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
      * @return array

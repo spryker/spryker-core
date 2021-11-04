@@ -28,10 +28,12 @@ class ProductConcreteBulkForm extends AbstractType
      * @var string
      */
     protected const LABEL_IS_ACTIVE = 'Active';
+
     /**
      * @var string
      */
     protected const LABEL_VALID_FROM = 'From';
+
     /**
      * @var string
      */
@@ -140,7 +142,7 @@ class ProductConcreteBulkForm extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 }

@@ -36,7 +36,7 @@ class MerchantSalesOrderMapper
             ->setIdOrder($merchantSalesOrderEntity->getFkSalesOrder());
 
         $merchantOrderTransfer->setTotals(
-            $this->findTotalsTransferInMerchantSalesOrderEntity($merchantSalesOrderEntity)
+            $this->findTotalsTransferInMerchantSalesOrderEntity($merchantSalesOrderEntity),
         );
 
         $merchantSalesOrderEntity->initMerchantSalesOrderItems(false);
@@ -46,8 +46,8 @@ class MerchantSalesOrderMapper
                 $merchantOrderTransfer->addMerchantOrderItem(
                     $this->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
                         $merchantSalesOrderItemEntity,
-                        new MerchantOrderItemTransfer()
-                    )
+                        new MerchantOrderItemTransfer(),
+                    ),
                 );
             }
         }
@@ -192,9 +192,9 @@ class MerchantSalesOrderMapper
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
+     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemEntities
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
@@ -206,7 +206,7 @@ class MerchantSalesOrderMapper
         foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
             $merchantOrderTransfer = $this->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
                 $merchantSalesOrderItemEntity,
-                new MerchantOrderItemTransfer()
+                new MerchantOrderItemTransfer(),
             );
 
             $merchantOrderItemCollectionTransfer->addMerchantOrderItem($merchantOrderTransfer);

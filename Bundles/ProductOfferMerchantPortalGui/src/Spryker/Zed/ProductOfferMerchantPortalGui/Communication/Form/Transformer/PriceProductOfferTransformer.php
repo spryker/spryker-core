@@ -28,6 +28,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
@@ -120,7 +121,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
             $key = sprintf(
                 '%d_%d',
                 $priceProductTransfer->getMoneyValue()->getFkStore(),
-                $priceProductTransfer->getMoneyValue()->getFkCurrency()
+                $priceProductTransfer->getMoneyValue()->getFkCurrency(),
             );
 
             $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValue()->getFkStore();
@@ -155,7 +156,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 $newPriceProductOffer,
                 $priceProductDimensionTransfer,
                 $priceProductTransfers,
-                $priceTypes
+                $priceTypes,
             );
         }
 
@@ -163,8 +164,6 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPersistedPriceProductTransfers(): ArrayObject
@@ -200,7 +199,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
                 $newPriceProductOffer,
                 $priceProductDimensionTransfer,
                 $currencyTransfer,
-                $priceTypeTransfer
+                $priceTypeTransfer,
             );
 
             if ($newPriceProductTransfer === null) {
@@ -269,13 +268,11 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<mixed> $prices
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function addPrices(PriceProductTransfer $priceProductTransfer, array $prices, array $priceTypes): array
     {

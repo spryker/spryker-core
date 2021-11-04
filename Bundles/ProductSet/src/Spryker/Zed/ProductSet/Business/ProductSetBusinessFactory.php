@@ -45,7 +45,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
         return new ProductSetCreator(
             $this->createProductSetDataCreator(),
             $this->createProductSetTouch(),
-            $this->createProductSetImageCreator()
+            $this->createProductSetImageCreator(),
         );
     }
 
@@ -57,7 +57,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
         return new ProductSetReader(
             $this->getQueryContainer(),
             $this->createProductSetDataReader(),
-            $this->createProductSetImageReader()
+            $this->createProductSetImageReader(),
         );
     }
 
@@ -70,7 +70,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
             $this->createProductSetEntityReader(),
             $this->createProductSetDataUpdater(),
             $this->createProductSetImageCreator(),
-            $this->createProductSetTouch()
+            $this->createProductSetTouch(),
         );
     }
 
@@ -99,7 +99,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
             $this->createProductSetEntityReader(),
             $this->createProductSetDataDeleter(),
             $this->createProductSetImageDeleter(),
-            $this->createProductSetTouch()
+            $this->createProductSetTouch(),
         );
     }
 
@@ -118,7 +118,7 @@ class ProductSetBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSetImageSetCombiner(
             $this->getQueryContainer(),
-            $this->getProductImageFacade()
+            $this->getProductImageFacade(),
         );
     }
 

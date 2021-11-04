@@ -17,6 +17,7 @@ interface SchedulerConstants
      * - Defines the set of scheduler IDs to be enabled.
      *
      * @api
+     *
      * @var string
      */
     public const ENABLED_SCHEDULERS = 'SCHEDULER:ENABLED_SCHEDULERS';

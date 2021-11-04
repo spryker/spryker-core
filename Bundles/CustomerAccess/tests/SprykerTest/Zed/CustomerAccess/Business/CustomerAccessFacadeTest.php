@@ -126,7 +126,7 @@ class CustomerAccessFacadeTest extends Unit
         $customerAccessTransfer = $this->tester->haveCustomerAccess(
             [
                 CustomerAccessTransfer::CONTENT_TYPE_ACCESS => $data,
-            ]
+            ],
         );
 
         // Act

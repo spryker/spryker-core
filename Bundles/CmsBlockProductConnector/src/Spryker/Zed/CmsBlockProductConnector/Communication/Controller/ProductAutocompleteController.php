@@ -25,34 +25,42 @@ class ProductAutocompleteController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAM_SUGGESTION = 'term';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_PAGE = 'page';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_RESULTS = 'results';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_PAGINATION = 'pagination';
+
     /**
      * @var string
      */
     protected const RESPONSE_KEY_PAGINATION_MORE = 'more';
+
     /**
      * @var string
      */
     protected const RESPONSE_DATA_KEY_ID = 'id';
+
     /**
      * @var string
      */
     protected const RESPONSE_DATA_KEY_TEXT = 'text';
+
     /**
      * @var int
      */
     protected const DEFAULT_PAGE = 1;
+
     /**
      * @var int
      */
@@ -75,10 +83,10 @@ class ProductAutocompleteController extends AbstractController
 
         return $this->jsonResponse([
             static::RESPONSE_KEY_RESULTS => $this->transformProductAbstractSuggestionsToAutocompleteData(
-                $productAbstractSuggestionCollectionTransfer->getProductAbstracts()
+                $productAbstractSuggestionCollectionTransfer->getProductAbstracts(),
             ),
             static::RESPONSE_KEY_PAGINATION => $this->getPaginationData(
-                $productAbstractSuggestionCollectionTransfer->getPagination()
+                $productAbstractSuggestionCollectionTransfer->getPagination(),
             ),
         ]);
     }
@@ -110,7 +118,7 @@ class ProductAutocompleteController extends AbstractController
                 static::RESPONSE_DATA_KEY_ID => $productAbstractTransfer->getIdProductAbstract(),
                 static::RESPONSE_DATA_KEY_TEXT => $productLabelFormatter->format(
                     $productAbstractTransfer->getName(),
-                    $productAbstractTransfer->getSku()
+                    $productAbstractTransfer->getSku(),
                 ),
             ];
         }

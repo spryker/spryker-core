@@ -60,7 +60,7 @@ class CurrencyBuilderTest extends Unit
         return new CurrencyBuilder(
             $currencyRepository,
             'EUR',
-            Store::getInstance()->getCurrencyIsoCode()
+            Store::getInstance()->getCurrencyIsoCode(),
         );
     }
 }

@@ -39,7 +39,7 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
 
         return $this->executeCheckoutResponseMapperPlugins(
             $restCheckoutResponseTransfer,
-            $restCheckoutResponseAttributesTransfer
+            $restCheckoutResponseAttributesTransfer,
         );
     }
 
@@ -57,7 +57,7 @@ class CheckoutResponseMapper implements CheckoutResponseMapperInterface
             $restCheckoutResponseAttributesTransfer = $checkoutResponseMapperPlugin
                 ->mapRestCheckoutResponseTransferToRestCheckoutResponseAttributesTransfer(
                     $restCheckoutResponseTransfer,
-                    $restCheckoutResponseAttributesTransfer
+                    $restCheckoutResponseAttributesTransfer,
                 );
         }
 

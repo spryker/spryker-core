@@ -30,22 +30,27 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      * @var string
      */
     protected const SERVICE_COOKIES = 'cookies';
+
     /**
      * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
+
     /**
      * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var string
      */
     protected const SERVICE_REQUEST_CONTEXT = 'request_context';
+
     /**
      * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
+
     /**
      * @var string
      */
@@ -53,12 +58,14 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
+     *
      * @var string
      */
     protected const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
@@ -102,7 +109,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             return new HttpKernel(
                 $this->getEventDispatcher($container),
                 $this->getResolver($container),
-                $this->getRequestStack($container)
+                $this->getRequestStack($container),
             );
         });
 

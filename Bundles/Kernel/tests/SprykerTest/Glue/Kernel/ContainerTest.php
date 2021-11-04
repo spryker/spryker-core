@@ -27,6 +27,7 @@ class ContainerTest extends Unit
      * @var string
      */
     public const TEST_VALUE = 'foo';
+
     /**
      * @var string
      */

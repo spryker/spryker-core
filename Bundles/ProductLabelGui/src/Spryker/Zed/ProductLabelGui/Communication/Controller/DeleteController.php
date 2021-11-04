@@ -23,6 +23,7 @@ class DeleteController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+
     /**
      * @var string
      */

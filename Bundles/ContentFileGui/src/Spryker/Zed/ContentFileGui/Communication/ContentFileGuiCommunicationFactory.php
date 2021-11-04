@@ -36,7 +36,7 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ContentFileListViewTable(
             $this->getFileQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $identifierSuffix
+            $identifierSuffix,
         );
     }
 
@@ -52,7 +52,7 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getFileQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $fileIds,
-            $identifierSuffix
+            $identifierSuffix,
         );
     }
 

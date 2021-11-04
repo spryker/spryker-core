@@ -13,8 +13,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface;
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const TYPE_MAPPING = [
         'double' => 'float',
@@ -24,26 +23,32 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      * @var string
      */
     public const KEY_TYPE = 'type';
+
     /**
      * @var string
      */
     public const KEY_COLUMN = 'column';
+
     /**
      * @var string
      */
     public const KEY_FOREIGN_KEY = 'foreign-key';
+
     /**
      * @var string
      */
     public const KEY_ENTITY = 'Entity';
+
     /**
      * @var string
      */
     public const FOREIGN_TABLE = 'foreignTable';
+
     /**
      * @var string
      */
     public const KEY_PHP_NAME = 'phpName';
+
     /**
      * @var string
      */
@@ -63,9 +68,9 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     }
 
     /**
-     * @param array $transferDefinitions
+     * @param array<array> $transferDefinitions
      *
-     * @return array
+     * @return array<array>
      */
     public function normalizeDefinitions(array $transferDefinitions)
     {
@@ -81,7 +86,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
                 self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferName,
-                self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
+                self::KEY_DEPRECATED => $transferDefinition[self::KEY_DEPRECATED] ?? null,
                 self::KEY_PROPERTY => $properties,
                 self::ENTITY_NAMESPACE => $this->findEntityNamespace($transferDefinition),
             ];
@@ -205,8 +210,8 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     }
 
     /**
-     * @param array $normalizedDefinition
-     * @param array $allDefinitions
+     * @param array<string, mixed> $normalizedDefinition
+     * @param array<array> $allDefinitions
      *
      * @return mixed
      */
@@ -229,7 +234,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     }
 
     /**
-     * @param array $transferDefinition
+     * @param array<string, mixed> $transferDefinition
      *
      * @return string|null
      */

@@ -103,7 +103,7 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     /**
      * @param array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer> $productManagementAttributeValueTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>>
      */
     protected function indexProductManagementAttributeValues(array $productManagementAttributeValueTransfers): array
     {

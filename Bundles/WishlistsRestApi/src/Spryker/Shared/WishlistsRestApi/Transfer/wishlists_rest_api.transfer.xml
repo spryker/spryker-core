@@ -44,8 +44,8 @@
     <transfer name="WishlistItemRequest">
         <property name="idCustomer" type="int"/>
         <property name="uuidWishlist" type="string"/>
-        <property name="uuid" type="string"/>
         <property name="sku" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="WishlistItemResponse">

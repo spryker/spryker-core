@@ -44,7 +44,7 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_CONTENT_BANNER, function (Container $container) {
             return new ContentBannersRestApiToContentBannerClientBridge(
-                $container->getLocator()->contentBanner()->client()
+                $container->getLocator()->contentBanner()->client(),
             );
         });
 

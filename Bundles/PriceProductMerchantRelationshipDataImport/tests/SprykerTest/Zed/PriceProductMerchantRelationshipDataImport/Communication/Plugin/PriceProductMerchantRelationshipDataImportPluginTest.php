@@ -43,7 +43,7 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
         $PriceProductMerchantRelationshipDataImportPlugin = new PriceProductMerchantRelationshipDataImportPlugin();
         $this->assertSame(
             PriceProductMerchantRelationshipDataImportConfig::IMPORT_TYPE_PRICE_PRODUCT_MERCHANT_RELATIONSHIP,
-            $PriceProductMerchantRelationshipDataImportPlugin->getImportType()
+            $PriceProductMerchantRelationshipDataImportPlugin->getImportType(),
         );
     }
 

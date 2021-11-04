@@ -19,6 +19,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
      * @var string
      */
     public const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+
     /**
      * @var string
      */
@@ -89,7 +90,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     {
         $config->setDefaultSortField(
             static::COL_PRODUCT_ABSTRACT_SKU,
-            TableConfiguration::SORT_ASC
+            TableConfiguration::SORT_ASC,
         );
 
         $config->setSortable([
@@ -122,7 +123,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
             '%s?%s=%s',
             $this->defaultUrl,
             static::PARAM_ID_PRODUCT_LABEL,
-            (int)$this->idProductLabel
+            (int)$this->idProductLabel,
         ));
     }
 
@@ -158,7 +159,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     protected function getAdditionalRelationCountColumn(SpyProductAbstract $productAbstractEntity)
     {
         $relationCount = (int)$productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
         );
 
         return ($relationCount - 1);
@@ -190,9 +191,9 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
                 '/product-management/view',
                 [
                     ViewController::PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
-                ]
+                ],
             ),
-            'View'
+            'View',
         );
     }
 }

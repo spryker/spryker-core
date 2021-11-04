@@ -15,6 +15,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANIES = 'companies';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
 
     /**
      * @deprecated Will be removed with next major release.
+     *
      * @var string
      */
     public const ACTION_COMPANIES_GET = 'get';
@@ -30,6 +32,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_NOT_FOUND = '1801';
+
     /**
      * @var string
      */
@@ -39,6 +42,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1803';
+
     /**
      * @var string
      */
@@ -51,6 +55,7 @@ class CompaniesRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
+     *
      * @var string
      */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';

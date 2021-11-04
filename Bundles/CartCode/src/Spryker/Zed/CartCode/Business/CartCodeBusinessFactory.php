@@ -36,7 +36,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
             $this->createRecalculationResultProcessor(),
-            $this->getCartCodePlugins()
+            $this->getCartCodePlugins(),
         );
     }
 
@@ -49,7 +49,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
             $this->createRecalculationResultProcessor(),
-            $this->getCartCodePlugins()
+            $this->getCartCodePlugins(),
         );
     }
 
@@ -61,7 +61,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
         return new CartCodeClearer(
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodePlugins()
+            $this->getCartCodePlugins(),
         );
     }
 

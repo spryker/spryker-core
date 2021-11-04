@@ -61,7 +61,7 @@ class RedirectChainInjectionTest extends Unit
         $this->assertSame(
             '/test-foo',
             $actualRedirectEntity->getToUrl(),
-            'Redirect to already redirected target should resolve in target\'s target.'
+            'Redirect to already redirected target should resolve in target\'s target.',
         );
     }
 

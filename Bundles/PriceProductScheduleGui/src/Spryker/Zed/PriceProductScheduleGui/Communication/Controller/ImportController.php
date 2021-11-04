@@ -38,7 +38,7 @@ class ImportController extends AbstractController
         $priceProductScheduleTable = $this->getFactory()->createPriceProductScheduleListTable();
 
         return $this->jsonResponse(
-            $priceProductScheduleTable->fetchData()
+            $priceProductScheduleTable->fetchData(),
         );
     }
 }

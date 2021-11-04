@@ -39,8 +39,8 @@ class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterfa
                 sprintf(
                     '"%s" key must be in the data set. Given: "%s"',
                     ProductConfigurationDataSet::KEY_CONCRETE_SKU,
-                    implode(', ', array_keys($dataSet->getArrayCopy()))
-                )
+                    implode(', ', array_keys($dataSet->getArrayCopy())),
+                ),
             );
         }
 
@@ -54,7 +54,7 @@ class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterfa
 
             if (!$idProductConcrete) {
                 throw new EntityNotFoundException(
-                    sprintf('Could not find product concrete by sku "%s"', $productConcreteSku)
+                    sprintf('Could not find product concrete by sku "%s"', $productConcreteSku),
                 );
             }
 

@@ -22,6 +22,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_LOCALE = 'PLUGIN_LOCALE';
+
     /**
      * @var string
      */

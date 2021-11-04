@@ -33,7 +33,7 @@ class ProductConfigurationPriceProductFilterExpanderPlugin extends AbstractPlugi
     {
         return $this->getClient()->expandPriceProductFilterWithProductConfigurationInstance(
             $productViewTransfer,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
     }
 }

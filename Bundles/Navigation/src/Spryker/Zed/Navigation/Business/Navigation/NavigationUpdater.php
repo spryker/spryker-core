@@ -104,7 +104,7 @@ class NavigationUpdater implements NavigationUpdaterInterface
         if (!$navigationEntity) {
             throw new NavigationNotFoundException(sprintf(
                 'Navigation entity not found with ID %d.',
-                $navigationTransfer->getIdNavigation()
+                $navigationTransfer->getIdNavigation(),
             ));
         }
 

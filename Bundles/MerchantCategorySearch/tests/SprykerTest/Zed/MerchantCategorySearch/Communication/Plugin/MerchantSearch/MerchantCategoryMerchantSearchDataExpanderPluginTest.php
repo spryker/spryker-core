@@ -33,6 +33,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander::CATEGORY_KEYS
+     *
      * @var string
      */
     protected const CATEGORY_KEYS = 'category-keys';
@@ -59,9 +60,9 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
                             ->setFkMerchant(1)
                             ->setCategory(
                                 (new CategoryTransfer())
-                                    ->setCategoryKey($expectedCategoryKey)
-                            )
-                    )
+                                    ->setCategoryKey($expectedCategoryKey),
+                            ),
+                    ),
             );
 
         $factoryMock = $this->getFactoryMock();
@@ -74,7 +75,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
         $merchantSearchCollectionTransfer = (new MerchantSearchCollectionTransfer())
             ->addMerchant(
                 (new MerchantSearchTransfer())
-                    ->setIdMerchant(1)
+                    ->setIdMerchant(1),
             );
 
         // Act
@@ -86,7 +87,7 @@ class MerchantCategoryMerchantSearchDataExpanderPluginTest extends Unit
             [
                 static::CATEGORY_KEYS => [$expectedCategoryKey],
             ],
-            $expandedMerchantSearchCollectionTransfer->getMerchants()[0]->getData()
+            $expandedMerchantSearchCollectionTransfer->getMerchants()[0]->getData(),
         );
     }
 

@@ -24,34 +24,42 @@ class DeleteController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
+
     /**
      * @var string
      */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+
     /**
      * @var string
      */
     protected const PARAM_ID_PRODUCT = 'id-product';
+
     /**
      * @var string
      */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
+
     /**
      * @var string
      */
     protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
+
     /**
      * @var string
      */
     protected const PARAM_TEMPLATE_FORM = 'form';
+
     /**
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirectUrl';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE = 'Scheduled price was successfully removed';
+
     /**
      * @var string
      */
@@ -73,7 +81,7 @@ class DeleteController extends AbstractController
             ->createPriceProductScheduleDeleteForm(
                 $dataProvider,
                 $priceProductScheduleTransfer,
-                $redirectUrl
+                $redirectUrl,
             );
         $form->handleRequest($request);
 

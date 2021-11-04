@@ -13,10 +13,12 @@ interface CartDataSetInterface
      * @var string
      */
     public const KEY_CART = 'key';
+
     /**
      * @var string
      */
     public const KEY_STORE = 'store';
+
     /**
      * @var string
      */

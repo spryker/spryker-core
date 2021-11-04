@@ -209,7 +209,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         return $this->shipmentRepository
             ->findTaxSetByShipmentMethodAndCountryIso2Code(
                 $shipmentTransfer->getMethod(),
-                $countryIso2Code
+                $countryIso2Code,
             );
     }
 

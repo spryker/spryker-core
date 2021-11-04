@@ -28,7 +28,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
      * @param array $events
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array
     {
@@ -41,7 +41,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
      * @param array $events
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function groupEventsByIdSalesShipment(array $events, iterable $orderItemTransfers): array
     {
@@ -70,7 +70,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
     /**
      * @param array $events
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function retrieveEventNamesFromEventList(array $events): array
     {
@@ -88,7 +88,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
      * @param array $eventNameCollection
      * @param int $shipmentId
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function expandEventListEventNameCollectionForShipment(
         array $eventList,

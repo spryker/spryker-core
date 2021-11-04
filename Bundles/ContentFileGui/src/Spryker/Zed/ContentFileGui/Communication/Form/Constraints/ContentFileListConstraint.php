@@ -19,7 +19,7 @@ class ContentFileListConstraint extends SymfonyConstraint
 
     /**
      * @param \Spryker\Zed\ContentFileGui\Dependency\Facade\ContentFileGuiToContentFileFacadeInterface $contentFileFacade
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(ContentFileGuiToContentFileFacadeInterface $contentFileFacade, ?array $options = null)
     {

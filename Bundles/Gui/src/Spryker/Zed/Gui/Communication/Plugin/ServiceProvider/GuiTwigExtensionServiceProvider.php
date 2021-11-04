@@ -39,7 +39,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
                 $this->registerTwigFilters($twig);
 
                 return $twig;
-            })
+            }),
         );
     }
 

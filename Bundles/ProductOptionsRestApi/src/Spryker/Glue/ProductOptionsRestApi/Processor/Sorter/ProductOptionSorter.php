@@ -15,6 +15,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const SORT_VALUE_DELIMITER = '.';
@@ -42,7 +43,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
             return $this->compareRestProductOptionsAttributesTransfers(
                 $currentRestProductOptionsAttributesTransfer,
                 $nextRestProductOptionsAttributesTransfer,
-                $sorts
+                $sorts,
             );
         });
 
@@ -76,7 +77,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
                 $currentRestProductOptionsAttributesTransfer,
                 $nextRestProductOptionsAttributesTransfer,
                 $sorts,
-                $index + 1
+                $index + 1,
             );
         }
 

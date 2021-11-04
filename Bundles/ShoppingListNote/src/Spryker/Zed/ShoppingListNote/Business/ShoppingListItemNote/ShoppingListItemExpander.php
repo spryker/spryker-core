@@ -60,7 +60,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
         $expandedShoppingListItemTransfers = new ArrayObject();
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemTransfer->setShoppingListItemNote(
-                $indexedShoppingListItemNoteTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] ?? new ShoppingListItemNoteTransfer()
+                $indexedShoppingListItemNoteTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] ?? new ShoppingListItemNoteTransfer(),
             );
             $expandedShoppingListItemTransfers->append($shoppingListItemTransfer);
         }

@@ -40,6 +40,7 @@ class SecurityApplicationPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
@@ -326,7 +327,7 @@ class SecurityApplicationPluginTest extends Unit
                  *
                  * @return \Symfony\Component\HttpFoundation\Response
                  */
-                public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+                public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
                 {
                     return new Response('authentication success');
                 }

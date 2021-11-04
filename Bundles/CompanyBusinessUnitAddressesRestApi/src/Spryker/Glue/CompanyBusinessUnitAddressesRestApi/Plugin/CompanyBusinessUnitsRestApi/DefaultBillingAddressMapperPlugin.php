@@ -37,7 +37,7 @@ class DefaultBillingAddressMapperPlugin extends AbstractPlugin implements Compan
             ->createCompanyBusinessUnitAddressMapper()
             ->mapDefaultBillingAddressIdFromCompanyBusinessUnitTransferToRestCompanyBusinessUnitAttributesTransfer(
                 $companyBusinessUnitTransfer,
-                $restCompanyBusinessUnitAttributesTransfer
+                $restCompanyBusinessUnitAttributesTransfer,
             );
     }
 }

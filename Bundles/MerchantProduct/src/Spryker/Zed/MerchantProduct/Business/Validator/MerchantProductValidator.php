@@ -47,7 +47,7 @@ class MerchantProductValidator implements MerchantProductValidatorInterface
 
         $constraintViolationList = $this->validator->validate(
             $merchantProductTransfer,
-            $this->merchantProductConstraints
+            $this->merchantProductConstraints,
         );
 
         if (!$constraintViolationList->count()) {

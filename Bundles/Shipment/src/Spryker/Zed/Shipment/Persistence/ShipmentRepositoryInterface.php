@@ -52,7 +52,7 @@ interface ShipmentRepositoryInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getItemIdsGroupedByShipmentIds(
         OrderTransfer $orderTransfer,

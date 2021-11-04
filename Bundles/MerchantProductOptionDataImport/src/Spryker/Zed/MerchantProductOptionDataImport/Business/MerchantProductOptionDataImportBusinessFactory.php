@@ -28,7 +28,7 @@ class MerchantProductOptionDataImportBusinessFactory extends DataImportBusinessF
     public function getMerchantProductOptionGroupDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantProductOptionGroupDataImporterConfiguration()
+            $this->getConfig()->getMerchantProductOptionGroupDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

@@ -30,7 +30,7 @@ class MerchantOpeningHoursStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->createMerchantOpeningHoursMapper(),
             $this->getUtilEncodingService(),
-            $this->createDateScheduleFilter()
+            $this->createDateScheduleFilter(),
         );
     }
 

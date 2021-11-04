@@ -28,6 +28,7 @@ class PluginUsageFinderConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'dev:plugin-usage:dump';
+
     /**
      * @var string
      */
@@ -55,7 +56,7 @@ class PluginUsageFinderConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $dependencyProviderCollectionTransfer = $this->getFacade()->getInProjectDependencyProviderUsedPlugins(
-            $this->buildModuleFilterTransfer()
+            $this->buildModuleFilterTransfer(),
         );
 
         $this->printDependencyProviderPluginUsageList($dependencyProviderCollectionTransfer);

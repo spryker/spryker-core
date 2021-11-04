@@ -18,6 +18,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader::KEY_ID
+     *
      * @var string
      */
     protected const KEY_ID = 'id';
@@ -127,7 +128,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
                 continue;
             }
             $productConcreteMeasurementUnitStorageTransfers[] = $this->mapToProductMeasurementUnitStorage(
-                $productMeasurementUnitStorageData
+                $productMeasurementUnitStorageData,
             );
         }
 

@@ -26,10 +26,12 @@ class EventItemTriggerForm extends AbstractType
      * @var string
      */
     public const OPTION_EVENT = 'OPTION_EVENT';
+
     /**
      * @var string
      */
     public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
+
     /**
      * @var string
      */
@@ -47,7 +49,7 @@ class EventItemTriggerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -60,7 +62,7 @@ class EventItemTriggerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -83,21 +85,21 @@ class EventItemTriggerForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->createAction($options)
+            $this->createAction($options),
         );
 
         return $this;
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

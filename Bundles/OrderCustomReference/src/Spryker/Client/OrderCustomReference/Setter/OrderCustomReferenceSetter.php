@@ -62,7 +62,7 @@ class OrderCustomReferenceSetter implements OrderCustomReferenceSetterInterface
         }
 
         $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequestTransfer(
-            $quoteTransfer->setOrderCustomReference($orderCustomReference)
+            $quoteTransfer->setOrderCustomReference($orderCustomReference),
         );
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);

@@ -28,7 +28,7 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
 {
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -83,7 +83,7 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new MerchantUserUpdater(
             $this->getMerchantUserFacade(),
-            $this->getMerchantUserPostChangePlugins()
+            $this->getMerchantUserPostChangePlugins(),
         );
     }
 

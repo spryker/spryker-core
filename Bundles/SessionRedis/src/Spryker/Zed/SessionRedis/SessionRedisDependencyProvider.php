@@ -22,18 +22,22 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION_REDIS = 'CLIENT_SESSION_REDIS';
+
     /**
      * @var string
      */
     public const PLUGINS_HANDLER_SESSION = 'PLUGINS_HANDLER_SESSION';
+
     /**
      * @var string
      */
     public const PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR = 'PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR';
+
     /**
      * @var string
      */
@@ -41,12 +45,14 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK} instead.
+     *
      * @var string
      */
     protected const REQUEST_STACK_CONTAINER_KEY = 'request_stack';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
@@ -102,7 +108,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_MONITORING, function (Container $container) {
             $sessionToMonitoringServiceBridge = new SessionRedisToMonitoringServiceBridge(
-                $container->getLocator()->monitoring()->service()
+                $container->getLocator()->monitoring()->service(),
             );
 
             return $sessionToMonitoringServiceBridge;
@@ -120,7 +126,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_SESSION_REDIS, function (Container $container) {
             return new SessionRedisToRedisClientBridge(
-                $container->getLocator()->redis()->client()
+                $container->getLocator()->redis()->client(),
             );
         });
 

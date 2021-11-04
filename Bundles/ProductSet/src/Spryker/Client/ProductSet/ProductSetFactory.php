@@ -41,7 +41,7 @@ class ProductSetFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->createProductSetResourceBuilder(),
             $this->getLocaleClient()->getCurrentLocale(),
-            $this->createProductSetStorageMapper()
+            $this->createProductSetStorageMapper(),
         );
     }
 

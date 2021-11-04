@@ -20,6 +20,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependen
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
@@ -29,6 +30,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependen
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
@@ -102,7 +104,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependen
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductOfferAvailabilityStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

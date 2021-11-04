@@ -38,6 +38,7 @@ abstract class AbstractEventDispatcherHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'EventDispatcher';
+
     /**
      * @var string
      */
@@ -70,7 +71,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         parent::_before($test);
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getEventDispatcherApplicationPluginStub()
+            $this->getEventDispatcherApplicationPluginStub(),
         );
     }
 

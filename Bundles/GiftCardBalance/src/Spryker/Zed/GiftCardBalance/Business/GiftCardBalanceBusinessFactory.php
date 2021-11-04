@@ -23,7 +23,7 @@ class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardBalanceChecker()
     {
         return new GiftCardBalanceChecker(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 

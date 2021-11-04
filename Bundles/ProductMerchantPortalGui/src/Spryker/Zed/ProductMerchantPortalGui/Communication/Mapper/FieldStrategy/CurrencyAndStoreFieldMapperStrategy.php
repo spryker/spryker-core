@@ -72,7 +72,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
             $newPriceProductTransfer = $this->moveVolumePriceToNewPriceProduct(
                 $newPriceProductTransfer,
                 $volumeQuantity,
-                $priceProductTransfer
+                $priceProductTransfer,
             );
 
             $priceProductTransfers[] = $newPriceProductTransfer;
@@ -100,12 +100,12 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
         if (count($newPriceProductTransfers) === 0) {
             $newPriceProductTransfer = $this->createNewPriceProduct(
                 $priceProductTransfer->getPriceTypeOrFail()->getNameOrFail(),
-                $priceProductTransfer
+                $priceProductTransfer,
             );
 
             $this->mapDataToMoneyValueTransfer(
                 $data,
-                $newPriceProductTransfer->getMoneyValueOrFail()
+                $newPriceProductTransfer->getMoneyValueOrFail(),
             );
 
             return $newPriceProductTransfer;
@@ -134,7 +134,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
             ->setPriceType($priceProductTransfer->getPriceTypeOrFail()->getNameOrFail())
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
             );
 
         if ($idProductConcrete && $idProductAbstract) {
@@ -142,7 +142,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
                 ->findProductConcretePricesWithoutPriceExtraction(
                     $idProductConcrete,
                     $idProductAbstract,
-                    $priceProductCriteriaTransfer
+                    $priceProductCriteriaTransfer,
                 );
         }
 
@@ -150,7 +150,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
             return $this->priceProductFacade
                 ->findProductAbstractPricesWithoutPriceExtraction(
                     $idProductAbstract,
-                    $priceProductCriteriaTransfer
+                    $priceProductCriteriaTransfer,
                 );
         }
 
@@ -175,7 +175,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
             $moneyValueTransfer->setFkStore($value);
             $moneyValueTransfer->setStore(
                 (new StoreTransfer())
-                    ->setIdStore($value)
+                    ->setIdStore($value),
             );
 
             return $moneyValueTransfer;

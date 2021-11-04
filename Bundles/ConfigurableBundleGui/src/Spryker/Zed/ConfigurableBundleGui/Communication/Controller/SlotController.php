@@ -26,48 +26,56 @@ class SlotController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME
+     *
      * @var string
      */
     protected const AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'availableProductConcreteRelationTabs';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME
+     *
      * @var string
      */
     protected const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME
+     *
      * @var string
      */
     protected const AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME = 'availableProductConcreteTable';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME
+     *
      * @var string
      */
     protected const ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME = 'assignedProductConcreteTable';
 
     /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Controller\ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST
+     *
      * @var string
      */
     protected const URL_PARAM_ID_PRODUCT_LIST = 'id-product-list';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
@@ -76,14 +84,17 @@ class SlotController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_SLOT_CREATE_FAIL = 'Configurable bundle template slot has not been created.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_SLOT_UPDATE_FAIL = 'Configurable bundle template slot has not been updated.';
+
     /**
      * @var string
      */
@@ -93,10 +104,12 @@ class SlotController extends AbstractController
      * @var string
      */
     protected const SUCCESS_MESSAGE_SLOT_CREATED = 'Configurable bundle template slot was successfully created.';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGE_SLOT_UPDATED = 'Configurable bundle template slot was successfully updated.';
+
     /**
      * @var string
      */
@@ -111,6 +124,7 @@ class SlotController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+
     /**
      * @var string
      */
@@ -175,7 +189,7 @@ class SlotController extends AbstractController
             ->getTables()['availableProductConcreteTable'];
 
         return $this->jsonResponse(
-            $availableProductConcreteTable->fetchData()
+            $availableProductConcreteTable->fetchData(),
         );
     }
 
@@ -189,7 +203,7 @@ class SlotController extends AbstractController
             ->getTables()['assignedProductConcreteTable'];
 
         return $this->jsonResponse(
-            $assignedProductConcreteTable->fetchData()
+            $assignedProductConcreteTable->fetchData(),
         );
     }
 
@@ -201,7 +215,7 @@ class SlotController extends AbstractController
     protected function executeCreateAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE),
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotCreateFormDataProvider();
@@ -209,7 +223,7 @@ class SlotController extends AbstractController
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateSlotCreateForm(
                 $formDataProvider->getData($idConfigurableBundleTemplate),
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -250,7 +264,7 @@ class SlotController extends AbstractController
     protected function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplateSlot = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotEditFormDataProvider();
@@ -267,7 +281,7 @@ class SlotController extends AbstractController
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateSlotEditForm(
                 $configurableBundleTemplateSlotEditFormTransfer,
-                $formDataProvider->getOptions()
+                $formDataProvider->getOptions(),
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -296,11 +310,11 @@ class SlotController extends AbstractController
 
         $request->query->set(
             static::URL_PARAM_ID_PRODUCT_LIST,
-            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
+            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList(),
         );
 
         $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
-            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()
+            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate(),
         );
 
         $viewData = [
@@ -323,7 +337,7 @@ class SlotController extends AbstractController
     protected function executeDeleteAction(Request $request): RedirectResponse
     {
         $idConfigurableBundleTemplateSlot = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
         );
 
         $configurableBundleTemplateSlotFilterTransfer = $this->createConfigurableBundleTemplateSlotFilter($idConfigurableBundleTemplateSlot);

@@ -26,10 +26,12 @@ class PriceVolumeCollectionDataProvider
      * @var string
      */
     public const OPTION_CURRENCY_CODE = 'currency_code';
+
     /**
      * @var string
      */
     public const OPTION_DIVISOR = 'divisor';
+
     /**
      * @var string
      */
@@ -44,14 +46,17 @@ class PriceVolumeCollectionDataProvider
      * @var int
      */
     protected const EMPTY_ROW_COUNT = 3;
+
     /**
      * @var int
      */
     protected const FRACTION_POW_BASE = 10;
+
     /**
      * @var int
      */
     protected const DEFAULT_FRACTION_DIGITS = 2;
+
     /**
      * @var int
      */
@@ -61,6 +66,7 @@ class PriceVolumeCollectionDataProvider
      * @var string
      */
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
+
     /**
      * @var string
      */
@@ -168,14 +174,14 @@ class PriceVolumeCollectionDataProvider
 
             if (empty($priceProductTransfers)) {
                 throw new PriceProductNotFoundException(
-                    sprintf(static::MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR, $idProductAbstract)
+                    sprintf(static::MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR, $idProductAbstract),
                 );
             }
         }
 
         if (empty($priceProductTransfers)) {
             throw new PriceProductNotFoundException(
-                sprintf(static::MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR, $idProductConcrete)
+                sprintf(static::MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR, $idProductConcrete),
             );
         }
 

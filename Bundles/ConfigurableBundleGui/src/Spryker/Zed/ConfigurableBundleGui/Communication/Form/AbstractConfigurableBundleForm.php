@@ -28,10 +28,12 @@ abstract class AbstractConfigurableBundleForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_TRANSLATIONS = 'translations';
+
     /**
      * @var string
      */
@@ -61,7 +63,7 @@ abstract class AbstractConfigurableBundleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -85,7 +87,7 @@ abstract class AbstractConfigurableBundleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

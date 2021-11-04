@@ -21,7 +21,7 @@ class CompanyBusinessUnitDataImportHelper extends Module
         $this->assertCount(
             0,
             $companyQuery,
-            'Found at least one entry in the database table but database table was expected to be empty.'
+            'Found at least one entry in the database table but database table was expected to be empty.',
         );
     }
 
@@ -34,7 +34,7 @@ class CompanyBusinessUnitDataImportHelper extends Module
         $this->assertGreaterThan(
             0,
             $companyQuery->count(),
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

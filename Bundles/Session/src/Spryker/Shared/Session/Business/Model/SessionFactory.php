@@ -27,10 +27,12 @@ abstract class SessionFactory
      * @var string
      */
     public const BUCKET_NAME_POSTFIX = 'sessions';
+
     /**
      * @var string
      */
     public const PASSWORD = 'password';
+
     /**
      * @var string
      */
@@ -133,7 +135,7 @@ abstract class SessionFactory
             $redisClient,
             $this->createRedisSpinLockLocker($redisClient),
             $this->createRedisSessionKeyGenerator(),
-            $this->getSessionLifetime()
+            $this->getSessionLifetime(),
         );
     }
 
@@ -164,7 +166,7 @@ abstract class SessionFactory
             $this->createRedisLockKeyGenerator(),
             Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_TIMEOUT_MILLISECONDS, 0),
             Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_RETRY_DELAY_MICROSECONDS, 0),
-            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS, 0)
+            Config::get(SessionConstants::SESSION_HANDLER_REDIS_LOCKING_LOCK_TTL_MILLISECONDS, 0),
         );
     }
 
@@ -176,7 +178,7 @@ abstract class SessionFactory
     public function createRedisLockKeyGenerator()
     {
         return new RedisLockKeyGenerator(
-            $this->createRedisSessionKeyGenerator()
+            $this->createRedisSessionKeyGenerator(),
         );
     }
 
@@ -240,7 +242,7 @@ abstract class SessionFactory
             [$handler, 'read'],
             [$handler, 'write'],
             [$handler, 'destroy'],
-            [$handler, 'gc']
+            [$handler, 'gc'],
         );
     }
 

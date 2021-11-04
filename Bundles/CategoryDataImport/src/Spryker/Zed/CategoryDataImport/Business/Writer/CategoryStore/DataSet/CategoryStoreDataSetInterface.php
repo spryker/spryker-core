@@ -13,10 +13,12 @@ interface CategoryStoreDataSetInterface
      * @var string
      */
     public const COLUMN_CATEGORY_KEY = 'category_key';
+
     /**
      * @var string
      */
     public const COLUMN_INCLUDED_STORE_NAME = 'included_store_names';
+
     /**
      * @var string
      */
@@ -26,10 +28,12 @@ interface CategoryStoreDataSetInterface
      * @var string
      */
     public const ID_CATEGORY = 'id_category';
+
     /**
      * @var string
      */
     public const INCLUDED_STORE_IDS = 'included_store_ids';
+
     /**
      * @var string
      */

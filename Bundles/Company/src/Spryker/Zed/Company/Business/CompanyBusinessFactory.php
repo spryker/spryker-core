@@ -37,7 +37,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createPluginExecutor(),
-            $this->createStoreRelationWriter()
+            $this->createStoreRelationWriter(),
         );
     }
 
@@ -64,7 +64,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyStoreRelationWriter(
             $this->getEntityManager(),
-            $this->createCompanyStoreRelationReader()
+            $this->createCompanyStoreRelationReader(),
         );
     }
 
@@ -84,7 +84,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
         return new CompanyPluginExecutor(
             $this->getCompanyPreSavePlugins(),
             $this->getCompanyPostSavePlugins(),
-            $this->getCompanyPostCreatePlugins()
+            $this->getCompanyPostCreatePlugins(),
         );
     }
 

@@ -38,7 +38,7 @@ class ConfigurableBundleTemplateSlotEditForm extends AbstractConfigurableBundleT
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -73,50 +73,50 @@ class ConfigurableBundleTemplateSlotEditForm extends AbstractConfigurableBundleT
         $builder->get(static::FIELD_NAME)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
-                static::FIELD_NAME
-            )
+                static::FIELD_NAME,
+            ),
         );
 
         $builder->get(static::FIELD_TRANSLATIONS)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
-                static::FIELD_TRANSLATIONS
-            )
+                static::FIELD_TRANSLATIONS,
+            ),
         );
 
         $builder->get(ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::PRODUCT_LIST_AGGREGATE_FORM,
-                ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION
-            )
+                ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION,
+            ),
         );
 
         $builder->get(ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::PRODUCT_LIST_AGGREGATE_FORM,
-                ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION
-            )
+                ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION,
+            ),
         );
 
         $builder->get(ProductListAggregateFormTransfer::ASSIGNED_PRODUCT_IDS)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::PRODUCT_LIST_AGGREGATE_FORM,
-                ProductListAggregateFormTransfer::ASSIGNED_PRODUCT_IDS
-            )
+                ProductListAggregateFormTransfer::ASSIGNED_PRODUCT_IDS,
+            ),
         );
 
         $builder->get(ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_ASSIGNED)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::PRODUCT_LIST_AGGREGATE_FORM,
-                ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_ASSIGNED
-            )
+                ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_ASSIGNED,
+            ),
         );
 
         $builder->get(ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_DE_ASSIGNED)->setPropertyPath(
             $this->getFieldPropertyPath(
                 ConfigurableBundleTemplateSlotEditFormTransfer::PRODUCT_LIST_AGGREGATE_FORM,
-                ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_DE_ASSIGNED
-            )
+                ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_DE_ASSIGNED,
+            ),
         );
     }
 

@@ -19,10 +19,12 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PRODUCT_CLIENT = 'PRODUCT_CLIENT';
+
     /**
      * @var string
      */
     public const AVAILABILITY_CLIENT = 'AVAILABILITY_CLIENT';
+
     /**
      * @var string
      */
@@ -83,7 +85,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         throw new BadMethodCallException(sprintf(
             'Product mapper plugin is not provided. You must create mapper plugin implementing "%s" interface and provide it with "%s" method.',
             StorageProductMapperPluginInterface::class,
-            'DiscountPromotionDependencyProvider::getProductMapperPlugin'
+            'DiscountPromotionDependencyProvider::getProductMapperPlugin',
         ));
     }
 }

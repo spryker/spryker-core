@@ -25,7 +25,7 @@ class ConcreteProductImageSetsMapper implements ConcreteProductImageSetsMapperIn
         foreach ($productImageSetStorageTransfers as $productImageSetStorageTransfer) {
             $restProductImageSet = (new RestProductImageSetTransfer())->fromArray(
                 $productImageSetStorageTransfer->toArray(),
-                true
+                true,
             );
             $restProductImageSetsAttributesTransfer->addImageSets($restProductImageSet);
         }

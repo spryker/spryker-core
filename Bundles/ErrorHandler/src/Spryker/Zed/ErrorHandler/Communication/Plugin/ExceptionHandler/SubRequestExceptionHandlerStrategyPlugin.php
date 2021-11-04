@@ -71,7 +71,7 @@ class SubRequestExceptionHandlerStrategyPlugin extends AbstractPlugin implements
             [
                 'exception' => $exception,
             ],
-            $cookies
+            $cookies,
         );
 
         if ($request->hasSession()) {

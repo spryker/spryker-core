@@ -39,7 +39,7 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $itemPriceDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(1000),
-            $this->createClauseTransfer(10)
+            $this->createClauseTransfer(10),
         );
 
         $this->assertTrue($isSatisfied);

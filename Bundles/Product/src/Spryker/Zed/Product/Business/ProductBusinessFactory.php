@@ -68,7 +68,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductManager(
             $this->createProductAbstractManager(),
             $this->createProductConcreteManager(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -86,7 +86,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createAttributeEncoder(),
             $this->createProductTransferMapper(),
             $this->createProductAbstractStoreRelationReader(),
-            $this->createProductAbstractStoreRelationWriter()
+            $this->createProductAbstractStoreRelationWriter(),
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
@@ -113,7 +113,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductConcreteAssertion(),
             $this->createAttributeEncoder(),
             $this->createProductTransferMapper(),
-            $this->getRepository()
+            $this->getRepository(),
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -138,7 +138,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductUrlManager(),
             $this->createProductConcreteTouch(),
             $this->getQueryContainer(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -152,7 +152,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getLocaleFacade(),
             $this->getQueryContainer(),
-            $this->createProductUrlGenerator()
+            $this->createProductUrlGenerator(),
         );
     }
 
@@ -164,7 +164,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductUrlGenerator(
             $this->createProductAbstractNameGenerator(),
             $this->getLocaleFacade(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 
@@ -175,7 +175,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new VariantGenerator(
             $this->getUrlFacade(),
-            $this->createSkuGenerator()
+            $this->createSkuGenerator(),
         );
     }
 
@@ -259,7 +259,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new AttributeLoader(
             $this->getQueryContainer(),
             $this->createAttributeMerger(),
-            $this->createAttributeEncoder()
+            $this->createAttributeEncoder(),
         );
     }
 
@@ -271,7 +271,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractTouch(
             $this->getTouchFacade(),
             $this->getQueryContainer(),
-            $this->createProductAbstractStatusChecker()
+            $this->createProductAbstractStatusChecker(),
         );
     }
 
@@ -283,7 +283,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteTouch(
             $this->getTouchFacade(),
             $this->getQueryContainer(),
-            $this->createProductAbstractStatusChecker()
+            $this->createProductAbstractStatusChecker(),
         );
     }
 
@@ -318,7 +318,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractStoreRelationWriter(
             $this->getQueryContainer(),
-            $this->createProductAbstractStoreRelationReader()
+            $this->createProductAbstractStoreRelationReader(),
         );
     }
 
@@ -368,7 +368,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductAbstractAssertion()
     {
         return new ProductAbstractAssertion(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -378,7 +378,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductConcreteAssertion()
     {
         return new ProductConcreteAssertion(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -490,7 +490,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductAbstractBeforeCreateObserverPluginManager()
     {
         return new ProductAbstractBeforeCreateObserverPluginManager(
-            $this->getProductAbstractBeforeCreatePlugins()
+            $this->getProductAbstractBeforeCreatePlugins(),
         );
     }
 
@@ -501,7 +501,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractAfterCreateObserverPluginManager(
             $this->getProductAbstractAfterCreatePlugins(),
-            $this->getProductAbstractPostCreatePlugins()
+            $this->getProductAbstractPostCreatePlugins(),
         );
     }
 
@@ -536,7 +536,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractReadObserverPluginManager(
             $this->getProductAbstractReadPlugins(),
-            $this->getProductAbstractExpanderPlugins()
+            $this->getProductAbstractExpanderPlugins(),
         );
     }
 
@@ -596,7 +596,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductSuggester(
             $this->getConfig(),
             $this->getRepository(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -608,7 +608,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteWriter(
             $this->createProductConcreteManager(),
             $this->getEntityManager(),
-            $this->createProductConcreteAssertion()
+            $this->createProductConcreteAssertion(),
         );
     }
 }

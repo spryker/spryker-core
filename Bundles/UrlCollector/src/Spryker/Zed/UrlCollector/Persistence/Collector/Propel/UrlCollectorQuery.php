@@ -31,13 +31,13 @@ class UrlCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
             SpyUrlTableMap::COL_ID_URL,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->addJoin(
             SpyUrlTableMap::COL_FK_LOCALE,
             SpyLocaleTableMap::COL_ID_LOCALE,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->withColumn(SpyUrlTableMap::COL_URL, UrlTransfer::URL);

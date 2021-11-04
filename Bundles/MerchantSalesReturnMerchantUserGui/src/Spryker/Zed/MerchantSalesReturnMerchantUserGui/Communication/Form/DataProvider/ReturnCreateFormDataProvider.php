@@ -20,6 +20,7 @@ class ReturnCreateFormDataProvider
      * @var string
      */
     protected const CUSTOM_REASON = 'Custom reason';
+
     /**
      * @var string
      */
@@ -27,12 +28,14 @@ class ReturnCreateFormDataProvider
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     *
      * @var string
      */
     protected const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     *
      * @var string
      */
     protected const OPTION_RETURN_REASONS = 'option_return_reasons';
@@ -60,11 +63,9 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getData(OrderTransfer $orderTransfer): array
     {
@@ -76,9 +77,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<int|string, mixed>
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -88,11 +87,9 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<int, array<string, \Generated\Shared\Transfer\ItemTransfer>>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array
+     * @return array<int, array<string, \Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function mapReturnItemTransfers(OrderTransfer $orderTransfer): array
     {
@@ -106,9 +103,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @phpstan-return array<int|string, mixed>
-     *
-     * @return array<string>
+     * @return array<string, mixed>
      */
     protected function prepareReturnReasonChoices(): array
     {
@@ -159,7 +154,7 @@ class ReturnCreateFormDataProvider
 
             $translatedMessage = $this->glossaryFacade->translate(
                 $returnPolicyMessage->getValueOrFail(),
-                $returnPolicyMessage->getParameters()
+                $returnPolicyMessage->getParameters(),
             );
 
             $returnPolicyMessage->setMessage($translatedMessage);

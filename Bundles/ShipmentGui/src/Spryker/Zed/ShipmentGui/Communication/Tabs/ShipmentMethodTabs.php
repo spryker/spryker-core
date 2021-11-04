@@ -17,10 +17,12 @@ class ShipmentMethodTabs extends AbstractTabs
      * @var string
      */
     protected const TAB_CONFIGURATION_NAME = 'configuration';
+
     /**
      * @var string
      */
     protected const TAB_CONFIGURATION_TITLE = 'Configuration';
+
     /**
      * @var string
      */
@@ -30,10 +32,12 @@ class ShipmentMethodTabs extends AbstractTabs
      * @var string
      */
     protected const TAB_STORE_RELATION_NAME = 'store-relation';
+
     /**
      * @var string
      */
     protected const TAB_STORE_RELATION_TITLE = 'Store Relation';
+
     /**
      * @var string
      */
@@ -43,10 +47,12 @@ class ShipmentMethodTabs extends AbstractTabs
      * @var string
      */
     protected const TAB_PRICE_TAX_NAME = 'price-tax';
+
     /**
      * @var string
      */
     protected const TAB_PRICE_TAX_TITLE = 'Price & Tax';
+
     /**
      * @var string
      */

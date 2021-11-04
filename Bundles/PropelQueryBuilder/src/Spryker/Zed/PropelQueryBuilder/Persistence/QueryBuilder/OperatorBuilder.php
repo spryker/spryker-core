@@ -70,7 +70,7 @@ class OperatorBuilder implements OperatorBuilderInterface
 
         throw new OperatorBuilderException(sprintf(
             'Invalid QueryBuilder operator type: %s',
-            $type
+            $type,
         ));
     }
 
@@ -103,7 +103,7 @@ class OperatorBuilder implements OperatorBuilderInterface
             if (array_key_exists($type, $operatorCollection)) {
                 throw new OperatorBuilderException(sprintf(
                     'Operator "%s" is already defined',
-                    $type
+                    $type,
                 ));
             }
 

@@ -18,6 +18,7 @@ class ProductLabelTwigExtension extends TwigExtension
      * @var string
      */
     public const FUNCTION_PRODUCT_ABSTRACT_LABELS = 'spyProductAbstractLabels';
+
     /**
      * @var string
      */
@@ -65,7 +66,7 @@ class ProductLabelTwigExtension extends TwigExtension
             [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]
+            ],
         );
     }
 
@@ -80,7 +81,7 @@ class ProductLabelTwigExtension extends TwigExtension
             [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
-            ]
+            ],
         );
     }
 

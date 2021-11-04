@@ -134,7 +134,7 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
 
         $priceProductScheduleQuery = $this->addProductIdentifierToUniqueQuery(
             $priceProductScheduleEntity,
-            $priceProductScheduleQuery
+            $priceProductScheduleQuery,
         );
 
         return $priceProductScheduleQuery->count() === 0;
@@ -165,7 +165,7 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
 
         return $this->priceProductScheduleMapper
             ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
-                $priceProductScheduleEntityCollection
+                $priceProductScheduleEntityCollection,
             );
     }
 

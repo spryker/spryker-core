@@ -34,6 +34,7 @@ class DetailController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     *
      * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
@@ -114,7 +115,7 @@ class DetailController extends AbstractController
         $blockData = $this->renderMultipleActions(
             $request,
             $this->getFactory()->getSalesDetailExternalBlocksUrls(),
-            $orderTransfer
+            $orderTransfer,
         );
 
         return [

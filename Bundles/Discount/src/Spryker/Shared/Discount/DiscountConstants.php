@@ -17,6 +17,7 @@ interface DiscountConstants
      * - Represents the "voucher type" from the discount types.
      *
      * @api
+     *
      * @var string
      */
     public const TYPE_VOUCHER = 'voucher';
@@ -26,6 +27,7 @@ interface DiscountConstants
      * - Represents the "cart rule type" from the discount types.
      *
      * @api
+     *
      * @var string
      */
     public const TYPE_CART_RULE = 'cart_rule';
@@ -35,6 +37,7 @@ interface DiscountConstants
      * - Success result type saved in VoucherCreateInfoTransfer.
      *
      * @api
+     *
      * @var string
      */
     public const MESSAGE_TYPE_SUCCESS = 'success';
@@ -44,6 +47,7 @@ interface DiscountConstants
      * - Error result type saved in VoucherCreateInfoTransfer.
      *
      * @api
+     *
      * @var string
      */
     public const MESSAGE_TYPE_ERROR = 'error';
@@ -53,6 +57,7 @@ interface DiscountConstants
      * - Uniquely identifies promotion discount collector strategy type.
      *
      * @api
+     *
      * @var string
      */
     public const DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING = 'query-string';
@@ -63,6 +68,7 @@ interface DiscountConstants
      * - Default type is single amount input.
      *
      * @api
+     *
      * @var string
      */
     public const CALCULATOR_DEFAULT_INPUT_TYPE = 'calculator-default-input-type';
@@ -73,6 +79,7 @@ interface DiscountConstants
      * - Money type renders the input form for each currency.
      *
      * @api
+     *
      * @var string
      */
     public const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';

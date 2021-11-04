@@ -49,7 +49,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
         $merchantRelationshipTransfer = $this->repository->getMerchantRelationshipById(
-            $merchantRelationshipTransfer->getIdMerchantRelationship()
+            $merchantRelationshipTransfer->getIdMerchantRelationship(),
         );
 
         if (!$merchantRelationshipTransfer) {
@@ -71,7 +71,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         $merchantRelationshipTransfer->requireMerchantRelationshipKey();
 
         $merchantRelationshipTransfer = $this->repository->findMerchantRelationshipByKey(
-            $merchantRelationshipTransfer->getMerchantRelationshipKey()
+            $merchantRelationshipTransfer->getMerchantRelationshipKey(),
         );
 
         if (!$merchantRelationshipTransfer) {
@@ -117,7 +117,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
         return $this->repository->getMerchantRelationshipById(
-            $merchantRelationshipTransfer->getIdMerchantRelationship()
+            $merchantRelationshipTransfer->getIdMerchantRelationship(),
         );
     }
 }

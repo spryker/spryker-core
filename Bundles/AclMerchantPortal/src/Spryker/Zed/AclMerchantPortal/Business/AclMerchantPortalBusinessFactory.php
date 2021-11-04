@@ -32,7 +32,7 @@ class AclMerchantPortalBusinessFactory extends AbstractBusinessFactory
             $this->getAclFacade(),
             $this->getAclEntityFacade(),
             $this->createAclMerchantPortalGenerator(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -42,7 +42,7 @@ class AclMerchantPortalBusinessFactory extends AbstractBusinessFactory
     public function createAclMerchantPortalGenerator(): AclMerchantPortalGeneratorInterface
     {
         return new AclMerchantPortalGenerator(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

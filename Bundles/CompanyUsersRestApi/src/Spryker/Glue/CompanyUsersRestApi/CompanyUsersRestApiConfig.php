@@ -15,10 +15,12 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_COMPANY_USERS = 'company-users';
+
     /**
      * @var string
      */
     public const CONTROLLER_RESOURCE_COMPANY_USERS = 'company-users-resource';
+
     /**
      * @var string
      */
@@ -26,12 +28,14 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\CompanyBusinessUnitsRestApi\CompanyBusinessUnitsRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNITS
+     *
      * @var string
      */
     public const RESOURCE_COMPANY_BUSINESS_UNITS = 'company-business-units';
 
     /**
      * @uses \Spryker\Glue\CompanyRolesRestApi\CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES
+     *
      * @var string
      */
     public const RESOURCE_COMPANY_ROLES = 'company-roles';
@@ -40,6 +44,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_REST_USER_IS_NOT_A_COMPANY_USER = '1401';
+
     /**
      * @var string
      */
@@ -49,6 +54,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_SELECTED = '1403';
+
     /**
      * @var string
      */
@@ -58,6 +64,7 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+
     /**
      * @var string
      */
@@ -65,13 +72,13 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
+     *
      * @var string
      */
     public const COLLECTION_IDENTIFIER_CURRENT_USER = 'mine';
 
     /**
-     * @type string[]
-     * @var array
+     * @var array<string>
      */
     protected const COMPANY_USER_RESOURCES = [];
 

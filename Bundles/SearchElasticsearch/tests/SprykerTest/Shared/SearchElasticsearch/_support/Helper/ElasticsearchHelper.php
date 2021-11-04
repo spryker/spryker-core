@@ -35,6 +35,7 @@ class ElasticsearchHelper extends Module
      * @var string
      */
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+
     /**
      * @var string
      */
@@ -247,7 +248,7 @@ class ElasticsearchHelper extends Module
         $snapshot = new Snapshot($this->getClient());
         $settings = array_merge(
             $settings,
-            ['location' => $this->getVirtualRepositoryLocation()]
+            ['location' => $this->getVirtualRepositoryLocation()],
         );
         $snapshot->registerRepository($repositoryName, $type, $settings);
     }
@@ -255,7 +256,7 @@ class ElasticsearchHelper extends Module
     /**
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

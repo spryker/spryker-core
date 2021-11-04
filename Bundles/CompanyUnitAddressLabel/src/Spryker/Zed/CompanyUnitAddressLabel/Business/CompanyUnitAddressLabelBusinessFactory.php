@@ -26,7 +26,7 @@ class CompanyUnitAddressLabelBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUnitAddressHydrator(): CompanyUnitAddressHydratorInterface
     {
         return new CompanyUnitAddressHydrator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -37,7 +37,7 @@ class CompanyUnitAddressLabelBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUnitAddressLabelRelationSaver(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

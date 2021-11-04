@@ -64,7 +64,7 @@ class ContentWriter implements ContentWriterInterface
         $contentTransfer->requireIdContent();
 
         $contentTransfer->setKey(
-            $this->contentKeyProvider->getContentKeyByIdContent($contentTransfer->getIdContent())
+            $this->contentKeyProvider->getContentKeyByIdContent($contentTransfer->getIdContent()),
         );
 
         return $this->contentEntityManager->saveContent($contentTransfer);

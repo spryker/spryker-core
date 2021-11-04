@@ -32,7 +32,7 @@ class ProductSearchConfigExtensionMarker implements ProductSearchConfigExtension
     {
         $this->touchFacade->touchActive(
             ProductSearchConfig::RESOURCE_TYPE_PRODUCT_SEARCH_CONFIG_EXTENSION,
-            ProductSearchConfig::PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID
+            ProductSearchConfig::PRODUCT_SEARCH_CONFIG_EXPANDER_RESOURCE_ID,
         );
     }
 }

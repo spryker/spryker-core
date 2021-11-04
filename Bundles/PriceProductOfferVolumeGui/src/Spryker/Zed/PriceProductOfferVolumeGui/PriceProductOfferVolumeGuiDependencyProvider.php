@@ -21,6 +21,7 @@ class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDepende
      * @var string
      */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+
     /**
      * @var string
      */
@@ -50,7 +51,7 @@ class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new PriceProductOfferVolumeGuiToProductOfferFacadeBridge(
-                $container->getLocator()->productOffer()->facade()
+                $container->getLocator()->productOffer()->facade(),
             );
         });
 
@@ -66,7 +67,7 @@ class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductOfferVolumeGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

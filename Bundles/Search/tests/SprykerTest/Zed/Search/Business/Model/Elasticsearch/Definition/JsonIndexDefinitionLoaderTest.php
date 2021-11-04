@@ -42,7 +42,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/EmptyIndex'],
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
-            'DE'
+            'DE',
         );
 
         // Act
@@ -67,7 +67,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
-            'DE'
+            'DE',
         );
 
         // Act
@@ -87,7 +87,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
-            'DE'
+            'DE',
         );
 
         $expectedSettings = [
@@ -124,7 +124,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/SingleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
-            'DE'
+            'DE',
         );
 
         $expectedMappings = [
@@ -163,7 +163,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
             'DE',
-            $suffix
+            $suffix,
         );
 
         $expectedMappings = [
@@ -198,7 +198,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/MultipleIndex'],
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
-            'DE'
+            'DE',
         );
 
         // Act
@@ -248,7 +248,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/Merge/*/'],
             $this->createJsonIndexDefinitionMerger(),
             ['DE'],
-            'DE'
+            'DE',
         );
 
         // Act
@@ -269,7 +269,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             [__DIR__ . '/Fixtures/Stores/Core/'],
             $this->createJsonIndexDefinitionMerger(),
             ['A', 'B', 'C'],
-            'A'
+            'A',
         );
 
         // Act
@@ -294,7 +294,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
             ],
             $this->createJsonIndexDefinitionMerger(),
             ['A', 'B'],
-            'A'
+            'A',
         );
 
         $expectedDefinition = (new ElasticsearchIndexDefinitionTransfer())
@@ -396,7 +396,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     ): JsonIndexDefinitionFinder {
         return new JsonIndexDefinitionFinder(
             $sourceDirectories,
-            $this->getJsonIndexDefinitionMapper($searchToStoreFacadeBridge)
+            $this->getJsonIndexDefinitionMapper($searchToStoreFacadeBridge),
         );
     }
 
@@ -409,7 +409,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
     {
         return new JsonIndexDefinitionMapper(
             $this->getUtilEncodingMock(),
-            $searchToStoreFacadeBridge
+            $searchToStoreFacadeBridge,
         );
     }
 

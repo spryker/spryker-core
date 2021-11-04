@@ -66,7 +66,7 @@ class MergeGuestQuoteAndCustomerQuoteTest extends Unit
         $this->assertNotEmpty($findQuoteResponseTransfer->getQuoteTransfer()->getItems());
         $this->assertNotEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
-            $createGuestQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
+            $createGuestQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
         );
         $this->assertEmpty($findQuoteResponseTransfer->getErrors());
         $this->assertEmpty($guestQuoteCollectionTransfer->getQuotes());

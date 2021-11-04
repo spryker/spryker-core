@@ -38,12 +38,12 @@ class DataExportConfigurationResolver implements DataExportConfigurationResolver
     ): DataExportConfigurationTransfer {
         $dataExportActionConfigurationTransfer = $this->dataExportConfigurationMerger->mergeDataExportConfigurationTransfers(
             $dataExportActionConfigurationTransfer,
-            $additionalDataExportConfigurationsTransfer->getDefaults()
+            $additionalDataExportConfigurationsTransfer->getDefaults(),
         );
 
         $additionalDataExportActionConfigurationTransfer = $this->findDataExportActionConfigurationByDataEntity(
             $dataExportActionConfigurationTransfer->getDataEntityOrFail(),
-            $additionalDataExportConfigurationsTransfer
+            $additionalDataExportConfigurationsTransfer,
         );
 
         if (!$additionalDataExportActionConfigurationTransfer) {
@@ -52,7 +52,7 @@ class DataExportConfigurationResolver implements DataExportConfigurationResolver
 
         return $this->dataExportConfigurationMerger->mergeDataExportConfigurationTransfers(
             $dataExportActionConfigurationTransfer,
-            $additionalDataExportActionConfigurationTransfer
+            $additionalDataExportActionConfigurationTransfer,
         );
     }
 

@@ -28,6 +28,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
+
     /**
      * @var string
      */
@@ -37,10 +38,12 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
@@ -50,14 +53,17 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY_CLOSURE_TABLE = 'PROPEL_QUERY_CATEGORY_CLOSURE_TABLE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES';
+
     /**
      * @var string
      */
@@ -227,7 +233,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToProductCategoryQueryContainerBridge(
-                $container->getLocator()->productCategory()->queryContainer()
+                $container->getLocator()->productCategory()->queryContainer(),
             );
         });
 
@@ -243,7 +249,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToCategoryQueryContainerBridge(
-                $container->getLocator()->category()->queryContainer()
+                $container->getLocator()->category()->queryContainer(),
             );
         });
 

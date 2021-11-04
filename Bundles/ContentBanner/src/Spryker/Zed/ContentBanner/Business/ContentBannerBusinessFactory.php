@@ -27,7 +27,7 @@ class ContentBannerBusinessFactory extends AbstractBusinessFactory
     {
         return new ContentBannerValidator(
             $this->getValidatorAdapter(),
-            $this->createContentBannerConstraintsProvider()
+            $this->createContentBannerConstraintsProvider(),
         );
     }
 

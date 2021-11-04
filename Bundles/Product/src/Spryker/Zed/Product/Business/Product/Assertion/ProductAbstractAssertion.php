@@ -43,7 +43,7 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
         if ($productExists) {
             throw new ProductAbstractExistsException(sprintf(
                 'Product abstract with sku %s already exists',
-                $sku
+                $sku,
             ));
         }
     }
@@ -66,7 +66,7 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
         if (!$isUnique) {
             throw new ProductAbstractExistsException(sprintf(
                 'Product abstract with sku %s already exists',
-                $sku
+                $sku,
             ));
         }
     }
@@ -88,7 +88,7 @@ class ProductAbstractAssertion implements ProductAbstractAssertionInterface
         if (!$productExists) {
             throw new MissingProductException(sprintf(
                 'Product abstract with id "%s" does not exist.',
-                $idProductAbstract
+                $idProductAbstract,
             ));
         }
     }

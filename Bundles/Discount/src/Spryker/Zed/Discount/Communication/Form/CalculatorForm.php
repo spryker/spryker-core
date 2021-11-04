@@ -40,14 +40,17 @@ class CalculatorForm extends AbstractType
      * @var string
      */
     public const FIELD_AMOUNT = 'amount';
+
     /**
      * @var string
      */
     public const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
+
     /**
      * @var string
      */
     public const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
+
     /**
      * @var string
      */
@@ -77,7 +80,7 @@ class CalculatorForm extends AbstractType
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
                 $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
-            }
+            },
         );
     }
 
@@ -155,7 +158,7 @@ class CalculatorForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface|\Symfony\Component\Form\FormInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -176,7 +179,7 @@ class CalculatorForm extends AbstractType
         $builder->add(
             static::FIELD_AMOUNT,
             TextType::class,
-            array_merge($defaultOptions, $options)
+            array_merge($defaultOptions, $options),
         );
 
         return $this;
@@ -194,7 +197,7 @@ class CalculatorForm extends AbstractType
             MoneyCollectionType::class,
             [
                 MoneyCollectionType::OPTION_AMOUNT_PER_STORE => false,
-            ]
+            ],
         );
 
         return $this;
@@ -270,7 +273,7 @@ class CalculatorForm extends AbstractType
                     '/discount/query-string/rule-fields',
                     [
                         'type' => MetaProviderFactory::TYPE_COLLECTOR,
-                    ]
+                    ],
                 )->build(),
             ],
         ]);
@@ -291,7 +294,7 @@ class CalculatorForm extends AbstractType
         if (!isset($calculatorPlugins[$pluginName])) {
             throw new CalculatorException(sprintf(
                 'Calculator plugin with name "%s" not found. Have you added it to DiscountDependencyProvider::getAvailableCalculatorPlugins() plugin stack?',
-                $pluginName
+                $pluginName,
             ));
         }
 

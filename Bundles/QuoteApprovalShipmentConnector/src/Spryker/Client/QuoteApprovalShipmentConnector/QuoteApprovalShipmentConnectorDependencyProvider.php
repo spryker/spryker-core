@@ -40,7 +40,7 @@ class QuoteApprovalShipmentConnectorDependencyProvider extends AbstractDependenc
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new QuoteApprovalShipmentConnectorToShipmentServiceBridge(
-                $container->getLocator()->shipment()->service()
+                $container->getLocator()->shipment()->service(),
             );
         });
 

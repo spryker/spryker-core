@@ -16,6 +16,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
      * @var string
      */
     public const KEY = 'ApproveQuotePermissionPlugin';
+
     /**
      * @var string
      */

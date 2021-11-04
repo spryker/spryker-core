@@ -28,7 +28,7 @@ class CmsStorageBusinessFactory extends AbstractBusinessFactory
             $this->getCmsFacade(),
             $this->getContentWidgetDataExpanderPlugins(),
             $this->getStoreFacade(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

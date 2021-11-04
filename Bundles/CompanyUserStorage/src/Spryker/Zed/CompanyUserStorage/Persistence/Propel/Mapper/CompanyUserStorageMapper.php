@@ -31,7 +31,7 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $companyUserStorageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $companyUserStorageEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
@@ -42,7 +42,7 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
         foreach ($companyUserStorageEntityCollection as $companyUserStorageEntity) {
             $synchronizationDataTransfers[] = $this->mapCompanyUserStorageEntityToSynchronizationDataTransfer(
                 $companyUserStorageEntity,
-                new SynchronizationDataTransfer()
+                new SynchronizationDataTransfer(),
             );
         }
 

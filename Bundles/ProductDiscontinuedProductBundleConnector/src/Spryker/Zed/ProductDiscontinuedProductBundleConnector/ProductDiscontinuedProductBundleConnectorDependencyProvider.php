@@ -22,10 +22,12 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      * @var string
      */
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+
     /**
      * @var string
      */
@@ -67,7 +69,7 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
     {
         $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge(
-                $container->getLocator()->productDiscontinued()->facade()
+                $container->getLocator()->productDiscontinued()->facade(),
             );
         });
 
@@ -83,7 +85,7 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
     {
         $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return new ProductDiscontinuedProductBundleConnectorToProductBundleFacadeBridge(
-                $container->getLocator()->productBundle()->facade()
+                $container->getLocator()->productBundle()->facade(),
             );
         });
 

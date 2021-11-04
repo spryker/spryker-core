@@ -123,8 +123,8 @@ class EventQueueProducer implements EventQueueProducerInterface
         $queueSendMessageTransfer->setQueuePoolName($queuePoolName);
         $queueSendMessageTransfer->setBody(
             $this->utilEncodingService->encodeJson(
-                $this->mapQueueMessageBody($transfer, $listener, $eventName)
-            )
+                $this->mapQueueMessageBody($transfer, $listener, $eventName),
+            ),
         );
 
         return $queueSendMessageTransfer;

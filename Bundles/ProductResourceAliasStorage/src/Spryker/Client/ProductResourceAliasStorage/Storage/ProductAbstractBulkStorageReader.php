@@ -40,7 +40,7 @@ class ProductAbstractBulkStorageReader implements ProductAbstractBulkStorageRead
         return $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $identifiers,
-            $localeName
+            $localeName,
         );
     }
 }

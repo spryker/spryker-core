@@ -45,11 +45,11 @@ class CategoryNodePageSearchByCategoryAttributeEventsWriter implements CategoryN
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCategoryAttributeTableMap::COL_FK_CATEGORY
+            SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
         );
 
         $this->categoryNodePageSearchWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 }

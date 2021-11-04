@@ -51,20 +51,20 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
         $shoppingListResponseTransfer = $this->shoppingListFacade->findShoppingListByUuid(
             $this->shoppingListItemMapper->mapShoppingListItemRequestTransferToShoppingListTransfer(
                 $shoppingListItemRequestTransfer,
-                new ShoppingListTransfer()
-            )
+                new ShoppingListTransfer(),
+            ),
         );
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemMapper->mapShoppingListResponseErrorsToShoppingListItemResponseErrors(
                 $shoppingListResponseTransfer,
-                new ShoppingListItemResponseTransfer()
+                new ShoppingListItemResponseTransfer(),
             );
         }
 
         $shoppingListItemTransfer = $this->findShoppingListItemTransfer(
             $shoppingListResponseTransfer->getShoppingList()->getItems(),
-            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid()
+            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid(),
         );
 
         if (!$shoppingListItemTransfer) {
@@ -76,7 +76,7 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
             ->setShoppingListItem(
                 $shoppingListItemTransfer
                     ->setIdCompanyUser($shoppingListResponseTransfer->getShoppingList()->getIdCompanyUser())
-                    ->setFkShoppingList($shoppingListResponseTransfer->getShoppingList()->getIdShoppingList())
+                    ->setFkShoppingList($shoppingListResponseTransfer->getShoppingList()->getIdShoppingList()),
             );
     }
 

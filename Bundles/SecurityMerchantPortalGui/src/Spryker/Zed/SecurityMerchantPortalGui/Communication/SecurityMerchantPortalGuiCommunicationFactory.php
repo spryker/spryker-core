@@ -76,7 +76,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     {
         return new MerchantUser(
             $merchantUserTransfer,
-            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER]
+            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],
         );
     }
 

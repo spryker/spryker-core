@@ -25,26 +25,32 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      * @var string
      */
     public const KEY = 'product_attribute_key';
+
     /**
      * @var string
      */
     public const IS_SUPER = 'is_super';
+
     /**
      * @var string
      */
     public const ATTRIBUTE_ID = 'attribute_id';
+
     /**
      * @var string
      */
     public const ALLOW_INPUT = 'allow_input';
+
     /**
      * @var string
      */
     public const INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
     public const ID_PRODUCT_ATTRIBUTE_KEY = 'id_product_attribute_key';
+
     /**
      * @var string
      */
@@ -371,13 +377,13 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
                 $criterionValue = $criteria->getNewCriterion(
                     SpyProductManagementAttributeValueTableMap::COL_VALUE,
                     '%' . mb_strtolower($value) . '%',
-                    Criteria::LIKE
+                    Criteria::LIKE,
                 );
 
                 $criterionTranslation = $criteria->getNewCriterion(
                     SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION,
                     '%' . mb_strtolower($value) . '%',
-                    Criteria::LIKE
+                    Criteria::LIKE,
                 );
 
                 $criterionValue->addOr($criterionTranslation);
@@ -388,7 +394,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
         $productAttributeKeyCriterion = $this->createAttributeKeysInCriterion(
             $attributes,
             $criteria,
-            $defaultCriterion
+            $defaultCriterion,
         );
 
         $criteria->addAnd($productAttributeKeyCriterion);
@@ -429,7 +435,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
         $productAttributeKeyCriterion = $criteria->getNewCriterion(
             SpyProductAttributeKeyTableMap::COL_KEY,
             $keys,
-            Criteria::IN
+            Criteria::IN,
         );
         $productAttributeKeyCriterion->addAnd($defaultCriterion);
 

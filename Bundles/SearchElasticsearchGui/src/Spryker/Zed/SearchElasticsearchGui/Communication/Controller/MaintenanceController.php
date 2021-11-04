@@ -21,6 +21,7 @@ class MaintenanceController extends AbstractController
      * @var string
      */
     public const URL_PARAM_INDEX = 'index';
+
     /**
      * @var string
      */
@@ -44,7 +45,7 @@ class MaintenanceController extends AbstractController
         $indexTable = $this->getFactory()->createIndexTable();
 
         return $this->jsonResponse(
-            $indexTable->fetchData()
+            $indexTable->fetchData(),
         );
     }
 
@@ -66,7 +67,7 @@ class MaintenanceController extends AbstractController
         $documentTable = $this->getFactory()->createDocumentTable();
 
         return $this->jsonResponse(
-            $documentTable->fetchData()
+            $documentTable->fetchData(),
         );
     }
 

@@ -59,7 +59,7 @@ class SalesReturnRepository extends AbstractRepository implements SalesReturnRep
 
         $returnReasonQuery = $this->buildQueryFromCriteria(
             $returnReasonQuery,
-            $returnReasonFilterTransfer->getFilter()
+            $returnReasonFilterTransfer->getFilter(),
         );
 
         $returnReasonQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);

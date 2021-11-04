@@ -36,7 +36,7 @@ class ReturnCreateBundleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -49,7 +49,7 @@ class ReturnCreateBundleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -64,7 +64,7 @@ class ReturnCreateBundleForm extends AbstractType
                     ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS => $options[ProductBundleReturnCreateFormDataProvider::OPTION_RETURN_REASONS],
                 ],
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

@@ -20,10 +20,12 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      * @var string
      */
     protected const OPTION_NAME = 'name';
+
     /**
      * @var string
      */
     protected const OPTION_KEY = 'key';
+
     /**
      * @var string
      */
@@ -73,7 +75,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $localeName
      * @param string $storeName
      *
@@ -133,7 +135,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
                 $blockKey,
                 CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 
@@ -163,7 +165,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
                 $blockNameKey,
                 CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
                 $localeName,
-                $storeName
+                $storeName,
             );
         }
 
@@ -180,7 +182,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<string>
      */
@@ -238,7 +240,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\CmsBlockRequestTransfer
      */

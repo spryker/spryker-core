@@ -21,6 +21,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */
@@ -30,10 +31,12 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+
     /**
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */

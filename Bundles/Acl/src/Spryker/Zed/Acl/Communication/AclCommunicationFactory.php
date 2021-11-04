@@ -47,7 +47,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     {
         return new GroupTable(
             $this->getQueryContainer()->queryGroup(),
-            $this->getProvidedDependency(AclDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getProvidedDependency(AclDependencyProvider::SERVICE_DATE_FORMATTER),
         );
     }
 
@@ -82,7 +82,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -97,7 +97,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     public function createGroupFormDataProvider()
     {
         return new AclGroupFormDataProvider(
-            $this->getProvidedDependency(AclDependencyProvider::QUERY_CONTAINER_ACL)
+            $this->getProvidedDependency(AclDependencyProvider::QUERY_CONTAINER_ACL),
         );
     }
 
@@ -108,13 +108,13 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     {
         return new RoleTable(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(AclDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getProvidedDependency(AclDependencyProvider::SERVICE_DATE_FORMATTER),
         );
     }
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -136,7 +136,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

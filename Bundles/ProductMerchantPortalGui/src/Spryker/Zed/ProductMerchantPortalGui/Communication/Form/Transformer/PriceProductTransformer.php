@@ -93,8 +93,6 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
      *
      * @return mixed
@@ -104,7 +102,7 @@ class PriceProductTransformer implements DataTransformerInterface
         $priceProductTableViewCollection = $this->priceProductTableDataMapper
             ->mapPriceProductTransfersToPriceProductTableViewCollectionTransfer(
                 $value->getArrayCopy(),
-                new PriceProductTableViewCollectionTransfer()
+                new PriceProductTableViewCollectionTransfer(),
             )->toArrayRecursiveCamelCased();
         $prices = $priceProductTableViewCollection[PriceProductTableViewCollectionTransfer::PRICE_PRODUCT_TABLE_VIEWS];
 
@@ -140,14 +138,14 @@ class PriceProductTransformer implements DataTransformerInterface
                 ->setOnlyConcretePrices(true)
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())
-                        ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                        ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
                 );
 
             return $this->priceProductFacade
                 ->findProductConcretePricesWithoutPriceExtraction(
                     $this->idProductConcrete,
                     $this->idProductAbstract,
-                    $priceProductCriteriaTransfer
+                    $priceProductCriteriaTransfer,
                 );
         }
 

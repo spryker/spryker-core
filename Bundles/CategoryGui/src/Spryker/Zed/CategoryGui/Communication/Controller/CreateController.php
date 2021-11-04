@@ -22,10 +22,12 @@ class CreateController extends CategoryAbstractController
      * @var string
      */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
+
     /**
      * @var string
      */
@@ -38,6 +40,7 @@ class CreateController extends CategoryAbstractController
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
@@ -83,7 +86,7 @@ class CreateController extends CategoryAbstractController
         $this->addSuccessMessages($categoryResponseTransfer->getMessages());
 
         return $this->redirectResponse(
-            $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategoryOrFail()->getIdCategoryOrFail())
+            $this->createSuccessRedirectUrl($categoryResponseTransfer->getCategoryOrFail()->getIdCategoryOrFail()),
         );
     }
 
@@ -99,7 +102,7 @@ class CreateController extends CategoryAbstractController
         }
 
         return $this->getFactory()->createCategoryCreateForm(
-            $this->readParentNodeId($request)
+            $this->readParentNodeId($request),
         );
     }
 
@@ -130,7 +133,7 @@ class CreateController extends CategoryAbstractController
             static::ROUTE_CATEGORY_EDIT,
             [
                 static::REQUEST_PARAM_ID_CATEGORY => $idCategory,
-            ]
+            ],
         );
 
         return $url->build();

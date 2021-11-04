@@ -29,7 +29,7 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
             ->createPropelPermissionMapper()
             ->mapPermissionEntityCollectionToTransferCollection(
                 $permissionEntityCollection,
-                new PermissionCollectionTransfer()
+                new PermissionCollectionTransfer(),
             );
     }
 

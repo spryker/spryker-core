@@ -19,6 +19,7 @@ class FileTable extends AbstractTable
 {
     protected const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
     protected const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
+
     /**
      * @var string
      */
@@ -28,10 +29,12 @@ class FileTable extends AbstractTable
      * @var string
      */
     protected const URL_FILE_MANAGER_GUI_VIEW = '/file-manager-gui/view-file';
+
     /**
      * @var string
      */
     protected const URL_FILE_MANAGER_GUI_EDIT = '/file-manager-gui/edit-file';
+
     /**
      * @var string
      */
@@ -41,10 +44,12 @@ class FileTable extends AbstractTable
      * @var string
      */
     protected const VIEW_TITLE = 'View';
+
     /**
      * @var string
      */
     protected const EDIT_TITLE = 'Edit';
+
     /**
      * @var string
      */
@@ -197,7 +202,7 @@ class FileTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return array<string>
      */
     protected function buildLinks(array $item)
     {
@@ -207,13 +212,13 @@ class FileTable extends AbstractTable
             Url::generate(static::URL_FILE_MANAGER_GUI_VIEW, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
-            static::VIEW_TITLE
+            static::VIEW_TITLE,
         );
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_FILE_MANAGER_GUI_EDIT, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
-            static::EDIT_TITLE
+            static::EDIT_TITLE,
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::URL_FILE_MANAGER_GUI_DELETE, [
@@ -221,7 +226,7 @@ class FileTable extends AbstractTable
             ]),
             static::DELETE_TITLE,
             [],
-            DeleteFileForm::class
+            DeleteFileForm::class,
         );
 
         return $buttons;

@@ -40,7 +40,7 @@ class ViewPaymentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class ViewPaymentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -64,7 +64,7 @@ class ViewPaymentMethodForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'disabled' => $options[ViewPaymentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
-            ]
+            ],
         );
 
         return $this;

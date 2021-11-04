@@ -46,7 +46,7 @@ class ProductMeasurementSalesUnitStoreWriterStep extends PublishAwareStep implem
 
         if (!$spyProductMeasurementSalesUnitEntity) {
             throw new EntityNotFoundException(
-                sprintf('Product measurement sales unit with key "%s" was not found during import.', $productMeasurementSalesUnitKey)
+                sprintf('Product measurement sales unit with key "%s" was not found during import.', $productMeasurementSalesUnitKey),
             );
         }
 

@@ -15,6 +15,7 @@ class MySqlStorageReader extends AbstractStorageReader
      * @var string
      */
     protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+
     /**
      * @var string
      */
@@ -103,7 +104,7 @@ class MySqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param array<string[][]> $queryDataPerTable
+     * @param array<array<array<string>>> $queryDataPerTable
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */
@@ -136,7 +137,7 @@ class MySqlStorageReader extends AbstractStorageReader
             static::SELECT_STATEMENT_PATTERN,
             $keyPlaceholder,
             $aliasKeyPlaceholder,
-            $tableName
+            $tableName,
         );
     }
 

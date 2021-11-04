@@ -15,14 +15,17 @@ class SharedCartConfig extends AbstractBundleConfig
      * @var string
      */
     public const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */
     public const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
+
     /**
      * @var string
      */
     public const PERMISSION_GROUP_OWNER_ACCESS = 'OWNER_ACCESS';
+
     /**
      * @var string
      */

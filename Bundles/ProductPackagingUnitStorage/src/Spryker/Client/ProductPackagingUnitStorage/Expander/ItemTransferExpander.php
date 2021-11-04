@@ -46,7 +46,7 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
         $this->assertItemTransfer($itemTransfer);
 
         $productPackagingUnitStorageTransfer = $this->productPackagingUnitStorageReader->findProductPackagingUnitById(
-            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()
+            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete(),
         );
 
         if ($productPackagingUnitStorageTransfer === null) {
@@ -55,14 +55,14 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
 
         if ($productPackagingUnitStorageTransfer->getIdLeadProduct() !== $productPackagingUnitStorageTransfer->getIdProduct()) {
             $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-                (int)$productPackagingUnitStorageTransfer->getIdProduct()
+                (int)$productPackagingUnitStorageTransfer->getIdProduct(),
             );
 
             $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
         }
 
         $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productPackagingUnitStorageTransfer->getIdLeadProduct()
+            (int)$productPackagingUnitStorageTransfer->getIdLeadProduct(),
         );
 
         if ($amountProductMeasurementSalesUnitTransfer !== null) {
@@ -70,7 +70,7 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
         }
 
         $itemTransfer->setAmount(
-            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
+            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity()),
         );
 
         return $itemTransfer;

@@ -28,7 +28,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */
@@ -42,7 +42,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -57,7 +57,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int
      */
@@ -71,7 +71,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|null $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return int Exit code
      */
@@ -87,7 +87,7 @@ interface DevelopmentFacadeInterface
      *
      * @param string $module
      * @param string $toModule
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @return void
      */
@@ -102,7 +102,7 @@ interface DevelopmentFacadeInterface
      * @deprecated Use Spryk tool instead.
      *
      * @param string $module
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -191,7 +191,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|bool $moduleToView
-     * @param array $excludedModules
+     * @param array<string> $excludedModules
      * @param bool $showIncomingDependencies
      *
      * @return string
@@ -409,7 +409,7 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

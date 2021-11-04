@@ -25,14 +25,17 @@ class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigB
      * @var int
      */
     public const DEFAULT_ITEMS_PER_PAGE = 12;
+
     /**
-     * @var array
+     * @var array<int>
      */
     public const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+
     /**
      * @var string
      */
     public const PARAMETER_NAME_PAGE = 'page';
+
     /**
      * @var string
      */

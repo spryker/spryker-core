@@ -77,7 +77,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                 (new PaginationConfigTransfer())
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
-                    ->setDefaultItemsPerPage(10)
+                    ->setDefaultItemsPerPage(10),
             );
 
         $expectedQuery = (new Query())
@@ -101,7 +101,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                 (new PaginationConfigTransfer())
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
-                    ->setDefaultItemsPerPage(10)
+                    ->setDefaultItemsPerPage(10),
             );
 
         $expectedQuery = (new Query())
@@ -128,7 +128,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
                     ->setDefaultItemsPerPage(10)
-                    ->setValidItemsPerPageOptions([10, 20, 30])
+                    ->setValidItemsPerPageOptions([10, 20, 30]),
             );
 
         $expectedQuery = (new Query())
@@ -155,7 +155,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
                     ->setDefaultItemsPerPage(10)
-                    ->setValidItemsPerPageOptions([10, 20, 30])
+                    ->setValidItemsPerPageOptions([10, 20, 30]),
             );
 
         $expectedQuery = (new Query())

@@ -38,7 +38,7 @@ class ShipmentType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -46,7 +46,7 @@ class ShipmentType extends AbstractType
     {
         $this->addStoreField(
             $builder,
-            $options[static::OPTION_SHIPMENT_METHODS_ARRAY]
+            $options[static::OPTION_SHIPMENT_METHODS_ARRAY],
         );
     }
 

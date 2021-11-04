@@ -93,7 +93,7 @@ class QuotePermissionGroupQuoteExpanderPluginTest extends Test
         $this->quoteTransfer = $this->tester->haveSharedQuote(
             $this->ownerCustomerTransfer,
             $this->otherCustomerTransfer->getCompanyUserTransfer(),
-            $this->quotePermissionGroupEntityTransfer
+            $this->quotePermissionGroupEntityTransfer,
         );
     }
 
@@ -112,7 +112,7 @@ class QuotePermissionGroupQuoteExpanderPluginTest extends Test
         $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
         $this->assertSame(
             $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
-            $this->quotePermissionGroupEntityTransfer->getIdQuotePermissionGroup()
+            $this->quotePermissionGroupEntityTransfer->getIdQuotePermissionGroup(),
         );
     }
 

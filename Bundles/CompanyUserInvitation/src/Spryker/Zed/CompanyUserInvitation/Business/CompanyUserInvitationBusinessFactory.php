@@ -33,7 +33,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     public function createInvitationReader()
     {
         return new InvitationReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -43,7 +43,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     public function createInvitationImporter()
     {
         return new InvitationImporter(
-            $this->createInvitationWriter()
+            $this->createInvitationWriter(),
         );
     }
 
@@ -55,7 +55,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
         return new InvitationWriter(
             $this->getEntityManager(),
             $this->createInvitationValidator(),
-            $this->createInvitationHydrator()
+            $this->createInvitationHydrator(),
         );
     }
 
@@ -66,7 +66,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     {
         return new InvitationDeleter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -78,7 +78,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
         return new InvitationValidator(
             $this->getRepository(),
             $this->getCompanyUserFacade(),
-            $this->getCompanyBusinessUnitFacade()
+            $this->getCompanyBusinessUnitFacade(),
         );
     }
 
@@ -91,7 +91,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getCompanyUserFacade(),
             $this->getCompanyBusinessUnitFacade(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 
@@ -103,7 +103,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
         return new InvitationSender(
             $this->createInvitationReader(),
             $this->createInvitationUpdater(),
-            $this->createInvitationMailer()
+            $this->createInvitationMailer(),
         );
     }
 
@@ -114,7 +114,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     {
         return new InvitationUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -125,7 +125,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     {
         return new InvitationMailer(
             $this->getConfig(),
-            $this->getMailFacade()
+            $this->getMailFacade(),
         );
     }
 
@@ -137,7 +137,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
         return new CompanyUserInvitationStatusInstaller(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

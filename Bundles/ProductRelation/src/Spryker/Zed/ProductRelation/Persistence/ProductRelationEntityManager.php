@@ -35,14 +35,14 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
         $productRelationEntity = $productRelationMapper
             ->mapProductRelationTransferToProductRelationEntity(
                 $productRelationTransfer,
-                new SpyProductRelation()
+                new SpyProductRelation(),
             );
 
         $productRelationEntity->save();
 
         return $productRelationMapper->mapProductRelationEntityToProductRelationTransfer(
             $productRelationEntity,
-            $productRelationTransfer
+            $productRelationTransfer,
         );
     }
 
@@ -124,7 +124,7 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
             ->createProductRelationTypeMapper()
             ->mapProductRelationTypeEntityToProductRelationTypeTransfer(
                 $productRelationTypeEntity,
-                $productRelationTypeTransfer
+                $productRelationTypeTransfer,
             );
     }
 
@@ -148,13 +148,13 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
 
         $productRelationEntity = $productRelationMapper->mapProductRelationTransferToProductRelationEntity(
             $productRelationTransfer,
-            $productRelationEntity
+            $productRelationEntity,
         );
         $productRelationEntity->save();
 
         return $productRelationMapper->mapProductRelationEntityToProductRelationTransfer(
             $productRelationEntity,
-            $productRelationTransfer
+            $productRelationTransfer,
         );
     }
 

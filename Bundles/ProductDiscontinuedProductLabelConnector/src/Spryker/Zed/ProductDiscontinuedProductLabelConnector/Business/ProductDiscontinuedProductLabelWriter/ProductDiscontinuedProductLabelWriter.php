@@ -92,7 +92,7 @@ class ProductDiscontinuedProductLabelWriter implements ProductDiscontinuedProduc
     {
         if (!static::$productLabelCache) {
             static::$productLabelCache = $this->productLabelFacade->findLabelByLabelName(
-                $this->config->getProductDiscontinueLabelName()
+                $this->config->getProductDiscontinueLabelName(),
             );
         }
 

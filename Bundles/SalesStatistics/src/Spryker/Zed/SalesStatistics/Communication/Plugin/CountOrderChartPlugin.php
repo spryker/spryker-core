@@ -24,10 +24,12 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
      * @var string
      */
     public const NAME = 'count-orders';
+
     /**
      * @var string
      */
     public const TITLE = 'Count orders';
+
     /**
      * @var int
      */
@@ -78,7 +80,7 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
         return $this->getFactory()
             ->getTwigEnvironment()
             ->createTemplate(
-                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME)
+                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME),
             )
             ->render([]);
     }

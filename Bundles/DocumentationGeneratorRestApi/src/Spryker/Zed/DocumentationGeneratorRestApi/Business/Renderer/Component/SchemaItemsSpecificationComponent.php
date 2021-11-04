@@ -20,22 +20,27 @@ class SchemaItemsSpecificationComponent implements SchemaItemsSpecificationCompo
      * @var string
      */
     protected const KEY_REF = '$ref';
+
     /**
      * @var string
      */
     protected const KEY_ITEMS = 'items';
+
     /**
      * @var string
      */
     protected const KEY_ONEOF = 'oneOf';
+
     /**
      * @var string
      */
     protected const KEY_TYPE = 'type';
+
     /**
      * @var string
      */
     protected const KEY_NULLABLE = 'nullable';
+
     /**
      * @var string
      */

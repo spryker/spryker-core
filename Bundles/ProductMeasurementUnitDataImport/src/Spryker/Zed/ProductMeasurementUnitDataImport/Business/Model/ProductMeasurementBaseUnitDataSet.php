@@ -13,6 +13,7 @@ interface ProductMeasurementBaseUnitDataSet
      * @var string
      */
     public const COLUMN_CODE = 'code';
+
     /**
      * @var string
      */

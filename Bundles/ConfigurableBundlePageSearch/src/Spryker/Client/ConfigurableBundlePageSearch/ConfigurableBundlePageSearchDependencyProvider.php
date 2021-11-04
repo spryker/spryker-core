@@ -22,6 +22,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH_RESULT_FORMATTER';
+
     /**
      * @var string
      */
@@ -51,7 +52,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new ConfigurableBundlePageSearchToSearchClientBridge(
-                $container->getLocator()->search()->client()
+                $container->getLocator()->search()->client(),
             );
         });
 

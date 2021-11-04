@@ -21,6 +21,7 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
      * @var string
      */
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
      * @var string
      */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */

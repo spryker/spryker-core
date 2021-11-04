@@ -26,18 +26,22 @@ class LocalizedProductImageSetFormType extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_IMAGE_SET = 'id_product_image_set';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     public const FIELD_FK_RESOURCE_PRODUCT_SET = 'fk_resource_product_set';
+
     /**
      * @var string
      */
@@ -68,7 +72,7 @@ class LocalizedProductImageSetFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -113,7 +117,7 @@ class LocalizedProductImageSetFormType extends AbstractType
                         'pattern' => '/^[A-Za-z0-9_-]+$/',
                         'match' => true,
                         'message' => 'Please enter name using only letters, numbers, underscore or dash.',
-                    ]
+                    ],
                 ),
             ],
         ]);

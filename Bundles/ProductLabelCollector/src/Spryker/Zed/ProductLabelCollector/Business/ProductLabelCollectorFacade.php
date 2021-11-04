@@ -52,7 +52,7 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 
@@ -87,7 +87,7 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

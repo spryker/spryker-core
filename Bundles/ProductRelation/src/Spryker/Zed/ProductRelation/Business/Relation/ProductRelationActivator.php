@@ -55,8 +55,8 @@ class ProductRelationActivator implements ProductRelationActivatorInterface
             throw new ProductRelationNotFoundException(
                 sprintf(
                     'Product relation with id "%d" not found',
-                    $idProductRelation
-                )
+                    $idProductRelation,
+                ),
             );
         }
 
@@ -93,8 +93,8 @@ class ProductRelationActivator implements ProductRelationActivatorInterface
             throw new ProductRelationNotFoundException(
                 sprintf(
                     'Product relation with id "%d" not found.',
-                    $idProductRelation
-                )
+                    $idProductRelation,
+                ),
             );
         }
 

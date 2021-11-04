@@ -35,6 +35,7 @@ class CustomerGroupDecisionRuleTest extends Unit
      * @var string
      */
     protected const CUSTOMER_GROUP_NAMES_TEST_GROUP_1 = 'customer_group_names_test_group_1';
+
     /**
      * @var string
      */
@@ -48,7 +49,7 @@ class CustomerGroupDecisionRuleTest extends Unit
         $customerGroupDecisionRule = $this->createCustomerGroupDecisionRule();
 
         $this->assertFalse(
-            $customerGroupDecisionRule->isSatisfiedBy($this->createQuoteTransfer(), $this->createItemTransfer(), $this->createClauseTransfer())
+            $customerGroupDecisionRule->isSatisfiedBy($this->createQuoteTransfer(), $this->createItemTransfer(), $this->createClauseTransfer()),
         );
     }
 
@@ -66,7 +67,7 @@ class CustomerGroupDecisionRuleTest extends Unit
         $quoteTransfer->setCustomer($customerTransfer);
 
         $this->assertFalse(
-            $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $this->createItemTransfer(), $this->createClauseTransfer())
+            $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $this->createItemTransfer(), $this->createClauseTransfer()),
         );
     }
 

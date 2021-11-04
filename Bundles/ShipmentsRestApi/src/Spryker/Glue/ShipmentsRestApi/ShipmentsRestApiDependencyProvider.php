@@ -20,6 +20,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+
     /**
      * @var string
      */

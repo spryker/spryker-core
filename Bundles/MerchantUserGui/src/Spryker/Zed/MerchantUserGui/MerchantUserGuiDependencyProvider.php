@@ -22,10 +22,12 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_USER = 'PROPEL_MERCHANT_USER_QUERY';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
@@ -70,7 +72,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new MerchantUserGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -86,7 +88,7 @@ class MerchantUserGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_ROUTER, function (Container $container) {
             return new MerchantUserGuiToRouterFacadeBridge(
-                $container->getLocator()->router()->facade()
+                $container->getLocator()->router()->facade(),
             );
         });
 

@@ -30,7 +30,7 @@ class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
         }
 
         $calculableObjectTransfer->setExpenses(
-            $this->filterShipmentExpenses($calculableObjectTransfer->getExpenses())
+            $this->filterShipmentExpenses($calculableObjectTransfer->getExpenses()),
         );
     }
 

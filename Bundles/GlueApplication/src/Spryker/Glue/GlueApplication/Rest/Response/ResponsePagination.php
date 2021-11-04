@@ -23,6 +23,7 @@ class ResponsePagination implements ResponsePaginationInterface
 
     /**
      * @param string $domainName
+     *
      * @var int
      */
     public const HARD_LIMIT = 500;
@@ -70,7 +71,7 @@ class ResponsePagination implements ResponsePaginationInterface
 
         return array_merge(
             $paginationLinks,
-            $restResponse->getLinks()
+            $restResponse->getLinks(),
         );
     }
 
@@ -117,7 +118,7 @@ class ResponsePagination implements ResponsePaginationInterface
             $inputPageLimit = $restRequest->getPage()->getLimit();
         }
 
-        return $restResponse->getLimit() ? $restResponse->getLimit() : $inputPageLimit;
+        return $restResponse->getLimit() ?: $inputPageLimit;
     }
 
     /**
@@ -196,7 +197,7 @@ class ResponsePagination implements ResponsePaginationInterface
             '%s/%s?%s',
             $this->config->getGlueDomainName(),
             implode('/', $resourceLinks),
-            ($queryString ? $queryString . '&' : '')
+            ($queryString ? $queryString . '&' : ''),
         );
     }
 
@@ -213,7 +214,7 @@ class ResponsePagination implements ResponsePaginationInterface
                 '&%s[%s]=%s',
                 RequestConstantsInterface::QUERY_PAGE,
                 RequestConstantsInterface::QUERY_LIMIT,
-                $pageOffsetsTransfer->getLimit()
+                $pageOffsetsTransfer->getLimit(),
             );
         }
 
@@ -231,7 +232,7 @@ class ResponsePagination implements ResponsePaginationInterface
             '%s[%s]=%s',
             RequestConstantsInterface::QUERY_PAGE,
             RequestConstantsInterface::QUERY_OFFSET,
-            (string)$offset
+            (string)$offset,
         );
     }
 

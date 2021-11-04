@@ -20,14 +20,17 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_INVALID_MERCHANT_PRODUCT = 'merchant_product.message.invalid';
+
     /**
      * @var string
      */
     protected const GLOSSARY_PARAM_MERCHANT_REFERENCE = '%merchant_reference%';
+
     /**
      * @var string
      */
@@ -70,7 +73,7 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
                     ->setParameters([
                         static::GLOSSARY_PARAM_MERCHANT_REFERENCE => $itemTransfer->getMerchantReference(),
                         static::GLOSSARY_PARAM_CONCRETE_SKU => $itemTransfer->getSku(),
-                    ])
+                    ]),
             );
         }
 
@@ -80,10 +83,8 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
     }
 
     /**
-     * @phpstan-param array<string, string> $concreteProductSkuMerchantReferenceMap
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $concreteProductSkuMerchantReferenceMap
+     * @param array<string, string> $concreteProductSkuMerchantReferenceMap
      *
      * @return bool
      */

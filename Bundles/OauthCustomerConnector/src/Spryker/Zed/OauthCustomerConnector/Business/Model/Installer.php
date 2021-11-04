@@ -60,12 +60,12 @@ class Installer implements InstallerInterface
 
         $oauthClientTransfer = new OauthClientTransfer();
         $oauthClientTransfer->setIdentifier(
-            $this->oauthCustomerConnectorConfig->getClientId()
+            $this->oauthCustomerConnectorConfig->getClientId(),
         );
 
         if (!$this->isExistOauthClient($oauthClientTransfer)) {
             $oauthClientTransfer->setSecret(
-                password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT)
+                password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT),
             );
             $oauthClientTransfer->setIsConfidential(true);
             $oauthClientTransfer->setName('Customer client');

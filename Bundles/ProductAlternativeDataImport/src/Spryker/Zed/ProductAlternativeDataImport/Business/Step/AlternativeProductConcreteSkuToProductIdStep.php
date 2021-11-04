@@ -52,8 +52,8 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
                 throw new EntityNotFoundException(
                     sprintf(
                         'Could not find product by sku "%s"',
-                        $productConcreteSku
-                    )
+                        $productConcreteSku,
+                    ),
                 );
             }
 

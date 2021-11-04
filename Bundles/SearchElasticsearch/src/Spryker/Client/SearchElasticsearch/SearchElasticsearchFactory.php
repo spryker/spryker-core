@@ -88,7 +88,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearchClient(): SearchInterface
     {
         return new Search(
-            $this->getElasticaClient()
+            $this->getElasticaClient(),
         );
     }
 
@@ -98,7 +98,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createConnection(): ConnectionInterface
     {
         return new Connection(
-            $this->getElasticaClient()
+            $this->getElasticaClient(),
         );
     }
 
@@ -109,7 +109,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     {
         return new LoggableSearch(
             $this->createSearchClient(),
-            $this->createElasticsearchLogger()
+            $this->createElasticsearchLogger(),
         );
     }
 
@@ -120,7 +120,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     {
         return new ElasticsearchInMemoryLogger(
             $this->getUtilEncodingService(),
-            $this->getConfig()->getClientConfig()
+            $this->getConfig()->getClientConfig(),
         );
     }
 
@@ -131,7 +131,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     {
         return new IndexNameResolver(
             $this->getStoreClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -191,7 +191,7 @@ class SearchElasticsearchFactory extends AbstractFactory
         return new FacetAggregationFactory(
             $this->createSource(),
             $this->createAggregationBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -209,7 +209,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function getElasticaClient(): Client
     {
         return $this->createElasticaClientFactory()->createClient(
-            $this->getConfig()->getClientConfig()
+            $this->getConfig()->getClientConfig(),
         );
     }
 
@@ -268,7 +268,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     {
         return new QueryFactory(
             $this->createQueryBuilder(),
-            $this->getMoneyClient()
+            $this->getMoneyClient(),
         );
     }
 
@@ -286,7 +286,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearchContextExpander(): SearchContextExpanderInterface
     {
         return new SearchContextExpander(
-            $this->createIndexNameResolver()
+            $this->createIndexNameResolver(),
         );
     }
 
@@ -314,13 +314,13 @@ class SearchElasticsearchFactory extends AbstractFactory
         $searchConfigBuilder = new SearchConfigBuilder(
             $this->createFacetConfig(),
             $this->createSortConfig(),
-            $this->createPaginationConfig()
+            $this->createPaginationConfig(),
         );
         $searchConfigBuilder->setSearchConfigBuilderPlugins(
-            $this->getSearchConfigBuilderPlugins()
+            $this->getSearchConfigBuilderPlugins(),
         );
         $searchConfigBuilder->setSearchConfigExpanderPlugins(
-            $this->getSearchConfigExpanderPlugins()
+            $this->getSearchConfigExpanderPlugins(),
         );
 
         return $searchConfigBuilder;
@@ -372,7 +372,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createDocumentWriterFactory(): DocumentWriterFactoryInterface
     {
         return new DocumentWriterFactory(
-            $this->createMappingTypeSupportDetector()
+            $this->createMappingTypeSupportDetector(),
         );
     }
 
@@ -390,7 +390,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createDocumentReaderFactory(): DocumentReaderFactoryInterface
     {
         return new DocumentReaderFactory(
-            $this->createMappingTypeSupportDetector()
+            $this->createMappingTypeSupportDetector(),
         );
     }
 

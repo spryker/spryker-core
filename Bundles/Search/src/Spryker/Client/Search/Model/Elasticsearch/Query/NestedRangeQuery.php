@@ -16,13 +16,16 @@ class NestedRangeQuery extends AbstractNestedQuery
 {
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     public const RANGE_DIVIDER = '-';
+
     /**
      * @var string
      */
     public const RANGE_MIN = 'min';
+
     /**
      * @var string
      */
@@ -93,8 +96,8 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function setMinMaxValuesFromArray(array $rangeValues)
     {
-        $this->minValue = isset($rangeValues[self::RANGE_MIN]) ? $rangeValues[self::RANGE_MIN] : null;
-        $this->maxValue = isset($rangeValues[self::RANGE_MAX]) ? $rangeValues[self::RANGE_MAX] : null;
+        $this->minValue = $rangeValues[self::RANGE_MIN] ?? null;
+        $this->maxValue = $rangeValues[self::RANGE_MAX] ?? null;
 
         $this->convertMinMaxValues();
     }

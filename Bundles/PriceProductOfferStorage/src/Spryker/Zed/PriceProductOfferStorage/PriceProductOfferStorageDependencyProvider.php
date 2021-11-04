@@ -22,10 +22,12 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
@@ -70,7 +72,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new PriceProductOfferStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -86,7 +88,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new PriceProductOfferStorageToEventFacadeBridge(
-                $container->getLocator()->event()->facade()
+                $container->getLocator()->event()->facade(),
             );
         });
 
@@ -102,7 +104,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRICE_PRODUCT_OFFER, function (Container $container) {
             return new PriceProductOfferStorageToPriceProductOfferFacadeBridge(
-                $container->getLocator()->priceProductOffer()->facade()
+                $container->getLocator()->priceProductOffer()->facade(),
             );
         });
 

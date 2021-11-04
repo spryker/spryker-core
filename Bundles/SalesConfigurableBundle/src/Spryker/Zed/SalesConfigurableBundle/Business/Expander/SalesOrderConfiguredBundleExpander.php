@@ -78,9 +78,9 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
                 (new SalesOrderConfiguredBundleTranslationTransfer())
                     ->setName(
                         $this->glossaryFacade->translate(
-                            $salesOrderConfiguredBundleTransfer->getName()
-                        )
-                    )
+                            $salesOrderConfiguredBundleTransfer->getName(),
+                        ),
+                    ),
             );
         }
 
@@ -102,7 +102,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if (array_key_exists($itemTransfer->getIdSalesOrderItem(), $salesOrderConfiguredBundleItemTransfers)) {
                 $itemTransfer->setSalesOrderConfiguredBundleItem(
-                    $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()]
+                    $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()],
                 );
             }
         }

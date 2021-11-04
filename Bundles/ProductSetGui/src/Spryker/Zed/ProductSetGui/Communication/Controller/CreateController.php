@@ -27,7 +27,7 @@ class CreateController extends AbstractProductSetController
         $productSetForm = $this->getFactory()
             ->getCreateProductSetForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -47,7 +47,7 @@ class CreateController extends AbstractProductSetController
             return $this->redirectResponse(
                 Url::generate('/product-set-gui/view', [
                     static::PARAM_ID => $productSetTransfer->getIdProductSet(),
-                ])->build()
+                ])->build(),
             );
         }
 

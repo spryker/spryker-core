@@ -34,7 +34,7 @@ class WebExceptionErrorRenderer implements ErrorRendererInterface
             $exception->getFile(),
             $exception->getLine(),
             $this->getUri(),
-            $exception->getTraceAsString()
+            $exception->getTraceAsString(),
         );
 
         return $errorMessage;

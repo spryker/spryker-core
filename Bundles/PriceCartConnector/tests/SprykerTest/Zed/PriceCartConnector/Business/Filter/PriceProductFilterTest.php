@@ -121,7 +121,7 @@ class PriceProductFilterTest extends Unit
         $this->assertEquals(
             14,
             $priceProductFilterTransfer->getQuantity(),
-            'Expects that only items with all matching fields (from config) are merged.'
+            'Expects that only items with all matching fields (from config) are merged.',
         );
         $this->assertEquals($skuToMerge, $priceProductFilterTransfer->getSku());
     }
@@ -138,7 +138,7 @@ class PriceProductFilterTest extends Unit
             $this->createPriceFacadeMock(),
             $this->createCurrencyFacadeMock(),
             $this->createCartItemQuantityCounterStrategyPlugins(),
-            $this->createItemComparator($itemFieldsForIsSameItemComparison)
+            $this->createItemComparator($itemFieldsForIsSameItemComparison),
         );
     }
 
@@ -183,7 +183,7 @@ class PriceProductFilterTest extends Unit
         array $itemFieldsForIsSameItemComparison
     ): ItemComparatorInterface {
         return new ItemComparator(
-            $this->createPriceCartConnectorConfigMock($itemFieldsForIsSameItemComparison)
+            $this->createPriceCartConnectorConfigMock($itemFieldsForIsSameItemComparison),
         );
     }
 

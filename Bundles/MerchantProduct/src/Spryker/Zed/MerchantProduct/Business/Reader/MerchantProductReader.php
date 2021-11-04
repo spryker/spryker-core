@@ -57,7 +57,7 @@ class MerchantProductReader implements MerchantProductReaderInterface
         }
 
         $merchantProductTransfer->setProductAbstract(
-            $this->productFacade->findProductAbstractById($merchantProductTransfer->getIdProductAbstract())
+            $this->productFacade->findProductAbstractById($merchantProductTransfer->getIdProductAbstract()),
         );
 
         return $merchantProductTransfer;

@@ -16,6 +16,7 @@ class MerchantProductOfferDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_MERCHANT_PRODUCT_OFFER = 'merchant-product-offer';
+
     /**
      * @var string
      */
@@ -55,7 +56,7 @@ class MerchantProductOfferDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

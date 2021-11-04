@@ -33,7 +33,7 @@ class CartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createZedStub(),
             $this->createCartChangeRequestExpander(),
-            $this->getQuoteItemFinderPlugin()
+            $this->getQuoteItemFinderPlugin(),
         );
     }
 
@@ -46,7 +46,7 @@ class CartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createZedStub(),
             $this->createCartChangeRequestExpander(),
-            $this->getQuoteItemFinderPlugin()
+            $this->getQuoteItemFinderPlugin(),
         );
     }
 
@@ -106,7 +106,7 @@ class CartFactory extends AbstractFactory
         return new QuoteStorageStrategyProxy(
             $this->getMessengerClient(),
             $this->getQuoteClient(),
-            $this->getQuoteStorageStrategy()
+            $this->getQuoteStorageStrategy(),
         );
     }
 
@@ -117,7 +117,7 @@ class CartFactory extends AbstractFactory
     {
         return new QuoteStorageStrategyProvider(
             $this->getQuoteClient(),
-            $this->getQuoteStorageStrategyPlugins()
+            $this->getQuoteStorageStrategyPlugins(),
         );
     }
 
@@ -128,7 +128,7 @@ class CartFactory extends AbstractFactory
     {
         return new CartChangeRequestExpander(
             $this->getAddItemsRequestExpanderPlugins(),
-            $this->getRemoveItemsRequestExpanderPlugins()
+            $this->getRemoveItemsRequestExpanderPlugins(),
         );
     }
 
@@ -139,7 +139,7 @@ class CartFactory extends AbstractFactory
     {
         return new GroupKeyPrefixItemExpander(
             $this->getQuoteItemFinderPlugin(),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 

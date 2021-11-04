@@ -36,11 +36,9 @@ class ProductOfferStockProductOfferViewSectionPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getData(ProductOfferTransfer $productOfferTransfer): array
     {

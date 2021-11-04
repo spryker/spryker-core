@@ -171,7 +171,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->setCustomer(
-            $this->getFactory()->getCustomerClient()->getCustomer()
+            $this->getFactory()->getCustomerClient()->getCustomer(),
         );
 
         return $this->getFactory()

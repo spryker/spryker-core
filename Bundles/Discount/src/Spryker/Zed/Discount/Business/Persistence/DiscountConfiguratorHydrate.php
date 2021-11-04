@@ -101,7 +101,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
         $discountGeneralTransfer->setStoreRelation(
-            $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity)
+            $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity),
         );
 
         return $discountGeneralTransfer;
@@ -118,7 +118,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountCalculatorTransfer->fromArray($discountEntity->toArray(), true);
         $discountCalculatorTransfer->setCollectorStrategyType(DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING);
         $discountCalculatorTransfer->setMoneyValueCollection(
-            $this->discountEntityMapper->getMoneyValueCollectionForEntity($discountEntity)
+            $this->discountEntityMapper->getMoneyValueCollectionForEntity($discountEntity),
         );
 
         return $discountCalculatorTransfer;
@@ -220,7 +220,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $this->hydrateDiscountVoucher(
             $discountEntity->getIdDiscount(),
             $discountEntity,
-            $discountConfigurator
+            $discountConfigurator,
         );
 
         $discountConfigurator = $this->executeDiscountConfigurationExpanderPlugins($discountConfigurator);

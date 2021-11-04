@@ -22,6 +22,7 @@ abstract class AbstractRouterApplicationPlugin extends AbstractPlugin implements
 {
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     *
      * @var string
      */
     public const SERVICE_ROUTER = 'routers';
@@ -30,6 +31,7 @@ abstract class AbstractRouterApplicationPlugin extends AbstractPlugin implements
      * @var string
      */
     public const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
+
     /**
      * @var string
      */

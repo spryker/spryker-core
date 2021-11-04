@@ -37,24 +37,24 @@ class StoresResourceMapper implements StoresResourceMapperInterface
 
         $storesRestAttributes = $this->addLocaleToStoresRestAttributes(
             $storesRestAttributes,
-            $this->storeClient->getCurrentStore()->getAvailableLocaleIsoCodes()
+            $this->storeClient->getCurrentStore()->getAvailableLocaleIsoCodes(),
         );
 
         $storesRestAttributes = $this->addStoreCountryToStoresRestAttributes(
             $storesRestAttributes,
-            $countries
+            $countries,
         );
 
         $storesRestAttributes = $this->addTimeZoneToStoresRestAttributes($storesRestAttributes);
 
         $storesRestAttributes = $this->addDefaultCurrencyToStoresRestAttributes(
             $storesRestAttributes,
-            $this->storeClient->getCurrentStore()->getDefaultCurrencyIsoCode()
+            $this->storeClient->getCurrentStore()->getDefaultCurrencyIsoCode(),
         );
 
         $storesRestAttributes = $this->addStoreCurrencyToStoresRestAttributes(
             $storesRestAttributes,
-            $currencies
+            $currencies,
         );
 
         return $storesRestAttributes;

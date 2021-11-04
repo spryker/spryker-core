@@ -118,7 +118,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
             $responseData[ProductGuiTableConfigurationProvider::COL_KEY_IMAGE] = $this->getImageUrl($productConcreteTransfer);
             $responseData[ProductGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES] = $this->getSuperAttributesColumnData(
                 $productConcreteTransfer,
-                $localeTransfer
+                $localeTransfer,
             );
             $responseData[ProductGuiTableConfigurationProvider::COL_KEY_STATUS] = $this->getStatusColumnData($productConcreteTransfer);
 
@@ -185,7 +185,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
         return array_values($this->localizedAttributesExtractor->extractCombinedSuperAttributeNames(
             $productConcreteTransfer->getAttributes(),
             $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
+            $localeTransfer,
         ));
     }
 }

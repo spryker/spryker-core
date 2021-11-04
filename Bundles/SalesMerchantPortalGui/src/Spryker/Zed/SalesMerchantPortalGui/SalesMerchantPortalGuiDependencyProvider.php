@@ -31,34 +31,42 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'FACADE_MONEY';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
+
     /**
      * @var string
      */
     public const FACADE_ROUTER = 'FACADE_ROUTER';
+
     /**
      * @var string
      */
     public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @var string
      */
@@ -66,9 +74,11 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
+
     /**
      * @var string
      */
@@ -76,18 +86,21 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
 
     /**
      * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR
+     *
      * @var string
      */
     public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
     /**
      * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin::SERVICE_GUI_TABLE_FACTORY
+     *
      * @var string
      */
     public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
 
     /**
      * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     *
      * @var string
      */
     public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
@@ -96,6 +109,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
+
     /**
      * @var string
      */
@@ -155,7 +169,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -171,7 +185,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new SalesMerchantPortalGuiToCurrencyFacadeBridge(
-                $container->getLocator()->currency()->facade()
+                $container->getLocator()->currency()->facade(),
             );
         });
 
@@ -187,7 +201,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesMerchantPortalGuiToMoneyFacadeBridge(
-                $container->getLocator()->money()->facade()
+                $container->getLocator()->money()->facade(),
             );
         });
 
@@ -203,7 +217,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new SalesMerchantPortalGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -219,7 +233,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantOmsFacadeBridge(
-                $container->getLocator()->merchantOms()->facade()
+                $container->getLocator()->merchantOms()->facade(),
             );
         });
 
@@ -235,7 +249,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SalesMerchantPortalGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -251,7 +265,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge(
-                $container->getLocator()->merchantSalesOrder()->facade()
+                $container->getLocator()->merchantSalesOrder()->facade(),
             );
         });
 
@@ -267,7 +281,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesMerchantPortalGuiToSalesFacadeBridge(
-                $container->getLocator()->sales()->facade()
+                $container->getLocator()->sales()->facade(),
             );
         });
 
@@ -297,7 +311,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_ROUTER, function (Container $container) {
             return new SalesMerchantPortalGuiToRouterFacadeBridge(
-                $container->getLocator()->router()->facade()
+                $container->getLocator()->router()->facade(),
             );
         });
 
@@ -313,7 +327,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new SalesMerchantPortalGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 

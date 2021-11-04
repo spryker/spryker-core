@@ -52,7 +52,7 @@ class ProductLabelsRestApiToProductLabelStorageClientBridge implements ProductLa
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>>
      */
     public function getProductLabelsByProductAbstractIds(
         array $productAbstractIds,

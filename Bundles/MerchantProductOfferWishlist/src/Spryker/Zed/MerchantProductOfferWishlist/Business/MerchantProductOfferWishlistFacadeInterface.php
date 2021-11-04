@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferWishlist\Business;
 
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
+use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
 
 interface MerchantProductOfferWishlistFacadeInterface
 {
@@ -25,4 +26,20 @@ interface MerchantProductOfferWishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
     public function checkWishlistItemProductOfferRelation(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets product offer collection by `WishlistItem.sku` transfer property.
+     * - Checks if product offer exists in collection by `WishlistItem.productOfferReference` transfer object.
+     * - Returns `WishlistPreUpdateItemCheckResponseTransfer.success=true` if product offer found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
+     */
+    public function checkUpdateWishlistItemProductOfferRelation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreUpdateItemCheckResponseTransfer;
 }

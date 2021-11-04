@@ -25,24 +25,28 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     public const SEARCH_TYPE_ALL = 'all';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     protected const SEARCH_TYPE_ORDER_REFERENCE = 'orderReference';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     protected const SEARCH_TYPE_ITEM_NAME = 'itemName';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     *
      * @var string
      */
     protected const SEARCH_TYPE_ITEM_SKU = 'itemSku';
@@ -51,14 +55,14 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
      * @var string
      */
     protected const SEARCH_TYPE_DATE_FROM = 'dateFrom';
+
     /**
      * @var string
      */
     protected const SEARCH_TYPE_DATE_TO = 'dateTo';
 
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const ORDER_SEARCH_TYPE_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
@@ -67,8 +71,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     ];
 
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const ORDER_BY_COLUMN_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ID_SALES_ORDER,
@@ -79,6 +82,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
      * @var string
      */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+
     /**
      * @var string
      */
@@ -86,6 +90,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
     /**
      * @phpstan-var non-empty-string
+     *
      * @var string
      */
     protected const DELIMITER_ORDER_BY = '::';
@@ -122,21 +127,21 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
         if ($filterFieldType === static::SEARCH_TYPE_DATE_FROM || $filterFieldType === static::SEARCH_TYPE_DATE_TO) {
             return $this->addDateFilter(
                 $salesOrderQuery,
-                $filterFieldTransfer
+                $filterFieldTransfer,
             );
         }
 
         if ($filterFieldType === static::SEARCH_TYPE_ALL || isset(static::ORDER_SEARCH_TYPE_MAPPING[$filterFieldType])) {
             return $this->addSearchTypeFilter(
                 $salesOrderQuery,
-                $filterFieldTransfer
+                $filterFieldTransfer,
             );
         }
 
         if ($filterFieldType === static::FILTER_FIELD_TYPE_ORDER_BY) {
             return $this->addOrderByFilter(
                 $salesOrderQuery,
-                $filterFieldTransfer
+                $filterFieldTransfer,
             );
         }
 
@@ -168,7 +173,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
             $salesOrderQuery->add(
                 static::ORDER_SEARCH_TYPE_MAPPING[$searchType],
                 $this->generateLikePattern($searchValue),
-                Criteria::LIKE
+                Criteria::LIKE,
             );
 
             return $salesOrderQuery;
@@ -198,7 +203,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
                 $conditionName,
                 static::ORDER_SEARCH_TYPE_MAPPING[$searchType],
                 $this->generateLikePattern($searchValue),
-                Criteria::LIKE
+                Criteria::LIKE,
             );
 
             $conditions[] = $conditionName;
@@ -207,7 +212,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
         $salesOrderQuery->combine(
             $conditions,
             Criteria::LOGICAL_OR,
-            static::CONDITION_GROUP_ALL
+            static::CONDITION_GROUP_ALL,
         );
 
         return $salesOrderQuery;

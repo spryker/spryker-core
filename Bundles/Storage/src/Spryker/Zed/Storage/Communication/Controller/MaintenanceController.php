@@ -20,6 +20,7 @@ class MaintenanceController extends AbstractController
      * @var string
      */
     public const REFERENCE_KEY = 'reference_key';
+
     /**
      * @var string
      */
@@ -35,7 +36,7 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse(
             [
                 'totalCount' => $count,
-            ]
+            ],
         );
     }
 
@@ -57,7 +58,7 @@ class MaintenanceController extends AbstractController
         $table = $this->getFactory()->createStorageTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 

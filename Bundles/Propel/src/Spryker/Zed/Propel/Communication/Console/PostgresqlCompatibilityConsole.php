@@ -25,6 +25,7 @@ class PostgresqlCompatibilityConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:pg-sql-compat';
+
     /**
      * @var string
      */

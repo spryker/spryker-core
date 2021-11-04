@@ -29,22 +29,27 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
      * @var string
      */
     public const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
+
     /**
      * @var string
      */
     public const FIELD_PLACEHOLDER = 'placeholder';
+
     /**
      * @var string
      */
     public const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
+
     /**
      * @var string
      */
     public const FIELD_TEMPLATE_NAME = 'templateName';
+
     /**
      * @var string
      */
     public const FIELD_TRANSLATIONS = 'translations';
+
     /**
      * @var string
      */
@@ -77,7 +82,7 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

@@ -26,7 +26,7 @@ class ShoppingListCompanyUserMapper implements ShoppingListCompanyUserMapperInte
     ): ShoppingListCompanyUserCollectionTransfer {
         foreach ($companyUserEntityCollection as $companyUserEntityTransfer) {
             $shoppingListCompanyUserCollection->addShoppingListCompanyUser(
-                $this->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer, new ShoppingListCompanyUserTransfer())
+                $this->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntityTransfer, new ShoppingListCompanyUserTransfer()),
             );
         }
 

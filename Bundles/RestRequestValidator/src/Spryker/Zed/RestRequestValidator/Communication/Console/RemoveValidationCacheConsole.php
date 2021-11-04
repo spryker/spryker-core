@@ -22,6 +22,7 @@ class RemoveValidationCacheConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'glue:rest-request-validation-cache:remove';
+
     /**
      * @var string
      */

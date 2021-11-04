@@ -22,14 +22,17 @@ class CollectorConfig extends AbstractBundleConfig
      * @var string
      */
     public const COLLECTOR_TOUCH_ID = 'collector_touch_id';
+
     /**
      * @var string
      */
     public const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
+
     /**
      * @var string
      */
     public const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
+
     /**
      * @var string
      */
@@ -39,6 +42,7 @@ class CollectorConfig extends AbstractBundleConfig
      * @var string
      */
     public const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
+
     /**
      * @var string
      */
@@ -129,7 +133,7 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, array<string>>
      */
     protected function getQueryToDbEngineClassMap()
     {
@@ -140,7 +144,7 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function getMysqlDbEngineClassMap()
     {
@@ -151,7 +155,7 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function getPostgresDbEngineClassMap()
     {
@@ -164,7 +168,7 @@ class CollectorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getCurrentBulkQueryClassNames()
     {

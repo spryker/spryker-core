@@ -34,6 +34,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      * @var string
      */
     protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
+
     /**
      * @var string
      */
@@ -152,7 +153,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
         $hasUsers = $this->repository->hasUsers(
             $companyBusinessUnitResponseTransfer
                 ->getCompanyBusinessUnitTransfer()
-                ->getIdCompanyBusinessUnit()
+                ->getIdCompanyBusinessUnit(),
         );
 
         if ($hasUsers) {
@@ -181,7 +182,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
                 ->setIsSuccessful(false)
                 ->setMessages(new ArrayObject())
                 ->addMessage(
-                    (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE)
+                    (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE),
                 );
 
             return $companyBusinessUnitResponseTransfer;

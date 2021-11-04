@@ -15,6 +15,7 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
      * Price Dimension Merchant Relationship
      *
      * @uses \Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
@@ -31,6 +32,7 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     public const PRICE_GROSS_MODE = 'GROSS_MODE';

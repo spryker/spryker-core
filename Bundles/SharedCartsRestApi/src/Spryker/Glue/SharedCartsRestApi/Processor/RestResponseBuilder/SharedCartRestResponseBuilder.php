@@ -63,14 +63,14 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
 
         $restSharedCartsAttributesTransfer = $this->sharedCartMapper->mapShareDetailTransferToRestSharedCartsAttributesTransfer(
             $shareDetailTransfer,
-            new RestSharedCartsAttributesTransfer()
+            new RestSharedCartsAttributesTransfer(),
         );
 
         return $restResponse->addResource(
             $this->createRestSharedCartsResource(
                 $shareDetailTransfer->getUuid(),
-                $restSharedCartsAttributesTransfer
-            )
+                $restSharedCartsAttributesTransfer,
+            ),
         );
     }
 
@@ -99,7 +99,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
         return $this->createRestErrorResponse(
             Response::HTTP_BAD_REQUEST,
             SharedCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
-            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
+            SharedCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING,
         );
     }
 
@@ -111,7 +111,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
         return $this->createRestErrorResponse(
             Response::HTTP_NOT_FOUND,
             SharedCartsRestApiConfig::RESPONSE_CODE_COMPANY_USER_NOT_FOUND,
-            SharedCartsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND
+            SharedCartsRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND,
         );
     }
 
@@ -123,7 +123,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
         return $this->createRestErrorResponse(
             Response::HTTP_FORBIDDEN,
             SharedCartsRestApiConfig::RESPONSE_CODE_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN,
-            SharedCartsRestApiConfig::RESPONSE_DETAIL_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN
+            SharedCartsRestApiConfig::RESPONSE_DETAIL_SHARE_CART_OUTSIDE_THE_COMPANY_FORBIDDEN,
         );
     }
 
@@ -135,7 +135,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
         return $this->createRestErrorResponse(
             Response::HTTP_BAD_REQUEST,
             SharedCartsRestApiConfig::RESPONSE_CODE_SHARED_CART_ID_MISSING,
-            SharedCartsRestApiConfig::RESPONSE_DETAIL_SHARED_CART_ID_MISSING
+            SharedCartsRestApiConfig::RESPONSE_DETAIL_SHARED_CART_ID_MISSING,
         );
     }
 
@@ -170,7 +170,7 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
         return $this->restResourceBuilder->createRestResource(
             SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
             $sharedCartUuid,
-            $restSharedCartsAttributesTransfer
+            $restSharedCartsAttributesTransfer,
         );
     }
 

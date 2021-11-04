@@ -22,10 +22,12 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_COMPANY_ROLE = 'PROPEL_QUERY_COMPANY_ROLE';
+
     /**
      * @var string
      */
@@ -95,7 +97,7 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUsersRestApiToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 

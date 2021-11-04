@@ -24,7 +24,7 @@ EOT;
     protected $config;
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected $resourceNameToStorageTableMap;
 
@@ -132,7 +132,7 @@ EOT;
 
         if (!$resourceStorageTableName) {
             throw new InvalidRecourseToTableMappingConfigurationException(
-                sprintf(static::MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION, $resourceName)
+                sprintf(static::MESSAGE_INVALID_RESOURCE_TO_TABLE_CONFIGURATION_MAPPING_EXCEPTION, $resourceName),
             );
         }
 

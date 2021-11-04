@@ -44,6 +44,7 @@ class ConfigurableBundleCartAdderTest extends Unit
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
+
     /**
      * @var string
      */
@@ -66,21 +67,21 @@ class ConfigurableBundleCartAdderTest extends Unit
                     ->setQuantity(1)
                     ->setTemplate((new ConfigurableBundleTemplateTransfer())
                         ->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)
-                        ->setName(static::FAKE_CONFIGURABLE_BUNDLE_NAME))
+                        ->setName(static::FAKE_CONFIGURABLE_BUNDLE_NAME)),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundleItem(
                         (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1))
-                    )
+                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1)),
+                    ),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundleItem(
                         (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2))
-                    )
+                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2)),
+                    ),
             );
 
         $cartClientMock = $this->createCartClientMock();
@@ -109,21 +110,21 @@ class ConfigurableBundleCartAdderTest extends Unit
                 (new ConfiguredBundleTransfer())
                     ->setQuantity(1)
                     ->setTemplate((new ConfigurableBundleTemplateTransfer())
-                        ->setName(static::FAKE_CONFIGURABLE_BUNDLE_NAME))
+                        ->setName(static::FAKE_CONFIGURABLE_BUNDLE_NAME)),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundleItem(
                         (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1))
-                    )
+                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1)),
+                    ),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundleItem(
                         (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2))
-                    )
+                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2)),
+                    ),
             );
 
         $configuredBundleCartAdderMock = $this->createConfiguredBundleCartAdderMock($this->createCartClientMock());
@@ -147,21 +148,21 @@ class ConfigurableBundleCartAdderTest extends Unit
                     ->setQuantity(1)
                     ->setTemplate((new ConfigurableBundleTemplateTransfer())
                         ->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)
-                        ->setName(static::FAKE_CONFIGURABLE_BUNDLE_NAME))
+                        ->setName(static::FAKE_CONFIGURABLE_BUNDLE_NAME)),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundleItem(
                         (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(null))
-                    )
+                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(null)),
+                    ),
             )
             ->addItem(
                 (new ItemTransfer())
                     ->setConfiguredBundleItem(
                         (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2))
-                    )
+                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2)),
+                    ),
             );
 
         $configuredBundleCartAdderMock = $this->createConfiguredBundleCartAdderMock($this->createCartClientMock());

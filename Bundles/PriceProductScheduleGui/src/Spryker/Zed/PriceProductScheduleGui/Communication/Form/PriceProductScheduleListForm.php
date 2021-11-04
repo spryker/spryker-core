@@ -26,10 +26,12 @@ class PriceProductScheduleListForm extends AbstractType
      * @var string
      */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME = 'name';
+
     /**
      * @var int
      */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH = 255;
+
     /**
      * @var string
      */
@@ -63,7 +65,7 @@ class PriceProductScheduleListForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -92,7 +94,7 @@ class PriceProductScheduleListForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'Please type a name of list',
                 ],
-            ]
+            ],
         );
 
         return $this;

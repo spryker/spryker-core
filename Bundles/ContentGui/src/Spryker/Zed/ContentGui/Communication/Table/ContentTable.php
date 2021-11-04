@@ -136,7 +136,7 @@ class ContentTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(ContentTableConstants::URL_CONTENT_EDIT, $urlParams),
-            'Edit'
+            'Edit',
         );
 
         return implode(' ', $buttons);

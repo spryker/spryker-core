@@ -71,7 +71,7 @@ class ImportSuccessListTable extends AbstractTable
         $config->setUrl(sprintf(
             'table?%s=%d',
             PriceProductScheduleListTransfer::ID_PRICE_PRODUCT_SCHEDULE_LIST,
-            $this->priceProductScheduleListTransfer->getIdPriceProductScheduleList()
+            $this->priceProductScheduleListTransfer->getIdPriceProductScheduleList(),
         ));
 
         $config->setSearchable([
@@ -91,7 +91,7 @@ class ImportSuccessListTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule> $priceProductScheduleCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[] $priceProductScheduleCollection */
         $priceProductScheduleCollection = $this->runQuery($query, $config, true);
 
         return $this->mapPriceProductScheduleCollection($priceProductScheduleCollection);

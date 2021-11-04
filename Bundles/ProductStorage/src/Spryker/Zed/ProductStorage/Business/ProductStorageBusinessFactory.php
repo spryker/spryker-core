@@ -33,7 +33,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
-            $this->getProductAbstractStorageExpanderPlugins()
+            $this->getProductAbstractStorageExpanderPlugins(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteStorageWriter(
             $this->getProductFacade(),
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 
@@ -66,7 +66,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->createSingleValueSuperAttributeFilter()
+            $this->createSingleValueSuperAttributeFilter(),
         );
     }
 

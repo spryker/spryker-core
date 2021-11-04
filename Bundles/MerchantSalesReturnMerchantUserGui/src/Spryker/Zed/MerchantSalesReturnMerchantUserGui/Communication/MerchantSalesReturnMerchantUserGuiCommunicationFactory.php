@@ -48,7 +48,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
             $this->getDateTimeService(),
             $this->getConfig(),
             $this->getSalesReturnPropelQuery(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
         );
     }
 
@@ -59,7 +59,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     {
         return new CustomerReader(
             $this->getSalesFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -70,7 +70,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     {
         return new MerchantOrderReader(
             $this->getMerchantSalesOrderFacade(),
-            $this->getMerchantOmsFacade()
+            $this->getMerchantOmsFacade(),
         );
     }
 
@@ -80,7 +80,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     public function createCreateReturnFormHandler(): CreateReturnFormHandlerInterface
     {
         return new CreateReturnFormHandler(
-            $this->getSalesReturnFacade()
+            $this->getSalesReturnFacade(),
         );
     }
 
@@ -101,13 +101,9 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @phpstan-param array<int|string, mixed> $options
+     * @param array<string, mixed> $options
      *
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface|mixed[]
      */
     public function createEventTriggerForm(array $options = []): FormInterface
     {
@@ -115,13 +111,9 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @phpstan-param array<int|string, mixed> $options
+     * @param array<string, mixed> $options
      *
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface|mixed[]
      */
     public function createEventItemTriggerForm(array $options = []): FormInterface
     {
@@ -129,11 +121,9 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface|mixed[]
      */
     public function createReturnCreateForm(OrderTransfer $orderTransfer): FormInterface
     {
@@ -142,7 +132,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
         return $this->getFormFactory()->create(
             ReturnCreateForm::class,
             $returnCreateFormDataProvider->getData($orderTransfer),
-            $returnCreateFormDataProvider->getOptions()
+            $returnCreateFormDataProvider->getOptions(),
         );
     }
 
@@ -153,7 +143,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     {
         return new ReturnCreateFormDataProvider(
             $this->getSalesReturnFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 

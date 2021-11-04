@@ -60,6 +60,7 @@ class OauthFacadeTest extends Unit
      * @var string
      */
     protected const CLIENT_IDENTIFIER = 'test client';
+
     /**
      * @var string
      */
@@ -224,13 +225,13 @@ class OauthFacadeTest extends Unit
         $this->getOauthFacade()->saveScope(
             (new OauthScopeTransfer())
             ->setIdentifier($identifiers[0])
-            ->setDescription('scope')
+            ->setDescription('scope'),
         );
 
         $this->getOauthFacade()->saveScope(
             (new OauthScopeTransfer())
                 ->setIdentifier($identifiers[1])
-                ->setDescription('test scope')
+                ->setDescription('test scope'),
         );
 
         $oauthScopeTransfers = $this->getOauthFacade()->getScopesByIdentifiers($identifiers);
@@ -255,7 +256,7 @@ class OauthFacadeTest extends Unit
 
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
             $oauthResponseTransfer->getCustomerReference(),
-            $oauthResponseTransfer->getRefreshToken()
+            $oauthResponseTransfer->getRefreshToken(),
         );
 
         // Act
@@ -274,7 +275,7 @@ class OauthFacadeTest extends Unit
         $this->createTestClient();
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
             $this->tester->haveCustomer()->getCustomerReference(),
-            'test'
+            'test',
         );
 
         // Act
@@ -291,7 +292,7 @@ class OauthFacadeTest extends Unit
     {
         // Arrange
         $revokeRefreshTokenRequestTransfer = $this->tester->createRevokeRefreshTokenRequestTransfer(
-            $this->tester->haveCustomer()->getCustomerReference()
+            $this->tester->haveCustomer()->getCustomerReference(),
         );
 
         // Act
@@ -372,12 +373,12 @@ class OauthFacadeTest extends Unit
                             (new CustomerIdentifierTransfer())
                                 ->setCustomerReference('DE--test')
                                 ->setIdCustomer(999)
-                                ->toArray()
-                        )
+                                ->toArray(),
+                        ),
                     );
 
                 return $oauthUserTransfer;
-            }
+            },
         );
 
         $userProviderPluginMock
@@ -388,7 +389,7 @@ class OauthFacadeTest extends Unit
             OauthDependencyProvider::PLUGIN_USER_PROVIDER,
             [
                 $userProviderPluginMock,
-            ]
+            ],
         );
     }
 
@@ -408,14 +409,14 @@ class OauthFacadeTest extends Unit
                     ->setFullyQualifiedClassName(PasswordGrantType::class);
 
                 return $oauthGrantTypeConfigurationTransfer;
-            }
+            },
         );
 
         $this->tester->setDependency(
             OauthDependencyProvider::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER,
             [
                 $grantTypeConfigurationProviderPluginMock,
-            ]
+            ],
         );
     }
 

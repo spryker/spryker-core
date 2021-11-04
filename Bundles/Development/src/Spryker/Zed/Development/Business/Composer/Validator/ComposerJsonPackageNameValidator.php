@@ -16,6 +16,7 @@ class ComposerJsonPackageNameValidator implements ComposerJsonValidatorInterface
      * @var string
      */
     protected const REQUIRE = 'require';
+
     /**
      * @var string
      */

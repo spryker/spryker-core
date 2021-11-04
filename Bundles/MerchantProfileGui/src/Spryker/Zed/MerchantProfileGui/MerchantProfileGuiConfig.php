@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MerchantProfileGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const SALUTATION_CHOICES = [
         'Ms' => 'Ms',
@@ -24,7 +24,7 @@ class MerchantProfileGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getSalutationChoices(): array
     {

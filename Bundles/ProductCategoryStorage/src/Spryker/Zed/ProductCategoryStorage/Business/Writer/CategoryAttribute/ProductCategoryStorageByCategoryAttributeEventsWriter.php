@@ -44,7 +44,7 @@ class ProductCategoryStorageByCategoryAttributeEventsWriter implements ProductCa
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCategoryAttributeTableMap::COL_FK_CATEGORY
+            SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
         );
 
         $this->productCategoryStorageWriter->writeCollectionByRelatedCategories($categoryIds, false);
@@ -62,7 +62,7 @@ class ProductCategoryStorageByCategoryAttributeEventsWriter implements ProductCa
                 $eventEntityTransfers,
                 [
                     SpyCategoryAttributeTableMap::COL_NAME,
-                ]
+                ],
             );
 
         $this->writeCollectionByCategoryAttributeEvents($modifiedColumnsEventTransfer);

@@ -36,7 +36,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getCustomerFacade(),
             $this->createCompanyUserPluginExecutor(),
-            $this->getCompanyUserSavePreCheckPlugins()
+            $this->getCompanyUserSavePreCheckPlugins(),
         );
     }
 
@@ -47,7 +47,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserStatusHandler(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -61,7 +61,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUserPostSavePlugins(),
             $this->getCompanyUserPostCreatePlugins(),
             $this->getCompanyUserHydrationPlugins(),
-            $this->getCompanyUserPreDeletePlugins()
+            $this->getCompanyUserPreDeletePlugins(),
         );
     }
 

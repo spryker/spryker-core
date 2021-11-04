@@ -14,8 +14,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 class StockTransformer implements DataTransformerInterface
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer

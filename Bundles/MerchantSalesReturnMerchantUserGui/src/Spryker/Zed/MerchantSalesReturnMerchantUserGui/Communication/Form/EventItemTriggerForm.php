@@ -23,10 +23,12 @@ class EventItemTriggerForm extends AbstractType
      * @var string
      */
     protected const OPTION_EVENT = 'OPTION_EVENT';
+
     /**
      * @var string
      */
     protected const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
+
     /**
      * @var string
      */
@@ -39,16 +41,16 @@ class EventItemTriggerForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::submitTriggerEventItemAction()
+     *
      * @var string
      */
     protected const ACTION_ROUTE = '/merchant-sales-return-merchant-user-gui/oms-trigger/submit-trigger-event-item';
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -60,10 +62,9 @@ class EventItemTriggerForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -86,26 +87,23 @@ class EventItemTriggerForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<string, mixed> $options
      *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
     protected function setAction(FormBuilderInterface $builder, array $options)
     {
         $builder->setAction(
-            $this->generateCreateActionUrl($options)
+            $this->generateCreateActionUrl($options),
         );
 
         return $this;
     }
 
     /**
-     * @phpstan-param array<string, mixed> $options
-     *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */

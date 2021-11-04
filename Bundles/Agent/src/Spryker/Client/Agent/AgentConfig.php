@@ -29,7 +29,7 @@ class AgentConfig extends AbstractBundleConfig
     {
         return $this->get(
             AgentConstants::AGENT_ALLOWED_SECURED_PATTERN_LIST,
-            static::DEFAULT_AGENT_ALLOWED_SECURED_PATTERN_LIST
+            static::DEFAULT_AGENT_ALLOWED_SECURED_PATTERN_LIST,
         );
     }
 }

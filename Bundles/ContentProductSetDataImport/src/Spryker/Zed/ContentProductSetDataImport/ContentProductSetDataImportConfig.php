@@ -16,6 +16,7 @@ class ContentProductSetDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_FILE_NAME = 'content_product_set.csv';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class ContentProductSetDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::IMPORT_FILE_NAME,
-            static::IMPORT_TYPE_CONTENT_PRODUCT_SET
+            static::IMPORT_TYPE_CONTENT_PRODUCT_SET,
         );
     }
 
@@ -46,7 +47,7 @@ class ContentProductSetDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

@@ -21,7 +21,7 @@ class ProductSetTermToProductSetTypeExecutor implements ContentProductSetTermExe
     public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductSetTypeTransfer
     {
         $contentProductSetTermTransfer = $this->mapContentTypeContextTransferToContentProductSetTermTransfer(
-            $contentTypeContextTransfer
+            $contentTypeContextTransfer,
         );
 
         $contentProductSetTypeTransfer = new ContentProductSetTypeTransfer();

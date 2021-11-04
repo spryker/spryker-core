@@ -13,6 +13,7 @@ interface CmsPageStoreDataSet
      * @var string
      */
     public const KEY_PAGE_NAME = 'page_key';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface CmsPageStoreDataSet
      * @var string
      */
     public const ID_STORE = 'id_store';
+
     /**
      * @var string
      */

@@ -18,6 +18,7 @@ class SecurityBlockerAgentStorage implements SecurityBlockerAgentStorageInterfac
 {
     /**
      * @uses \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig::RESPONSE_CODE_INVALID_LOGIN
+     *
      * @var string
      */
     protected const RESPONSE_CODE_INVALID_LOGIN = '4101';

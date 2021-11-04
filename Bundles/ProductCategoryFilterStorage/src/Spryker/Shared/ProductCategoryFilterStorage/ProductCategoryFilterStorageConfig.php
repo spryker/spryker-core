@@ -16,6 +16,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_QUEUE = 'sync.storage.category';
@@ -25,6 +26,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
@@ -34,6 +36,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_CATEGORY_FILTER_RESOURCE_NAME = 'product_category_filter';

@@ -34,7 +34,7 @@ class StockWriterStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 static::EXCEPTION_MESSAGE,
                 StockDataSetInterface::COLUMN_NAME,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 

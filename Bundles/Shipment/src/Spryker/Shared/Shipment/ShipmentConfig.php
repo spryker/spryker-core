@@ -21,6 +21,7 @@ class ShipmentConfig extends AbstractSharedConfig
      * - Shipment expense type name.
      *
      * @api
+     *
      * @var string
      */
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';

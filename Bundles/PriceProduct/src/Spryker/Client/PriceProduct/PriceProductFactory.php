@@ -29,7 +29,7 @@ class PriceProductFactory extends AbstractFactory
             $this->getCurrencyClient(),
             $this->getConfig(),
             $this->getQuoteClient(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
         );
     }
 

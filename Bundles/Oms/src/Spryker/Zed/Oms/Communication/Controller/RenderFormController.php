@@ -22,22 +22,27 @@ class RenderFormController extends AbstractController
      * @var string
      */
     protected const KEY_ID_SALES_ORDER = 'idSalesOrder';
+
     /**
      * @var string
      */
     protected const KEY_EVENTS = 'events';
+
     /**
      * @var string
      */
     protected const KEY_REDIRECT_URL = 'redirectUrl';
+
     /**
      * @var string
      */
     protected const KEY_EVENTS_GROUPED_BY_ITEM = 'eventsGroupedByItem';
+
     /**
      * @var string
      */
     protected const KEY_ID_SALES_ORDER_ITEM = 'idSalesOrderItem';
+
     /**
      * @var string
      */

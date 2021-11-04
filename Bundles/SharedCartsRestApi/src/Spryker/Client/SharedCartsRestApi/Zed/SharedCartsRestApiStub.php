@@ -38,7 +38,7 @@ class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShareDetailCollectionTransfer $shareDetailCollectionTransfer */
         $shareDetailCollectionTransfer = $this->zedRequestClient->call(
             '/shared-carts-rest-api/gateway/get-shared-carts-by-cart-uuid',
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         return $shareDetailCollectionTransfer;
@@ -54,7 +54,7 @@ class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShareCartResponseTransfer $shareCartResponseTransfer */
         $shareCartResponseTransfer = $this->zedRequestClient->call(
             '/shared-carts-rest-api/gateway/create',
-            $shareCartRequestTransfer
+            $shareCartRequestTransfer,
         );
 
         return $shareCartResponseTransfer;
@@ -70,7 +70,7 @@ class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShareCartResponseTransfer $shareCartResponseTransfer */
         $shareCartResponseTransfer = $this->zedRequestClient->call(
             '/shared-carts-rest-api/gateway/update',
-            $shareCartRequestTransfer
+            $shareCartRequestTransfer,
         );
 
         return $shareCartResponseTransfer;
@@ -86,7 +86,7 @@ class SharedCartsRestApiStub implements SharedCartsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\ShareCartResponseTransfer $shareCartResponseTransfer */
         $shareCartResponseTransfer = $this->zedRequestClient->call(
             '/shared-carts-rest-api/gateway/delete',
-            $shareCartRequestTransfer
+            $shareCartRequestTransfer,
         );
 
         return $shareCartResponseTransfer;

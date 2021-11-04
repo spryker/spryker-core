@@ -29,14 +29,17 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+
     /**
      * @var string
      */
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -44,21 +47,26 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use SERVICE_UTIL_DATE_TIME instead.
+     *
      * @var string
      */
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
     /**
      * @var string
      */
@@ -66,6 +74,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     *
      * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
@@ -84,14 +93,17 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
+
     /**
      * @var string
      */
     public const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
+
     /**
      * @var string
      */

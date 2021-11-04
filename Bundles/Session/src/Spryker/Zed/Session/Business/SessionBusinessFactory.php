@@ -39,7 +39,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     protected function createYvesSessionLockReleaserPool()
     {
         $sessionLockReleaserPool = new SessionLockReleaserPool(
-            $this->getYvesSessionLockReleaserPlugins()
+            $this->getYvesSessionLockReleaserPlugins(),
         );
 
         // This check was added because of BC and will be removed in the next major release.
@@ -47,9 +47,9 @@ class SessionBusinessFactory extends AbstractBusinessFactory
             $sessionLockReleaserPool->addLockReleaser(
                 $this->createRedisSessionLockReleaser(
                     $this->getConfig()->getSessionHandlerRedisConnectionParametersYves(),
-                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves()
+                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsYves(),
                 ),
-                SessionConfig::SESSION_HANDLER_REDIS_LOCKING
+                SessionConfig::SESSION_HANDLER_REDIS_LOCKING,
             );
         }
 
@@ -71,7 +71,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     protected function createZedSessionLockReleaserPool()
     {
         $sessionLockReleaserPool = new SessionLockReleaserPool(
-            $this->getZedSessionLockReleaserPlugins()
+            $this->getZedSessionLockReleaserPlugins(),
         );
 
         // This check was added because of BC and will be removed in the next major release.
@@ -79,9 +79,9 @@ class SessionBusinessFactory extends AbstractBusinessFactory
             $sessionLockReleaserPool->addLockReleaser(
                 $this->createRedisSessionLockReleaser(
                     $this->getConfig()->getSessionHandlerRedisConnectionParametersZed(),
-                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed()
+                    $this->getConfig()->getSessionHandlerRedisConnectionOptionsZed(),
                 ),
-                SessionConfig::SESSION_HANDLER_REDIS_LOCKING
+                SessionConfig::SESSION_HANDLER_REDIS_LOCKING,
             );
         }
 
@@ -102,7 +102,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
 
         return new SessionLockReleaser(
             $this->getRedisSessionLocker($redisClient),
-            $this->createRedisSessionLockReader($redisClient)
+            $this->createRedisSessionLockReader($redisClient),
         );
     }
 
@@ -144,7 +144,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     {
         return new SessionFactory(
             $this->getConfig()->getSessionLifeTime(),
-            $this->getMonitoringService()
+            $this->getMonitoringService(),
         );
     }
 
@@ -183,7 +183,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     {
         return new RedisSessionLockReader(
             $redisClient,
-            $this->createRedisLockKeyGenerator()
+            $this->createRedisLockKeyGenerator(),
         );
     }
 
@@ -205,7 +205,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     public function createSessionHealthChecker(): HealthCheckInterface
     {
         return new SessionHealthCheck(
-            $this->getSessionClient()
+            $this->getSessionClient(),
         );
     }
 

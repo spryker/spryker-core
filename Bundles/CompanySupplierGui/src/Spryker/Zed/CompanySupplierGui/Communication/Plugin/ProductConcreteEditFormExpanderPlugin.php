@@ -22,7 +22,7 @@ class ProductConcreteEditFormExpanderPlugin extends AbstractPlugin implements Pr
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class ProductConcreteEditFormExpanderPlugin extends AbstractPlugin implements Pr
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 }

@@ -51,7 +51,7 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new Transformer(
             $this->createFormatter($apiRequestTransfer->getFormatType()),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

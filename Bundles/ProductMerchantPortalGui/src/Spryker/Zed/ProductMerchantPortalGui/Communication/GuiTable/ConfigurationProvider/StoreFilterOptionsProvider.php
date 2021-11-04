@@ -25,9 +25,7 @@ class StoreFilterOptionsProvider implements StoreFilterOptionsProviderInterface
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
-     * @return array<string>
+     * @return array<int, string>
      */
     public function getStoreOptions(): array
     {

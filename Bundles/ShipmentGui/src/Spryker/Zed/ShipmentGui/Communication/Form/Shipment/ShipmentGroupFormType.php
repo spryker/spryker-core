@@ -22,10 +22,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ShipmentGroupFormType extends AbstractType
 {
     public const FIELD_ID_SALES_SHIPMENT = ShipmentFormType::FIELD_ID_SALES_SHIPMENT;
+
     /**
      * @var string
      */
     public const FIELD_ID_SALES_ORDER = 'id_sales_order';
+
     /**
      * @var string
      */
@@ -39,6 +41,7 @@ class ShipmentGroupFormType extends AbstractType
      * @var string
      */
     public const FIELD_SHIPMENT_FORM = 'shipment';
+
     /**
      * @var string
      */
@@ -69,7 +72,7 @@ class ShipmentGroupFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -82,7 +85,7 @@ class ShipmentGroupFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -101,7 +104,7 @@ class ShipmentGroupFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

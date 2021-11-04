@@ -23,7 +23,7 @@ class UrlStorageCmsPageMapperPlugin extends AbstractPlugin implements UrlStorage
 {
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
@@ -53,7 +53,7 @@ class UrlStorageCmsPageMapperPlugin extends AbstractPlugin implements UrlStorage
                 '%s.%s.resource.page.%s',
                 strtolower(Store::getInstance()->getStoreName()),
                 strtolower($locale),
-                $idCmsPage
+                $idCmsPage,
             );
 
             return $collectorDataKey;

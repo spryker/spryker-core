@@ -20,6 +20,7 @@ class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const MERCHANT_USER_DEFAULT_URL = '/dashboard-merchant-portal-gui/dashboard';
+
     /**
      * @var string
      */

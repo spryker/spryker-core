@@ -75,7 +75,7 @@ class FilesystemCacheWriter implements CacheWriterInterface
         throw new DirectoryCreationException(
             sprintf('Couldn\'t create directory "%s".', $directory),
             $exception->getCode(),
-            $exception
+            $exception,
         );
     }
 }

@@ -129,7 +129,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
             $productOfferTransfer,
             $quantity,
             $itemsCount,
-            $storeTransfer
+            $storeTransfer,
         );
 
         // Act
@@ -138,9 +138,9 @@ class OmsProductOfferReservationFacadeTest extends Unit
                 ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->setSku($productOfferTransfer->getConcreteSku())
                 ->setReservedStates(
-                    $this->tester->getOmsStateCollectionTransfer($salesOrderEntity)
+                    $this->tester->getOmsStateCollectionTransfer($salesOrderEntity),
                 )
-                ->setStore($storeTransfer)
+                ->setStore($storeTransfer),
         );
 
         // Assert
@@ -150,7 +150,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
         // SUM(amount)
         $this->assertSame(
             $this->tester->sumSalesAggregationTransfers($salesAggregationTransfers)->toString(),
-            (new Decimal($quantity * $itemsCount))->toString()
+            (new Decimal($quantity * $itemsCount))->toString(),
         );
     }
 

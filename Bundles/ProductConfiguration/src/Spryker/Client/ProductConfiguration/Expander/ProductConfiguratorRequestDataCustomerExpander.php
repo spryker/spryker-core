@@ -36,7 +36,7 @@ class ProductConfiguratorRequestDataCustomerExpander implements ProductConfigura
 
         if ($customerTransfer) {
             $productConfiguratorRequestDataTransfer->setCustomerReference(
-                $customerTransfer->getCustomerReference()
+                $customerTransfer->getCustomerReference(),
             );
         }
 

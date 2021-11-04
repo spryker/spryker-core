@@ -23,6 +23,7 @@ class EditController extends BaseProductRelationController
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+
     /**
      * @var string
      */
@@ -32,14 +33,17 @@ class EditController extends BaseProductRelationController
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Product relation successfully modified';
+
     /**
      * @var string
      */
     protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
+
     /**
      * @var string
      */
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
+
     /**
      * @var string
      */
@@ -49,6 +53,7 @@ class EditController extends BaseProductRelationController
      * @var string
      */
     protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id "%id%" not found.';
+
     /**
      * @var string
      */
@@ -56,12 +61,14 @@ class EditController extends BaseProductRelationController
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\ListController::indexAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
@@ -81,7 +88,7 @@ class EditController extends BaseProductRelationController
         $productRelationForm = $this->getFactory()
             ->createRelationForm(
                 $productRelationFormTypeDataProvider->getData($idProductRelation),
-                $productRelationFormTypeDataProvider->getOptions(true)
+                $productRelationFormTypeDataProvider->getOptions(true),
             );
 
         $productRelationTabs = $this->getFactory()
@@ -128,7 +135,7 @@ class EditController extends BaseProductRelationController
         $productTable = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 
@@ -206,7 +213,7 @@ class EditController extends BaseProductRelationController
             ->getProductRelationFacade()
             ->getProductAbstractDataById(
                 $idProductAbstract,
-                $localeTransfer->getIdLocale()
+                $localeTransfer->getIdLocale(),
             );
     }
 
@@ -230,7 +237,7 @@ class EditController extends BaseProductRelationController
             static::REDIRECT_URL_EDIT,
             [
                 static::URL_PARAM_ID_PRODUCT_RELATION => $idProductRelation,
-            ]
+            ],
         )->build();
 
         return $this->redirectResponse($editProductRelationUrl);

@@ -16,6 +16,7 @@ class StorageDatabase implements StorageDatabaseInterface
      * @var string
      */
     protected const KEY_PLACEHOLDER = ':key';
+
     /**
      * @var string
      */
@@ -25,10 +26,12 @@ class StorageDatabase implements StorageDatabaseInterface
      * @var string
      */
     protected const ACCESS_STATS_KEY_COUNT = 'count';
+
     /**
      * @var string
      */
     protected const ACCESS_STATS_KEY_KEYS = 'keys';
+
     /**
      * @var string
      */
@@ -110,7 +113,7 @@ class StorageDatabase implements StorageDatabaseInterface
 
         foreach ($keys as $key) {
             $prefixedKey = $this->getPrefixedKeyName($key);
-            $results[$prefixedKey] = isset($data[$key]) ? $data[$key] : null;
+            $results[$prefixedKey] = $data[$key] ?? null;
         }
 
         return $results;
@@ -280,7 +283,7 @@ class StorageDatabase implements StorageDatabaseInterface
         if ($this->debug) {
             $this->accessStats[static::ACCESS_STATS_KEY_COUNT][static::ACCESS_STATS_KEY_READ] += count($keys);
             $this->accessStats[static::ACCESS_STATS_KEY_KEYS][static::ACCESS_STATS_KEY_READ] = array_unique(
-                array_merge($this->accessStats[static::ACCESS_STATS_KEY_KEYS][static::ACCESS_STATS_KEY_READ], $keys)
+                array_merge($this->accessStats[static::ACCESS_STATS_KEY_KEYS][static::ACCESS_STATS_KEY_READ], $keys),
             );
         }
     }

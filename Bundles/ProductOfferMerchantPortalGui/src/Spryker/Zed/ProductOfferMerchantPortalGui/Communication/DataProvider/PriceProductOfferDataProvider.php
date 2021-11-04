@@ -47,8 +47,6 @@ class PriceProductOfferDataProvider implements PriceProductOfferDataProviderInte
     }
 
     /**
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param int $idProductOffer
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
@@ -73,8 +71,8 @@ class PriceProductOfferDataProvider implements PriceProductOfferDataProviderInte
         return new ArrayObject(
             $this->priceProductFilter->filterPriceProductTransfers(
                 $productOfferTransfer->getPrices()->getArrayCopy(),
-                (new PriceProductOfferCriteriaTransfer())->addVolumeQuantity(1)
-            )
+                (new PriceProductOfferCriteriaTransfer())->addVolumeQuantity(1),
+            ),
         );
     }
 }

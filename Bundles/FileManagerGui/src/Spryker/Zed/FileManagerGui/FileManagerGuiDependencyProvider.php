@@ -24,18 +24,22 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_FILE_INFO = 'PROPEL_QUERY_FILE_INFO';
+
     /**
      * @var string
      */
@@ -64,7 +68,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_FILE_MANAGER, function (Container $container) {
             return new FileManagerGuiToFileManagerFacadeBridge(
-                $container->getLocator()->fileManager()->facade()
+                $container->getLocator()->fileManager()->facade(),
             );
         });
 
@@ -80,7 +84,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new FileManagerGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

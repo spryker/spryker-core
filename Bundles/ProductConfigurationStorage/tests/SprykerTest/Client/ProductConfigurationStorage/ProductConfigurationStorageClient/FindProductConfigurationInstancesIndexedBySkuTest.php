@@ -33,6 +33,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
      * @var string
      */
     protected const TEST_SKU_1 = 'test-sku-1';
+
     /**
      * @var string
      */
@@ -72,11 +73,11 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
         // Assert
         $this->assertNotNull(
             $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.'
+            'Expects that product configuration instances will be found from session.',
         );
         $this->assertIsArray(
             $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.'
+            'Expects that product configuration instances will be found from session.',
         );
 
         $this->assertEquals(2, count($productConfigurationInstanceTransfers));
@@ -84,7 +85,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
             $this->assertInstanceOf(
                 ProductConfigurationInstanceTransfer::class,
                 $transfer,
-                'Expects that product configuration instances will be found from session.'
+                'Expects that product configuration instances will be found from session.',
             );
         }
     }
@@ -113,11 +114,11 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
         // Assert
         $this->assertNotNull(
             $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.'
+            'Expects that product configuration instances will be found from session.',
         );
         $this->assertIsArray(
             $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.'
+            'Expects that product configuration instances will be found from session.',
         );
 
         $this->assertEquals(2, count($productConfigurationInstanceTransfers));
@@ -125,7 +126,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
             $this->assertInstanceOf(
                 ProductConfigurationInstanceTransfer::class,
                 $transfer,
-                'Expects that product configuration instances will be found from session.'
+                'Expects that product configuration instances will be found from session.',
             );
         }
     }
@@ -146,7 +147,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
         // Assert
         $this->assertEmpty(
             $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances wont be found.'
+            'Expects that product configuration instances wont be found.',
         );
     }
 

@@ -266,7 +266,7 @@ class GatewayControllerListenerPluginTest extends Unit
         $fixtureServer = TransferServer::getInstance();
         $this->resetSingleton($fixtureServer);
         CoreTransferServer::getInstance(
-            $this->createRepeaterMock()
+            $this->createRepeaterMock(),
         );
     }
 

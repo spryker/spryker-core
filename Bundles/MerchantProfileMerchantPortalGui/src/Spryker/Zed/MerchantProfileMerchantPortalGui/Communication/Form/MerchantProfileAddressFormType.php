@@ -32,34 +32,42 @@ class MerchantProfileAddressFormType extends AbstractType
      * @var string
      */
     protected const FIELD_ID_MERCHANT_PROFILE_ADDRESS = 'id_merchant_profile_address';
+
     /**
      * @var string
      */
     protected const FIELD_CITY = 'city';
+
     /**
      * @var string
      */
     protected const FIELD_ZIP_CODE = 'zip_code';
+
     /**
      * @var string
      */
     protected const FIELD_FK_COUNTRY = 'fk_country';
+
     /**
      * @var string
      */
     protected const FIELD_ADDRESS_1 = 'address1';
+
     /**
      * @var string
      */
     protected const FIELD_ADDRESS_2 = 'address2';
+
     /**
      * @var string
      */
     protected const FIELD_ADDRESS_3 = 'address3';
+
     /**
      * @var string
      */
     protected const FIELD_LATITUDE = 'latitude';
+
     /**
      * @var string
      */
@@ -69,30 +77,37 @@ class MerchantProfileAddressFormType extends AbstractType
      * @var string
      */
     protected const LABEL_CITY = 'City';
+
     /**
      * @var string
      */
     protected const LABEL_ZIP_CODE = 'Zip Code';
+
     /**
      * @var string
      */
     protected const LABEL_FK_COUNTRY = 'Country';
+
     /**
      * @var string
      */
     protected const LABEL_ADDRESS_1 = 'Street';
+
     /**
      * @var string
      */
     protected const LABEL_ADDRESS_2 = 'Number';
+
     /**
      * @var string
      */
     protected const LABEL_ADDRESS_3 = 'Addition to address';
+
     /**
      * @var string
      */
     protected const LABEL_LATITUDE = 'Latitude';
+
     /**
      * @var string
      */
@@ -113,7 +128,7 @@ class MerchantProfileAddressFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -129,7 +144,7 @@ class MerchantProfileAddressFormType extends AbstractType
             ->addLongitudeField($builder);
 
         $builder->addModelTransformer(
-            new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer()
+            new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer(),
         );
     }
 

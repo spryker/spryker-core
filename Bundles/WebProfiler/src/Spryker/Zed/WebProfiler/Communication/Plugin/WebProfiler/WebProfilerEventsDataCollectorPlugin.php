@@ -19,6 +19,7 @@ class WebProfilerEventsDataCollectorPlugin implements WebProfilerDataCollectorPl
      * @var string
      */
     protected const NAME = 'events';
+
     /**
      * @var string
      */

@@ -66,19 +66,19 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
     ): RestResponseInterface {
         $shoppingListItemRequestTransfer = $this->shoppingListItemRestRequestReader->readShoppingListItemRequestTransferFromRequest(
-            $restRequest
+            $restRequest,
         );
 
         if (count($shoppingListItemRequestTransfer->getErrorIdentifiers()) > 0) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $shoppingListItemRequestTransfer->getErrorIdentifiers()
+                $shoppingListItemRequestTransfer->getErrorIdentifiers(),
             );
         }
 
         $shoppingListItemRequestTransfer = $this->shoppingListItemMapper->mapRestShoppingListItemsAttributesTransferToShoppingListItemRequestTransfer(
             $restShoppingListItemsAttributesTransfer,
-            $shoppingListItemRequestTransfer
+            $shoppingListItemRequestTransfer,
         );
 
         $shoppingListItemResponseTransfer = $this->shoppingListsRestApiClient->addShoppingListItem($shoppingListItemRequestTransfer);
@@ -86,13 +86,13 @@ class ShoppingListItemAdder implements ShoppingListItemAdderInterface
         if ($shoppingListItemResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListItemRestResponseBuilder->buildErrorRestResponse(
                 $restRequest,
-                $shoppingListItemResponseTransfer->getErrors()
+                $shoppingListItemResponseTransfer->getErrors(),
             );
         }
 
         return $this->shoppingListItemRestResponseBuilder->buildShoppingListItemRestResponse(
             $shoppingListItemResponseTransfer->getShoppingListItem(),
-            $shoppingListItemRequestTransfer->getShoppingListUuid()
+            $shoppingListItemRequestTransfer->getShoppingListUuid(),
         );
     }
 }

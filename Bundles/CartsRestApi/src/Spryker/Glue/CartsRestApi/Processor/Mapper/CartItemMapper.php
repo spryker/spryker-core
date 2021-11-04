@@ -45,13 +45,13 @@ class CartItemMapper implements CartItemMapperInterface
             $restCartItemCalculationsTransfer = new RestCartItemCalculationsTransfer();
         }
         $restItemsAttributesTransfer->setCalculations(
-            $restCartItemCalculationsTransfer->fromArray($itemTransfer->toArray(), true)
+            $restCartItemCalculationsTransfer->fromArray($itemTransfer->toArray(), true),
         );
 
         return $this->executeRestCartItemsAttributesMapperPlugins(
             $itemTransfer,
             $restItemsAttributesTransfer,
-            $localeName
+            $localeName,
         );
     }
 
@@ -72,7 +72,7 @@ class CartItemMapper implements CartItemMapperInterface
                 $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestItemsAttributesTransfer(
                     $itemTransfer,
                     $restItemsAttributesTransfer,
-                    $localeName
+                    $localeName,
                 );
         }
 

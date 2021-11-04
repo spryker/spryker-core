@@ -27,8 +27,8 @@ class AssignedCustomerTable extends AbstractCustomerTable
             sprintf(
                 'assigned-customer-table?%s=%d',
                 EditController::PARAM_ID_USER,
-                $this->userTransfer->getIdUser()
-            )
+                $this->userTransfer->getIdUser(),
+            ),
         );
 
         return $config;
@@ -44,7 +44,7 @@ class AssignedCustomerTable extends AbstractCustomerTable
                 ->addAnd(
                     SpyCustomerTableMap::COL_FK_USER,
                     $this->userTransfer->getIdUser(),
-                    Criteria::EQUAL
+                    Criteria::EQUAL,
                 )
             ->leftJoinSpyUser()
             ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::COL_ID)

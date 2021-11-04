@@ -266,7 +266,7 @@ class Writer implements WriterInterface
         $productImageSetEntity->save();
 
         $productImageSetTransfer->setIdProductImageSet(
-            $productImageSetEntity->getIdProductImageSet()
+            $productImageSetEntity->getIdProductImageSet(),
         );
 
         $productImageSetTransfer = $this->persistProductImageSetCollection($productImageSetTransfer);
@@ -306,7 +306,7 @@ class Writer implements WriterInterface
             $idProductImageSetToProductImage = $this->persistProductImageRelation(
                 $productImageSetTransfer->requireIdProductImageSet()->getIdProductImageSet(),
                 $imageTransfer->getIdProductImage(),
-                $imageTransfer->getSortOrder()
+                $imageTransfer->getSortOrder(),
             );
 
             $imageTransfer->setIdProductImageSetToProductImage($idProductImageSetToProductImage);
@@ -347,7 +347,7 @@ class Writer implements WriterInterface
             $imageSetTransfer->setIdProductAbstract(
                 $productAbstractTransfer
                     ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
+                    ->getIdProductAbstract(),
             );
 
             $this->createProductImageSet($imageSetTransfer);
@@ -367,7 +367,7 @@ class Writer implements WriterInterface
             $imageSetTransfer->setIdProductAbstract(
                 $productAbstractTransfer
                     ->requireIdProductAbstract()
-                    ->getIdProductAbstract()
+                    ->getIdProductAbstract(),
             );
 
             $this->updateProductImageSet($imageSetTransfer);
@@ -389,7 +389,7 @@ class Writer implements WriterInterface
             $imageSetTransfer->setIdProduct(
                 $productConcreteTransfer
                     ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
+                    ->getIdProductConcrete(),
             );
 
             $this->createProductImageSet($imageSetTransfer);
@@ -409,7 +409,7 @@ class Writer implements WriterInterface
             $imageSetTransfer->setIdProduct(
                 $productConcreteTransfer
                     ->requireIdProductConcrete()
-                    ->getIdProductConcrete()
+                    ->getIdProductConcrete(),
             );
 
             $this->updateProductImageSet($imageSetTransfer);

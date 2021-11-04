@@ -18,6 +18,7 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_RESOURCE_SHARE = 'CLIENT_RESOURCE_SHARE';
+
     /**
      * @var string
      */
@@ -67,7 +68,7 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new PersistentCartShareToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 

@@ -29,7 +29,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionValueExpander(
             $this->getProductOptionFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
         );
     }
 
@@ -80,7 +80,7 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionValuePriceValidator(
             $this->getProductOptionFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
         );
     }
 }

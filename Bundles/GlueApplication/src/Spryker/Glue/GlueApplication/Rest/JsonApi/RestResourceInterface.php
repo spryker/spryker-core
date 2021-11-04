@@ -15,18 +15,22 @@ interface RestResourceInterface
      * @var string
      */
     public const RESOURCE_DATA = 'data';
+
     /**
      * @var string
      */
     public const RESOURCE_TYPE = 'type';
+
     /**
      * @var string
      */
     public const RESOURCE_ID = 'id';
+
     /**
      * @var string
      */
     public const RESOURCE_ATTRIBUTES = 'attributes';
+
     /**
      * @var string
      */
@@ -34,9 +38,11 @@ interface RestResourceInterface
 
     /**
      * @deprecated Use {@link \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface::LINK_SELF} instead
+     *
      * @var string
      */
     public const RESOURCE_LINKS_SELF = 'self';
+
     /**
      * @var string
      */

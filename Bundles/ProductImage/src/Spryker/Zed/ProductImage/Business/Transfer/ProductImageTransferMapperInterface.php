@@ -14,7 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface ProductImageTransferMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
@@ -28,7 +28,7 @@ interface ProductImageTransferMapperInterface
     public function mapProductImageSet(SpyProductImageSet $productImageSetEntity);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImage> $productImageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImage[] $productImageEntityCollection
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      *
      * @return array<\Generated\Shared\Transfer\ProductImageTransfer>

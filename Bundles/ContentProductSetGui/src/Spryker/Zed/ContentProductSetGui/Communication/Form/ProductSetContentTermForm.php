@@ -61,18 +61,18 @@ class ProductSetContentTermForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['tables']['productSetViewTable'] = $this->getFactory()->createProductSetViewTable(
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['tables']['productSetSelectedTable'] = $this->getFactory()->createProductSetSelectedTable(
             $view->vars['value']->getIdProductSet(),
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
     }
@@ -87,7 +87,7 @@ class ProductSetContentTermForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -115,7 +115,7 @@ class ProductSetContentTermForm extends AbstractType
                 $id = (int)$event->getData();
                 $event->setData($id);
                 $event->getForm()->setData($id);
-            }
+            },
         );
 
         return $this;

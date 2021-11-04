@@ -22,6 +22,7 @@ class MerchantProfileGlossaryAttributeLocaleFormType extends AbstractType
      * @var string
      */
     protected const FIELD_ID_LOCALE = 'idLocale';
+
     /**
      * @var string
      */
@@ -29,7 +30,7 @@ class MerchantProfileGlossaryAttributeLocaleFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -80,7 +81,7 @@ class MerchantProfileGlossaryAttributeLocaleFormType extends AbstractType
             },
             function ($value) {
                 return (int)$value;
-            }
+            },
         );
     }
 }

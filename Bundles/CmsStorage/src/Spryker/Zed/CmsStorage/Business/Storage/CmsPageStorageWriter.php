@@ -22,14 +22,17 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @var string
      */
     protected const CMS_PAGE_ENTITY = 'CMS_PAGE_ENTITY';
+
     /**
      * @var string
      */
     protected const CMS_PAGE_STORAGE_ENTITY = 'CMS_PAGE_STORAGE_ENTITY';
+
     /**
      * @var string
      */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+
     /**
      * @var string
      */
@@ -117,7 +120,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     {
         $pairedEntities = $this->pairCmsPageEntitiesWithCmsPageStorageEntities(
             $cmsPageEntities,
-            $cmsPageStorageEntities
+            $cmsPageStorageEntities,
         );
 
         $storeTransfer = $this->storeFacade->getCurrentStore();
@@ -145,7 +148,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
                 $cmsPageEntity,
                 $cmsPageStorageEntity,
                 $pair[static::LOCALE_NAME],
-                $pair[static::STORE_NAME]
+                $pair[static::STORE_NAME],
             );
         }
     }
@@ -236,7 +239,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         $localeCmsPageDataTransfer = $this->cmsFacade
             ->extractLocaleCmsPageDataTransfer(
                 $cmsVersionDataTransfer,
-                (new LocaleTransfer())->setLocaleName($localeName)
+                (new LocaleTransfer())->setLocaleName($localeName),
             );
 
         $localeCmsPageDataTransfer->fromArray($cmsPageEntity->toArray(), true);
@@ -248,7 +251,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {
             $expandedData = $contentWidgetDataExpanderPlugin->expand(
                 $expandedData,
-                (new LocaleTransfer())->setLocaleName($localeName)
+                (new LocaleTransfer())->setLocaleName($localeName),
             );
         }
 
@@ -318,7 +321,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
                 $cmsPageEntity,
                 $cmsPageStorageEntities,
                 $pairs,
-                $localeNameMap
+                $localeNameMap,
             );
         }
 
@@ -331,7 +334,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageStorageEntities
      * @param array $pairs
-     * @param array<string[]> $localeNameMap
+     * @param array<array<string>> $localeNameMap
      *
      * @return array
      */
@@ -349,8 +352,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
             $localeNames = $localeNameMap[$storeName];
 
             foreach ($localeNames as $localeName) {
-                $cmsPageStorageEntity = isset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]) ?
-                    $cmsPageStorageEntities[$idCmsPage][$localeName][$storeName] :
+                $cmsPageStorageEntity = $cmsPageStorageEntities[$idCmsPage][$localeName][$storeName] ??
                     new SpyCmsPageStorage();
 
                 $pairs[] = [
@@ -388,7 +390,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

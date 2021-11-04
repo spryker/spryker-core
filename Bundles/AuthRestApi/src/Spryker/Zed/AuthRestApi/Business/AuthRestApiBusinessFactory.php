@@ -25,7 +25,7 @@ class AuthRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new AccessTokenCreator(
             $this->getOauthFacade(),
-            $this->getPostAuthPlugins()
+            $this->getPostAuthPlugins(),
         );
     }
 

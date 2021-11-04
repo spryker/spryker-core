@@ -15,10 +15,12 @@ class RouteResolver implements RouteResolverInterface
      * @var int
      */
     protected const SERVICE_NAME_INDEX_MODULE = 2;
+
     /**
      * @var int
      */
     protected const SERVICE_NAME_INDEX_CONTROLLER = 3;
+
     /**
      * @var int
      */

@@ -34,7 +34,7 @@ class SessionFactory extends AbstractFactory
         return new SessionStorage(
             $this->createSessionStorageOptions(),
             $this->createSessionStorageHandlerPool(),
-            $this->getConfig()->getConfiguredSessionHandlerName()
+            $this->getConfig()->getConfiguredSessionHandlerName(),
         );
     }
 
@@ -52,7 +52,7 @@ class SessionFactory extends AbstractFactory
     protected function createSessionStorageHandlerPool()
     {
         $sessionHandlerPool = new SessionStorageHandlerPool(
-            $this->getSessionHandlerPlugins()
+            $this->getSessionHandlerPlugins(),
         );
 
         // This check was added because of BC and will be removed in the next major release.
@@ -75,7 +75,7 @@ class SessionFactory extends AbstractFactory
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerRedis(
             $this->getConfig()->getSessionHandlerRedisConnectionParameters(),
-            $this->getConfig()->getSessionHandlerRedisConnectionOptions()
+            $this->getConfig()->getSessionHandlerRedisConnectionOptions(),
         );
     }
 
@@ -88,7 +88,7 @@ class SessionFactory extends AbstractFactory
     {
         return $this->createSessionHandlerFactory()->createRedisLockingSessionHandler(
             $this->getConfig()->getSessionHandlerRedisConnectionParameters(),
-            $this->getConfig()->getSessionHandlerRedisConnectionOptions()
+            $this->getConfig()->getSessionHandlerRedisConnectionOptions(),
         );
     }
 
@@ -100,7 +100,7 @@ class SessionFactory extends AbstractFactory
     protected function createSessionHandlerFile()
     {
         return $this->createSessionHandlerFactory()->createSessionHandlerFile(
-            $this->getConfig()->getSessionHandlerFileSavePath()
+            $this->getConfig()->getSessionHandlerFileSavePath(),
         );
     }
 
@@ -113,7 +113,7 @@ class SessionFactory extends AbstractFactory
     {
         return new SessionHandlerFactory(
             $this->getConfig()->getSessionLifeTime(),
-            $this->getMonitoringService()
+            $this->getMonitoringService(),
         );
     }
 
@@ -157,7 +157,7 @@ class SessionFactory extends AbstractFactory
     public function createSessionHealthChecker(): HealthCheckInterface
     {
         return new SessionHealthCheck(
-            $this->getSessionClient()
+            $this->getSessionClient(),
         );
     }
 

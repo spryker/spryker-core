@@ -27,6 +27,7 @@ class FileDirectoryForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class FileDirectoryForm extends AbstractType
      * @var string
      */
     public const OPTION_DATA_CLASS = 'data_class';
+
     /**
      * @var string
      */
@@ -57,7 +59,7 @@ class FileDirectoryForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -82,7 +84,7 @@ class FileDirectoryForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -122,7 +124,7 @@ class FileDirectoryForm extends AbstractType
             },
             function ($value) {
                 return $value;
-            }
+            },
         );
     }
 

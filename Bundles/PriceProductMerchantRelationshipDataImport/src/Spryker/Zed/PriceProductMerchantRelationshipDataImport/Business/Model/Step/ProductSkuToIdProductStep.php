@@ -36,7 +36,7 @@ class ProductSkuToIdProductStep implements DataImportStepInterface
                 'One of "%s" or "%s" must be in the data set. Given: "%s"',
                 PriceProductMerchantRelationshipDataSetInterface::ABSTRACT_SKU,
                 PriceProductMerchantRelationshipDataSetInterface::CONCRETE_SKU,
-                implode(', ', array_keys($dataSet->getArrayCopy()))
+                implode(', ', array_keys($dataSet->getArrayCopy())),
             ));
         }
 

@@ -33,6 +33,7 @@ class PropelSchemaParserTest extends Unit
      * @var string
      */
     protected const GENERATED_SCHEMA_FILES = 'SchemaFiles';
+
     /**
      * @var string
      */
@@ -127,7 +128,7 @@ class PropelSchemaParserTest extends Unit
 
         // Act
         foreach ($foreignIdColumnNames as $foreignIdColumnName) {
-            $dependentModules[] = $propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, 'FooBar');
+            $propelSchemaParser->getModuleNameByForeignReference($foreignIdColumnName, 'FooBar');
         }
     }
 

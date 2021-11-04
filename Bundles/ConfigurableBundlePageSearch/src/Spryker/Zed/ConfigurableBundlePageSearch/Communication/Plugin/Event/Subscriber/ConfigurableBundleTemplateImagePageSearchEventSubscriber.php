@@ -52,7 +52,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
             new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName(),
         );
 
         return $this;
@@ -70,7 +70,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
             new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName(),
         );
 
         return $this;
@@ -88,7 +88,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
             new ProductImageSetConfigurableBundlePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName(),
         );
 
         return $this;
@@ -106,7 +106,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
             new ProductImageSetConfigurableBundlePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName(),
         );
 
         return $this;
@@ -124,7 +124,7 @@ class ConfigurableBundleTemplateImagePageSearchEventSubscriber extends AbstractP
             new ProductImageSetConfigurableBundlePageSearchPublishListener(),
             0,
             null,
-            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName()
+            $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName(),
         );
 
         return $this;

@@ -52,7 +52,7 @@ class SubFormDataProviders implements StepEngineFormDataProviderInterface
         foreach ($this->subFormPlugins as $subForm) {
             $options = array_merge(
                 $options,
-                $subForm->createSubFormDataProvider()->getOptions($quoteTransfer)
+                $subForm->createSubFormDataProvider()->getOptions($quoteTransfer),
             );
         }
 

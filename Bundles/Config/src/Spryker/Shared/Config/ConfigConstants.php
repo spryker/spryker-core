@@ -14,6 +14,7 @@ interface ConfigConstants
 {
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ENABLE_WEB_PROFILER = 'CONFIG:ENABLE_WEB_PROFILER';

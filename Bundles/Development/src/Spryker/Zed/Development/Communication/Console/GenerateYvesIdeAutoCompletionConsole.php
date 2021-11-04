@@ -21,6 +21,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
      * @var string
      */
     protected const OLD_COMMAND_NAME = 'dev:ide:generate-yves-auto-completion';
+
     /**
      * @var string
      */

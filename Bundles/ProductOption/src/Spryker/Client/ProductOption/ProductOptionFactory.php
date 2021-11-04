@@ -25,7 +25,7 @@ class ProductOptionFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->createKeyBuilder(),
             $this->createProductOptionValuePriceReader(),
-            $localeName
+            $localeName,
         );
     }
 
@@ -52,7 +52,7 @@ class ProductOptionFactory extends AbstractFactory
     {
         return new ProductOptionValuePriceReader(
             $this->getPriceClient(),
-            $this->getCurrencyClient()
+            $this->getCurrencyClient(),
         );
     }
 

@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
+use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -171,6 +172,18 @@ interface ProductDiscontinuedFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
     public function checkWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if wishlist item is not discontinued.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
+     */
+    public function checkUpdateWishlistItemProductIsNotDiscontinued(WishlistItemTransfer $wishlistItemTransfer): WishlistPreUpdateItemCheckResponseTransfer;
 
     /**
      * Specification:

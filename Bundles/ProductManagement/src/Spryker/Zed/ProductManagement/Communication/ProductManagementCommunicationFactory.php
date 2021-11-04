@@ -117,7 +117,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore(),
-            $this->createProductAttributeReader()
+            $this->createProductAttributeReader(),
         );
     }
 
@@ -140,7 +140,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $currentLocale,
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -159,7 +159,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductTaxCollection(),
             $this->getStore(),
             $this->getProductAttributeFacade(),
-            $this->createProductAttributeReader()
+            $this->createProductAttributeReader(),
         );
     }
 
@@ -184,7 +184,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore(),
             $this->createProductStockHelper(),
-            $this->getProductConcreteFormEditDataProviderExpanderPlugins()
+            $this->getProductConcreteFormEditDataProviderExpanderPlugins(),
         );
     }
 
@@ -330,7 +330,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductValidityActivityMessenger(
             $this->getConfig(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -345,7 +345,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade(),
             $this->createLocaleProvider(),
             $this->getProductFormTransferMapperExpanderPlugins(),
-            $this->createProductConcreteSuperAttributeFilterHelper()
+            $this->createProductConcreteSuperAttributeFilterHelper(),
         );
     }
 
@@ -355,7 +355,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createLocaleProvider()
     {
         return new LocaleProvider(
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -369,7 +369,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade()->getCurrentLocale(),
             $this->createProductTypeHelper(),
             $this->getRepository(),
-            $this->getProductTableDataExpanderPlugins()
+            $this->getProductTableDataExpanderPlugins(),
         );
     }
 
@@ -385,7 +385,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $idProductAbstract,
             $this->getLocaleFacade()->getCurrentLocale(),
-            $type
+            $type,
         );
     }
 
@@ -405,7 +405,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade()->getCurrentLocale(),
             $this->getPriceFacade(),
             $this->getStoreFacade(),
-            $idProductConcrete
+            $idProductConcrete,
         );
     }
 
@@ -420,7 +420,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductQueryContainer(),
             $this->getProductGroupQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 
@@ -470,7 +470,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductConcreteFormEditTabs()
     {
         return new ProductConcreteFormEditTabs(
-            $this->getProductConcreteFormEditTabsExpanderPlugins()
+            $this->getProductConcreteFormEditTabsExpanderPlugins(),
         );
     }
 
@@ -488,7 +488,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductTypeHelper()
     {
         return new ProductTypeHelper(
-            $this->getProductQueryContainer()
+            $this->getProductQueryContainer(),
         );
     }
 
@@ -635,7 +635,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAttributeHelper(
             $this->getProductFacade(),
-            $this->getProductQueryContainer()
+            $this->getProductQueryContainer(),
         );
     }
 
@@ -653,7 +653,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createAbstractProductEditViewExpanderPluginExecutor(): AbstractProductEditViewExpanderPluginExecutorInterface
     {
         return new AbstractProductEditEditViewExpanderPluginExecutor(
-            $this->getAbstractProductEditViewExpanderPlugins()
+            $this->getAbstractProductEditViewExpanderPlugins(),
         );
     }
 
@@ -663,7 +663,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function createProductConcreteEditViewExpanderPluginExecutor(): ProductConcreteEditViewExpanderPluginExecutorInterface
     {
         return new ProductConcreteEditEditViewExpanderPluginExecutor(
-            $this->getProductConcreteEditViewExpanderPlugins()
+            $this->getProductConcreteEditViewExpanderPlugins(),
         );
     }
 

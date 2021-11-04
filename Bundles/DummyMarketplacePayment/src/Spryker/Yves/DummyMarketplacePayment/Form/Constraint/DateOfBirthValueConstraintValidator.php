@@ -27,7 +27,7 @@ class DateOfBirthValueConstraintValidator extends ConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 DateOfBirthValueConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

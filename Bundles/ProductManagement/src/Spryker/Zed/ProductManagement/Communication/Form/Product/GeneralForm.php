@@ -25,6 +25,7 @@ class GeneralForm extends AbstractSubForm
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class GeneralForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -47,7 +48,7 @@ class GeneralForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -71,7 +72,7 @@ class GeneralForm extends AbstractSubForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

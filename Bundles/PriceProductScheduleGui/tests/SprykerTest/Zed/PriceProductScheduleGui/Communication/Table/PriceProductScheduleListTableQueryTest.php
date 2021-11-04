@@ -37,24 +37,28 @@ class PriceProductScheduleListTableQueryTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     *
      * @var string
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
     /**
      * @uses \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleListTable::COL_NUMBER_OF_PRICES
+     *
      * @var string
      */
     protected const COL_NUMBER_OF_PRICES = 'number_of_prices';
 
     /**
      * @uses \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleListTable::COL_NUMBER_OF_PRODUCTS
+     *
      * @var string
      */
     protected const COL_NUMBER_OF_PRODUCTS = 'number_of_products';
@@ -108,7 +112,7 @@ class PriceProductScheduleListTableQueryTest extends Unit
 
         $priceProductScheduleListTableMock = new PriceProductScheduleListTableMock(
             SpyPriceProductScheduleListQuery::create(),
-            $this->getPriceProductScheduleGuiToStoreFacadeMock()
+            $this->getPriceProductScheduleGuiToStoreFacadeMock(),
         );
         $priceProductScheduleListTableMock->setTwig($this->getTwigMock());
 

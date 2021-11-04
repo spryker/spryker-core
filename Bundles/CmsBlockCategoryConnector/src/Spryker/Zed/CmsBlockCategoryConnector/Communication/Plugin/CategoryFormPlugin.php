@@ -49,7 +49,7 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions(),
         );
     }
 

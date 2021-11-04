@@ -123,7 +123,7 @@ class User implements UserInterface
 
         if ($userCheck === true) {
             throw new UsernameExistsException(
-                sprintf('Username %s already exist.', $userTransfer->getUsername())
+                sprintf('Username %s already exist.', $userTransfer->getUsername()),
             );
         }
 

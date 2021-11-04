@@ -26,7 +26,7 @@ class StockAddressDataImportBusinessFactory extends DataImportBusinessFactory
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getStockAddressDataImporterConfiguration()
+            $this->getConfig()->getStockAddressDataImporterConfiguration(),
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */

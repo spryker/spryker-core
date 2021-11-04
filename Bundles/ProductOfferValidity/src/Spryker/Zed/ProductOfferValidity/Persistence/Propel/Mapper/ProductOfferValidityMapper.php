@@ -30,8 +30,8 @@ class ProductOfferValidityMapper
             $productOfferValidityCollectionTransfer->addProductOfferValidity(
                 $this->productOfferValidityEntityToProductOfferValidityTransfer(
                     $productOfferValidityEntity,
-                    new ProductOfferValidityTransfer()
-                )
+                    new ProductOfferValidityTransfer(),
+                ),
             );
         }
 

@@ -21,6 +21,7 @@ class DeployPreparePropelConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:deploy:prepare';
+
     /**
      * @var string
      */

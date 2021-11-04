@@ -62,8 +62,8 @@ class LocaleManager
             throw new MissingLocaleException(
                 sprintf(
                     'Tried to retrieve locale %s, but it does not exist',
-                    $localeName
-                )
+                    $localeName,
+                ),
             );
         }
 
@@ -87,8 +87,8 @@ class LocaleManager
             throw new MissingLocaleException(
                 sprintf(
                     'Tried to retrieve locale with code %s, but it does not exist',
-                    $localeCode
-                )
+                    $localeCode,
+                ),
             );
         }
 
@@ -113,8 +113,8 @@ class LocaleManager
             throw new MissingLocaleException(
                 sprintf(
                     'Tried to retrieve locale with id %s, but it does not exist',
-                    $idLocale
-                )
+                    $idLocale,
+                ),
             );
         }
 
@@ -134,8 +134,8 @@ class LocaleManager
             throw new LocaleExistsException(
                 sprintf(
                     'Tried to create locale %s, but it already exists',
-                    $localeName
-                )
+                    $localeName,
+                ),
             );
         }
 

@@ -38,6 +38,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
 {
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const STATUS_DECLINED = 'declined';
@@ -83,7 +84,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         //Act
         $this->productConcreteOffersStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
@@ -100,7 +101,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         $expectedCount = 0;
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-            [ProductOfferTransfer::IS_ACTIVE => false]
+            [ProductOfferTransfer::IS_ACTIVE => false],
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
@@ -109,7 +110,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         //Act
         $this->productConcreteOffersStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
@@ -126,7 +127,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         $expectedCount = 0;
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
-            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DECLINED]
+            [ProductOfferTransfer::APPROVAL_STATUS => static::STATUS_DECLINED],
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
@@ -135,7 +136,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         //Act
         $this->productConcreteOffersStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
@@ -153,7 +154,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         $productOfferTransfer = $this->tester->createProductOffer(
             $this->tester->getLocator()->store()->facade()->getCurrentStore(),
             [],
-            [ProductConcreteTransfer::IS_ACTIVE => false]
+            [ProductConcreteTransfer::IS_ACTIVE => false],
         );
         $eventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferTransfer->getConcreteSku()]),
@@ -162,7 +163,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
         //Act
         $this->productConcreteOffersStoragePublishListener->handleBulk(
             $eventTransfers,
-            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH
+            MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH,
         );
         $merchantProductOfferStorageEntities = $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku());
 
@@ -193,7 +194,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
             ->method('deleteCollectionByProductSkus')
             ->withConsecutive(
                 [[$productOfferTransfer->getConcreteSku()], 'AT'],
-                [[$productOfferTransfer->getConcreteSku()], 'US']
+                [[$productOfferTransfer->getConcreteSku()], 'US'],
             );
 
         $eventBehaviorFacade = $this->getMockBuilder(MerchantProductOfferStorageToEventBehaviorFacadeInterface::class)->getMock();
@@ -205,7 +206,7 @@ class ProductConcreteOffersStoragePublishListenerTest extends AbstractStoragePub
             $this->getMerchantProductOfferStorageRepositoryMock($productOfferCollectionTransfer),
             $productOfferStorageDeleter,
             $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock(),
-            new ProductOfferCriteriaTransferProvider()
+            new ProductOfferCriteriaTransferProvider(),
         );
 
         //Act

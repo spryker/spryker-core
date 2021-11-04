@@ -23,6 +23,7 @@ class DeleteRateController extends AbstractController
      * @var string
      */
     protected const PARAM_REQUEST_ID_TAX_RATE = 'id-tax-rate';
+
     /**
      * @var string
      */

@@ -27,6 +27,7 @@ class DetailController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_LIST = '/merchant-sales-return-merchant-user-gui';
@@ -35,25 +36,26 @@ class DetailController extends AbstractController
      * @var string
      */
     protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Requested return with ID %id% was not found.';
+
     /**
      * @var string
      */
     protected const MESSAGE_PARAM_ID = '%id%';
+
     /**
      * @var string
      */
     protected const DEFAULT_LABEL_CLASS = 'label-default';
+
     /**
      * @var string
      */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
@@ -93,7 +95,7 @@ class DetailController extends AbstractController
     protected function findReturn(Request $request): ?ReturnTransfer
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_RETURN)
+            $request->get(static::PARAM_ID_RETURN),
         );
 
         return $this->getFactory()
@@ -121,11 +123,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -143,11 +143,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function extractUniqueItemStateLabelsFromReturn(array $merchantOrderItemTransfers): array
     {
@@ -166,11 +164,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
      * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function extractUniqueOrderItemManualEvents(array $merchantOrderItemTransfers): array
     {
@@ -184,11 +180,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<int, int>
-     *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return array<int>
+     * @return array<int, int>
      */
     protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {

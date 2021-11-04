@@ -61,7 +61,7 @@ class SpecificationBuilderTest extends Unit
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
         $specification = $decisionRuleSpecificationBuilder->buildFromQueryString(
-            'sku is in "123' . ComparatorOperators::LIST_DELIMITER . '321" and sku  is in  "321' . ComparatorOperators::LIST_DELIMITER . ' 123"'
+            'sku is in "123' . ComparatorOperators::LIST_DELIMITER . '321" and sku  is in  "321' . ComparatorOperators::LIST_DELIMITER . ' 123"',
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
@@ -75,7 +75,7 @@ class SpecificationBuilderTest extends Unit
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
         $specification = $decisionRuleSpecificationBuilder->buildFromQueryString(
-            'sku is in "123' . ComparatorOperators::LIST_DELIMITER . '321" or sku  is in  "321' . ComparatorOperators::LIST_DELIMITER . ' 123"'
+            'sku is in "123' . ComparatorOperators::LIST_DELIMITER . '321" or sku  is in  "321' . ComparatorOperators::LIST_DELIMITER . ' 123"',
         );
 
         $this->assertInstanceOf(DecisionRuleOrSpecification::class, $specification);
@@ -89,7 +89,7 @@ class SpecificationBuilderTest extends Unit
         $decisionRuleSpecificationBuilder = $this->createDecisionRuleSpecificationBuilder();
 
         $specification = $decisionRuleSpecificationBuilder->buildFromQueryString(
-            '(sku = "231" or (sku = "1" and  sku = "2")) and sku = "3") '
+            '(sku = "231" or (sku = "1" and  sku = "2")) and sku = "3") ',
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $specification);
@@ -141,7 +141,7 @@ class SpecificationBuilderTest extends Unit
         $decisionRuleMetaProvider = new MetaDataProvider(
             $this->createDecisionRulePlugins(),
             $comparatorOperators,
-            $this->createLogicalComparators()
+            $this->createLogicalComparators(),
         );
 
         return new SpecificationBuilder(
@@ -149,7 +149,7 @@ class SpecificationBuilderTest extends Unit
             $this->createDecisionRuleProvider(),
             $comparatorOperators,
             $this->createClauseValidator($comparatorOperators, $decisionRuleMetaProvider),
-            $this->createMetaDataProvider()
+            $this->createMetaDataProvider(),
         );
     }
 
@@ -171,7 +171,7 @@ class SpecificationBuilderTest extends Unit
         return new MetaDataProvider(
             $this->createDecisionRulePlugins(),
             $this->createComparatorOperators(),
-            $this->createLogicalComparators()
+            $this->createLogicalComparators(),
         );
     }
 
@@ -323,7 +323,7 @@ class SpecificationBuilderTest extends Unit
 
         $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString(
-            '((sku = "123" and (quantity is in "321' . ComparatorOperators::LIST_DELIMITER . '321" or sku = "123"))) or color = "red"'
+            '((sku = "123" and (quantity is in "321' . ComparatorOperators::LIST_DELIMITER . '321" or sku = "123"))) or color = "red"',
         );
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
@@ -351,7 +351,7 @@ class SpecificationBuilderTest extends Unit
 
         $specificationBuilder = $this->createSpecificationBuilder($specificationProviderMock, $createComparatorOperatorsMock);
         $compositeSpecification = $specificationBuilder->buildFromQueryString(
-            'attribute.value = "123"'
+            'attribute.value = "123"',
         );
 
         $this->assertInstanceOf(DecisionRuleSpecificationInterface::class, $compositeSpecification);
@@ -452,7 +452,7 @@ class SpecificationBuilderTest extends Unit
             $specificationProviderMock,
             $createComparatorOperatorsMock,
             $this->createClauseValidatorMock(),
-            $metaDataProviderMock
+            $metaDataProviderMock,
         );
     }
 

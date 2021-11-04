@@ -32,6 +32,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
     /**
      * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const NAME = 'facets';
@@ -67,13 +68,13 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
         $restSearchAttributesTransfer = $this->mapSearchResponseProductsToRestCatalogSearchAttributesTransfer(
             $restSearchAttributesTransfer,
-            $searchResult
+            $searchResult,
         );
 
         if (isset($searchResult[static::NAME])) {
             $restSearchAttributesTransfer = $this->mapSearchResponseFacetTransfersToSearchAttributesTransfer(
                 $searchResult[static::NAME],
-                $restSearchAttributesTransfer
+                $restSearchAttributesTransfer,
             );
         }
 
@@ -96,7 +97,7 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
 
         foreach ($searchResult[static::SEARCH_KEY_PRODUCTS] as $product) {
             $restCatalogSearchAttributesTransfer->addAbstractProduct(
-                (new RestCatalogSearchAbstractProductsTransfer())->fromArray($product, true)
+                (new RestCatalogSearchAbstractProductsTransfer())->fromArray($product, true),
             );
         }
 
@@ -187,8 +188,8 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         $restPriceProductTransfer->setCurrency(
             (new RestCurrencyTransfer())->fromArray(
                 $this->getCurrencyTransfer()->toArray(),
-                true
-            )
+                true,
+            ),
         );
 
         if ($priceModeInformation->getCurrentPriceMode() === $priceModeInformation->getGrossModeIdentifier()) {

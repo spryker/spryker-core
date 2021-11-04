@@ -16,10 +16,12 @@ class AclEntityDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_ACL_ENTITY_RULE = 'acl-entity-rule';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_ACL_ENTITY_SEGMENT = 'acl-entity-segment';
+
     /**
      * @var string
      */
@@ -71,7 +73,7 @@ class AclEntityDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

@@ -16,6 +16,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
 {
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA
+     *
      * @var string
      */
     protected const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
@@ -24,10 +25,12 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @var string
      */
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+
     /**
      * @var string
      */
     protected const COLUMN_PRODUCT_ORDER = 'product_order';
+
     /**
      * @var string
      */
@@ -37,13 +40,14 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @var string
      */
     protected const RELATION_LOCALE = 'Locale';
+
     /**
      * @var string
      */
     protected const ID_LOCALE = 'id_locale';
 
     /**
-     * @var array<int[][][]>
+     * @var array<array<array<array<int>>>>
      */
     protected static $categoryTreeIds;
 
@@ -85,7 +89,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $allParentCategoryNodeIds,
             $productAbstractPageSearchTransfer->getCategoryNodeIds(),
             $localeTransfer,
-            $productAbstractPageSearchTransfer
+            $productAbstractPageSearchTransfer,
         );
 
         $this->setSorting(
@@ -93,7 +97,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $localeTransfer,
             $storeTransfer,
             $productAbstractPageSearchTransfer,
-            $productCategoryEntities
+            $productCategoryEntities,
         );
     }
 
@@ -165,14 +169,14 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
             $directParentCategoryNodeIds,
             $localeTransfer,
             $productAbstractPageSearchTransfer,
-            $categoryTreeNames
+            $categoryTreeNames,
         );
         $this->setCategoryNames(
             $allParentCategoryNodeIds,
             $directParentCategoryNodeIds,
             $localeTransfer,
             $productAbstractPageSearchTransfer,
-            $categoryTreeNames
+            $categoryTreeNames,
         );
     }
 
@@ -181,7 +185,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param array<string[]> $categoryTreeNames
+     * @param array<array<string>> $categoryTreeNames
      *
      * @return void
      */
@@ -213,7 +217,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param array<string[]> $categoryTreeNames
+     * @param array<array<string>> $categoryTreeNames
      *
      * @return void
      */
@@ -241,7 +245,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]> $productCategoryEntities
+     * @param array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>> $productCategoryEntities
      *
      * @return void
      */
@@ -310,7 +314,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
         if (!isset(static::$categoryTreeIds[$storeName][$idLocale])) {
             static::$categoryTreeIds[$storeName][$idLocale] = $this->productCategoryTreeBuilder->buildProductCategoryTree(
                 $localeTransfer,
-                $storeTransfer
+                $storeTransfer,
             );
         }
 

@@ -39,7 +39,7 @@ class PublishAndSynchronizeHealthCheckDataHelper extends AbstractHelper
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($publishAndSynchronizeHealthCheckTransfer): void {
             $publishAndSynchronizeHealthCheckEntity = SpyPublishAndSynchronizeHealthCheckQuery::create()->findOneByHealthCheckKey(
-                $publishAndSynchronizeHealthCheckTransfer->getHealthCheckKey()
+                $publishAndSynchronizeHealthCheckTransfer->getHealthCheckKey(),
             );
 
             $publishAndSynchronizeHealthCheckEntity->delete();

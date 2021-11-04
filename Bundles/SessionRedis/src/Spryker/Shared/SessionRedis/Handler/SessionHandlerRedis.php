@@ -19,10 +19,12 @@ class SessionHandlerRedis implements SessionHandlerInterface
      * @var string
      */
     public const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
+
     /**
      * @var string
      */
     public const METRIC_SESSION_WRITE_TIME = 'Redis/Session_write_time';
+
     /**
      * @var string
      */
@@ -132,7 +134,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
         $result = $this->redisClient->setex(
             $key,
             $this->sessionRedisLifeTimeCalculator->getSessionLifeTime(),
-            (string)json_encode($sessionData)
+            (string)json_encode($sessionData),
         );
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
@@ -160,6 +162,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifetime): bool
     {
         return true;

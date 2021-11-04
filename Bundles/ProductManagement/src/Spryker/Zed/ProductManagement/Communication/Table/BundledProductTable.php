@@ -32,26 +32,32 @@ class BundledProductTable extends AbstractTable
      * @var string
      */
     public const COL_SELECT = 'select';
+
     /**
      * @var string
      */
     public const COL_PRICE = 'price';
+
     /**
      * @var string
      */
     public const COL_AVAILABILITY = 'availability';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     public const SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME = 'Name';
+
     /**
      * @var string
      */
     public const SPY_STOCK_PRODUCT_ALIAS_QUANTITY = 'stockQuantity';
+
     /**
      * @var string
      */
@@ -146,8 +152,8 @@ class BundledProductTable extends AbstractTable
         $config->setUrl(
             sprintf(
                 'bundled-product-table?id-product-concrete=%d',
-                $this->idProductConcrete
-            )
+                $this->idProductConcrete,
+            ),
         );
 
         $defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
@@ -287,7 +293,7 @@ class BundledProductTable extends AbstractTable
             "<input id='product_assign_checkbox_%d' class='product_assign_checkbox' type='checkbox' data-info='%s' %s >",
             $productConcreteEntity->getIdProduct(),
             $this->utilEncodingService->encodeJson($productConcreteEntity->toArray()),
-            $checked
+            $checked,
         );
     }
 
@@ -302,7 +308,7 @@ class BundledProductTable extends AbstractTable
             return $this->availabilityFacade
                 ->calculateAvailabilityForProductWithStore(
                     $productConcreteEntity->getSku(),
-                    $this->storeFacade->getCurrentStore()
+                    $this->storeFacade->getCurrentStore(),
                 );
         }
 

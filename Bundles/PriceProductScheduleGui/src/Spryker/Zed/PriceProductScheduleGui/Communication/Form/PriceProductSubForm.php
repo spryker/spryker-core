@@ -25,14 +25,17 @@ class PriceProductSubForm extends AbstractType
      * @var string
      */
     public const FIELD_PRICE_TYPE = 'priceType';
+
     /**
      * @var string
      */
     public const FIELD_MONEY_VALUE = 'moneyValue';
+
     /**
      * @var string
      */
     public const FIELD_ABSTRACT_SKU = 'skuProductAbstract';
+
     /**
      * @var string
      */
@@ -61,7 +64,7 @@ class PriceProductSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -75,7 +78,7 @@ class PriceProductSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -93,7 +96,7 @@ class PriceProductSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

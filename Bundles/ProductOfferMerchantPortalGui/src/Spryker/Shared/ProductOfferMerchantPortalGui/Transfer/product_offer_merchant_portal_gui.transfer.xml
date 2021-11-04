@@ -113,6 +113,7 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
     </transfer>
 
     <transfer name="Locale">
@@ -162,6 +163,8 @@
         <property name="idProductOffer" type="int"/>
         <property name="idProductConcrete" type="int"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="merchantReference" type="string"/>
+        <property name="approvalStatus" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferStock">
@@ -192,6 +195,7 @@
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="StoreWithCurrency">
@@ -209,6 +213,7 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="priceData" type="string"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="fkStore" type="int"/>
@@ -224,11 +229,13 @@
     </transfer>
 
     <transfer name="PriceProduct">
+        <property name="volumeQuantity" type="int"/>
         <property name="moneyValue" type="MoneyValue"/>
         <property name="priceType" type="PriceType"/>
         <property name="fkPriceType" type="int"/>
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="idProduct" type="int"/>
+        <property name="idPriceProduct" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferResponse">
@@ -246,6 +253,7 @@
 
     <transfer name="PriceProductDimension">
         <property name="idProductOffer" type="int"/>
+        <property name="idPriceProductOffer" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferError">
@@ -334,6 +342,10 @@
         <property name="volumeQuantities" type="int[]" singular="volumeQuantity"/>
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
         <property name="productOfferCriteria" type="ProductOfferCriteria"/>
+        <property name="idProductOffer" type="int"/>
+        <property name="currencyIds" type="int[]" singular="idCurrency"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
+        <property name="priceTypeIds" type="int[]" singular="idPriceType"/>
     </transfer>
 
     <transfer name="ValidationResponse">
@@ -344,6 +356,8 @@
     <transfer name="ValidationError">
         <property name="message" type="string"/>
         <property name="propertyPath" type="string"/>
+        <property name="invalidValue" type="string"/>
+        <property name="root" type="object"/>
     </transfer>
 
     <transfer name="GuiTableEditableInitialData">
@@ -362,9 +376,13 @@
 
     <transfer name="Merchant">
         <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
+    </transfer>
+
+    <transfer name="ZedUiFormResponse">
     </transfer>
 
 </transfers>

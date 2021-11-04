@@ -46,8 +46,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
@@ -62,8 +60,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
@@ -75,7 +71,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     ): ValidationResponseTransfer {
         $constraintViolationList = $this->validator->validate(
             $priceProductTransfers,
-            $this->priceProductConstraintProvider->getConstraints()
+            $this->priceProductConstraintProvider->getConstraints(),
         );
 
         if (!$constraintViolationList->count()) {
@@ -100,8 +96,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *

@@ -80,6 +80,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->currentDataSet;
@@ -88,6 +89,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->loadChunk();
@@ -96,6 +98,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -104,6 +107,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return count($this->currentDataSet);
@@ -114,6 +118,7 @@ class PropelBatchIterator implements CountableIteratorInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -123,6 +128,7 @@ class PropelBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         $query = clone $this->query;

@@ -35,7 +35,7 @@ class MerchantReturnExpander implements MerchantReturnExpanderInterface
     public function expand(ReturnTransfer $returnTransfer): ReturnTransfer
     {
         $returnTransfer->setMerchantOrders(
-            $this->getMerchantOrderCollection($returnTransfer)->getMerchantOrders()
+            $this->getMerchantOrderCollection($returnTransfer)->getMerchantOrders(),
         );
 
         return $returnTransfer;

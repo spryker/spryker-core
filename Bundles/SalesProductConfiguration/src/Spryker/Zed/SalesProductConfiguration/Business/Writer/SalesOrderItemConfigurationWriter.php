@@ -70,7 +70,7 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
             if ($itemTransfer->getProductConfigurationInstance()) {
                 $salesOrderItemConfigurationTransfers = $this->mapSalesOrderItemConfiguration(
                     $itemTransfer,
-                    $salesOrderItemConfigurationTransfers
+                    $salesOrderItemConfigurationTransfers,
                 );
             }
         }

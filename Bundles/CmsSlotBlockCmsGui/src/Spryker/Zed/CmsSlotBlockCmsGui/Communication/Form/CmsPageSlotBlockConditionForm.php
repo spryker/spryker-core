@@ -22,6 +22,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
      * @var string
      */
     public const OPTION_PAGE_ARRAY = 'option-page-array';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const FIELD_CMS_PAGE = 'cms_page';
@@ -43,7 +45,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -76,7 +78,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -105,7 +107,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

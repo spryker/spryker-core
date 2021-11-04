@@ -23,6 +23,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
      * @var string
      */
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+
     /**
      * @var string
      */
@@ -63,7 +65,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_AGENT, function (Container $container) {
             return new AgentAuthRestApiToAgentClientBridge(
-                $container->getLocator()->agent()->client()
+                $container->getLocator()->agent()->client(),
             );
         });
 
@@ -79,7 +81,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::CLIENT_OAUTH, function (Container $container) {
             return new AgentAuthRestApiToOauthClientBridge(
-                $container->getLocator()->oauth()->client()
+                $container->getLocator()->oauth()->client(),
             );
         });
 
@@ -95,7 +97,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::SERVICE_OAUTH, function (Container $container) {
             return new AgentAuthRestApiToOauthServiceBridge(
-                $container->getLocator()->oauth()->service()
+                $container->getLocator()->oauth()->service(),
             );
         });
 
@@ -111,7 +113,7 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new AgentAuthRestApiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

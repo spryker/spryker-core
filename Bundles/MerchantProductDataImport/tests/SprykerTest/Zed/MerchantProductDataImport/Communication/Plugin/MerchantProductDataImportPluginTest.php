@@ -34,6 +34,7 @@ class MerchantProductDataImportPluginTest extends Unit
      * @var string
      */
     protected const MERCHANT_REFERENCE = 'MERCHANT_TEST';
+
     /**
      * @var string
      */
@@ -82,7 +83,7 @@ class MerchantProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue(
             SpyMerchantProductAbstractQuery::create()->find()->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -97,7 +98,7 @@ class MerchantProductDataImportPluginTest extends Unit
         // Assert
         $this->assertSame(
             MerchantProductDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT,
-            $merchantProductDataImportPlugin->getImportType()
+            $merchantProductDataImportPlugin->getImportType(),
         );
     }
 }

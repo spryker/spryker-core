@@ -26,6 +26,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
      * @var string
      */
     public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
+
     /**
      * @var string
      */
@@ -38,6 +39,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller\SuggestController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_SUGGEST = '/company-business-unit-gui/suggest';
@@ -49,7 +51,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -94,7 +96,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
         $form->add(
             static::FIELD_FK_COMPANY_BUSINESS_UNIT,
             SelectType::class,
-            $this->getCompanyBusinessUnitFieldParameters($companyBusinessUnitChoices)
+            $this->getCompanyBusinessUnitFieldParameters($companyBusinessUnitChoices),
         );
     }
 
@@ -112,7 +114,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -121,7 +123,7 @@ class CompanyUserBusinessUnitForm extends AbstractType
         $builder->add(
             static::FIELD_FK_COMPANY_BUSINESS_UNIT,
             SelectType::class,
-            $this->getCompanyBusinessUnitFieldParameters($options)
+            $this->getCompanyBusinessUnitFieldParameters($options),
         );
 
         return $this;

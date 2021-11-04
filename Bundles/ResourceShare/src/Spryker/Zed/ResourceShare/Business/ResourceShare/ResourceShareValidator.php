@@ -17,10 +17,12 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
      * @var string
      */
     protected const GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED = 'resource_share.validation.error.resource_share_is_expired';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED = 'resource_share.generation.error.resource_type_is_not_defined';
+
     /**
      * @var string
      */
@@ -39,7 +41,7 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED),
                 );
         }
 
@@ -47,7 +49,7 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CUSTOMER_REFERENCE_IS_NOT_DEFINED),
                 );
         }
 
@@ -55,7 +57,7 @@ class ResourceShareValidator implements ResourceShareValidatorInterface
             return $resourceShareResponseTransfer
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_RESOURCE_SHARE_IS_EXPIRED),
                 );
         }
 

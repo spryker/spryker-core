@@ -96,7 +96,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
         $this->fileObject->setCsvControl(
             $this->csvReaderConfiguration->getDelimiter(),
             $this->csvReaderConfiguration->getEnclosure(),
-            $this->csvReaderConfiguration->getEscape()
+            $this->csvReaderConfiguration->getEscape(),
         );
     }
 
@@ -173,7 +173,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
                 throw new DataSetWithHeaderCombineFailedException(sprintf(
                     'Can not combine data set header with current data set. Keys: "%s", Values "%s"',
                     implode(', ', $this->dataSetKeys),
-                    implode(', ', array_values($dataSetBeforeCombine))
+                    implode(', ', array_values($dataSetBeforeCombine)),
                 ), 0, $e);
             }
         }

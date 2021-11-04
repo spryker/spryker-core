@@ -24,6 +24,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @var int
      */
     protected const RANDOM_STRING_LENGTH = 32;
+
     /**
      * @var string
      */
@@ -33,6 +34,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @var string
      */
     protected const SOURCE_CORE = 'core';
+
     /**
      * @var string
      */
@@ -168,7 +170,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             ></database>',
             $schemaDatabase,
             $schemaNamespace,
-            $schemaPackage
+            $schemaPackage,
         ));
     }
 
@@ -375,7 +377,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         if (empty($elementName) || is_array($elementName)) {
             $elementName = sprintf(
                 static::PATTERN_ANONYMOUS_ELEMENT,
-                $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH)
+                $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH),
             );
         }
 

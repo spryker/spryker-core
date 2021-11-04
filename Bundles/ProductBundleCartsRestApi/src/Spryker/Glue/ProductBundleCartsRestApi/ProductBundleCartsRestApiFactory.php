@@ -29,7 +29,7 @@ class ProductBundleCartsRestApiFactory extends AbstractFactory
         return new BundleItemExpander(
             $this->getProductBundleClient(),
             $this->getCartsRestApiResource(),
-            $this->createBundleItemRestResponseBuilder()
+            $this->createBundleItemRestResponseBuilder(),
         );
     }
 
@@ -41,7 +41,7 @@ class ProductBundleCartsRestApiFactory extends AbstractFactory
         return new BundledItemExpander(
             $this->getProductBundleClient(),
             $this->getCartsRestApiResource(),
-            $this->createBundleItemRestResponseBuilder()
+            $this->createBundleItemRestResponseBuilder(),
         );
     }
 

@@ -22,14 +22,17 @@ class RoleTable extends AbstractTable
      * @var string
      */
     public const ACTION = 'Action';
+
     /**
      * @var string
      */
     public const PARAM_ID_ROLE = 'id-role';
+
     /**
      * @var string
      */
     public const UPDATE_ROLE_URL = '/acl/role/update';
+
     /**
      * @var string
      */
@@ -115,7 +118,7 @@ class RoleTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(static::UPDATE_ROLE_URL, [static::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
-            'Edit'
+            'Edit',
         );
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {

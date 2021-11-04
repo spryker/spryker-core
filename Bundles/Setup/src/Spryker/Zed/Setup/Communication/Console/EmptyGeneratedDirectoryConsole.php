@@ -73,9 +73,9 @@ class EmptyGeneratedDirectoryConsole extends Console
                         'transfer:databuilder:remove',
                         'transfer:entity:remove',
                         'transfer:remove',
-                    ]
-                )
-            )
+                    ],
+                ),
+            ),
         );
 
         $this->getFacade()->emptyGeneratedDirectory();

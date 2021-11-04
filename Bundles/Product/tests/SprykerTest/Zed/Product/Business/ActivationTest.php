@@ -79,7 +79,7 @@ class ActivationTest extends FacadeTestAbstract
     protected function assertProductWasActivated(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcrete = $this->productConcreteManager->findProductConcreteById(
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         );
 
         $this->assertTrue($productConcrete->getIsActive());
@@ -100,7 +100,7 @@ class ActivationTest extends FacadeTestAbstract
     protected function assertProductWasDeactivated(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcrete = $this->productConcreteManager->findProductConcreteById(
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         );
 
         $this->assertFalse($productConcrete->getIsActive());

@@ -92,7 +92,7 @@ class OauthRevokeRepository extends AbstractRepository implements OauthRevokeRep
 
         $oauthRefreshTokenQuery->filterByRevokedAt(
             null,
-            $oauthTokenCriteriaFilterTransfer->getIsRevoked() ? Criteria::ISNOTNULL : Criteria::ISNULL
+            $oauthTokenCriteriaFilterTransfer->getIsRevoked() ? Criteria::ISNOTNULL : Criteria::ISNULL,
         );
 
         return $oauthRefreshTokenQuery;

@@ -21,6 +21,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
      * @var string
      */
     protected const OLD_COMMAND_NAME = 'dev:ide:generate-zed-auto-completion';
+
     /**
      * @var string
      */

@@ -21,6 +21,7 @@ class GenerateTranslationCacheConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'translator:generate-cache';
+
     /**
      * @var string
      */

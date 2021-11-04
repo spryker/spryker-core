@@ -28,7 +28,7 @@ class StockAddressDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'warehouse_address.csv',
-            static::IMPORT_TYPE_STOCK_ADDRESS
+            static::IMPORT_TYPE_STOCK_ADDRESS,
         );
     }
 
@@ -42,7 +42,7 @@ class StockAddressDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

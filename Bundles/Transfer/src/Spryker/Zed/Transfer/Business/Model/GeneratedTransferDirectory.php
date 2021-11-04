@@ -49,7 +49,7 @@ class GeneratedTransferDirectory implements GeneratedTransferDirectoryInterface
         }
 
         $this->fileSystem->remove(
-            $this->fileFinder->findFiles($this->directoryPath)
+            $this->fileFinder->findFiles($this->directoryPath),
         );
     }
 }

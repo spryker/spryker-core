@@ -21,22 +21,27 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      * @var string
      */
     protected const MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.notification.quantity.min.failed';
+
     /**
      * @var string
      */
     protected const MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.notification.quantity.max.failed';
+
     /**
      * @var string
      */
     protected const MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.notification.quantity.interval.failed';
+
     /**
      * @var string
      */
     protected const NOTIFICATION_MESSAGE_PARAM_MIN = '%min%';
+
     /**
      * @var string
      */
     protected const NOTIFICATION_MESSAGE_PARAM_MAX = '%max%';
+
     /**
      * @var string
      */
@@ -97,8 +102,8 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
                 $this->normalizeItemTransfer(
                     $itemTransferMapBySku[$productSku],
                     $productQuantityTransferMapBySku[$productSku],
-                    $productQuantity
-                )
+                    $productQuantity,
+                ),
             );
         }
         $cartChangeTransfer->setItems($normalizedItems);
@@ -305,7 +310,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             return $this->buildNotificationMessage(
                 static::MESSAGE_QUANTITY_MIN_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_MIN,
-                $nearestQuantity
+                $nearestQuantity,
             );
         }
 
@@ -313,7 +318,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             return $this->buildNotificationMessage(
                 static::MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_STEP,
-                $productQuantityTransfer->getQuantityInterval()
+                $productQuantityTransfer->getQuantityInterval(),
             );
         }
 
@@ -321,7 +326,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             return $this->buildNotificationMessage(
                 static::MESSAGE_QUANTITY_MAX_NOT_FULFILLED,
                 static::NOTIFICATION_MESSAGE_PARAM_MAX,
-                $nearestQuantity
+                $nearestQuantity,
             );
         }
 

@@ -62,7 +62,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         // Assert
         $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment(
-            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
+            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment(),
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
@@ -83,7 +83,7 @@ class UpdateShipmentWithNewDataTest extends Test
         $shipmentTransfer = $saveOrderTransfer->getOrderItems()[0]->getShipment();
         $expectedShipmentMethod = $shipmentTransfer->getMethod()->getName();
         $shipmentTransfer->setMethod(
-            $this->tester->haveShipmentMethod((new ShipmentMethodBuilder())->build()->toArray())
+            $this->tester->haveShipmentMethod((new ShipmentMethodBuilder())->build()->toArray()),
         );
 
         $shipmentGroupTransfer = (new ShipmentGroupTransfer())->setShipment($shipmentTransfer);
@@ -95,7 +95,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         // Assert
         $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment(
-            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
+            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment(),
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
@@ -103,7 +103,7 @@ class UpdateShipmentWithNewDataTest extends Test
         $this->assertNotEquals(
             $expectedShipmentMethod,
             $shipmentEntity->getName(),
-            'New shipment method should have been assigned to shipment.'
+            'New shipment method should have been assigned to shipment.',
         );
     }
 
@@ -133,7 +133,7 @@ class UpdateShipmentWithNewDataTest extends Test
 
         // Assert
         $shipmentEntity = SpySalesShipmentQuery::create()->findOneByIdSalesShipment(
-            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment()
+            $shipmentGroupResponseTransfer->getShipmentGroup()->getShipment()->getIdSalesShipment(),
         );
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a shipment should have been successful.');
@@ -154,16 +154,16 @@ class UpdateShipmentWithNewDataTest extends Test
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
-                            ->withMethod()
-                    )
+                            ->withMethod(),
+                    ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
-                            ->withMethod()
-                    )
+                            ->withMethod(),
+                    ),
             )
             ->withBillingAddress()
             ->withCustomer()

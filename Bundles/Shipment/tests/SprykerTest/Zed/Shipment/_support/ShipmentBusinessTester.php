@@ -254,7 +254,7 @@ class ShipmentBusinessTester extends Actor
         $savedOrderTransfer = $this->haveOrderUsingPreparedQuoteTransfer(
             $quoteTransfer,
             $testStateMachineProcessName,
-            [new OrderShipmentSavePlugin()]
+            [new OrderShipmentSavePlugin()],
         );
 
         return $savedOrderTransfer;
@@ -283,7 +283,7 @@ class ShipmentBusinessTester extends Actor
         $shipmentTransfer = (new ShipmentBuilder())
             ->build()
             ->setMethod(
-                $this->haveShipmentMethod()
+                $this->haveShipmentMethod(),
             );
 
         $originalQuoteTransfer = (new QuoteBuilder())

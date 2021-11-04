@@ -49,7 +49,7 @@ class SalesController extends AbstractController
             ->createOrderReturnTable((new OrderTransfer())->setIdSalesOrder($idSalesOrder));
 
         return new JsonResponse(
-            $orderReturnTable->fetchData()
+            $orderReturnTable->fetchData(),
         );
     }
 }

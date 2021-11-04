@@ -27,7 +27,7 @@ class NavigationStorageBusinessFactory extends AbstractBusinessFactory
             $this->getNavigationFacade(),
             $this->getQueryContainer(),
             $this->getStore(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

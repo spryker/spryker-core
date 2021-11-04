@@ -30,6 +30,7 @@ class SalesDataExportFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     *
      * @var string
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
@@ -38,14 +39,17 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DESTINATION_TEMPLATE = '{data_entity}s_DE_{timestamp}.{extension}';
+
     /**
      * @var string
      */
     protected const FORMATTER_TYPE = 'csv';
+
     /**
      * @var string
      */
     protected const CONNECTION_TYPE = 'local';
+
     /**
      * @var string
      */
@@ -60,6 +64,7 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_ORDER = 'order';
+
     /**
      * @var string
      */
@@ -69,6 +74,7 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_ORDER_ITEM = 'order-item';
+
     /**
      * @var string
      */
@@ -78,6 +84,7 @@ class SalesDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_ORDER_EXPENSE = 'order-expense';
+
     /**
      * @var string
      */
@@ -206,7 +213,7 @@ class SalesDataExportFacadeTest extends Unit
         $this->assertSame(
             sprintf($dataExportResultFileTemplate, $this->timestamp),
             $fileName,
-            'File name does not equals to an expected value'
+            'File name does not equals to an expected value',
         );
 
         $filePath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data/export' . DIRECTORY_SEPARATOR . $fileName;

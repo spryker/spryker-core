@@ -36,7 +36,7 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
         }
 
         $dataSet[CmsSlotBlockDataSetInterface::COL_SLOT_TEMPLATE_ID] = $this->getTemplateIdByPath(
-            $dataSet[CmsSlotBlockDataSetInterface::COL_SLOT_TEMPLATE_PATH]
+            $dataSet[CmsSlotBlockDataSetInterface::COL_SLOT_TEMPLATE_PATH],
         );
     }
 

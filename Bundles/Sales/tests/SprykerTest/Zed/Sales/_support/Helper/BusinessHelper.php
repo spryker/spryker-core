@@ -30,6 +30,7 @@ class BusinessHelper extends Module
      * @var string
      */
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */
@@ -39,14 +40,17 @@ class BusinessHelper extends Module
      * @var int
      */
     protected const ORDER_ITEM_QTY = 1;
+
     /**
      * @var int
      */
     protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
+
     /**
      * @var int
      */
     protected const ORDER_ITEM_GROSS_PRICE_2 = 800;
+
     /**
      * @var int
      */
@@ -80,7 +84,7 @@ class BusinessHelper extends Module
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            $itemTransfers
+            $itemTransfers,
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
@@ -111,7 +115,7 @@ class BusinessHelper extends Module
             $omsStateEntity,
             $salesOrderEntity,
             $omsOrderProcessEntity,
-            $itemTransfers
+            $itemTransfers,
         );
     }
 
@@ -139,7 +143,7 @@ class BusinessHelper extends Module
                 $itemTransfer,
                 static::ORDER_ITEM_QTY,
                 static::ORDER_ITEM_GROSS_PRICE_1,
-                static::ORDER_ITEM_TAX_RATE
+                static::ORDER_ITEM_TAX_RATE,
             );
         }
 
@@ -167,7 +171,7 @@ class BusinessHelper extends Module
             (new ItemBuilder())->build(),
             static::ORDER_ITEM_QTY,
             static::ORDER_ITEM_GROSS_PRICE_1,
-            static::ORDER_ITEM_TAX_RATE
+            static::ORDER_ITEM_TAX_RATE,
         );
 
         $salesOrderItems[] = $this->createOrderItem(
@@ -177,7 +181,7 @@ class BusinessHelper extends Module
             (new ItemBuilder())->build(),
             static::ORDER_ITEM_QTY,
             static::ORDER_ITEM_GROSS_PRICE_2,
-            static::ORDER_ITEM_TAX_RATE
+            static::ORDER_ITEM_TAX_RATE,
         );
 
         return $salesOrderItems;

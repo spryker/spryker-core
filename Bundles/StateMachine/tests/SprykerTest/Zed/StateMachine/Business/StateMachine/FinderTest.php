@@ -196,7 +196,7 @@ class FinderTest extends StateMachineMocks
         return new Finder(
             $builderMock,
             $handlerResolverMock,
-            $stateMachineQueryContainerMock
+            $stateMachineQueryContainerMock,
         );
     }
 }

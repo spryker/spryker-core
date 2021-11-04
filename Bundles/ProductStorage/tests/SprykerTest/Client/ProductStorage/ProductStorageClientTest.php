@@ -41,18 +41,22 @@ class ProductStorageClientTest extends Unit
      * @var string
      */
     protected const SUPER_ATTRIBUTE_NAME_1 = 'super_attribute_name_1';
+
     /**
      * @var string
      */
     protected const SUPER_ATTRIBUTE_NAME_2 = 'super_attribute_name_2';
+
     /**
      * @var string
      */
     protected const SUPER_ATTRIBUTE_VALUE_1 = 'super_attribute_value_1';
+
     /**
      * @var string
      */
     protected const SUPER_ATTRIBUTE_VALUE_2_1 = 'super_attribute_value_2_1';
+
     /**
      * @var string
      */
@@ -62,6 +66,7 @@ class ProductStorageClientTest extends Unit
      * @var int
      */
     protected const PRODUCT_CONCRETE_ID_1 = 10001;
+
     /**
      * @var int
      */
@@ -110,7 +115,7 @@ class ProductStorageClientTest extends Unit
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 [$idProductAbstract],
                 static::LOCALE_NAME,
-                $storeName
+                $storeName,
             );
 
         // Assert
@@ -235,7 +240,7 @@ class ProductStorageClientTest extends Unit
             if ($expandedProductViewTransfer->offsetExists($productConcreteStoragePropertyKey)) {
                 $this->assertSame(
                     $productConcreteStoragePropertyValue,
-                    $expandedProductViewTransfer->offsetGet($productConcreteStoragePropertyKey)
+                    $expandedProductViewTransfer->offsetGet($productConcreteStoragePropertyKey),
                 );
             }
         }
@@ -285,7 +290,7 @@ class ProductStorageClientTest extends Unit
                 static::SUPER_ATTRIBUTE_VALUE_2_1,
                 static::SUPER_ATTRIBUTE_VALUE_2_2,
             ]],
-            $expandedProductViewTransfer->getAvailableAttributes()
+            $expandedProductViewTransfer->getAvailableAttributes(),
         );
     }
 
@@ -308,7 +313,7 @@ class ProductStorageClientTest extends Unit
         $this->tester->setDependency(
             ProductStorageDependencyProvider::CLIENT_STORAGE,
             $storageClientMock,
-            ProductStorageFactory::class
+            ProductStorageFactory::class,
         );
 
         return $storageClientMock;
@@ -378,7 +383,7 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function superAttributesDataProvider(): array
     {

@@ -16,11 +16,9 @@ interface CmsContentWidgetContentConnectorFacadeInterface
      *
      * @api
      *
-     * @phpstan-return array<string, string>
-     *
      * @param array<string> $contentItemKeys
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function mapContentItemKeys(array $contentItemKeys): array;
 }

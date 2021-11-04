@@ -47,7 +47,7 @@ class StoreRelationshipFilterStep implements DataImportStepInterface
 
         $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS] = array_diff(
             $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS],
-            $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS]
+            $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS],
         );
     }
 
@@ -60,7 +60,7 @@ class StoreRelationshipFilterStep implements DataImportStepInterface
     {
         $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS] = array_diff(
             $dataSet[CategoryStoreDataSetInterface::INCLUDED_STORE_IDS],
-            $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS]
+            $dataSet[CategoryStoreDataSetInterface::EXCLUDED_STORE_IDS],
         );
     }
 }

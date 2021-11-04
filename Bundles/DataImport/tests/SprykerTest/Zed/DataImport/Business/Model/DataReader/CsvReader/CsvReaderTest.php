@@ -36,6 +36,7 @@ class CsvReaderTest extends Unit
      * @var int
      */
     public const EXPECTED_NUMBER_OF_DATA_SETS_IN_CSV = 3;
+
     /**
      * @var int
      */

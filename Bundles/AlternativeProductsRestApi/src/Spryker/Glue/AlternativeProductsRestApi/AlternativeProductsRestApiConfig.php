@@ -15,6 +15,7 @@ class AlternativeProductsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const CONTROLLER_ABSTRACT_ALTERNATIVE_PRODUCTS = 'abstract-alternative-products';
+
     /**
      * @var string
      */
@@ -24,6 +25,7 @@ class AlternativeProductsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RELATIONSHIP_NAME_ABSTRACT_ALTERNATIVE_PRODUCTS = 'abstract-alternative-products';
+
     /**
      * @var string
      */
@@ -33,6 +35,7 @@ class AlternativeProductsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const ACTION_ABSTRACT_ALTERNATIVE_PRODUCTS_GET = 'get';
+
     /**
      * @var string
      */

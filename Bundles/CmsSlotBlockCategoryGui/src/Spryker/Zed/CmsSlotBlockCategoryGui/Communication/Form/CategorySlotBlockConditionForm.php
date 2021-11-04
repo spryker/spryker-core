@@ -22,6 +22,7 @@ class CategorySlotBlockConditionForm extends AbstractType
      * @var string
      */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+
     /**
      * @var string
      */
@@ -32,6 +33,7 @@ class CategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const FIELD_CATEGORY = 'category';
@@ -43,7 +45,7 @@ class CategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -76,7 +78,7 @@ class CategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -105,7 +107,7 @@ class CategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

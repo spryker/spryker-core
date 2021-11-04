@@ -53,7 +53,7 @@ class ContentFileListTypeMapper implements ContentFileListTypeMapperInterface
 
         if (!isset($this->contentFileListTermExecutors[$term])) {
             throw new InvalidFileListTermException(
-                sprintf('There is no matching ContentFileListTermExecutor for FileListType when provided with term `%s`.', $term)
+                sprintf('There is no matching ContentFileListTermExecutor for FileListType when provided with term `%s`.', $term),
             );
         }
 

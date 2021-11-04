@@ -33,12 +33,12 @@ class ResourceShareDataHelper extends Module
         $resourceShareTransfer = (new ResourceShareBuilder($seedData))->build();
 
         $resourceShareResponseTransfer = $this->getResourceShareFacade()->generateResourceShare(
-            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer)
+            (new ResourceShareRequestTransfer())->setResourceShare($resourceShareTransfer),
         );
 
         $this->assertTrue(
             $resourceShareResponseTransfer->getIsSuccessful(),
-            static::ERROR_MESSAGE_UNABLE_TO_CREATE_RESOURCE_SHARE_WITH_PROVIDED_DATA
+            static::ERROR_MESSAGE_UNABLE_TO_CREATE_RESOURCE_SHARE_WITH_PROVIDED_DATA,
         );
 
         return $resourceShareResponseTransfer->getResourceShare();

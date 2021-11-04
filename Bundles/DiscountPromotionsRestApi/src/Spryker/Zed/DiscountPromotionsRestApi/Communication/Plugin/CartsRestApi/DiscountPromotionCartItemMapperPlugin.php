@@ -37,7 +37,7 @@ class DiscountPromotionCartItemMapperPlugin extends AbstractPlugin implements Ca
         return $this->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

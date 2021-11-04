@@ -90,7 +90,7 @@ class QuoteResolver implements QuoteResolverInterface
         }
         $customerQuoteTransfer = $this->findCustomerQuoteById(
             $idQuote,
-            $customerTransfer
+            $customerTransfer,
         );
 
         if (!$customerQuoteTransfer) {

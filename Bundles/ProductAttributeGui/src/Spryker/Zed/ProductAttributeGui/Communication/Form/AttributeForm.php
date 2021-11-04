@@ -34,22 +34,27 @@ class AttributeForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+
     /**
      * @var string
      */
     public const FIELD_KEY = 'key';
+
     /**
      * @var string
      */
     public const FIELD_INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
     public const FIELD_ALLOW_INPUT = 'allow_input';
+
     /**
      * @var string
      */
     public const FIELD_IS_SUPER = 'is_super';
+
     /**
      * @var string
      */
@@ -59,10 +64,12 @@ class AttributeForm extends AbstractType
      * @var string
      */
     public const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
+
     /**
      * @var string
      */
     public const OPTION_VALUES_CHOICES = 'values_choices';
+
     /**
      * @var string
      */
@@ -72,6 +79,7 @@ class AttributeForm extends AbstractType
      * @var string
      */
     public const GROUP_VALUES = 'values_group';
+
     /**
      * @var string
      */
@@ -115,7 +123,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -144,7 +152,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -181,7 +189,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -201,7 +209,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -217,7 +225,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -238,7 +246,7 @@ class AttributeForm extends AbstractType
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) use ($options) {
                 $this->addValuesFieldChoices($event, $options);
-            }
+            },
         );
 
         return $this;
@@ -246,7 +254,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -275,7 +283,7 @@ class AttributeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

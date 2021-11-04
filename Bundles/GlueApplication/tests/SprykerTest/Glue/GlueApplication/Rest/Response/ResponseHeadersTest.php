@@ -50,7 +50,7 @@ class ResponseHeadersTest extends Unit
                     $httpResponse->headers->set('x-custom', 'custom');
 
                     return $httpResponse;
-                }
+                },
             );
 
         $responseHeaders = $this->createResponseHeaders([

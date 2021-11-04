@@ -98,13 +98,13 @@ class SharedCartByCartIdExpander implements SharedCartByCartIdExpanderInterface
     {
         $restSharedCartsAttributesTransfer = $this->sharedCartMapper->mapShareDetailTransferToRestSharedCartsAttributesTransfer(
             $shareDetailTransfer,
-            new RestSharedCartsAttributesTransfer()
+            new RestSharedCartsAttributesTransfer(),
         );
 
         $sharedCartRestResource = $this->restResourceBuilder->createRestResource(
             SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
             $shareDetailTransfer->getUuid(),
-            $restSharedCartsAttributesTransfer
+            $restSharedCartsAttributesTransfer,
         );
 
         $sharedCartRestResource->setPayload($shareDetailTransfer);

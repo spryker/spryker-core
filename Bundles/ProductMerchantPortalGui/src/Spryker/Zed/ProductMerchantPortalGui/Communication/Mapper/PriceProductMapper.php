@@ -25,6 +25,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
@@ -36,6 +37,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
@@ -94,7 +96,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             $priceProductTransfers = $this->addNewPriceProductData(
                 $newPriceProduct,
                 $priceProductTransfers,
-                $priceTypeTransfers
+                $priceTypeTransfers,
             );
         }
 
@@ -119,7 +121,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             $newPriceProductTransfer = $this->getPriceProductTransfer(
                 $newPriceProduct,
                 $currencyTransfer,
-                $priceTypeTransfer
+                $priceTypeTransfer,
             );
 
             if (!$newPriceProductTransfer) {
@@ -128,7 +130,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
             $priceProductTransfers = $this->priceProductMerger->mergePriceProducts(
                 $newPriceProductTransfer,
-                $priceProductTransfers
+                $priceProductTransfers,
             );
         }
 
@@ -210,7 +212,7 @@ class PriceProductMapper implements PriceProductMapperInterface
             static::PRICE_KEY,
             $priceTypeName,
             PriceProductTransfer::MONEY_VALUE,
-            $amountType
+            $amountType,
         );
     }
 

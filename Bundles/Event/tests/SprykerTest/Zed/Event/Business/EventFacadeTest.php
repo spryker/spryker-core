@@ -102,7 +102,7 @@ class EventFacadeTest extends Unit
         $eventBusinessFactory = $this->createEventBusinessFactory(
             null,
             null,
-            $eventSubscriberCollection
+            $eventSubscriberCollection,
         );
 
         $eventFacade->setFactory($eventBusinessFactory);
@@ -128,7 +128,7 @@ class EventFacadeTest extends Unit
             ->method('sendMessage')
             ->with(
                 EventConstants::EVENT_QUEUE,
-                $this->containsOnlyInstancesOf(QueueSendMessageTransfer::class)
+                $this->containsOnlyInstancesOf(QueueSendMessageTransfer::class),
             );
 
         $eventBusinessFactory = $this->createEventBusinessFactory($mockedQueueClient, $eventCollection);

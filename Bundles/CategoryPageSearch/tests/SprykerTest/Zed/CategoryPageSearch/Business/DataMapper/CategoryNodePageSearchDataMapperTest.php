@@ -46,7 +46,7 @@ class CategoryNodePageSearchDataMapperTest extends Unit
         $result = $categoryNodePageSearchDataMapper->mapNodeTransferToCategoryNodePageSearchDataForStoreAndLocale(
             $nodeTransfer,
             $storeName,
-            $localeName
+            $localeName,
         );
 
         // Assert

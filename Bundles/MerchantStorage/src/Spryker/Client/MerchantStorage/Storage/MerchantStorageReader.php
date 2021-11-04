@@ -23,6 +23,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
      * @var string
      */
     protected const KEY_ID_MERCHANT = 'id';
+
     /**
      * @var string
      */
@@ -142,7 +143,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
                 continue;
             }
             $merchantStorageTransfers[] = $this->merchantStorageMapper->mapMerchantStorageDataToMerchantStorageTransfer(
-                $this->utilEncodingService->decodeJson($merchantData, true)
+                $this->utilEncodingService->decodeJson($merchantData, true),
             );
         }
 

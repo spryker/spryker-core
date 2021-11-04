@@ -18,6 +18,8 @@ use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemAdder;
 use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemAdderInterface;
 use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemDeleter;
 use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemDeleterInterface;
+use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemUpdater;
+use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemUpdaterInterface;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 use Spryker\Zed\WishlistsRestApi\WishlistsRestApiDependencyProvider;
 
@@ -41,7 +43,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistUpdater(): WishlistUpdaterInterface
     {
         return new WishlistUpdater(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 
@@ -51,7 +53,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistDeleter(): WishlistDeleterInterface
     {
         return new WishlistDeleter(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 
@@ -61,7 +63,7 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistItemAdder(): WishlistItemAdderInterface
     {
         return new WishlistItemAdder(
-            $this->getWishlistFacade()
+            $this->getWishlistFacade(),
         );
     }
 
@@ -72,7 +74,18 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new WishlistItemDeleter(
             $this->getWishlistFacade(),
-            $this->getRestWishlistItemsAttributesDeleteStrategyPlugins()
+            $this->getRestWishlistItemsAttributesDeleteStrategyPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemUpdater
+     */
+    public function createWishlistItemUpdater(): WishlistItemUpdaterInterface
+    {
+        return new WishlistItemUpdater(
+            $this->getWishlistFacade(),
+            $this->getRestWishlistItemsAttributesUpdateStrategyPlugins(),
         );
     }
 
@@ -90,5 +103,13 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getRestWishlistItemsAttributesDeleteStrategyPlugins(): array
     {
         return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_DELETE_STRATEGY);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesUpdateStrategyPluginInterface>
+     */
+    public function getRestWishlistItemsAttributesUpdateStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistsRestApiDependencyProvider::PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_UPDATE_STRATEGY);
     }
 }

@@ -23,6 +23,7 @@ class TouchCleanUpConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'touch:cleanup';
+
     /**
      * @var string
      */

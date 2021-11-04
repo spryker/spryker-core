@@ -44,7 +44,7 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
     {
         return new OauthScopeInstaller(
             $this->getOauthFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -55,7 +55,7 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserAccessTokenCreator(
             $this->getOauthFacade(),
-            $this->getCustomerOauthRequestMapperPlugins()
+            $this->getCustomerOauthRequestMapperPlugins(),
         );
     }
 
@@ -68,7 +68,7 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
             $this->getOauthFacade(),
             $this->getUtilEncodingService(),
             $this->getCustomerFacade(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -80,7 +80,7 @@ class OauthCompanyUserBusinessFactory extends AbstractBusinessFactory
         return new CompanyUserProvider(
             $this->getCompanyUserFacade(),
             $this->getUtilEncodingService(),
-            $this->getOauthCompanyUserIdentifierExpanderPlugins()
+            $this->getOauthCompanyUserIdentifierExpanderPlugins(),
         );
     }
 

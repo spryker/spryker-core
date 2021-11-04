@@ -53,10 +53,12 @@ class ProductLabelStorageListenerTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var string
      */
@@ -94,13 +96,13 @@ class ProductLabelStorageListenerTest extends Unit
         $this->productLabelTransfer = $this->tester->haveProductLabel();
 
         $localizedAttributes = $this->tester->generateLocalizedAttributes(
-            $this->getLocaleFacade()->getCurrentLocale()->getIdLocale()
+            $this->getLocaleFacade()->getCurrentLocale()->getIdLocale(),
         );
         $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $this->productLabelTransfer->getIdProductLabel(),
-            $this->productAbstractTransfer->getIdProductAbstract()
+            $this->productAbstractTransfer->getIdProductAbstract(),
         );
     }
 
@@ -189,7 +191,7 @@ class ProductLabelStorageListenerTest extends Unit
         $data = $spyProductLabelDictionaryStorage->getData();
         $labelsCount = $this->tester->getProductLabelsCountByStoreNameAndLocaleName(
             $storeTransfer->getName(),
-            $localeName
+            $localeName,
         );
         $this->assertCount($labelsCount, $data['items'], 'Number of items does not equals to an expected value.');
     }
@@ -237,7 +239,7 @@ class ProductLabelStorageListenerTest extends Unit
         $data = $spyProductLabelDictionaryStorage->getData();
         $labelsCount = $this->tester->getProductLabelsCountByStoreNameAndLocaleName(
             $storeTransferDE->getName(),
-            $localeName
+            $localeName,
         );
         $this->assertCount($labelsCount, $data['items'], 'Number of items does not equals to an expected value.');
     }
@@ -268,7 +270,7 @@ class ProductLabelStorageListenerTest extends Unit
         $this->assertSame(
             0,
             $productLabelDictionaryStorageEntityCount,
-            'Product label dictionary storage entities number does not equals to an expected number'
+            'Product label dictionary storage entities number does not equals to an expected number',
         );
     }
 

@@ -41,14 +41,17 @@ class SharedCartBusinessTester extends Actor
      * @var string
      */
     protected const VALUE_SHARE_OPTION = 'VALUE_SHARE_OPTION';
+
     /**
      * @var int
      */
     protected const VALUE_ID_QUOTE = 1;
+
     /**
      * @var int
      */
     protected const VALUE_OWNER_ID_COMPANY_USER = 1;
+
     /**
      * @var int
      */
@@ -64,7 +67,7 @@ class SharedCartBusinessTester extends Actor
         return $this->havePersistentQuote(
             [
                 QuoteTransfer::CUSTOMER => $customerTransfer,
-            ]
+            ],
         );
     }
 
@@ -84,7 +87,7 @@ class SharedCartBusinessTester extends Actor
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                 CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnit->getIdCompanyBusinessUnit(),
                 CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
-            ]
+            ],
         );
     }
 
@@ -99,7 +102,7 @@ class SharedCartBusinessTester extends Actor
                 CompanyTransfer::STATUS => 'approved',
                 CompanyTransfer::IS_ACTIVE => true,
                 CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
-            ]
+            ],
         );
     }
 
@@ -116,7 +119,7 @@ class SharedCartBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
                 CompanyBusinessUnitTransfer::PHONE => '1234567890',
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
-            ]
+            ],
         );
     }
 

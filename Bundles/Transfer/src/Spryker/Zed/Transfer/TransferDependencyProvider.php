@@ -23,10 +23,12 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_GLOB = 'util glob service';
+
     /**
      * @var string
      */
     public const SYMFONY_FILE_SYSTEM = 'symfony_file_system';
+
     /**
      * @var string
      */
@@ -67,7 +69,7 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PROPEL, function (Container $container) {
             return new TransferToPropelFacadeBridge(
-                $container->getLocator()->propel()->facade()
+                $container->getLocator()->propel()->facade(),
             );
         });
 
@@ -83,7 +85,7 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_GLOB, function (Container $container) {
             return new TransferToUtilGlobServiceBridge(
-                $container->getLocator()->utilGlob()->service()
+                $container->getLocator()->utilGlob()->service(),
             );
         });
 

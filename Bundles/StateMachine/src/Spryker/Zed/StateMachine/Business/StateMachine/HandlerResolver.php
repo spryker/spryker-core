@@ -41,8 +41,8 @@ class HandlerResolver implements HandlerResolverInterface
         throw new StateMachineHandlerNotFound(
             sprintf(
                 'State machine handler with name "%s" not found',
-                $stateMachineName
-            )
+                $stateMachineName,
+            ),
         );
     }
 

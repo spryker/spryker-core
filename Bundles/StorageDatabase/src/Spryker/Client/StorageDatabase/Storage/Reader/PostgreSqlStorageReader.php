@@ -15,6 +15,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
      * @var string
      */
     protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+
     /**
      * @var string
      */
@@ -100,7 +101,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param array<string[]> $queryDataPerTable
+     * @param array<array<string>> $queryDataPerTable
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */
@@ -128,7 +129,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
         return sprintf(
             static::SELECT_STATEMENT_PATTERN,
             $keyPlaceholder,
-            $tableName
+            $tableName,
         );
     }
 

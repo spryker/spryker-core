@@ -39,12 +39,14 @@ class ProductConcreteForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     *
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     *
      * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';
@@ -53,10 +55,12 @@ class ProductConcreteForm extends AbstractType
      * @var string
      */
     protected const LABEL_VALID_FROM = 'From';
+
     /**
      * @var string
      */
     protected const LABEL_VALID_TO = 'To';
+
     /**
      * @var string
      */
@@ -66,6 +70,7 @@ class ProductConcreteForm extends AbstractType
      * @var string
      */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var string
      */
@@ -108,10 +113,9 @@ class ProductConcreteForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -205,7 +209,7 @@ class ProductConcreteForm extends AbstractType
             CheckboxType::class,
             [
                 'required' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -276,7 +280,7 @@ class ProductConcreteForm extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 

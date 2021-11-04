@@ -12,7 +12,7 @@ class FileWriter implements FileWriterInterface
     /**
      * @param string $fileName
      * @param string $fileContent
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class FileWriter implements FileWriterInterface
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -34,16 +34,16 @@ class FileWriter implements FileWriterInterface
     {
         $baseDirectory = rtrim(
             $options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],
-            DIRECTORY_SEPARATOR
+            DIRECTORY_SEPARATOR,
         );
 
         $applicationPathFragment = trim(
             str_replace(
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
                 $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-                $options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN]
+                $options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN],
             ),
-            DIRECTORY_SEPARATOR
+            DIRECTORY_SEPARATOR,
         );
 
         return "{$baseDirectory}/{$applicationPathFragment}/";
@@ -51,7 +51,7 @@ class FileWriter implements FileWriterInterface
 
     /**
      * @param string $directory
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

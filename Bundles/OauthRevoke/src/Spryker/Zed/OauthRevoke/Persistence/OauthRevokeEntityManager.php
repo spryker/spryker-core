@@ -77,7 +77,7 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
         $oauthRefreshTokenMapper = $this->getFactory()->createOauthRefreshTokenMapper();
         $oauthRefreshTokenEntity = $oauthRefreshTokenMapper->mapOauthRefreshTokenTransferToOauthRefreshTokenEntity(
             $oauthRefreshTokenTransfer,
-            new SpyOauthRefreshToken()
+            new SpyOauthRefreshToken(),
         );
 
         $oauthRefreshTokenEntity->save();

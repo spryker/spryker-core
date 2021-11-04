@@ -382,7 +382,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 

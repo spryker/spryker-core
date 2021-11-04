@@ -30,6 +30,7 @@ class GetUniqueOrderItemsTest extends Test
      * @var string
      */
     protected const FAKE_GROUP_KEY_1 = 'FAKE_GROUP_KEY_1';
+
     /**
      * @var string
      */

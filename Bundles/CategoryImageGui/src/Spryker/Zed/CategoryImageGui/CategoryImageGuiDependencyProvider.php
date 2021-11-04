@@ -50,7 +50,7 @@ class CategoryImageGuiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CategoryImageGuiToLocaleBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

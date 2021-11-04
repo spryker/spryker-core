@@ -19,6 +19,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      * @var string
      */
     public const PRODUCT_TYPE_ABSTRACT = 'Abstract';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 
         foreach ($productAlternativeEntities as $productAlternativeEntity) {
             $productAlternativeCollectionTransfer->addProductAlternative(
-                $this->mapProductAlternativeTransfer($productAlternativeEntity)
+                $this->mapProductAlternativeTransfer($productAlternativeEntity),
             );
         }
 

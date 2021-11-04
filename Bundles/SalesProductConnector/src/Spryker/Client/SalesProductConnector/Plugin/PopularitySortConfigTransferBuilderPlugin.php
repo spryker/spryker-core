@@ -18,10 +18,12 @@ class PopularitySortConfigTransferBuilderPlugin extends AbstractPlugin implement
      * @var string
      */
     protected const CONFIG_NAME = 'popularity';
+
     /**
      * @var string
      */
     protected const PARAMETER_NAME = 'popularity';
+
     /**
      * @var string
      */

@@ -26,12 +26,12 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     protected $config;
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     protected static $idFieldToModuleNameMap;
 
     /**
-     * @var array<string>
+     * @var array<string, string>
      */
     protected static $uniqueFieldToModuleNameMap;
 
@@ -106,7 +106,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function getUniqueFieldToModuleNameMap(): array
     {
@@ -118,7 +118,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function buildIdFieldToModuleNameMap(): array
     {
@@ -133,7 +133,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     protected function buildUniqueFieldToModuleNameMap(): array
     {
@@ -149,7 +149,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function getSchemaFileFinder(): Finder
     {
@@ -273,13 +273,13 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @param array $idFieldToModuleNameMap
-     * @param array $idColumnNames
+     * @param array<string, string> $idFieldToModuleNameMap
+     * @param array<string> $idColumnNames
      * @param string $module
      *
      * @throws \Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function addIdColumnNames(array $idFieldToModuleNameMap, array $idColumnNames, string $module): array
     {
@@ -294,14 +294,14 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     }
 
     /**
-     * @param array $uniqueFieldToModuleNameMap
+     * @param array<string, string> $uniqueFieldToModuleNameMap
      * @param array<string> $requiredColumnNames
      * @param array<string> $uniqueColumnNames
      * @param string $module
      *
      * @throws \Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function addUniqueColumnNames(array $uniqueFieldToModuleNameMap, array $requiredColumnNames, array $uniqueColumnNames, string $module): array
     {

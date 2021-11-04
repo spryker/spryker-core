@@ -40,11 +40,11 @@ class ExpenseSanitizer implements ExpenseSanitizerInterface
         $expenseTransfer->setSumTaxAmount($expenseTransfer->getSumTaxAmount() ?? $expenseTransfer->getUnitTaxAmount());
         $expenseTransfer->setSumDiscountAmountAggregation(
             $expenseTransfer->getSumDiscountAmountAggregation()
-            ?? $expenseTransfer->getUnitDiscountAmountAggregation()
+            ?? $expenseTransfer->getUnitDiscountAmountAggregation(),
         );
         $expenseTransfer->setSumPriceToPayAggregation(
             $expenseTransfer->getSumPriceToPayAggregation()
-            ?? $expenseTransfer->getUnitPriceToPayAggregation()
+            ?? $expenseTransfer->getUnitPriceToPayAggregation(),
         );
 
         return $expenseTransfer;

@@ -60,7 +60,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReferenceGenerator(),
             $this->createQuoteRequestVersionSanitizer(),
             $this->createQuoteRequestStatus(),
-            $this->getQuoteRequestValidatorPlugins()
+            $this->getQuoteRequestValidatorPlugins(),
         );
     }
 
@@ -76,7 +76,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReferenceGenerator(),
             $this->createQuoteRequestVersionSanitizer(),
             $this->createQuoteRequestUserStatus(),
-            $this->getQuoteRequestUserValidatorPlugins()
+            $this->getQuoteRequestUserValidatorPlugins(),
         );
     }
 
@@ -86,7 +86,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestTimeValidator(): QuoteRequestTimeValidatorInterface
     {
         return new QuoteRequestTimeValidator(
-            $this->createQuoteRequestReader()
+            $this->createQuoteRequestReader(),
         );
     }
 
@@ -97,7 +97,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestSender(
             $this->getEntityManager(),
-            $this->createQuoteRequestReader()
+            $this->createQuoteRequestReader(),
         );
     }
 
@@ -108,7 +108,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestUserSender(
             $this->getEntityManager(),
-            $this->createQuoteRequestReader()
+            $this->createQuoteRequestReader(),
         );
     }
 
@@ -121,7 +121,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createQuoteRequestReader(),
-            $this->createQuoteRequestStatus()
+            $this->createQuoteRequestStatus(),
         );
     }
 
@@ -133,7 +133,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
         return new QuoteRequestUserTerminator(
             $this->getEntityManager(),
             $this->createQuoteRequestReader(),
-            $this->createQuoteRequestUserStatus()
+            $this->createQuoteRequestUserStatus(),
         );
     }
 
@@ -144,7 +144,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestReader(
             $this->getRepository(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 
@@ -154,7 +154,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestStatus(): QuoteRequestStatusInterface
     {
         return new QuoteRequestStatus(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -164,7 +164,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteRequestUserStatus(): QuoteRequestUserStatusInterface
     {
         return new QuoteRequestUserStatus(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -175,7 +175,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestReferenceGenerator(
             $this->getConfig(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -186,7 +186,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestVersionSanitizer(
             $this->getCartFacade(),
-            $this->getCalculationFacade()
+            $this->getCalculationFacade(),
         );
     }
 
@@ -197,7 +197,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestCleaner(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -247,7 +247,7 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function createQuoteValidator(): QuoteValidatorInterface
     {
         return new QuoteValidator(
-            $this->getQuoteRequestPreCreateCheckPlugins()
+            $this->getQuoteRequestPreCreateCheckPlugins(),
         );
     }
 

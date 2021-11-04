@@ -35,7 +35,7 @@ class ProductListStorageListener extends AbstractPlugin implements EventBulkHand
         $this->preventTransaction();
 
         $this->getFacade()->publishProductList(
-            $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers)
+            $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers),
         );
     }
 }

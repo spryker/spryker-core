@@ -63,8 +63,8 @@ class ShipmentDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of shipments is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 }

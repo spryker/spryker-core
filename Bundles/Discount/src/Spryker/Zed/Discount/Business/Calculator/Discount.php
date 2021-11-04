@@ -99,7 +99,7 @@ class Discount implements DiscountInterface
     {
         $activeDiscounts = $this->retrieveActiveCartAndVoucherDiscounts(
             $this->getVoucherCodes($quoteTransfer),
-            $this->getIdStore($quoteTransfer->getStore())
+            $this->getIdStore($quoteTransfer->getStore()),
         );
 
         [$applicableDiscounts, $nonApplicableDiscounts] = $this->splitDiscountsByApplicability($activeDiscounts, $quoteTransfer);
@@ -270,7 +270,7 @@ class Discount implements DiscountInterface
 
         $discountApplicableItems = $this->filterDiscountApplicableItems(
             $quoteTransfer,
-            $discountEntity->getIdDiscount()
+            $discountEntity->getIdDiscount(),
         );
 
         if (count($discountApplicableItems) === 0) {
@@ -363,7 +363,7 @@ class Discount implements DiscountInterface
      */
     protected function hasDiscountItemQuantityDecisionRule(SpyDiscount $discountEntity): bool
     {
-        return str_contains($discountEntity->getDecisionRuleQueryString(), static::ITEM_QUANTITY_DECISION_RULE);
+        return strpos($discountEntity->getDecisionRuleQueryString(), static::ITEM_QUANTITY_DECISION_RULE) !== false;
     }
 
     /**

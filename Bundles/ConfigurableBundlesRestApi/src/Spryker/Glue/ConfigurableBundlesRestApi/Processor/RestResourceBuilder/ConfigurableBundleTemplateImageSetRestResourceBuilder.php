@@ -52,18 +52,18 @@ class ConfigurableBundleTemplateImageSetRestResourceBuilder implements Configura
         $restConfigurableBundleTemplateImageSetsAttributesTransfer = $this->configurableBundleMapper
             ->mapProductImageSetStorageTransferToRestAttributesTransfer(
                 $productImageSetStorageTransfer,
-                new RestConfigurableBundleTemplateImageSetsAttributesTransfer()
+                new RestConfigurableBundleTemplateImageSetsAttributesTransfer(),
             );
 
         $configurableBundleTemplateImageSetRestResource = $this->restResourceBuilder->createRestResource(
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_SETS,
             $idParentResource,
-            $restConfigurableBundleTemplateImageSetsAttributesTransfer
+            $restConfigurableBundleTemplateImageSetsAttributesTransfer,
         );
 
         $configurableBundleTemplateImageSetRestResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->createConfigurableBundleTemplateImageSetSelfLink($idParentResource)
+            $this->createConfigurableBundleTemplateImageSetSelfLink($idParentResource),
         );
 
         return $configurableBundleTemplateImageSetRestResource;
@@ -80,7 +80,7 @@ class ConfigurableBundleTemplateImageSetRestResourceBuilder implements Configura
             '%s/%s?include=%s',
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
             $idParentResource,
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_SETS
+            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_SETS,
         );
     }
 }

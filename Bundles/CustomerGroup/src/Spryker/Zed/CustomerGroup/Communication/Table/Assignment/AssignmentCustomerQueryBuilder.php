@@ -40,7 +40,7 @@ class AssignmentCustomerQueryBuilder implements AssignmentCustomerQueryBuilderIn
             $query->addJoin(
                 [SpyCustomerTableMap::COL_ID_CUSTOMER, $idCustomerGroup],
                 [SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER, SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER_GROUP],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
                 ->addAnd(SpyCustomerGroupToCustomerTableMap::COL_FK_CUSTOMER_GROUP, null, Criteria::ISNULL);
         }

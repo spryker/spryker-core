@@ -50,12 +50,12 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
         }
 
         $urlTransfers = $this->productFacade->getProductUrls(
-            $this->createUrlFilterTransfer($productAbstractIds)
+            $this->createUrlFilterTransfer($productAbstractIds),
         );
 
         return $this->expandItemTransfersWithProductAbstractUrls(
             $cartChangeTransfer,
-            $this->getIndexedProductUrlTransfers($urlTransfers)
+            $this->getIndexedProductUrlTransfers($urlTransfers),
         );
     }
 
@@ -72,7 +72,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
 
             if (isset($urlTransfers[$idProductAbstract])) {
                 $itemTransfer->setUrl(
-                    $urlTransfers[$idProductAbstract]->getUrl()
+                    $urlTransfers[$idProductAbstract]->getUrl(),
                 );
             }
         }

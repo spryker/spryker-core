@@ -57,12 +57,12 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
 
         $this->tester->setDependency(
             ShipmentDependencyProvider::FACADE_TAX,
-            $this->createShipmentToTaxFacadeBridgeMock('MOON', 0.00)
+            $this->createShipmentToTaxFacadeBridgeMock('MOON', 0.00),
         );
 
         $this->tester->setDependency(
             ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
-            [new TaxSetProductAbstractAfterCreatePlugin()]
+            [new TaxSetProductAbstractAfterCreatePlugin()],
         );
 
         $this->shipmentMethodTransferList = [];
@@ -86,7 +86,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         $quoteShipmentMethodTransfer = $quoteTransfer->getShipment()->getMethod();
         $shipmentMethodTransfer = $this->tester->findShipmentMethodByAddressIso2CodeInShipmentMethodTransferList(
             $quoteTransfer->getShipment()->getShippingAddress()->getIso2Code(),
-            $this->shipmentMethodTransferList
+            $this->shipmentMethodTransferList,
         );
         if ($shipmentMethodTransfer !== null) {
             $quoteShipmentMethodTransfer->setIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod());
@@ -106,8 +106,8 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
             $quoteTransfer->getShipment()->getMethod()->getTaxRate(),
             static::FLOAT_COMPARISION_DELTA,
             sprintf(
-                'The actual shipment methdo tax rate is invalid.'
-            )
+                'The actual shipment methdo tax rate is invalid.',
+            ),
         );
 
         $this->assertEqualsWithDelta(
@@ -115,8 +115,8 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
             $quoteTransfer->getExpenses()[0]->getTaxRate(),
             static::FLOAT_COMPARISION_DELTA,
             sprintf(
-                'The actual shipment expense tax rate is invalid.'
-            )
+                'The actual shipment expense tax rate is invalid.',
+            ),
         );
     }
 

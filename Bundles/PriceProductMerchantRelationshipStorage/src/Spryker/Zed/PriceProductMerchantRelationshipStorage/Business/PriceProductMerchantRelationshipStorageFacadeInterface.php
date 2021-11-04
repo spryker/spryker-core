@@ -19,11 +19,9 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @phpstan-param array<mixed> $businessUnitProducts
-     *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $businessUnitProducts
+     * @param array<mixed> $businessUnitProducts
      *
      * @return void
      */
@@ -35,11 +33,9 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @phpstan-param array<mixed> $businessUnitProducts
-     *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $businessUnitProducts
+     * @param array<mixed> $businessUnitProducts
      *
      * @return void
      */

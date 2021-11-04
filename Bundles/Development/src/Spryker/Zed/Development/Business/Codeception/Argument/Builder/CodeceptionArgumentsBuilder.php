@@ -14,21 +14,26 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 {
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeTestConsole::OPTION_CONFIG_PATH
+     *
      * @var string
      */
     protected const OPTION_CONFIG_PATH = 'config';
+
     /**
      * @var string
      */
     protected const OPTION_GROUP_INCLUDE = 'group';
+
     /**
      * @var string
      */
     protected const OPTION_GROUP_EXCLUDE = 'exclude';
+
     /**
      * @var string
      */
     protected const OPTION_VERBOSE = 'verbose';
+
     /**
      * @var string
      */
@@ -48,7 +53,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -67,7 +72,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -82,7 +87,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -91,7 +96,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         if (!empty($options[static::OPTION_GROUP_INCLUDE])) {
             $codeceptionArguments->addArgument(
                 '-g',
-                explode(',', $options[static::OPTION_GROUP_INCLUDE])
+                explode(',', $options[static::OPTION_GROUP_INCLUDE]),
             );
         }
 
@@ -100,7 +105,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -109,7 +114,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         if (!empty($options[static::OPTION_GROUP_EXCLUDE])) {
             $codeceptionArguments->addArgument(
                 '-x',
-                explode(',', $options[static::OPTION_GROUP_EXCLUDE])
+                explode(',', $options[static::OPTION_GROUP_EXCLUDE]),
             );
         }
 
@@ -118,7 +123,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -133,7 +138,7 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -156,13 +161,13 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     {
         return $codeceptionArguments->addArgument(
             '--ext',
-            ['\\' . SuiteFilterHelper::class]
+            ['\\' . SuiteFilterHelper::class],
         );
     }
 
     /**
      * @param \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments $codeceptionArguments
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\CodeceptionArguments
      */
@@ -179,12 +184,12 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
         $extensionInlineConfig = sprintf(
             $extensionInlineConfigTemplate,
             $suiteFilterHelperClassName,
-            $inclusiveGroupsAsString
+            $inclusiveGroupsAsString,
         );
 
         return $codeceptionArguments->addArgument(
             '-o',
-            [$extensionInlineConfig]
+            [$extensionInlineConfig],
         );
     }
 }

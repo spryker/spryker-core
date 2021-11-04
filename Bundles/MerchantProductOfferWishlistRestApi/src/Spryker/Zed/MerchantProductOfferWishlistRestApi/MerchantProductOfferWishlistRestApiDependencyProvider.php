@@ -44,7 +44,7 @@ class MerchantProductOfferWishlistRestApiDependencyProvider extends AbstractBund
     {
         $container->set(static::FACADE_WISHLIST, function (Container $container) {
             return new MerchantProductOfferWishlistRestApiToWishlistFacadeBridge(
-                $container->getLocator()->wishlist()->facade()
+                $container->getLocator()->wishlist()->facade(),
             );
         });
 

@@ -41,7 +41,7 @@ class EditController extends AbstractController
                 (new ProductOfferTransfer())
                     ->setIdProductOffer($idProductOffer)
                     ->setApprovalStatus($approvalStatus)
-                    ->setIdProductConcrete($idProductConcrete)
+                    ->setIdProductConcrete($idProductConcrete),
             );
 
         if ($productOfferResponseTransfer->getIsSuccessful()) {

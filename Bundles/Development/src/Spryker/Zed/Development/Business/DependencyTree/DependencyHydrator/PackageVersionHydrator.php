@@ -15,6 +15,7 @@ class PackageVersionHydrator implements DependencyHydratorInterface
      * @var string
      */
     public const NAME = 'name';
+
     /**
      * @var string
      */

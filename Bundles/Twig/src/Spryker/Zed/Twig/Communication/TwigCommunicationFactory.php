@@ -37,7 +37,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
         return new TwigFilesystemLoader(
             $this->getConfig()->getTemplatePaths(),
             $this->createFilesystemCache(),
-            $this->createTemplateNameExtractor()
+            $this->createTemplateNameExtractor(),
         );
     }
 
@@ -99,7 +99,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
         $filesystemLoaderCache = new FilesystemCache(
             $this->createFilesystemCacheLoader(),
             $this->createFilesystemCacheWriter(),
-            $this->getConfig()->isPathCacheEnabled()
+            $this->getConfig()->isPathCacheEnabled(),
         );
 
         return $filesystemLoaderCache;
@@ -120,7 +120,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FilesystemCacheWriter(
             $this->getConfig()->getCacheFilePath(),
-            $this->getConfig()->getPermissionMode()
+            $this->getConfig()->getPermissionMode(),
         );
     }
 

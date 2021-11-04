@@ -13,14 +13,17 @@ interface CompanyUserDataSetInterface
      * @var string
      */
     public const COLUMN_COMPANY_USER_KEY = 'company_user_key';
+
     /**
      * @var string
      */
     public const COLUMN_CUSTOMER_REFERENCE = 'customer_reference';
+
     /**
      * @var string
      */
     public const COLUMN_COMPANY_KEY = 'company_key';
+
     /**
      * @var string
      */

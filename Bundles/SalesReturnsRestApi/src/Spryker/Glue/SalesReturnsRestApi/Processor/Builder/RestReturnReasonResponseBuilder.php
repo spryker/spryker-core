@@ -53,12 +53,12 @@ class RestReturnReasonResponseBuilder implements RestReturnReasonResponseBuilder
         $restReturnReasonsAttributesTransfers = $this->returnReasonResourceMapper
             ->mapReturnReasonSearchTransfersToRestReturnReasonsAttributesTransfers(
                 $returnReasonSearchCollectionTransfer->getReturnReasons(),
-                $localeName
+                $localeName,
             );
 
         $restResponse = $this->restResourceBuilder->createRestResponse(
             $returnReasonSearchCollectionTransfer->getNbResults(),
-            $returnReasonSearchRequestTransfer->getRequestParameters()['ipp'] ?? 0
+            $returnReasonSearchRequestTransfer->getRequestParameters()['ipp'] ?? 0,
         );
 
         foreach ($restReturnReasonsAttributesTransfers as $restReturnReasonsAttributesTransfer) {
@@ -66,8 +66,8 @@ class RestReturnReasonResponseBuilder implements RestReturnReasonResponseBuilder
                 $this->restResourceBuilder->createRestResource(
                     SalesReturnsRestApiConfig::RESOURCE_RETURN_REASONS,
                     null,
-                    $restReturnReasonsAttributesTransfer
-                )
+                    $restReturnReasonsAttributesTransfer,
+                ),
             );
         }
 

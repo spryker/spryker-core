@@ -38,36 +38,42 @@ class SecurityApplicationPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_FIREWALL
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_FIREWALL = 'security.firewall';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_LAST_ERROR
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO = 'security.user_provider.inmemory._proto';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_ACCESS_MAP
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
@@ -76,10 +82,12 @@ class SecurityApplicationPluginTest extends Unit
      * @var string
      */
     protected const HOMEPAGE_PATH = '/homepage';
+
     /**
      * @var string
      */
     protected const USER_PAGE_PATH = '/homepage/user';
+
     /**
      * @var string
      */
@@ -89,18 +97,22 @@ class SecurityApplicationPluginTest extends Unit
      * @var string
      */
     protected const USER_NAME = 'user';
+
     /**
      * @var string
      */
     protected const USER_PASSWORD = 'foo';
+
     /**
      * @var string
      */
     protected const USER_ENCODED_PASSWORD = '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu';
+
     /**
      * @var string
      */
     protected const USER_INVALID_PASSWORD = 'bar';
+
     /**
      * @var string
      */
@@ -256,7 +268,7 @@ class SecurityApplicationPluginTest extends Unit
                  *
                  * @return \Symfony\Component\HttpFoundation\Response
                  */
-                public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+                public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
                 {
                     return new Response('authentication success');
                 }

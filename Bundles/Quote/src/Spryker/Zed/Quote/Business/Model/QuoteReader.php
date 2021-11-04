@@ -64,7 +64,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository->findQuoteByCustomerReferenceAndIdStore(
             $customerTransfer->getCustomerReference(),
-            $this->storeFacade->getCurrentStore()->getIdStore()
+            $this->storeFacade->getCurrentStore()->getIdStore(),
         );
 
         if ($quoteTransfer) {
@@ -92,7 +92,7 @@ class QuoteReader implements QuoteReaderInterface
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByCustomerReferenceAndIdStore(
                 $customerTransfer->getCustomerReference(),
-                $storeTransfer->getIdStore()
+                $storeTransfer->getIdStore(),
             );
 
         if ($quoteTransfer) {
@@ -198,7 +198,7 @@ class QuoteReader implements QuoteReaderInterface
 
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $expandedQuotesCollection->addQuote(
-                $this->executeExpandQuotePlugins($quoteTransfer)
+                $this->executeExpandQuotePlugins($quoteTransfer),
             );
         }
 

@@ -23,10 +23,12 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -41,10 +43,12 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR';
+
     /**
      * @var string
      */
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER = 'PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER';
+
     /**
      * @var string
      */
@@ -78,7 +82,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductOfferToPriceProductFacadeBridge(
-                $container->getLocator()->priceProduct()->facade()
+                $container->getLocator()->priceProduct()->facade(),
             );
         });
 
@@ -94,7 +98,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new PriceProductOfferToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -124,7 +128,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new PriceProductOfferToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 

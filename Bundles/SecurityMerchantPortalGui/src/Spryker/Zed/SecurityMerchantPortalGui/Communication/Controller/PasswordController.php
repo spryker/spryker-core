@@ -23,27 +23,34 @@ class PasswordController extends AbstractController
      * @var string
      */
     protected const PARAM_TOKEN = 'token';
+
     /**
      * @var string
      */
     protected const MESSAGE_USER_REQUEST_PASSWORD_SUCCESS = 'If there is an account associated with this email, you will receive an Email with further instructions.';
+
     /**
      * @uses \Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater::RESET_RASSWORD_PATH
+     *
      * @var string
      */
     protected const RESET_RASSWORD_PATH = '/security-merchant-portal-gui/password/reset';
+
     /**
      * @var string
      */
     protected const MESSAGE_USER_PASSWORD_UPDATE_SUCCESS = 'Success! The password is updated.';
+
     /**
      * @var string
      */
     protected const MESSAGE_USER_PASSWORD_UPDATE_ERROR = 'Could not update password.';
+
     /**
      * @var string
      */
     protected const MESSAGE_MISSING_TOKEN_ERROR = 'Request token is missing!';
+
     /**
      * @var string
      */
@@ -66,7 +73,7 @@ class PasswordController extends AbstractController
                 ->getMerchantUserFacade()
                 ->findMerchantUser(
                     (new MerchantUserCriteriaTransfer())
-                        ->setUsername($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL])
+                        ->setUsername($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL]),
                 );
 
             if ($merchantUser) {
@@ -75,12 +82,12 @@ class PasswordController extends AbstractController
                     ->requestPasswordReset(
                         (new UserPasswordResetRequestTransfer())
                             ->setEmail($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL])
-                            ->setResetPasswordPath(static::RESET_RASSWORD_PATH)
+                            ->setResetPasswordPath(static::RESET_RASSWORD_PATH),
                     );
             }
 
             $this->addSuccessMessage(
-                static::MESSAGE_USER_REQUEST_PASSWORD_SUCCESS
+                static::MESSAGE_USER_REQUEST_PASSWORD_SUCCESS,
             );
 
             return $this->viewResponse([]);
@@ -103,7 +110,7 @@ class PasswordController extends AbstractController
 
         if (!$this->isValidToken($token)) {
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 
@@ -117,7 +124,7 @@ class PasswordController extends AbstractController
                 ->getMerchantUserFacade()
                 ->setNewPassword(
                     $token,
-                    $formData[MerchantResetPasswordForm::FIELD_PASSWORD]
+                    $formData[MerchantResetPasswordForm::FIELD_PASSWORD],
                 );
 
             if ($isPasswordReset) {
@@ -127,7 +134,7 @@ class PasswordController extends AbstractController
             }
 
             return $this->redirectResponse(
-                $this->getFactory()->getConfig()->getUrlLogin()
+                $this->getFactory()->getConfig()->getUrlLogin(),
             );
         }
 

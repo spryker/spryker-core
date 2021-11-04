@@ -31,6 +31,7 @@ class CategoryPageSearchFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants::CATEGORY_STORE_PUBLISH,
+     *
      * @var string
      */
     protected const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
@@ -39,10 +40,12 @@ class CategoryPageSearchFacadeTest extends Unit
      * @var string
      */
     protected const KEY_SEARCH_RESULT_DATA = 'search-result-data';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */
@@ -310,7 +313,7 @@ class CategoryPageSearchFacadeTest extends Unit
         $this->assertSame(
             $categoryLocalizedAttributesTransfer->getName(),
             $data[static::KEY_SEARCH_RESULT_DATA][static::KEY_NAME],
-            'The name of category in search-result-data does not equals to expected value.'
+            'The name of category in search-result-data does not equals to expected value.',
         );
     }
 

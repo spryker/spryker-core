@@ -76,7 +76,7 @@ class CartOperation implements CartOperationInterface
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             (int)$persistentCartChangeTransfer->getIdQuote(),
             $persistentCartChangeTransfer->getCustomer(),
-            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()
+            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -84,7 +84,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
         );
 
         return $this->quoteItemOperation->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
@@ -102,7 +102,7 @@ class CartOperation implements CartOperationInterface
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             (int)$persistentCartChangeTransfer->getIdQuote(),
             $persistentCartChangeTransfer->getCustomer(),
-            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()
+            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -110,7 +110,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
         );
 
         return $this->quoteItemOperation->addValidItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
@@ -127,7 +127,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeTransfer->getIdQuote(),
-            $persistentCartChangeTransfer->getCustomer()
+            $persistentCartChangeTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -135,7 +135,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
         );
 
         $itemTransferList = [];
@@ -160,7 +160,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeQuantityTransfer->getIdQuote(),
-            $persistentCartChangeQuantityTransfer->getCustomer()
+            $persistentCartChangeQuantityTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -168,7 +168,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeQuantityTransfer->getQuote()
+            $persistentCartChangeQuantityTransfer->getQuote(),
         );
 
         $itemTransfer = $persistentCartChangeQuantityTransfer->getItem();
@@ -213,7 +213,7 @@ class CartOperation implements CartOperationInterface
 
         $persistentQuoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeTransfer->getIdQuote(),
-            $persistentCartChangeTransfer->getCustomer()
+            $persistentCartChangeTransfer->getCustomer(),
         );
 
         if (!$persistentQuoteResponseTransfer->getIsSuccessful()) {
@@ -222,7 +222,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true),
-            $persistentCartChangeTransfer->getQuote()
+            $persistentCartChangeTransfer->getQuote(),
         );
 
         $itemsToAdding = $this->prepareItemsForAdding($persistentCartChangeTransfer, $quoteTransfer);
@@ -350,7 +350,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeQuantityTransfer->getIdQuote(),
-            $persistentCartChangeQuantityTransfer->getCustomer()
+            $persistentCartChangeQuantityTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -358,7 +358,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeQuantityTransfer->getQuote()
+            $persistentCartChangeQuantityTransfer->getQuote(),
         );
 
         $decreaseItemTransfer = $this->findItemInQuote($persistentCartChangeQuantityTransfer->getItem(), $quoteTransfer);
@@ -368,7 +368,7 @@ class CartOperation implements CartOperationInterface
 
         $itemTransfer = clone $decreaseItemTransfer;
         $itemTransfer->setQuantity(
-            $persistentCartChangeQuantityTransfer->getItem()->getQuantity()
+            $persistentCartChangeQuantityTransfer->getItem()->getQuantity(),
         );
 
         return $this->quoteItemOperation->removeItems([$itemTransfer], $quoteTransfer);
@@ -385,7 +385,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeQuantityTransfer->getIdQuote(),
-            $persistentCartChangeQuantityTransfer->getCustomer()
+            $persistentCartChangeQuantityTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -393,7 +393,7 @@ class CartOperation implements CartOperationInterface
 
         $quoteTransfer = $this->mergeQuotes(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $persistentCartChangeQuantityTransfer->getQuote()
+            $persistentCartChangeQuantityTransfer->getQuote(),
         );
 
         $decreaseItemTransfer = $this->findItemInQuote($persistentCartChangeQuantityTransfer->getItem(), $quoteTransfer);
@@ -403,7 +403,7 @@ class CartOperation implements CartOperationInterface
 
         $itemTransfer = clone $decreaseItemTransfer;
         $itemTransfer->setQuantity(
-            $persistentCartChangeQuantityTransfer->getItem()->getQuantity()
+            $persistentCartChangeQuantityTransfer->getItem()->getQuantity(),
         );
 
         return $this->quoteItemOperation->addItems([$itemTransfer], $quoteTransfer);
@@ -419,7 +419,7 @@ class CartOperation implements CartOperationInterface
         $quoteTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()
+            $quoteTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -440,7 +440,7 @@ class CartOperation implements CartOperationInterface
         $quoteTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()
+            $quoteTransfer->getCustomer(),
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;

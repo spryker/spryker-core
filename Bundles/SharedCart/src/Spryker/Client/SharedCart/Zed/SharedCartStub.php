@@ -53,7 +53,7 @@ class SharedCartStub extends ZedRequestStub implements SharedCartStubInterface
         /** @var \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer $quotePermissionGroupResponseTransfer */
         $quotePermissionGroupResponseTransfer = $this->zedStub->call(
             '/shared-cart/gateway/find-quote-permission-group-by-id',
-            $quotePermissionGroupTransfer
+            $quotePermissionGroupTransfer,
         );
 
         return $quotePermissionGroupResponseTransfer;
@@ -69,7 +69,7 @@ class SharedCartStub extends ZedRequestStub implements SharedCartStubInterface
         /** @var \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer */
         $customerCollectionTransfer = $this->zedStub->call(
             '/shared-cart/gateway/get-customer-collection-by-quote',
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         return $customerCollectionTransfer;

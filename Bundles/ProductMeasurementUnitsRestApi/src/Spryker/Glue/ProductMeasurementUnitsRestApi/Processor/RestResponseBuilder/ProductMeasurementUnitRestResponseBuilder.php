@@ -39,7 +39,7 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
     public function createProductMeasurementUnitRestResponse(ProductMeasurementUnitTransfer $productMeasurementUnitTransfer): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse()->addResource(
-            $this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer)
+            $this->createProductMeasurementUnitRestResource($productMeasurementUnitTransfer),
         );
     }
 
@@ -58,7 +58,7 @@ class ProductMeasurementUnitRestResponseBuilder implements ProductMeasurementUni
         return $this->restResourceBuilder->createRestResource(
             ProductMeasurementUnitsRestApiConfig::RESOURCE_PRODUCT_MEASUREMENT_UNITS,
             $resourceId,
-            $restProductMeasurementUnitsAttributesTransfer
+            $restProductMeasurementUnitsAttributesTransfer,
         );
     }
 

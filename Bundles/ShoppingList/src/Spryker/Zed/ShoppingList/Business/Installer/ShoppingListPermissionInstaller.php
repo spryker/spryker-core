@@ -74,7 +74,7 @@ class ShoppingListPermissionInstaller implements ShoppingListPermissionInstaller
             foreach ($shoppingListPermissionGroupTransfer->getPermissions() as $permissionTransfer) {
                 $this->shoppingListEntityManager->saveShoppingListPermissionGroupToPermission(
                     $shoppingListPermissionGroupEntityTransfer,
-                    $this->permissionFacade->findPermissionByKey($permissionTransfer->getKey())
+                    $this->permissionFacade->findPermissionByKey($permissionTransfer->getKey()),
                 );
             }
         }

@@ -13,7 +13,8 @@ class ProductPageSearchConfig extends AbstractSharedConfig
 {
     /**
      * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_MODES
-     * @var array
+     *
+     * @var array<string>
      */
     public const PRICE_MODES = [
         'NET_MODE',
@@ -25,6 +26,7 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * - This constant is used for extracting data from plugin array
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
@@ -33,10 +35,12 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
+
     /**
      * @var string
      */
     public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
+
     /**
      * @var string
      */
@@ -47,6 +51,7 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      *  - Default Price Dimension name.
      *
      * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';

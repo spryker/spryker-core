@@ -95,7 +95,7 @@ class CategoryUpdater implements CategoryUpdaterInterface
 
         $this->eventFacade->trigger(
             CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE,
-            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
         );
     }
 

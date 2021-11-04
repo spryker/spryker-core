@@ -22,7 +22,7 @@ class QuoteRequestDataImportHelper extends Module
 
         $this->assertTrue(
             $quoteRequestQuery->find()->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -35,7 +35,7 @@ class QuoteRequestDataImportHelper extends Module
 
         $this->assertTrue(
             $quoteRequestItemQuery->count() > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

@@ -22,10 +22,12 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
@@ -33,6 +35,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     *
      * @var string
      */
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
@@ -78,7 +81,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new SecurityMerchantPortalGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -94,7 +97,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SecurityMerchantPortalGuiToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
+                $container->getLocator()->messenger()->facade(),
             );
         });
 
@@ -110,7 +113,7 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     {
         $container->set(static::FACADE_SECURITY, function (Container $container) {
             return new SecurityMerchantPortalGuiToSecurityFacadeBridge(
-                $container->getLocator()->security()->facade()
+                $container->getLocator()->security()->facade(),
             );
         });
 

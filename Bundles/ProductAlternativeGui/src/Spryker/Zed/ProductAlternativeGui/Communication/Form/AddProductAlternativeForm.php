@@ -33,7 +33,7 @@ class AddProductAlternativeForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -88,7 +88,7 @@ class AddProductAlternativeForm extends AbstractType
                     'required' => false,
                     'choices' => $data[static::FIELD_PRODUCT_ALTERNATIVE],
                     'multiple' => true,
-                ]
+                ],
             );
         };
     }

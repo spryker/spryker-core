@@ -49,8 +49,8 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
         throw new QuoteStorageStrategyPluginNotFound(
             sprintf(
                 'There is no quote storage strategy with name: %s. ',
-                $storageStrategyType
-            )
+                $storageStrategyType,
+            ),
         );
     }
 }

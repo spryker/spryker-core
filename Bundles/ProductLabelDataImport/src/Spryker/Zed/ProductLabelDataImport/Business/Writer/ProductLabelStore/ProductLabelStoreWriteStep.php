@@ -17,6 +17,7 @@ class ProductLabelStoreWriteStep extends PublishAwareStep implements DataImportS
 {
     /**
      * @uses \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig::PRODUCT_LABEL_STORE_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_PRODUCT_LABEL_STORE_PUBLISH = 'ProductLabel.product_label_store.publish';

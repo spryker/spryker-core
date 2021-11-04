@@ -21,6 +21,7 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      * @var string
      */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
     /**
      * @var string
      */

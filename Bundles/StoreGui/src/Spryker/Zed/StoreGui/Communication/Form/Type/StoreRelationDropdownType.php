@@ -25,10 +25,12 @@ class StoreRelationDropdownType extends AbstractType
      * @var string
      */
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
+
     /**
      * @var string
      */
     public const OPTION_DATA_CLASS = 'data_class';
+
     /**
      * @var string
      */
@@ -38,10 +40,12 @@ class StoreRelationDropdownType extends AbstractType
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+
     /**
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+
     /**
      * @var string
      */
@@ -56,10 +60,12 @@ class StoreRelationDropdownType extends AbstractType
      * @var string
      */
     protected const FIELD_ID_ENTITY = 'id_entity';
+
     /**
      * @var string
      */
     protected const FIELD_ID_STORES = 'id_stores';
+
     /**
      * @var string
      */
@@ -96,7 +102,7 @@ class StoreRelationDropdownType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $this->setInitialData($event);
-            }
+            },
         );
     }
 
@@ -152,7 +158,7 @@ class StoreRelationDropdownType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -171,7 +177,7 @@ class StoreRelationDropdownType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -195,7 +201,7 @@ class StoreRelationDropdownType extends AbstractType
                         'disabled' => $this->getIsStoreDisabled($idStore, $options),
                     ];
                 },
-            ]
+            ],
         );
 
         return $this;
@@ -203,7 +209,7 @@ class StoreRelationDropdownType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -221,12 +227,12 @@ class StoreRelationDropdownType extends AbstractType
                 'attr' => [
                     static::OPTION_EXTENDED => $options[static::OPTION_EXTENDED],
                 ],
-            ]
+            ],
         );
 
         $builder->add(static::FIELD_ID_STORES, HiddenType::class);
         $builder->get(static::FIELD_ID_STORES)->addModelTransformer(
-            $this->getFactory()->createIdStoresDataTransformer()
+            $this->getFactory()->createIdStoresDataTransformer(),
         );
 
         return $this;
@@ -234,7 +240,7 @@ class StoreRelationDropdownType extends AbstractType
 
     /**
      * @param string $idStore
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

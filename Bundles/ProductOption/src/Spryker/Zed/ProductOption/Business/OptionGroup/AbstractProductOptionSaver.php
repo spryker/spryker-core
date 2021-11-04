@@ -70,7 +70,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
 
             $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity(
                 $productOptionGroupEntity,
-                $idProductAbstract
+                $idProductAbstract,
             );
 
             $productOptionGroupEntity->addSpyProductAbstractProductOptionGroup($productAbstractProductOptionGroupEntity);
@@ -118,7 +118,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
         if ($affectedRows > 0) {
             $this->touchFacade->touchActive(
                 ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION,
-                $productAbstractEntity->getIdProductAbstract()
+                $productAbstractEntity->getIdProductAbstract(),
             );
 
             return true;
@@ -143,7 +143,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
         if (!$productOptionGroupEntity) {
             throw new ProductOptionGroupNotFoundException(sprintf(
                 'Product Option Group with id "%s" not found.',
-                $idProductOptionGroup
+                $idProductOptionGroup,
             ));
         }
 
@@ -166,7 +166,7 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
         if (!$productAbstractEntity) {
             throw new AbstractProductNotFoundException(sprintf(
                 'Abstract Product with sku "%s" not found.',
-                $abstractSku
+                $abstractSku,
             ));
         }
 

@@ -25,10 +25,12 @@ class AddressController extends AbstractController
      * @var string
      */
     protected const URL_CUSTOMER_LIST = '/customer';
+
     /**
      * @var string
      */
     protected const URL_CUSTOMER_VIEW = '/customer/view';
+
     /**
      * @var string
      */
@@ -54,7 +56,7 @@ class AddressController extends AbstractController
             return $this->redirectResponse(
                 Url::generate(static::URL_CUSTOMER_VIEW, [
                     CustomerConstants::PARAM_ID_CUSTOMER => $idCustomer,
-                ])->build()
+                ])->build(),
             );
         }
 
@@ -72,7 +74,7 @@ class AddressController extends AbstractController
             ->getFactory()
             ->createAddressForm(
                 $dataProvider->getData($idCustomerAddress),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -85,7 +87,7 @@ class AddressController extends AbstractController
             return $this->redirectResponse(sprintf(
                 '/customer/view?%s=%d',
                 CustomerConstants::PARAM_ID_CUSTOMER,
-                $idCustomer
+                $idCustomer,
             ));
         }
 
@@ -110,7 +112,7 @@ class AddressController extends AbstractController
             ->getFactory()
             ->createAddressForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -122,7 +124,7 @@ class AddressController extends AbstractController
             $this->getFacade()->createAddress($addressTransfer);
 
             return $this->redirectResponse(
-                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
+                sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer),
             );
         }
 

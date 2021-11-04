@@ -24,18 +24,22 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      * @var string
      */
     public const KEY_NAME_PREFIX = 'storage';
+
     /**
      * @var string
      */
     public const KEY_NAME_SEPARATOR = ':';
+
     /**
      * @var string
      */
     public const KEY_USED = 'used';
+
     /**
      * @var string
      */
     public const KEY_NEW = 'new';
+
     /**
      * @var string
      */
@@ -459,7 +463,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         if (!$this->getService() instanceof StorageScanPluginInterface) {
             throw new InvalidStorageScanPluginInterfaceException(
-                'In order to use the method `scanKeys` you need a service that implements the plugin interface `StorageScanPluginInterface`'
+                'In order to use the method `scanKeys` you need a service that implements the plugin interface `StorageScanPluginInterface`',
             );
         }
 

@@ -25,14 +25,17 @@ class MerchantUrlCollectionFormType extends AbstractType
      * @var string
      */
     public const FIELD_URL = 'url';
+
     /**
      * @var string
      */
     protected const TEMPLATE_PATH = 'url';
+
     /**
      * @var string
      */
     protected const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
@@ -54,7 +57,7 @@ class MerchantUrlCollectionFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

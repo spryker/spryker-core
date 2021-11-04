@@ -90,7 +90,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
 
         return $this->cartsRestApiResource->createGuestCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+            $restRequest,
         );
     }
 
@@ -127,7 +127,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
 
         return $this->cartsRestApiResource->createGuestCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+            $restRequest,
         );
     }
 

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Collector\Business\Exporter\Writer;
 
 use Codeception\Test\Unit;
+use InvalidArgumentException;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
@@ -125,7 +126,7 @@ class AbstractTouchUpdaterTest extends Unit
      */
     public function testBulkUpdateIsFailingWithWrongTouchQueryConfigured(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Can\'t resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery');
         $this->collectorConfig = $this->createWrongCollectorConfig();
         $this->createTouchUpdater();
@@ -136,7 +137,7 @@ class AbstractTouchUpdaterTest extends Unit
      */
     public function testBulkDeleteIsFailingWithWrongTouchQueryConfigured(): void
     {
-        $this->expectException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Can\'t resolve bulk touch class name: BulkDeleteTouchByIdQuery');
         $this->collectorConfig = $this->createWrongCollectorConfig();
         $this->createBulkTouchDeleteQuery();
@@ -200,7 +201,7 @@ class AbstractTouchUpdaterTest extends Unit
             [
                 'collector_touch_id' => 'touch_id',
                 'touchKeyColumnName_value' => 'new value',
-            ]
+            ],
         );
 
         $touchUpdaterSet->add(
@@ -209,7 +210,7 @@ class AbstractTouchUpdaterTest extends Unit
             [
                 'collector_touch_id' => 'touch_id2',
                 'touchKeyColumnName_value' => 'new value2',
-            ]
+            ],
         );
 
         return $touchUpdaterSet;

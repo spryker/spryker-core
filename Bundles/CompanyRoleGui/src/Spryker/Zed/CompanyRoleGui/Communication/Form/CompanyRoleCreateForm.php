@@ -32,6 +32,7 @@ class CompanyRoleCreateForm extends AbstractType
      * @var string
      */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+
     /**
      * @var string
      */
@@ -41,22 +42,27 @@ class CompanyRoleCreateForm extends AbstractType
      * @var string
      */
     protected const FIELD_ID_COMPANY_ROLE = 'idCompanyRole';
+
     /**
      * @var string
      */
     protected const FIELD_FK_COMPANY = 'fkCompany';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_IS_DEFAULT = 'isDefault';
+
     /**
      * @var string
      */
     protected const FIELD_PERMISSION_COLLECTION = 'permissionCollection';
+
     /**
      * @var string
      */
@@ -86,7 +92,7 @@ class CompanyRoleCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -114,7 +120,7 @@ class CompanyRoleCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -184,7 +190,7 @@ class CompanyRoleCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -203,7 +209,7 @@ class CompanyRoleCreateForm extends AbstractType
 
         $callbackTransformer = new CallbackTransformer(
             $this->getInputDataCallbackPermissionCollectionTransformer(),
-            $this->getOutputDataCallbackPermissionCollectionTransformer()
+            $this->getOutputDataCallbackPermissionCollectionTransformer(),
         );
 
         $builder->get(static::FIELD_PERMISSION_COLLECTION)

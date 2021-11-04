@@ -13,6 +13,7 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
      * @var string
      */
     public const BUTTON_CLASS = 'class';
+
     /**
      * @var string
      */
@@ -29,14 +30,14 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
     protected $title;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $options = [];
 
     /**
      * @param array $buttons
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $buttons, $title, array $options)
     {
@@ -59,7 +60,7 @@ class ButtonGroupUrlGenerator implements UrlGeneratorInterface
             $class,
             $optionParams,
             $icon,
-            $this->title
+            $this->title,
         );
 
         $html .= '<ul class="dropdown-menu">';

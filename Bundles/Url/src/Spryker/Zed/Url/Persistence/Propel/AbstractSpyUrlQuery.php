@@ -25,6 +25,7 @@ abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
      * Used to map a resource type to a column
      *
      * @see AbstractSpyUrl::RESOURCE_PREFIX
+     *
      * @var string
      */
     public const RESOURCE_PREFIX = 'FkResource';
@@ -47,8 +48,8 @@ abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
             throw new UnknownResourceTypeException(
                 sprintf(
                     'Tried to set a resource type that is unknown. ResourceType: %s',
-                    $resourceType
-                )
+                    $resourceType,
+                ),
             );
         }
 

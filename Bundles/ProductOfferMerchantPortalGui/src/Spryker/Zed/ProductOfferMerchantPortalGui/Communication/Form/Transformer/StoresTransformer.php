@@ -14,8 +14,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 class StoresTransformer implements DataTransformerInterface
 {
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\StoreTransfer>|null $storeTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null $storeTransfers
      *
      * @return array<int>|null
@@ -52,7 +50,7 @@ class StoresTransformer implements DataTransformerInterface
 
         foreach ($storeIds as $idStore) {
             $storeTransfers->append(
-                (new StoreTransfer())->setIdStore((int)$idStore)
+                (new StoreTransfer())->setIdStore((int)$idStore),
             );
         }
 

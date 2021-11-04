@@ -50,7 +50,7 @@ class PriceModeValidator implements PriceModeValidatorInterface
             (new RestErrorMessageTransfer())
                 ->setDetail(ProductPricesRestApiConfig::RESPONSE_DETAILS_INVALID_PRICE_MODE)
                 ->setCode(ProductPricesRestApiConfig::RESPONSE_CODE_INVALID_PRICE_MODE)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setStatus(Response::HTTP_BAD_REQUEST),
         );
     }
 

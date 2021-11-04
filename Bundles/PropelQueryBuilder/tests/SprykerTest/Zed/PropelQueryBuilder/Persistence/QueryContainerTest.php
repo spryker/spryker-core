@@ -40,6 +40,7 @@ class QueryContainerTest extends Unit
      * @var int
      */
     public const LIMIT = 10;
+
     /**
      * @var int
      */
@@ -49,10 +50,12 @@ class QueryContainerTest extends Unit
      * @var int
      */
     public const EXPECTED_COUNT = 8;
+
     /**
      * @var int
      */
     public const EXPECTED_OFFSET = 10;
+
     /**
      * @var array
      */
@@ -426,7 +429,7 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $collection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $collection
      * @param array $expectedSkuCollection
      *
      * @return void

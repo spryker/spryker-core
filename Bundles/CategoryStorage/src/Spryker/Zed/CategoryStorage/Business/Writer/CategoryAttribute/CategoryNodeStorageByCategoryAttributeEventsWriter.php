@@ -45,11 +45,11 @@ class CategoryNodeStorageByCategoryAttributeEventsWriter implements CategoryNode
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCategoryAttributeTableMap::COL_FK_CATEGORY
+            SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
         );
 
         $this->categoryNodeStorageWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 }

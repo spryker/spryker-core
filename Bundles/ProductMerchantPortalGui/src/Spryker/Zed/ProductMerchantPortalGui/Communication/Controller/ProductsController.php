@@ -19,6 +19,7 @@ class ProductsController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::indexAction()
+     *
      * @var string
      */
     protected const URL_CREATE_PRODUCT_ABSTRACT = '/product-merchant-portal-gui/create-product-abstract';
@@ -52,7 +53,7 @@ class ProductsController extends AbstractController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductAbstractTableDataProvider(),
-            $this->getFactory()->createProductAbstractGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createProductAbstractGuiTableConfigurationProvider()->getConfiguration(),
         );
     }
 }

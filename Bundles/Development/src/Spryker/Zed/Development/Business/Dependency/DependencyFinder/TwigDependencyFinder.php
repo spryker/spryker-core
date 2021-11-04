@@ -23,7 +23,7 @@ class TwigDependencyFinder implements DependencyFinderInterface
     protected $twigDependencyFinder;
 
     /**
-     * @param array $twigDependencyFinder
+     * @param array<\Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface> $twigDependencyFinder
      */
     public function __construct(array $twigDependencyFinder)
     {

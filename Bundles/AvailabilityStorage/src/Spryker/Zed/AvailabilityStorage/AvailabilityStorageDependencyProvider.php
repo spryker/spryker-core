@@ -24,6 +24,7 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const QUERY_CONTAINER_AVAILABILITY = 'QUERY_CONTAINER_AVAILABILITY';
+
     /**
      * @var string
      */

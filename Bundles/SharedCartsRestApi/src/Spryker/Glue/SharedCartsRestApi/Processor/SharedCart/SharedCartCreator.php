@@ -79,19 +79,19 @@ class SharedCartCreator implements SharedCartCreatorInterface
             $cartsResource->getId(),
             $restRequest->getRestUser()->getNaturalIdentifier(),
             $companyUserTransfer->getIdCompanyUser(),
-            $restSharedCartsAttributesTransfer->getIdCartPermissionGroup()
+            $restSharedCartsAttributesTransfer->getIdCartPermissionGroup(),
         );
 
         $shareCartResponseTransfer = $this->sharedCartsRestApiClient->create($shareCartRequestTransfer);
 
         if (!$shareCartResponseTransfer->getIsSuccessful()) {
             return $this->sharedCartRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $shareCartResponseTransfer->getErrorIdentifier()
+                $shareCartResponseTransfer->getErrorIdentifier(),
             );
         }
 
         return $this->sharedCartRestResponseBuilder->createSharedCartRestResponse(
-            $shareCartResponseTransfer->getShareDetails()->offsetGet(0)
+            $shareCartResponseTransfer->getShareDetails()->offsetGet(0),
         );
     }
 

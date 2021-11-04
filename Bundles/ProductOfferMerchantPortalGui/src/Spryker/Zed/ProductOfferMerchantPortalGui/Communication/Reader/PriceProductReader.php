@@ -46,8 +46,8 @@ class PriceProductReader implements PriceProductReaderInterface
         $priceProductTransfers = $this->priceProductOfferFacade
             ->getProductOfferPrices(
                 (new PriceProductOfferCriteriaTransfer())->setIdProductOffer(
-                    $priceProductOfferCriteriaTransfer->getIdProductOfferOrFail()
-                )
+                    $priceProductOfferCriteriaTransfer->getIdProductOfferOrFail(),
+                ),
             )
             ->getArrayCopy();
 

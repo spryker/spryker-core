@@ -220,7 +220,7 @@ class CmsBlockFacadeTest extends Unit
                 CmsBlockTransfer::STORE_RELATION => [
                     StoreRelationTransfer::ID_STORES => $originalRelation,
                 ],
-            ]
+            ],
         );
 
         $this->createCmsBlockFacade()->updateCmsBlock($cmsBlockTransfer);

@@ -33,6 +33,7 @@ class ConfigurableBundleTemplateSlotDataImportPluginTest extends Unit
      * @var string
      */
     protected const TEST_CONFIGURABLE_BUNDLE_TEMPLATE_KEY = 'test-configurable-bundle-template-key-1';
+
     /**
      * @var string
      */
@@ -42,6 +43,7 @@ class ConfigurableBundleTemplateSlotDataImportPluginTest extends Unit
      * @var string
      */
     protected const INCORRECT_CONFIGURABLE_BUNDLE_TEMPLATE_KEY = 'incorrect-configurable-bundle-template-key';
+
     /**
      * @var string
      */

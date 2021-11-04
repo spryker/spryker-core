@@ -23,9 +23,11 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
 {
     /**
      * @uses \Spryker\Zed\AclEntityDataImport\Business\DataSet\AclEntitySegmentConnectorDataSetInterface::FK_ACL_ENTITY_SEGMENT
+     *
      * @var string
      */
     public const FK_ACL_ENTITY_SEGMENT = 'fk_acl_entity_segment';
+
     /**
      * @var string
      */
@@ -76,7 +78,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
             function (AclEntityRuleTransfer $aclEntityRuleTransfer): int {
                 return $aclEntityRuleTransfer->getIdAclEntitySegmentOrFail();
             },
-            $this->aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy()
+            $this->aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),
         );
 
         $segmentRelationName = $this->aclEntityService->generateSegmentConnectorRelationName($query->getModelShortName());
@@ -88,7 +90,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
             ->addJoinCondition(
                 $segmentTableMap->getPhpName(),
                 $this->generateSegmentJoinCondition($segmentTableMap),
-                $aclEntitySegmentIds
+                $aclEntitySegmentIds,
             );
 
         return $query;
@@ -111,8 +113,8 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
             },
             $this->aclEntityRuleCollectionTransferFilter->filterByPermissionMask(
                 $this->aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_UPDATE
-            )->getAclEntityRules()->getArrayCopy()
+                AclEntityConstants::OPERATION_MASK_UPDATE,
+            )->getAclEntityRules()->getArrayCopy(),
         );
         // Propel does not support joins for update queries through query builder (@see \Propel\Runtime\ActiveQuery\ModelCriteria::update)
         // Limit update scope with additional IN condition
@@ -146,8 +148,8 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
             },
             $this->aclEntityRuleCollectionTransferFilter->filterByPermissionMask(
                 $this->aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_DELETE
-            )->getAclEntityRules()->getArrayCopy()
+                AclEntityConstants::OPERATION_MASK_DELETE,
+            )->getAclEntityRules()->getArrayCopy(),
         );
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
         $primaryKey = current($query->getTableMap()->getPrimaryKeys());
@@ -176,14 +178,14 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
                 $this->aclEntityRuleCollectionTransfer,
                 AclEntityConstants::SCOPE_SEGMENT,
                 get_class($entity),
-                AclEntityConstants::OPERATION_MASK_CREATE
+                AclEntityConstants::OPERATION_MASK_CREATE,
             );
 
         $aclEntitySegmentIds = array_map(
             function (AclEntityRuleTransfer $aclEntityRuleTransfer): int {
                 return $aclEntityRuleTransfer->getIdAclEntitySegmentOrFail();
             },
-            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy()
+            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),
         );
 
         $aclEntitySegmentGetter = $this->aclEntityService->generateSegmentConnectorGetter(get_class($entity));
@@ -276,17 +278,17 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
         $segmentQuery = PropelQuery::from($segmentClass);
 
         $entityForeignKeyColumn = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
-            PropelQuery::from(get_class($entity))->getTableMap()->getName()
+            PropelQuery::from(get_class($entity))->getTableMap()->getName(),
         );
 
         $segmentQuery
             ->filterBy(
                 $segmentQuery->getTableMap()->getColumn(self::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
-                $segmentId
+                $segmentId,
             )
             ->filterBy(
                 $segmentQuery->getTableMap()->getColumn($entityForeignKeyColumn)->getPhpName(),
-                $entity->getPrimaryKey()
+                $entity->getPrimaryKey(),
             );
 
         return $segmentQuery->count() > 0;
@@ -303,13 +305,13 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     protected function getAccessibleTargetEntityIds(ModelCriteria $query, array $segmentIds): array
     {
         $segmentTableQuery = PropelQuery::from(
-            $this->aclEntityService->generateSegmentConnectorClassName($query->getModelName())
+            $this->aclEntityService->generateSegmentConnectorClassName($query->getModelName()),
         );
         $segmentEntities = $segmentTableQuery
             ->filterBy(
                 $segmentTableQuery->getTableMap()->getColumn(self::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
                 $segmentIds,
-                Criteria::IN
+                Criteria::IN,
             )
             ->find();
 
@@ -326,7 +328,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
 
                 return call_user_func($callable);
             },
-            $segmentEntities->getArrayCopy()
+            $segmentEntities->getArrayCopy(),
         );
     }
 
@@ -339,7 +341,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     {
         return sprintf(
             self::SEGMENT_JOIN_CONDITION_TEMPLATE,
-            $segmentTableMap->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getFullyQualifiedName()
+            $segmentTableMap->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getFullyQualifiedName(),
         );
     }
 }

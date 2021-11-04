@@ -23,6 +23,7 @@ class PriceProductStoreOptimizeConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'price-product-store:optimize';
+
     /**
      * @var string
      */

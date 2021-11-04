@@ -27,7 +27,7 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
 {
     /**
      * @param array|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -46,7 +46,7 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -57,7 +57,7 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new PriceVolumeCollectionDataMapper(
             $this->getUtilEncodingService(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -68,7 +68,7 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new PriceVolumeCollectionFormHandler(
             $this->getPriceProductFacade(),
-            $this->createPriceVolumeCollectionDataMapper()
+            $this->createPriceVolumeCollectionDataMapper(),
         );
     }
 

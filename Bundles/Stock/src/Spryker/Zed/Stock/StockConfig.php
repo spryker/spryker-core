@@ -15,6 +15,7 @@ class StockConfig extends AbstractBundleConfig
      * @var string
      */
     public const TOUCH_STOCK_TYPE = 'stock-type';
+
     /**
      * @var string
      */

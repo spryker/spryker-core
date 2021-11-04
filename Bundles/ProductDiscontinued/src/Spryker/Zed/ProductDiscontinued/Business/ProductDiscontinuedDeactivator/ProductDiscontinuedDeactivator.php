@@ -152,8 +152,8 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
         $this->logger->debug(
             sprintf(
                 'Found %d products to deactivate.',
-                $productNumber
-            )
+                $productNumber,
+            ),
         );
     }
 
@@ -172,8 +172,8 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
             $this->logger->info(
                 sprintf(
                     'Product %d was deactivated.',
-                    $productDiscontinuedTransfer->getFkProduct()
-                )
+                    $productDiscontinuedTransfer->getFkProduct(),
+                ),
             );
         }
     }

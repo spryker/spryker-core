@@ -21,6 +21,7 @@ class WebProfilerRedisDataCollectorPlugin extends AbstractPlugin implements WebP
      * @var string
      */
     protected const DATA_COLLECTOR_NAME = 'redis';
+
     /**
      * @var string
      */

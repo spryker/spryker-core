@@ -26,7 +26,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     protected $translationHydrator;
 
     /**
-     * @var array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer[]>
+     * @var array<array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>>
      */
     protected static $salesOrderThresholdTransfersCache = [];
 
@@ -61,7 +61,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
         $salesOrderThresholdTransfers = $this->salesOrderThresholdRepository
             ->getSalesOrderThresholds(
                 $storeTransfer,
-                $currencyTransfer
+                $currencyTransfer,
             );
 
         $salesOrderThresholdTransfers = $this->translationHydrator->expandWithLocalizedMessagesCollection($salesOrderThresholdTransfers);
@@ -101,7 +101,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
         return sprintf(
             '`%s`|`%s`',
             ($currencyTransfer->getIdCurrency() ?? $currencyTransfer->getCode()),
-            ($storeTransfer->getIdStore() ?? $storeTransfer->getName())
+            ($storeTransfer->getIdStore() ?? $storeTransfer->getName()),
         );
     }
 

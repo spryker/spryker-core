@@ -16,12 +16,12 @@ interface ProductAttributesMapperInterface
      * @param \Symfony\Component\Form\FormErrorIterator $errors
      * @param array $attributesInitialData
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapErrorsToAttributesData(FormErrorIterator $errors, array $attributesInitialData): array;
 
     /**
-     * @param array<string[][]> $attributesInitialData
+     * @param array<array<array<string>>> $attributesInitialData
      * @param array<string> $attributes
      *
      * @return array<string>
@@ -29,11 +29,7 @@ interface ProductAttributesMapperInterface
     public function mapAttributesDataToProductAttributes(array $attributesInitialData, array $attributes): array;
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
-     * @param array<string[][]> $attributesInitialData
+     * @param array<array<array<string>>> $attributesInitialData
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
@@ -41,11 +37,6 @@ interface ProductAttributesMapperInterface
     public function mapAttributesDataToLocalizedAttributesTransfers(array $attributesInitialData, ArrayObject $localizedAttributesTransfers): ArrayObject;
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
      *
@@ -57,11 +48,6 @@ interface ProductAttributesMapperInterface
     ): ArrayObject;
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
      *

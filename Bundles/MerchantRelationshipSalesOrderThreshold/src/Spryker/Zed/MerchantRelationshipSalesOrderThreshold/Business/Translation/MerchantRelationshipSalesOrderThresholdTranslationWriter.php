@@ -39,7 +39,7 @@ class MerchantRelationshipSalesOrderThresholdTranslationWriter implements Mercha
     ): MerchantRelationshipSalesOrderThresholdTransfer {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
             $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue(),
-            $this->createTranslationsLocaleMap($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages())
+            $this->createTranslationsLocaleMap($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages()),
         );
 
         $this->glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
@@ -60,7 +60,7 @@ class MerchantRelationshipSalesOrderThresholdTranslationWriter implements Mercha
 
         $this->saveLocalizedMessages($merchantRelationshipSalesOrderThresholdTransfer);
         $this->glossaryFacade->deleteKey(
-            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()
+            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
         );
     }
 

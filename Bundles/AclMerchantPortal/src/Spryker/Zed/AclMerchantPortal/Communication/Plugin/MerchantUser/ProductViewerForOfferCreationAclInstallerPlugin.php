@@ -33,6 +33,7 @@ class ProductViewerForOfferCreationAclInstallerPlugin extends AbstractPlugin imp
             ->setName($this->getConfig()->getProductViewerForOfferCreationAclRoleName())
             ->setReference($this->getConfig()->getProductViewerForOfferCreationAclRoleReference());
 
+        $roleTransfers = [];
         $roleTransfers[] = (new RoleTransfer())
             ->setName($this->getConfig()->getProductViewerForOfferCreationAclRoleName())
             ->setReference($this->getConfig()->getProductViewerForOfferCreationAclRoleReference())
@@ -53,6 +54,7 @@ class ProductViewerForOfferCreationAclInstallerPlugin extends AbstractPlugin imp
      */
     public function getGroups(): array
     {
+        $groupTransfers = [];
         $groupTransfers[] = (new GroupTransfer())
             ->setName($this->getConfig()->getProductViewerForOfferCreationAclRoleName())
             ->setReference($this->getConfig()->getProductViewerForOfferCreationAclRoleReference());

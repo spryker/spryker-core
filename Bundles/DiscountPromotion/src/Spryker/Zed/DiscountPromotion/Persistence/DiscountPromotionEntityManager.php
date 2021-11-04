@@ -40,7 +40,7 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
             ->createDiscountPromotionMapper();
         $discountPromotionEntity = $mapper->mapDiscountPromotionTransferToEntity(
             $discountPromotionTransfer,
-            new SpyDiscountPromotion()
+            new SpyDiscountPromotion(),
         );
 
         $discountPromotionEntity->save();
@@ -69,7 +69,7 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
             ->createDiscountPromotionMapper();
         $discountPromotionEntity = $mapper->mapDiscountPromotionTransferToEntity(
             $discountPromotionTransfer,
-            $discountPromotionEntity
+            $discountPromotionEntity,
         );
 
         $discountPromotionEntity->save();

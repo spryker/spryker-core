@@ -22,6 +22,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
      * @var string
      */
     public const CONCRETE_PRODUCTS_AVAILABILITY = 'concrete_products_availability';
+
     /**
      * @var string
      */
@@ -64,7 +65,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
             $attributes[$item->getSku()] = $this->getAttributesWithAvailability(
                 $item,
                 $attributeMap,
-                $availableItemsSkus
+                $availableItemsSkus,
             );
         }
 
@@ -163,7 +164,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     {
         $attributeMapIterator = new RecursiveIteratorIterator(
             new RecursiveArrayIterator($attributeMap[StorageAttributeMapTransfer::ATTRIBUTE_VARIANTS]),
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         );
 
         return $attributeMapIterator;
@@ -180,7 +181,7 @@ class CartItemsAttributeMapper implements CartItemsMapperInterface
     {
         return array_key_exists($variantName, $productVariants) === false || array_key_exists(
             $variantValue,
-            $productVariants[$variantName]
+            $productVariants[$variantName],
         ) === false;
     }
 

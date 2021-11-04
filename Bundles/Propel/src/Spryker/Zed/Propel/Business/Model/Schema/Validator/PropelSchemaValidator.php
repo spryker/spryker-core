@@ -80,7 +80,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<string, array>
      */
     protected function getSchemaFilesForValidation(): array
     {
@@ -160,7 +160,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
                 $toXmlElements,
                 $fromXmlElementName,
                 $fromXmlChildTagName,
-                $fromXmlChildElement
+                $fromXmlChildElement,
             );
             $this->validateAttributes($toXmlElementChild, $fromXmlChildElement, $fileName);
             $this->validateSchemasRecursive($toXmlElementChild, $fromXmlChildElement, $fileName);
@@ -290,7 +290,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
                 $key,
                 $fileName,
                 (string)$toXmlAttributes[$key],
-                $value
+                $value,
             ));
         }
     }

@@ -24,7 +24,7 @@ class CompanyUserAgentBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserReader(): CompanyUserReaderInterface
     {
         return new CompanyUserReader(
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 

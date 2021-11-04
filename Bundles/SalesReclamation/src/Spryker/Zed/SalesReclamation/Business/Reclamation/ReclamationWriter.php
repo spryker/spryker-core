@@ -51,7 +51,7 @@ class ReclamationWriter implements ReclamationWriterInterface
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($reclamationCreateRequestTransfer) {
                 return $this->executeCreateReclamationTransaction($reclamationCreateRequestTransfer);
-            }
+            },
         );
     }
 

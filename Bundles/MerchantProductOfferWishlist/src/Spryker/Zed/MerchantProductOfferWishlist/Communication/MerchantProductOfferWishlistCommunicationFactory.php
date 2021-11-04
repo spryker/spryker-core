@@ -28,7 +28,7 @@ class MerchantProductOfferWishlistCommunicationFactory extends AbstractCommunica
     {
         return new MerchantProductOfferWishlistItemExpander(
             $this->getProductOfferFacade(),
-            $this->getMerchantFacade()
+            $this->getMerchantFacade(),
         );
     }
 

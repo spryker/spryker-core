@@ -31,7 +31,7 @@ class StorageDatabaseFactory extends AbstractFactory
     public function createConnectionProvider(): ConnectionProviderInterface
     {
         return new ConnectionProvider(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -42,7 +42,7 @@ class StorageDatabaseFactory extends AbstractFactory
     {
         return new StorageDatabase(
             $this->getUtilEncodingService(),
-            $this->getStorageReaderPlugin()
+            $this->getStorageReaderPlugin(),
         );
     }
 
@@ -52,7 +52,7 @@ class StorageDatabaseFactory extends AbstractFactory
     public function createStorageTableNameResolver(): StorageTableNameResolverInterface
     {
         return new StorageTableNameResolver(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -63,7 +63,7 @@ class StorageDatabaseFactory extends AbstractFactory
     {
         return new PostgreSqlStorageReader(
             $this->createConnectionProvider(),
-            $this->createStorageTableNameResolver()
+            $this->createStorageTableNameResolver(),
         );
     }
 
@@ -74,7 +74,7 @@ class StorageDatabaseFactory extends AbstractFactory
     {
         return new MySqlStorageReader(
             $this->createConnectionProvider(),
-            $this->createStorageTableNameResolver()
+            $this->createStorageTableNameResolver(),
         );
     }
 

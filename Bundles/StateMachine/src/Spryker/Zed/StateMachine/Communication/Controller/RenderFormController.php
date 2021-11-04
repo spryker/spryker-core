@@ -22,30 +22,37 @@ class RenderFormController extends AbstractController
      * @var string
      */
     public const URL_PARAM_IDENTIFIER = 'identifier';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_STATE = 'id-state';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PROCESS = 'id-process';
+
     /**
      * @var string
      */
     public const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+
     /**
      * @var string
      */
     public const URL_PARAM_PROCESS_NAME = 'process-name';
+
     /**
      * @var string
      */
     public const URL_PARAM_REDIRECT = 'redirect';
+
     /**
      * @var string
      */
     public const URL_PARAM_EVENTS = 'events';
+
     /**
      * @var string
      */
@@ -98,7 +105,7 @@ class RenderFormController extends AbstractController
         $eventItemTriggerDataProvider = $this->getFactory()->createEventItemTriggerFormDataProvider();
         $form = $this->getFactory()
             ->createEventItemTriggerForm(
-                $eventItemTriggerDataProvider->getOptions($identifier, $redirect, $eventName, $stateMachineName, $processName)
+                $eventItemTriggerDataProvider->getOptions($identifier, $redirect, $eventName, $stateMachineName, $processName),
             );
 
         return $this->viewResponse([

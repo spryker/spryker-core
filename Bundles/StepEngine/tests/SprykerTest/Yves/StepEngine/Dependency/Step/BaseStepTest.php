@@ -29,6 +29,7 @@ class BaseStepTest extends Unit
      * @var string
      */
     public const STEP_ROUTE = 'stepRoute';
+
     /**
      * @var string
      */

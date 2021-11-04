@@ -27,8 +27,8 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
  * @property-read bool $allowReserved
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema $schema
  * @property-read mixed $example
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Example[] $examples
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType[] $content
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Example> $examples
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType> $content
  */
 class Parameter extends AbstractObject implements ReferableInterface
 {

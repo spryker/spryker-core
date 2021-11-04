@@ -25,7 +25,7 @@ class ClassNameFilter implements DependencyFilterInterface
     }
 
     /**
-     * @param array $dependency
+     * @param array<string, string> $dependency
      *
      * @return bool
      */

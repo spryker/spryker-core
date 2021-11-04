@@ -26,10 +26,12 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      * @var string
      */
     public const FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE = 'id_product_search_attribute';
+
     /**
      * @var string
      */
     public const FIELD_FILTER_TYPE = 'filter_type';
+
     /**
      * @var string
      */
@@ -69,7 +71,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -96,7 +98,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -133,7 +135,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -152,7 +154,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

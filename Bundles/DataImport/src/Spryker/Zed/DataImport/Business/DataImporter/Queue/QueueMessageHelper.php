@@ -16,6 +16,7 @@ class QueueMessageHelper implements QueueMessageHelperInterface
      * @var string
      */
     protected const ERROR_MESSAGE = 'errorMessage';
+
     /**
      * @var string
      */

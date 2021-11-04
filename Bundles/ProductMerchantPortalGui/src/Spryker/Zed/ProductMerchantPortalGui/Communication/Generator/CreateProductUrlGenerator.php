@@ -11,30 +11,35 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::indexAction()
+     *
      * @var string
      */
     protected const URL_INDEX_ACTION = '/product-merchant-portal-gui/create-product-abstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::createWithSingleConcreteAction()
+     *
      * @var string
      */
     protected const URL_WITH_SINGLE_CONCRETE_ACTION = '/product-merchant-portal-gui/create-product-abstract/create-with-single-concrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::createWithMultiConcreteAction()
+     *
      * @var string
      */
     protected const URL_WITH_MULTI_CONCRETE_ACTION = '/product-merchant-portal-gui/create-product-abstract/create-with-multi-concrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_NAME
+     *
      * @var string
      */
     protected const FIELD_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_SKU
+     *
      * @var string
      */
     protected const FIELD_SKU = 'sku';
@@ -51,13 +56,13 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
             [
                 static::FIELD_SKU => $formData[static::FIELD_SKU],
                 static::FIELD_NAME => $formData[static::FIELD_NAME],
-            ]
+            ],
         );
 
         return sprintf(
             '%s?%s',
             $isSingleConcrete ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
-            $getParams
+            $getParams,
         );
     }
 
@@ -73,13 +78,13 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
             [
                 static::FIELD_SKU => $sku,
                 static::FIELD_NAME => $name,
-            ]
+            ],
         );
 
         return sprintf(
             '%s?%s',
             static::URL_INDEX_ACTION,
-            $getParams
+            $getParams,
         );
     }
 }

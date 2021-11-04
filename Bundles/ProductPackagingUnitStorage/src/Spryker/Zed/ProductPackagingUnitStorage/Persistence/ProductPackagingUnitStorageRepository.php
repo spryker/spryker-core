@@ -64,7 +64,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
                 ->createProductPackagingUnitStorageMapper()
                 ->mapProductPackagingUnitStorageEntityTransferToStorageTransfer(
                     $productPackagingUnitEntityTransfer,
-                    new ProductPackagingUnitStorageTransfer()
+                    new ProductPackagingUnitStorageTransfer(),
                 );
         }
 

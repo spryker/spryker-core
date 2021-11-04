@@ -37,7 +37,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     public function exportDatabase($backupPath)
     {
         $this->runProcess(
-            $this->getExportCommand($backupPath)
+            $this->getExportCommand($backupPath),
         );
     }
 
@@ -68,7 +68,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
             $backupPath,
-            Config::get(PropelConstants::ZED_DB_DATABASE)
+            Config::get(PropelConstants::ZED_DB_DATABASE),
         );
     }
 
@@ -120,7 +120,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getEnvironmentVariables()
     {

@@ -23,7 +23,7 @@ class GlossaryStorageFactory extends AbstractFactory
         return new GlossaryStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

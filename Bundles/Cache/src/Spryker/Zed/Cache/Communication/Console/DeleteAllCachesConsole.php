@@ -23,6 +23,7 @@ class DeleteAllCachesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'cache:delete-all';
+
     /**
      * @var string
      */

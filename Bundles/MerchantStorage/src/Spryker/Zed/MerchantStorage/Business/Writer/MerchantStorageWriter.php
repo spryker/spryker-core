@@ -21,12 +21,14 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
 {
     /**
      * @uses \Orm\Zed\MerchantCategory\Persistence\Map\SpyMerchantCategoryTableMap::COL_FK_MERCHANT
+     *
      * @var string
      */
     protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
@@ -130,7 +132,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
                 ) {
                     $this->merchantStorageEntityManager->saveMerchantStorage(
                         $this->mapMerchantTransferToStorageTransfer($merchantTransfer, new MerchantStorageTransfer()),
-                        $storeTransfer
+                        $storeTransfer,
                     );
 
                     continue;

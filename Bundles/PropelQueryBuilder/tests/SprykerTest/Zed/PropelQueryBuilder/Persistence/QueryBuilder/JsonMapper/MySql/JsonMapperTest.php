@@ -31,14 +31,17 @@ class JsonMapperTest extends Unit
      * @var string
      */
     protected const RULE_FIELD = 'RULE_FIELD';
+
     /**
      * @var string
      */
     protected const RULE_VALUE = 'RULE_VALUE';
+
     /**
      * @var string
      */
     protected const OPERATOR = 'OPERATOR';
+
     /**
      * @var string
      */
@@ -59,7 +62,7 @@ class JsonMapperTest extends Unit
             static::RULE_FIELD,
             static::ATTRIBUTE_NAME,
             static::OPERATOR,
-            static::RULE_VALUE
+            static::RULE_VALUE,
         );
 
         // Act

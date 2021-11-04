@@ -74,7 +74,7 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
                 foreach ($cmsSlotBlock[CmsSlotBlockTransfer::CONDITIONS] as $conditionKey => $condition) {
                     $cmsSlotBlockTransfer->addCondition(
                         $conditionKey,
-                        (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+                        (new CmsSlotBlockConditionTransfer())->fromArray($condition, true),
                     );
                 }
             }

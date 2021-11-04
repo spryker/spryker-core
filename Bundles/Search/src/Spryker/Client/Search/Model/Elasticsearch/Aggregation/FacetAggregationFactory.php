@@ -93,7 +93,7 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
                 throw new MissingFacetAggregationException(sprintf(
                     'Missing facet aggregation for type "%s" in field "%s".',
                     $valueType,
-                    $facetConfigTransfer->getFieldName()
+                    $facetConfigTransfer->getFieldName(),
                 ));
         }
     }
@@ -128,7 +128,7 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
         return new StringFacetAggregation(
             $facetConfigTransfer,
             $this->aggregationBuilder,
-            $this->searchConfig
+            $this->searchConfig,
         );
     }
 

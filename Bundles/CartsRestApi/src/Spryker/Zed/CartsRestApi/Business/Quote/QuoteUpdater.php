@@ -109,7 +109,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
         }
 
         $quoteTransfer = $this->cartFacade->reloadItems(
-            $this->quoteMapper->mapQuoteTransferToOriginalQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
+            $this->quoteMapper->mapQuoteTransferToOriginalQuoteTransfer($quoteTransfer, $originalQuoteTransfer),
         );
 
         return $this->performQuoteUpdate($quoteTransfer);
@@ -128,7 +128,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
-                ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
+                ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference()),
         );
 
         $guestQuotesTransfers = $quoteCollectionTransfer->getQuotes();
@@ -159,7 +159,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
 
         $guestQuoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
-                ->setCustomerReference($anonymousCustomerReference)
+                ->setCustomerReference($anonymousCustomerReference),
         );
 
         $guestQuoteTransfers = $guestQuoteCollectionTransfer->getQuotes();

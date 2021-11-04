@@ -19,6 +19,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const COMMANDS = 'commands';
+
     /**
      * @var string
      */
@@ -31,6 +32,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS} instead.
+     *
      * @var string
      */
     public const SERVICE_PROVIDERS = 'service providers';
@@ -39,6 +41,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+
     /**
      * @var string
      */

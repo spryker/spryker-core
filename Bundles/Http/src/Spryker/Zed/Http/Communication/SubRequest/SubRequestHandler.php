@@ -98,7 +98,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
             $additionalSubRequestParameters,
             $request->cookies->all(),
             $request->files->all(),
-            $request->server->all()
+            $request->server->all(),
         );
     }
 }

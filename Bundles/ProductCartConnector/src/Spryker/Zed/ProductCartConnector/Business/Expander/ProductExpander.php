@@ -98,7 +98,7 @@ class ProductExpander implements ProductExpanderInterface
     {
         $localizedProductName = $this->productFacade->getLocalizedProductConcreteName(
             $productConcreteTransfer,
-            $this->localeFacade->getCurrentLocale()
+            $this->localeFacade->getCurrentLocale(),
         );
 
         $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete())
@@ -120,7 +120,7 @@ class ProductExpander implements ProductExpanderInterface
             function (ItemTransfer $itemTransfer) {
                 return $itemTransfer->getSku();
             },
-            $cartChangeTransfer->getItems()->getArrayCopy()
+            $cartChangeTransfer->getItems()->getArrayCopy(),
         );
 
         return $productConcreteSkus;

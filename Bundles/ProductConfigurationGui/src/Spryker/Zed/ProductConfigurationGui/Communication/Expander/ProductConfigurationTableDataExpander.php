@@ -13,12 +13,14 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
 {
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::COL_PRODUCT_TYPES
+     *
      * @var string
      */
     protected const COL_PRODUCT_TYPES = 'product_types';
 
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::COL_SKU
+     *
      * @var string
      */
     protected const COL_SKU = 'sku';
@@ -75,7 +77,7 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
         $item[static::COL_PRODUCT_TYPES] = sprintf(
             '%s, %s',
             $item[static::COL_PRODUCT_TYPES],
-            static::CONFIGURABLE_PRODUCT_TYPE
+            static::CONFIGURABLE_PRODUCT_TYPE,
         );
 
         return $item;

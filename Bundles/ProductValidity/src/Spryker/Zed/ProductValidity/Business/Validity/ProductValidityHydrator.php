@@ -40,7 +40,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
     {
         $productValidityEntity = $this->productValidityQueryContainer
             ->queryProductValidityByIdProductConcrete(
-                $productConcreteTransfer->getIdProductConcrete()
+                $productConcreteTransfer->getIdProductConcrete(),
             )
             ->findOne();
 
@@ -49,10 +49,10 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
         }
 
         $productConcreteTransfer->setValidFrom(
-            $this->formatDateTime($productValidityEntity->getValidFrom())
+            $this->formatDateTime($productValidityEntity->getValidFrom()),
         );
         $productConcreteTransfer->setValidTo(
-            $this->formatDateTime($productValidityEntity->getValidTo())
+            $this->formatDateTime($productValidityEntity->getValidTo()),
         );
 
         return $productConcreteTransfer;

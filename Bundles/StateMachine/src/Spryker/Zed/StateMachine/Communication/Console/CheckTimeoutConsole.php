@@ -25,14 +25,17 @@ class CheckTimeoutConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'state-machine:check-timeout';
+
     /**
      * @var string
      */
     public const COMMAND_DESCRIPTION = 'Check timeouts';
+
     /**
      * @var string
      */
     public const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
+
     /**
      * @var string
      */
@@ -49,14 +52,14 @@ class CheckTimeoutConsole extends Console
         $this->addArgument(
             static::ARGUMENT_STATE_MACHINE_NAME,
             InputArgument::OPTIONAL,
-            'Name of state machine to trigger timeout expired items'
+            'Name of state machine to trigger timeout expired items',
         );
 
         $this->addOption(
             static::OPTION_STATE_MACHINE_NAME,
             's',
             InputOption::VALUE_REQUIRED,
-            '(deprecated) Name of state machine to trigger timeout expired items'
+            '(deprecated) Name of state machine to trigger timeout expired items',
         );
 
         parent::configure();

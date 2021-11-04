@@ -39,7 +39,7 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
             $this->createConfiguredBundleRestResponseBuilder(),
             $this->getClient(),
             $this->getCartsRestApiResource(),
-            $this->createConfiguredBundleRequestCreator()
+            $this->createConfiguredBundleRequestCreator(),
         );
     }
 
@@ -52,7 +52,7 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
             $this->createConfiguredBundleRestResponseBuilder(),
             $this->getClient(),
             $this->getCartsRestApiResource(),
-            $this->createConfiguredBundleRequestCreator()
+            $this->createConfiguredBundleRequestCreator(),
         );
     }
 
@@ -63,7 +63,7 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
     {
         return new ConfiguredBundleRequestCreator(
             $this->getConfigurableBundleStorageClient(),
-            $this->createConfiguredBundleMapper()
+            $this->createConfiguredBundleMapper(),
         );
     }
 
@@ -74,7 +74,7 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
     {
         return new ConfiguredBundleRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createConfiguredBundleMapper()
+            $this->createConfiguredBundleMapper(),
         );
     }
 

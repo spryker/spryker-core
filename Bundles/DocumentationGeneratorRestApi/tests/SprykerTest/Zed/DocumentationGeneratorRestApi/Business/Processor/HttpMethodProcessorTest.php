@@ -32,18 +32,22 @@ class HttpMethodProcessorTest extends Unit
      * @var string
      */
     protected const RESOURCE_PATH = '/test-resource';
+
     /**
      * @var string
      */
     protected const RESOURCE_ID = '{testResourceId}';
+
     /**
      * @var string
      */
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';
+
     /**
      * @var string
      */
     protected const NOT_FOUND_RESPONSE_DESCRIPTION = 'Not found.';
+
     /**
      * @var string
      */
@@ -79,7 +83,7 @@ class HttpMethodProcessorTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            null
+            null,
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -99,7 +103,7 @@ class HttpMethodProcessorTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            (new AnnotationTransfer())->setIsEmptyResponse(true)
+            (new AnnotationTransfer())->setIsEmptyResponse(true),
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -119,7 +123,7 @@ class HttpMethodProcessorTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            (new AnnotationTransfer())->setSummary([static::SUMMARY])
+            (new AnnotationTransfer())->setSummary([static::SUMMARY]),
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -138,7 +142,7 @@ class HttpMethodProcessorTest extends Unit
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
-            null
+            null,
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -157,7 +161,7 @@ class HttpMethodProcessorTest extends Unit
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             true,
-            null
+            null,
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -176,7 +180,7 @@ class HttpMethodProcessorTest extends Unit
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
-            null
+            null,
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -195,7 +199,7 @@ class HttpMethodProcessorTest extends Unit
             new TestResourceRoutePlugin(),
             static::RESOURCE_PATH,
             false,
-            (new AnnotationTransfer())->setIsEmptyResponse(true)
+            (new AnnotationTransfer())->setIsEmptyResponse(true),
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -215,7 +219,7 @@ class HttpMethodProcessorTest extends Unit
             static::RESOURCE_PATH,
             false,
             static::RESOURCE_ID,
-            null
+            null,
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();
@@ -236,7 +240,7 @@ class HttpMethodProcessorTest extends Unit
             false,
             static::RESOURCE_ID,
             (new AnnotationTransfer())
-                ->setDeprecated(true)
+                ->setDeprecated(true),
         );
 
         $generatedPaths = $this->methodProcessor->getGeneratedPaths();

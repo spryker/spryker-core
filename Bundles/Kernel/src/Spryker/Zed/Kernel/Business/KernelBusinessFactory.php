@@ -29,7 +29,7 @@ class KernelBusinessFactory extends AbstractBusinessFactory
             $this->createModuleNamesFinder(),
             $this->getSharedFactory()->createClassNameFinder(),
             $this->createCacheWriter(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

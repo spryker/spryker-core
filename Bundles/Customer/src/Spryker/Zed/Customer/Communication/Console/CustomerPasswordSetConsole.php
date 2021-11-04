@@ -26,14 +26,17 @@ class CustomerPasswordSetConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'customer:password:set';
+
     /**
      * @var string
      */
     protected const OPTION_FORCE = 'force';
+
     /**
      * @var string
      */
     protected const OPTION_FORCE_SHORT = 'f';
+
     /**
      * @var string
      */
@@ -82,7 +85,7 @@ class CustomerPasswordSetConsole extends Console
     {
         return new ConfirmationQuestion(
             sprintf('%s customers in the database will be affected. Do you want to continue? [Y/n]', $customersCount),
-            false
+            false,
         );
     }
 

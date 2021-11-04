@@ -28,10 +28,12 @@ class Writer implements WriterInterface
      * @var string
      */
     public const TOUCH_STOCK_TYPE = 'stock-type';
+
     /**
      * @var string
      */
     public const TOUCH_STOCK_PRODUCT = 'stock-product';
+
     /**
      * @var string
      */
@@ -264,7 +266,7 @@ class Writer implements WriterInterface
     {
         $this->touchFacade->touchActive(
             self::TOUCH_STOCK_TYPE,
-            $stockTypeEntity->getIdStock()
+            $stockTypeEntity->getIdStock(),
         );
     }
 
@@ -277,7 +279,7 @@ class Writer implements WriterInterface
     {
         $this->touchFacade->touchActive(
             self::TOUCH_STOCK_PRODUCT,
-            $stockProductEntity->getIdStockProduct()
+            $stockProductEntity->getIdStockProduct(),
         );
     }
 

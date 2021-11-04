@@ -35,7 +35,7 @@ class NopaymentBusinessFactory extends AbstractBusinessFactory
     public function createNopaymentPaid(): PaidInterface
     {
         return new Paid(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 

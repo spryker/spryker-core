@@ -42,7 +42,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
             return $quoteResponseTransfer;
         }
         $companyUserTransferCollection = $this->sharedCartRepository->findShareInformationCustomer(
-            $customerTransfer->getCustomerReference()
+            $customerTransfer->getCustomerReference(),
         );
         if (count($companyUserTransferCollection)) {
             return $this->addShareInformation($quoteResponseTransfer, $companyUserTransferCollection);
@@ -71,8 +71,8 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
                     $this->createShareDetails(
                         $quoteTransfer->getIdQuote(),
                         $groupedCompanyUserTransferCollection[$quoteTransfer->getIdQuote()],
-                        $quotePermissionGroupTransferList
-                    )
+                        $quotePermissionGroupTransferList,
+                    ),
                 );
             }
         }
@@ -81,8 +81,8 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
                 $this->createShareDetails(
                     $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),
                     $groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()],
-                    $quotePermissionGroupTransferList
-                )
+                    $quotePermissionGroupTransferList,
+                ),
             );
         }
 
@@ -103,7 +103,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     /**
      * @param array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer> $companyUserTransferCollection
      *
-     * @return array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer>>
      */
     protected function groupCompanyUsersByQuoteId(array $companyUserTransferCollection): array
     {
@@ -155,11 +155,11 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
 
                 $customerTransfer = $companyUserEntityTransfer->getCustomer();
                 $shareDetailTransfer->setCustomerName(
-                    $customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName()
+                    $customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName(),
                 );
 
                 $shareDetailTransfer->setQuotePermissionGroup(
-                    $quotePermissionGroupTransferList[$quoteCompanyUser->getFkQuotePermissionGroup()]
+                    $quotePermissionGroupTransferList[$quoteCompanyUser->getFkQuotePermissionGroup()],
                 );
 
                 $shareDetailsTransferList->append($shareDetailTransfer);

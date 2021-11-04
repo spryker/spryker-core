@@ -36,6 +36,7 @@ class GuiTableFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\GuiTable\Business\ResponseFormatter\DataResponseFormatter::KEY_DATA_RESPONSE_ARRAY_DATA
+     *
      * @var string
      */
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
@@ -44,42 +45,52 @@ class GuiTableFacadeTest extends Unit
      * @var string
      */
     protected const TEST_PARAM_SEARCH = 'search string';
+
     /**
      * @var string
      */
     protected const TEST_PARAM_SORT_BY = 'column1';
+
     /**
      * @var string
      */
     protected const TEST_PARAM_SORT_DIRECTION_ASC = 'ASC';
+
     /**
      * @var string
      */
     protected const TEST_PARAM_SORT_DIRECTION_DESC = 'DESC';
+
     /**
      * @var int
      */
     protected const TEST_PARAM_PAGE = 3;
+
     /**
      * @var int
      */
     protected const TEST_PARAM_PAGE_SIZE = 5;
+
     /**
      * @var int
      */
     protected const TEST_PARAM_TOTAL = 100;
+
     /**
      * @var string
      */
     protected const TEST_DATE_FROM = '2020-05-31T21:00:00.437Z';
+
     /**
      * @var string
      */
     protected const TEST_DATE_TO = '2020-06-18T20:59:59.027Z';
+
     /**
      * @var array
      */
     protected const TEST_PARAM_FILTER = ['filterId' => 'filterValue'];
+
     /**
      * @var int
      */
@@ -89,10 +100,12 @@ class GuiTableFacadeTest extends Unit
      * @var string
      */
     protected const TEST_COLUMN_ID_1 = 'columnId1';
+
     /**
      * @var string
      */
     protected const TEST_COLUMN_ID_2 = 'columnId2';
+
     /**
      * @var array
      */
@@ -100,10 +113,12 @@ class GuiTableFacadeTest extends Unit
         [self::TEST_COLUMN_ID_1 => 'value1', self::TEST_COLUMN_ID_2 => 'value1'],
         [self::TEST_COLUMN_ID_1 => 'value2', self::TEST_COLUMN_ID_2 => 'value2'],
     ];
+
     /**
      * @var string
      */
     protected const TEST_TYPE_DATE = 'date';
+
     /**
      * @var string
      */
@@ -135,7 +150,7 @@ class GuiTableFacadeTest extends Unit
             ->addItem(
                 (new GuiTableFilterTransfer())
                     ->setId('filterId')
-                    ->setType(static::TEST_TYPE_DATE)
+                    ->setType(static::TEST_TYPE_DATE),
             );
         $guiTableConfigurationTransfer = (new GuiTableConfigurationTransfer())
             ->setFilters($guiTableFiltersConfigurationTransfer);
@@ -143,7 +158,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $guiTableDataRequestTransfer = $this->tester->getFacade()->buildGuiTableDataRequest(
             $requestParams,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
 
         // Assert
@@ -173,7 +188,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $guiTableDataRequestTransfer = $this->tester->getFacade()->buildGuiTableDataRequest(
             $requestParams,
-            new GuiTableConfigurationTransfer()
+            new GuiTableConfigurationTransfer(),
         );
 
         // Assert
@@ -198,7 +213,7 @@ class GuiTableFacadeTest extends Unit
             ->addItem(
                 (new GuiTableFilterTransfer())
                     ->setId('filterId')
-                    ->setType(static::TEST_TYPE_DATE)
+                    ->setType(static::TEST_TYPE_DATE),
             );
         $guiTableConfigurationTransfer = (new GuiTableConfigurationTransfer())
             ->setFilters($guiTableFiltersConfigurationTransfer);
@@ -206,7 +221,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $guiTableDataRequestTransfer = $this->tester->getFacade()->buildGuiTableDataRequest(
             $requestParams,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
         $filterValue = $guiTableDataRequestTransfer->getFilters()['filterId'];
 
@@ -227,7 +242,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $formattedGuiTableDataResponse = $this->tester->getFacade()->formatGuiTableDataResponse(
             $guiTableDataResponseTransfer,
-            new GuiTableConfigurationTransfer()
+            new GuiTableConfigurationTransfer(),
         );
 
         // Assert
@@ -259,7 +274,7 @@ class GuiTableFacadeTest extends Unit
         // Act
         $formattedGuiTableDataResponse = $this->tester->getFacade()->formatGuiTableDataResponse(
             $guiTableDataResponseTransfer,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
 
         // Assert
@@ -277,7 +292,7 @@ class GuiTableFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $localeFacadeMock->method('getCurrentLocale')->willReturn(
-            (new LocaleTransfer())->setIdLocale(static::TEST_ID_LOCALE)
+            (new LocaleTransfer())->setIdLocale(static::TEST_ID_LOCALE),
         );
 
         $this->tester->setDependency(GuiTableDependencyProvider::FACADE_LOCALE, $localeFacadeMock);
@@ -296,7 +311,7 @@ class GuiTableFacadeTest extends Unit
 
         $this->tester->setDependency(
             GuiTableDependencyProvider::PLUGINS_REQUEST_FILTER_VALUE_NORMALIZER,
-            [$dateRangeRequestFilterValueNormalizerPluginMock]
+            [$dateRangeRequestFilterValueNormalizerPluginMock],
         );
     }
 
@@ -313,7 +328,7 @@ class GuiTableFacadeTest extends Unit
 
         $this->tester->setDependency(
             GuiTableDependencyProvider::PLUGINS_RESPONSE_COLUMN_VALUE_FORMATTER,
-            [$dateResponseColumnValueFormatterPluginMock]
+            [$dateResponseColumnValueFormatterPluginMock],
         );
     }
 
@@ -326,7 +341,7 @@ class GuiTableFacadeTest extends Unit
             function ($data) {
                 return (new GuiTableRowDataResponseTransfer())->setResponseData($data);
             },
-            static::TEST_TABLE_DATA
+            static::TEST_TABLE_DATA,
         );
 
         return (new GuiTableDataResponseTransfer())

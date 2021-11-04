@@ -19,18 +19,22 @@ class SecurityBlockerConfig extends AbstractBundleConfig
      * @var string
      */
     protected const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
+
     /**
      * @var string
      */
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
+
     /**
      * @var int
      */
     protected const DEFAULT_BLOCKING_TTL = 600;
+
     /**
      * @var int
      */
     protected const DEFAULT_BLOCK_FOR = 300;
+
     /**
      * @var int
      */
@@ -88,7 +92,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getConnectionOptions(): array
     {
@@ -98,8 +102,6 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns the security configuration per type.
-     *
-     * @phpstan-return array<int|string, \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
      *
      * @api
      *
@@ -139,7 +141,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
             ->setTtl($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_TTL, static::DEFAULT_BLOCKING_TTL))
             ->setBlockFor($this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCK_FOR, static::DEFAULT_BLOCK_FOR))
             ->setNumberOfAttempts(
-                $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, static::DEFAULT_BLOCKING_NUMBER_OF_ATTEMPTS)
+                $this->get(SecurityBlockerConstants::SECURITY_BLOCKER_BLOCKING_NUMBER_OF_ATTEMPTS, static::DEFAULT_BLOCKING_NUMBER_OF_ATTEMPTS),
             );
     }
 

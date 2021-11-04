@@ -78,7 +78,7 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
                 $productViewTransfer,
                 $productData,
                 $localeName,
-                $productStorageCriteriaTransfer
+                $productStorageCriteriaTransfer,
             );
     }
 

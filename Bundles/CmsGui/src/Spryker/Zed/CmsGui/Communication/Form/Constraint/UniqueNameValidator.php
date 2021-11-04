@@ -63,7 +63,7 @@ class UniqueNameValidator extends ConstraintValidator
         $cmsPageLocalizedAttributesEntity = $this->findCmsPageLocalizedAttributesByNameAndId(
             $submittedPageAttributesTransfer->getName(),
             $submittedPageAttributesTransfer->getIdCmsPage(),
-            $constraint
+            $constraint,
         );
 
         if ($cmsPageLocalizedAttributesEntity === null) {

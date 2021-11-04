@@ -41,7 +41,7 @@ class OmsMultiThreadFacadeTest extends Unit
         // Act
         $salesOrderEntityTransfer = $omsMultiThreadFacade->expandSalesOrderEntityTransferWithOmsProcessorIdentifier(
             new SpySalesOrderEntityTransfer(),
-            new QuoteTransfer()
+            new QuoteTransfer(),
         );
         $omsProcessorId = $salesOrderEntityTransfer->getOmsProcessorIdentifier();
 

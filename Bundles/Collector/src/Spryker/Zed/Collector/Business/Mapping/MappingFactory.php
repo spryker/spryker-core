@@ -29,7 +29,7 @@ class MappingFactory implements MappingFactoryInterface
         if (method_exists(Index::class, 'getType')) {
             return new Mapping(
                 $elasticaClient->getIndex($searchCollectorConfigurationTransfer->getIndexName())->getType($searchCollectorConfigurationTransfer->getTypeName()),
-                $mappingProperties
+                $mappingProperties,
             );
         }
 

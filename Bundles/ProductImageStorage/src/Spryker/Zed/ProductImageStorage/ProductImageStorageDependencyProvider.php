@@ -25,22 +25,27 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES = 'PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES';
+
     /**
      * @var string
      */
@@ -112,7 +117,7 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductImageStorageToProductImageQueryContainerBridge(
-                $container->getLocator()->productImage()->queryContainer()
+                $container->getLocator()->productImage()->queryContainer(),
             );
         });
 

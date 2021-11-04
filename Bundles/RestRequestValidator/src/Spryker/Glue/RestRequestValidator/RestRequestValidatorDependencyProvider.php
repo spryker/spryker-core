@@ -24,18 +24,22 @@ class RestRequestValidatorDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const ADAPTER_FILESYSTEM = 'ADAPTER_FILESYSTEM';
+
     /**
      * @var string
      */
     public const ADAPTER_YAML = 'ADAPTER_YAML';
+
     /**
      * @var string
      */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+
     /**
      * @var string
      */
     public const ADAPTER_CONSTRAINT_COLLECTION = 'ADAPTER_CONSTRAINT_COLLECTION';
+
     /**
      * @var string
      */

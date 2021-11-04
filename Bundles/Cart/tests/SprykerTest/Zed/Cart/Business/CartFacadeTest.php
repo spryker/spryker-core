@@ -56,26 +56,32 @@ class CartFacadeTest extends Unit
      * @var string
      */
     public const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
     /**
      * @var string
      */
     public const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+
     /**
      * @var string
      */
     public const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+
     /**
      * @var int
      */
     public const DUMMY_1_PRICE = 99;
+
     /**
      * @var string
      */
     public const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+
     /**
      * @var string
      */
     public const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+
     /**
      * @var int
      */
@@ -418,7 +424,7 @@ class CartFacadeTest extends Unit
         // Arrange
         $this->tester->setDependency(
             CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
-            [new ProductExistsCartPreCheckPlugin()]
+            [new ProductExistsCartPreCheckPlugin()],
         );
 
         $activeProductConcreteTransfer = $this->tester->haveFullProduct();
@@ -459,7 +465,7 @@ class CartFacadeTest extends Unit
 
         $this->tester->setDependency(
             CartDependencyProvider::FACADE_QUOTE,
-            $quoteFacadeMock
+            $quoteFacadeMock,
         );
 
         return $quoteFacadeMock;
@@ -476,7 +482,7 @@ class CartFacadeTest extends Unit
 
         $this->tester->setDependency(
             CartDependencyProvider::FACADE_MESSENGER,
-            $messengerFacadeMock
+            $messengerFacadeMock,
         );
 
         return $messengerFacadeMock;
@@ -573,12 +579,12 @@ class CartFacadeTest extends Unit
         $this->assertCount(
             1,
             $quoteResponseTransfer->getQuoteTransfer()->getItems(),
-            'Expected that items count in the quote after replace will be equal to 1.'
+            'Expected that items count in the quote after replace will be equal to 1.',
         );
         $this->assertSame(
             static::DUMMY_1_SKU_CONCRETE_PRODUCT,
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->getIterator()->current()->getSku(),
-            'Expected that new item will be added to quote after replaceItem call.'
+            'Expected that new item will be added to quote after replaceItem call.',
         );
     }
 
@@ -708,7 +714,7 @@ class CartFacadeTest extends Unit
             CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER,
             [
                 $quoteChangeObserverPluginMock,
-            ]
+            ],
         );
 
         $quoteTransfer = (new QuoteBuilder())->withItem()->build();

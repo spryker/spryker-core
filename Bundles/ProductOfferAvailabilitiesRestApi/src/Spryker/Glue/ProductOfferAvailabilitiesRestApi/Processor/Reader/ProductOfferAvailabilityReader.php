@@ -59,7 +59,9 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
-        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$productOfferRestResource->getId()]);
+        /** @var array<string> $productOfferResources */
+        $productOfferResources = [$productOfferRestResource->getId()];
+        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources($productOfferResources);
 
         $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$productOfferRestResource->getId()] ?? null;
         if (!isset($productOfferAvailabilityRestResource)) {
@@ -70,8 +72,6 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
     }
 
     /**
-     * @phpstan-param array<int, string|null> $productOfferReferences
-     *
      * @param array<string> $productOfferReferences
      *
      * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>

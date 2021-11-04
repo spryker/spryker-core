@@ -34,14 +34,17 @@ class BusinessHelper extends AbstractHelper
      * @var string
      */
     protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
+
     /**
      * @var string
      */
     protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
+
     /**
      * @var string
      */
     protected const QUERY_CONTAINER_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Persistence\%3$sQueryContainer';
+
     /**
      * @var string
      */
@@ -284,7 +287,7 @@ class BusinessHelper extends AbstractHelper
             $this->writeMissingHelperMessage(sprintf(
                 'Could not inject <fg=yellow>%1$sConfig</> into <fg=yellow>%1$sBusinessFactory</>. You may want to add <fg=yellow>%2$s</> to your <fg=yellow>%1$s codeception.yml</> enabled modules.',
                 $moduleName,
-                ConfigHelper::class
+                ConfigHelper::class,
             ));
 
             return $businessFactory;

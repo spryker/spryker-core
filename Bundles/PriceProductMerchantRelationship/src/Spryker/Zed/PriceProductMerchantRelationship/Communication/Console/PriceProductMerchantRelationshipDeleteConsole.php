@@ -23,6 +23,7 @@ class PriceProductMerchantRelationshipDeleteConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'price-product-merchant-relationship:delete';
+
     /**
      * @var string
      */

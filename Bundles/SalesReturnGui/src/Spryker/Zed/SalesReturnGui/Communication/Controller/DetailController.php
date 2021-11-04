@@ -26,6 +26,7 @@ class DetailController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui';
@@ -34,6 +35,7 @@ class DetailController extends AbstractController
      * @var string
      */
     protected const MESSAGE_RETURN_NOT_FOUND = 'Requested return with ID "%id%" was not found.';
+
     /**
      * @var string
      */
@@ -71,7 +73,7 @@ class DetailController extends AbstractController
             ]);
 
             return $this->redirectResponse(
-                Url::generate(static::ROUTE_RETURN_LIST)->build()
+                Url::generate(static::ROUTE_RETURN_LIST)->build(),
             );
         }
 
@@ -95,7 +97,7 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param array<string[]> $orderItemManualEventsGroupedByItem
+     * @param array<array<string>> $orderItemManualEventsGroupedByItem
      *
      * @return array<string>
      */
@@ -118,7 +120,7 @@ class DetailController extends AbstractController
     protected function findReturn(Request $request): ?ReturnTransfer
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_RETURN)
+            $request->get(static::PARAM_ID_RETURN),
         );
 
         return $this->getFactory()

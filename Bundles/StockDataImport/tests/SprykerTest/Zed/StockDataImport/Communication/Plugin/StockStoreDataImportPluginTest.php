@@ -76,8 +76,8 @@ class StockStoreDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of stock stores is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 }

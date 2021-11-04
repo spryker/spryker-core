@@ -41,7 +41,7 @@ class CategoryStorageFactory extends AbstractFactory
     {
         return new CategoryTreeStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -52,7 +52,7 @@ class CategoryStorageFactory extends AbstractFactory
     {
         return new CategoryNodeStorage(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -64,7 +64,7 @@ class CategoryStorageFactory extends AbstractFactory
         return new UrlStorageCategoryNodeMapper(
             $this->getSynchronizationService(),
             $this->getStoreClient(),
-            $this->getLocaleClient()
+            $this->getLocaleClient(),
         );
     }
 

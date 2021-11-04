@@ -78,7 +78,7 @@ class ProductCategoryFacadeTest extends Unit
         $expectedProductName = sprintf(
             '%s (%s)',
             $productTransfer->getLocalizedAttributes()[0]->getName(),
-            $productTransfer->getAbstractSku()
+            $productTransfer->getAbstractSku(),
         );
 
         $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());

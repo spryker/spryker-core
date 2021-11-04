@@ -51,22 +51,27 @@ class ProductFormAdd extends AbstractType
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const FIELD_PRICES = 'prices';
+
     /**
      * @var string
      */
     public const FIELD_TAX_RATE = 'tax_rate';
+
     /**
      * @var string
      */
     public const FIELD_NEW_FROM = 'new_from';
+
     /**
      * @var string
      */
@@ -76,38 +81,47 @@ class ProductFormAdd extends AbstractType
      * @var string
      */
     public const FORM_ATTRIBUTE_ABSTRACT = 'attribute_abstract';
+
     /**
      * @var string
      */
     public const FORM_ATTRIBUTE_SUPER = 'attribute_super';
+
     /**
      * @var string
      */
     public const FORM_GENERAL = 'general';
+
     /**
      * @var string
      */
     public const FORM_PRICE_AND_TAX = 'price_and_tax';
+
     /**
      * @var string
      */
     public const FORM_PRICE_AND_STOCK = 'price_and_stock';
+
     /**
      * @var string
      */
     public const FORM_TAX_SET = 'tax_set';
+
     /**
      * @var string
      */
     public const FORM_SEO = 'seo';
+
     /**
      * @var string
      */
     public const FORM_STORE_RELATION = 'store_relation';
+
     /**
      * @var string
      */
     public const FORM_IMAGE_SET = 'image_set';
+
     /**
      * @var string
      */
@@ -117,18 +131,22 @@ class ProductFormAdd extends AbstractType
      * @var string
      */
     public const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
+
     /**
      * @var string
      */
     public const OPTION_ATTRIBUTE_SUPER = 'option_attribute_super';
+
     /**
      * @var string
      */
     public const OPTION_ID_LOCALE = 'option_id_locale';
+
     /**
      * @var string
      */
     public const OPTION_TAX_RATES = 'option_tax_rates';
+
     /**
      * @var string
      */
@@ -138,34 +156,42 @@ class ProductFormAdd extends AbstractType
      * @var string
      */
     public const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_ATTRIBUTE_ABSTRACT = 'validation_group_attribute_abstract';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_ATTRIBUTE_SUPER = 'validation_group_attribute_super';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_GENERAL = 'validation_group_general';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_PRICE_AND_TAX = 'validation_group_price_and_tax';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_PRICE_AND_STOCK = 'validation_group_price_and_stock';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_SEO = 'validation_group_seo';
+
     /**
      * @var string
      */
     public const VALIDATION_GROUP_IMAGE_SET = 'validation_group_image';
+
     /**
      * @var string
      */
@@ -242,7 +268,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -283,7 +309,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -300,7 +326,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -315,14 +341,14 @@ class ProductFormAdd extends AbstractType
 
         $defaultName = self::getLocalizedPrefixName(
             self::FORM_ATTRIBUTE_ABSTRACT,
-            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
         $this->addAttributeAbstractForm(
             $builder,
             $defaultName,
             null,
-            $options[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE]
+            $options[ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE],
         );
 
         return $this;
@@ -343,7 +369,7 @@ class ProductFormAdd extends AbstractType
 
         $defaultName = self::getLocalizedPrefixName(
             self::FORM_IMAGE_SET,
-            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
+            ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
         $this->addImageSetForm($builder, $defaultName);
@@ -360,7 +386,7 @@ class ProductFormAdd extends AbstractType
     {
         $builder->add(
             static::FORM_STORE_RELATION,
-            $this->getFactory()->getStoreRelationFormTypePlugin()->getType()
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
         );
 
         return $this;
@@ -401,7 +427,7 @@ class ProductFormAdd extends AbstractType
 
                             if ($skuCount > 0) {
                                 $context->addViolation(
-                                    sprintf('The SKU "%s" is already used', $sku)
+                                    sprintf('The SKU "%s" is already used', $sku),
                                 );
                             }
                         },
@@ -477,7 +503,7 @@ class ProductFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -505,7 +531,7 @@ class ProductFormAdd extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -525,7 +551,7 @@ class ProductFormAdd extends AbstractType
                             if ($valueSet[AttributeAbstractForm::FIELD_NAME] && empty($valueSet[AttributeAbstractForm::FIELD_VALUE])) {
                                 $context->addViolation(sprintf(
                                     'Please enter value for product attribute "%s" or disable it',
-                                    $type
+                                    $type,
                                 ));
                             }
                         }
@@ -539,7 +565,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -558,7 +584,7 @@ class ProductFormAdd extends AbstractType
                             if ($valueSet[AttributeSuperForm::FIELD_NAME] && empty($valueSet[AttributeSuperForm::FIELD_VALUE])) {
                                 $context->addViolation(sprintf(
                                     'Please enter value for variant attribute "%s" or disable it',
-                                    $type
+                                    $type,
                                 ));
                             }
                         }
@@ -582,7 +608,7 @@ class ProductFormAdd extends AbstractType
             PriceDimensionForm::class,
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -590,7 +616,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -609,7 +635,7 @@ class ProductFormAdd extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
                     ]),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -617,7 +643,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -660,7 +686,7 @@ class ProductFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -798,7 +824,7 @@ class ProductFormAdd extends AbstractType
                 }
 
                 return $value;
-            }
+            },
         );
     }
 
@@ -815,7 +841,7 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

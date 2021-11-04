@@ -31,7 +31,7 @@ class MerchantProductGuiRepository extends AbstractRepository implements Merchan
                 (new QueryJoinTransfer())
                     ->setJoinType(Criteria::INNER_JOIN)
                     ->setRelation('SpyMerchantProductAbstract')
-                    ->setCondition(SpyMerchantProductAbstractTableMap::COL_FK_MERCHANT . sprintf(' = %d', $merchantProductCriteriaTransfer->getIdMerchant()))
+                    ->setCondition(SpyMerchantProductAbstractTableMap::COL_FK_MERCHANT . sprintf(' = %d', $merchantProductCriteriaTransfer->getIdMerchant())),
             );
 
         return $queryCriteriaTransfer;

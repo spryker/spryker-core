@@ -90,13 +90,13 @@ class CustomerReader implements CustomerReaderInterface
             ->customerResourceMapper
             ->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
                 $customerResponseTransfer->getCustomerTransfer(),
-                new RestCustomersResponseAttributesTransfer()
+                new RestCustomersResponseAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
-            $restCustomersResponseAttributesTransfer
+            $restCustomersResponseAttributesTransfer,
         );
 
         $restResponse->addResource($restResource);

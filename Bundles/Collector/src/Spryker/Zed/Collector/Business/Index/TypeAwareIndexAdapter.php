@@ -36,7 +36,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
 
     /**
      * @param string|int $id
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Elastica\Document
      */
@@ -47,7 +47,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
 
     /**
      * @param array<\Elastica\Document> $documents
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Elastica\Bulk\ResponseSet
      */
@@ -91,7 +91,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
     protected function getType(): Type
     {
         return $this->elasticaIndex->getType(
-            $this->searchCollectorConfigurationTransfer->getTypeName()
+            $this->searchCollectorConfigurationTransfer->getTypeName(),
         );
     }
 }

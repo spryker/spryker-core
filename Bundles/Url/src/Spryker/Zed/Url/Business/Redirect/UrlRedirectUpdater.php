@@ -98,7 +98,7 @@ class UrlRedirectUpdater implements UrlRedirectUpdaterInterface
         if (!$urlRedirectEntity) {
             throw new MissingRedirectException(sprintf(
                 'Tried to retrieve a missing url redirect entity with ID %s.',
-                $idUrlRedirect
+                $idUrlRedirect,
             ));
         }
 

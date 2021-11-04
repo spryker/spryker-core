@@ -20,10 +20,12 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
      * @var string
      */
     protected const DESCRIPTION_DEFAULT_REQUEST = 'Expected request body.';
+
     /**
      * @var string
      */
     protected const DESCRIPTION_DEFAULT_RESPONSE = 'Expected response to a bad request.';
+
     /**
      * @var string
      */
@@ -79,7 +81,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
+            (string)Response::HTTP_OK,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
@@ -113,7 +115,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_CREATED
+            (string)Response::HTTP_CREATED,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
@@ -153,7 +155,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
+            (string)Response::HTTP_OK,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
@@ -185,7 +187,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         $responseSchemaDataTransfer = $this->addDefaultSuccessResponseToResponseSchemaDataTransfer(
             $pathMethodDataTransfer,
             new PathSchemaDataTransfer(),
-            (string)Response::HTTP_NO_CONTENT
+            (string)Response::HTTP_NO_CONTENT,
         );
         if ($responseSchemaDataTransfer) {
             $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);

@@ -29,14 +29,17 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -46,14 +49,17 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_CATEGORY_FORM = 'PLUGINS_CATEGORY_FORM';
+
     /**
      * @var string
      */
     public const PLUGINS_CATEGORY_FORM_TAB_EXPANDER = 'PLUGINS_CATEGORY_FORM_TAB_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_CATEGORY_RELATION_READ = 'PLUGINS_CATEGORY_RELATION_READ';
+
     /**
      * @var string
      */
@@ -63,10 +69,12 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY = 'PROPEL_QUERY_CATEGORY';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY_TEMPLATE = 'PROPEL_QUERY_CATEGORY_TEMPLATE';
+
     /**
      * @var string
      */
@@ -79,6 +87,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     *
      * @var string
      */
     public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
@@ -129,7 +138,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CategoryGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -145,7 +154,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new CategoryGuiToCategoryFacadeBridge(
-                $container->getLocator()->category()->facade()
+                $container->getLocator()->category()->facade(),
             );
         });
 
@@ -161,7 +170,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CategoryGuiToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -322,8 +331,8 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own CategoryGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage categories.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 
@@ -336,7 +345,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new CategoryGuiToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         });
 
@@ -352,7 +361,7 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CategoryGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 

@@ -66,7 +66,7 @@ class ElasticsearchWriterTest extends Unit
      */
     public function testWriteCreateDocumentsWithInValidDataSet(): void
     {
-        $this->expectException('Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException');
+        $this->expectException(InvalidDataSetException::class);
         $dataSet = $this->getInValidTestDataSet();
         $writer = $this->getElasticsearchWriter();
         $writer->write($dataSet);

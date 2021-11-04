@@ -60,7 +60,7 @@ class AttributeReader implements AttributeReaderInterface
             $idLocale,
             $searchText,
             $offset,
-            $limit
+            $limit,
         );
 
         $results = [];
@@ -97,7 +97,7 @@ class AttributeReader implements AttributeReaderInterface
         $query = $this->productAttributeQueryContainer->queryProductManagementAttributeValueWithTranslation(
             $idProductManagementAttribute,
             $idLocale,
-            $searchText
+            $searchText,
         );
 
         return $query->count();
@@ -151,7 +151,7 @@ class AttributeReader implements AttributeReaderInterface
      */
     public function getProductAttributeCollection()
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute> $collection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[] $collection */
         $collection = $this->productAttributeQueryContainer
             ->queryProductAttributeCollection()
             ->joinWithSpyProductManagementAttributeValue()

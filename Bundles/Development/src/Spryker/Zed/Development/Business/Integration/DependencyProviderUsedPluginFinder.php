@@ -54,7 +54,7 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
         foreach ($projectModules as $moduleTransfer) {
             $dependencyProviderCollectionTransfer = $this->addPluginUsageInModuleApplications(
                 $moduleTransfer,
-                $dependencyProviderCollectionTransfer
+                $dependencyProviderCollectionTransfer,
             );
         }
 
@@ -91,7 +91,7 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
         DependencyProviderCollectionTransfer $dependencyProviderCollectionTransfer
     ) {
         $finder = $this->getFinderForModule(
-            $this->getPath($moduleTransfer, $applicationTransfer)
+            $this->getPath($moduleTransfer, $applicationTransfer),
         );
 
         foreach ($finder as $splFileInfo) {
@@ -115,14 +115,14 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
             $moduleTransfer->getPath(),
             $moduleTransfer->getOrganization()->getName(),
             $applicationTransfer->getName(),
-            $moduleTransfer->getName()
+            $moduleTransfer->getName(),
         );
     }
 
     /**
      * @param string $path
      *
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function getFinderForModule(string $path): Finder
     {

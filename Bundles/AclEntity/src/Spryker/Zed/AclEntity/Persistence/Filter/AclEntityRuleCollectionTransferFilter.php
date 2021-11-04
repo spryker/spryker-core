@@ -28,7 +28,7 @@ class AclEntityRuleCollectionTransferFilter implements AclEntityRuleCollectionTr
             $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),
             function (AclEntityRuleTransfer $aclEntityRuleTransfer) use ($scope) {
                 return $aclEntityRuleTransfer->getScopeOrFail() === $scope;
-            }
+            },
         );
 
         return (new AclEntityRuleCollectionTransfer())
@@ -52,7 +52,7 @@ class AclEntityRuleCollectionTransferFilter implements AclEntityRuleCollectionTr
                 || ($aclEntityRuleTransfer->getEntityOrFail() === AclEntityConstants::WHILDCARD_ENTITY
                     && $aclEntityRuleTransfer->getScopeOrFail() === AclEntityConstants::SCOPE_GLOBAL
                     );
-            }
+            },
         );
 
         return (new AclEntityRuleCollectionTransfer())
@@ -76,7 +76,7 @@ class AclEntityRuleCollectionTransferFilter implements AclEntityRuleCollectionTr
             function (AclEntityRuleTransfer $aclEntityRuleTransfer) use ($scope, $entityClass) {
                 return $aclEntityRuleTransfer->getScopeOrFail() === $scope
                     && $aclEntityRuleTransfer->getEntityOrFail() === $entityClass;
-            }
+            },
         );
 
         return (new AclEntityRuleCollectionTransfer())
@@ -103,7 +103,7 @@ class AclEntityRuleCollectionTransferFilter implements AclEntityRuleCollectionTr
                 return $aclEntityRuleTransfer->getScopeOrFail() === $scope
                     && ($aclEntityRuleTransfer->getEntityOrFail() === $entityClass || $aclEntityRuleTransfer->getEntityOrFail() === AclEntityConstants::WHILDCARD_ENTITY)
                     && ($aclEntityRuleTransfer->getPermissionMaskOrFail() & $permissionMask);
-            }
+            },
         );
 
         return (new AclEntityRuleCollectionTransfer())
@@ -127,7 +127,7 @@ class AclEntityRuleCollectionTransferFilter implements AclEntityRuleCollectionTr
             function (AclEntityRuleTransfer $aclEntityRuleTransfer) use ($entityClass, $permissionMask) {
                 return $aclEntityRuleTransfer->getEntityOrFail() === $entityClass
                     && ($aclEntityRuleTransfer->getPermissionMaskOrFail() & $permissionMask);
-            }
+            },
         );
 
         return (new AclEntityRuleCollectionTransfer())
@@ -148,7 +148,7 @@ class AclEntityRuleCollectionTransferFilter implements AclEntityRuleCollectionTr
             $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),
             function (AclEntityRuleTransfer $aclEntityRuleTransfer) use ($permissionMask): bool {
                 return ($aclEntityRuleTransfer->getPermissionMaskOrFail() & $permissionMask) > 0;
-            }
+            },
         );
 
         return (new AclEntityRuleCollectionTransfer())

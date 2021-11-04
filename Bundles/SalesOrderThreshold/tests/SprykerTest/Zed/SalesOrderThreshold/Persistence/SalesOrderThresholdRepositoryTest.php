@@ -35,6 +35,7 @@ class SalesOrderThresholdRepositoryTest extends Unit
      * @var string
      */
     protected const TAX_SET_NAME_1 = 'TAX_SET_NAME_1';
+
     /**
      * @var int
      */
@@ -44,6 +45,7 @@ class SalesOrderThresholdRepositoryTest extends Unit
      * @var string
      */
     protected const TAX_SET_NAME_2 = 'TAX_SET_NAME_2';
+
     /**
      * @var int
      */

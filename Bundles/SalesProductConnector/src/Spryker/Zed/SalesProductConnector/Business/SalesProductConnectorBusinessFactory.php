@@ -37,7 +37,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemMetadataSaver(
             $this->getUtilEncodingService(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -50,7 +50,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemMetadataHydrator(
             $this->getUtilEncodingService(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -62,7 +62,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductIdHydrator()
     {
         return new ProductIdHydrator(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -72,7 +72,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createItemMetadataExpander(): ItemMetadataExpanderInterface
     {
         return new ItemMetadataExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -82,7 +82,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductIdExpander(): ProductIdExpanderInterface
     {
         return new ProductIdExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -101,7 +101,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new PopularityProductPageExpander(
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -112,7 +112,7 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractIdsRefreshReader(
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

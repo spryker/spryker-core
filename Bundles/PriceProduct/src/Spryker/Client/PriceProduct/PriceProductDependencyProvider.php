@@ -22,10 +22,12 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+
     /**
      * @var string
      */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     /**
      * @var string
      */

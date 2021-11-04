@@ -79,7 +79,7 @@ class TypelessMappingAdapter implements MappingAdapterInterface
     protected function getIndex(): Index
     {
         return $this->elasticaClient->getIndex(
-            $this->searchCollectorConfigurationTransfer->getIndexName()
+            $this->searchCollectorConfigurationTransfer->getIndexName(),
         );
     }
 }

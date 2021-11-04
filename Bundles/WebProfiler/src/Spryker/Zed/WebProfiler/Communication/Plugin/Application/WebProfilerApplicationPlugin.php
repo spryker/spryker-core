@@ -43,14 +43,17 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
      * @var string
      */
     public const SERVICE_STOPWATCH = 'stopwatch';
+
     /**
      * @var string
      */
     public const SERVICE_LOGGER = 'logger';
+
     /**
      * @var string
      */
     public const SERVICE_PROFILER = 'profiler';
+
     /**
      * @var string
      */
@@ -58,18 +61,21 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_CHARSET
+     *
      * @var string
      */
     public const SERVICE_CHARSET = 'charset';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     *
      * @var string
      */
     public const SERVICE_DISPATCHER = 'dispatcher';
@@ -78,10 +84,12 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
      * @var string
      */
     public const SERVICE_REQUEST = 'request';
+
     /**
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var string
      */
@@ -233,7 +241,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
                 $container->get(static::SERVICE_ROUTER),
                 $container->get(static::SERVICE_PROFILER),
                 $container->get(static::SERVICE_TWIG),
-                $this->getDataCollectorPluginTemplates()
+                $this->getDataCollectorPluginTemplates(),
             );
         };
 
@@ -241,7 +249,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
             return new RouterController(
                 $container->get(static::SERVICE_PROFILER),
                 $container->get(static::SERVICE_TWIG),
-                $container->get(static::SERVICE_ROUTER)
+                $container->get(static::SERVICE_ROUTER),
             );
         };
 
@@ -249,14 +257,14 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
             if (class_exists(ExceptionPanelController::class)) {
                 return new ExceptionPanelController(
                     new HtmlErrorRenderer($container->get('debug')),
-                    $container->get(static::SERVICE_PROFILER)
+                    $container->get(static::SERVICE_PROFILER),
                 );
             }
 
             return new ExceptionController(
                 $container->get(static::SERVICE_PROFILER),
                 $container->get(static::SERVICE_TWIG),
-                $container->get('debug')
+                $container->get('debug'),
             );
         };
 

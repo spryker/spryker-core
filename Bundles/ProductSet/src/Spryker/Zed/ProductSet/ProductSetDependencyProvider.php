@@ -24,10 +24,12 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */
     public const FACADE_URL = 'FACADE_URL';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+
     /**
      * @var string
      */

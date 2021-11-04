@@ -14,7 +14,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 /**
  * @property-read string $url
  * @property-read string $description
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\ServerVariable[] $variables
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\ServerVariable> $variables
  */
 class Server extends AbstractObject
 {

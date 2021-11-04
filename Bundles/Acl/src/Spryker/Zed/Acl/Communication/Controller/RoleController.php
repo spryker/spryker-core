@@ -29,10 +29,12 @@ class RoleController extends AbstractController
      * @var string
      */
     public const PARAM_ID_ROLE = 'id-role';
+
     /**
      * @var string
      */
     public const ACL_ROLE_LIST_URL = '/acl/role/index';
+
     /**
      * @var string
      */
@@ -63,7 +65,7 @@ class RoleController extends AbstractController
         $roleTable = $this->getFactory()->createRoleTable();
 
         return $this->jsonResponse(
-            $roleTable->fetchData()
+            $roleTable->fetchData(),
         );
     }
 
@@ -86,11 +88,11 @@ class RoleController extends AbstractController
 
                 $this->addSuccessMessage(
                     'Role "%s" successfully added.',
-                    ['%s' => $formData[RoleForm::FIELD_NAME]]
+                    ['%s' => $formData[RoleForm::FIELD_NAME]],
                 );
 
                 return $this->redirectResponse(
-                    sprintf(self::ROLE_UPDATE_URL, $roleTransfer->getIdAclRole())
+                    sprintf(self::ROLE_UPDATE_URL, $roleTransfer->getIdAclRole()),
                 );
             } catch (RoleNameExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
@@ -202,7 +204,7 @@ class RoleController extends AbstractController
         $ruleSetTable = $this->getFactory()->createRulesetTable($idRole);
 
         return $this->jsonResponse(
-            $ruleSetTable->fetchData()
+            $ruleSetTable->fetchData(),
         );
     }
 
@@ -219,7 +221,7 @@ class RoleController extends AbstractController
         $ruleSetForm = $this->getFactory()
             ->createRuleForm(
                 $dataProvider->getData($idAclRole),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -257,7 +259,7 @@ class RoleController extends AbstractController
                 $this->getFacade()->updateRole($roleTransfer);
                 $this->addSuccessMessage(
                     'Role "%s" successfully updated.',
-                    ['%s' => $roleTransfer->getName()]
+                    ['%s' => $roleTransfer->getName()],
                 );
             } catch (RoleNameExistsException $e) {
                 $this->addErrorMessage($e->getMessage());

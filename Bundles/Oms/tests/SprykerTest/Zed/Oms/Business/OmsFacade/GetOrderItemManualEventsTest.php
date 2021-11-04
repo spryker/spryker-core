@@ -28,6 +28,7 @@ class GetOrderItemManualEventsTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var int
      */
@@ -37,6 +38,7 @@ class GetOrderItemManualEventsTest extends Unit
      * @var string
      */
     protected const SHIPPED_STATE_NAME = 'shipped';
+
     /**
      * @var string
      */
@@ -68,7 +70,7 @@ class GetOrderItemManualEventsTest extends Unit
 
         // Act
         $orderItemManualEvents = $this->tester->getFacade()->getOrderItemManualEvents(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds),
         );
 
         // Assert
@@ -85,7 +87,7 @@ class GetOrderItemManualEventsTest extends Unit
 
         // Act
         $orderItemManualEvents = $this->tester->getFacade()->getOrderItemManualEvents(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds([-1])
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds([-1]),
         );
 
         // Assert

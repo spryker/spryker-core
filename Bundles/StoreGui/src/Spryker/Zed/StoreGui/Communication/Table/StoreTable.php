@@ -18,6 +18,7 @@ class StoreTable extends AbstractTable
      * @var string
      */
     public const COL_ID_STORE = 'id_store';
+
     /**
      * @var string
      */

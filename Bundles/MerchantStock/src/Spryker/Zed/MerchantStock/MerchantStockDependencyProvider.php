@@ -44,7 +44,7 @@ class MerchantStockDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STOCK, function (Container $container) {
             return new MerchantStockToStockFacadeBridge(
-                $container->getLocator()->stock()->facade()
+                $container->getLocator()->stock()->facade(),
             );
         });
 

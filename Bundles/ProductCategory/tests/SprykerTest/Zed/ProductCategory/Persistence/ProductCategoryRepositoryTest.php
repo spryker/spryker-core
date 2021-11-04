@@ -36,6 +36,7 @@ class ProductCategoryRepositoryTest extends Unit
      * @var string
      */
     protected const CATEGORY_NAME_1 = 'CATEGORY_1';
+
     /**
      * @var string
      */
@@ -45,10 +46,12 @@ class ProductCategoryRepositoryTest extends Unit
      * @var string
      */
     protected const CATEGORY_ATTRIBUTE_1 = 'CATEGORY_ATTRIBUTE_1';
+
     /**
      * @var string
      */
     protected const CATEGORY_ATTRIBUTE_2 = 'CATEGORY_ATTRIBUTE_2';
+
     /**
      * @var string
      */
@@ -74,7 +77,7 @@ class ProductCategoryRepositoryTest extends Unit
         $productAbstract = $this->tester->createProductAbstractEntityWithCategories(
             static::PRODUCT_ABSTRACT_SKU,
             $categoriesData,
-            $localeEntity
+            $localeEntity,
         );
 
         $productCategoryQueryContainer = new ProductCategoryRepository();
@@ -82,7 +85,7 @@ class ProductCategoryRepositoryTest extends Unit
         // Act
         $productCategoryTransferCollection = $productCategoryQueryContainer->getCategoryTransferCollectionByIdProductAbstract(
             $productAbstract->getIdProductAbstract(),
-            $localeEntity->getIdLocale()
+            $localeEntity->getIdLocale(),
         );
 
         // Assert

@@ -26,7 +26,7 @@ class MailConfig extends AbstractBundleConfig
     {
         return $this->get(
             MailConstants::SENDER_NAME,
-            ''
+            '',
         );
     }
 
@@ -39,7 +39,7 @@ class MailConfig extends AbstractBundleConfig
     {
         return $this->get(
             MailConstants::SENDER_EMAIL,
-            ''
+            '',
         );
     }
 

@@ -73,7 +73,7 @@ class CartUpdater implements CartUpdaterInterface
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
         $quoteTransfer = $this->cartMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
-            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
+            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier()),
         );
 
         $quoteTransfer
@@ -89,7 +89,7 @@ class CartUpdater implements CartUpdaterInterface
 
         return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

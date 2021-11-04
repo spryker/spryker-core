@@ -55,7 +55,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferGenerator(
             $messenger,
             $this->createClassGenerator(),
-            $this->createTransferDefinitionBuilder()
+            $this->createTransferDefinitionBuilder(),
         );
     }
 
@@ -69,7 +69,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferGenerator(
             $messenger,
             $this->createClassGenerator(),
-            $this->createEntityTransferDefinitionBuilder()
+            $this->createEntityTransferDefinitionBuilder(),
         );
     }
 
@@ -79,7 +79,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createClassGenerator()
     {
         return new ClassGenerator(
-            $this->getConfig()->getClassTargetDirectory()
+            $this->getConfig()->getClassTargetDirectory(),
         );
     }
 
@@ -93,7 +93,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new DataBuilderGenerator(
             $messenger,
             $this->createDataBuilderClassGenerator(),
-            $this->createDataBuilderDefinitionBuilder()
+            $this->createDataBuilderDefinitionBuilder(),
         );
     }
 
@@ -103,7 +103,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createDataBuilderClassGenerator()
     {
         return new DataBuilderClassGenerator(
-            $this->getConfig()->getDataBuilderTargetDirectory()
+            $this->getConfig()->getDataBuilderTargetDirectory(),
         );
     }
 
@@ -115,7 +115,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferDefinitionBuilder(
             $this->createLoader(),
             $this->createTransferDefinitionMerger(),
-            $this->createClassDefinition()
+            $this->createClassDefinition(),
         );
     }
 
@@ -127,7 +127,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new TransferDefinitionBuilder(
             $this->createEntityLoader(),
             $this->createTransferDefinitionMerger(),
-            $this->createClassDefinition()
+            $this->createClassDefinition(),
         );
     }
 
@@ -139,7 +139,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new DataBuilderDefinitionBuilder(
             $this->createDataBuilderLoader(),
             $this->createTransferDefinitionMerger(),
-            $this->createDataBuilderDefinition()
+            $this->createDataBuilderDefinition(),
         );
     }
 
@@ -158,7 +158,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferDefinitionLoader(
             $this->createFinder(),
-            $this->createDefinitionNormalizer()
+            $this->createDefinitionNormalizer(),
         );
     }
 
@@ -169,7 +169,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new EntityTransferDefinitionLoader(
             $this->createEntityFinder(),
-            $this->createEntityDefinitionNormalizer()
+            $this->createEntityDefinitionNormalizer(),
         );
     }
 
@@ -180,7 +180,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferDefinitionLoader(
             $this->createDataBuilderFinder(),
-            $this->createDefinitionNormalizer()
+            $this->createDefinitionNormalizer(),
         );
     }
 
@@ -192,7 +192,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function createTransferCleaner()
     {
         return new TransferCleaner(
-            $this->getConfig()->getClassTargetDirectory()
+            $this->getConfig()->getClassTargetDirectory(),
         );
     }
 
@@ -207,7 +207,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
             $this->getFileSystem(),
-            $this->createDirectoryFileFinder()
+            $this->createDirectoryFileFinder(),
         );
     }
 
@@ -219,7 +219,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
             $this->getFileSystem(),
-            $this->createDataTransferFileFinder()
+            $this->createDataTransferFileFinder(),
         );
     }
 
@@ -231,7 +231,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getClassTargetDirectory(),
             $this->getFileSystem(),
-            $this->createEntityTransferFileFinder()
+            $this->createEntityTransferFileFinder(),
         );
     }
 
@@ -243,7 +243,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new GeneratedTransferDirectory(
             $this->getConfig()->getDataBuilderTargetDirectory(),
             $this->getFileSystem(),
-            $this->createDirectoryFileFinder()
+            $this->createDirectoryFileFinder(),
         );
     }
 
@@ -253,7 +253,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function createDirectoryFileFinder(): GeneratedFileFinderInterface
     {
         return new DirectoryFileFinder(
-            $this->getFinder()
+            $this->getFinder(),
         );
     }
 
@@ -263,7 +263,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function createDataTransferFileFinder(): GeneratedFileFinderInterface
     {
         return new DataTransferFileFinder(
-            $this->getFinder()
+            $this->getFinder(),
         );
     }
 
@@ -273,7 +273,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     public function createEntityTransferFileFinder(): GeneratedFileFinderInterface
     {
         return new EntityTransferFileFinder(
-            $this->getFinder()
+            $this->getFinder(),
         );
     }
 
@@ -307,7 +307,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     protected function createClassDefinition()
     {
         return new ClassDefinition(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -346,7 +346,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
             $messenger,
             $this->createFinder(),
             $this->getConfig(),
-            $this->createXmlValidator()
+            $this->createXmlValidator(),
         );
     }
 
@@ -357,7 +357,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new TransferDefinitionFinder(
             $this->getConfig(),
-            $this->getUtilGlobService()
+            $this->getUtilGlobService(),
         );
     }
 
@@ -369,7 +369,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
         return new EntityTransferDefinitionFinder(
             $this->getConfig(),
             $this->getUtilGlobService(),
-            $this->getPropelFacade()
+            $this->getPropelFacade(),
         );
     }
 
@@ -380,7 +380,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     {
         return new DataBuilderDefinitionFinder(
             $this->getConfig(),
-            $this->getUtilGlobService()
+            $this->getUtilGlobService(),
         );
     }
 

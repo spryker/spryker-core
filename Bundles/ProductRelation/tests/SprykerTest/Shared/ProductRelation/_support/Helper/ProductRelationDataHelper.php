@@ -77,7 +77,7 @@ class ProductRelationDataHelper extends Module
             $idProductAbstract,
             $productRelationKey,
             $productRelationType,
-            $storeRelationTransfer
+            $storeRelationTransfer,
         );
 
         $productRelationResponseTransfer = $productRelationFacade->createProductRelation($productRelationTransfer);
@@ -85,7 +85,7 @@ class ProductRelationDataHelper extends Module
 
         $this->debug(sprintf(
             'Inserted Product Relation: %d',
-            $productRelationTransfer->getIdProductRelation()
+            $productRelationTransfer->getIdProductRelation(),
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productRelationTransfer): void {

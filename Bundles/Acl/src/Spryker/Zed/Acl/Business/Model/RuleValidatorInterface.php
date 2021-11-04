@@ -27,12 +27,12 @@ interface RuleValidatorInterface
     public function addRule(RuleTransfer $rule);
 
     /**
-     * @return array
+     * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getAllowedRules();
 
     /**
-     * @return array
+     * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getDeniedRules();
 

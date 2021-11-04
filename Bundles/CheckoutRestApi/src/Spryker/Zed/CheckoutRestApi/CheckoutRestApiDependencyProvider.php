@@ -27,46 +27,57 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CART = 'FACADE_CART';
+
     /**
      * @var string
      */
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
+
     /**
      * @var string
      */
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
+
     /**
      * @var string
      */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+
     /**
      * @var string
      */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+
     /**
      * @var string
      */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+
     /**
      * @var string
      */
     public const PLUGINS_QUOTE_MAPPER = 'PLUGINS_QUOTE_MAPPER';
+
     /**
      * @var string
      */
     public const PLUGINS_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_CHECKOUT_DATA_VALIDATOR';
+
     /**
      * @var string
      */
     public const PLUGINS_READ_CHECKOUT_DATA_VALIDATOR = 'PLUGINS_READ_CHECKOUT_DATA_VALIDATOR';
+
     /**
      * @var string
      */

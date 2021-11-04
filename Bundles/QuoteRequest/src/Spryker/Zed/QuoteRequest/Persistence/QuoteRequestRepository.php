@@ -201,7 +201,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->groupByIdQuoteRequest()
             ->having(sprintf(
                 'COUNT(%s) = 1',
-                SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST
+                SpyQuoteRequestVersionTableMap::COL_FK_QUOTE_REQUEST,
             ))
             ->select([
                 SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST,

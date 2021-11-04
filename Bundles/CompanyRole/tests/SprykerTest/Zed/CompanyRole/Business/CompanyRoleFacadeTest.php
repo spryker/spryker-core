@@ -33,6 +33,7 @@ class CompanyRoleFacadeTest extends Test
      * @var array
      */
     protected const CONFIGURATION = ['testKey' => 'testValue'];
+
     /**
      * @var string
      */
@@ -58,7 +59,7 @@ class CompanyRoleFacadeTest extends Test
         $resultCompanyRoleTransfer = $this->tester->getFacade()
             ->getCompanyRoleById(
                 (new CompanyRoleTransfer())
-                    ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole())
+                    ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole()),
             );
 
         // Assert
@@ -225,7 +226,7 @@ class CompanyRoleFacadeTest extends Test
         $resultCompanyRoleTransfer = $this->tester->getFacade()
             ->findCompanyRoleById(
                 (new CompanyRoleTransfer())
-                    ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole())
+                    ->setIdCompanyRole($existingCompanyRole->getIdCompanyRole()),
             );
 
         // Assert

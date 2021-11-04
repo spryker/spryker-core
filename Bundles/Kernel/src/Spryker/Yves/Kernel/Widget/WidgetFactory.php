@@ -58,7 +58,7 @@ class WidgetFactory implements WidgetFactoryInterface
             throw new InvalidWidgetPluginException(sprintf(
                 'Invalid widget plugin %s. This class needs to implement %s.',
                 $widgetClassName,
-                WidgetPluginInterface::class
+                WidgetPluginInterface::class,
             ));
         }
     }
@@ -75,7 +75,7 @@ class WidgetFactory implements WidgetFactoryInterface
         if (!method_exists($widgetClassName, 'initialize')) {
             throw new InvalidWidgetPluginException(sprintf(
                 'Widget %s needs to define and implement custom initialize() method with its custom widget input parameters.',
-                $widgetClassName
+                $widgetClassName,
             ));
         }
     }

@@ -27,22 +27,27 @@ class AvailabilityAbstractTable extends AbstractTable
      * @var string
      */
     public const TABLE_COL_ACTION = 'Actions';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
+
     /**
      * @var string
      */
     public const AVAILABLE = 'Available';
+
     /**
      * @var string
      */
     public const NOT_AVAILABLE = 'Not available';
+
     /**
      * @var string
      */
     public const IS_BUNDLE_PRODUCT = 'Is bundle product';
+
     /**
      * @var string
      */
@@ -111,7 +116,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $url = Url::generate(
             '/availability-abstract-table',
-            $this->getRequest()->query->all()
+            $this->getRequest()->query->all(),
         );
 
         $config->setUrl($url);
@@ -160,7 +165,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $this->expandPropelQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\Base\SpyProductAbstract> $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\Base\SpyProductAbstract[] $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
@@ -168,7 +173,7 @@ class AvailabilityAbstractTable extends AbstractTable
             ->getProductAbstractEntitiesWithStockByProductAbstractIds(
                 $productAbstractIds,
                 $this->idLocale,
-                $this->idStore
+                $this->idStore,
             );
 
         foreach ($productAbstractEntities as $productAbstractEntity) {
@@ -192,7 +197,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\Base\SpyProductAbstract> $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\Base\SpyProductAbstract[] $productAbstractEntities
      *
      * @return array<int>
      */
@@ -276,7 +281,7 @@ class AvailabilityAbstractTable extends AbstractTable
             [
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
                 static::URL_PARAM_ID_STORE => $this->idStore,
-            ]
+            ],
         );
 
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -313,7 +318,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         return $this->availabilityHelper->calculateReservation(
             $reservationQuantity,
-            $this->storeFacade->getStoreById($this->idStore)
+            $this->storeFacade->getStoreById($this->idStore),
         );
     }
 

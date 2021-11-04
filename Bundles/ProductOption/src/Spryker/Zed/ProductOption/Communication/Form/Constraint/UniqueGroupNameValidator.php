@@ -44,8 +44,8 @@ class UniqueGroupNameValidator extends ConstraintValidator
             $this->context->buildViolation(
                 sprintf(
                     'Group with "%s" translation key is already created.',
-                    $value
-                )
+                    $value,
+                ),
             )->addViolation();
         }
     }

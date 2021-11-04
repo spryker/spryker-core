@@ -33,6 +33,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @var string
      */
     protected const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
+
     /**
      * @var string
      */
@@ -125,7 +126,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
 
         $productConcreteIdsChunks = array_chunk(
             $productConcreteIds,
-            $this->productPageSearchConfig->getProductConcretePagePublishChunkSize()
+            $this->productPageSearchConfig->getProductConcretePagePublishChunkSize(),
         );
 
         foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
@@ -201,7 +202,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $this->syncProductConcretePageSearchPerStore(
                     $productConcreteTransfer,
                     $storeTransfer,
-                    $productConcretePageSearchTransfers[$productConcreteTransfer->getIdProductConcrete()][$storeTransfer->getName()] ?? []
+                    $productConcretePageSearchTransfers[$productConcreteTransfer->getIdProductConcrete()][$storeTransfer->getName()] ?? [],
                 );
             }
         }
@@ -236,7 +237,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $productConcreteTransfer,
                 $storeTransfer,
                 $localizedProductConcretePageSearchTransfers[$localizedAttributesTransfer->getLocale()->getLocaleName()] ?? new ProductConcretePageSearchTransfer(),
-                $localizedAttributesTransfer
+                $localizedAttributesTransfer,
             );
         }
     }
@@ -273,7 +274,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             $productConcreteTransfer,
             $storeTransfer,
             $productConcretePageSearchTransfer,
-            $localizedAttributesTransfer
+            $localizedAttributesTransfer,
         );
 
         $this->productConcretePageSearchWriter->saveProductConcretePageSearch($productConcretePageSearchTransfer);
@@ -297,17 +298,17 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
             $productConcreteTransfer,
             $productConcretePageSearchTransfer,
             $storeTransfer,
-            $localizedAttributesTransfer
+            $localizedAttributesTransfer,
         );
 
         $productConcretePageSearchTransfer = $this->expandProductConcretePageSearchTransferWithPlugins($productConcreteTransfer, $productConcretePageSearchTransfer);
 
         $productConcretePageSearchTransfer->setData(
-            $this->mapTransferToProductConcretePageSearchDocument($productConcretePageSearchTransfer)
+            $this->mapTransferToProductConcretePageSearchDocument($productConcretePageSearchTransfer),
         );
 
         $productConcretePageSearchTransfer->setStructuredData(
-            $this->getStructuredDataFromProductConcretePageSearchTransfer($productConcretePageSearchTransfer)
+            $this->getStructuredDataFromProductConcretePageSearchTransfer($productConcretePageSearchTransfer),
         );
 
         return $productConcretePageSearchTransfer;
@@ -329,7 +330,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     ): ProductConcretePageSearchTransfer {
         $productConcretePageSearchTransfer->fromArray(
             $productConcreteTransfer->toArray(),
-            true
+            true,
         );
 
         $productConcretePageSearchTransfer->setFkProduct($productConcreteTransfer->getIdProductConcrete())

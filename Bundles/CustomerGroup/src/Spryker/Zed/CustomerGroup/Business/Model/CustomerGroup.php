@@ -48,14 +48,14 @@ class CustomerGroup implements CustomerGroupInterface
 
         $customerGroupToCustomerCollection = $customerGroupEntity->getSpyCustomerGroupToCustomers();
         $customerGroupTransfer->setCustomers(
-            $this->entityCollectionToTransferCollection($customerGroupToCustomerCollection)
+            $this->entityCollectionToTransferCollection($customerGroupToCustomerCollection),
         );
 
         return $customerGroupTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customerGroupToCustomerCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerGroupToCustomerCollection
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer>
      */
@@ -184,7 +184,7 @@ class CustomerGroup implements CustomerGroupInterface
         if (!$customerEntity) {
             throw new CustomerGroupNotFoundException(sprintf(
                 'Customer group not found by ID `%s`',
-                $customerGroupTransfer->getIdCustomerGroup()
+                $customerGroupTransfer->getIdCustomerGroup(),
             ));
         }
 
@@ -254,7 +254,7 @@ class CustomerGroup implements CustomerGroupInterface
             $customerGroupTransfer
                 ->getCustomerAssignment()
                 ->addIdCustomerToDeAssign(
-                    $customerTransfer->getIdCustomer()
+                    $customerTransfer->getIdCustomer(),
                 );
 
             $this->removeCustomersFromGroup($customerGroupTransfer);

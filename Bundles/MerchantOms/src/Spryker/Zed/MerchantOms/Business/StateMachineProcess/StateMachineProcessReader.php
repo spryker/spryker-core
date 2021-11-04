@@ -58,7 +58,7 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     ): StateMachineProcessTransfer {
         $stateMachineProcessTransfer = $this->resolveMerchantStateMachineProcess($merchantCriteriaTransfer);
         $stateMachineProcessTransfer->setStateNames(
-            $this->stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer)
+            $this->stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer),
         );
 
         return $stateMachineProcessTransfer;
@@ -75,7 +75,7 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
 
         $stateMachineProcessTransfer = $this->stateMachineFacade->findStateMachineProcess(
             (new StateMachineProcessCriteriaTransfer())
-                ->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess())
+                ->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess()),
         );
 
         if (!$stateMachineProcessTransfer) {

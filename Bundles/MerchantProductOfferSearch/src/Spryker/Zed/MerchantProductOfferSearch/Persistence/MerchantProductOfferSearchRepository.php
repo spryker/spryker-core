@@ -26,22 +26,27 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
      * @var string
      */
     protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
+
     /**
      * @var string
      */
     protected const KEY_MERCHANT_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_MERCHANT_REFERENCE = 'reference';
+
     /**
      * @var string
      */
     protected const KEY_MERCHANT_NAMES = 'names';
+
     /**
      * @var string
      */
     protected const KEY_MERCHANT_REFERENCES = 'references';
+
     /**
      * @var string
      */
@@ -85,7 +90,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
                 ->createProductAbstractMerchantMapper()
                 ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
                     $productAbstractMerchantData,
-                    new ProductAbstractMerchantTransfer()
+                    new ProductAbstractMerchantTransfer(),
                 );
         }
 

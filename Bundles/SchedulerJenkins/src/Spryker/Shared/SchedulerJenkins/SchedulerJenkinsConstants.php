@@ -25,6 +25,7 @@ interface SchedulerJenkinsConstants
      * ]
      *
      * @api
+     *
      * @var string
      */
     public const JENKINS_CONFIGURATION = 'SCHEDULER_JENKINS:JENKINS_CONFIGURATION';
@@ -34,6 +35,7 @@ interface SchedulerJenkinsConstants
      * - Defines the path to Twig XML template for Jenkins API.
      *
      * @api
+     *
      * @var string
      */
     public const JENKINS_TEMPLATE_PATH = 'SCHEDULER_JENKINS:JENKINS_TEMPLATE_PATH';
@@ -43,6 +45,7 @@ interface SchedulerJenkinsConstants
      * - Defines Jenkins logs rotation in days.
      *
      * @api
+     *
      * @var string
      */
     public const JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 'SCHEDULER_JENKINS:JENKINS_DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION';

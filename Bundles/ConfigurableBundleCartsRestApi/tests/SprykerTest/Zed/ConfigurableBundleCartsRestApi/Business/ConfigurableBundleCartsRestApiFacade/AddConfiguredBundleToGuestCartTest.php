@@ -36,6 +36,7 @@ class AddConfiguredBundleToGuestCartTest extends Unit
      * @var string
      */
     protected const FAKE_QUOTE_UUID = 'FAKE_QUOTE_UUID';
+
     /**
      * @var string
      */
@@ -43,12 +44,14 @@ class AddConfiguredBundleToGuestCartTest extends Unit
 
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION
+     *
      * @var string
      */
     protected const ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION = 'ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION';
 
     /**
      * @uses \Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE
+     *
      * @var string
      */
     protected const ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE = 'ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE';
@@ -348,7 +351,7 @@ class AddConfiguredBundleToGuestCartTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION,
-            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
+            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier(),
         );
     }
 
@@ -377,7 +380,7 @@ class AddConfiguredBundleToGuestCartTest extends Unit
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE,
-            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
+            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier(),
         );
     }
 

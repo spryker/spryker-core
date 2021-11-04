@@ -27,7 +27,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new Exception(
-                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"'
+                'could not set redisKey: "' . $key . '" with value: "' . json_encode($value) . '"',
             );
         }
 
@@ -65,7 +65,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
 
         if (!$result) {
             throw new Exception(
-                'could not set redisKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
+                'could not set redisKeys for items: "[' . implode(',', array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"',
             );
         }
 

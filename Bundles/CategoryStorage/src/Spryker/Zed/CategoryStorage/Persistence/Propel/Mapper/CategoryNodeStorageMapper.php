@@ -28,7 +28,7 @@ class CategoryNodeStorageMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryNodeStorage> $categoryNodeStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryNodeStorage[] $categoryNodeStorageEntities
      * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
      *
      * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
@@ -40,7 +40,7 @@ class CategoryNodeStorageMapper
         foreach ($categoryNodeStorageEntities as $categoryNodeStorageEntity) {
             $categoryNodeStorageTransfers[] = $this->mapCategoryNodeStorageEntityToCategoryNodeStorageTransfer(
                 $categoryNodeStorageEntity,
-                new CategoryNodeStorageTransfer()
+                new CategoryNodeStorageTransfer(),
             );
         }
 
@@ -58,7 +58,7 @@ class CategoryNodeStorageMapper
         SpyCategoryNodeStorage $categoryNodeStorageEntity
     ): SpyCategoryNodeStorage {
         return $categoryNodeStorageEntity->setData(
-            $this->utilSanitizeService->arrayFilterRecursive($categoryNodeStorageTransfer->toArray())
+            $this->utilSanitizeService->arrayFilterRecursive($categoryNodeStorageTransfer->toArray()),
         );
     }
 

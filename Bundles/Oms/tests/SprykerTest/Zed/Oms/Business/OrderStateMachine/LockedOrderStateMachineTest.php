@@ -30,7 +30,7 @@ class LockedOrderStateMachineTest extends Unit
     protected $tester;
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function methodsUnderTestDataProvider(): array
     {

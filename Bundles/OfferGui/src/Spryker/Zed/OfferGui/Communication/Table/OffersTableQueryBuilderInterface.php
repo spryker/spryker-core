@@ -13,6 +13,7 @@ interface OffersTableQueryBuilderInterface
      * @var string
      */
     public const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+
     /**
      * @var string
      */

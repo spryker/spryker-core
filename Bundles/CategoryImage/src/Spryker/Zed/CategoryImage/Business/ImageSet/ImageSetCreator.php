@@ -50,7 +50,7 @@ class ImageSetCreator implements ImageSetCreatorInterface
     {
         foreach ($categoryTransfer->getImageSets() as $categoryImageSetTransfer) {
             $categoryImageSetTransfer->setIdCategory(
-                $categoryTransfer->requireIdCategory()->getIdCategory()
+                $categoryTransfer->requireIdCategory()->getIdCategory(),
             );
 
             $this->categoryImageEntityManager->saveCategoryImageSet($categoryImageSetTransfer);

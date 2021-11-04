@@ -35,7 +35,7 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
         return new CustomerBusinessUnitAttachFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
             $this->getCompanyFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 
@@ -84,7 +84,7 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             CustomerBusinessUnitAttachForm::class,
             $dataProvider->getData($idCustomer, $idCompany),
-            $dataProvider->getOptions($idCompany)
+            $dataProvider->getOptions($idCompany),
         );
     }
 
@@ -94,7 +94,7 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerBusinessUnitAttachFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(
-            BusinessOnBehalfGuiDependencyProvider::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER
+            BusinessOnBehalfGuiDependencyProvider::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER,
         );
     }
 
@@ -112,7 +112,7 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createCustomerTableButtonCreator(): CustomerTableButtonCreatorInterface
     {
         return new CustomerTableButtonCreator(
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
         );
     }
 

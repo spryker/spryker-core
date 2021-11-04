@@ -44,7 +44,7 @@ class NavigationContentTermFormDataProvider
             $navigationChoices[$navigationTransfer->getKey()] = sprintf(
                 static::NAVIGATION_CHOICE_PATTERN,
                 $navigationName,
-                $navigationKey
+                $navigationKey,
             );
         }
 

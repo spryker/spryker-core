@@ -22,10 +22,8 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @phpstan-param array<mixed> $productData
-     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<mixed> $productData
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer

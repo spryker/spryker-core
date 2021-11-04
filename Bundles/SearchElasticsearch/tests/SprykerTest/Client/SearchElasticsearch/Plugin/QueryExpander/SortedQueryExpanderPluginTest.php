@@ -102,7 +102,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                         'order' => static::DIRECTION_ASC,
                         'mode' => 'min',
                     ],
-                ]
+                ],
             );
 
         $requestParameters = [
@@ -140,7 +140,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
                 (new SortConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
-                    ->setFieldName(PageIndexMap::STRING_SORT)
+                    ->setFieldName(PageIndexMap::STRING_SORT),
             );
 
         return $searchConfigMock;

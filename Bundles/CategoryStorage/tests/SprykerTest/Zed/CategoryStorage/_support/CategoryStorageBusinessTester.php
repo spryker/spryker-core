@@ -74,7 +74,7 @@ class CategoryStorageBusinessTester extends Actor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param string $storeName
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage[]
      */
     public function findCategoryTreeStorageEntitiesByLocalizedCategoryAndStoreName(CategoryTransfer $categoryTransfer, string $storeName): ObjectCollection
     {
@@ -100,7 +100,7 @@ class CategoryStorageBusinessTester extends Actor
         }
 
         $spyCategoryNodeStorageEntity->setData(
-            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData)
+            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData),
         );
 
         $spyCategoryNodeStorageEntity->save();
@@ -118,7 +118,7 @@ class CategoryStorageBusinessTester extends Actor
     ): SpyCategoryTreeStorage {
         $categoryTreeStorageEntity = $this->createSpyCategoryTreeStorageQueryByLocalizedCategoryAndStoreName(
             $categoryTransfer,
-            $storeName
+            $storeName,
         )->findOneOrCreate();
 
         if ($categoryTreeStorageEntity->isNew()) {

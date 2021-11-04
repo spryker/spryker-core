@@ -21,6 +21,7 @@ class SessionRedisConfig extends AbstractBundleConfig
      * @var string
      */
     public const ZED_SESSION_REDIS_CONNECTION_KEY = 'SESSION_ZED';
+
     /**
      * @var string
      */
@@ -75,13 +76,13 @@ class SessionRedisConfig extends AbstractBundleConfig
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getZedDataSourceNames()
+                $this->getZedDataSourceNames(),
             )
             ->setConnectionCredentials(
-                $this->getZedConnectionCredentials()
+                $this->getZedConnectionCredentials(),
             )
             ->setClientOptions(
-                $this->getZedConnectionOptions()
+                $this->getZedConnectionOptions(),
             );
     }
 
@@ -94,13 +95,13 @@ class SessionRedisConfig extends AbstractBundleConfig
     {
         return (new RedisConfigurationTransfer())
             ->setDataSourceNames(
-                $this->getYvesDataSourceNames()
+                $this->getYvesDataSourceNames(),
             )
             ->setConnectionCredentials(
-                $this->getYvesConnectionCredentials()
+                $this->getYvesConnectionCredentials(),
             )
             ->setClientOptions(
-                $this->getYvesConnectionOptions()
+                $this->getYvesConnectionOptions(),
             );
     }
 
@@ -177,7 +178,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getZedConnectionOptions(): array
     {
@@ -217,7 +218,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getYvesConnectionOptions(): array
     {

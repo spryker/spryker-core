@@ -22,30 +22,37 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
      * @var string
      */
     protected const KEY_ACCESS_TOKEN_ID = 'access_token_id';
+
     /**
      * @var string
      */
     protected const KEY_CLIENT_ID = 'client_id';
+
     /**
      * @var string
      */
     protected const KEY_EXPIRE_TIME = 'expire_time';
+
     /**
      * @var string
      */
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
+
     /**
      * @var string
      */
     protected const KEY_SCOPES = 'scopes';
+
     /**
      * @var string
      */
     protected const KEY_USER_ID = 'user_id';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAMETER_REFRESH_TOKEN = 'refresh_token';
+
     /**
      * @var string
      */
@@ -71,7 +78,7 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
         $scopes = $this->validateScopes($this->getRequestParameter(
             static::REQUEST_PARAMETER_SCOPE,
             $request,
-            implode(self::SCOPE_DELIMITER_STRING, $oldRefreshToken[static::KEY_SCOPES])
+            implode(self::SCOPE_DELIMITER_STRING, $oldRefreshToken[static::KEY_SCOPES]),
         ));
 
         // The OAuth spec says that a refreshed access token can have the original scopes or fewer so ensure

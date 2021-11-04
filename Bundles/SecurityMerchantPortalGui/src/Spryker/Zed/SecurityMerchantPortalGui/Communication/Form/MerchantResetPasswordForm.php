@@ -23,26 +23,32 @@ class MerchantResetPasswordForm extends AbstractType
      * @var string
      */
     public const FIELD_PASSWORD = 'password';
+
     /**
      * @var string
      */
     protected const LABEL_NEW_PASSWORD = 'New password';
+
     /**
      * @var string
      */
     protected const LABEL_RE_ENTER_PASSWORD = 'Re-enter password';
+
     /**
      * @var string
      */
     protected const MESSAGE_PASSWORD_FIELDS_ERROR = 'The password fields must match.';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_NEW_PASSWORD_FIELD = 'Enter a new password';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_RE_ENTER_PASSWORD_FIELD = 'Re-enter the new password';
+
     /**
      * @var string
      */
@@ -50,7 +56,7 @@ class MerchantResetPasswordForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

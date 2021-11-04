@@ -18,14 +18,13 @@ use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStor
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
-     * @phpstan-var array<mixed>
-     *
-     * @var array
+     * @var array<mixed>
      */
     public static $storeNames = [];
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     *
      * @var string
      */
     public const STATUS_APPROVED = 'approved';
@@ -139,7 +138,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
         $productOfferReferencesGroupedByConcreteSku = $this->getProductOfferReferencesGroupedByConcreteSku(
             $productConcreteSkus,
-            $productOfferCollectionTransfer
+            $productOfferCollectionTransfer,
         );
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
@@ -161,12 +160,10 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param array<string> $productConcreteSkus
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getProductOfferReferencesGroupedByConcreteSku(
         array $productConcreteSkus,
@@ -203,7 +200,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         foreach ($storeNamesToRemove as $storeName) {
             $this->productConcreteOffersStorageDeleter->deleteCollectionByProductSkus(
                 [$productSku],
-                $storeName
+                $storeName,
             );
         }
     }

@@ -36,7 +36,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     public function createItemExpander()
     {
         return new ItemExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

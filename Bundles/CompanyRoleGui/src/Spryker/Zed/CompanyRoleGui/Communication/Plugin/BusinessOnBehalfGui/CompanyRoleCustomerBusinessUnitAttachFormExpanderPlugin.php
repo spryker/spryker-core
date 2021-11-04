@@ -47,7 +47,7 @@ class CompanyRoleCustomerBusinessUnitAttachFormExpanderPlugin extends AbstractPl
 
         $companyUserRoleByCompanyForm->buildForm(
             $builder,
-            $dataProvider->getOptions($companyUserTransfer)
+            $dataProvider->getOptions($companyUserTransfer),
         );
 
         return $builder;

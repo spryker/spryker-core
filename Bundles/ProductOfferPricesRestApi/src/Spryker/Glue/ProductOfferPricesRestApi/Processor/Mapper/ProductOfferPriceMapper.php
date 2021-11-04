@@ -46,13 +46,13 @@ class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
                 $priceType,
                 $amount,
                 $currentProductPriceTransfer->getPriceModeOrFail(),
-                $restCurrencyTransfer
+                $restCurrencyTransfer,
             );
             $restProductOfferPricesAttributesTransfer->addPrice($restProductOfferPriceAttributesTransfer);
 
             $restProductOfferPricesAttributesTransfer = $this->executeRestProductOfferPricesAttributesMapperPlugins(
                 $currentProductPriceTransfer,
-                $restProductOfferPricesAttributesTransfer
+                $restProductOfferPricesAttributesTransfer,
             );
         }
 
@@ -104,7 +104,7 @@ class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
         foreach ($this->restProductOfferPricesAttributesMapperPlugins as $restProductOfferPricesAttributesMapperPlugin) {
             $restProductOfferPricesAttributesTransfer = $restProductOfferPricesAttributesMapperPlugin->map(
                 $currentProductPriceTransfer,
-                $restProductOfferPricesAttributesTransfer
+                $restProductOfferPricesAttributesTransfer,
             );
         }
 

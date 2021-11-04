@@ -40,6 +40,7 @@ class QueueFacadeTest extends Unit
      * @var string
      */
     protected const REGISTERED_QUEUE_NAME = 'event';
+
     /**
      * @var string
      */
@@ -49,10 +50,12 @@ class QueueFacadeTest extends Unit
      * @var int
      */
     protected const LIMIT_OPTION = 1;
+
     /**
      * @var string
      */
     protected const FORMAT_OPTION = 'json';
+
     /**
      * @var int
      */

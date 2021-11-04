@@ -162,7 +162,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         return $searchConfig;
@@ -180,21 +180,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         return $searchConfig;
@@ -212,7 +212,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             );
 
         return $searchConfig;
@@ -230,21 +230,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_RANGE)
+                    ->setType(SharedSearchConfig::FACET_TYPE_RANGE),
             );
 
         return $searchConfig;
@@ -262,7 +262,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY),
             );
 
         return $searchConfig;
@@ -280,21 +280,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY),
             );
 
         return $searchConfig;
@@ -312,21 +312,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
+                    ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
-                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
+                    ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY),
             );
 
         return $searchConfig;

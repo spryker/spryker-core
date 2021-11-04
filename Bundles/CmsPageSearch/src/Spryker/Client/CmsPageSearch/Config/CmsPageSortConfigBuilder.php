@@ -15,6 +15,7 @@ class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
      * @var string
      */
     protected const DIRECTION_ASC = 'asc';
+
     /**
      * @var string
      */

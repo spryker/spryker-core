@@ -23,34 +23,42 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      * @var string
      */
     protected const KEY_IS_PROTECTED = 'is_protected';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_ID = 'id';
+
     /**
      * @var string
      */
     protected const KEY_PARENT = 'parent';
+
     /**
      * @var string
      */
     protected const KEY_PATHS = 'paths';
+
     /**
      * @var string
      */
     protected const KEY_TAGS = 'tags';
+
     /**
      * @var string
      */
     protected const KEY_SCHEMAS = 'schemas';
+
     /**
      * @var string
      */
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+
     /**
      * @var string
      */
@@ -60,6 +68,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      * @var string
      */
     protected const PATTERN_PATH_WITH_PARENT = '/%s/%s%s';
+
     /**
      * @var string
      */
@@ -132,7 +141,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
                 $this->processMethods(
                     $plugin,
                     $pathAnnotationsTransfer,
-                    $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins())
+                    $this->getParentResource($plugin, $resourceRoutesPluginsProviderPlugin->getResourceRoutePlugins()),
                 );
             }
         }
@@ -195,7 +204,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
             $this->getResourceIdFromResourceType($plugin->getResourceType()),
-            $annotationTransfer
+            $annotationTransfer,
         );
     }
 
@@ -220,7 +229,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_GET)[static::KEY_IS_PROTECTED],
             $this->getResourceIdFromResourceType($plugin->getResourceType()),
-            $annotationTransfer
+            $annotationTransfer,
         );
     }
 
@@ -241,7 +250,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             $plugin,
             $resourcePath,
             $this->resourceRouteCollection->get(Request::METHOD_POST)[static::KEY_IS_PROTECTED],
-            $annotationTransfer
+            $annotationTransfer,
         );
     }
 
@@ -262,7 +271,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             $plugin,
             $resourcePath . '/' . $this->getResourceIdFromResourceType($plugin->getResourceType()),
             $this->resourceRouteCollection->get(Request::METHOD_PATCH)[static::KEY_IS_PROTECTED],
-            $annotationTransfer
+            $annotationTransfer,
         );
     }
 
@@ -283,7 +292,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
             $plugin,
             $resourcePath . '/' . $this->getResourceIdFromResourceType($plugin->getResourceType()),
             $this->resourceRouteCollection->get(Request::METHOD_DELETE)[static::KEY_IS_PROTECTED],
-            $annotationTransfer
+            $annotationTransfer,
         );
     }
 
@@ -301,7 +310,7 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
 
         return $this->parseParentToPath(
             sprintf(static::PATTERN_PATH_WITH_PARENT, $parent[static::KEY_NAME], $parent[static::KEY_ID], $path),
-            $parent[static::KEY_PARENT]
+            $parent[static::KEY_PARENT],
         );
     }
 

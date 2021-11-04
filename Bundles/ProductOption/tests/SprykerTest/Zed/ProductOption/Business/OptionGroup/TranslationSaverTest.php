@@ -100,7 +100,7 @@ class TranslationSaverTest extends MockProvider
 
         return new TranslationSaver(
             $glossaryFacadeMock,
-            $localeFacadeMock
+            $localeFacadeMock,
         );
     }
 

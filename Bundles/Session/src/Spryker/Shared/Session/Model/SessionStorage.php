@@ -79,7 +79,7 @@ class SessionStorage implements SessionStorageInterface
             [$handler, 'read'],
             [$handler, 'write'],
             [$handler, 'destroy'],
-            [$handler, 'gc']
+            [$handler, 'gc'],
         );
     }
 }

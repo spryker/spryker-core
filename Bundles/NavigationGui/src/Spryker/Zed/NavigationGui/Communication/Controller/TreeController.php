@@ -22,6 +22,7 @@ class TreeController extends AbstractController
      * @var string
      */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
+
     /**
      * @var string
      */
@@ -59,6 +60,7 @@ class TreeController extends AbstractController
      */
     public function updateHierarchyAction(Request $request)
     {
+        /** @var array<string, mixed> $navigationTreeData */
         $navigationTreeData = $request->request->get(self::PARAM_NAVIGATION_TREE);
 
         if (!$navigationTreeData) {

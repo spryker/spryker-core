@@ -15,10 +15,12 @@ class PathExtractor implements PathExtractorInterface
      * @var string
      */
     public const URI = 'uri';
+
     /**
      * @var string
      */
     public const LABEL = 'label';
+
     /**
      * @var string
      */

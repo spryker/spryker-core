@@ -28,6 +28,7 @@ class Code128BarcodeGeneratorPluginTest extends Unit
      * @var string
      */
     protected const CODE128_BARCODE_GENERATOR_PLUGIN_ENCODING = 'data:image/png;base64';
+
     /**
      * @var string
      */

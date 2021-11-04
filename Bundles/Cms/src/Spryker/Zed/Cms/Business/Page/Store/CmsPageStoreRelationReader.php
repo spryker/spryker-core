@@ -47,7 +47,7 @@ class CmsPageStoreRelationReader implements CmsPageStoreRelationReaderInterface
         $storeRelationTransfer->requireIdEntity();
 
         $relatedStores = $this->cmsRepository->getRelatedStoresByIdCmsPage(
-            $storeRelationTransfer->getIdEntity()
+            $storeRelationTransfer->getIdEntity(),
         );
 
         $idStores = $this->getIdStores($relatedStores);

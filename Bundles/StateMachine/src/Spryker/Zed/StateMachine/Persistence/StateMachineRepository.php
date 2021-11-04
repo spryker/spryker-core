@@ -37,7 +37,7 @@ class StateMachineRepository extends AbstractRepository implements StateMachineR
             ->createStateMachineMapper()
             ->mapStateMachineProcessEntityToStateMachineProcessTransfer(
                 $stateMachineProcessEntity,
-                new StateMachineProcessTransfer()
+                new StateMachineProcessTransfer(),
             );
     }
 

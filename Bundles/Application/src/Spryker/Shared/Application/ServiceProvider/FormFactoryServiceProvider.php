@@ -50,7 +50,7 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
                 $twig->addRuntimeLoader(new FactoryRuntimeLoader($data));
 
                 return $twig;
-            })
+            }),
         );
     }
 

@@ -18,9 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class OrdersController extends AbstractController
 {
     /**
-     * @phpstan-return array<mixed>
-     *
-     * @return array
+     * @return array<mixed>
      */
     public function indexAction(): array
     {
@@ -41,7 +39,7 @@ class OrdersController extends AbstractController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createMerchantOrderGuiTableDataProvider(),
-            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration(),
         );
     }
 }

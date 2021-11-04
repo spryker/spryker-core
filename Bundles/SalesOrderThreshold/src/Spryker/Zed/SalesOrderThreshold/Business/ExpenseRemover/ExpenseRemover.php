@@ -25,8 +25,8 @@ class ExpenseRemover implements ExpenseRemoverInterface
                 $calculableObjectTransfer->getExpenses()->getArrayCopy(),
                 function (ExpenseTransfer $expenseTransfer) {
                     return $expenseTransfer->getType() !== SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE;
-                }
-            )
+                },
+            ),
         );
     }
 }

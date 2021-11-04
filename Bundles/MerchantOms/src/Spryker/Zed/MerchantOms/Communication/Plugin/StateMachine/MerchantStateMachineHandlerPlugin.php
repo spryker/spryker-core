@@ -98,7 +98,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
             ->updateMerchantOrderItem(
                 (new MerchantOrderItemTransfer())
                     ->setIdMerchantOrderItem($stateMachineItemTransfer->getIdentifier())
-                    ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState())
+                    ->setFkStateMachineItemState($stateMachineItemTransfer->getIdItemState()),
             );
 
         /** @var bool $isSuccessfulMerchantOrderItemResponse */

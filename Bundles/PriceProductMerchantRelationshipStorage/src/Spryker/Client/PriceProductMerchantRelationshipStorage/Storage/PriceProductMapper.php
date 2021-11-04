@@ -67,7 +67,7 @@ class PriceProductMapper implements PriceProductMapperInterface
                             $idMerchantRelationship,
                             $currencyCode,
                             $priceType,
-                            $priceProductTransfers
+                            $priceProductTransfers,
                         );
 
                         $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer))
@@ -113,11 +113,11 @@ class PriceProductMapper implements PriceProductMapperInterface
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())
                         ->setType($this->priceProductMerchantRelationshipStorageConfig->getPriceDimensionMerchantRelationship())
-                        ->setIdMerchantRelationship($idMerchantRelationship)
+                        ->setIdMerchantRelationship($idMerchantRelationship),
                 )
                 ->setMoneyValue(
                     (new MoneyValueTransfer())
-                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode)),
                 )
                 ->setPriceTypeName($priceType);
         }

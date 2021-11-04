@@ -28,7 +28,7 @@ class AlternativeProductsRestApiFactory extends AbstractFactory
         return new ConcreteAlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient(),
-            $this->createAlternativeProductRestResponseBuilder()
+            $this->createAlternativeProductRestResponseBuilder(),
         );
     }
 
@@ -40,7 +40,7 @@ class AlternativeProductsRestApiFactory extends AbstractFactory
         return new AbstractAlternativeProductReader(
             $this->getProductAlternativeStorageClient(),
             $this->getProductStorageClient(),
-            $this->createAlternativeProductRestResponseBuilder()
+            $this->createAlternativeProductRestResponseBuilder(),
         );
     }
 
@@ -51,7 +51,7 @@ class AlternativeProductsRestApiFactory extends AbstractFactory
     {
         return new AlternativeProductRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->getProductsRestApiResource()
+            $this->getProductsRestApiResource(),
         );
     }
 

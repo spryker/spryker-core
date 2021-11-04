@@ -67,7 +67,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createInstallMultiPathFinderForYves(),
-            $this->getConfig()->getYvesInstallCommand()
+            $this->getConfig()->getYvesInstallCommand(),
         );
     }
 
@@ -90,7 +90,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new InstallMultiPathFinder(
             $this->getConfig()->getYvesInstallMultiPathDirectoryPatterns(),
-            $this->createPathPatternValidator()
+            $this->createPathPatternValidator(),
         );
     }
 
@@ -119,7 +119,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new DependencyInstaller(
             $this->createInstallMultiPathFinderForZed(),
-            $this->getConfig()->getZedInstallCommand()
+            $this->getConfig()->getZedInstallCommand(),
         );
     }
 
@@ -142,7 +142,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     {
         return new InstallMultiPathFinder(
             $this->getConfig()->getZedInstallMultiPathDirectoryPatterns(),
-            $this->createPathPatternValidator()
+            $this->createPathPatternValidator(),
         );
     }
 

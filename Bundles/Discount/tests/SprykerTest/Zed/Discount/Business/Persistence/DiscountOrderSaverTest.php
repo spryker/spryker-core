@@ -36,10 +36,12 @@ class DiscountOrderSaverTest extends Unit
      * @var string
      */
     public const DISCOUNT_DISPLAY_NAME = 'discount';
+
     /**
      * @var int
      */
     public const DISCOUNT_AMOUNT = 100;
+
     /**
      * @var string
      */
@@ -49,10 +51,12 @@ class DiscountOrderSaverTest extends Unit
      * @var int
      */
     public const ID_SALES_ORDER = 1;
+
     /**
      * @var string
      */
     public const USED_CODE_1 = 'used code 1';
+
     /**
      * @var string
      */
@@ -195,7 +199,7 @@ class DiscountOrderSaverTest extends Unit
      */
     private function getDiscountQueryContainerMock(array $methods = []): DiscountQueryContainerInterface
     {
-        $discountQueryContainerMock = $this->getMockBuilder('Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface')->setMethods($methods)->getMock();
+        $discountQueryContainerMock = $this->getMockBuilder(DiscountQueryContainerInterface::class)->setMethods($methods)->getMock();
 
         return $discountQueryContainerMock;
     }

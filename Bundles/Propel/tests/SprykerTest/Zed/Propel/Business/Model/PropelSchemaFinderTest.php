@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Propel\Business\Model;
 
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
+use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
@@ -28,9 +29,9 @@ class PropelSchemaFinderTest extends AbstractPropelSchemaTest
     public function testGetSchemasShouldReturnIterateableFileCollection(): void
     {
         $schemaFinder = new PropelSchemaFinder(
-            [$this->getFixtureDirectory()]
+            [$this->getFixtureDirectory()],
         );
 
-        $this->assertInstanceOf('Symfony\Component\Finder\Finder', $schemaFinder->getSchemaFiles());
+        $this->assertInstanceOf(Finder::class, $schemaFinder->getSchemaFiles());
     }
 }

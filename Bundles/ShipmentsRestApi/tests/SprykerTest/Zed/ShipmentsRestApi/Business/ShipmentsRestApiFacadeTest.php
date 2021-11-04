@@ -239,7 +239,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
-            ['getShipmentFacade']
+            ['getShipmentFacade'],
         );
 
         $mockFactory->method('getShipmentFacade')
@@ -258,17 +258,17 @@ class ShipmentsRestApiFacadeTest extends Unit
             [
                 'findAvailableMethodById',
                 'findMethodById',
-            ]
+            ],
         );
 
         $mockCustomerFacade->method('findAvailableMethodById')
             ->willReturn(
-                (new ShipmentMethodBuilder($this->tester::SHIPMENT_METHOD))->withPrice()->build()
+                (new ShipmentMethodBuilder($this->tester::SHIPMENT_METHOD))->withPrice()->build(),
             );
 
         $mockCustomerFacade->method('findMethodById')
             ->willReturn(
-                (new ShipmentMethodBuilder($this->tester::SHIPMENT_METHOD))->build()
+                (new ShipmentMethodBuilder($this->tester::SHIPMENT_METHOD))->build(),
             );
 
         return $mockCustomerFacade;
@@ -281,7 +281,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             ShipmentsRestApiBusinessFactory::class,
-            ['getShipmentFacade']
+            ['getShipmentFacade'],
         );
 
         $mockFactory->method('getShipmentFacade')
@@ -300,7 +300,7 @@ class ShipmentsRestApiFacadeTest extends Unit
             [
                 'findAvailableMethodById',
                 'findMethodById',
-            ]
+            ],
         );
 
         $mockCustomerFacade->method('findAvailableMethodById')

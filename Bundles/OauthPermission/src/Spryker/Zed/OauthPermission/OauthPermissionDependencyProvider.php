@@ -21,6 +21,7 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new OauthPermissionToPermissionFacadeBridge(
-                $container->getLocator()->permission()->facade()
+                $container->getLocator()->permission()->facade(),
             );
         });
 
@@ -65,7 +66,7 @@ class OauthPermissionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new OauthPermissionToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 

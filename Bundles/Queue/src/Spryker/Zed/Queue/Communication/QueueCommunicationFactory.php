@@ -23,7 +23,7 @@ class QueueCommunicationFactory extends AbstractCommunicationFactory
     public function createQueueProcessTable()
     {
         return new QueueProcessTable(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 }

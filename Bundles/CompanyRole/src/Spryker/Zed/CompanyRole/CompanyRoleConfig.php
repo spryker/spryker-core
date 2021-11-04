@@ -60,7 +60,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
             ->setName(static::DEFAULT_ADMIN_ROLE_NAME)
             ->setIsDefault(true)
             ->setPermissionCollection($this->createPermissionCollectionFromPermissionKeys(
-                $this->getAdminRolePermissionKeys()
+                $this->getAdminRolePermissionKeys(),
             ));
     }
 

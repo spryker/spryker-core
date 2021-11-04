@@ -14,6 +14,7 @@ interface CustomerAccessEvents
      * - This event will be used for spy_unauthenticated_customer_access entity changes
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_UPDATE = 'Entity.spy_unauthenticated_customer_access.update';
@@ -23,6 +24,7 @@ interface CustomerAccessEvents
      * - This event will be used for spy_unauthenticated_customer_access entity created
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_CREATE = 'Entity.spy_unauthenticated_customer_access.create';
@@ -32,6 +34,7 @@ interface CustomerAccessEvents
      * - This event will be used for spy_unauthenticated_customer_access entity deletion
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_DELETE = 'Entity.spy_unauthenticated_customer_access.delete';

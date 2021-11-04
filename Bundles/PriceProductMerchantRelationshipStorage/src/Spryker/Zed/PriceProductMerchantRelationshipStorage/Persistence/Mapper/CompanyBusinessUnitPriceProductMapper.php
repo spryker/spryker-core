@@ -30,13 +30,13 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
             if (!isset($pricesByKey[$uniquePriceIndex])) {
                 $pricesByKey[$uniquePriceIndex] = $this->createPriceProductMerchantRelationshipStorageTransfer(
                     $priceProductMerchantRelationshipData,
-                    $uniquePriceIndex
+                    $uniquePriceIndex,
                 );
             }
 
             $this->addUngroupedPrice(
                 $pricesByKey[$uniquePriceIndex],
-                $priceProductMerchantRelationshipData
+                $priceProductMerchantRelationshipData,
             );
         }
 
@@ -85,7 +85,7 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
     ): void {
         $merchantRelationshipStorageTransfer->addUngroupedPrice(
             (new PriceProductMerchantRelationshipValueTransfer())
-                ->fromArray($priceProductMerchantRelationshipData, true)
+                ->fromArray($priceProductMerchantRelationshipData, true),
         );
     }
 }

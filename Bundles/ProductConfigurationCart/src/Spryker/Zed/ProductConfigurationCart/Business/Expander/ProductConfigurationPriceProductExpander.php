@@ -32,7 +32,7 @@ class ProductConfigurationPriceProductExpander implements ProductConfigurationPr
 
             $productConfigurationInstance = $this->fillProductConfigurationPricesWithSku(
                 $itemTransfer->getProductConfigurationInstanceOrFail(),
-                $itemTransfer
+                $itemTransfer,
             );
 
             $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices()->getArrayCopy();

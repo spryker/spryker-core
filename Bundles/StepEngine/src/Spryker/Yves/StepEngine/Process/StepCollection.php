@@ -273,6 +273,7 @@ class StepCollection implements StepCollectionInterface
     /**
      * @return \Traversable
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->steps);

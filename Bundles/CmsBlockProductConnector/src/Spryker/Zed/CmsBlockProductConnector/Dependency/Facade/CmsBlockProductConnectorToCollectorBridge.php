@@ -61,7 +61,7 @@ class CmsBlockProductConnectorToCollectorBridge implements CmsBlockProductConnec
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

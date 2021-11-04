@@ -169,7 +169,7 @@ class VariantGenerator implements VariantGeneratorInterface
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
         $tokenCollection = $this->generateTokens(
-            $this->convertAttributesIntoTokens($attributeCollection)
+            $this->convertAttributesIntoTokens($attributeCollection),
         );
 
         $result = [];
@@ -181,8 +181,8 @@ class VariantGenerator implements VariantGeneratorInterface
             $productConcreteTransfer->setSku(
                 $this->skuGenerator->generateProductConcreteSku(
                     $productAbstractTransfer,
-                    $productConcreteTransfer
-                )
+                    $productConcreteTransfer,
+                ),
             );
             $result[] = $productConcreteTransfer;
         }

@@ -22,10 +22,12 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+
     /**
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -35,10 +37,12 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_POST_CREATE = 'PLUGINS_PRODUCT_OFFER_POST_CREATE';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_POST_UPDATE = 'PLUGINS_PRODUCT_OFFER_POST_UPDATE';
+
     /**
      * @var string
      */

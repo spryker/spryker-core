@@ -29,10 +29,12 @@ class StoreRelationToggleType extends AbstractType
      * @var string
      */
     public const FIELD_ID_ENTITY = 'id_entity';
+
     /**
      * @var string
      */
     public const FIELD_ID_STORES = 'id_stores';
+
     /**
      * @var string
      */
@@ -64,7 +66,7 @@ class StoreRelationToggleType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
                 $this->setInitialData($event);
-            }
+            },
         );
     }
 
@@ -143,7 +145,7 @@ class StoreRelationToggleType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => array_flip($this->getStoreNameMap()),
-            ]
+            ],
         );
 
         return $this;
@@ -168,12 +170,12 @@ class StoreRelationToggleType extends AbstractType
                 'property_path' => static::FIELD_ID_STORES,
                 'multiple' => true,
                 'choices' => array_flip($this->getStoreNameMap()),
-            ]
+            ],
         );
 
         $builder->add(static::FIELD_ID_STORES, HiddenType::class);
         $builder->get(static::FIELD_ID_STORES)->addModelTransformer(
-            $this->getFactory()->createIdStoresDataTransformer()
+            $this->getFactory()->createIdStoresDataTransformer(),
         );
 
         return $this;

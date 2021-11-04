@@ -18,6 +18,7 @@ class ProductConfigurationDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
@@ -46,7 +47,7 @@ class ProductConfigurationDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductConfigurationToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -62,7 +63,7 @@ class ProductConfigurationDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new ProductConfigurationToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

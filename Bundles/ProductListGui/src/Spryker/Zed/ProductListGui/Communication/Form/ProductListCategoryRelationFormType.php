@@ -57,7 +57,7 @@ class ProductListCategoryRelationFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -76,7 +76,7 @@ class ProductListCategoryRelationFormType extends AbstractType
     {
         $builder->add(
             static::FIELD_ID_PRODUCT_LIST,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;
@@ -84,7 +84,7 @@ class ProductListCategoryRelationFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

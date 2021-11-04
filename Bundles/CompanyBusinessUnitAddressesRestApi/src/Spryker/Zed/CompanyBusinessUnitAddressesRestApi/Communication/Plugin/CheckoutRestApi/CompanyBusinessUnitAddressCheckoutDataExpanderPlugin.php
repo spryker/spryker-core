@@ -36,7 +36,7 @@ class CompanyBusinessUnitAddressCheckoutDataExpanderPlugin extends AbstractPlugi
     ): RestCheckoutDataTransfer {
         return $this->getFacade()->expandCheckoutDataWithCompanyBusinessUnitAddresses(
             $restCheckoutDataTransfer,
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
         );
     }
 }

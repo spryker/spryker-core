@@ -106,7 +106,7 @@ class GiftCardReader implements GiftCardReaderInterface
         if (!$giftCardTransfer) {
             throw new GiftCardNotFoundException(sprintf(
                 'Gift card for code "%s" could not be found',
-                $code
+                $code,
             ));
         }
 

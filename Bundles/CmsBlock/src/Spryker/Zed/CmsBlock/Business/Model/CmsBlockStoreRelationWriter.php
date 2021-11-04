@@ -100,7 +100,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     {
         $storeRelation = $this->cmsBlockStoreRelationReader->getStoreRelation(
             (new StoreRelationTransfer())
-                ->setIdEntity($idCmsBlock)
+                ->setIdEntity($idCmsBlock),
         );
 
         return $storeRelation->getIdStores();

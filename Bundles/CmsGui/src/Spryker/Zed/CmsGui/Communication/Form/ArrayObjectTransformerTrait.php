@@ -23,7 +23,7 @@ trait ArrayObjectTransformerTrait
             },
             function ($value) {
                 return new ArrayObject($value);
-            }
+            },
         );
     }
 }

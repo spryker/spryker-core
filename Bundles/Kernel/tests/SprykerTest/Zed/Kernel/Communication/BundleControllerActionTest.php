@@ -27,10 +27,12 @@ class BundleControllerActionTest extends Unit
      * @var string
      */
     public const BUNDLE = 'foo';
+
     /**
      * @var string
      */
     public const CONTROLLER = 'bar';
+
     /**
      * @var string
      */
@@ -75,7 +77,7 @@ class BundleControllerActionTest extends Unit
         $bundleControllerAction = new BundleControllerAction(
             $request->attributes->get('module'),
             $request->attributes->get('controller'),
-            $request->attributes->get('action')
+            $request->attributes->get('action'),
         );
 
         return $bundleControllerAction;
@@ -89,7 +91,7 @@ class BundleControllerActionTest extends Unit
         $request = new Request(
             [],
             [],
-            ['module' => self::BUNDLE, 'controller' => self::CONTROLLER, 'action' => self::ACTION]
+            ['module' => self::BUNDLE, 'controller' => self::CONTROLLER, 'action' => self::ACTION],
         );
 
         return $request;

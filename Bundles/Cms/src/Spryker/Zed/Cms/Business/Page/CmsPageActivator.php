@@ -21,6 +21,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
 {
     /**
      * @var string
+     *
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::TEMPLATE_PATH
      */
     protected const COLUMN_TEMPLATE_PATH = 'template_path';
@@ -89,7 +90,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
         $cmsPageEntity = $this->getCmsPageEntityWithTemplatesAndUrl($idCmsPage);
 
         $pageTemplatePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
-            $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
+            $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH),
         );
 
         if (!count($pageTemplatePlaceholders)) {
@@ -98,7 +99,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
 
         if ($this->countNumberOfGlossaryKeysForIdCmsPage($idCmsPage) === 0) {
             throw new CannotActivatePageException(
-                sprintf('Cannot activate CMS page, page placeholders not provided!')
+                sprintf('Cannot activate CMS page, page placeholders not provided!'),
             );
         }
 
@@ -162,8 +163,8 @@ class CmsPageActivator implements CmsPageActivatorInterface
             throw new MissingPageException(
                 sprintf(
                     'CMS page with id "%d" not found.',
-                    $idCmsPage
-                )
+                    $idCmsPage,
+                ),
             );
         }
 

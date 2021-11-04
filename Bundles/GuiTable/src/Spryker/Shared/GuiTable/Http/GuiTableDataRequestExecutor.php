@@ -62,12 +62,12 @@ class GuiTableDataRequestExecutor implements GuiTableDataRequestExecutorInterfac
     ): Response {
         $guiTableDataRequestTransfer = $this->dataRequestBuilder->buildGuiTableDataRequestFromRequest(
             $request,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
         $guiTableDataResponseTransfer = $guiTableDataProvider->getData($guiTableDataRequestTransfer);
 
         return $this->httpResponseBuilder->buildResponse(
-            $this->dataResponseFormatter->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
+            $this->dataResponseFormatter->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer),
         );
     }
 }

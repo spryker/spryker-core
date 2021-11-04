@@ -24,11 +24,14 @@ class CommentController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_REDIRECT = '/sales/detail';
+
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::PARAM_ID_SALES_ORDER
+     *
      * @var string
      */
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
@@ -44,7 +47,7 @@ class CommentController extends AbstractController
 
         $formDataProvider = $this->getFactory()->createCommentFormDataProvider();
         $form = $this->getFactory()->getCommentForm(
-            $formDataProvider->getData($idSalesOrder)
+            $formDataProvider->getData($idSalesOrder),
         );
         $form->handleRequest($request);
 
@@ -91,7 +94,7 @@ class CommentController extends AbstractController
         $currentUserTransfer = $this->getFactory()->getUserFacade()->getCurrentUser();
 
         $commentTransfer->setUsername(
-            $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName()
+            $currentUserTransfer->getFirstName() . ' ' . $currentUserTransfer->getLastName(),
         );
 
         $this->getFacade()->saveComment($commentTransfer);
@@ -101,7 +104,7 @@ class CommentController extends AbstractController
         return $this->redirectResponse(
             Url::generate(static::ROUTE_REDIRECT, [
                 static::PARAM_ID_SALES_ORDER => $idSalesOrder,
-            ])
+            ]),
         );
     }
 }

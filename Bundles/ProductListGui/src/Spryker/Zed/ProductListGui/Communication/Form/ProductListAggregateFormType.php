@@ -55,7 +55,7 @@ class ProductListAggregateFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -74,7 +74,7 @@ class ProductListAggregateFormType extends AbstractType
     {
         $builder->add(
             ProductListAggregateFormTransfer::PRODUCT_LIST,
-            ProductListFormType::class
+            ProductListFormType::class,
         );
 
         return $this;
@@ -82,7 +82,7 @@ class ProductListAggregateFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

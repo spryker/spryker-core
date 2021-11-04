@@ -30,10 +30,12 @@ class ReservationReaderTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const NOT_RESERVED_SUBPROCESS_ITEM_STATE = 'awaiting approval';
+
     /**
      * @var string
      */
@@ -76,7 +78,7 @@ class ReservationReaderTest extends Unit
             static::STORE_NAME_DE,
             static::NOT_RESERVED_SUBPROCESS_ITEM_STATE,
             'Test06',
-            6
+            6,
         );
 
         $totalQuantity = 0;
@@ -97,7 +99,7 @@ class ReservationReaderTest extends Unit
 
         //Act
         $sumReservedProductQuantitiesBefore = $reservationReader->sumReservedProductQuantities(
-            $reservationRequestTransfer
+            $reservationRequestTransfer,
         );
 
         foreach ($salesOrderEntity->getItems() as $orderItem) {
@@ -105,18 +107,18 @@ class ReservationReaderTest extends Unit
         }
 
         $sumReservedProductQuantitiesAfter = $reservationReader->sumReservedProductQuantities(
-            $reservationRequestTransfer
+            $reservationRequestTransfer,
         );
 
         // Assert
         $this->assertTrue(
             $sumReservedProductQuantitiesBefore->equals(0),
-            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.'
+            'Expected reserved product quantity to be 0 for non-reserved state of subprocess.',
         );
 
         $this->assertTrue(
             $sumReservedProductQuantitiesAfter->equals($totalQuantity),
-            'Expected reserved product quantity to be 50 for reserved state of subprocess.'
+            'Expected reserved product quantity to be 50 for reserved state of subprocess.',
         );
     }
 

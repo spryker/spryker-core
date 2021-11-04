@@ -42,7 +42,7 @@ class QuoteShareDetailMapperTest extends Unit
         $quoteShareDetailMapper = new QuoteShareDetailMapper();
         $shareDetailTransferCollection = $quoteShareDetailMapper->mapShareDetailCollectionByQuoteId(
             $quoteCompanyUserEntities,
-            $quotePermissionGroupTransfers
+            $quotePermissionGroupTransfers,
         );
 
         // Assert

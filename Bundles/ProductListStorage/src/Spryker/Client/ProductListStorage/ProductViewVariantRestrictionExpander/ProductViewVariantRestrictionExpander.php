@@ -281,7 +281,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     {
         return new RecursiveIteratorIterator(
             new RecursiveArrayIterator($attributeVariants),
-            RecursiveIteratorIterator::SELF_FIRST
+            RecursiveIteratorIterator::SELF_FIRST,
         );
     }
 

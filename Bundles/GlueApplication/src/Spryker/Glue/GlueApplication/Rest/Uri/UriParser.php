@@ -40,7 +40,7 @@ class UriParser implements UriParserInterface
         while ($index < $urlPartsCount) {
             $resources[] = [
                 RequestConstantsInterface::ATTRIBUTE_TYPE => $urlParts[$index],
-                RequestConstantsInterface::ATTRIBUTE_ID => isset($urlParts[$index + 1]) ? $urlParts[$index + 1] : null,
+                RequestConstantsInterface::ATTRIBUTE_ID => $urlParts[$index + 1] ?? null,
             ];
 
             $index += 2;

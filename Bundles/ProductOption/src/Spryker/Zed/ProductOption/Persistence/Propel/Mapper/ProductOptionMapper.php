@@ -28,7 +28,7 @@ class ProductOptionMapper
         $productAbstractOptionGroupStatusTransfers = [];
         foreach ($productAbstractOptionGroupStatuses as $productAbstractOptionGroupStatus) {
             $productAbstractOptionGroupStatusTransfers[] = $this->mapProductAbstractOptionGroupStatusToTransfer(
-                $productAbstractOptionGroupStatus
+                $productAbstractOptionGroupStatus,
             );
         }
 
@@ -36,7 +36,7 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
@@ -50,7 +50,7 @@ class ProductOptionMapper
                 ->fromArray($salesOrderItemEntity->toArray(), true)
                 ->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation())
                 ->setProductOptions(
-                    new ArrayObject($this->mapSalesOrderItemEntityToProductOptionTransfers($salesOrderItemEntity))
+                    new ArrayObject($this->mapSalesOrderItemEntityToProductOptionTransfers($salesOrderItemEntity)),
                 );
         }
 
@@ -58,7 +58,7 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductOptionValueTransfer>
      */

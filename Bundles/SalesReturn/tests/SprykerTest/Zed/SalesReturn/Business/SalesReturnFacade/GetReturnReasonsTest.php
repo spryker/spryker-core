@@ -61,7 +61,7 @@ class GetReturnReasonsTest extends Unit
         $this->assertNotEmpty($returnReasonCollectionTransfer->getReturnReasons());
         $this->assertEquals(
             $returnReasonTransfers,
-            $returnReasonCollectionTransfer->getReturnReasons()->getArrayCopy()
+            $returnReasonCollectionTransfer->getReturnReasons()->getArrayCopy(),
         );
     }
 

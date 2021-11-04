@@ -15,34 +15,42 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const COLUMN_TYPE_AUTOCOMPLETE = 'autocomplete';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_TEXT = 'text';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_DATE = 'date';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_CHIP = 'chip';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_LIST = 'list';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_SELECT = 'select';
+
     /**
      * @var string
      */
     public const COLUMN_TYPE_INPUT = 'input';
+
     /**
      * @var string
      */
@@ -52,10 +60,12 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const FILTER_TYPE_SELECT = 'select';
+
     /**
      * @var string
      */
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
+
     /**
      * @var string
      */
@@ -65,6 +75,7 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const ACTION_TYPE_DRAWER = 'drawer';
+
     /**
      * @var string
      */
@@ -74,6 +85,7 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM = 'ajax-form';
+
     /**
      * @var string
      */
@@ -83,14 +95,17 @@ interface GuiTableConfigurationBuilderInterface
      * @var string
      */
     public const DATA_SOURCE_TYPE_INLINE = 'inline';
+
     /**
      * @var string
      */
     public const DATA_SOURCE_TYPE_DEPENDABLE = 'dependable';
+
     /**
      * @var string
      */
     public const DATA_SOURCE_TYPE_HTTP = 'http';
+
     /**
      * @var string
      */
@@ -194,12 +209,10 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
-     * @phpstan-param array<int, string> $values
-     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<int|string, string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -432,7 +445,7 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @api
      *
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
      * @return $this
      */
@@ -519,14 +532,10 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $initialData
-     * @phpstan-param array<mixed> $addButton
-     * @phpstan-param array<mixed> $cancelButton
-     *
      * @param string $formInputName
-     * @param array|null $initialData
-     * @param array|null $addButton
-     * @param array|null $cancelButton
+     * @param array<string, mixed> $initialData
+     * @param array<string, mixed>|null $addButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return $this
      */
@@ -540,13 +549,10 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $saveButton
-     * @phpstan-param array<mixed> $cancelButton
-     *
      * @param string $url
      * @param string $method
-     * @param array|null $saveButton
-     * @param array|null $cancelButton
+     * @param array<string, mixed>|null $saveButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return $this
      */
@@ -560,12 +566,10 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
-     * @phpstan-param array<string, mixed> $options
-     *
      * @param string $id
      * @param string $title
      * @param string $inputType
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -574,12 +578,10 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $options
-     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array $options
+     * @param array<int|string, mixed> $options
      * @param string|null $placeholder
      *
      * @return $this

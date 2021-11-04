@@ -19,10 +19,12 @@ class AvailabilityMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @var string
      */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     /**
      * @var string
      */
@@ -51,7 +53,7 @@ class AvailabilityMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new AvailabilityMerchantPortalGuiToAvailabilityFacadeBridge(
-                $container->getLocator()->availability()->facade()
+                $container->getLocator()->availability()->facade(),
             );
         });
 
@@ -67,7 +69,7 @@ class AvailabilityMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new AvailabilityMerchantPortalGuiToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 
@@ -83,7 +85,7 @@ class AvailabilityMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_MERCHANT_STOCK, function (Container $container) {
             return new AvailabilityMerchantPortalGuiToMerchantStockFacadeBridge(
-                $container->getLocator()->merchantStock()->facade()
+                $container->getLocator()->merchantStock()->facade(),
             );
         });
 

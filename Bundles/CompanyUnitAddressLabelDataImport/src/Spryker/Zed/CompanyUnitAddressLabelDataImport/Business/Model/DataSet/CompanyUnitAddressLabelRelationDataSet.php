@@ -13,6 +13,7 @@ interface CompanyUnitAddressLabelRelationDataSet
      * @var string
      */
     public const ADDRESS_KEY = 'address_key';
+
     /**
      * @var string
      */
@@ -22,6 +23,7 @@ interface CompanyUnitAddressLabelRelationDataSet
      * @var string
      */
     public const LABEL_NAME = 'label_name';
+
     /**
      * @var string
      */

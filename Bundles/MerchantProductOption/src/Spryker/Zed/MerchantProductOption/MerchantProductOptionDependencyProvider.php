@@ -44,7 +44,7 @@ class MerchantProductOptionDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantProductOptionToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

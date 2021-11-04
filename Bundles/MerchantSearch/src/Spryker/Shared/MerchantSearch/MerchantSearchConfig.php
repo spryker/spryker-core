@@ -34,12 +34,14 @@ class MerchantSearchConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_UPDATE
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
 
     /**
      * @uses \Spryker\Zed\MerchantCategory\Dependency\MerchantCategoryEvents::ENTITY_SPY_MERCHANT_CATEGORY_CREATE
+     *
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
@@ -81,6 +83,7 @@ class MerchantSearchConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     public const MERCHANT_STATUS_APPROVED = 'approved';

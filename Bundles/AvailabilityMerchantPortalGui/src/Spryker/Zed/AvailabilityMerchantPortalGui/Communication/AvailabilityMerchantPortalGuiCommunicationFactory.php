@@ -25,7 +25,7 @@ class AvailabilityMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new ProductConcreteTableExpander(
             $this->getAvailabilityFacade(),
             $this->getMerchantStockFacade(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
         );
     }
 

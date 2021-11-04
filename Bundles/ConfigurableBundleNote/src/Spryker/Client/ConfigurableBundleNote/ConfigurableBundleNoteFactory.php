@@ -35,7 +35,7 @@ class ConfigurableBundleNoteFactory extends AbstractFactory
     {
         return new QuoteStorageStrategyProvider(
             $this->getQuoteClient(),
-            $this->getQuoteStorageStrategies()
+            $this->getQuoteStorageStrategies(),
         );
     }
 

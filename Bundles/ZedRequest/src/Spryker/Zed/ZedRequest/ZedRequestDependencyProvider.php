@@ -24,6 +24,7 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MESSENGER = 'messenger facade';
+
     /**
      * @var string
      */

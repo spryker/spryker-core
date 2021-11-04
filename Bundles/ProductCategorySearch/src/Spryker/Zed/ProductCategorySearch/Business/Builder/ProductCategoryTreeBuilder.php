@@ -17,18 +17,22 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      * @var string
      */
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+
     /**
      * @var string
      */
     protected const COLUMN_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+
     /**
      * @var string
      */
     protected const COLUMN_FK_LOCALE = 'fk_locale';
+
     /**
      * @var string
      */
     protected const COLUMN_CATEGORY_NAME = 'category_name';
+
     /**
      * @var string
      */
@@ -51,7 +55,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {
@@ -65,7 +69,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
             $categoryTree = $this->buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
                 $categoryTree,
                 $idCategoryNode,
-                $formattedCategoriesByLocaleAndStoreAndNodeIds[$storeTransfer->getName()][$localeTransfer->getIdLocale()][$idCategoryNode] ?? []
+                $formattedCategoriesByLocaleAndStoreAndNodeIds[$storeTransfer->getName()][$localeTransfer->getIdLocale()][$idCategoryNode] ?? [],
             );
         }
 
@@ -76,7 +80,7 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
      * @param array<int> $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function buildProductCategoryTreeNames(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
     {
@@ -97,11 +101,11 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     }
 
     /**
-     * @param array<int[]> $categoryTree
+     * @param array<array<int>> $categoryTree
      * @param int $idCategoryNode
      * @param array $categories
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function buildProductCategoryTreeByIdCategoryNodeForStoreAndLocale(
         array $categoryTree,

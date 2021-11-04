@@ -46,7 +46,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         $priceProductMerchantRelationshipEntity->save();
 
         $priceProductMerchantRelationshipEntityTransfer->setIdPriceProductMerchantRelationship(
-            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship()
+            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship(),
         );
 
         return $priceProductMerchantRelationshipEntityTransfer;
@@ -63,7 +63,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         $priceProductMerchantRelationshipEntity = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
             ->filterByIdPriceProductMerchantRelationship(
-                $priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship()
+                $priceProductMerchantRelationshipEntityTransfer->getIdPriceProductMerchantRelationship(),
             )
             ->findOne();
 
@@ -75,7 +75,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         $priceProductMerchantRelationshipEntity->save();
 
         $priceProductMerchantRelationshipEntityTransfer->setIdPriceProductMerchantRelationship(
-            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship()
+            $priceProductMerchantRelationshipEntity->getIdPriceProductMerchantRelationship(),
         );
 
         return $priceProductMerchantRelationshipEntityTransfer;
@@ -144,7 +144,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship> $priceProductMerchantRelationshipEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
      *
      * @return void
      */

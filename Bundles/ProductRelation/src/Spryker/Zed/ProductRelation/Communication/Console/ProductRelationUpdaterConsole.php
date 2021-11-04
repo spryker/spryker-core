@@ -23,6 +23,7 @@ class ProductRelationUpdaterConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'product-relation:update';
+
     /**
      * @var string
      */

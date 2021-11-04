@@ -37,36 +37,42 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_PRICES
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
@@ -104,12 +110,12 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
         $pricesInitialData = $this->getDefaultInitialData(
             PriceProductTableViewTransfer::PRICES,
-            $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null
+            $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null,
         );
 
         $attributesInitialData = $this->getDefaultInitialData(
             ProductConcreteTransfer::ATTRIBUTES,
-            $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null
+            $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null,
         );
 
         if ($productConcreteEditForm->isSubmitted()) {
@@ -118,7 +124,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             return $this->handleProductConcreteEditFormSubmission(
                 $productConcreteEditForm,
                 $pricesInitialData,
-                $attributesInitialData
+                $attributesInitialData,
             );
         }
 
@@ -128,7 +134,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             new ValidationResponseTransfer(),
             $pricesInitialData,
             $attributesInitialData,
-            []
+            [],
         );
     }
 
@@ -149,7 +155,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                     ->createPriceProductConcreteTableDataProvider($idProductConcrete),
                 $this->getFactory()
                     ->createPriceProductConcreteGuiTableConfigurationProvider()
-                    ->getConfiguration($idProductConcrete)
+                    ->getConfiguration($idProductConcrete),
             );
     }
 
@@ -188,26 +194,26 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             ->mapValidationResponseTransferToInitialData(
                 $pricesValidationResponseTransfer,
                 $priceProductTransfers,
-                $pricesInitialData
+                $pricesInitialData,
             );
 
         if ($productConcreteEditForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
             $merchantProductValidationResponseTransfer = $this->validateMerchantProduct(
                 $this->getIdMerchantFromCurrentUser(),
-                $productConcreteTransfer->getFkProductAbstractOrFail()
+                $productConcreteTransfer->getFkProductAbstractOrFail(),
             );
 
             $productAttributes = $this->getFactory()
                 ->createProductAttributesMapper()
                 ->mapAttributesDataToProductAttributes(
                     $attributesInitialData,
-                    $productConcreteTransfer->getAttributes()
+                    $productConcreteTransfer->getAttributes(),
                 );
             $productLocalizedAttributes = $this->getFactory()
                 ->createProductAttributesMapper()
                 ->mapAttributesDataToLocalizedAttributesTransfers(
                     $attributesInitialData,
-                    $productConcreteTransfer->getLocalizedAttributes()
+                    $productConcreteTransfer->getLocalizedAttributes(),
                 );
 
             $productConcreteTransfer->setAttributes($productAttributes)->setLocalizedAttributes($productLocalizedAttributes);
@@ -227,7 +233,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             $imageSetsErrors = $this->getFactory()
                 ->createImageSetMapper()
                 ->mapErrorsToImageSetValidationData(
-                    $productConcreteEditForm->getErrors(true, true)
+                    $productConcreteEditForm->getErrors(true, true),
                 );
 
             $attributesInitialData = $this->getFactory()
@@ -237,7 +243,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
         $merchantProductValidationResponseTransfer->setIsSuccess(
             $pricesValidationResponseTransfer->getIsSuccessOrFail()
-            && $merchantProductValidationResponseTransfer->getIsSuccessOrFail()
+            && $merchantProductValidationResponseTransfer->getIsSuccessOrFail(),
         );
 
         return $this->getResponse(
@@ -246,7 +252,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             $merchantProductValidationResponseTransfer,
             $pricesInitialData,
             $attributesInitialData,
-            $imageSetsErrors
+            $imageSetsErrors,
         );
     }
 
@@ -275,21 +281,21 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             ->createLocalizedAttributesExtractor()
             ->extractLocalizedAttributes(
                 $productConcreteTransfer->getLocalizedAttributes(),
-                $localeTransfer
+                $localeTransfer,
             );
         $superAttributeNames = $this->getFactory()
             ->createLocalizedAttributesExtractor()
             ->extractCombinedSuperAttributeNames(
                 $productConcreteTransfer->getAttributes(),
                 $productConcreteTransfer->getLocalizedAttributes(),
-                $localeTransfer
+                $localeTransfer,
             );
         $reservationResponseTransfer = $this->getFactory()
             ->getOmsFacade()
             ->getOmsReservedProductQuantity(
                 (new ReservationRequestTransfer())
                     ->setSku($productConcreteTransfer->getSku())
-                    ->setStore($this->getFactory()->getStoreFacade()->getCurrentStore())
+                    ->setStore($this->getFactory()->getStoreFacade()->getCurrentStore()),
             );
 
         $imageSetTabNames = $this->getImageSetTabNames($productConcreteTransfer);
@@ -329,19 +335,15 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             $this->addErrorResponseDataToResponse(
                 $productConcreteEditForm,
                 $validationResponseTransfer,
-                $responseData
-            )
+                $responseData,
+            ),
         );
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
-     *
-     * @phpstan-return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
+     * @return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
      */
     protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
     {
@@ -356,13 +358,10 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
-     * @phpstan-param array<int, mixed> $imageSetsErrors
-     *
      * @phpstan-return \SplObjectStorage<object, mixed>
      *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
-     * @param array $imageSetsErrors
+     * @param array<int, mixed> $imageSetsErrors
      *
      * @return \SplObjectStorage
      */
@@ -433,7 +432,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 ->findProductConcretePricesWithoutPriceExtraction(
                     $productConcreteTransfer->getIdProductConcreteOrFail(),
                     $productConcreteTransfer->getFkProductAbstractOrFail(),
-                    $priceProductCriteriaTransfer
+                    $priceProductCriteriaTransfer,
                 );
 
             foreach ($priceProductTransfers as $priceProductTransfer) {
@@ -451,7 +450,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                     ->createProductAttributesMapper()
                     ->mapLocalizedAttributesNames(
                         $productConcreteTransfer->getLocalizedAttributes(),
-                        $productAbstractTransfer->getLocalizedAttributes()
+                        $productAbstractTransfer->getLocalizedAttributes(),
                     );
 
                 $productConcreteTransfer->setLocalizedAttributes($localizedAttributeTransfers);
@@ -462,7 +461,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                     ->createProductAttributesMapper()
                     ->mapLocalizedDescriptions(
                         $productConcreteTransfer->getLocalizedAttributes(),
-                        $productAbstractTransfer->getLocalizedAttributes()
+                        $productAbstractTransfer->getLocalizedAttributes(),
                     );
                 $productConcreteTransfer->setLocalizedAttributes($localizedAttributeTransfers);
             }
@@ -470,7 +469,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             if ($data[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS]) {
                 $concreteProductImageSetsTransfers = $this->mapAbstractProductImageSets(
                     $productAbstractTransfer->getImageSets(),
-                    $productConcreteTransfer->getIdProductConcreteOrFail()
+                    $productConcreteTransfer->getIdProductConcreteOrFail(),
                 );
 
                 $productConcreteTransfer->setImageSets($concreteProductImageSetsTransfers);
@@ -497,13 +496,9 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
-     * @phpstan-return array<int, string>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function getLocaleNamesIndexedByIdLocale(ArrayObject $localizedAttributesTransfers): array
     {
@@ -520,10 +515,6 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param int $idProductConcrete
      *

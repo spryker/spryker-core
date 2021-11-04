@@ -33,6 +33,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */
@@ -77,7 +78,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerBusinessUnit(
                 (new OrderTransfer())->setCompanyBusinessUnitUuid($companyUserTransfer->getCompanyBusinessUnit()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
             );
 
         // Assert
@@ -101,7 +102,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerBusinessUnit(
                 (new OrderTransfer())->setCompanyBusinessUnitUuid(null),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
             );
 
         // Assert
@@ -125,7 +126,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerBusinessUnit(
                 (new OrderTransfer())->setCompanyBusinessUnitUuid($companyUserTransfer->getCompanyBusinessUnit()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer(null)
+                (new CustomerTransfer())->setCompanyUserTransfer(null),
             );
 
         // Assert
@@ -149,7 +150,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerBusinessUnit(
                 (new OrderTransfer())->setCompanyBusinessUnitUuid($companyUserTransfer->getCompanyBusinessUnit()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer(new CompanyUserTransfer())
+                (new CustomerTransfer())->setCompanyUserTransfer(new CompanyUserTransfer()),
             );
 
         // Assert
@@ -173,7 +174,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerBusinessUnit(
                 (new OrderTransfer())->setCompanyBusinessUnitUuid($companyUserTransfer->getCompanyBusinessUnit()->getUuid()),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer->setCompanyBusinessUnit(null))
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer->setCompanyBusinessUnit(null)),
             );
 
         // Assert
@@ -197,7 +198,7 @@ class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
             ->getFacade()
             ->checkOrderAccessByCustomerBusinessUnit(
                 (new OrderTransfer())->setCompanyBusinessUnitUuid(static::FAKE_BUSINESS_UUID),
-                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer)
+                (new CustomerTransfer())->setCompanyUserTransfer($companyUserTransfer),
             );
 
         // Assert

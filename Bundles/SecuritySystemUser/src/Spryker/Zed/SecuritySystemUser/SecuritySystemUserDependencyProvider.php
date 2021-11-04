@@ -44,7 +44,7 @@ class SecuritySystemUserDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new SecuritySystemUserToUserFacadeBridge(
-                $container->getLocator()->user()->facade()
+                $container->getLocator()->user()->facade(),
             );
         });
 

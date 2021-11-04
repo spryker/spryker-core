@@ -64,7 +64,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         foreach ($messageTransfers as $messageTransfer) {
             $restErrorMessageTransfer = $this->mapMessageTransferToRestErrorMessageTransfer(
                 $messageTransfer,
-                new RestErrorMessageTransfer()
+                new RestErrorMessageTransfer(),
             );
 
             $restResponse->addError($restErrorMessageTransfer);
@@ -88,12 +88,12 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
                 $quoteRequestTransfers,
                 [],
-                $localeName
+                $localeName,
             );
 
         return $this->buildRestResponse(
             $quoteRequestTransfers,
-            $restQuoteRequestsAttributesTransfers
+            $restQuoteRequestsAttributesTransfers,
         );
     }
 
@@ -112,12 +112,12 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
                 $quoteRequestTransfers,
                 [],
-                $localeName
+                $localeName,
             );
 
         return $this->buildRestResponse(
             $quoteRequestTransfers,
-            $restQuoteRequestsAttributesTransfers
+            $restQuoteRequestsAttributesTransfers,
         );
     }
 
@@ -175,7 +175,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
             return $restErrorMessageTransfer->fromArray(
                 $errorIdentifierToRestErrorMapping[$errorIdentifier],
-                true
+                true,
             );
         }
 
@@ -207,7 +207,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
                 $restQuoteRequestsAttributesTransfer = $indexedRestQuoteRequestsAttributesTransfers[$quoteRequestTransfer->getQuoteRequestReference()];
                 $restResponse->addResource($this->createRestResource(
                     $quoteRequestTransfer,
-                    $restQuoteRequestsAttributesTransfer
+                    $restQuoteRequestsAttributesTransfer,
                 ));
             }
         }
@@ -228,7 +228,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         $quoteRequestResource = $this->restResourceBuilder->createRestResource(
             QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS,
             $restQuoteRequestsAttributesTransfer->getQuoteRequestReference(),
-            $restQuoteRequestsAttributesTransfer
+            $restQuoteRequestsAttributesTransfer,
         );
 
         return $quoteRequestResource->setPayload($quoteRequestTransfer);

@@ -72,7 +72,7 @@ class PermissionFacadeTest extends Unit
         $this->assertCount(1, $permissionCollectionTransfer->getPermissions());
         $this->assertSame(
             static::PERMISSION_PLUGIN_KEY,
-            $permissionCollectionTransfer->getPermissions()->offsetGet(0)->getKey()
+            $permissionCollectionTransfer->getPermissions()->offsetGet(0)->getKey(),
         );
     }
 

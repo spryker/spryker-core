@@ -27,12 +27,14 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     *
      * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     *
      * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
@@ -100,7 +102,7 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
         }, $guiTableDataResponseTransfer->getRows()->getArrayCopy());
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         $stockTransfers = $this->merchantStockFacade->get(
-            ((new MerchantStockCriteriaTransfer())->setIdMerchant($idMerchant)->setIsDefault(true))
+            ((new MerchantStockCriteriaTransfer())->setIdMerchant($idMerchant)->setIsDefault(true)),
         )->getStocks();
 
         if (!$stockTransfers->count()) {
@@ -110,10 +112,10 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
         $productConcreteAvailabilityCollectionTransfer = $this->availabilityFacade->getProductConcreteAvailabilityCollection(
             (new ProductAvailabilityCriteriaTransfer())
                 ->setProductConcreteSkus($productConcreteSkus)
-                ->setStoreIds($stockTransfers->offsetGet(0)->getStoreRelationOrFail()->getIdStores())
+                ->setStoreIds($stockTransfers->offsetGet(0)->getStoreRelationOrFail()->getIdStores()),
         );
         $productAvailabilities = $this->getProductAvailabilitiesGroupedByProductSkus(
-            $productConcreteAvailabilityCollectionTransfer
+            $productConcreteAvailabilityCollectionTransfer,
         );
 
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {
@@ -131,7 +133,7 @@ class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterf
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
      *
-     * @return array<float[]>
+     * @return array<array<float>>
      */
     protected function getProductAvailabilitiesGroupedByProductSkus(
         ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer

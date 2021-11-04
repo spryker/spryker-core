@@ -90,6 +90,7 @@ class ExternalDependency extends AbstractDependencyFinder
                 continue;
             }
 
+            $dependencyInformation = [];
             $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = 'external';
             $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
             $dependencyInformation[DependencyTree::META_FOREIGN_IS_EXTERNAL] = true;

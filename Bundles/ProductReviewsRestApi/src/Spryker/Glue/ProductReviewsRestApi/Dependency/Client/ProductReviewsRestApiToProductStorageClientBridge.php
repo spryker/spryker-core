@@ -72,7 +72,7 @@ class ProductReviewsRestApiToProductStorageClientBridge implements ProductReview
         return $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             $mappingType,
             $identifiers,
-            $localeName
+            $localeName,
         );
     }
 }

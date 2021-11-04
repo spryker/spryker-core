@@ -23,18 +23,22 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
+
     /**
      * @var string
      */
     public const REPOSITORY_PRODUCT_MEASUREMENT_UNIT = 'REPOSITORY_PRODUCT_MEASUREMENT_UNIT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT = 'PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT';
+
     /**
      * @var string
      */
@@ -77,7 +81,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductMeasurementUnitStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -93,7 +97,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_PRODUCT_MEASUREMENT_UNIT, function (Container $container) {
             return new ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge(
-                $container->getLocator()->productMeasurementUnit()->facade()
+                $container->getLocator()->productMeasurementUnit()->facade(),
             );
         });
 

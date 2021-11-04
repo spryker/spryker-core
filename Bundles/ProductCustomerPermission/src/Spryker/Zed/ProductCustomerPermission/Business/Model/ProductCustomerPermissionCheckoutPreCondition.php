@@ -90,7 +90,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
         $productCustomerPermissionCount = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts(
                 $idCustomer,
-                $idProductAbstracts
+                $idProductAbstracts,
             )->count();
 
         return $productCustomerPermissionCount === count($idProductAbstracts);
@@ -113,7 +113,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
         $allowedProducts = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts(
                 $idCustomer,
-                $idProductAbstracts
+                $idProductAbstracts,
             )->find();
 
         $allowedIdProductAbstracts = [];

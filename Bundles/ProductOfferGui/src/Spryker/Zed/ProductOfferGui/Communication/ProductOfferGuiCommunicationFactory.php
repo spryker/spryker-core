@@ -31,7 +31,7 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade(),
             $this->getProductOfferFacade(),
             $this->getRepository(),
-            $this->getProductOfferTableExpanderPlugins()
+            $this->getProductOfferTableExpanderPlugins(),
         );
     }
 

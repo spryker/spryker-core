@@ -89,7 +89,7 @@ class InvitationHydrator implements InvitationHydratorInterface
     {
         return $this->utilTextService->hashValue(
             sprintf('%s.%s', $invitationTransfer->getEmail(), microtime(true)),
-            Hash::SHA256
+            Hash::SHA256,
         );
     }
 
@@ -120,7 +120,7 @@ class InvitationHydrator implements InvitationHydratorInterface
             ->setIdCompany($companyUserTransfer->getFkCompany());
 
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
-            $companyBusinessUnitCriteriaFilter
+            $companyBusinessUnitCriteriaFilter,
         );
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
@@ -135,7 +135,7 @@ class InvitationHydrator implements InvitationHydratorInterface
     {
         if (!$this->companyUserInvitationStatusTransfer) {
             $this->companyUserInvitationStatusTransfer = $this->repository->findCompanyUserInvitationStatusByStatusKey(
-                CompanyUserInvitationConfig::INVITATION_STATUS_NEW
+                CompanyUserInvitationConfig::INVITATION_STATUS_NEW,
             );
         }
 

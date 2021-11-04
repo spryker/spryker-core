@@ -22,10 +22,12 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+
     /**
      * @var string
      */
@@ -69,7 +71,7 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProductSearchToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -85,7 +87,7 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
             return new MerchantProductSearchToProductPageSearchFacadeBridge(
-                $container->getLocator()->productPageSearch()->facade()
+                $container->getLocator()->productPageSearch()->facade(),
             );
         });
 

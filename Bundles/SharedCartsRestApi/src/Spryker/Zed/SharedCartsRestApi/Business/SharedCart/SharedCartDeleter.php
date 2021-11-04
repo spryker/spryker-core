@@ -44,7 +44,7 @@ class SharedCartDeleter implements SharedCartDeleterInterface
         $shareDetailTransfer->requireUuid();
 
         $quoteCompanyUserTransfer = $this->sharedCartFacade->findQuoteCompanyUserByUuid(
-            (new QuoteCompanyUserTransfer())->setUuid($shareDetailTransfer->getUuid())
+            (new QuoteCompanyUserTransfer())->setUuid($shareDetailTransfer->getUuid()),
         );
 
         if (!$quoteCompanyUserTransfer) {
@@ -58,7 +58,7 @@ class SharedCartDeleter implements SharedCartDeleterInterface
 
         $shareDetailTransfer->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
         $this->sharedCartFacade->deleteQuoteCompanyUser(
-            (new ShareCartRequestTransfer())->addShareDetail($shareDetailTransfer)
+            (new ShareCartRequestTransfer())->addShareDetail($shareDetailTransfer),
         );
 
         return $shareCartResponseTransfer->setIsSuccessful(true);

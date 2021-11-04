@@ -93,7 +93,7 @@ class Condition implements ConditionInterface
                 $isValidCondition = $this->checkCondition(
                     $stateMachineItemTransfer,
                     $transactionLogger,
-                    $transition->getCondition()
+                    $transition->getCondition(),
                 );
 
                 if ($isValidCondition) {
@@ -123,7 +123,7 @@ class Condition implements ConditionInterface
     ) {
         $conditionPlugin = $this->getConditionPlugin(
             $conditionName,
-            $stateMachineItemTransfer->getStateMachineName()
+            $stateMachineItemTransfer->getStateMachineName(),
         );
 
         try {
@@ -166,7 +166,7 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {
@@ -187,13 +187,13 @@ class Condition implements ConditionInterface
         $this->stateUpdater->updateStateMachineItemState(
             $stateMachineItems,
             $processes,
-            $sourceStates
+            $sourceStates,
         );
 
         $itemsWithOnEnterEvent = $this->finder->filterItemsWithOnEnterEvent(
             $stateMachineItems,
             $processes,
-            $sourceStates
+            $sourceStates,
         );
 
         return $itemsWithOnEnterEvent;
@@ -201,7 +201,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]> $stateToTransitionsMap
+     * @param array<array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>> $stateToTransitionsMap
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      *
      * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
@@ -214,7 +214,7 @@ class Condition implements ConditionInterface
         $stateMachineItemStateIds = $this->stateMachinePersistence->getStateMachineItemIdsByStatesProcessAndStateMachineName(
             $process->getName(),
             $stateMachineName,
-            array_keys($stateToTransitionsMap)
+            array_keys($stateToTransitionsMap),
         );
 
         $stateMachineItems = $this->stateMachineHandlerResolver
@@ -229,7 +229,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]> $stateToTransitionsMap Keys are state names
+     * @param array<array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>> $stateToTransitionsMap Keys are state names
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return void
@@ -245,7 +245,7 @@ class Condition implements ConditionInterface
 
             $process = $this->finder->findProcessByStateMachineAndProcessName(
                 $stateMachineName,
-                $stateMachineItemTransfer->getProcessName()
+                $stateMachineItemTransfer->getProcessName(),
             );
 
             $sourceState = $process->getStateFromAllProcesses($stateName);
@@ -260,7 +260,7 @@ class Condition implements ConditionInterface
                     $transitions,
                     $stateMachineItemTransfer,
                     $sourceState,
-                    $this->transitionLog
+                    $this->transitionLog,
                 );
             }
 
@@ -277,7 +277,7 @@ class Condition implements ConditionInterface
     /**
      * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $transitions
      *
-     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]>
+     * @return array<array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>>
      */
     protected function createStateToTransitionMap(array $transitions)
     {
@@ -323,8 +323,8 @@ class Condition implements ConditionInterface
                 sprintf(
                     'Condition plugin "%s" not registered in "%s" class. Please add it to getConditionPlugins() method.',
                     $conditionString,
-                    get_class($this->stateMachineHandlerResolver)
-                )
+                    get_class($this->stateMachineHandlerResolver),
+                ),
             );
         }
     }

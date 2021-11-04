@@ -43,7 +43,7 @@ class PriceProductVolumesRestApiDependencyProvider extends AbstractBundleDepende
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_VOLUME, function (Container $container) {
             return new PriceProductVolumesRestApiToPriceProductVolumeClientBridge(
-                $container->getLocator()->priceProductVolume()->client()
+                $container->getLocator()->priceProductVolume()->client(),
             );
         });
 

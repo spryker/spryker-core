@@ -27,11 +27,9 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getMerchantData(ProductOfferTransfer $productOfferTransfer): array
     {

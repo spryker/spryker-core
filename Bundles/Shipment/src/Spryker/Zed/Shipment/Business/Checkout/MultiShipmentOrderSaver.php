@@ -125,7 +125,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
             return $this->saveOrderShipmentTransactionByShipmentGroup(
                 $orderTransfer,
                 $shipmentGroupTransfer,
-                $saveOrderTransfer
+                $saveOrderTransfer,
             );
         });
 
@@ -150,7 +150,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
             $this->saveOrderShipmentTransactionByShipmentGroup(
                 $orderTransfer,
                 $shipmentGroupTransfer,
-                $saveOrderTransfer
+                $saveOrderTransfer,
             );
         }
     }
@@ -172,7 +172,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
             $shipmentGroupTransfer = $this->saveSalesShipment(
                 $orderTransfer,
                 $shipmentGroupTransfer,
-                $saveOrderTransfer
+                $saveOrderTransfer,
             );
 
             $this->addShipmentToQuoteItems($shipmentGroupTransfer, $quoteTransfer);
@@ -278,7 +278,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         $shipmentTransfer = $this->entityManager->saveSalesShipment(
             $shipmentTransfer,
             $orderTransfer,
-            $expenseTransfer
+            $expenseTransfer,
         );
 
         $itemTransfers = $shipmentGroupTransfer->getItems();

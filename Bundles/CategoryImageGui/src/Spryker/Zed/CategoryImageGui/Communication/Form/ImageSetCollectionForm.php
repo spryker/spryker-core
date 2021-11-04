@@ -24,10 +24,12 @@ class ImageSetCollectionForm extends AbstractType
      * @var string
      */
     public const OPTION_LOCALES = 'locales';
+
     /**
      * @var string
      */
     public const OPTION_IS_RENDERED = 'is_rendered';
+
     /**
      * @var string
      */
@@ -35,7 +37,7 @@ class ImageSetCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -63,7 +65,7 @@ class ImageSetCollectionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -79,7 +81,7 @@ class ImageSetCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

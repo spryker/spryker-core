@@ -70,7 +70,7 @@ class TaskManager implements TaskManagerInterface
         if (!$processedMessages) {
             $queueTaskResponseTransfer->setMessage(sprintf(
                 'No messages processed from the queue "%s". Wether there is nothing to process or something failed while processing.',
-                $queueName
+                $queueName,
             ));
 
             return $queueTaskResponseTransfer;
@@ -84,7 +84,7 @@ class TaskManager implements TaskManagerInterface
         $queueTaskResponseTransfer->setMessage(sprintf(
             'Received messages: "%s", Processed messages: "%s"',
             count($messages),
-            count($processedMessages)
+            count($processedMessages),
         ));
 
         return $queueTaskResponseTransfer;
@@ -104,8 +104,8 @@ class TaskManager implements TaskManagerInterface
                 sprintf(
                     'There is no message processor plugin registered for this queue: %s, ' .
                     'you can fix this error by adding it in QueueDependencyProvider',
-                    $queueName
-                )
+                    $queueName,
+                ),
             );
         }
 

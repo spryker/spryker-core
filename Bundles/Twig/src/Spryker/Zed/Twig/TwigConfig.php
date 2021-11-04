@@ -25,6 +25,7 @@ class TwigConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
+     *
      * @var string
      */
     protected const APPLICATION_YVES = 'YVES';
@@ -159,7 +160,7 @@ class TwigConfig extends AbstractBundleConfig
     {
         $directories = array_merge(
             glob('vendor/*/*/src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
-            glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT)
+            glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
         );
 
         return $directories;
@@ -194,7 +195,7 @@ class TwigConfig extends AbstractBundleConfig
         $directories = array_merge(
             glob('vendor/*/*/src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT),
             glob('src/*/Yves/*/Theme/' . $themeNameDefault, GLOB_ONLYDIR | GLOB_NOSORT),
-            glob('src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT)
+            glob('src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT),
         );
 
         return $directories;
@@ -213,13 +214,13 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getTwigOptions(): array
     {
         return array_replace(
             $this->getSharedConfig()->getDefaultTwigOptions(),
-            $this->get(TwigConstants::ZED_TWIG_OPTIONS, [])
+            $this->get(TwigConstants::ZED_TWIG_OPTIONS, []),
         );
     }
 

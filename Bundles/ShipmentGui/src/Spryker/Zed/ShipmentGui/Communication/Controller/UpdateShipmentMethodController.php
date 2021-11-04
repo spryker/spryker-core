@@ -19,17 +19,21 @@ class UpdateShipmentMethodController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\StockGui\Communication\Controller\WarehouseController::listAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';
+
     /**
      * @var string
      */
     protected const MESSAGE_SUCCESS = 'Shipment method has been successfully updated';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method not found';
+
     /**
      * @var string
      */
@@ -43,7 +47,7 @@ class UpdateShipmentMethodController extends AbstractController
     public function indexAction(Request $request)
     {
         $idShipmentMethod = $this->castId(
-            $request->query->getInt(static::PARAMETER_ID_SHIPMENT_METHOD)
+            $request->query->getInt(static::PARAMETER_ID_SHIPMENT_METHOD),
         );
 
         $shipmentMethodTransfer = $this->getFactory()
@@ -61,7 +65,7 @@ class UpdateShipmentMethodController extends AbstractController
         $shipmentMethodForm = $this->getFactory()
             ->createShipmentMethodForm(
                 $dataProvider->getData($shipmentMethodTransfer),
-                $dataProvider->getOptions(true)
+                $dataProvider->getOptions(true),
             );
         $shipmentMethodForm->handleRequest($request);
 

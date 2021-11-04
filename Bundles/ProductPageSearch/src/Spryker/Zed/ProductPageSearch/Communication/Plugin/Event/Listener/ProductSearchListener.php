@@ -28,7 +28,7 @@ class ProductSearchListener extends AbstractProductPageSearchListener implements
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
                 $eventEntityTransfers,
-                SpyProductSearchTableMap::COL_FK_PRODUCT
+                SpyProductSearchTableMap::COL_FK_PRODUCT,
             );
 
         $productAbstractIds = $this->getQueryContainer()

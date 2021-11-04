@@ -61,7 +61,7 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
     {
         return new MerchantRelationshipThresholdReader(
             $this->getRepository(),
-            $this->createMerchantRelationshipSalesOrderThresholdTranslationReader()
+            $this->createMerchantRelationshipSalesOrderThresholdTranslationReader(),
         );
     }
 
@@ -75,7 +75,7 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator(),
-            $this->createMerchantRelationshipSalesOrderThresholdTranslationWriter()
+            $this->createMerchantRelationshipSalesOrderThresholdTranslationWriter(),
         );
     }
 
@@ -94,7 +94,7 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
     {
         return new MerchantRelationshipSalesOrderThresholdTranslationReader(
             $this->getGlossaryFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -104,7 +104,7 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
     public function createMerchantRelationshipSalesOrderThresholdTranslationWriter(): MerchantRelationshipSalesOrderThresholdTranslationWriterInterface
     {
         return new MerchantRelationshipSalesOrderThresholdTranslationWriter(
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 }

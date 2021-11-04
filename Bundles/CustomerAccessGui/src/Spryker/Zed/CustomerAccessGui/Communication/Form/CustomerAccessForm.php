@@ -24,6 +24,7 @@ class CustomerAccessForm extends AbstractType
      * @var string
      */
     public const OPTION_CONTENT_TYPE_ACCESS = 'OPTION_CONTENT_TYPE_ACCESS';
+
     /**
      * @var string
      */
@@ -53,7 +54,7 @@ class CustomerAccessForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

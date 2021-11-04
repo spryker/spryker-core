@@ -31,6 +31,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      * @var string
      */
     protected const ID_PRICE_PRODUCT_OFFER = 'id_price_product_offer';
+
     /**
      * @var string
      */
@@ -40,6 +41,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      * @var string
      */
     protected const COL_ID_PRODUCT_NAME = 'IdProduct';
+
     /**
      * @var string
      */
@@ -233,7 +235,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     /**
      * @param array<int> $productIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[]
      */
     protected function getProductEntitiesByProductIds(array $productIds): ObjectCollection
     {
@@ -296,7 +298,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     /**
      * @param array<int> $productIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage[]
      */
     protected function getProductConcreteProductOfferPriceStorageEntities(array $productIds): ObjectCollection
     {
@@ -336,7 +338,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $priceProductStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $priceProductTransfers = $this->priceProductOfferFacade->getProductOfferPrices(
-            (new PriceProductOfferCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds)
+            (new PriceProductOfferCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds),
         );
 
         $priceProductOfferIds = [];

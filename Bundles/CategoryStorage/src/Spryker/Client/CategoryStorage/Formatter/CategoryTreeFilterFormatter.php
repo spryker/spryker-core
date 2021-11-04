@@ -15,18 +15,21 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
 {
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::DOC_COUNT
+     *
      * @var string
      */
     protected const DOC_COUNT = 'doc_count';
 
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_BUCKETS
+     *
      * @var string
      */
     protected const KEY_BUCKETS = 'buckets';
 
     /**
      * @uses \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor::KEY_KEY
+     *
      * @var string
      */
     protected const KEY_KEY = 'key';
@@ -58,12 +61,12 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
         $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories($localeName, $storeName);
         $categoryNodeSearchResultTransfers = $this->mapCategoryNodeStoragesToCategoryNodeSearchResults(
             $categoryNodeStorageTransfers,
-            new ArrayObject()
+            new ArrayObject(),
         );
 
         return $this->mergeCategoryNodeSearchResultWithCategoryDocCount(
             $categoryNodeSearchResultTransfers,
-            $categoryDocCounts
+            $categoryDocCounts,
         );
     }
 
@@ -79,7 +82,7 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     ): ArrayObject {
         foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
             $categoryNodeSearchResultTransfers->append(
-                (new CategoryNodeSearchResultTransfer())->fromArray($categoryNodeStorageTransfer->toArray(), true)
+                (new CategoryNodeSearchResultTransfer())->fromArray($categoryNodeStorageTransfer->toArray(), true),
             );
         }
 
@@ -104,8 +107,8 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
                 $categoryNodeSearchResultTransfer->setChildren(
                     $this->mergeCategoryNodeSearchResultWithCategoryDocCount(
                         $categoryNodeSearchResultTransfer->getChildren(),
-                        $categoryDocCounts
-                    )
+                        $categoryDocCounts,
+                    ),
                 );
             }
 
@@ -113,8 +116,8 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
                 $categoryNodeSearchResultTransfer->setParents(
                     $this->mergeCategoryNodeSearchResultWithCategoryDocCount(
                         $categoryNodeSearchResultTransfer->getParents(),
-                        $categoryDocCounts
-                    )
+                        $categoryDocCounts,
+                    ),
                 );
             }
         }

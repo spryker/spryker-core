@@ -20,6 +20,7 @@ class SslPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAdd
      * @var string
      */
     protected const SCHEME_HTTPS = 'https';
+
     /**
      * @var string
      */

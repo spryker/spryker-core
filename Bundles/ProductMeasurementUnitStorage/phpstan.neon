@@ -1,7 +1,7 @@
 parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Parameter \#1 \$data of method .+SpyProductMeasurementUnitStorageEntityTransfer::setData\(\) expects string\|null, array given.#'
-        - '#Parameter \#1 \$data of method .+SpyProductConcreteMeasurementUnitStorageEntityTransfer::setData\(\) expects string\|null, array given.#'
+        - '#Parameter \#1 \$data of method .+SpyProductMeasurementUnitStorageEntityTransfer::setData\(\) expects string\|null, array\<string, mixed\> given.#'
+        - '#Parameter \#1 \$data of method .+SpyProductConcreteMeasurementUnitStorageEntityTransfer::setData\(\) expects string\|null, .+ProductConcreteMeasurementUnitStorageTransfer given.#'
         - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given.#'
         - '#Negated boolean expression is always false.#'

@@ -16,6 +16,7 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -56,7 +57,7 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
     ): ConcreteProductsRestAttributesTransfer {
         $productConcreteData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         $productReviewStorageTransfer = $this->productReviewStorageClient

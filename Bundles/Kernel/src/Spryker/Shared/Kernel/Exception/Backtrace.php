@@ -70,7 +70,7 @@ class Backtrace
         $backtraceFile = str_replace(
             self::CURRENT_PATH,
             Config::get(KernelConstants::BACKTRACE_USER_PATH, self::CURRENT_PATH),
-            $backtraceFile
+            $backtraceFile,
         );
 
         return $backtraceFile;

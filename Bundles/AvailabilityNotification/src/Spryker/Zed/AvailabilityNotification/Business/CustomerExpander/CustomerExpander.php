@@ -50,7 +50,7 @@ class CustomerExpander implements CustomerExpanderInterface
                             ->getAvailabilityNotifications(
                                 (new AvailabilityNotificationCriteriaTransfer())
                                     ->addCustomerReference($customerTransfer->getCustomerReference())
-                                    ->addStoreName($this->storeFacade->getCurrentStore()->getName())
+                                    ->addStoreName($this->storeFacade->getCurrentStore()->getName()),
                             )
                             ->getAvailabilityNotificationSubscriptions();
         $skus = [];

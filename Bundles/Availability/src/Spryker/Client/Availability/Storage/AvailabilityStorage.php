@@ -54,7 +54,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         $availability = $this->storageClient->get($key);
         if ($availability === null) {
             throw new ProductAvailabilityNotFoundException(
-                sprintf('Product availability not found for "%d" product abstract id', $idProductAbstract)
+                sprintf('Product availability not found for "%d" product abstract id', $idProductAbstract),
             );
         }
 

@@ -34,6 +34,7 @@ class ItemCollectionType extends AbstractType
      * @var string
      */
     public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class ItemCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -64,7 +65,7 @@ class ItemCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

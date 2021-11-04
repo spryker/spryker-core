@@ -61,7 +61,7 @@ class SalesPaymentMapper
         foreach ($spySalesPaymentCollection as $spySalesPayment) {
             $salesPaymentTransfers[] = $this->mapSalesPaymentEntityToSalesPaymentTransfer(
                 $spySalesPayment,
-                new SalesPaymentTransfer()
+                new SalesPaymentTransfer(),
             );
         }
 

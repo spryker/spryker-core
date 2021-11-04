@@ -45,7 +45,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->assertNotNull(
             $this->getQueryContainer()
             ->queryProductCustomerPermissionByCustomerAndProducts($customer->getIdCustomer(), [$product->getIdProductAbstract()])
-            ->findOne()
+            ->findOne(),
         );
     }
 
@@ -67,9 +67,9 @@ class ProductCustomerPermissionFacadeTest extends Unit
             $this->getQueryContainer()
                 ->queryProductCustomerPermissionByCustomerAndProducts(
                     $customer->getIdCustomer(),
-                    [$product->getIdProductAbstract()]
+                    [$product->getIdProductAbstract()],
                 )
-                ->findOne()
+                ->findOne(),
         );
     }
 
@@ -118,7 +118,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->assertNull(
             $this->getQueryContainer()
                 ->queryProductCustomerPermissionByCustomer($customer->getIdCustomer())
-                ->findOne()
+                ->findOne(),
         );
     }
 
@@ -143,7 +143,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->assertNull(
             $this->getQueryContainer()
                 ->queryProductCustomerPermissionByCustomer($customer->getIdCustomer())
-                ->findOne()
+                ->findOne(),
         );
     }
 

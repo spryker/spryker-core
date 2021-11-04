@@ -31,7 +31,7 @@ class SalesInvoiceConfig extends AbstractBundleConfig
         return (new SequenceNumberSettingsTransfer())
             ->setName($this->getSharedConfig()->getOrderInvoiceSequence())
             ->setPrefix(
-                $this->getOrderInvoiceReferencePrefix()
+                $this->getOrderInvoiceReferencePrefix(),
             );
     }
 
@@ -56,7 +56,7 @@ class SalesInvoiceConfig extends AbstractBundleConfig
     public function getOrderInvoiceTemplatePath(): string
     {
         throw new OrderInvoiceTemplatePathNotConfiguredException(
-            'You need to provide an invoice template!'
+            'You need to provide an invoice template!',
         );
     }
 

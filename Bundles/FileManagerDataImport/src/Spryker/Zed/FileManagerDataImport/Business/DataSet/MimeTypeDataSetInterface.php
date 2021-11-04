@@ -13,6 +13,7 @@ interface MimeTypeDataSetInterface
      * @var string
      */
     public const KEY_NAME = 'name';
+
     /**
      * @var string
      */

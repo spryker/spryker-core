@@ -20,6 +20,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
@@ -28,6 +29,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT = '4507';
+
     /**
      * @var string
      */
@@ -46,6 +49,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND = '4501';
+
     /**
      * @var string
      */
@@ -59,9 +63,7 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @phpstan-return array<string|int, array<string, mixed>>
-     *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

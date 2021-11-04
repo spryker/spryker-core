@@ -23,6 +23,7 @@ class FilterPreferencesTable extends AbstractTable
     public const COL_NAME = 'attribute_key';
     public const COL_POSITION = SpyProductSearchAttributeTableMap::COL_POSITION;
     public const COL_FILTER_TYPE = SpyProductSearchAttributeTableMap::COL_FILTER_TYPE;
+
     /**
      * @var string
      */
@@ -145,27 +146,27 @@ class FilterPreferencesTable extends AbstractTable
                 sprintf(
                     '/product-search/filter-preferences/edit?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $idProductSearchAttribute
+                    $idProductSearchAttribute,
                 ),
-                'Edit'
+                'Edit',
             ),
             $this->generateViewButton(
                 sprintf(
                     '/product-search/filter-preferences/view?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $idProductSearchAttribute
+                    $idProductSearchAttribute,
                 ),
-                'View'
+                'View',
             ),
             $this->generateRemoveButton(
                 sprintf(
                     '/product-search/filter-preferences/delete?%s=%d',
                     SearchPreferencesController::PARAM_ID,
-                    $idProductSearchAttribute
+                    $idProductSearchAttribute,
                 ),
                 'Delete',
                 [],
-                DeleteFilterPreferencesForm::class
+                DeleteFilterPreferencesForm::class,
             ),
         ];
 

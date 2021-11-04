@@ -28,7 +28,7 @@ class MerchantOmsDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'merchant_oms_process.csv',
-            static::IMPORT_TYPE_MERCHANT_OMS_PROCESS
+            static::IMPORT_TYPE_MERCHANT_OMS_PROCESS,
         );
     }
 
@@ -42,7 +42,7 @@ class MerchantOmsDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

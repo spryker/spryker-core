@@ -27,7 +27,7 @@ class ProductReviewSearchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getUtilEncoding(),
             $this->getStore(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

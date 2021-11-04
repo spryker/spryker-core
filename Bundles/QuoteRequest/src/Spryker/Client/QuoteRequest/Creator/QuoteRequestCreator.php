@@ -59,7 +59,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
             return (new QuoteRequestResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS),
                 );
         }
 

@@ -26,18 +26,22 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
     /**
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
@@ -47,6 +51,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+
     /**
      * @var string
      */
@@ -91,7 +96,7 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new AvailabilityNotificationToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 

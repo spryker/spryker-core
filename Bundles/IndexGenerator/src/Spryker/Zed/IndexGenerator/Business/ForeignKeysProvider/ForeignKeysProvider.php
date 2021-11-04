@@ -200,7 +200,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         $indexColumnXmlElements = $tableXmlElement->xpath(
             $hasNamespace
             ? 's:index/s:index-column | s:column[@primaryKey="true"]'
-            : 'index/index-column | column[@primaryKey="true"]'
+            : 'index/index-column | column[@primaryKey="true"]',
         );
 
         if ($indexColumnXmlElements === false) {
@@ -243,7 +243,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         }
 
         /** @var array<\SimpleXMLElement> $xPath */
-        $xPath = $xmlElement->xpath($hasNamespace ?  '//s:database' : '//database');
+        $xPath = $xmlElement->xpath($hasNamespace ? '//s:database' : '//database');
 
         /** @var array $database */
         $database = $xPath ? $xPath[0] : [];

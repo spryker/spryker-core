@@ -38,6 +38,7 @@ class ProductOptionGroupSaverTest extends MockProvider
      * @var int
      */
     protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+
     /**
      * @var int
      */
@@ -58,7 +59,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         $productOptionGroupSaverMock = $this->createProductOptionGroupSaver(
             null,
             null,
-            $translationSaverMock
+            $translationSaverMock,
         );
 
         $optionGroupEntityMock = $this->createProductOptionGroupEntityMock();

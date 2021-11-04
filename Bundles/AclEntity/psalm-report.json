@@ -10,8 +10,7 @@
             "snippet": "    $this->getPersistenceFactory()->createAclQueryDirector($aclEntityMetadataCollectionTransfer)->inspect<?php echo $action; ?>($this);",
             "selected_text": "$action",
             "error_level": -1,
-            "shortcode": 127,
-            "other_references": null
+            "shortcode": 127
         },
         {
             "severity": "error",
@@ -23,8 +22,7 @@
             "snippet": "    $this->getPersistenceFactory()->createAclQueryDirector($aclEntityMetadataCollectionTransfer)->applyAclRuleOn<?php echo $action; ?>Query($this);",
             "selected_text": "$action",
             "error_level": -1,
-            "shortcode": 127,
-            "other_references": null
+            "shortcode": 127
         },
         {
             "severity": "error",
@@ -36,8 +34,7 @@
             "snippet": "        return $targetEntityQuery\n            ->join($this->convertFullToShortClassName($pivotEntity))\n            ->addJoinCondition(\n                $this->convertFullToShortClassName($pivotEntity),\n                $pivotTableMap->getColumn($referenceColumn)->getFullyQualifiedName() . '=?',\n                $entity->getPrimaryKey()\n            )\n            ->find();",
             "selected_text": "$targetEntityQuery\n            ->join($this->convertFullToShortClassName($pivotEntity))\n            ->addJoinCondition(\n                $this->convertFullToShortClassName($pivotEntity),\n                $pivotTableMap->getColumn($referenceColumn)->getFullyQualifiedName() . '=?',\n                $entity->getPrimaryKey()\n            )\n            ->find()",
             "error_level": 6,
-            "shortcode": 128,
-            "other_references": null
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -51,8 +48,7 @@
             "snippet": "            $rolesTransfer->getRoles()->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -64,8 +60,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -77,8 +72,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -90,8 +84,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -103,8 +96,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -116,8 +108,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -129,8 +120,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -142,8 +132,7 @@
             "snippet": "    /**\n     * @var \\Closure[]<\\Spryker\\Zed\\AclEntity\\Persistence\\Propel\\AclDirector\\Strategy\\AclQueryDirectorStrategyInterface>\n     */\n    protected $aclQueryDirectorStrategyContainer;",
             "selected_text": "protected $aclQueryDirectorStrategyContainer;",
             "error_level": 4,
-            "shortcode": 8,
-            "other_references": null
+            "shortcode": 8
         },
         {
             "severity": "info",
@@ -155,8 +144,7 @@
             "snippet": "    protected $aclQueryDirectorStrategyContainer;",
             "selected_text": "$aclQueryDirectorStrategyContainer",
             "error_level": 2,
-            "shortcode": 45,
-            "other_references": null
+            "shortcode": 45
         },
         {
             "severity": "info",
@@ -168,8 +156,7 @@
             "snippet": "            if ($createAclEntityRuleCollectionTransfer->getAclEntityRules()->count() > 0) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -181,8 +168,7 @@
             "snippet": "                $updateAclEntityRuleCollectionTransfer->getAclEntityRules()->count() > 0",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -194,8 +180,7 @@
             "snippet": "                $deleteAclEntityRuleCollectionTransfer->getAclEntityRules()->count() > 0",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -207,8 +192,7 @@
             "snippet": "            $this->aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -220,8 +204,7 @@
             "snippet": "            )->getAclEntityRules()->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -233,8 +216,7 @@
             "snippet": "            )->getAclEntityRules()->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -246,8 +228,7 @@
             "snippet": "            $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -259,8 +240,7 @@
             "snippet": "                && in_array($entity->getPrimaryKey(), $aclEntityRuleTransfer->getSegmentConnectorTargetIds())",
             "selected_text": "getPrimaryKey",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -272,8 +252,7 @@
             "snippet": "                $aclEntityRuleTransfer->getPermissionMask() & AclEntityConstants::OPERATION_MASK_DELETE",
             "selected_text": "$aclEntityRuleTransfer->getPermissionMask()",
             "error_level": 1,
-            "shortcode": 80,
-            "other_references": null
+            "shortcode": 80
         },
         {
             "severity": "info",
@@ -285,8 +264,7 @@
             "snippet": "                && in_array($entity->getPrimaryKey(), $aclEntityRuleTransfer->getSegmentConnectorTargetIds())",
             "selected_text": "getPrimaryKey",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -298,8 +276,7 @@
             "snippet": "            $segmentEntities->getArrayCopy()",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -311,8 +288,7 @@
             "snippet": "                && in_array($entity->getPrimaryKey(), $aclEntityRuleTransfer->getSegmentConnectorTargetIds())",
             "selected_text": "getPrimaryKey",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -324,8 +300,7 @@
             "snippet": "     * @return \\Propel\\Generator\\Model\\Table",
             "selected_text": "\\Propel\\Generator\\Model\\Table",
             "error_level": 5,
-            "shortcode": 144,
-            "other_references": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -337,8 +312,7 @@
             "snippet": "            return $this->database->getTable($connectorTableName);",
             "selected_text": "$this->database->getTable($connectorTableName)",
             "error_level": 5,
-            "shortcode": 139,
-            "other_references": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -350,8 +324,7 @@
             "snippet": "            ->generateConnectorReferenceColumnName($aclEntitySegmentTable->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -363,8 +336,7 @@
             "snippet": "        $column->setType($aclEntitySegmentTable->getAutoIncrementPrimaryKey()->getType());",
             "selected_text": "getAutoIncrementPrimaryKey",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -376,8 +348,7 @@
             "snippet": "        $column->setType($aclEntitySegmentTable->getAutoIncrementPrimaryKey()->getType());",
             "selected_text": "getType",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -389,8 +360,7 @@
             "snippet": "            $aclEntitySegmentTable->getAutoIncrementPrimaryKey()->getType()",
             "selected_text": "getType",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -402,8 +372,7 @@
             "snippet": "        $constraint->addReference($columnName, $aclEntitySegmentTable->getAutoIncrementPrimaryKey()->getName());",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -415,8 +384,7 @@
             "snippet": "     * @param \\Propel\\Runtime\\Collection\\Collection|\\Orm\\Zed\\AclEntity\\Persistence\\SpyAclEntityRule[] $aclEntityRuleEntities",
             "selected_text": "\\Propel\\Runtime\\Collection\\Collection|\\Orm\\Zed\\AclEntity\\Persistence\\SpyAclEntityRule[]",
             "error_level": 4,
-            "shortcode": 141,
-            "other_references": null
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -428,8 +396,7 @@
             "snippet": "        if ($aclEntityMetadataTransfer->getParent() && $aclEntityMetadataTransfer->getParent()->getConnection()) {",
             "selected_text": "getConnection",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -441,8 +408,7 @@
             "snippet": "            $entityRelation = $entity->isNew() ? new $entityRelationClass() : call_user_func(",
             "selected_text": "isNew",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -454,8 +420,7 @@
             "snippet": "        if ($entity->isNew()) {",
             "selected_text": "isNew",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -467,8 +432,7 @@
             "snippet": "                $entity->getPrimaryKey()",
             "selected_text": "getPrimaryKey",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -480,8 +444,7 @@
             "snippet": "        if ($entity->isNew()) {",
             "selected_text": "isNew",
             "error_level": 5,
-            "shortcode": 181,
-            "other_references": null
+            "shortcode": 181
         },
         {
             "severity": "info",
@@ -493,8 +456,7 @@
             "snippet": "        $aclEntityRuleCollectionTransfer->getAclEntityRules()->uasort(",
             "selected_text": "uasort",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -506,8 +468,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "other_references": null
+            "shortcode": 70
         },
         {
             "severity": "info",
@@ -519,8 +480,7 @@
             "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
-            "shortcode": 70,
-            "other_references": null
+            "shortcode": 70
         }
     ],
     "deprecation": []

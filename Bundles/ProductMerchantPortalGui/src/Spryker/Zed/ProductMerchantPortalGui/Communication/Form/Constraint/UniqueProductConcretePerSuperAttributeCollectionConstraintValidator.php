@@ -19,30 +19,35 @@ class UniqueProductConcretePerSuperAttributeCollectionConstraintValidator extend
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteSuperAttributeForm::FIELD_SUPER_ATTRIBUTES
+     *
      * @var string
      */
     protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\SuperAttributeForm::FIELD_VALUE
+     *
      * @var string
      */
     protected const FIELD_VALUE = 'value';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\SuperAttributeForm::FIELD_ATTRIBUTE
+     *
      * @var string
      */
     protected const FIELD_ATTRIBUTE = 'attribute';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAttributeValueForm::FIELD_VALUE
+     *
      * @var string
      */
     protected const FIELD_ATTRIBUTE_VALUE = 'value';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
@@ -69,7 +74,7 @@ class UniqueProductConcretePerSuperAttributeCollectionConstraintValidator extend
         foreach ($value[static::FIELD_SUPER_ATTRIBUTES] as $superAttributeFormData) {
             $productCriteriaTransfer->addAttribute(
                 $superAttributeFormData[static::FIELD_VALUE],
-                $superAttributeFormData[static::FIELD_ATTRIBUTE][static::FIELD_ATTRIBUTE_VALUE]
+                $superAttributeFormData[static::FIELD_ATTRIBUTE][static::FIELD_ATTRIBUTE_VALUE],
             );
         }
 

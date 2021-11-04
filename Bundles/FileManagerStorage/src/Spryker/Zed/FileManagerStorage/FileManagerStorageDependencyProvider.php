@@ -21,6 +21,7 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
@@ -60,7 +61,7 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new FileManagerStorageToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -76,7 +77,7 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new FileManagerStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

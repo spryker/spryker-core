@@ -17,7 +17,7 @@ interface ReturnReasonSearchMapperInterface
      * @param \Generated\Shared\Transfer\ReturnReasonTransfer $returnReasonTransfer
      * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer $returnReasonSearchTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param array<string[]> $returnReasonTranslations
+     * @param array<array<string>> $returnReasonTranslations
      *
      * @return \Generated\Shared\Transfer\ReturnReasonSearchTransfer
      */

@@ -40,6 +40,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 {
     /**
      * @see https://angular.io/api/common/DatePipe for details.
+     *
      * @var string
      */
     protected const DEFAULT_UI_DATE_FORMAT = 'dd.MM.y';
@@ -110,7 +111,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $dataSourceUrl;
 
     /**
-     * @var array<string[]>
+     * @var array<array<string>>
      */
     protected $dataSourceInlineData;
 
@@ -331,12 +332,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<int, string> $values
-     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<int|string, string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -416,7 +415,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $guiTableFilterTransfer->setTypeOptions(
                 (new DateRangeGuiTableFilterTypeOptionsTransfer())
                     ->setPlaceholderFrom($placeholderFrom)
-                    ->setPlaceholderTo($placeholderTo)
+                    ->setPlaceholderTo($placeholderTo),
             );
         }
 
@@ -449,7 +448,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'action' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -479,7 +478,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -509,7 +508,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -520,7 +519,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param string $type
      * @param string|null $component
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
@@ -556,7 +555,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setComponent($component)
             ->setOptions(
                 (new GuiTableRowActionOptionsTransfer())
-                    ->setInputs($options)
+                    ->setInputs($options),
             );
     }
 
@@ -584,7 +583,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'action' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -614,7 +613,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -646,7 +645,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             [
                 'url' => $url,
                 'method' => $method,
-            ]
+            ],
         );
 
         return $this;
@@ -657,7 +656,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param string $type
      * @param string|null $component
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
@@ -693,7 +692,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setComponent($component)
             ->setOptions(
                 (new GuiTableBatchActionOptionsTransfer())
-                    ->setInputs($options)
+                    ->setInputs($options),
             );
     }
 
@@ -798,7 +797,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
      * @return $this
      */
@@ -932,22 +931,22 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $guiTableConfigurationTransfer->setTitle(
                 (new GuiTableTitleConfigurationTransfer())
                     ->setIsEnabled(true)
-                    ->setTitle($this->title)
+                    ->setTitle($this->title),
             );
         }
 
         if ($this->defaultPageSize) {
             $guiTableConfigurationTransfer->setPagination(
-                (new GuiTablePaginationConfigurationTransfer())->setDefaultSize($this->defaultPageSize)
+                (new GuiTablePaginationConfigurationTransfer())->setDefaultSize($this->defaultPageSize),
             );
         }
 
         $guiTableConfigurationTransfer->setColumnConfigurator(
-            (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled($this->isColumnConfiguratorEnabled)
+            (new GuiTableColumnConfiguratorConfigurationTransfer())->setEnabled($this->isColumnConfiguratorEnabled),
         );
 
         $guiTableConfigurationTransfer->setSearch(
-            (new GuiTableSearchConfigurationTransfer())->setIsEnabled($this->isSearchEnabled)
+            (new GuiTableSearchConfigurationTransfer())->setIsEnabled($this->isSearchEnabled),
         );
 
         if ($this->searchPlaceholder) {
@@ -957,7 +956,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->isItemSelectionEnabled !== null) {
             $guiTableConfigurationTransfer->setItemSelection(
-                (new GuiTableItemSelectionConfigurationTransfer())->setIsEnabled($this->isItemSelectionEnabled)
+                (new GuiTableItemSelectionConfigurationTransfer())->setIsEnabled($this->isItemSelectionEnabled),
             );
         }
 
@@ -967,7 +966,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         if ($this->isPaginationEnabled !== null) {
             $guiTableConfigurationTransfer->setPagination(
-                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled)
+                (new GuiTablePaginationConfigurationTransfer())->setIsEnabled($this->isPaginationEnabled),
             );
         }
 
@@ -977,14 +976,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $initialData
-     * @phpstan-param array<mixed> $addButton
-     * @phpstan-param array<mixed> $cancelButton
-     *
      * @param string $formInputName
-     * @param array|null $initialData
-     * @param array|null $addButton
-     * @param array|null $cancelButton
+     * @param array<string, mixed> $initialData
+     * @param array<string, mixed>|null $addButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return $this
      */
@@ -1013,13 +1008,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $saveButton
-     * @phpstan-param array<mixed> $cancelButton
-     *
      * @param string $url
      * @param string $method
-     * @param array|null $saveButton
-     * @param array|null $cancelButton
+     * @param array<string, mixed>|null $saveButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return $this
      */
@@ -1046,12 +1038,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<string, mixed> $options
-     *
      * @param string $id
      * @param string $title
      * @param string $inputType
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -1076,12 +1066,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @phpstan-param array<mixed> $options
-     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array $options
+     * @param array<int|string, mixed> $options
      * @param string|null $placeholder
      *
      * @return $this
@@ -1119,9 +1107,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @param array $initialData
+     * @param array<string, mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer
      */
@@ -1163,9 +1149,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $addButton
-     *
-     * @param array|null $addButton
+     * @param array<string, mixed>|null $addButton
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
@@ -1178,9 +1162,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $saveButton
-     *
-     * @param array|null $saveButton
+     * @param array<string, mixed>|null $saveButton
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
@@ -1193,9 +1175,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @phpstan-param array<mixed> $cancelButton
-     *
-     * @param array|null $cancelButton
+     * @param array<string, mixed>|null $cancelButton
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
@@ -1250,7 +1230,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected function setFilters(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->setFilters(
-            (new GuiTableFiltersConfigurationTransfer())->setIsEnabled(false)
+            (new GuiTableFiltersConfigurationTransfer())->setIsEnabled(false),
         );
 
         if ($this->filters) {
@@ -1270,7 +1250,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected function setRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->setRowActions(
-            (new GuiTableRowActionsConfigurationTransfer())->setIsEnabled(false)
+            (new GuiTableRowActionsConfigurationTransfer())->setIsEnabled(false),
         );
 
         if ($this->rowActions) {

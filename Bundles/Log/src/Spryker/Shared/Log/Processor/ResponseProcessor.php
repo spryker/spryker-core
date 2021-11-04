@@ -13,6 +13,7 @@ class ResponseProcessor implements ProcessorInterface
      * @var string
      */
     public const EXTRA = 'response';
+
     /**
      * @var string
      */

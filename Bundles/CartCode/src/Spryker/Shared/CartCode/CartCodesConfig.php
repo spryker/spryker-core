@@ -15,6 +15,7 @@ class CartCodesConfig extends AbstractBundleConfig
      * @var string
      */
     public const MESSAGE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */

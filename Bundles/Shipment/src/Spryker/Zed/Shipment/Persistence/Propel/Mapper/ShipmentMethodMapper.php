@@ -81,8 +81,8 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         $shipmentMethodTransfer->setStoreRelation(
             $this->storeRelationMapper->mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
                 $salesShipmentMethodEntity->getShipmentMethodStores(),
-                $storeRelationTransfer
-            )
+                $storeRelationTransfer,
+            ),
         );
 
         return $shipmentMethodTransfer;
@@ -132,13 +132,13 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 
         $currencyTransfer = $this->mapCurrencyEntityToCurrencyTransfer(
             $shipmentMethodPriceEntity->getCurrency(),
-            new CurrencyTransfer()
+            new CurrencyTransfer(),
         );
         $moneyValueTransfer->setCurrency($currencyTransfer);
 
         $storeTransfer = $this->storeRelationMapper->mapStoreEntityToStoreTransfer(
             $shipmentMethodPriceEntity->getStore(),
-            new StoreTransfer()
+            new StoreTransfer(),
         );
         $moneyValueTransfer->setStore($storeTransfer);
 
@@ -146,7 +146,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|iterable<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodsEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[] $shipmentMethodsEntities
      * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers
      *
      * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
@@ -158,7 +158,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         foreach ($shipmentMethodsEntities as $salesShipmentMethodEntity) {
             $shipmentMethodTransfers[] = $this->mapShipmentMethodEntityToShipmentMethodTransfer(
                 $salesShipmentMethodEntity,
-                new ShipmentMethodTransfer()
+                new ShipmentMethodTransfer(),
             );
         }
 
@@ -176,7 +176,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         foreach ($salesShipmentMethodEntity->getShipmentMethodPrices() as $shipmentMethodPriceEntity) {
             $moneyValueTransfer = $this->mapShipmentMethodPriceEntityToMoneyValueTransfer(
                 $shipmentMethodPriceEntity,
-                new MoneyValueTransfer()
+                new MoneyValueTransfer(),
             );
 
             $moneyValueCollection->append($moneyValueTransfer);

@@ -56,7 +56,7 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
     {
         $contentPlaceholders = $this->extractPlaceholders(
             $collectItemData[CmsBlockCollectorQuery::COL_PLACEHOLDERS],
-            $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS]
+            $collectItemData[CmsBlockCollectorQuery::COL_GLOSSARY_KEYS],
         );
 
         $baseCollectedCmsBlockData = [

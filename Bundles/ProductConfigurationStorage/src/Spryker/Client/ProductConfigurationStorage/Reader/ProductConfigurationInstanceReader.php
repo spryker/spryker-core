@@ -88,7 +88,7 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
         return $this->productConfigurationStorageMapper
             ->mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer(
                 $productConfigurationStorageTransfer,
-                new ProductConfigurationInstanceTransfer()
+                new ProductConfigurationInstanceTransfer(),
             );
     }
 
@@ -103,13 +103,13 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
 
         $notConfiguredProductSkus = $this->getNotConfiguredProductSkus(
             $skus,
-            array_keys($productConfigurationInstancesIndexedBySku)
+            array_keys($productConfigurationInstancesIndexedBySku),
         );
 
         if ($notConfiguredProductSkus) {
             $productConfigurationInstancesIndexedBySku = array_merge(
                 $productConfigurationInstancesIndexedBySku,
-                $this->findProductConfigurationInstancesInStorageIndexedBySku($notConfiguredProductSkus)
+                $this->findProductConfigurationInstancesInStorageIndexedBySku($notConfiguredProductSkus),
             );
         }
 
@@ -163,7 +163,7 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
 
         return $this->productConfigurationStorageMapper
             ->mapProductConfigurationStorageTransfersToProductConfigurationInstanceTransfersIndexedBySku(
-                $productConfigurationStorageTransfers
+                $productConfigurationStorageTransfers,
             );
     }
 }

@@ -37,26 +37,32 @@ class CartCodesRestApiBusinessTester extends Actor
      * @var string
      */
     public const CODE = 'testCode1';
+
     /**
      * @var string
      */
     public const NON_EXISTENT_CODE = 'testCode2';
+
     /**
      * @var int
      */
     public const NON_EXISTENT_ID_DISCOUNT = 7777;
+
     /**
      * @var string
      */
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
+
     /**
      * @var string
      */
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
+
     /**
      * @var int
      */
     public const ID_DISCOUNT = 3446;
+
     /**
      * @var int
      */
@@ -71,7 +77,7 @@ class CartCodesRestApiBusinessTester extends Actor
             [
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-            ]
+            ],
         ))->build();
     }
 
@@ -85,14 +91,14 @@ class CartCodesRestApiBusinessTester extends Actor
                 [
                     StoreTransfer::NAME => 'DE',
                     StoreTransfer::ID_STORE => 1,
-                ]
+                ],
             )
             ->withCustomer()
             ->withVoucherDiscount(
                 (new DiscountTransfer())
                     ->setVoucherCode(static::CODE)
                     ->setIdDiscount(static::ID_DISCOUNT)
-                    ->toArray()
+                    ->toArray(),
             )
             ->build();
     }
@@ -107,14 +113,14 @@ class CartCodesRestApiBusinessTester extends Actor
                 [
                     StoreTransfer::NAME => 'DE',
                     StoreTransfer::ID_STORE => 1,
-                ]
+                ],
             )
             ->withCustomer()
             ->withGiftCard(
                 (new GiftCardTransfer())
                     ->setCode(static::CODE)
                     ->setIdGiftCard(static::ID_GIFT_CARD)
-                    ->toArray()
+                    ->toArray(),
             )
             ->build();
     }
@@ -139,7 +145,7 @@ class CartCodesRestApiBusinessTester extends Actor
                     StoreTransfer::NAME => 'DE',
                     StoreTransfer::ID_STORE => 1,
                 ],
-            ]
+            ],
         );
     }
 
@@ -152,7 +158,7 @@ class CartCodesRestApiBusinessTester extends Actor
             [
                 QuoteTransfer::UUID => uniqid('uuid', true),
                 QuoteTransfer::CUSTOMER => $this->haveCustomer(),
-            ]
+            ],
         );
     }
 }

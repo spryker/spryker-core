@@ -109,7 +109,7 @@ class TaxWriter implements TaxWriterInterface
         if (!$this->taxRepository->isTaxSetNameUnique($taxSetTransfer->getName())) {
             throw new DuplicateResourceException(sprintf(
                 'Tax Set with the name %s already exists.',
-                $taxSetTransfer->getName()
+                $taxSetTransfer->getName(),
             ));
         }
 
@@ -149,7 +149,7 @@ class TaxWriter implements TaxWriterInterface
         if (!$this->taxRepository->isTaxSetNameAndIdUnique($taxSetTransfer->getName(), $taxSetTransfer->getIdTaxSet())) {
             throw new DuplicateResourceException(sprintf(
                 'Tax Set with the name %s already exists.',
-                $taxSetTransfer->getName()
+                $taxSetTransfer->getName(),
             ));
         }
 

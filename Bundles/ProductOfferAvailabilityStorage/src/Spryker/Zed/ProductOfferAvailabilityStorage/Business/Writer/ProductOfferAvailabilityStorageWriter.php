@@ -122,7 +122,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
             $productOfferAvailabilityTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
             $productOfferAvailabilityStorageEntity = $this->productOfferAvailabilityStorageRepository->findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
                 $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
-                $productOfferAvailabilityRequestTransfer->getStore()->getName()
+                $productOfferAvailabilityRequestTransfer->getStore()->getName(),
             );
 
             if (!$productOfferAvailabilityTransfer && $productOfferAvailabilityStorageEntity) {
@@ -137,7 +137,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
 
             $productOfferAvailabilityStorageTransfer = $this->mapProductConcreteAvailabilityTransferToProductOfferAvailabilityStorageTransfer(
                 $productOfferAvailabilityTransfer,
-                new ProductOfferAvailabilityStorageTransfer()
+                new ProductOfferAvailabilityStorageTransfer(),
             );
 
             /** @var \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer */
@@ -148,7 +148,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
                 ->setKey($this->generateKey($productOfferAvailabilityRequestTransfer))
                 ->setIsSendingToQueue($this->isSendingToQueue)
                 ->setStore(
-                    $productOfferAvailabilityRequestTransfer->getStore()->getName()
+                    $productOfferAvailabilityRequestTransfer->getStore()->getName(),
                 )
                 ->setData($productOfferAvailabilityStorageTransfer->toArray())
                 ->save();

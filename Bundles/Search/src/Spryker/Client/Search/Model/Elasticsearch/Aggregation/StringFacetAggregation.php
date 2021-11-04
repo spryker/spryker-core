@@ -77,13 +77,13 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
         if ($facetConfigTransfer->getAggregationParams()) {
             return $this->createStandaloneFacetNameAggregation(
                 $facetConfigTransfer->getFieldName(),
-                $facetConfigTransfer->getName()
+                $facetConfigTransfer->getName(),
             );
         }
 
         return $this->createFacetNameAggregation(
             $facetConfigTransfer->getFieldName(),
-            $this->getFacetNameAggregationSize()
+            $this->getFacetNameAggregationSize(),
         );
     }
 

@@ -38,7 +38,7 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
 
         $wishlistEntities = $wishlistQuery
             ->leftJoinWithSpyWishlistItem()
-                ->withColumn('count(*)', WishlistTransfer::NUMBER_OF_ITEMS)
+                ->withColumn(sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_FK_WISHLIST), WishlistTransfer::NUMBER_OF_ITEMS)
             ->groupByIdWishlist()
             ->find();
 
@@ -66,8 +66,8 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             str_replace(
                 SpyWishlistItemTableMap::TABLE_NAME,
                 $alias,
-                SpyWishlistItemTableMap::COL_FK_WISHLIST
-            )
+                SpyWishlistItemTableMap::COL_FK_WISHLIST,
+            ),
         );
 
         $wishlistQuery = $this->getFactory()
@@ -86,7 +86,7 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->createWishlistMapper()
             ->mapWishlistEntityToWishlistTransferIncludingWishlistItems(
                 $wishlistEntityCollection->getFirst(),
-                new WishlistTransfer()
+                new WishlistTransfer(),
             );
     }
 
@@ -98,7 +98,8 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
     public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
     {
         $wishlistItemQuery = $this->getFactory()
-            ->createWishlistItemQuery();
+            ->createWishlistItemQuery()
+            ->joinWithSpyWishlist();
 
         $wishlistItemQuery = $this->applyWishlistItemFilters($wishlistItemCriteriaTransfer, $wishlistItemQuery);
         $wishlistItemEntity = $wishlistItemQuery->findOne();

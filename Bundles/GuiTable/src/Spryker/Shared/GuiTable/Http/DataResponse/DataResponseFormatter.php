@@ -46,7 +46,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
         $guiTableDataResponseArray = $guiTableDataResponseTransfer->toArray(true, true);
         $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = $this->formatValues(
             $guiTableDataResponseArray,
-            $guiTableConfigurationTransfer
+            $guiTableConfigurationTransfer,
         );
 
         unset($guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);

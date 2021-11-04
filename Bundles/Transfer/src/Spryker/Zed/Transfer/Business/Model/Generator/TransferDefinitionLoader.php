@@ -20,14 +20,17 @@ class TransferDefinitionLoader implements LoaderInterface
      * @var string
      */
     public const KEY_BUNDLE = 'bundle';
+
     /**
      * @var string
      */
     public const KEY_CONTAINING_BUNDLE = 'containing bundle';
+
     /**
      * @var string
      */
     public const KEY_TRANSFER = 'transfer';
+
     /**
      * @var string
      */
@@ -70,7 +73,7 @@ class TransferDefinitionLoader implements LoaderInterface
     {
         $this->loadDefinitions();
         $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
-            $this->transferDefinitions
+            $this->transferDefinitions,
         );
 
         return $this->transferDefinitions;
@@ -121,7 +124,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param array $definition
+     * @param array<string, mixed> $definition
      * @param string $module
      * @param string $containingModule
      *
@@ -152,7 +155,7 @@ class TransferDefinitionLoader implements LoaderInterface
     }
 
     /**
-     * @param array $transfer
+     * @param array<string, mixed> $transfer
      * @param string $bundle
      *
      * @throws \InvalidArgumentException
@@ -171,8 +174,8 @@ class TransferDefinitionLoader implements LoaderInterface
                     'Transfer name `%s` does not match expected name `%s` for module `%s`',
                     $name,
                     $filteredName,
-                    $bundle
-                )
+                    $bundle,
+                ),
             );
         }
     }
@@ -196,9 +199,9 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * We need to shim casing issues for property names or singular names for BC reasons.
      *
-     * @param array $transfer
+     * @param array<string, mixed> $transfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function normalize(array $transfer): array
     {

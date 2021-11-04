@@ -38,7 +38,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
             $configurableBundleTemplateQuery,
-            $configurableBundleTemplateFilterTransfer
+            $configurableBundleTemplateFilterTransfer,
         );
 
         $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->findOne();
@@ -65,7 +65,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
             $configurableBundleTemplateQuery,
-            $configurableBundleTemplateFilterTransfer
+            $configurableBundleTemplateFilterTransfer,
         );
 
         return $this->getFactory()
@@ -87,7 +87,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
             $configurableBundleTemplateSlotQuery,
-            $configurableBundleTemplateSlotFilterTransfer
+            $configurableBundleTemplateSlotFilterTransfer,
         );
 
         $configurableBundleTemplateSlotEntity = $configurableBundleTemplateSlotQuery->findOne();
@@ -116,7 +116,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
             $configurableBundleTemplateSlotQuery,
-            $configurableBundleTemplateSlotFilterTransfer
+            $configurableBundleTemplateSlotFilterTransfer,
         );
 
         return $this->getFactory()
@@ -156,20 +156,20 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     ): SpyConfigurableBundleTemplateQuery {
         if ($configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate()) {
             $configurableBundleTemplateQuery->filterByIdConfigurableBundleTemplate(
-                $configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate()
+                $configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate(),
             );
         }
 
         if ($configurableBundleTemplateFilterTransfer->getConfigurableBundleTemplateIds()) {
             $configurableBundleTemplateQuery->filterByIdConfigurableBundleTemplate_In(
-                $configurableBundleTemplateFilterTransfer->getConfigurableBundleTemplateIds()
+                $configurableBundleTemplateFilterTransfer->getConfigurableBundleTemplateIds(),
             );
         }
 
         if ($configurableBundleTemplateFilterTransfer->getFilter()) {
             $configurableBundleTemplateQuery = $this->buildQueryFromCriteria(
                 $configurableBundleTemplateQuery,
-                $configurableBundleTemplateFilterTransfer->getFilter()
+                $configurableBundleTemplateFilterTransfer->getFilter(),
             );
 
             $configurableBundleTemplateQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
@@ -193,19 +193,19 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             && $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()
         ) {
             $configurableBundleTemplateSlotQuery->filterByFkProductList(
-                $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()
+                $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList(),
             );
         }
 
         if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplate()) {
             $configurableBundleTemplateSlotQuery->filterByFkConfigurableBundleTemplate(
-                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplate()
+                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplate(),
             );
         }
 
         if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()) {
             $configurableBundleTemplateSlotQuery->filterByIdConfigurableBundleTemplateSlot(
-                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()
+                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot(),
             );
         }
 

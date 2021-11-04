@@ -74,7 +74,7 @@ class SearchHelper extends AbstractHelper
             '<fg=yellow>%s</> not found in the search source <fg=yellow>%s</> but was expected to be there. Keys in the search: %s',
             $key,
             $source,
-            implode(', ', $allSourceKeys)
+            implode(', ', $allSourceKeys),
         )));
     }
 
@@ -91,7 +91,7 @@ class SearchHelper extends AbstractHelper
         $this->assertFalse(in_array($key, $allSourceKeys), $this->format(sprintf(
             '<fg=yellow>%s</> found in the search source <fg=yellow>%s</> but was not expected to be there.',
             $key,
-            $source
+            $source,
         )));
     }
 
@@ -136,7 +136,7 @@ class SearchHelper extends AbstractHelper
     {
         $this->getDependencyProviderHelper()->setDependency(
             SearchDependencyProvider::PLUGINS_CLIENT_ADAPTER,
-            [$this->getInMemorySearchPlugin()]
+            [$this->getInMemorySearchPlugin()],
         );
 
         // Resolves the SearchClientInterface with all mocks from above.

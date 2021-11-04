@@ -41,6 +41,7 @@ abstract class AbstractTable
      * @var string
      */
     public const TABLE_CLASS = 'gui-table-data';
+
     /**
      * @var string
      */
@@ -50,30 +51,37 @@ abstract class AbstractTable
      * @var string
      */
     public const BUTTON_CLASS = 'class';
+
     /**
      * @var string
      */
     public const BUTTON_HREF = 'href';
+
     /**
      * @var string
      */
     public const BUTTON_DEFAULT_CLASS = 'btn-default';
+
     /**
      * @var string
      */
     public const BUTTON_ICON = 'icon';
+
     /**
      * @var string
      */
     public const PARAMETER_VALUE = 'value';
+
     /**
      * @var string
      */
     public const SORT_BY_COLUMN = 'column';
+
     /**
      * @var string
      */
     public const SORT_BY_DIRECTION = 'dir';
+
     /**
      * @var string
      */
@@ -81,18 +89,21 @@ abstract class AbstractTable
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     *
      * @var string
      */
     public const SERVICE_TRANSLATOR = 'translator';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     *
      * @var string
      */
     public const SERVICE_FORM_FACTORY = 'form.factory';
@@ -433,7 +444,7 @@ abstract class AbstractTable
         return str_replace(
             ['.', '(', ')'],
             '',
-            $name
+            $name,
         );
     }
 
@@ -629,7 +640,7 @@ abstract class AbstractTable
         $loaderChain = $twig->getLoader();
         $loaderChain->addLoader(new FilesystemLoader(
             $this->getTwigPaths(),
-            $this->getTwigRootPath()
+            $this->getTwigRootPath(),
         ));
 
         return $twig;
@@ -981,7 +992,7 @@ abstract class AbstractTable
                     'LOWER(%s%s) LIKE %s',
                     $value,
                     $filter,
-                    Propel::getConnection()->quote($conditionParameter)
+                    Propel::getConnection()->quote($conditionParameter),
                 );
 
                 $conditions[] = $condition;
@@ -1033,7 +1044,7 @@ abstract class AbstractTable
     {
         $gluedCondition = implode(
             sprintf(' %s ', Criteria::LOGICAL_OR),
-            $conditions
+            $conditions,
         );
 
         $gluedCondition = '(' . $gluedCondition . ')';
@@ -1124,7 +1135,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1141,7 +1152,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1158,7 +1169,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1176,7 +1187,7 @@ abstract class AbstractTable
      * @param string $title
      * @param string $url
      * @param bool $separated
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -1193,7 +1204,7 @@ abstract class AbstractTable
     /**
      * @param array $buttonGroupItems
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1210,7 +1221,7 @@ abstract class AbstractTable
     /**
      * @param string $url
      * @param string $title
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $formClassName
      *
      * @return string
@@ -1234,7 +1245,7 @@ abstract class AbstractTable
     /**
      * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Table\AbstractTable::createForm()} instead.
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $name
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -1451,7 +1462,7 @@ abstract class AbstractTable
 
     /**
      * @param array $defaultOptions
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -1493,7 +1504,7 @@ abstract class AbstractTable
 
     /**
      * @param array $defaultOptions
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -1524,8 +1535,8 @@ abstract class AbstractTable
                     $searchColumns[$column->getData()],
                     Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59')
-                )
+                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'),
+                ),
             );
 
             return;
@@ -1539,7 +1550,7 @@ abstract class AbstractTable
         $query->where(sprintf(
             '%s = %s',
             $searchColumns[$column->getData()],
-            Propel::getConnection()->quote($value)
+            Propel::getConnection()->quote($value),
         ));
     }
 

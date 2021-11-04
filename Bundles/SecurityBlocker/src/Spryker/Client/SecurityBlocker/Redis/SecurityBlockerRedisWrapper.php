@@ -50,7 +50,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     {
         return $this->redisClient->get(
             $this->securityBlockerConfig->getRedisConnectionKey(),
-            $this->getStorageKey($key)
+            $this->getStorageKey($key),
         );
     }
 
@@ -63,7 +63,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     {
         return $this->redisClient->incr(
             $this->securityBlockerConfig->getRedisConnectionKey(),
-            $this->getStorageKey($key)
+            $this->getStorageKey($key),
         );
     }
 
@@ -80,7 +80,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
             $this->securityBlockerConfig->getRedisConnectionKey(),
             $this->getStorageKey($key),
             $seconds,
-            $value
+            $value,
         );
     }
 
@@ -91,7 +91,7 @@ class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterfac
     {
         $this->redisClient->setupConnection(
             $this->securityBlockerConfig->getRedisConnectionKey(),
-            $this->securityBlockerConfig->getRedisConnectionConfiguration()
+            $this->securityBlockerConfig->getRedisConnectionConfiguration(),
         );
     }
 

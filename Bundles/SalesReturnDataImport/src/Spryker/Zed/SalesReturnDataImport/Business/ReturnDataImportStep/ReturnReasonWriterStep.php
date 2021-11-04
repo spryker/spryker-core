@@ -17,6 +17,7 @@ class ReturnReasonWriterStep extends PublishAwareStep implements DataImportStepI
 {
     /**
      * @uses \Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig::RETURN_REASON_PUBLISH_WRITE
+     *
      * @var string
      */
     protected const EVENT_RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish_write';
@@ -38,7 +39,7 @@ class ReturnReasonWriterStep extends PublishAwareStep implements DataImportStepI
 
         $this->addPublishEvents(
             static::EVENT_RETURN_REASON_PUBLISH_WRITE,
-            $salesReturnReasonEntity->getIdSalesReturnReason()
+            $salesReturnReasonEntity->getIdSalesReturnReason(),
         );
     }
 

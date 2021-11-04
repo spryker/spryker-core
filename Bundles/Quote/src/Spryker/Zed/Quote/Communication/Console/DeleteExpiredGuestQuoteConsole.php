@@ -21,6 +21,7 @@ class DeleteExpiredGuestQuoteConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'quote:delete-expired-guest-quotes';
+
     /**
      * @var string
      */

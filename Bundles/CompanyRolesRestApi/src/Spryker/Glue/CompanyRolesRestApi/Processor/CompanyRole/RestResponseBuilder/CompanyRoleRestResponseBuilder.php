@@ -46,7 +46,7 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
         $companyRoleRestResource = $this->createCompanyRoleRestResource(
             $companyRoleUuid,
             $restCompanyRoleAttributesTransfer,
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         return $this->restResourceBuilder->createRestResponse()
@@ -68,7 +68,7 @@ class CompanyRoleRestResponseBuilder implements CompanyRoleRestResponseBuilderIn
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyRolesRestApiConfig::RESOURCE_COMPANY_ROLES,
             $companyRoleUuid,
-            $restCompanyRoleAttributesTransfer
+            $restCompanyRoleAttributesTransfer,
         );
 
         if (!$companyRoleTransfer) {

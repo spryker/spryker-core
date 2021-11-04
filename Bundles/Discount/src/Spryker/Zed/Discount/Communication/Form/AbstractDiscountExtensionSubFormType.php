@@ -34,7 +34,7 @@ abstract class AbstractDiscountExtensionSubFormType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view The view
      * @param \Symfony\Component\Form\FormInterface $form The form
-     * @param array $options The options
+     * @param array<string, mixed> $options The options
      *
      * @return void
      */

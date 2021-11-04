@@ -56,18 +56,18 @@ class ProductAbstractAvailabilityRestResponseBuilder implements ProductAbstractA
         $restProductsAbstractAvailabilityAttributesTransfer = $this->productsAvailabilityResourceMapper
             ->mapProductAbstractAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer(
                 $productAbstractAvailabilityTransfer,
-                new RestAbstractProductAvailabilityAttributesTransfer()
+                new RestAbstractProductAvailabilityAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES,
             $productAbstractSku,
-            $restProductsAbstractAvailabilityAttributesTransfer
+            $restProductsAbstractAvailabilityAttributesTransfer,
         );
 
         $restResource->addLink(
             RestLinkInterface::LINK_SELF,
-            $this->getProductAbstractAvailabilityResourceSelfLink($productAbstractSku)
+            $this->getProductAbstractAvailabilityResourceSelfLink($productAbstractSku),
         );
 
         return $restResource;
@@ -122,7 +122,7 @@ class ProductAbstractAvailabilityRestResponseBuilder implements ProductAbstractA
             '%s/%s/%s',
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $productAbstractSku,
-            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES
+            ProductAvailabilitiesRestApiConfig::RESOURCE_ABSTRACT_PRODUCT_AVAILABILITIES,
         );
     }
 }

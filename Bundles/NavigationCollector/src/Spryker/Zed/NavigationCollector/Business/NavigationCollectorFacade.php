@@ -52,7 +52,7 @@ class NavigationCollectorFacade extends AbstractFacade implements NavigationColl
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

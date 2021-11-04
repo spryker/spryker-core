@@ -16,6 +16,7 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
      * @var string
      */
     protected const KEY_GENERATOR_PREFIX = 'blck';
+
     /**
      * @var int
      */

@@ -13,10 +13,12 @@ class SalesOrderThresholdConfig
      * @var string
      */
     public const GROUP_HARD = 'Hard';
+
     /**
      * @var string
      */
     public const GROUP_HARD_MAX = 'Hard-Max';
+
     /**
      * @var string
      */
@@ -26,18 +28,22 @@ class SalesOrderThresholdConfig
      * @var string
      */
     public const THRESHOLD_STRATEGY_KEY_HARD = 'hard-minimum-threshold';
+
     /**
      * @var string
      */
     public const THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM = 'hard-maximum-threshold';
+
     /**
      * @var string
      */
     public const THRESHOLD_STRATEGY_KEY_SOFT = 'soft-minimum-threshold';
+
     /**
      * @var string
      */
     public const THRESHOLD_STRATEGY_KEY_SOFT_FIXED_FEE = 'soft-minimum-threshold-fixed-fee';
+
     /**
      * @var string
      */
@@ -50,6 +56,7 @@ class SalesOrderThresholdConfig
 
     /**
      * @uses \Spryker\Shared\Calculation\CalculationPriceMode::PRICE_MODE_NET
+     *
      * @var string
      */
     public const PRICE_MODE_NET = 'NET_MODE';
@@ -61,6 +68,7 @@ class SalesOrderThresholdConfig
 
     /**
      * @uses \Spryker\Shared\Tax\TaxConstants::TAX_EXEMPT_PLACEHOLDER
+     *
      * @var string
      */
     public const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';

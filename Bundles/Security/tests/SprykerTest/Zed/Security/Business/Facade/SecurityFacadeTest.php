@@ -34,6 +34,7 @@ class SecurityFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     *
      * @var string
      */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
@@ -118,7 +119,7 @@ class SecurityFacadeTest extends Unit
         $container = $this->tester->getContainer();
         $this->tester->setDependency(
             SecurityDependencyProvider::SERVICE_SECURITY_AUTHORIZATION_CHECKER,
-            $container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)
+            $container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER),
         );
     }
 

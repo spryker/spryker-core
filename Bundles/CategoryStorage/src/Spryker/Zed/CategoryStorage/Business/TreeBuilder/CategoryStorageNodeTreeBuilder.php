@@ -39,7 +39,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
      * @param array<int> $categoryNodeIds
      * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
-     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>>>
      */
     public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers): array
     {
@@ -52,13 +52,13 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
                 $categoryNodeStorageTransfers = $this->categoryNodeStorageMapper->mapNodeTransfersToCategoryNodeStorageTransfersByLocaleAndStore(
                     $indexedNodeTransfers,
                     $localeName,
-                    $storeName
+                    $storeName,
                 );
 
                 $categoryNodeStorageTransferTrees[$storeName][$localeName] = $this->buildCategoryNodeStorageTransferTrees(
                     $categoryNodeIds,
                     $indexedNodeTransfers,
-                    $categoryNodeStorageTransfers
+                    $categoryNodeStorageTransfers,
                 );
             }
         }
@@ -83,7 +83,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function getLocaleNameMapByStoreName(): array
     {
@@ -122,12 +122,12 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
             $categoryNodeStorageTransfer = $this->buildChildrenTree(
                 $categoryNodeStorageTransfer,
                 $indexedNodeTransfers,
-                $indexedCategoryNodeStorageTransfers
+                $indexedCategoryNodeStorageTransfers,
             );
             $categoryNodeStorageTransfer = $this->buildParentsTree(
                 $categoryNodeStorageTransfer,
                 $indexedNodeTransfers,
-                $indexedCategoryNodeStorageTransfers
+                $indexedCategoryNodeStorageTransfers,
             );
 
             $categoryNodeStorageTransferTrees[$idCategoryNode] = $categoryNodeStorageTransfer;
@@ -151,13 +151,13 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         $childrenCategoryNodeStorageTransfers = $this->findChildren(
             $categoryNodeStorageTransfer->getNodeIdOrFail(),
             $indexedNodeTransfers,
-            $indexedCategoryNodeStorageTransfers
+            $indexedCategoryNodeStorageTransfers,
         );
         foreach ($childrenCategoryNodeStorageTransfers as $childrenCategoryNodeStorageTransfer) {
             $childrenCategoryNodeStorageTransfer = $this->buildChildrenTree(
                 $childrenCategoryNodeStorageTransfer,
                 $indexedNodeTransfers,
-                $indexedCategoryNodeStorageTransfers
+                $indexedCategoryNodeStorageTransfers,
             );
             $categoryNodeStorageTransfer->addChildren($childrenCategoryNodeStorageTransfer);
         }
@@ -184,13 +184,13 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
 
         $parentCategoryNodeStorageTransfers = $this->findParents(
             $nodeTransfer->getFkParentCategoryNodeOrFail(),
-            $indexedCategoryNodeStorageTransfers
+            $indexedCategoryNodeStorageTransfers,
         );
         foreach ($parentCategoryNodeStorageTransfers as $parentCategoryNodeStorageTransfer) {
             $parentCategoryNodeStorageTransfer = $this->buildParentsTree(
                 $parentCategoryNodeStorageTransfer,
                 $indexedNodeTransfers,
-                $indexedCategoryNodeStorageTransfers
+                $indexedCategoryNodeStorageTransfers,
             );
             $categoryNodeStorageTransfer->addParents($parentCategoryNodeStorageTransfer);
         }
@@ -211,7 +211,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
         foreach ($indexedNodeTransfers as $nodeTransfer) {
             if ($idCategoryNode === $nodeTransfer->getFkParentCategoryNode() && isset($indexedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()])) {
                 $childrenCategoryNodeStorageTransfers[] = $this->cloneCategoryNodeStorageTransfer(
-                    $indexedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()]
+                    $indexedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()],
                 );
             }
         }

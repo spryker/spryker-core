@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 interface PriceProductValidationMapperInterface
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<mixed> $initialData

@@ -54,7 +54,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         $shoppingListItemProductOptionMapperPlugin = $this->createShoppingListItemProductOptionToItemProductOptionMapperPlugin();
         $actualResult = $shoppingListItemProductOptionMapperPlugin->map(
             $shoppingListItemTransfer,
-            $itemTransfer
+            $itemTransfer,
         );
 
         // Assert
@@ -64,7 +64,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
                 $productOptionTransfer->getValue(),
                 array_map(function (ProductOptionValueTransfer $productOptionValueTransfer) {
                     return $productOptionValueTransfer->getValue();
-                }, $productOptionGroupTransfer->getProductOptionValues()->getArrayCopy())
+                }, $productOptionGroupTransfer->getProductOptionValues()->getArrayCopy()),
             );
         }
     }
@@ -92,7 +92,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
         $shoppingListItemProductOptionMapperPlugin = $this->createShoppingListItemProductOptionToItemProductOptionMapperPlugin();
         $actualResult = $shoppingListItemProductOptionMapperPlugin->map(
             $shoppingListItemTransfer,
-            $itemTransfer
+            $itemTransfer,
         );
 
         // Assert
@@ -102,7 +102,7 @@ class ShoppingListItemProductOptionToItemProductOptionMapperPluginTest extends U
                 $productOptionTransfer->getValue(),
                 array_map(function (ProductOptionValueTransfer $productOptionValueTransfer) {
                     return $productOptionValueTransfer->getValue();
-                }, $productOptionGroupTransfer->getProductOptionValues()->getArrayCopy())
+                }, $productOptionGroupTransfer->getProductOptionValues()->getArrayCopy()),
             );
         }
     }

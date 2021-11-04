@@ -15,7 +15,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
  * @property-read string $authorizationUrl
  * @property-read string $tokenUrl
  * @property-read string $refreshUrl
- * @property-read string[] $email
+ * @property-read array<string> $email
  */
 class OAuthFlow extends AbstractObject
 {

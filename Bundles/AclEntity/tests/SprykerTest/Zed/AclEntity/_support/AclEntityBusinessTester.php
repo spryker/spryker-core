@@ -53,7 +53,7 @@ class AclEntityBusinessTester extends Actor
     /**
      * @param int $idEntitySegment
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Merchant\Persistence\SpyAclEntitySegmentMerchant>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Merchant\Persistence\SpyAclEntitySegmentMerchant[]
      */
     public function findAclEntitySegmentMerchants(int $idEntitySegment): ObjectCollection
     {

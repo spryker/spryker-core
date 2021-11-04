@@ -41,7 +41,7 @@ class ProductConfigurationInstanceQuoteReader implements ProductConfigurationIns
         $itemTransfer = $this->cartClient->findQuoteItem(
             $quoteTransfer,
             $sku,
-            $groupKey
+            $groupKey,
         );
 
         if (!$itemTransfer || !$itemTransfer->getProductConfigurationInstance()) {
@@ -49,7 +49,7 @@ class ProductConfigurationInstanceQuoteReader implements ProductConfigurationIns
         }
 
         return (new ProductConfigurationInstanceTransfer())->fromArray(
-            $itemTransfer->getProductConfigurationInstanceOrFail()->toArray()
+            $itemTransfer->getProductConfigurationInstanceOrFail()->toArray(),
         );
     }
 }

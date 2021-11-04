@@ -142,11 +142,11 @@ class PriceProductMapper implements PriceProductMapperInterface
             $priceProductTransfers[$index] = (new PriceProductTransfer())
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())
-                        ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
+                        ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT),
                 )
                 ->setMoneyValue(
                     (new MoneyValueTransfer())
-                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode)),
                 )
                 ->setPriceTypeName($priceType);
         }

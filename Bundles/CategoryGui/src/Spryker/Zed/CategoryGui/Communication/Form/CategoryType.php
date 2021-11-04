@@ -22,6 +22,7 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     public const OPTION_PARENT_CATEGORY_NODE_CHOICES = 'parent_category_node_choices';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+
     /**
      * @var string
      */
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+
     /**
      * @var string
      */
@@ -49,6 +52,7 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     protected const FIELD_PARENT_CATEGORY_NODE = 'parent_category_node';
+
     /**
      * @var string
      */
@@ -58,6 +62,7 @@ class CategoryType extends CommonCategoryType
      * @var string
      */
     protected const LABEL_PARENT_CATEGORY_NODE = 'Parent';
+
     /**
      * @var string
      */
@@ -70,6 +75,7 @@ class CategoryType extends CommonCategoryType
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\SearchController::categoryStoreAction()
+     *
      * @var string
      */
     protected const DEFAULT_ACTION_URL = '/category-gui/search/category-store';
@@ -94,7 +100,7 @@ class CategoryType extends CommonCategoryType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -154,7 +160,7 @@ class CategoryType extends CommonCategoryType
         ]);
 
         $builder->get(static::FIELD_EXTRA_PARENTS)->addModelTransformer(
-            $this->getFactory()->createCategoryExtraParentsTransformer()
+            $this->getFactory()->createCategoryExtraParentsTransformer(),
         );
 
         return $this;
@@ -162,7 +168,7 @@ class CategoryType extends CommonCategoryType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -180,7 +186,7 @@ class CategoryType extends CommonCategoryType
         $builder->add(
             static::FIELD_STORE_RELATION,
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
-            $options
+            $options,
         );
 
         return $this;

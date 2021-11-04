@@ -26,17 +26,19 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      * @var string
      */
     protected const INFO_MESSAGES = 'infoMessages';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGES = 'errorMessages';
+
     /**
      * @var string
      */
     protected const SUCCESS_MESSAGES = 'successMessages';
 
     /**
-     * @var array
+     * @var array<string, array>>
      */
     protected static $statusMessages = [
         self::INFO_MESSAGES => [],
@@ -85,7 +87,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
             $url,
             $object,
             $this->prepareAndGetMetaTransfers(),
-            $requestOptions
+            $requestOptions,
         );
 
         static::$lastResponse = $response;

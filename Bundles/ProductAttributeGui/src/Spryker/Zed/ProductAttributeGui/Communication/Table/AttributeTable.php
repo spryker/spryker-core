@@ -20,10 +20,12 @@ class AttributeTable extends AbstractTable
      * @var string
      */
     public const COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+
     /**
      * @var string
      */
     public const COL_INPUT_TYPE = 'input_type';
+
     /**
      * @var string
      */
@@ -119,14 +121,14 @@ class AttributeTable extends AbstractTable
             Url::generate('/product-attribute-gui/attribute/view', [
                 'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-attribute-gui/attribute/edit', [
                 'id' => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
             ]),
-            'Edit'
+            'Edit',
         );
 
         return $urls;

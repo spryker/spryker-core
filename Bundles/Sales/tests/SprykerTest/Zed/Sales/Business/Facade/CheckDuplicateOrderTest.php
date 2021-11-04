@@ -34,10 +34,12 @@ class CheckDuplicateOrderTest extends Test
      * @var string
      */
     protected const CURRENCY_ISO_CODE = 'CODE';
+
     /**
      * @var string
      */
     protected const ORDER_REFERENCE = 'ORDER_REFERENCE';
+
     /**
      * @var string
      */
@@ -77,7 +79,7 @@ class CheckDuplicateOrderTest extends Test
         $this->assertNotNull($quoteTransfer->getOrderReference());
         $this->assertEquals(
             $quoteTransfer->getOrderReference(),
-            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference(),
         );
     }
 
@@ -100,7 +102,7 @@ class CheckDuplicateOrderTest extends Test
         $this->assertNotNull($quoteTransfer->getOrderReference());
         $this->assertEquals(
             $quoteTransfer->getOrderReference(),
-            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference(),
         );
     }
 
@@ -123,7 +125,7 @@ class CheckDuplicateOrderTest extends Test
         $this->assertNotNull($quoteTransfer->getOrderReference());
         $this->assertNotEquals(
             $quoteTransfer->getOrderReference(),
-            $checkoutResponseTransfer->getSaveOrder()->getOrderReference()
+            $checkoutResponseTransfer->getSaveOrder()->getOrderReference(),
         );
     }
 

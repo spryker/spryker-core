@@ -150,7 +150,7 @@ class AttributeMap implements AttributeMapInterface
             return $this->createAttributeMapStorageTransfer(
                 $concreteProductIds,
                 $superAttributeVariations,
-                $attributeVariants
+                $attributeVariants,
             );
         }
 
@@ -158,7 +158,7 @@ class AttributeMap implements AttributeMapInterface
             $concreteProductIds,
             $superAttributeVariations,
             $attributeVariants,
-            $productConcreteSuperAttributes
+            $productConcreteSuperAttributes,
         );
     }
 
@@ -359,7 +359,7 @@ class AttributeMap implements AttributeMapInterface
             foreach ($productSuperAttributes as $productId => $attributes) {
                 $attributeVariants = array_merge_recursive(
                     $attributeVariants,
-                    $this->productFacade->generateAttributePermutations($attributes, $productId)
+                    $this->productFacade->generateAttributePermutations($attributes, $productId),
                 );
             }
         }

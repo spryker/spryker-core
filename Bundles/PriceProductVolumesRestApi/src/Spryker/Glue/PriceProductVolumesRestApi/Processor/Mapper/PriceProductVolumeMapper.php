@@ -50,7 +50,7 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
         $restProductPriceVolumesAttributesTransfers = $this->mapProductPriceTransfersToRestProductPriceVolumesAttributesTransfers(
             $productPriceTransfers,
             [],
-            $restProductPriceAttributesTransfer->getPriceTypeName()
+            $restProductPriceAttributesTransfer->getPriceTypeName(),
         );
 
         return $restProductPriceAttributesTransfer->setVolumePrices(new ArrayObject($restProductPriceVolumesAttributesTransfers));
@@ -86,7 +86,7 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
             if ($priceProductTransfer->getPriceTypeName() === null || $priceProductTransfer->getPriceTypeName() === $priceTypeName) {
                 $restProductPriceVolumesAttributesTransfers[] = $this->mapPriceProductTransferToRestProductPriceVolumesAttributesTransfer(
                     $priceProductTransfer,
-                    new RestProductPriceVolumesAttributesTransfer()
+                    new RestProductPriceVolumesAttributesTransfer(),
                 );
             }
         }

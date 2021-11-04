@@ -23,7 +23,7 @@ class CmsSlotBlockProductCategoryConnectorFactory extends AbstractFactory
     public function createProductCategoryCmsSlotBlockConditionResolver(): ProductCategoryCmsSlotBlockConditionResolverInterface
     {
         return new ProductCategoryCmsSlotBlockConditionResolver(
-            $this->createProductCategoryReader()
+            $this->createProductCategoryReader(),
         );
     }
 
@@ -34,7 +34,7 @@ class CmsSlotBlockProductCategoryConnectorFactory extends AbstractFactory
     {
         return new ProductCategoryReader(
             $this->getLocaleClient(),
-            $this->getProductCategoryStorageClient()
+            $this->getProductCategoryStorageClient(),
         );
     }
 

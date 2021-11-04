@@ -28,6 +28,7 @@ class QuoteRequestTerminator implements QuoteRequestTerminatorInterface
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
+
     /**
      * @var string
      */
@@ -155,7 +156,7 @@ class QuoteRequestTerminator implements QuoteRequestTerminatorInterface
         return $this->quoteRequestEntityManager->updateQuoteRequestStatus(
             $quoteRequestTransfer->getQuoteRequestReference(),
             $quoteRequestTransfer->getStatus(),
-            SharedQuoteRequestConfig::STATUS_CANCELED
+            SharedQuoteRequestConfig::STATUS_CANCELED,
         );
     }
 

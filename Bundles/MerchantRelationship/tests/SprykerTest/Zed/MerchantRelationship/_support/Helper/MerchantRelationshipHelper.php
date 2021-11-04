@@ -51,7 +51,7 @@ class MerchantRelationshipHelper extends Module
 
         if ($foundMerchantRelationshipTransfer) {
             $merchantRelationshipTransfer->setIdMerchantRelationship(
-                $foundMerchantRelationshipTransfer->getIdMerchantRelationship()
+                $foundMerchantRelationshipTransfer->getIdMerchantRelationship(),
             );
 
             return $this->getLocator()

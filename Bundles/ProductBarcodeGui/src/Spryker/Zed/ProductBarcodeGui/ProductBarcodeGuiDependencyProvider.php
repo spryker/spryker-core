@@ -18,6 +18,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -45,7 +46,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_PRODUCT_BARCODE, function (Container $container) {
             return new ProductBarcodeGuiToProductBarcodeFacadeBridge(
-                $container->getLocator()->productBarcode()->facade()
+                $container->getLocator()->productBarcode()->facade(),
             );
         });
 
@@ -61,7 +62,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductBarcodeGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 

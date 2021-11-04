@@ -16,14 +16,17 @@ class QueueConfig extends AbstractBundleConfig
      * @var string
      */
     public const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
+
     /**
      * @var int
      */
     public const DEFAULT_INTERVAL_MILLISECONDS = 1000;
+
     /**
      * @var int
      */
     public const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
+
     /**
      * @var int
      */
@@ -31,24 +34,28 @@ class QueueConfig extends AbstractBundleConfig
 
     /**
      * @uses \SIGINT
+     *
      * @var int
      */
     protected const SIGINT = 2;
 
     /**
      * @uses \SIGQUIT
+     *
      * @var int
      */
     protected const SIGQUIT = 3;
 
     /**
      * @uses \SIGABRT
+     *
      * @var int
      */
     protected const SIGABRT = 6;
 
     /**
      * @uses \SIGTERM
+     *
      * @var int
      */
     protected const SIGTERM = 15;
@@ -97,7 +104,7 @@ class QueueConfig extends AbstractBundleConfig
      *
      *  e.g: 'mail' => $option
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getQueueReceiverOptions()
     {
@@ -107,7 +114,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * Queue check options can be defined
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getMessageCheckOptions()
     {
@@ -179,7 +186,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getQueueAdapterConfiguration()
     {
@@ -189,7 +196,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getDefaultQueueAdapterConfiguration(): array
     {

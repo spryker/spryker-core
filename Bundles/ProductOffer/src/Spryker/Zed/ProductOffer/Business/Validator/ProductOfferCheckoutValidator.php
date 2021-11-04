@@ -21,6 +21,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_OFFER_NOT_ACTIVE_OR_APPROVED = 'product-offer.message.not-active-or-approved';
+
     /**
      * @var string
      */
@@ -101,7 +102,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
             ->setIsActive(true)
             ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setProductOfferReferences(
-                $this->extractProductOfferReferences($quoteTransfer)
+                $this->extractProductOfferReferences($quoteTransfer),
             );
 
         return $this->productOfferRepository->get($productOfferCriteriaFilterTransfer);

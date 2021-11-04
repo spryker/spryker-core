@@ -37,38 +37,47 @@ class SwiftMailerTest extends Unit
      * @var string
      */
     protected const SUBJECT = 'subject';
+
     /**
      * @var string
      */
     protected const FROM_EMAIL = 'from@email.com';
+
     /**
      * @var string
      */
     protected const FROM_NAME = 'fromName';
+
     /**
      * @var string
      */
     protected const TO_EMAIL = 'to@email.com';
+
     /**
      * @var string
      */
     protected const TO_NAME = 'toName';
+
     /**
      * @var string
      */
     protected const BCC_EMAIL = 'bcc@email.com';
+
     /**
      * @var string
      */
     protected const BCC_NAME = 'bccName';
+
     /**
      * @var string
      */
     protected const HTML_MAIL_CONTENT = 'html mail content';
+
     /**
      * @var string
      */
     protected const TEXT_MAIL_CONTENT = 'text mail content';
+
     /**
      * @var string
      */
@@ -194,7 +203,7 @@ class SwiftMailerTest extends Unit
         $swiftMailer = $this->getSwiftMailerWithMocks($mailerMock);
         $mailTransfer = $this->getMailTransfer()->addRecipientBcc(
             (new MailRecipientTransfer())
-                ->setName(static::BCC_NAME)
+                ->setName(static::BCC_NAME),
         );
 
         // Assert

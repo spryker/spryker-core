@@ -47,13 +47,13 @@ class YvesUrlFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
     protected function formatOptions(array $options): array
     {
-        $options[Url::HOST] = isset($options[Url::HOST]) ? $options[Url::HOST] : $this->getYvesHttpHost();
+        $options[Url::HOST] = $options[Url::HOST] ?? $this->getYvesHttpHost();
 
         return $options;
     }

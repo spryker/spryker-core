@@ -83,7 +83,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
         $guestCartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
-            $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
+            $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer),
         );
 
         $guestCartResource->setPayload($quoteTransfer);
@@ -91,7 +91,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
         $guestCartResource = $this->addGuestCartItemsRelationship(
             $guestCartResource,
             $quoteTransfer,
-            $localeName
+            $localeName,
         );
 
         return $this->createEmptyGuestCartRestResponse()->addResource($guestCartResource);
@@ -110,8 +110,8 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
             $restResponse->addError(
                 $this->cartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
-                    new RestErrorMessageTransfer()
-                )
+                    new RestErrorMessageTransfer(),
+                ),
             );
         }
 
@@ -136,7 +136,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
 
         $filteredItemTransfers = $this->executeCartItemFilterPlugins(
             $quoteTransfer->getItems()->getArrayCopy(),
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         foreach ($filteredItemTransfers as $itemTransfer) {
@@ -144,8 +144,8 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
                 $this->itemResponseBuilder->createGuestCartItemResource(
                     $guestCartResource,
                     $itemTransfer,
-                    $localeName
-                )
+                    $localeName,
+                ),
             );
         }
 

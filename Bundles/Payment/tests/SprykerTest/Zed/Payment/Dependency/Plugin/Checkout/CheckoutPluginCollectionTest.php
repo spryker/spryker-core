@@ -31,6 +31,7 @@ class CheckoutPluginCollectionTest extends Unit
      * @var string
      */
     public const PROVIDER = 'provider';
+
     /**
      * @var string
      */

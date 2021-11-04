@@ -44,7 +44,7 @@ class ExceptionHandlerDispatcher
                 $exception->getMessage(),
                 [
                     'exception' => $exception,
-                ]
+                ],
             );
 
             return $this->exceptionHandlers[$statusCode]->handleException($exception);
@@ -52,7 +52,7 @@ class ExceptionHandlerDispatcher
 
         throw new UndefinedExceptionHandlerException(sprintf(
             'Undefined exception handler for status code "%d".',
-            $statusCode
+            $statusCode,
         ));
     }
 }

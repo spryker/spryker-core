@@ -61,7 +61,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $idSelectedShipmentMethod) {
                 $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                     $shipmentMethodTransfer,
-                    new RestShipmentMethodTransfer()
+                    new RestShipmentMethodTransfer(),
                 );
 
                 $restCheckoutDataResponseAttributesTransfer->addSelectedShipmentMethod($restShipmentMethodTransfer);

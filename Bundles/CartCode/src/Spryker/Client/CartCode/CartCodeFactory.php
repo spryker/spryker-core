@@ -34,7 +34,7 @@ class CartCodeFactory extends AbstractFactory
         return new CodeAdder(
             $this->getCalculationClient(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodePlugins()
+            $this->getCartCodePlugins(),
         );
     }
 
@@ -48,7 +48,7 @@ class CartCodeFactory extends AbstractFactory
         return new CodeRemover(
             $this->getCalculationClient(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodePlugins()
+            $this->getCartCodePlugins(),
         );
     }
 
@@ -62,7 +62,7 @@ class CartCodeFactory extends AbstractFactory
         return new CodeClearer(
             $this->getCalculationClient(),
             $this->createQuoteOperationChecker(),
-            $this->getCartCodePlugins()
+            $this->getCartCodePlugins(),
         );
     }
 

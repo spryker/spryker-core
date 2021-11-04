@@ -73,8 +73,8 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Test
             sprintf(
                 'Should be saved %d adresses. Saved %d.',
                 $expectedResult,
-                $customerAddressEntity->count()
-            )
+                $customerAddressEntity->count(),
+            ),
         );
     }
 
@@ -106,8 +106,8 @@ class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Test
             $customerAddressEntity,
             sprintf(
                 'Any shipping or billing addresses should not be saved. Saved %d',
-                $customerAddressEntity->count()
-            )
+                $customerAddressEntity->count(),
+            ),
         );
     }
 

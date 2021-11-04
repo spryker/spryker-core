@@ -37,7 +37,7 @@ class CommentStub implements CommentStubInterface
         /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
         $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/add-comment',
-            $commentRequestTransfer
+            $commentRequestTransfer,
         );
 
         return $commentThreadResponseTransfer;
@@ -53,7 +53,7 @@ class CommentStub implements CommentStubInterface
         /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
         $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/update-comment',
-            $commentRequestTransfer
+            $commentRequestTransfer,
         );
 
         return $commentThreadResponseTransfer;
@@ -69,7 +69,7 @@ class CommentStub implements CommentStubInterface
         /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
         $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/update-comment-tags',
-            $commentRequestTransfer
+            $commentRequestTransfer,
         );
 
         return $commentThreadResponseTransfer;
@@ -85,7 +85,7 @@ class CommentStub implements CommentStubInterface
         /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
         $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/remove-comment',
-            $commentRequestTransfer
+            $commentRequestTransfer,
         );
 
         return $commentThreadResponseTransfer;
@@ -101,7 +101,7 @@ class CommentStub implements CommentStubInterface
         /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
         $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/add-comment-tag',
-            $commentTagRequestTransfer
+            $commentTagRequestTransfer,
         );
 
         return $commentThreadResponseTransfer;
@@ -117,7 +117,7 @@ class CommentStub implements CommentStubInterface
         /** @var \Generated\Shared\Transfer\CommentThreadResponseTransfer $commentThreadResponseTransfer */
         $commentThreadResponseTransfer = $this->zedRequestClient->call(
             '/comment/gateway/remove-comment-tag',
-            $commentTagRequestTransfer
+            $commentTagRequestTransfer,
         );
 
         return $commentThreadResponseTransfer;

@@ -21,6 +21,7 @@ class AgentDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_USER = 'PROPEL_QUERY_USER';
+
     /**
      * @var string
      */

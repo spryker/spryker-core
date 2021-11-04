@@ -15,15 +15,18 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
 {
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction
+     *
      * @var string
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_URL = '/configurable-bundle-gui/template';
+
     /**
      * @var string
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_TITLE = 'Configurable Bundle Templates';
+
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_OPTIONS = [
         'class' => 'btn-view',

@@ -68,7 +68,7 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
             return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomerRestorePasswordAttributesTransfer::PASSWORD,
-                RestCustomerRestorePasswordAttributesTransfer::CONFIRM_PASSWORD
+                RestCustomerRestorePasswordAttributesTransfer::CONFIRM_PASSWORD,
             );
         }
 

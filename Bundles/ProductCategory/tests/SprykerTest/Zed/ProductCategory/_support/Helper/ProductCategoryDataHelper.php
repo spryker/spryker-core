@@ -42,7 +42,7 @@ class ProductCategoryDataHelper extends Module
 
         return $productCategoryTransfer->fromArray(
             $spyProductCategoryEntity->toArray(),
-            true
+            true,
         );
     }
 

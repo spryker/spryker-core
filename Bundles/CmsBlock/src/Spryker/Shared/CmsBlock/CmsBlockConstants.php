@@ -17,6 +17,7 @@ interface CmsBlockConstants
      * - Defines project name for absolute path to template folder
      *
      * @api
+     *
      * @var string
      */
     public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';

@@ -90,7 +90,7 @@ interface CategoryRepositoryInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\NodeTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\NodeTransfer>>
      */
     public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
         CategoryTransfer $categoryTransfer,

@@ -28,6 +28,7 @@ class CompanyUserRoleForm extends AbstractType
      * @var string
      */
     public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
+
     /**
      * @var string
      */
@@ -35,9 +36,11 @@ class CompanyUserRoleForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm
+     *
      * @var string
      */
     protected const FIELD_FK_COMPANY = 'fk_company';
+
     /**
      * @var string
      */
@@ -50,7 +53,7 @@ class CompanyUserRoleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -118,13 +121,13 @@ class CompanyUserRoleForm extends AbstractType
         $form->add(
             static::FIELD_COMPANY_ROLE_COLLECTION,
             CompanyRoleChoiceType::class,
-            $this->getCompanyRoleFieldParameters($options)
+            $this->getCompanyRoleFieldParameters($options),
         );
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -133,14 +136,14 @@ class CompanyUserRoleForm extends AbstractType
         $builder->add(
             static::FIELD_COMPANY_ROLE_COLLECTION,
             CompanyRoleChoiceType::class,
-            $this->getCompanyRoleFieldParameters($options)
+            $this->getCompanyRoleFieldParameters($options),
         );
 
         return $this;
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

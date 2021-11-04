@@ -28,7 +28,7 @@ class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
             $quoteTransfer,
             $companyUserTransfer,
             ApproveQuotePermissionPlugin::KEY,
-            ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY
+            ApproveQuotePermissionPlugin::FIELD_STORE_MULTI_CURRENCY,
         );
     }
 
@@ -44,7 +44,7 @@ class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
             $quoteTransfer,
             $companyUserTransfer,
             PlaceOrderPermissionPlugin::KEY,
-            PlaceOrderPermissionPlugin::FIELD_STORE_MULTI_CURRENCY
+            PlaceOrderPermissionPlugin::FIELD_STORE_MULTI_CURRENCY,
         );
     }
 
@@ -68,7 +68,7 @@ class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
         foreach ($companyUserTransfer->getCompanyRoleCollection()->getRoles() as $companyRoleTransfer) {
             $permissionTransfer = $this->findPermissionByKey(
                 $companyRoleTransfer->getPermissionCollection(),
-                $permissionKey
+                $permissionKey,
             );
 
             if ($permissionTransfer === null) {
@@ -78,7 +78,7 @@ class PermissionLimitCalculator implements PermissionLimitCalculatorInterface
             $limit = $this->findPermissionLimitForQuote(
                 $permissionTransfer,
                 $quoteTransfer,
-                $configurationKey
+                $configurationKey,
             );
 
             if (!$isLimitUpdated || $limit > $highestLimit) {

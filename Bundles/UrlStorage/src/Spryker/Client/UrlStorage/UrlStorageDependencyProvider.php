@@ -24,10 +24,12 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -37,6 +39,7 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
@@ -138,7 +141,7 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new UrlStorageToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -154,7 +157,7 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new UrlStorageToLocaleClientBridge(
-                $container->getLocator()->locale()->client()
+                $container->getLocator()->locale()->client(),
             );
         });
 

@@ -22,6 +22,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
 
     /**
      * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     *
      * @var string
      */
     protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
@@ -65,7 +66,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
             [
                 SpyCategoryTableMap::COL_IS_ACTIVE,
                 SpyCategoryTableMap::COL_CATEGORY_KEY,
-            ]
+            ],
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($validEventTransfers);

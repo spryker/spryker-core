@@ -16,10 +16,12 @@ class ProductListEditAggregationTabs extends AbstractProductListAggregationTabs
      * @var string
      */
     protected const USED_BY_TAB_NAME = 'used_by';
+
     /**
      * @var string
      */
     protected const USED_BY_TAB_TITLE = 'Used By';
+
     /**
      * @var string
      */

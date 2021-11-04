@@ -42,6 +42,8 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="priceMode" type="string"/>
         <property name="store" type="Store"/>
+        <property name="orderReference" type="string"/>
+        <property name="isOrderPlacedSuccessfully" type="bool"/>
     </transfer>
 
     <transfer name="Totals">
@@ -295,6 +297,7 @@
 
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
+        <property name="idSalesShipment" type="int"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -349,6 +352,7 @@
     </transfer>
 
     <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">

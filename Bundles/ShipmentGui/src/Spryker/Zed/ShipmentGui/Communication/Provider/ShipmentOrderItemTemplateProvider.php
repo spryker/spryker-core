@@ -25,11 +25,9 @@ class ShipmentOrderItemTemplateProvider implements ShipmentOrderItemTemplateProv
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function provide(ArrayObject $itemTransfers): array
     {

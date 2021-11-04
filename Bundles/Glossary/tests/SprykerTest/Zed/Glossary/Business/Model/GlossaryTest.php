@@ -234,7 +234,7 @@ class GlossaryTest extends Unit
         $transferTranslation = $this->glossaryFacade->createTranslation(
             'SomeNonExistentKey2',
             $locale,
-            'some translation'
+            'some translation',
         );
         $this->assertNotNull($transferTranslation->getIdGlossaryTranslation());
 

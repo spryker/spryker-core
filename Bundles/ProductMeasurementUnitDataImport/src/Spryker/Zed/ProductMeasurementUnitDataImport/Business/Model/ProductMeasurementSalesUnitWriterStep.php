@@ -23,6 +23,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
 {
     /**
      * @see \Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_concrete_measurement_unit.publish';
@@ -45,7 +46,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
 
         $this->addPublishEvents(
             static::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH,
-            $spyProductMeasurementSalesUnitEntity->getFkProduct()
+            $spyProductMeasurementSalesUnitEntity->getFkProduct(),
         );
     }
 
@@ -63,7 +64,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
 
         if (!$spyProductEntity) {
             throw new EntityNotFoundException(
-                sprintf('Product concrete with SKU "%s" was not found during import.', $productConcreteSku)
+                sprintf('Product concrete with SKU "%s" was not found during import.', $productConcreteSku),
             );
         }
 
@@ -84,7 +85,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
 
         if (!$spyProductMeasurementBaseUnitEntity) {
             throw new EntityNotFoundException(
-                sprintf('Product measurement base unit was not found for product abstract id "%d" during data import.', $idProductAbstract)
+                sprintf('Product measurement base unit was not found for product abstract id "%d" during data import.', $idProductAbstract),
             );
         }
 

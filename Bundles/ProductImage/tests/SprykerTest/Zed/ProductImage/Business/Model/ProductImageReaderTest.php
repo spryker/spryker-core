@@ -63,13 +63,13 @@ class ProductImageReaderTest extends Unit
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();
         $this->transferGenerator = new ProductImageTransferMapper(
-            new ProductImageToLocaleBridge($this->localeFacade)
+            new ProductImageToLocaleBridge($this->localeFacade),
         );
 
         $this->reader = new Reader(
             $this->queryContainer,
             $this->transferGenerator,
-            new ProductImageToLocaleBridge($this->localeFacade)
+            new ProductImageToLocaleBridge($this->localeFacade),
         );
     }
 

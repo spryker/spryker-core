@@ -16,10 +16,12 @@ class CompanySupplierDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_TYPE = 'company-type';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_SUPPLIER = 'company-supplier';
+
     /**
      * @var string
      */
@@ -71,7 +73,7 @@ class CompanySupplierDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

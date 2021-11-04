@@ -25,14 +25,17 @@ class ViewShipmentMethodForm extends AbstractType
      * @var string
      */
     public const FIELD_STORE_RELATION = 'storeRelation';
+
     /**
      * @var string
      */
     public const FIELD_PRICES = 'prices';
+
     /**
      * @var string
      */
     public const FIELD_TAX_SET = 'fkTaxSet';
+
     /**
      * @var string
      */
@@ -66,7 +69,7 @@ class ViewShipmentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -79,7 +82,7 @@ class ViewShipmentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -92,7 +95,7 @@ class ViewShipmentMethodForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
-            ]
+            ],
         );
 
         return $this;
@@ -100,7 +103,7 @@ class ViewShipmentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -113,7 +116,7 @@ class ViewShipmentMethodForm extends AbstractType
                 static::OPTION_AMOUNT_PER_STORE => true,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
-            ]
+            ],
         );
 
         return $this;
@@ -121,7 +124,7 @@ class ViewShipmentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -138,7 +141,7 @@ class ViewShipmentMethodForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;

@@ -25,14 +25,17 @@ class UpdateProductsFormType extends AbstractType
      * @var string
      */
     public const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
+
     /**
      * @var string
      */
     public const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+
     /**
      * @var string
      */
@@ -40,7 +43,7 @@ class UpdateProductsFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -54,7 +57,7 @@ class UpdateProductsFormType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            [$this, 'onSubmit']
+            [$this, 'onSubmit'],
         );
     }
 
@@ -131,7 +134,7 @@ class UpdateProductsFormType extends AbstractType
                 },
                 function ($productAbstractIds = '{}') {
                     return $this->getFactory()->getUtilEncodingService()->decodeJson($productAbstractIds, true);
-                }
+                },
             ));
 
         return $this;
@@ -211,7 +214,7 @@ class UpdateProductsFormType extends AbstractType
             },
             function ($productAbstractIds = '') {
                 return $productAbstractIds ? explode(',', $productAbstractIds) : [];
-            }
+            },
         );
     }
 }

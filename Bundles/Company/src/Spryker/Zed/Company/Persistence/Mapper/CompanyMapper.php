@@ -25,7 +25,7 @@ class CompanyMapper implements CompanyMapperInterface
         SpyCompany $spyCompany
     ): SpyCompany {
         $spyCompany->fromArray(
-            $companyTransfer->modifiedToArray(false)
+            $companyTransfer->modifiedToArray(false),
         );
 
         return $spyCompany;
@@ -43,12 +43,12 @@ class CompanyMapper implements CompanyMapperInterface
     ): CompanyTransfer {
         return $companyTransfer->fromArray(
             $spyCompany->toArray(),
-            true
+            true,
         );
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Company\Persistence\SpyCompany> $companyEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Company\Persistence\SpyCompany[] $companyEntities
      *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
@@ -60,7 +60,7 @@ class CompanyMapper implements CompanyMapperInterface
         foreach ($companyEntities as $companyEntity) {
             $companyTransfer = $this->mapEntityToCompanyTransfer(
                 $companyEntity,
-                new CompanyTransfer()
+                new CompanyTransfer(),
             );
 
             $companyCollectionTransfer->addCompany($companyTransfer);

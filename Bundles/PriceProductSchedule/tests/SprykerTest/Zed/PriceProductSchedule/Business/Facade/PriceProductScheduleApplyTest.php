@@ -31,18 +31,22 @@ class PriceProductScheduleApplyTest extends Unit
      * @var string
      */
     public const KEY_IS_OTHER_CURRENCY = 'isOtherCurrency';
+
     /**
      * @var string
      */
     public const KEY_IS_OTHER_PRICE_TYPE = 'isOtherPriceType';
+
     /**
      * @var string
      */
     public const KEY_IS_PRODUCT_CONCRETE = 'isProductConcrete';
+
     /**
      * @var string
      */
     public const KEY_IS_PRODUCT_ABSTRACT = 'isProductAbstract';
+
     /**
      * @var string
      */
@@ -155,8 +159,8 @@ class PriceProductScheduleApplyTest extends Unit
                     'Scheduled price with id: #%s, active from: %s, active to: %s should have been set as current.',
                     $priceProductScheduleEntity->getIdPriceProductSchedule(),
                     $priceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
-                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y')
-                )
+                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                ),
             );
         }
     }
@@ -217,7 +221,7 @@ class PriceProductScheduleApplyTest extends Unit
 
         // Assert
         $appliedPriceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule(
-            $priceProductScheduleForApplyTransfer->getIdPriceProductSchedule()
+            $priceProductScheduleForApplyTransfer->getIdPriceProductSchedule(),
         );
 
         $this->assertTrue(
@@ -228,12 +232,12 @@ class PriceProductScheduleApplyTest extends Unit
                 $appliedPriceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
                 $appliedPriceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
                 $appliedPriceProductScheduleEntity->getGrossPrice(),
-                $appliedPriceProductScheduleEntity->getNetPrice()
-            )
+                $appliedPriceProductScheduleEntity->getNetPrice(),
+            ),
         );
 
         $notAppliedPriceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule(
-            $priceProductScheduleNotApplyTransfer->getIdPriceProductSchedule()
+            $priceProductScheduleNotApplyTransfer->getIdPriceProductSchedule(),
         );
 
         $this->assertFalse(
@@ -244,8 +248,8 @@ class PriceProductScheduleApplyTest extends Unit
                 $notAppliedPriceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
                 $notAppliedPriceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
                 $notAppliedPriceProductScheduleEntity->getGrossPrice(),
-                $notAppliedPriceProductScheduleEntity->getNetPrice()
-            )
+                $notAppliedPriceProductScheduleEntity->getNetPrice(),
+            ),
         );
     }
 
@@ -283,8 +287,8 @@ class PriceProductScheduleApplyTest extends Unit
                     'Scheduled price with id: #%s, active from: %s, active to: %s should have been set as current.',
                     $priceProductScheduleEntity->getIdPriceProductSchedule(),
                     $priceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
-                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y')
-                )
+                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                ),
             );
         }
     }
@@ -323,8 +327,8 @@ class PriceProductScheduleApplyTest extends Unit
                     'Scheduled price with id: #%s, active from: %s, active to: %s should have been set as current.',
                     $priceProductScheduleEntity->getIdPriceProductSchedule(),
                     $priceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
-                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y')
-                )
+                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                ),
             );
         }
     }
@@ -366,8 +370,8 @@ class PriceProductScheduleApplyTest extends Unit
                     'Scheduled price with id: #%s, active from: %s, active to: %s should have been set as current.',
                     $priceProductScheduleEntity->getIdPriceProductSchedule(),
                     $priceProductScheduleEntity->getActiveFrom()->format('d-m-Y'),
-                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y')
-                )
+                    $priceProductScheduleEntity->getActiveTo()->format('d-m-Y'),
+                ),
             );
         }
     }
@@ -406,7 +410,7 @@ class PriceProductScheduleApplyTest extends Unit
         $priceProductScheduleEntity = $this->tester->getPriceProductScheduleQuery()->findOneByIdPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
         $this->assertFalse(
             $priceProductScheduleEntity->isCurrent(),
-            'Scheduled price for other store should not have been set as current.'
+            'Scheduled price for other store should not have been set as current.',
         );
     }
 

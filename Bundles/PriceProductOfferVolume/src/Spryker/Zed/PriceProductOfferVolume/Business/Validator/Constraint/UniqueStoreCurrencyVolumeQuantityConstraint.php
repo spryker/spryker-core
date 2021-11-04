@@ -23,10 +23,8 @@ class UniqueStoreCurrencyVolumeQuantityConstraint extends SymfonyConstraint
     protected $priceProductOfferVolumeService;
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @param \Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface $priceProductOfferVolumeService
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(
         PriceProductOfferVolumeServiceInterface $priceProductOfferVolumeService,

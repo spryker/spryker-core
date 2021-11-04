@@ -24,14 +24,17 @@ class AclEntityRulePermissionMaskToBinaryStep implements DataImportStepInterface
      * @var string
      */
     protected const OPERATION_CREATE = 'C';
+
     /**
      * @var string
      */
     protected const OPERATION_READ = 'R';
+
     /**
      * @var string
      */
     protected const OPERATION_UPDATE = 'U';
+
     /**
      * @var string
      */
@@ -63,8 +66,8 @@ class AclEntityRulePermissionMaskToBinaryStep implements DataImportStepInterface
                     sprintf(
                         static::INVALID_PERMISSION_TEMPLATE,
                         $permission,
-                        implode(', ', array_keys($this->permissionMaskBinaryMap))
-                    )
+                        implode(', ', array_keys($this->permissionMaskBinaryMap)),
+                    ),
                 );
             }
             $binaryPermissionMask |= $this->permissionMaskBinaryMap[strtoupper($permission)];

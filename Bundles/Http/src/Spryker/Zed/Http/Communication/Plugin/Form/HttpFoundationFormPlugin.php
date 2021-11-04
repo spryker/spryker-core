@@ -32,7 +32,7 @@ class HttpFoundationFormPlugin extends AbstractPlugin implements FormPluginInter
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addTypeExtension(
-            $this->getFactory()->createFormTypeHttpFoundationExtension()
+            $this->getFactory()->createFormTypeHttpFoundationExtension(),
         );
 
         return $formFactoryBuilder;

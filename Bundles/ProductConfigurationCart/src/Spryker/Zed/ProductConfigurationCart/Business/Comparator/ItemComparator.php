@@ -56,8 +56,8 @@ class ItemComparator implements ItemComparatorInterface
                 throw new TransferPropertyNotFoundException(
                     sprintf(
                         'The property "%s" can\'t be found in ItemTransfer.',
-                        $fieldName
-                    )
+                        $fieldName,
+                    ),
                 );
             }
 
@@ -83,7 +83,7 @@ class ItemComparator implements ItemComparatorInterface
         return ($itemInCartProductConfigurationInstanceTransfer === null && $itemProductConfigurationInstanceTransfer === null)
             || $this->isProductConfigurationInstanceHashEquals(
                 $itemInCartProductConfigurationInstanceTransfer,
-                $itemProductConfigurationInstanceTransfer
+                $itemProductConfigurationInstanceTransfer,
             );
     }
 

@@ -31,7 +31,7 @@ class EntityTagFactory extends AbstractFactory
     {
         return new EntityTagReader(
             $this->createEntityTagKeyGenerator(),
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 
@@ -41,7 +41,7 @@ class EntityTagFactory extends AbstractFactory
     public function createEntityTagKeyGenerator(): EntityTagKeyGeneratorInterface
     {
         return new EntityTagKeyGenerator(
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -54,7 +54,7 @@ class EntityTagFactory extends AbstractFactory
             $this->createEntityTagKeyGenerator(),
             $this->getStorageClient(),
             $this->getUtilTextService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

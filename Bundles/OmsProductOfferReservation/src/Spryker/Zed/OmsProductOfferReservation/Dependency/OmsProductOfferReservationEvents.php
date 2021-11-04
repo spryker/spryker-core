@@ -14,6 +14,7 @@ interface OmsProductOfferReservationEvents
      * - Represents spy_oms_product_offer_reservation entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_CREATE = 'Entity.spy_oms_product_offer_reservation.create';
@@ -23,6 +24,7 @@ interface OmsProductOfferReservationEvents
      * - Represents spy_oms_product_offer_reservation entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_DELETE = 'Entity.spy_oms_product_offer_reservation.delete';
@@ -32,6 +34,7 @@ interface OmsProductOfferReservationEvents
      * - Represents spy_oms_product_offer_reservation entity update.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_UPDATE = 'Entity.spy_oms_product_offer_reservation.update';

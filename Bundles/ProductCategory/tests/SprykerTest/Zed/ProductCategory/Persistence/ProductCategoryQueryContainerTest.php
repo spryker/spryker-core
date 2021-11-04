@@ -27,10 +27,12 @@ class ProductCategoryQueryContainerTest extends Unit
      * @var string
      */
     protected const LOCALE_NAME = 'en_US';
+
     /**
      * @var string
      */
     protected const PRODUCT_ABSTRACT_SKU = 'PRODUCT_ABSTRACT';
+
     /**
      * @var string
      */
@@ -40,6 +42,7 @@ class ProductCategoryQueryContainerTest extends Unit
      * @var string
      */
     protected const PRODUCT_ABSTRACT_SKU_1 = 'PRODUCT_ABSTRACT_1';
+
     /**
      * @var string
      */
@@ -49,6 +52,7 @@ class ProductCategoryQueryContainerTest extends Unit
      * @var string
      */
     protected const PRODUCT_ABSTRACT_SKU_2 = 'PRODUCT_ABSTRACT_2';
+
     /**
      * @var string
      */

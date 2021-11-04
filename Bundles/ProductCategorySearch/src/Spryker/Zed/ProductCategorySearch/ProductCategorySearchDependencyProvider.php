@@ -22,10 +22,12 @@ class ProductCategorySearchDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+
     /**
      * @var string
      */

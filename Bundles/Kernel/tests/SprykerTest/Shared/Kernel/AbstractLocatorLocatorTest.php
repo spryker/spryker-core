@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Kernel;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\BundleProxy;
 use SprykerTest\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
@@ -29,6 +30,6 @@ class AbstractLocatorLocatorTest extends Unit
         $locator = LocatorLocator::getInstance();
         $bundleProxy = $locator->foo();
 
-        $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $bundleProxy);
+        $this->assertInstanceOf(BundleProxy::class, $bundleProxy);
     }
 }

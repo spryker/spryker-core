@@ -14,48 +14,56 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
 {
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_FIX
+     *
      * @var string
      */
     protected const OPTION_FIX = 'fix';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_DRY_RUN
+     *
      * @var string
      */
     protected const OPTION_DRY_RUN = 'dry-run';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_QUIET
+     *
      * @var string
      */
     protected const OPTION_QUIET = 'quiet';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_EXPLAIN
+     *
      * @var string
      */
     protected const OPTION_EXPLAIN = 'explain';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_SNIFFS
+     *
      * @var string
      */
     protected const OPTION_SNIFFS = 'sniffs';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_VERBOSE
+     *
      * @var string
      */
     protected const OPTION_VERBOSE = 'verbose';
 
     /**
      * @see \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer::OPTION_IGNORE
+     *
      * @var string
      */
     protected const OPTION_IGNORE = 'ignore';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_LEVEL
+     *
      * @var string
      */
     protected const OPTION_LEVEL = 'level';
@@ -64,10 +72,12 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
      * @var string
      */
     protected const MODULE_CONFIG_LEVEL = 'level';
+
     /**
      * @var int
      */
     protected const LEVEL_SPRYKER_BASIC = 1;
+
     /**
      * @var int
      */
@@ -79,12 +89,12 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected $developmentConfig;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $moduleConfig;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $configurationOptions;
 
@@ -97,7 +107,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return $this
      */
@@ -109,7 +119,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * @param array $configurationOptions
+     * @param array<string, mixed> $configurationOptions
      *
      * @return $this
      */
@@ -218,7 +228,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
 
         if (!in_array($optionLevel, $levelAllowed, true)) {
             throw new InvalidArgumentException(
-                sprintf('Level should be in [%s] range', implode(', ', $levelAllowed))
+                sprintf('Level should be in [%s] range', implode(', ', $levelAllowed)),
             );
         }
 

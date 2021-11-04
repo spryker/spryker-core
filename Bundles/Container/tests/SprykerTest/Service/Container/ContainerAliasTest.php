@@ -28,6 +28,7 @@ class ContainerAliasTest extends Unit
      * @var string
      */
     protected const SERVICE = 'service';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class ContainerAliasTest extends Unit
      * @var string
      */
     protected const SERVICE_ALIAS = 'service-alias';
+
     /**
      * @var string
      */

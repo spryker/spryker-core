@@ -44,7 +44,7 @@ class PaymentProviderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentProvider> $paymentProviderEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpyPaymentProvider[] $paymentProviderEntityCollection
      * @param \Generated\Shared\Transfer\PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
@@ -56,11 +56,11 @@ class PaymentProviderMapper
         foreach ($paymentProviderEntityCollection as $paymentProviderEntity) {
             $paymentProviderTransfer = $this->mapPaymentProviderEntityToPaymentProviderTransfer(
                 $paymentProviderEntity,
-                new PaymentProviderTransfer()
+                new PaymentProviderTransfer(),
             );
             $paymentProviderTransfer = $this->addPaymentMethodsToPaymentProvider(
                 $paymentProviderEntity,
-                $paymentProviderTransfer
+                $paymentProviderTransfer,
             );
             $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
         }

@@ -47,7 +47,7 @@ class ConfigurationResolver implements ConfigurationResolverInterface
 
             $securityConfigurationSettingTransfers[$type]->offsetSet(
                 $property,
-                $defaultSecurityBlockerConfigurationSettingsTransfer->offsetGet($property)
+                $defaultSecurityBlockerConfigurationSettingsTransfer->offsetGet($property),
             );
         }
 

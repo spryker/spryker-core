@@ -51,7 +51,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockReader(
             $this->getQueryContainer(),
-            $this->createCmsBlockMapper()
+            $this->createCmsBlockMapper(),
         );
     }
 
@@ -61,7 +61,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockMapper(): CmsBlockMapperInterface
     {
         return new CmsBlockMapper(
-            $this->createCmsBlockStoreRelationMapper()
+            $this->createCmsBlockStoreRelationMapper(),
         );
     }
 
@@ -78,7 +78,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH),
             $this->createCmsBlockTemplateManager(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::PLUGIN_CMS_BLOCK_UPDATE),
-            $this->createCmsBlockKeyProvider()
+            $this->createCmsBlockKeyProvider(),
         );
     }
 
@@ -107,7 +107,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCmsBlockTemplateMapper(),
             $this->getConfig(),
-            $this->createFinder()
+            $this->createFinder(),
         );
     }
 
@@ -119,7 +119,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
         return new CmsBlockGlossaryManager(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_LOCALE)
+            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_LOCALE),
         );
     }
 
@@ -134,7 +134,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->createCmsBlockGlossaryKeyGenerator(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::QUERY_CONTAINER_GLOSSARY),
             $this->getTouchFacade(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
         );
     }
 
@@ -145,7 +145,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockStoreRelationWriter(
             $this->getQueryContainer(),
-            $this->createCmsBlockStoreRelationReader()
+            $this->createCmsBlockStoreRelationReader(),
         );
     }
 
@@ -156,7 +156,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsBlockStoreRelationReader(
             $this->getQueryContainer(),
-            $this->createCmsBlockStoreRelationMapper()
+            $this->createCmsBlockStoreRelationMapper(),
         );
     }
 
@@ -190,7 +190,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     protected function createCmsBlockGlossaryKeyGenerator(): CmsBlockGlossaryKeyGeneratorInterface
     {
         return new CmsBlockGlossaryKeyGenerator(
-            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_GLOSSARY)
+            $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_GLOSSARY),
         );
     }
 

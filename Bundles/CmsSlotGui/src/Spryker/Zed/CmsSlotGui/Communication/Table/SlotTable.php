@@ -28,6 +28,7 @@ class SlotTable extends AbstractTable
     protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
     protected const COL_CONTENT_PROVIDER = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
+
     /**
      * @var string
      */
@@ -37,22 +38,27 @@ class SlotTable extends AbstractTable
      * @var string
      */
     protected const VALUE_COL_ID_CMS_SLOT = 'ID';
+
     /**
      * @var string
      */
     protected const VALUE_COL_NAME = 'Name';
+
     /**
      * @var string
      */
     protected const VALUE_COL_DESCRIPTION = 'Description';
+
     /**
      * @var string
      */
     protected const VALUE_COL_CONTENT_PROVIDER = 'Content Provider';
+
     /**
      * @var string
      */
     protected const VALUE_COL_STATUS = 'Status';
+
     /**
      * @var string
      */
@@ -62,6 +68,7 @@ class SlotTable extends AbstractTable
      * @var string
      */
     protected const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
+
     /**
      * @var string
      */
@@ -261,7 +268,7 @@ class SlotTable extends AbstractTable
         return sprintf(
             static::COL_NAME_WRAPPER,
             $slot[static::COL_CONTENT_PROVIDER],
-            $slot[SpyCmsSlotTableMap::COL_NAME]
+            $slot[SpyCmsSlotTableMap::COL_NAME],
         );
     }
 
@@ -276,7 +283,7 @@ class SlotTable extends AbstractTable
             $this->getUrlActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
             'Activate',
             ToggleActiveCmsSlotForm::class,
-            ['class' => 'btn-view js-slot-activation']
+            ['class' => 'btn-view js-slot-activation'],
         );
 
         if ($slot[static::COL_STATUS]) {
@@ -284,11 +291,13 @@ class SlotTable extends AbstractTable
                 $this->getUrlDeactivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
                 ToggleActiveCmsSlotForm::class,
-                ['class' => 'btn-danger js-slot-activation']
+                ['class' => 'btn-danger js-slot-activation'],
             );
         }
 
-        $buttons[] = $statusToggleButton;
+        $buttons = [
+            $statusToggleButton,
+        ];
 
         return implode(' ', $buttons);
     }

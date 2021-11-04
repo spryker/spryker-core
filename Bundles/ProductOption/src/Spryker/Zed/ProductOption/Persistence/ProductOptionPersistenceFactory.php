@@ -79,7 +79,7 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function createProductOptionGroupQueryExpander(): ProductOptionGroupQueryExpanderInterface
     {
         return new ProductOptionGroupQueryExpander(
-            $this->getProductOptionListTableQueryCriteriaExpanderPlugins()
+            $this->getProductOptionListTableQueryCriteriaExpanderPlugins(),
         );
     }
 

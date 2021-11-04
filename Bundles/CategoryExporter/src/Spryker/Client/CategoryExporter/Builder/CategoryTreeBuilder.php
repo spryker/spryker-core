@@ -17,6 +17,7 @@ class CategoryTreeBuilder
      * @var string
      */
     public const SUBTREE_DEPTH_KEY = 'depth';
+
     /**
      * @var int
      */
@@ -56,7 +57,7 @@ class CategoryTreeBuilder
         foreach ($parents as $parent) {
             $storageKey = $this->keyBuilder->generateKey(
                 $parent[CategoryNodeKeyInterface::NODE_ID],
-                $locale
+                $locale,
             );
             $parentCategory = $this->kvReader->get($storageKey);
 

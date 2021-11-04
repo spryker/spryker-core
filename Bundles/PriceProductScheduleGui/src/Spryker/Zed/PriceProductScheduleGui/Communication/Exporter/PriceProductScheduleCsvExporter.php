@@ -21,34 +21,42 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
      * @var string
      */
     protected const HEADER_ABSTRACT_SKU = 'abstract_sku';
+
     /**
      * @var string
      */
     protected const HEADER_CONCRETE_SKU = 'concrete_sku';
+
     /**
      * @var string
      */
     protected const HEADER_PRICE_TYPE = 'price_type';
+
     /**
      * @var string
      */
     protected const HEADER_STORE = 'store';
+
     /**
      * @var string
      */
     protected const HEADER_CURRENCY = 'currency';
+
     /**
      * @var string
      */
     protected const HEADER_NET_PRICE = 'value_net';
+
     /**
      * @var string
      */
     protected const HEADER_GROSS_PRICE = 'value_gross';
+
     /**
      * @var string
      */
     protected const HEADER_FROM = 'from_included';
+
     /**
      * @var string
      */
@@ -58,6 +66,7 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
      * @var string
      */
     protected const FORMAT_FILE_NAME = '%s.csv';
+
     /**
      * @var string
      */

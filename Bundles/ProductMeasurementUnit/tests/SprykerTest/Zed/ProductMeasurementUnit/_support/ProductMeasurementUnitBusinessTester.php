@@ -48,7 +48,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
         return (new CartChangeTransfer())
             ->setQuote(
                 (new QuoteTransfer())
-                    ->setItems(new ArrayObject([]))
+                    ->setItems(new ArrayObject([])),
             )
             ->setItems(new ArrayObject([]));
     }
@@ -73,7 +73,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setQuantity($quantity)
-                ->setQuantitySalesUnit($quantitySalesUnit)
+                ->setQuantitySalesUnit($quantitySalesUnit),
         );
 
         return $cartChangeTransfer;
@@ -97,7 +97,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
             (new ItemTransfer())
                 ->setSku($sku)
                 ->setQuantity($quantity)
-                ->setQuantitySalesUnit($amountSalesUnit)
+                ->setQuantitySalesUnit($amountSalesUnit),
         );
     }
 
@@ -113,7 +113,7 @@ class ProductMeasurementUnitBusinessTester extends Actor
             ->setName('SalesUnitName');
         $productMeasurementBaseUnit = (new ProductMeasurementBaseUnitTransfer())
             ->setProductMeasurementUnit(
-                (new ProductMeasurementUnitTransfer())->setName('BaseUnitName')
+                (new ProductMeasurementUnitTransfer())->setName('BaseUnitName'),
             );
 
         $quantitySalesUnit = new ProductMeasurementSalesUnitTransfer();
@@ -169,13 +169,13 @@ class ProductMeasurementUnitBusinessTester extends Actor
 
         $productMeasurementBaseUnitTransfer = $this->haveProductMeasurementBaseUnit(
             $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
         );
 
         $productMeasurementSalesUnitTransfer = $this->haveProductMeasurementSalesUnit(
             $productTransfer->getIdProductConcrete(),
             $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit(),
         );
 
         $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());

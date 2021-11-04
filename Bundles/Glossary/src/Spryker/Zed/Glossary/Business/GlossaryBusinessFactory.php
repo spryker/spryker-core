@@ -34,7 +34,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getLocaleFacade(),
             $this->createKeyManager(),
-            $this->getMessagesFacade()
+            $this->getMessagesFacade(),
         );
     }
 
@@ -68,7 +68,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     public function createKeyManager()
     {
         return new KeyManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -80,7 +80,7 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
         $installer = new GlossaryInstaller(
             $this->createTranslationManager(),
             $this->createKeyManager(),
-            $this->getConfig()->getGlossaryFilePaths()
+            $this->getConfig()->getGlossaryFilePaths(),
         );
 
         return $installer;

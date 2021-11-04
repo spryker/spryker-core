@@ -49,7 +49,7 @@ class ItemsGrouper implements ItemsGrouperInterface
             if (!isset($shipmentGroupTransfers[$shipmentHashKey])) {
                 $shipmentGroupTransfers[$shipmentHashKey] = $this->createShipmentGroupTransferWithListedItems(
                     $itemTransfer,
-                    $shipmentHashKey
+                    $shipmentHashKey,
                 );
             }
 

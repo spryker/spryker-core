@@ -21,6 +21,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
@@ -70,7 +72,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantProductOfferGuiToMerchantFacadeBridge(
-                $container->getLocator()->merchant()->facade()
+                $container->getLocator()->merchant()->facade(),
             );
         });
 

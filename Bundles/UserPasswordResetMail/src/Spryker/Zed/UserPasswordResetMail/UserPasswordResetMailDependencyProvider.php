@@ -44,7 +44,7 @@ class UserPasswordResetMailDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::FACADE_MAIL, function (Container $container) {
             return new UserPasswordResetMailToMailFacadeBridge(
-                $container->getLocator()->mail()->facade()
+                $container->getLocator()->mail()->facade(),
             );
         });
 

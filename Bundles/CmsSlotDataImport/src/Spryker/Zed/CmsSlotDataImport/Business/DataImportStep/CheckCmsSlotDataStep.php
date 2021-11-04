@@ -54,8 +54,8 @@ class CheckCmsSlotDataStep extends AbstractCheckDataStep implements DataImportSt
                 sprintf(
                     "Failed to import cms slot with key [%s]: \n%s",
                     $cmsSlotTransfer->getKey(),
-                    implode("\n", $errorMessages)
-                )
+                    implode("\n", $errorMessages),
+                ),
             );
         }
     }

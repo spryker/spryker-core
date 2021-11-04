@@ -27,15 +27,10 @@ interface MerchantProductOfferTableExpanderInterface
     public function expandTableConfiguration(TableConfiguration $config): TableConfiguration;
 
     /**
-     * @phpstan-param array<string, mixed> $rowData
-     * @phpstan-param array<string, mixed> $productOfferData
+     * @param array<string, mixed> $rowData
+     * @param array<string, mixed> $productOfferData
      *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $rowData
-     * @param array $productOfferData
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expandData(array $rowData, array $productOfferData): array;
 }

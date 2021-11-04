@@ -60,8 +60,8 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
             $error = $this->createPriceProductScheduleListErrorTransfer(
                 sprintf(
                     static::ERROR_MESSAGE_PRICE_PRODUCT_SCHEDULE_LIST_NOT_FOUND,
-                    $requestedPriceProductScheduleListTransfer->getIdPriceProductScheduleList()
-                )
+                    $requestedPriceProductScheduleListTransfer->getIdPriceProductScheduleList(),
+                ),
             );
 
             return $priceProductScheduleListResponseTransfer->addError($error);
@@ -79,7 +79,7 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
     {
         return $this->priceProductScheduleRepository
             ->findPriceProductScheduleListByName(
-                $this->priceProductScheduleConfig->getPriceProductScheduleListDefaultName()
+                $this->priceProductScheduleConfig->getPriceProductScheduleListDefaultName(),
             );
     }
 

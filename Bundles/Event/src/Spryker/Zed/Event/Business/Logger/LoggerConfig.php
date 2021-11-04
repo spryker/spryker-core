@@ -70,7 +70,7 @@ class LoggerConfig implements LoggerConfigInterface
 
         return new StreamHandler(
             $eventLogPath,
-            Logger::INFO
+            Logger::INFO,
         );
     }
 }

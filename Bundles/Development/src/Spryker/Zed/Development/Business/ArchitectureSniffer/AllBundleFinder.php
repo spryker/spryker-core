@@ -27,20 +27,20 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected $filter;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $projectNamespaces;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $coreNamespaces;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Laminas\Filter\FilterInterface $filter
-     * @param array $projectNamespaces
-     * @param array $coreNamespaces
+     * @param array<string> $projectNamespaces
+     * @param array<string> $coreNamespaces
      */
     public function __construct(Finder $finder, FilterInterface $filter, $projectNamespaces = [], $coreNamespaces = [])
     {
@@ -68,9 +68,9 @@ class AllBundleFinder implements AllBundleFinderInterface
     /**
      * @param string $path
      * @param string $namespace
-     * @param array $allBundles
+     * @param array<array<string, mixed>> $allBundles
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function findBundles($path, $namespace, array $allBundles)
     {
@@ -98,9 +98,9 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param array $allBundles
+     * @param array<array<string, mixed>> $allBundles
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function loadProjectBundles(array $allBundles)
     {
@@ -113,9 +113,9 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param array $allBundles
+     * @param array<array<string, mixed>> $allBundles
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function loadCoreDevelopmentBundles(array $allBundles)
     {
@@ -127,9 +127,9 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param array $allBundles
+     * @param array<array<string, mixed>> $allBundles
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function loadOtherCoreBundles(array $allBundles)
     {
@@ -145,9 +145,9 @@ class AllBundleFinder implements AllBundleFinderInterface
     }
 
     /**
-     * @param array $allBundles
+     * @param array<array<string, mixed>> $allBundles
      *
-     * @return mixed
+     * @return array<array<string, mixed>>
      */
     protected function addApplication(array $allBundles)
     {

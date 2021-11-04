@@ -59,7 +59,7 @@ class OrderReader implements OrderReaderInterface
         if ($restRequest->getResource()->getId()) {
             return $this->getOrderDetailsResourceAttributes(
                 $restRequest->getResource()->getId(),
-                $restRequest->getRestUser()->getNaturalIdentifier()
+                $restRequest->getRestUser()->getNaturalIdentifier(),
             );
         }
 
@@ -153,7 +153,7 @@ class OrderReader implements OrderReaderInterface
         return $this->orderRestResponseBuilder->createOrderListRestResponse(
             $orderListTransfer->getOrders(),
             $totalItems,
-            $limit
+            $limit,
         );
     }
 

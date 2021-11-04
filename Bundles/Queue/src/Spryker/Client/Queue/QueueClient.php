@@ -22,7 +22,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -68,7 +68,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      *
      * @param string $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
@@ -83,7 +83,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
@@ -140,7 +140,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -155,7 +155,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

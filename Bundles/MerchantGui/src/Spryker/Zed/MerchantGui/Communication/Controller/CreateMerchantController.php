@@ -38,7 +38,7 @@ class CreateMerchantController extends AbstractController
         $merchantForm = $this->getFactory()
             ->getMerchantCreateForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

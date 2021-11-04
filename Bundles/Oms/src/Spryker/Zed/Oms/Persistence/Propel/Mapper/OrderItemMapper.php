@@ -36,7 +36,7 @@ class OrderItemMapper implements OrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory> $omsOrderItemStateHistoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemStateTransfer>
      */
@@ -57,7 +57,7 @@ class OrderItemMapper implements OrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
@@ -70,11 +70,11 @@ class OrderItemMapper implements OrderItemMapperInterface
             $itemTransfer = (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
 
             $itemTransfer->setProcess(
-                $salesOrderItemEntity->getProcess()->getName()
+                $salesOrderItemEntity->getProcess()->getName(),
             );
 
             $itemTransfer->setState(
-                (new ItemStateTransfer())->fromArray($salesOrderItemEntity->getState()->toArray(), true)
+                (new ItemStateTransfer())->fromArray($salesOrderItemEntity->getState()->toArray(), true),
             );
 
             $itemTransfers[] = $itemTransfer;

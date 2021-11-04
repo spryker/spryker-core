@@ -20,10 +20,12 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
      * @var string
      */
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
+
     /**
      * @var string
      */
     protected const HTML_OUTPUT_ENCODING = 'HTML-ENTITIES';
+
     /**
      * @var string
      */
@@ -60,7 +62,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
 
         $this->domDocument->loadHTML(
             $this->getHtmlForDomDocumentLoading($html),
-            LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+            LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD,
         );
         $replaceableNodes = $this->getReplaceableNodes();
 

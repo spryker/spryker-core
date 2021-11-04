@@ -16,6 +16,7 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
      * @var string
      */
     public const TYPE_COLLECTOR = 'collector';
+
     /**
      * @var string
      */
@@ -53,8 +54,8 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
         throw new QueryBuilderException(
             sprintf(
                 'Meta provider for type "%s" not found.',
-                $type
-            )
+                $type,
+            ),
         );
     }
 
@@ -66,7 +67,7 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
         return new MetaDataProvider(
             $this->discountBusinessFactory->getDecisionRulePlugins(),
             $this->discountBusinessFactory->createComparatorOperators(),
-            $this->discountBusinessFactory->createLogicalComparators()
+            $this->discountBusinessFactory->createLogicalComparators(),
         );
     }
 
@@ -78,7 +79,7 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
         return new MetaDataProvider(
             $this->discountBusinessFactory->getCollectorPlugins(),
             $this->discountBusinessFactory->createComparatorOperators(),
-            $this->discountBusinessFactory->createLogicalComparators()
+            $this->discountBusinessFactory->createLogicalComparators(),
         );
     }
 }

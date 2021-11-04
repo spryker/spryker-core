@@ -14,7 +14,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterf
  */
 class_alias(
     ExtensionResultFormatterPluginInterface::class,
-    'Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface'
+    'Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface',
 );
 
 // This is done to support Composer's --classmap-authoritative option.

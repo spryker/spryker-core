@@ -24,7 +24,7 @@ class ProductGroupFactory extends AbstractFactory
         return new ProductStorageReader(
             $this->createProductAbstractGroupStorageReader(),
             $this->createProductGroupStorageReader(),
-            $this->getProductClient()
+            $this->getProductClient(),
         );
     }
 

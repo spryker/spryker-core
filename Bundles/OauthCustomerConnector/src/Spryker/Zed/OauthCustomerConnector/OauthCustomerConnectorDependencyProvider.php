@@ -22,6 +22,7 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */

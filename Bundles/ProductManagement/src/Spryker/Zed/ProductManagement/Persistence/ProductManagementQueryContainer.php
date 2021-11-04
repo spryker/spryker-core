@@ -68,7 +68,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE,
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
                 ],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
@@ -95,13 +95,13 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             $query->where(
                 'LOWER(' . SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION . ') = ?',
                 mb_strtolower($attributeValueOrTranslation),
-                PDO::PARAM_STR
+                PDO::PARAM_STR,
             )
             ->_or()
             ->where(
                 'LOWER(' . SpyProductManagementAttributeValueTableMap::COL_VALUE . ') = ?',
                 mb_strtolower($attributeValueOrTranslation),
-                PDO::PARAM_STR
+                PDO::PARAM_STR,
             );
         }
 

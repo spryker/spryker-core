@@ -21,6 +21,7 @@ class GlueApplicationApplicationPlugin extends AbstractPlugin implements Applica
      * @var string
      */
     protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
     /**
      * @var string
      */

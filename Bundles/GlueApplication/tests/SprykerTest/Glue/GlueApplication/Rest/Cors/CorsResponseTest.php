@@ -224,7 +224,7 @@ class CorsResponseTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourceRoutePlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $resourceRoutePlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface
      */
@@ -254,7 +254,7 @@ class CorsResponseTest extends Unit
             static::PARENT_RESOURCE_TYPE,
             static::PARENT_RESOURCE_ID,
             static::RESOURCE_TYPE,
-            static::RESOURCE_ID
+            static::RESOURCE_ID,
         );
     }
 }

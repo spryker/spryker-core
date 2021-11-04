@@ -50,7 +50,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->createStorageExporter(),
             $this->getConfig(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -90,7 +90,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createStorageMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterStorageTouchUpdater()
+            $this->createExporterWriterStorageTouchUpdater(),
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -106,7 +106,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createStorageWriter()
     {
         return new RedisWriter(
-            StorageInstanceBuilder::getStorageReadWriteInstance()
+            StorageInstanceBuilder::getStorageReadWriteInstance(),
         );
     }
 
@@ -119,7 +119,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createStorageWriter(),
             $this->createRedisReader(),
             $this->createKvMarkerKeyBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -129,7 +129,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     protected function createRedisReader()
     {
         return new RedisReader(
-            StorageInstanceBuilder::getStorageReadWriteInstance()
+            StorageInstanceBuilder::getStorageReadWriteInstance(),
         );
     }
 
@@ -164,7 +164,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new SearchTouchUpdater(
             $this->createBulkUpdateTouchQuery(),
-            $this->createBulkDeleteTouchQuery()
+            $this->createBulkDeleteTouchQuery(),
         );
     }
 
@@ -175,7 +175,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new StorageTouchUpdater(
             $this->createBulkUpdateTouchQuery(),
-            $this->createBulkDeleteTouchQuery()
+            $this->createBulkDeleteTouchQuery(),
         );
     }
 
@@ -191,7 +191,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->createElasticsearchExporter($searchWriter),
             $this->getConfig(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -209,7 +209,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
             $this->createBatchResultModel(),
-            $this->createExporterWriterSearchTouchUpdater()
+            $this->createExporterWriterSearchTouchUpdater(),
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -228,7 +228,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType(),
-            $this->createIndexFactory()
+            $this->createIndexFactory(),
         );
 
         return $elasticsearchWriter;
@@ -245,7 +245,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             StorageInstanceBuilder::getElasticsearchInstance(),
             $settings->getSearchIndexName(),
             $settings->getSearchDocumentType(),
-            $this->createIndexFactory()
+            $this->createIndexFactory(),
         );
 
         return $elasticsearchUpdateWriter;
@@ -260,7 +260,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createSearchMarkerWriter(),
             $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -273,7 +273,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType(),
-            $this->createMappingFactory()
+            $this->createMappingFactory(),
         );
 
         return $elasticsearchMarkerWriter;
@@ -288,7 +288,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType(),
-            $this->createIndexFactory()
+            $this->createIndexFactory(),
         );
     }
 
@@ -301,7 +301,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType(),
-            $this->createIndexFactory()
+            $this->createIndexFactory(),
         );
     }
 

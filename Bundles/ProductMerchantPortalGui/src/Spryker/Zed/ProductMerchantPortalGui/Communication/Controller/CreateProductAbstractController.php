@@ -24,6 +24,7 @@ class CreateProductAbstractController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Product successfully created!';
+
     /**
      * @var string
      */
@@ -33,18 +34,22 @@ class CreateProductAbstractController extends AbstractController
      * @var string
      */
     protected const REQUEST_PARAM_NAME = 'name';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_BACK = 'back';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_CONCRETE_PRODUCTS = 'concreteProducts';
+
     /**
      * @var string
      */
@@ -52,36 +57,42 @@ class CreateProductAbstractController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::ID_TABLE_PRODUCT_LIST
+     *
      * @var string
      */
     protected const ID_TABLE_PRODUCT_LIST = 'product-list';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
+     *
      * @var string
      */
     protected const FIELD_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_SKU
+     *
      * @var string
      */
     protected const FIELD_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME
+     *
      * @var string
      */
     protected const FIELD_CONCRETE_NAME = 'concreteName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU
+     *
      * @var string
      */
     protected const FIELD_CONCRETE_SKU = 'concreteSku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE
+     *
      * @var string
      */
     protected const FIELD_IS_SINGLE_CONCRETE = 'isSingleConcrete';
@@ -117,7 +128,7 @@ class CreateProductAbstractController extends AbstractController
         return new RedirectResponse(
             $this->getFactory()
                 ->createCreateProductUrlGenerator()
-                ->getCreateUrl($formData, (bool)$formData[static::FIELD_IS_SINGLE_CONCRETE])
+                ->getCreateUrl($formData, (bool)$formData[static::FIELD_IS_SINGLE_CONCRETE]),
         );
     }
 
@@ -135,7 +146,7 @@ class CreateProductAbstractController extends AbstractController
             return new RedirectResponse(
                 $this->getFactory()
                     ->createCreateProductUrlGenerator()
-                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
+                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
             );
         }
 
@@ -194,7 +205,7 @@ class CreateProductAbstractController extends AbstractController
             return new RedirectResponse(
                 $this->getFactory()
                     ->createCreateProductUrlGenerator()
-                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName)
+                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
             );
         }
 
@@ -209,7 +220,7 @@ class CreateProductAbstractController extends AbstractController
         $createProductAbstractWithMultiConcreteForm->handleRequest($request);
 
         $productAbstractTransfer = $this->getProductAbstractTransfer(
-            $createProductAbstractWithMultiConcreteForm->getData()
+            $createProductAbstractWithMultiConcreteForm->getData(),
         );
 
         $superAttributes = $this->getFactory()
@@ -227,7 +238,7 @@ class CreateProductAbstractController extends AbstractController
 
         if (!$request->isMethod(Request::METHOD_POST)) {
             return new JsonResponse(
-                $this->createMultiConcreteResponse($viewData, $formData)
+                $this->createMultiConcreteResponse($viewData, $formData),
             );
         }
 
@@ -336,7 +347,7 @@ class CreateProductAbstractController extends AbstractController
         return [
             'form' => $this->renderView(
                 '@ProductMerchantPortalGui/Partials/create_product_abstract_with_multi_concrete_form.twig',
-                $viewData
+                $viewData,
             )->getContent(),
             'action' => $this->getFactory()->createCreateProductUrlGenerator()->getCreateUrl($formData, false),
         ];

@@ -26,6 +26,7 @@ class ProductPriceMapExpanderPlugin extends AbstractPlugin implements ProductAbs
      * @var string
      */
     protected const KEY_PRICE = 'price';
+
     /**
      * @var string
      */

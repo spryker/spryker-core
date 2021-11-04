@@ -17,6 +17,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
      * @var string
      */
     protected const TRANSFER_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
+
     /**
      * @var string
      */
@@ -26,26 +27,32 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_ATTRIBUTES = 'Attributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_COLLECTION = 'Collection';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_DATA = 'Data';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_RELATIONSHIPS = 'Relationships';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_INCLUDED = 'Included';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
+
     /**
      * @var string
      */
@@ -87,7 +94,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_REQUEST
+            static::SCHEMA_NAME_PARTIAL_REQUEST,
         );
     }
 
@@ -101,7 +108,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_REQUEST . static::SCHEMA_NAME_PARTIAL_DATA
+            static::SCHEMA_NAME_PARTIAL_REQUEST . static::SCHEMA_NAME_PARTIAL_DATA,
         );
     }
 
@@ -115,7 +122,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_REQUEST . static::SCHEMA_NAME_PARTIAL_ATTRIBUTES
+            static::SCHEMA_NAME_PARTIAL_REQUEST . static::SCHEMA_NAME_PARTIAL_ATTRIBUTES,
         );
     }
 
@@ -129,7 +136,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_RESPONSE
+            static::SCHEMA_NAME_PARTIAL_RESPONSE,
         );
     }
 
@@ -143,7 +150,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_RESPONSE . static::SCHEMA_NAME_PARTIAL_DATA
+            static::SCHEMA_NAME_PARTIAL_RESPONSE . static::SCHEMA_NAME_PARTIAL_DATA,
         );
     }
 
@@ -157,7 +164,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE
+            static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE,
         );
     }
 
@@ -171,7 +178,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE . static::SCHEMA_NAME_PARTIAL_DATA
+            static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE . static::SCHEMA_NAME_PARTIAL_DATA,
         );
     }
 
@@ -185,7 +192,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            ''
+            '',
         );
     }
 
@@ -199,7 +206,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_RELATIONSHIPS
+            static::SCHEMA_NAME_PARTIAL_RELATIONSHIPS,
         );
     }
 
@@ -213,7 +220,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
         return $this->createSchemaNameFromTransferClassName(
             $this->getTransferClassNamePartial($transferClassName),
             static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
-            static::SCHEMA_NAME_PARTIAL_INCLUDED
+            static::SCHEMA_NAME_PARTIAL_INCLUDED,
         );
     }
 

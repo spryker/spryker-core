@@ -69,7 +69,7 @@ class ProductCategoryFilterCollectorRunner implements ProductCategoryFilterColle
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

@@ -31,6 +31,7 @@ class DataExportConsole extends Console
      * @var string
      */
     protected const OPTION_CONFIG = 'config';
+
     /**
      * @var string
      */
@@ -105,7 +106,7 @@ class DataExportConsole extends Console
                     '<fg=white>File name: %s, DataEntity: %s, Count: %d</fg=white>',
                     $dataExportResultTransfer->getFileName(),
                     $dataExportResultTransfer->getDataEntity(),
-                    $dataExportResultTransfer->getExportCount()
+                    $dataExportResultTransfer->getExportCount(),
                 ));
             }
         }

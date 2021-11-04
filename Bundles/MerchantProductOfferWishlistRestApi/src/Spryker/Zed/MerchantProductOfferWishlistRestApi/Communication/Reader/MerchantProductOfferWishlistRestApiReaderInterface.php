@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 interface MerchantProductOfferWishlistRestApiReaderInterface
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *

@@ -29,6 +29,7 @@ class CompanyUserForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_COMPANY_USER = 'id_company_user';
+
     /**
      * @var string
      */
@@ -58,7 +59,7 @@ class CompanyUserForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -72,7 +73,7 @@ class CompanyUserForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -86,7 +87,7 @@ class CompanyUserForm extends AbstractType
                 'label' => false,
                 CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $options[CompanyUserCustomerForm::OPTION_GENDER_CHOICES],
                 CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $options[CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES],
-            ]
+            ],
         );
 
         return $this;

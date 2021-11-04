@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface;
 
 /**
+ * @deprecated Will be removed in the next major without replacement.
+ *
  * @method \Spryker\Zed\MerchantProductOfferWishlistRestApi\Communication\MerchantProductOfferWishlistRestApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProductOfferWishlistRestApi\Business\MerchantProductOfferWishlistRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferWishlistRestApi\MerchantProductOfferWishlistRestApiConfig getConfig()
@@ -24,8 +26,6 @@ class EmptyProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends A
      * - Checks if requested wishlist item is exist in wishlist item collection.
      *
      * @api
-     *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
@@ -42,8 +42,6 @@ class EmptyProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends A
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
@@ -54,7 +52,7 @@ class EmptyProductOfferRestWishlistItemsAttributesDeleteStrategyPlugin extends A
         $this->getFacade()
             ->deleteWishlistItemWithoutProductOffer(
                 $wishlistItemRequestTransfer,
-                $wishlistItemTransfers
+                $wishlistItemTransfers,
             );
     }
 }

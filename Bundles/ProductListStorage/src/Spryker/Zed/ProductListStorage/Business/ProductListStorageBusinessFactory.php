@@ -35,7 +35,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductListProductAbstractStorageWriter(
             $this->getProductListFacade(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -47,7 +47,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductListProductConcreteStorageWriter(
             $this->getProductListFacade(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -57,7 +57,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -67,7 +67,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteReader(): ProductConcreteReaderInterface
     {
         return new ProductConcreteReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -80,7 +80,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
             $this->createProductListProductAbstractStorageWriter(),
             $this->createProductListProductConcreteStorageWriter(),
             $this->getProductListFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

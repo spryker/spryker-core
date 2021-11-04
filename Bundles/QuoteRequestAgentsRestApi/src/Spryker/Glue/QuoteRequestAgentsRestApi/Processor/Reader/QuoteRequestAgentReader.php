@@ -72,7 +72,7 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
         return $this->quoteRequestsRestApiResource
             ->createQuoteRequestRestResponse(
                 $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
     }
 
@@ -102,7 +102,7 @@ class QuoteRequestAgentReader implements QuoteRequestAgentReaderInterface
         return $this->quoteRequestsRestApiResource
             ->createQuoteRequestCollectionRestResponse(
                 $quoteRequestOverviewCollectionTransfer,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
     }
 }

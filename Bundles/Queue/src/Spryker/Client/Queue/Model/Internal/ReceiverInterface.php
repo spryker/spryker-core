@@ -19,7 +19,7 @@ interface ReceiverInterface
      *
      * @param string $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
@@ -32,7 +32,7 @@ interface ReceiverInterface
      * @api
      *
      * @param string $queueName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */

@@ -23,10 +23,12 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
      * @var string
      */
     public const COMMAND_NAME = 'dev:composer:update-json-files';
+
     /**
      * @var string
      */
     public const OPTION_DRY_RUN = 'dry-run';
+
     /**
      * @var string
      */
@@ -63,8 +65,8 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
             $this->error(
                 sprintf(
                     'Argument `%s` is not a valid module.',
-                    $this->input->getArgument(static::ARGUMENT_MODULE)
-                )
+                    $this->input->getArgument(static::ARGUMENT_MODULE),
+                ),
             );
 
             return static::CODE_ERROR;
@@ -103,8 +105,8 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
             $this->info(
                 sprintf(
                     'Please run %s locally without dry-run:',
-                    count($commands) > 1 ? 'these commands' : 'this command'
-                )
+                    count($commands) > 1 ? 'these commands' : 'this command',
+                ),
             );
             $this->output->writeln(implode("\n", $commands));
         }

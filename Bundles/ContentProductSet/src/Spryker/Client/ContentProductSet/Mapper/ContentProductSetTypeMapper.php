@@ -53,7 +53,7 @@ class ContentProductSetTypeMapper implements ContentProductSetTypeMapperInterfac
 
         if (!isset($this->contentProductSetTermExecutors[$term])) {
             throw new InvalidProductSetTermException(
-                sprintf('There is no matching Term for ProductSetType when provided with term %s.', $term)
+                sprintf('There is no matching Term for ProductSetType when provided with term %s.', $term),
             );
         }
 

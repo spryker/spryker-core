@@ -140,7 +140,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
             ->createPriceProductScheduleCsvReader()
             ->readPriceProductScheduleImportTransfersFromCsvFile(
                 $uploadedFile,
-                $productScheduledListImportRequestTransfer
+                $productScheduledListImportRequestTransfer,
             );
     }
 

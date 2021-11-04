@@ -174,7 +174,7 @@ class ProductApi implements ProductApiInterface
         $query = $this->buildQuery($apiRequestTransfer);
 
         $collection = $this->transferMapper->toTransferCollection(
-            $query->find()->toArray()
+            $query->find()->toArray(),
         );
 
         foreach ($collection as $k => $productApiTransfer) {

@@ -25,6 +25,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER = 'PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER';
+
     /**
      * @var string
      */
@@ -54,7 +55,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::CLIENT_PRODUCT_CONFIGURATION_STORAGE, function (Container $container) {
             return new ProductConfigurationsRestApiToProductConfigurationStorageClientBridge(
-                $container->getLocator()->productConfigurationStorage()->client()
+                $container->getLocator()->productConfigurationStorage()->client(),
             );
         });
 

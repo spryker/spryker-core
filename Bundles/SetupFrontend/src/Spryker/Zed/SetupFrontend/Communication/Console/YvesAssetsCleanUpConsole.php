@@ -20,6 +20,7 @@ class YvesAssetsCleanUpConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:yves:cleanup-assets';
+
     /**
      * @var string
      */

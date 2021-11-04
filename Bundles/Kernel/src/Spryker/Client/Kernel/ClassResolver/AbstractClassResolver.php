@@ -15,10 +15,12 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
      * @var string
      */
     public const KEY_NAMESPACE = '%namespace%';
+
     /**
      * @var string
      */
     public const KEY_BUNDLE = '%bundle%';
+
     /**
      * @var string
      */
@@ -41,7 +43,7 @@ abstract class AbstractClassResolver extends SharedAbstractClassResolver
         return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
-            $this->getClassPattern()
+            $this->getClassPattern(),
         );
     }
 }

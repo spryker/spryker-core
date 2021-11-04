@@ -35,7 +35,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
         $productConfigurationStorageEntity = $this->getFactory()->createProductConfigurationStorageMapper()
             ->mapProductConfigurationStorageTransferToProductConfigurationStorageEntity(
                 $productConfigurationStorageEntity,
-                $productConfigurationStorageTransfer
+                $productConfigurationStorageTransfer,
             );
 
         $productConfigurationStorageEntity->save();
@@ -43,7 +43,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
         return $this->getFactory()->createProductConfigurationStorageMapper()
             ->mapProductConfigurationStorageEntityToProductConfigurationStorageTransfer(
                 $productConfigurationStorageEntity,
-                new ProductConfigurationStorageTransfer()
+                new ProductConfigurationStorageTransfer(),
             );
     }
 
@@ -54,7 +54,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
      */
     public function deleteProductConfigurationStorageByProductConfigurationIds(array $productConfigurationIds): void
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage> $productConfigurationStorageEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities */
         $productConfigurationStorageEntities = $this->getFactory()
             ->createProductConfigurationStorageQuery()
             ->filterByFkProductConfiguration_In($productConfigurationIds)
@@ -66,7 +66,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage> $productConfigurationStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities
      *
      * @return void
      */

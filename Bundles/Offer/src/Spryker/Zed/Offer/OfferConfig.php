@@ -32,6 +32,7 @@ class OfferConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
@@ -49,7 +50,7 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getIncompleteOfferStatuses(): array
     {

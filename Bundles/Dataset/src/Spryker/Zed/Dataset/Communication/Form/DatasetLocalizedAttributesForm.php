@@ -28,18 +28,22 @@ class DatasetLocalizedAttributesForm extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_NAME = 'localeName';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
     public const FIELD_ID_DATASET_LOCALIZED_ATTRIBUTES = 'idDatasetLocalizedAttributes';
+
     /**
      * @var string
      */
@@ -47,7 +51,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

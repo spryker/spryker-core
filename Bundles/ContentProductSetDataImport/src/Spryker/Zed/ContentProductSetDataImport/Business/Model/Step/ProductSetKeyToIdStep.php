@@ -20,14 +20,17 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
      * @var string
      */
     protected const ERROR_MESSAGE_PRODUCT_SET_KEY_DEFAULT = '"{column}" is required. Please check the row with key: "{key}".';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "{column}" in the row with key: "{key}". The wrong product set key passed.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+
     /**
      * @var string
      */

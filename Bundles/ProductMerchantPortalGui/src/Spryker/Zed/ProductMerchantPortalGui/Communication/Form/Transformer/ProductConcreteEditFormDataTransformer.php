@@ -13,12 +13,14 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_SEARCHABILITY
+     *
      * @var string
      */
     protected const FIELD_SEARCHABILITY = 'searchability';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
+     *
      * @var string
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
@@ -58,7 +60,7 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $idLocale = $localizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail();
             $localizedAttributesTransfer->setIsSearchable(
-                in_array($idLocale, $productConcreteEditFormData[static::FIELD_SEARCHABILITY])
+                in_array($idLocale, $productConcreteEditFormData[static::FIELD_SEARCHABILITY]),
             );
         }
 

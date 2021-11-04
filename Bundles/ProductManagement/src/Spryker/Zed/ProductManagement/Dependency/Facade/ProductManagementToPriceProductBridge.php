@@ -82,7 +82,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     ): array {
         return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
             $idProductAbstract,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
     }
 
@@ -101,7 +101,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
         return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
             $idProductConcrete,
             $idProductAbstract,
-            $priceProductCriteriaTransfer
+            $priceProductCriteriaTransfer,
         );
     }
 }

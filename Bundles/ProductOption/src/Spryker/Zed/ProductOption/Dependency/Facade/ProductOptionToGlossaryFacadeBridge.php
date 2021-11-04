@@ -25,10 +25,8 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
     }
 
     /**
-     * @phpstan-param array<mixed> $data
-     *
      * @param string $keyName
-     * @param array $data
+     * @param array<mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return string

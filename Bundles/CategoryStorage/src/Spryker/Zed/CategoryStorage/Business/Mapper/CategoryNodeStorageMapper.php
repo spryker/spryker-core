@@ -47,7 +47,7 @@ class CategoryNodeStorageMapper implements CategoryNodeStorageMapperInterface
                 ->mapCategoryLocalizedAttributesTransfersToCategoryNodeStorageTransferForLocale(
                     $categoryTransfer->getLocalizedAttributes(),
                     $categoryNodeStorageTransfer,
-                    $localeName
+                    $localeName,
                 );
 
             $localizedCategoryNodeStorageTransfers[$nodeTransfer->getIdCategoryNode()] = $categoryNodeStorageTransfer;

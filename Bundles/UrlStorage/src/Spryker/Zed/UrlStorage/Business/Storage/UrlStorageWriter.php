@@ -25,6 +25,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
      * @var string
      */
     public const RESOURCE_TYPE = 'type';
+
     /**
      * @var string
      */
@@ -191,7 +192,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
         $this->getLogger()->warning(sprintf(
             "The URL entity resource type could not be determined, URL won't be published: %s",
-            json_encode($data)
+            json_encode($data),
         ));
 
         return null;
@@ -209,7 +210,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param array<\Orm\Zed\Url\Persistence\SpyUrl[]> $groupedUrlEntities
+     * @param array<array<\Orm\Zed\Url\Persistence\SpyUrl>> $groupedUrlEntities
      *
      * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
@@ -241,7 +242,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             $urlStorageTransfer->addUrlStorage(
                 (new UrlStorageTransfer())
                     ->fromArray($otherUrlEntity->toArray(), true)
-                    ->setLocaleName($otherUrlEntity->getSpyLocale()->getLocaleName())
+                    ->setLocaleName($otherUrlEntity->getSpyLocale()->getLocaleName()),
             );
         }
 

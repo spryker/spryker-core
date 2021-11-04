@@ -64,7 +64,7 @@ class RedirectChainAppendTest extends Unit
         $this->assertSame(
             $barUrlRedirectTransfer->getToUrl(),
             $actualRedirectEntity->getToUrl(),
-            'Redirects that has the same target as a newly created source of a redirect should point to the new target.'
+            'Redirects that has the same target as a newly created source of a redirect should point to the new target.',
         );
     }
 

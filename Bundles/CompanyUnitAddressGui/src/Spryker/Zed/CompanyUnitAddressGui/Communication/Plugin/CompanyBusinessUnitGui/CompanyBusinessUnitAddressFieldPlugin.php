@@ -39,7 +39,7 @@ class CompanyBusinessUnitAddressFieldPlugin extends AbstractPlugin implements Co
 
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions($companyBusinessUnitTransfer->getFkCompany())
+            $dataProvider->getOptions($companyBusinessUnitTransfer->getFkCompany()),
         );
     }
 }

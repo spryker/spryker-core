@@ -18,6 +18,7 @@ class ShoppingListAddItemPreCheck implements ShoppingListAddItemPreCheckInterfac
      * @var string
      */
     protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+
     /**
      * @var string
      */

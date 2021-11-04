@@ -41,7 +41,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
 
         return $this->mapProductMeasurementUnit(
             $productMeasurementUnitStorageTransfer,
-            new ProductMeasurementUnitTransfer()
+            new ProductMeasurementUnitTransfer(),
         );
     }
 
@@ -67,7 +67,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         foreach ($productMeasurementUnitStorageTransfers as $productMeasurementUnitStorageTransfer) {
             $productMeasurementUnitTransfers[] = $this->mapProductMeasurementUnit(
                 $productMeasurementUnitStorageTransfer,
-                new ProductMeasurementUnitTransfer()
+                new ProductMeasurementUnitTransfer(),
             );
         }
 
@@ -93,7 +93,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         foreach ($productMeasurementUnitStorageTransfers as $productMeasurementUnitStorageTransfer) {
             $productMeasurementUnitTransfers[] = $this->mapProductMeasurementUnit(
                 $productMeasurementUnitStorageTransfer,
-                new ProductMeasurementUnitTransfer()
+                new ProductMeasurementUnitTransfer(),
             );
         }
 
@@ -112,7 +112,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     ): ProductMeasurementUnitTransfer {
         $measurementUnitTransfer->fromArray(
             $measurementUnitStorageTransfer->toArray(),
-            true
+            true,
         );
 
         return $measurementUnitTransfer;

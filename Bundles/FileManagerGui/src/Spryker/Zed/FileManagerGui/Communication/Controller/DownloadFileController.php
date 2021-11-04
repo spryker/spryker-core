@@ -25,18 +25,22 @@ class DownloadFileController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+
     /**
      * @var string
      */
     protected const CONTENT_DISPOSITION = 'Content-Disposition';
+
     /**
      * @var string
      */
     protected const CONTENT_TYPE = 'Content-Type';
+
     /**
      * @var string
      */
     protected const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
+
     /**
      * @var string
      */
@@ -84,7 +88,7 @@ class DownloadFileController extends AbstractController
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $fileName,
-            (string)$transliterator->transliterate($fileName)
+            (string)$transliterator->transliterate($fileName),
         );
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);

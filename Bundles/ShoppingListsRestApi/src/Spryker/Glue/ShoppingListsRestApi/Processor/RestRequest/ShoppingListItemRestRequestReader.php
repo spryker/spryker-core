@@ -48,7 +48,7 @@ class ShoppingListItemRestRequestReader implements ShoppingListItemRestRequestRe
         $uuidShoppingListItem = $restRequest->getResource()->getId();
         if (!$uuidShoppingListItem) {
             return (new ShoppingListItemRequestTransfer())->addErrorIdentifier(
-                SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED
+                SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_ID_NOT_SPECIFIED,
             );
         }
 

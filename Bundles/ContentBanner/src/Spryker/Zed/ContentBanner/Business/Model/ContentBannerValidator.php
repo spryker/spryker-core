@@ -52,7 +52,7 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
         foreach ($this->constraintsProvider->getConstraintsMap() as $parameter => $constraintCollection) {
             $violations = $validator->validate(
                 $properties[$parameter],
-                $constraintCollection
+                $constraintCollection,
             );
             if (count($violations) !== 0) {
                 $contentParameterMessageTransfer = new ContentParameterMessageTransfer();
@@ -60,7 +60,7 @@ class ContentBannerValidator implements ContentBannerValidatorInterface
 
                 foreach ($violations as $violation) {
                     $contentParameterMessageTransfer->addMessage(
-                        (new MessageTransfer())->setValue($violation->getMessage())
+                        (new MessageTransfer())->setValue($violation->getMessage()),
                     );
                 }
                 $contentValidationResponseTransfer->addParameterMessages($contentParameterMessageTransfer);

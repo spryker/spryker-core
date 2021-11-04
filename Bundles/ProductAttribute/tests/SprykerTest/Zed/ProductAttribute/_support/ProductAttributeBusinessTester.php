@@ -45,26 +45,32 @@ class ProductAttributeBusinessTester extends Actor
      * @var string
      */
     public const ABSTRACT_SKU = 'testFooBarAbstract';
+
     /**
      * @var string
      */
     public const CONCRETE_SKU = 'testFooBarConcrete';
+
     /**
      * @var string
      */
     public const SUPER_ATTRIBUTE_KEY = 'super_attribute';
+
     /**
      * @var string
      */
     public const SUPER_ATTRIBUTE_VALUE = 'very super attribute';
+
     /**
      * @var string
      */
     public const FOO_ATTRIBUTE_KEY = 'foo';
+
     /**
      * @var string
      */
     public const ANOTHER_SUPER_ATTRIBUTE_KEY = 'another_super_attribute';
+
     /**
      * @var string
      */
@@ -82,6 +88,7 @@ class ProductAttributeBusinessTester extends Actor
      * @var string
      */
     public const LOCALE_ONE_NAME = 'de_DE';
+
     /**
      * @var string
      */

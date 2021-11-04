@@ -15,14 +15,17 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
      * @var string
      */
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
+
     /**
      * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+
     /**
      * @var string
      */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */

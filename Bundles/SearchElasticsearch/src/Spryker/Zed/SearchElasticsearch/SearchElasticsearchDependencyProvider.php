@@ -21,14 +21,17 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */
@@ -71,7 +74,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SearchElasticsearchToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

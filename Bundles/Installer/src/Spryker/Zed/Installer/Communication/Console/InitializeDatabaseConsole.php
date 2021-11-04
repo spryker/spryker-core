@@ -22,6 +22,7 @@ class InitializeDatabaseConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'setup:init-db';
+
     /**
      * @var string
      */

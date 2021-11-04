@@ -22,10 +22,12 @@ class CmsNavigationConnectorDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
+
     /**
      * @var string
      */

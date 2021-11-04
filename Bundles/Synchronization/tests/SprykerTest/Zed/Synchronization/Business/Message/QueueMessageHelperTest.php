@@ -47,7 +47,7 @@ class QueueMessageHelperTest extends Unit
         /** @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer $resultQueueReceiveMessageTransfer */
         $resultQueueReceiveMessageTransfer = $queueMessageHelper->markMessageAsFailed(
             $queueReceiveMessageTransfer,
-            static::TEST_ERROR_MESSAGE
+            static::TEST_ERROR_MESSAGE,
         );
 
         $this->assertFalse($resultQueueReceiveMessageTransfer->getAcknowledge());

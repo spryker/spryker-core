@@ -50,7 +50,7 @@ class JsonIndexDefinitionMapper implements IndexDefinitionMapperInterface
             $indexDefinitionFileTransfers[] = $this->mapSplFileInfoToIndexDefinitionFileTransfer(
                 $splFileInfo,
                 new IndexDefinitionFileTransfer(),
-                $storePrefixes
+                $storePrefixes,
             );
         }
 

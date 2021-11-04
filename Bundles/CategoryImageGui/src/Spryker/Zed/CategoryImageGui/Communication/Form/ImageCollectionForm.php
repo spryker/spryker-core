@@ -30,22 +30,27 @@ class ImageCollectionForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_CATEGORY_IMAGE = 'idCategoryImage';
+
     /**
      * @var string
      */
     public const FIELD_IMAGE_SMALL = 'externalUrlSmall';
+
     /**
      * @var string
      */
     public const FIELD_IMAGE_LARGE = 'externalUrlLarge';
+
     /**
      * @var string
      */
     public const FIELD_SORT_ORDER = 'sortOrder';
+
     /**
      * @var string
      */
     public const FIELD_IMAGE_PREVIEW = 'imagePreview';
+
     /**
      * @var string
      */
@@ -55,10 +60,12 @@ class ImageCollectionForm extends AbstractType
      * @var int
      */
     public const IMAGE_URL_MIN_LENGTH = 0;
+
     /**
      * @var int
      */
     public const IMAGE_URL_MAX_LENGTH = 2048;
+
     /**
      * @var int
      */
@@ -68,10 +75,12 @@ class ImageCollectionForm extends AbstractType
      * @var int
      */
     protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+
     /**
      * @var int
      */
     protected const MIN_SORT_ORDER_VALUE = 0;
+
     /**
      * @var int
      */
@@ -79,13 +88,14 @@ class ImageCollectionForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     *
      * @var string
      */
     protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

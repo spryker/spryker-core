@@ -55,7 +55,7 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
         string $sku
     ): ?ProductConfigurationStorageTransfer {
         $productConfigurationStorageData = $this->storageClient->get(
-            $this->generateKey($sku)
+            $this->generateKey($sku),
         );
 
         if (!$productConfigurationStorageData) {
@@ -64,7 +64,7 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
 
         return $this->productConfigurationStorageMapper->mapProductConfigurationStorageDataToProductConfigurationStorageTransfer(
             $productConfigurationStorageData,
-            new ProductConfigurationStorageTransfer()
+            new ProductConfigurationStorageTransfer(),
         );
     }
 

@@ -27,6 +27,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
      * @var string
      */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+
     /**
      * @var string
      */
@@ -48,7 +49,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
     public function testAclModuleHasPriorityDifferentFromDefaultPriority(): void
     {
         $aclModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedAclModulePath()
+            $this->tester->getZedAclModulePath(),
         );
 
         $aclPriority = $aclModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
@@ -64,7 +65,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
         $this->expectExceptionMessage('Priority should be more than 0');
 
         $customerModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedCustomerModulePath()
+            $this->tester->getZedCustomerModulePath(),
         );
     }
 
@@ -74,7 +75,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
     public function testDiscountModuleHasDefaultPriorityBecauseDoesNotHavePriorityParamInConfigFile(): void
     {
         $discountModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedDiscountModulePath()
+            $this->tester->getZedDiscountModulePath(),
         );
 
         $discountPriority = $discountModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
@@ -88,7 +89,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
     public function testCountryModuleHasDefaultPriorityBecauseConfigFileHasWrongExtension(): void
     {
         $countryModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedCountryPath()
+            $this->tester->getZedCountryPath(),
         );
 
         $countryPriority = $countryModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
@@ -102,7 +103,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
     public function testProductModuleHasDefaultPriorityBecauseConfigFileDoesNotExist(): void
     {
         $productModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedProductModulePath()
+            $this->tester->getZedProductModulePath(),
         );
 
         $productPriority = $productModuleArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
@@ -116,7 +117,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
     public function testCustomDirectoryHasDefaultPriorityBecauseConfigFileDoesNotHaveArchitectureSnifferBlock(): void
     {
         $customDirectoryArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedCustomPath()
+            $this->tester->getZedCustomPath(),
         );
 
         $customDirectoryPriority = $customDirectoryArchitectureSnifferConfig[static::CONFIG_PRIORITY_NAME];
@@ -130,7 +131,7 @@ class ArchitectureSnifferConfigurationBuilderTest extends Unit
     public function testDiscountModuleHasIgnoreErrorPatternsInConfigFile(): void
     {
         $discountModuleArchitectureSnifferConfig = $this->tester->createArchitectureSnifferConfigurationBuilder()->getConfiguration(
-            $this->tester->getZedDiscountModulePath()
+            $this->tester->getZedDiscountModulePath(),
         );
 
         $discountModuleIgnoreErrorPatterns = $discountModuleArchitectureSnifferConfig[static::CONFIG_IGNORE_ERRORS];

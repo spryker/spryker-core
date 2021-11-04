@@ -21,7 +21,7 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -40,7 +40,7 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
     {
         $bundleFormDataProvider = new BundleFormDataProvider(
             $request,
-            $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer)
+            $this->getFacade()->showOutgoingDependenciesForModule($moduleTransfer),
         );
 
         return $bundleFormDataProvider;

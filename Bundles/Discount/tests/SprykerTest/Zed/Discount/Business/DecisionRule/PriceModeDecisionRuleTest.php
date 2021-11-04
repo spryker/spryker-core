@@ -39,7 +39,7 @@ class PriceModeDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $priceModeDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(1000),
-            $this->createClauseTransfer('GROSS_MODE')
+            $this->createClauseTransfer('GROSS_MODE'),
         );
 
         $this->assertTrue($isSatisfied);

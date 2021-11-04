@@ -44,7 +44,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
         return $this->getEligibleProductConcreteTransfers(
             $productConcreteTransfers,
             $productMeasurementSalesUnitCounts,
-            $productMeasurementBaseUnitCounts
+            $productMeasurementBaseUnitCounts,
         );
     }
 

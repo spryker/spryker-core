@@ -19,30 +19,31 @@ class EventItemTriggerFormDataProvider
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE
+     *
      * @var string
      */
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_REDIRECT
+     *
      * @var string
      */
     protected const URL_PARAM_REDIRECT = 'redirect';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_EVENT_NAME
+     *
      * @var string
      */
     protected const URL_PARAM_EVENT_NAME = 'event';
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param string $merchantSalesOrderItemReference
      * @param string $eventName
      * @param string $redirect
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         string $merchantSalesOrderItemReference,

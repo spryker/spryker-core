@@ -23,14 +23,17 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
      * @var string
      */
     protected const KEY_ID_CATEGORY = 'id_category';
+
     /**
      * @var string
      */
     protected const KEY_NAME = 'name';
+
     /**
      * @var string
      */
     protected const KEY_URL = 'url';
+
     /**
      * @var string
      */
@@ -50,7 +53,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     ): array {
         $categoryLocalizedAttributesTransfer = $this->findCategoryLocalizedAttributesTransferForLocale(
             $nodeTransfer->getCategoryOrFail()->getLocalizedAttributes(),
-            $localeName
+            $localeName,
         );
 
         return [

@@ -20,7 +20,7 @@ class ShoppingListNoteFactory extends AbstractFactory
     public function getShoppingListItemToItemMapper(): ShoppingListItemToItemMapperInterface
     {
         return new ShoppingListItemToItemMapper(
-            $this->getCartClient()
+            $this->getCartClient(),
         );
     }
 

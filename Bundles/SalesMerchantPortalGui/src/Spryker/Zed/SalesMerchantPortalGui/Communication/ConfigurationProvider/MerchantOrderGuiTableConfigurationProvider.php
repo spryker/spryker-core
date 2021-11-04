@@ -22,34 +22,42 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
      * @var string
      */
     public const COL_KEY_REFERENCE = 'reference';
+
     /**
      * @var string
      */
     public const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';
+
     /**
      * @var string
      */
     public const COL_KEY_CREATED = 'created';
+
     /**
      * @var string
      */
     public const COL_KEY_CUSTOMER = 'customer';
+
     /**
      * @var string
      */
     public const COL_KEY_EMAIL = 'Email';
+
     /**
      * @var string
      */
     public const COL_KEY_ITEMS_STATES = 'itemsStates';
+
     /**
      * @var string
      */
     public const COL_KEY_GRAND_TOTAL = 'grandTotal';
+
     /**
      * @var string
      */
     public const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
+
     /**
      * @var string
      */
@@ -62,6 +70,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\OrdersController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/orders/table-data';
@@ -154,8 +163,8 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
             'Details',
             sprintf(
                 '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
-                MerchantOrderTransfer::ID_MERCHANT_ORDER
-            )
+                MerchantOrderTransfer::ID_MERCHANT_ORDER,
+            ),
         )->setRowClickAction(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL);
 
         return $guiTableConfigurationBuilder;

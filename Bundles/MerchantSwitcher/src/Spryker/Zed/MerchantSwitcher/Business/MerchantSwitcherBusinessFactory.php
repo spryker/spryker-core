@@ -34,7 +34,7 @@ class MerchantSwitcherBusinessFactory extends AbstractBusinessFactory
         return new MerchantSwitcher(
             $this->getMerchantProductOfferFacade(),
             $this->getQuoteFacade(),
-            $this->getCartFacade()
+            $this->getCartFacade(),
         );
     }
 
@@ -44,7 +44,7 @@ class MerchantSwitcherBusinessFactory extends AbstractBusinessFactory
     public function createWishlistMerchantSwitcher(): WishlistMerchantSwitcherInterface
     {
         return new WishlistMerchantSwitcher(
-            $this->getMerchantProductOfferFacade()
+            $this->getMerchantProductOfferFacade(),
         );
     }
 

@@ -23,11 +23,9 @@ class ProductBundleStorageToEventBehaviorFacadeBridge implements ProductBundleSt
     }
 
     /**
-     * @phpstan-return array<int>
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return array
+     * @return array<int>
      */
     public function getEventTransferIds(array $eventTransfers)
     {
@@ -35,12 +33,10 @@ class ProductBundleStorageToEventBehaviorFacadeBridge implements ProductBundleSt
     }
 
     /**
-     * @phpstan-return array<int>
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
-     * @return array
+     * @return array<int>
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
     {
@@ -48,10 +44,8 @@ class ProductBundleStorageToEventBehaviorFacadeBridge implements ProductBundleSt
     }
 
     /**
-     * @phpstan-param array<string> $columns
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
-     * @param array $columns
+     * @param array<string> $columns
      *
      * @return array<\Generated\Shared\Transfer\EventEntityTransfer>
      */

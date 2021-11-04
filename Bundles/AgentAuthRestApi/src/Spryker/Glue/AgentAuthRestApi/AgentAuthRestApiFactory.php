@@ -44,7 +44,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
         return new CustomerReader(
             $this->getAgentClient(),
             $this->createAgentAccessTokenRestResponseBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -55,7 +55,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
     {
         return new AgentAccessTokenCreator(
             $this->getOauthClient(),
-            $this->createAgentAccessTokenRestResponseBuilder()
+            $this->createAgentAccessTokenRestResponseBuilder(),
         );
     }
 
@@ -66,7 +66,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
     {
         return new AgentCustomerImpersonationAccessTokenCreator(
             $this->getOauthClient(),
-            $this->createAgentAccessTokenRestResponseBuilder()
+            $this->createAgentAccessTokenRestResponseBuilder(),
         );
     }
 
@@ -85,7 +85,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
     {
         return new AgentAccessTokenRestRequestValidator(
             $this->createAgentAuthorizationHeaderReader(),
-            $this->getOauthClient()
+            $this->getOauthClient(),
         );
     }
 
@@ -120,7 +120,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
     {
         return new AgentAuthorizationHeaderReader(
             $this->getOauthService(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

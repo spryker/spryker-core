@@ -24,7 +24,7 @@ class OrderCustomReferenceFactory extends AbstractFactory
     {
         return new OrderCustomReferenceSetter(
             $this->getPersistentCartClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

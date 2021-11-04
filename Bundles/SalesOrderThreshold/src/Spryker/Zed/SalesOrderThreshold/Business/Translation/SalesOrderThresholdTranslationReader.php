@@ -53,7 +53,7 @@ class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTransla
         foreach ($storeTransfer->getAvailableLocaleIsoCodes() as $localeIsoCode) {
             $this->initOrUpdateLocalizedMessages(
                 $salesOrderThresholdTransfer,
-                $localeIsoCode
+                $localeIsoCode,
             );
         }
 
@@ -72,7 +72,7 @@ class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTransla
     ): SalesOrderThresholdTransfer {
         $translationValue = $this->findTranslationValue(
             $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
-            $this->createLocaleTransfer($localeIsoCode)
+            $this->createLocaleTransfer($localeIsoCode),
         );
 
         foreach ($salesOrderThresholdTransfer->getLocalizedMessages() as $salesOrderThresholdLocalizedMessageTransfer) {
@@ -86,7 +86,7 @@ class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTransla
         $salesOrderThresholdTransfer->addLocalizedMessage(
             (new SalesOrderThresholdLocalizedMessageTransfer())
                 ->setLocaleCode($localeIsoCode)
-                ->setMessage($translationValue)
+                ->setMessage($translationValue),
         );
 
         return $salesOrderThresholdTransfer;

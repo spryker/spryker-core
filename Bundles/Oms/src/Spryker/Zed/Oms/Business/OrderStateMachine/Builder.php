@@ -519,8 +519,8 @@ class Builder implements BuilderInterface
             throw new StatemachineException(
                 sprintf(
                     '"%s" found in more then one location. Could not determine which one to choose. Please check your process definition location',
-                    $fileName
-                )
+                    $fileName,
+                ),
             );
         }
 
@@ -528,8 +528,8 @@ class Builder implements BuilderInterface
             throw new StatemachineException(
                 sprintf(
                     'Could not find "%s". Please check your process definition location',
-                    $fileName
-                )
+                    $fileName,
+                ),
             );
         }
     }

@@ -40,8 +40,8 @@ class InMemoryMessageTray implements MessageTrayInterface
         self::getFlashMessagesTransfer()->addSuccessMessage(
             $this->messageTranslator->translate(
                 $message->getValue(),
-                $message->getParameters()
-            )
+                $message->getParameters(),
+            ),
         );
     }
 
@@ -55,8 +55,8 @@ class InMemoryMessageTray implements MessageTrayInterface
         self::getFlashMessagesTransfer()->addInfoMessage(
             $this->messageTranslator->translate(
                 $message->getValue(),
-                $message->getParameters()
-            )
+                $message->getParameters(),
+            ),
         );
     }
 
@@ -70,8 +70,8 @@ class InMemoryMessageTray implements MessageTrayInterface
         self::getFlashMessagesTransfer()->addErrorMessage(
             $this->messageTranslator->translate(
                 $message->getValue(),
-                $message->getParameters()
-            )
+                $message->getParameters(),
+            ),
         );
     }
 

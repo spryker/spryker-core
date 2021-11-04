@@ -57,7 +57,7 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         $productConfiguratorResponseTransfer = $this->productConfigurationClient->mapProductConfiguratorCheckSumResponse(
             $configuratorResponseData,
-            $productConfiguratorResponseTransfer
+            $productConfiguratorResponseTransfer,
         );
 
         $productConfiguratorResponseProcessorResponseTransfer = (new ProductConfiguratorResponseProcessorResponseTransfer())
@@ -66,7 +66,7 @@ class ProductConfiguratorResponseProcessor implements ProductConfiguratorRespons
 
         $productConfiguratorResponseProcessorResponseTransfer = $this->productConfiguratorResponseValidator->validateProductConfiguratorCheckSumResponse(
             $productConfiguratorResponseProcessorResponseTransfer,
-            $configuratorResponseData
+            $configuratorResponseData,
         );
 
         if (!$productConfiguratorResponseProcessorResponseTransfer->getIsSuccessful()) {

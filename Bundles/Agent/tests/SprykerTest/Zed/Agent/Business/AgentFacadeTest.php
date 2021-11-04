@@ -68,7 +68,7 @@ class AgentFacadeTest extends Unit
         // Act
         $agentFromAgentFacade = $this->tester->getFacade()
             ->findAgentByUsername(
-                $this->tester->createAgent()->getUsername()
+                $this->tester->createAgent()->getUsername(),
             );
 
         // Assert
@@ -131,14 +131,14 @@ class AgentFacadeTest extends Unit
         $this->assertCount(
             $customerQueryTransfer->getLimit(),
             $customerAutocompleteResponseTransfer->getCustomers(),
-            'Returned customers count should be equal to limit.'
+            'Returned customers count should be equal to limit.',
         );
         foreach ($customerAutocompleteResponseTransfer->getCustomers() as $index => $actualCustomerTransfer) {
             $expectedCustomerTransfer = $this->customerTransfers[$expectedOffset + $index];
             $this->assertSame(
                 $expectedCustomerTransfer->getCustomerReference(),
                 $actualCustomerTransfer->getCustomerReference(),
-                'Returned customers collection must have the correct offset.'
+                'Returned customers collection must have the correct offset.',
             );
         }
     }

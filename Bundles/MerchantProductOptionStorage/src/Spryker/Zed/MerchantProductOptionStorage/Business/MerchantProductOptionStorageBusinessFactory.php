@@ -30,7 +30,7 @@ class MerchantProductOptionStorageBusinessFactory extends AbstractBusinessFactor
     {
         return new MerchantProductOptionFilter(
             $this->getRepository(),
-            $this->getMerchantProductOptionFacade()
+            $this->getMerchantProductOptionFacade(),
         );
     }
 
@@ -42,7 +42,7 @@ class MerchantProductOptionStorageBusinessFactory extends AbstractBusinessFactor
         return new MerchantProductOptionStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getRepository(),
-            $this->getProductOptionStorageFacade()
+            $this->getProductOptionStorageFacade(),
         );
     }
 

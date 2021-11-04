@@ -23,30 +23,37 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      * @var string
      */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+
     /**
      * @var string
      */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     /**
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY = 'PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY';
+
     /**
      * @var string
      */
     public const PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER';
+
     /**
      * @var string
      */
@@ -148,7 +155,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new MerchantProductOfferStorageToStorageClientBridge(
-                $container->getLocator()->storage()->client()
+                $container->getLocator()->storage()->client(),
             );
         });
 
@@ -164,7 +171,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new MerchantProductOfferStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 
@@ -180,7 +187,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new MerchantProductOfferStorageToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -196,7 +203,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new MerchantProductOfferStorageToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 
@@ -212,7 +219,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_MERCHANT_STORAGE, function (Container $container) {
             return new MerchantProductOfferStorageToMerchantStorageClientBridge(
-                $container->getLocator()->merchantStorage()->client()
+                $container->getLocator()->merchantStorage()->client(),
             );
         });
 

@@ -56,7 +56,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         $productOfferCreateFormDataProvider = $this->getFactory()->createProductOfferCreateFormDataProvider();
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferCreateFormDataProvider->getData($productConcreteTransfer),
-            $productOfferCreateFormDataProvider->getOptions($productAbstractTransfer)
+            $productOfferCreateFormDataProvider->getOptions($productAbstractTransfer),
         );
         $productOfferForm->handleRequest($request);
 
@@ -86,7 +86,7 @@ class CreateProductOfferController extends AbstractProductOfferController
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
                     $priceProductOfferCollectionTransfer,
-                    $initialData
+                    $initialData,
                 );
 
             return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer, $initialData);
@@ -98,7 +98,7 @@ class CreateProductOfferController extends AbstractProductOfferController
             $productOfferForm,
             $productConcreteTransfer,
             $productAbstractTransfer,
-            $initialData
+            $initialData,
         );
     }
 
@@ -112,7 +112,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductOfferPriceTableDataProvider(),
-            $this->getFactory()->createPriceProductOfferCreateGuiTableConfigurationProvider()->getConfiguration([])
+            $this->getFactory()->createPriceProductOfferCreateGuiTableConfigurationProvider()->getConfiguration([]),
         );
     }
 

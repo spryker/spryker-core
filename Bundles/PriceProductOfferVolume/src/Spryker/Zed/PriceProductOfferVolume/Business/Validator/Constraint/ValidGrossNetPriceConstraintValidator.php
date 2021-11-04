@@ -17,6 +17,7 @@ class ValidGrossNetPriceConstraintValidator extends ConstraintValidator
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
@@ -52,7 +53,7 @@ class ValidGrossNetPriceConstraintValidator extends ConstraintValidator
             $pathPrefix = sprintf(
                 '[%s:%s]',
                 PriceProductTransfer::MONEY_VALUE,
-                mb_strtolower($priceTypeName)
+                mb_strtolower($priceTypeName),
             );
 
             $this->context->buildViolation($constraint->getMessage())

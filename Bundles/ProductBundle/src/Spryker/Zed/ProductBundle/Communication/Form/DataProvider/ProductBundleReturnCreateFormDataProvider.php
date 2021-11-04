@@ -14,9 +14,11 @@ class ProductBundleReturnCreateFormDataProvider
 {
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     *
      * @var string
      */
     public const FIELD_RETURN_ITEMS = 'returnItems';
+
     /**
      * @var string
      */
@@ -24,18 +26,21 @@ class ProductBundleReturnCreateFormDataProvider
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     *
      * @var string
      */
     public const OPTION_RETURN_REASONS = 'option_return_reasons';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_ITEMS
+     *
      * @var string
      */
     public const BUNDLE_ITEMS = 'bundleItems';
 
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_PRODUCT
+     *
      * @var string
      */
     public const BUNDLE_PRODUCT = 'bundleProduct';

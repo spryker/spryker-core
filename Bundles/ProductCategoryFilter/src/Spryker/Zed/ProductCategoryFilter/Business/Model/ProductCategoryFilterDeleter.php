@@ -58,7 +58,7 @@ class ProductCategoryFilterDeleter implements ProductCategoryFilterDeleterInterf
     {
         $productCategoryFilterEntity = $this->deleteProductCategoryFilterEntity($categoryId);
         $this->productCategoryFilterTouch->touchProductCategoryFilterDeleted(
-            (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilterEntity->toArray(), true)
+            (new ProductCategoryFilterTransfer())->fromArray($productCategoryFilterEntity->toArray(), true),
         );
     }
 

@@ -24,7 +24,7 @@ class CmsSlotBlockStorageFactory extends AbstractFactory
         return new CmsSlotBlockStorageReader(
             $this->getStorageClient(),
             $this->getCmsSlotBlockStorageService(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

@@ -56,7 +56,7 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
             ->createProductAbstractLabelStorageMapper()
             ->mapProductAbstractLabelStorageEntitiesToProductAbstractLabelStorageTransfers(
                 $productAbstractLabelStorageEntities,
-                []
+                [],
             );
     }
 
@@ -77,7 +77,7 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
             ->createProductLabelDictionaryStorageMapper()
             ->mapProductLabelDictionaryStorageEntitiesToProductLabelDictionaryStorageTransfers(
                 $productLabelDictionaryEntities,
-                []
+                [],
             );
     }
 

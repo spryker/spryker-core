@@ -22,7 +22,7 @@ class ProductPackagingUnitDataImportBusinessFactory extends DataImportBusinessFa
     public function createProductPackagingUnitTypeDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductPackagingUnitTypeDataImporterConfiguration()
+            $this->getConfig()->getProductPackagingUnitTypeDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -39,7 +39,7 @@ class ProductPackagingUnitDataImportBusinessFactory extends DataImportBusinessFa
     public function createProductPackagingUnitDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getProductPackagingUnitDataImporterConfiguration()
+            $this->getConfig()->getProductPackagingUnitDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

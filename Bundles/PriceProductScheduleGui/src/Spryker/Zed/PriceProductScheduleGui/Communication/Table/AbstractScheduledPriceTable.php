@@ -21,30 +21,37 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
      * @var string
      */
     protected const COL_CURRENCY = 'fk_currency';
+
     /**
      * @var string
      */
     protected const COL_STORE = 'fk_store';
+
     /**
      * @var string
      */
     protected const COL_NET_PRICE = 'net_price';
+
     /**
      * @var string
      */
     protected const COL_GROSS_PRICE = 'gross_price';
+
     /**
      * @var string
      */
     protected const COL_ACTIVE_FROM = 'active_from';
+
     /**
      * @var string
      */
     protected const COL_ACTIVE_TO = 'active_to';
+
     /**
      * @var string
      */
     protected const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */
@@ -209,7 +216,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             Url::generate('/price-product-schedule-gui/edit', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
             ]),
-            'Edit'
+            'Edit',
         );
     }
 
@@ -224,7 +231,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             Url::generate('/price-product-schedule-gui/delete', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
             ]),
-            'Delete'
+            'Delete',
         );
     }
 

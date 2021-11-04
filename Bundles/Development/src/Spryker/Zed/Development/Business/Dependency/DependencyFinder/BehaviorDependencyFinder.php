@@ -131,7 +131,7 @@ class BehaviorDependencyFinder implements DependencyFinderInterface
     {
         $dependencyContainer->addDependency(
             $moduleName,
-            $this->getType()
+            $this->getType(),
         );
 
         return $dependencyContainer;

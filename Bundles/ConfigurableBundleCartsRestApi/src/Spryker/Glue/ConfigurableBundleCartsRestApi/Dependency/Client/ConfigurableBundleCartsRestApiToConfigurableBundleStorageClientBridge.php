@@ -36,7 +36,7 @@ class ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientBridge impl
     ): ?ConfigurableBundleTemplateStorageTransfer {
         return $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid(
             $configurableBundleTemplateUuid,
-            $localeName
+            $localeName,
         );
     }
 }

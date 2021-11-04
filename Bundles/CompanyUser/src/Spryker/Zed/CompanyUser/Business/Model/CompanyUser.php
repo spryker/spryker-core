@@ -120,7 +120,7 @@ class CompanyUser implements CompanyUserInterface
             $this->companyUserPluginExecutor->executePreDeletePlugins($companyUserTransfer);
 
             $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
-                $companyUserTransfer->getIdCompanyUser()
+                $companyUserTransfer->getIdCompanyUser(),
             );
 
             $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
@@ -297,7 +297,7 @@ class CompanyUser implements CompanyUserInterface
         $companyUserResponseTransfer->setIsSuccessful(false);
         $companyUserResponseTransfer = $this->addErrorsToResponse(
             $companyUserResponseTransfer,
-            $customerResponseTransfer->getErrors()
+            $customerResponseTransfer->getErrors(),
         );
 
         return $companyUserResponseTransfer;
@@ -328,12 +328,12 @@ class CompanyUser implements CompanyUserInterface
             $companyUserTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
             $companyUserTransfer->setFkCustomer(
                 $customerResponseTransfer->getCustomerTransfer()
-                    ->getIdCustomer()
+                    ->getIdCustomer(),
             );
 
             if ($customerResponseTransfer->getMessage()) {
                 $companyUserResponseTransfer->addMessage(
-                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue())
+                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue()),
                 );
             }
 
@@ -344,7 +344,7 @@ class CompanyUser implements CompanyUserInterface
 
         $companyUserResponseTransfer = $this->addErrorsToResponse(
             $companyUserResponseTransfer,
-            $customerResponseTransfer->getErrors()
+            $customerResponseTransfer->getErrors(),
         );
 
         return $companyUserResponseTransfer;
@@ -415,7 +415,7 @@ class CompanyUser implements CompanyUserInterface
     {
         foreach ($errors as $error) {
             $companyUserResponseTransfer->addMessage(
-                (new ResponseMessageTransfer())->setText($error->getMessage())
+                (new ResponseMessageTransfer())->setText($error->getMessage()),
             );
         }
 

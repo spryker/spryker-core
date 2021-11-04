@@ -25,10 +25,12 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
      * @var string
      */
     protected const GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED = 'shared_cart_page.share.success';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
+
     /**
      * @var string
      */
@@ -80,13 +82,13 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
             return (new ResourceShareResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART),
                 );
         }
 
         $shareCartRequestTransfer = $this->buildShareCartRequestTransfer(
             $resourceShareRequestTransfer,
-            $quotePermissionGroupTransfer
+            $quotePermissionGroupTransfer,
         );
 
         $this->quoteCompanyUserWriter->addQuoteCompanyUser($shareCartRequestTransfer);
@@ -95,7 +97,7 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
             ->setIsSuccessful(true)
             ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
             ->addMessage(
-                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED)
+                (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_WAS_SUCCESSFULLY_SHARED),
             );
     }
 
@@ -128,7 +130,7 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
                 ->setIsSuccessful(true)
                 ->setResourceShare($resourceShareRequestTransfer->getResourceShare())
                 ->addMessage(
-                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED)
+                    (new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_SHARE_ACCESS_UPDATED),
                 );
         }
 
@@ -172,7 +174,7 @@ class ResourceShareQuoteCompanyUserWriter implements ResourceShareQuoteCompanyUs
     protected function findQuotePermissionGroupByName(string $name): ?QuotePermissionGroupTransfer
     {
         $quotePermissionGroups = $this->sharedCartRepository->findQuotePermissionGroupList(
-            (new QuotePermissionGroupCriteriaFilterTransfer())->setName($name)
+            (new QuotePermissionGroupCriteriaFilterTransfer())->setName($name),
         );
 
         if (!count($quotePermissionGroups)) {

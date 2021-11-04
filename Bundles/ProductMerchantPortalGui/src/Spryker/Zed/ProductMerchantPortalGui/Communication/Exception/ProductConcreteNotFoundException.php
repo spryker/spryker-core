@@ -28,7 +28,7 @@ class ProductConcreteNotFoundException extends NotFoundHttpException
     {
         return sprintf(
             'Product concrete is not found for product concrete id %d.',
-            $idProductConcrete
+            $idProductConcrete,
         );
     }
 }

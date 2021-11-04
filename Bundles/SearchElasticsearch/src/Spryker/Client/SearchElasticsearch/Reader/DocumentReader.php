@@ -36,10 +36,10 @@ class DocumentReader implements DocumentReaderInterface
     {
         $elasticaDocument = $this->elasticaClient
             ->getIndex(
-                $this->getIndexName($searchDocumentTransfer)
+                $this->getIndexName($searchDocumentTransfer),
             )
             ->getDocument(
-                $searchDocumentTransfer->getId()
+                $searchDocumentTransfer->getId(),
             );
 
         return $this->mapElasticaDocumentToSearchDocumentTransfer($elasticaDocument, $searchDocumentTransfer);

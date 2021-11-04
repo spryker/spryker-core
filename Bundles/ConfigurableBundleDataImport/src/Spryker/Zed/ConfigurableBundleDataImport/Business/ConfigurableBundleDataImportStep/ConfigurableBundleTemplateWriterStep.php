@@ -35,7 +35,7 @@ class ConfigurableBundleTemplateWriterStep extends PublishAwareStep implements D
 
         $this->addPublishEvents(
             ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH,
-            $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()
+            $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
         );
     }
 

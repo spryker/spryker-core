@@ -16,10 +16,12 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @var string
      */
     protected const ID_FILTER_IN_STORES = 'inStores';
+
     /**
      * @var string
      */
     protected const ID_FILTER_IN_CURRENCIES = 'inCurrencies';
+
     /**
      * @var string
      */
@@ -29,18 +31,22 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
      * @var string
      */
     protected const TITLE_FILTER_STORES = 'Stores';
+
     /**
      * @var string
      */
     protected const TITLE_FILTER_CURRENCIES = 'Currencies';
+
     /**
      * @var string
      */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+
     /**
      * @var string
      */
     protected const TITLE_ADD_BUTTON = 'Save';
+
     /**
      * @var string
      */
@@ -53,36 +59,42 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::PARAM_ID_PRODUCT_OFFER
+     *
      * @var string
      */
     protected const REQUEST_PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\DeletePriceProductOfferController::PARAM_QUANTITY
+     *
      * @var string
      */
     protected const REQUEST_PARAM_QUANTITY = 'quantity';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\DeletePriceProductOfferController::PARAM_PRICE_PRODUCT_OFFER_IDS
+     *
      * @var string
      */
     protected const REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\SavePriceProductOfferController::indexAction()
+     *
      * @var string
      */
     protected const URL_SAVE_PRICES = '/product-offer-merchant-portal-gui/save-price-product-offer?type-price-product-offer-ids=${row.type_price_product_offer_ids}&volume_quantity=${row.volume_quantity}&product_offer_id=%d';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\DeletePriceProductOfferController::indexAction()
+     *
      * @var string
      */
     protected const URL_DELETE_PRICE = '/product-offer-merchant-portal-gui/delete-price-product-offer';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::priceTableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/update-product-offer/price-table-data';
@@ -119,7 +131,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = $this->setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
         );
 
         return $guiTableConfigurationBuilder->createConfiguration();
@@ -154,13 +166,13 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
             static::URL_DELETE_PRICE,
             $deleteUrlParams,
             static::REQUEST_PARAM_PRICE_PRODUCT_OFFER_IDS,
-            static::REQUEST_PARAM_QUANTITY
+            static::REQUEST_PARAM_QUANTITY,
         );
 
         $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            $url
+            $url,
         );
 
         return $guiTableConfigurationBuilder;
@@ -181,7 +193,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
         $guiTableConfigurationBuilder = parent::setEditableConfiguration(
             $guiTableConfigurationBuilder,
             $priceTypeTransfers,
-            $initialData
+            $initialData,
         );
 
         $urlSavePrices = sprintf(static::URL_SAVE_PRICES, $this->idProductOffer);

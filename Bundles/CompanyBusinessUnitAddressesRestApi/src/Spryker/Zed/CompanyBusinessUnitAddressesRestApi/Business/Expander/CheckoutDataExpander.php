@@ -47,7 +47,7 @@ class CheckoutDataExpander implements CheckoutDataExpanderInterface
 
         $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
             ->setIdCompanyBusinessUnit(
-                $restCheckoutRequestAttributesTransfer->getCustomer()->getIdCompanyBusinessUnit()
+                $restCheckoutRequestAttributesTransfer->getCustomer()->getIdCompanyBusinessUnit(),
             );
 
         $companyUnitAddressCollectionTransfer = $this->companyUnitAddressFacade

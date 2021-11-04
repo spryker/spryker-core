@@ -19,6 +19,7 @@ class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements Cms
 {
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY
+     *
      * @var string
      */
     protected const CONDITION_KEY = 'category';

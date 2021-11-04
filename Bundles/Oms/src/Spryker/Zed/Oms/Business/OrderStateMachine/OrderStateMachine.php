@@ -40,16 +40,20 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @var string
      */
     public const BY_ITEM = 'byItem';
+
     /**
      * @var string
      */
     public const BY_ORDER = 'byOrder';
+
     /**
      * @var int
      */
     public const MAX_EVENT_REPEATS = 10;
+
     /**
      * @deprecated Not in use anymore, will be removed in the next major.
+     *
      * @var int
      */
     public const MAX_ON_ENTER = 50;
@@ -694,7 +698,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @throws \LogicException
      *
-     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]>
+     * @return array<array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>>
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
@@ -771,7 +775,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]> $orderItemsWithOnEnterEvent
+     * @param array<array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>> $orderItemsWithOnEnterEvent
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
@@ -839,7 +843,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             ->querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
                 $omsProcessEntity->getIdOmsOrderProcess(),
                 $omsOrderItemEntityCollection->getPrimaryKeys(),
-                $omsCheckConditionsQueryCriteriaTransfer
+                $omsCheckConditionsQueryCriteriaTransfer,
             )
             ->find()
             ->getData();
@@ -885,7 +889,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     $sourceStateBuffer,
                     $timeoutModel,
                     $log,
-                    $currentTime
+                    $currentTime,
                 );
             });
         }

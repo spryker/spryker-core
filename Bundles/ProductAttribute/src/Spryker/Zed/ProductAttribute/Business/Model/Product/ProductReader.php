@@ -40,7 +40,7 @@ class ProductReader implements ProductReaderInterface
         if (!$productAbstractTransfer) {
             throw new ProductAbstractNotFoundException(sprintf(
                 'Product abstract with id "%s" not found',
-                $idProductAbstract
+                $idProductAbstract,
             ));
         }
 
@@ -61,7 +61,7 @@ class ProductReader implements ProductReaderInterface
         if (!$productConcreteTransfer) {
             throw new ProductConcreteNotFoundException(sprintf(
                 'Product concrete with id "%s" not found',
-                $idProduct
+                $idProduct,
             ));
         }
 

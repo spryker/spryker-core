@@ -40,12 +40,14 @@ class CustomersRestApiFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.customer_address.not_found';
 
     /**
      * @uses \Spryker\Zed\CustomersRestApi\Business\Validator\CustomerAddressValidator::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY = 'checkout.validation.customer_address.not_applicable';
@@ -495,7 +497,7 @@ class CustomersRestApiFacadeTest extends Unit
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::GLOSSARY_KEY_CUSTOMER_ADDRESSES_APPLICABLE_FOR_CUSTOMERS_ONLY,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -527,7 +529,7 @@ class CustomersRestApiFacadeTest extends Unit
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(
             static::GLOSSARY_KEY_CUSTOMER_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND,
-            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage()
+            $checkoutResponseTransfer->getErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -538,7 +540,7 @@ class CustomersRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             CustomersRestApiBusinessFactory::class,
-            ['getCustomerFacade']
+            ['getCustomerFacade'],
         );
 
         $mockFactory->method('getCustomerFacade')
@@ -554,7 +556,7 @@ class CustomersRestApiFacadeTest extends Unit
     {
         $mockFactory = $this->createPartialMock(
             CustomersRestApiBusinessFactory::class,
-            ['getCustomerFacade']
+            ['getCustomerFacade'],
         );
 
         $mockFactory->method('getCustomerFacade')
@@ -570,14 +572,14 @@ class CustomersRestApiFacadeTest extends Unit
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
-            ['getAddresses', 'findCustomerByReference']
+            ['getAddresses', 'findCustomerByReference'],
         );
 
         $mockCustomerFacade->method('getAddresses')
             ->willReturn(
                 (new AddressesTransfer())
                     ->addAddress((new AddressBuilder($this->tester::ADDRESS_1))->build())
-                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_2))->build())
+                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_2))->build()),
             );
 
         $mockCustomerFacade->method('findCustomerByReference')
@@ -585,7 +587,7 @@ class CustomersRestApiFacadeTest extends Unit
                 (new CustomerResponseTransfer())
                     ->setIsSuccess(true)
                     ->setHasCustomer(true)
-                    ->setCustomerTransfer((new CustomerBuilder($this->tester::CUSTOMER))->build())
+                    ->setCustomerTransfer((new CustomerBuilder($this->tester::CUSTOMER))->build()),
             );
 
         return $mockCustomerFacade;
@@ -598,21 +600,21 @@ class CustomersRestApiFacadeTest extends Unit
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
-            ['getAddresses', 'findCustomerByReference']
+            ['getAddresses', 'findCustomerByReference'],
         );
 
         $mockCustomerFacade->method('getAddresses')
             ->willReturn(
                 (new AddressesTransfer())
                     ->addAddress((new AddressBuilder($this->tester::ADDRESS_1))->build())
-                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_2))->build())
+                    ->addAddress((new AddressBuilder($this->tester::ADDRESS_2))->build()),
             );
 
         $mockCustomerFacade->method('findCustomerByReference')
             ->willReturn(
                 (new CustomerResponseTransfer())
                     ->setIsSuccess(false)
-                    ->setHasCustomer(false)
+                    ->setHasCustomer(false),
             );
 
         return $mockCustomerFacade;

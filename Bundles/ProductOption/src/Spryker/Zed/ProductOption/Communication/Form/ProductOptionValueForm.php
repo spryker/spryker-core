@@ -32,18 +32,22 @@ class ProductOptionValueForm extends AbstractType
      * @var string
      */
     public const FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
     public const FIELD_PRICES = 'prices';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+
     /**
      * @var string
      */
@@ -149,7 +153,7 @@ class ProductOptionValueForm extends AbstractType
             $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                     static::OPTION_AMOUNT_PER_STORE => true,
-            ]
+            ],
         );
 
         return $this;

@@ -38,6 +38,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      * @var int
      */
     public const ID_STORE = 1;
+
     /**
      * @var string
      */
@@ -61,7 +62,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
                     ->setSku($bundledItemSku)
-                    ->setAvailability($bundledItemAvailability)
+                    ->setAvailability($bundledItemAvailability),
             );
 
         $bundledProducts = [];
@@ -103,7 +104,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
                     ->setSku($bundledItemSku)
-                    ->setAvailability($bundledItemAvailability)
+                    ->setAvailability($bundledItemAvailability),
             );
 
         $bundleProductEntity = new SpyProductBundle();

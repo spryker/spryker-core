@@ -35,7 +35,7 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
             $this->getAvailabilityNotificationClient(),
             $this->createAvailabilityNotificationsRestResponseBuilder(),
             $this->getStoreClient(),
-            $this->createAvailabilityNotificationsRestApiValidator()
+            $this->createAvailabilityNotificationsRestApiValidator(),
         );
     }
 
@@ -47,7 +47,7 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
         return new AvailabilityNotificationSubscriber(
             $this->getAvailabilityNotificationClient(),
             $this->getStoreClient(),
-            $this->createAvailabilityNotificationsRestResponseBuilder()
+            $this->createAvailabilityNotificationsRestResponseBuilder(),
         );
     }
 
@@ -75,7 +75,7 @@ class AvailabilityNotificationsRestApiFactory extends AbstractFactory
         return new AvailabilityNotificationsRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createAvailabilityNotificationMapper(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

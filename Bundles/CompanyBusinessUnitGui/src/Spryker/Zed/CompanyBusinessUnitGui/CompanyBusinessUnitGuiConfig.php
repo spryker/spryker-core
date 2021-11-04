@@ -13,6 +13,7 @@ class CompanyBusinessUnitGuiConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig
+     *
      * @var string
      */
     public const COL_ID_COMPANY_USER = 'id_company_user';

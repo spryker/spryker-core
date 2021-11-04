@@ -22,6 +22,7 @@ class OauthAgentConnectorDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_AGENT = 'FACADE_AGENT';
+
     /**
      * @var string
      */

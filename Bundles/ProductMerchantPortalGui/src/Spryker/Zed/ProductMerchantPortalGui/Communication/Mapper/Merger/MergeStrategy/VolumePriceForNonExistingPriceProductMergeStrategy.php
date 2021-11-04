@@ -27,8 +27,6 @@ class VolumePriceForNonExistingPriceProductMergeStrategy extends AbstractPricePr
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -41,7 +39,7 @@ class VolumePriceForNonExistingPriceProductMergeStrategy extends AbstractPricePr
         $isVolumePriceProduct = $this->isVolumePriceProduct($newPriceProductTransfer);
         $isPriceProductInCollection = $this->isPriceProductInCollection(
             $newPriceProductTransfer,
-            $priceProductTransfers
+            $priceProductTransfers,
         );
 
         return $isVolumePriceProduct && !$isPriceProductInCollection;
@@ -68,7 +66,7 @@ class VolumePriceForNonExistingPriceProductMergeStrategy extends AbstractPricePr
         $priceProductTransfer = $this->priceProductVolumeService
             ->addVolumePrice(
                 $priceProductTransfer,
-                $newPriceProductTransfer
+                $newPriceProductTransfer,
             );
 
         $priceProductTransfers->append($priceProductTransfer);
@@ -77,8 +75,6 @@ class VolumePriceForNonExistingPriceProductMergeStrategy extends AbstractPricePr
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

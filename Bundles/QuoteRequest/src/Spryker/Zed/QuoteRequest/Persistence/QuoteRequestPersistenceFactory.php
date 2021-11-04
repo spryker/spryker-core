@@ -53,7 +53,7 @@ class QuoteRequestPersistenceFactory extends AbstractPersistenceFactory
     {
         return new QuoteRequestVersionMapper(
             $this->getConfig(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

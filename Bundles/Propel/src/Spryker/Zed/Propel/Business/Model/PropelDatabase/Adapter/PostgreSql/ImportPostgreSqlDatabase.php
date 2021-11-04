@@ -37,7 +37,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     public function importDatabase($backupPath)
     {
         $this->runProcess(
-            $this->getImportCommand($backupPath)
+            $this->getImportCommand($backupPath),
         );
     }
 
@@ -68,7 +68,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
             Config::get(PropelConstants::ZED_DB_DATABASE),
-            $backupPath
+            $backupPath,
         );
     }
 
@@ -82,7 +82,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
         return sprintf(
             'sudo pg_restore -d %s %s',
             Config::get(PropelConstants::ZED_DB_DATABASE),
-            $backupPath
+            $backupPath,
         );
     }
 
@@ -132,7 +132,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     {
         putenv(sprintf(
             'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
+            Config::get(PropelConstants::ZED_DB_PASSWORD),
         ));
     }
 

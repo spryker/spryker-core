@@ -34,7 +34,7 @@ class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydrator
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice> $priceCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
@@ -48,7 +48,7 @@ class ProductOptionValuePriceHydrator implements ProductOptionValuePriceHydrator
                     ->setIdEntity($priceEntity->getIdProductOptionValuePrice())
                     ->setNetAmount($priceEntity->getNetPrice())
                     ->setGrossAmount($priceEntity->getGrossPrice())
-                    ->setCurrency($this->getCurrencyTransferByIdCurrency($priceEntity->getFkCurrency()))
+                    ->setCurrency($this->getCurrencyTransferByIdCurrency($priceEntity->getFkCurrency())),
             );
         }
 

@@ -52,6 +52,7 @@ class ShoppingListTest extends Unit
      * @var string
      */
     protected const FAKE_PERMISSION_READ_ONLY = 'FAKE_READ_ONLY';
+
     /**
      * @var string
      */
@@ -191,7 +192,7 @@ class ShoppingListTest extends Unit
         $this->assertArraySubset(
             [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST],
             $shoppingListResponseTransfer->getErrors(),
-            'Customer should not be able to have two shopping lists with same name.'
+            'Customer should not be able to have two shopping lists with same name.',
         );
     }
 
@@ -277,7 +278,7 @@ class ShoppingListTest extends Unit
         $this->assertSame(
             $shoppingListTransfer->getIdShoppingList(),
             $sharedShoppingListTransfer->getIdShoppingList(),
-            'Company user should be able to load shopping list shared with him.'
+            'Company user should be able to load shopping list shared with him.',
         );
     }
 
@@ -308,7 +309,7 @@ class ShoppingListTest extends Unit
         $this->assertSame(
             $shoppingListTransfer->getIdShoppingList(),
             $sharedShoppingListTransfer->getIdShoppingList(),
-            'Any user from business unit should be able to load shopping list shared with it.'
+            'Any user from business unit should be able to load shopping list shared with it.',
         );
     }
 
@@ -339,7 +340,7 @@ class ShoppingListTest extends Unit
         $this->assertSame(
             $shoppingListTransfer->getIdShoppingList(),
             $sharedShoppingListTransfer->getIdShoppingList(),
-            'Any company user or business unit should be able to load shopping list shared with it.'
+            'Any company user or business unit should be able to load shopping list shared with it.',
         );
     }
 
@@ -442,7 +443,7 @@ class ShoppingListTest extends Unit
         // Assert
         $this->assertInstanceOf(
             ShoppingListPermissionGroupCollectionTransfer::class,
-            $resultShoppingListPermissionGroupCollection
+            $resultShoppingListPermissionGroupCollection,
         );
 
         $shoppingListPermissionGroupNames = $this->getPermissionGroupNamesFromCollection($resultShoppingListPermissionGroupCollection);
@@ -471,7 +472,7 @@ class ShoppingListTest extends Unit
         $shoppingListShareResponseTransfer = $shoppingListFacade->dismissShoppingListSharing(
             (new ShoppingListDismissRequestTransfer())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser()),
         );
         $sharedShoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -503,7 +504,7 @@ class ShoppingListTest extends Unit
         $shoppingListShareResponseTransfer = $shoppingListFacade->dismissShoppingListSharing(
             (new ShoppingListDismissRequestTransfer())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
+                ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser()),
         );
         $sharedShoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -568,7 +569,7 @@ class ShoppingListTest extends Unit
         $this->assertTrue($shoppingListOverviewResponseTransfer->getIsSuccess());
         $this->assertSame(
             $shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList(),
-            $shoppingListOverviewResponseTransfer->getShoppingLists()->getShoppingLists()[0]->getIdShoppingList()
+            $shoppingListOverviewResponseTransfer->getShoppingLists()->getShoppingLists()[0]->getIdShoppingList(),
         );
     }
 

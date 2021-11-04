@@ -26,7 +26,7 @@ class BundleBuilder implements BundleBuilderInterface
 
     /**
      * @param array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface> $bundleMethodBuilders
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $bundleMethodBuilders, array $options)
     {
@@ -63,7 +63,7 @@ class BundleBuilder implements BundleBuilderInterface
         return str_replace(
             IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
             $this->options[IdeAutoCompletionOptionConstants::APPLICATION_NAME],
-            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN]
+            $this->options[IdeAutoCompletionOptionConstants::TARGET_NAMESPACE_PATTERN],
         );
     }
 

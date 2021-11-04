@@ -25,18 +25,21 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
 {
     /**
      * @uses \Spryker\Zed\Category\Business\Tree\CategoryTreeReader::ID_CATEGORY
+     *
      * @var string
      */
     protected const KEY_NODE_CHILD_ID_CATEGORY = 'id_category';
 
     /**
      * @uses \Spryker\Zed\Category\Business\Tree\CategoryTreeReader::TEXT
+     *
      * @var string
      */
     protected const KEY_NODE_CHILD_TEXT = 'text';
 
     /**
      * @uses \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter::CHILDREN
+     *
      * @var string
      */
     protected const KEY_NODE_CHILD_CHILDREN = 'children';
@@ -104,7 +107,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer
     {
         $merchantProductTransfer = $this->merchantProductFacade->findMerchantProduct(
-            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract)
+            (new MerchantProductCriteriaTransfer())->addIdMerchant($idMerchant)->setIdProductAbstract($idProductAbstract),
         );
 
         if (!$merchantProductTransfer) {
@@ -123,7 +126,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     public function getOptions(): array
     {
@@ -202,7 +205,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     ): ProductAbstractTransfer {
         $categoryCollectionTransfer = $this->productCategoryFacade->getCategoryTransferCollectionByIdProductAbstract(
             $productAbstractTransfer->getIdProductAbstractOrFail(),
-            $this->localeFacade->getCurrentLocale()
+            $this->localeFacade->getCurrentLocale(),
         );
         $productAbstractTransfer->setCategoryIds($this->getCategoryIds($categoryCollectionTransfer));
 

@@ -116,7 +116,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         foreach ($indexedSkus as $idProduct => $productConcreteData) {
             $replacementIds = array_merge(
                 $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct),
-                $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($productConcreteData[ProductConcreteTransfer::FK_PRODUCT_ABSTRACT])
+                $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($productConcreteData[ProductConcreteTransfer::FK_PRODUCT_ABSTRACT]),
             );
             $sku = $productConcreteData[ProductConcreteTransfer::SKU];
             $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
@@ -152,7 +152,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         $productReplacementStorageEntity
             ->setSku($sku)
             ->setData(
-                $productReplacementStorage->toArray()
+                $productReplacementStorage->toArray(),
             );
 
         $productReplacementStorageEntity->setIsSendingToQueue($this->productAlternativeStorageConfig->isSendingToQueue());

@@ -23,22 +23,21 @@ class ViewController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+
     /**
      * @var string
      */
     protected const MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer not found';
 
     /**
-     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {
         $idProductOffer = $this->castId($request->get(
-            static::PARAM_ID_PRODUCT_OFFER
+            static::PARAM_ID_PRODUCT_OFFER,
         ));
 
         $productOfferCriteria = (new ProductOfferCriteriaTransfer())
@@ -73,11 +72,9 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getViewSections(ProductOfferTransfer $productOfferTransfer): array
     {

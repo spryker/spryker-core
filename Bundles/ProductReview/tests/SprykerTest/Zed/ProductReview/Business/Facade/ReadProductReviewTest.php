@@ -64,7 +64,7 @@ class ReadProductReviewTest extends Test
         $this->assertArraySubset(
             $this->tester->removeProductReviewDateFields($productReviewTransfer->modifiedToArray()),
             $this->tester->removeProductReviewDateFields($actualProductReviewTransfer->toArray()),
-            'Create should return the updated entity'
+            'Create should return the updated entity',
         );
     }
 }

@@ -28,7 +28,7 @@ class ProductConfigurationDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_configuration.csv',
-            static::IMPORT_TYPE_PRODUCT_CONFIGURATION
+            static::IMPORT_TYPE_PRODUCT_CONFIGURATION,
         );
     }
 
@@ -42,7 +42,7 @@ class ProductConfigurationDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

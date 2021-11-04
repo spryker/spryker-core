@@ -21,7 +21,7 @@ class CompanyUserDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCompanyUserDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCompanyUserDataImporterConfiguration()
+            $this->getConfig()->getCompanyUserDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

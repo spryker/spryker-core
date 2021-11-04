@@ -13,6 +13,7 @@ use ReflectionProperty;
 use Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface;
 use Spryker\Client\Redis\Adapter\RedisAdapterInterface;
 use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
+use Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +31,7 @@ class RedisAdapterProviderTest extends Unit
      * @var string
      */
     protected const CONNECTION_KEY_SESSION = 'session connection key';
+
     /**
      * @var string
      */
@@ -48,7 +50,7 @@ class RedisAdapterProviderTest extends Unit
         parent::setUp();
 
         $this->connectionProvider = new RedisAdapterProvider(
-            $this->createClientAdapterFactoryMock()
+            $this->createClientAdapterFactoryMock(),
         );
     }
 
@@ -67,7 +69,7 @@ class RedisAdapterProviderTest extends Unit
      */
     public function testThrowsExceptionWhenConnectionNotInitialized(): void
     {
-        $this->expectException('Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException');
+        $this->expectException(RedisAdapterNotInitializedException::class);
         $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
     }
 

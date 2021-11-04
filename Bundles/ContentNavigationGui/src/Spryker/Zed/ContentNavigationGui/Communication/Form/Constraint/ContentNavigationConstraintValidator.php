@@ -32,7 +32,7 @@ class ContentNavigationConstraintValidator extends AbstractConstraintValidator
             throw new InvalidArgumentException(sprintf(
                 'Expected constraint instance of %s, got %s instead.',
                 ContentNavigationConstraint::class,
-                get_class($constraint)
+                get_class($constraint),
             ));
         }
 

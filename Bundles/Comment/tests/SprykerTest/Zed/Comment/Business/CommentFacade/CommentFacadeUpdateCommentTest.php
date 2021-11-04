@@ -30,6 +30,7 @@ class CommentFacadeUpdateCommentTest extends Unit
      * @var string
      */
     protected const FAKE_COMMENT_MESSAGE = 'FAKE_COMMENT_MESSAGE';
+
     /**
      * @var string
      */
@@ -37,24 +38,28 @@ class CommentFacadeUpdateCommentTest extends Unit
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::COMMENT_MESSAGE_MAX_LENGTH
+     *
      * @var int
      */
     protected const COMMENT_MESSAGE_MAX_LENGTH = 5000;
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_ACCESS_DENIED
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_ACCESS_DENIED = 'comment.validation.error.access_denied';
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH = 'comment.validation.error.invalid_message_length';
@@ -223,7 +228,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_NOT_FOUND,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -249,7 +254,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_ACCESS_DENIED,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -279,7 +284,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -309,7 +314,7 @@ class CommentFacadeUpdateCommentTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_INVALID_MESSAGE_LENGTH,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 }

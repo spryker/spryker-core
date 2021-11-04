@@ -32,6 +32,7 @@ class TranslationTableQueryTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
@@ -40,10 +41,12 @@ class TranslationTableQueryTest extends Unit
      * @var string
      */
     protected const TEST_LOCALE_1 = 'xxx';
+
     /**
      * @var string
      */
     protected const TEST_LOCALE_2 = 'yyy';
+
     /**
      * @var string
      */
@@ -86,7 +89,7 @@ class TranslationTableQueryTest extends Unit
         $translationTableMock = new TranslationTableMock(
             SpyGlossaryKeyQuery::create(),
             SpyGlossaryTranslationQuery::create(),
-            $localeNames
+            $localeNames,
         );
 
         // Act

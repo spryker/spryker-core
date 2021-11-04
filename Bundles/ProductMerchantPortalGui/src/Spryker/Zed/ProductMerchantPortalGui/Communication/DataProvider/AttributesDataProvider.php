@@ -18,22 +18,27 @@ class AttributesDataProvider implements AttributesDataProviderInterface
      * @var string
      */
     protected const DATA_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     protected const DATA_KEY_VALUE = 'value';
+
     /**
      * @var string
      */
     protected const DATA_KEY_ATTRIBUTES = 'attributes';
+
     /**
      * @var string
      */
     protected const DATA_KEY_ATTRIBUTE = 'attribute';
+
     /**
      * @var string
      */
     protected const DATA_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+
     /**
      * @var string
      */
@@ -103,7 +108,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
             $superAttributesData[] = $this->getSuperAttributesDataItem(
                 $productConcreteTransfer,
                 $superAttributeKeys,
-                $localeTransfer
+                $localeTransfer,
             );
         }
 
@@ -142,7 +147,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
 
         $localizedAttributesTransfer = $this->localizedAttributesExtractor->extractLocalizedAttributes(
             $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
+            $localeTransfer,
         );
 
         return [

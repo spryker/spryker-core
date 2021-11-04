@@ -29,6 +29,7 @@ class CategoryConfig extends AbstractBundleConfig
      * Used as `item_type` for touch mechanism.
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
+
     /**
      * @var string
      */
@@ -81,7 +82,7 @@ class CategoryConfig extends AbstractBundleConfig
      */
     public function getDefaultRedirectUrl(): string
     {
-        if (class_exists('\Spryker\Zed\CategoryGui\Communication\Controller\ListController')) {
+        if (class_exists('Spryker\Zed\CategoryGui\Communication\Controller\ListController')) {
             return static::REDIRECT_URL_CATEGORY_GUI;
         }
 
@@ -101,7 +102,7 @@ class CategoryConfig extends AbstractBundleConfig
     {
         return $this->get(
             CategoryConstants::CATEGORY_IS_CLOSURE_TABLE_EVENTS_ENABLED,
-            static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED
+            static::DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED,
         );
     }
 }

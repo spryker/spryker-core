@@ -52,7 +52,7 @@ class GlossaryFactory extends AbstractFactory
         return new GlossaryStorage(
             $this->getStorage(),
             $this->createKeyBuilder(),
-            $localeName
+            $localeName,
         );
     }
 

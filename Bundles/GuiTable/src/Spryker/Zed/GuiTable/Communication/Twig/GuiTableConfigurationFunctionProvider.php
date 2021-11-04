@@ -26,6 +26,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
      * @var string
      */
     protected const CONFIG_ENABLED = 'enabled';
+
     /**
      * @var string
      */
@@ -102,11 +103,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int, mixed>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int, mixed>
      */
     protected function prepareColumnsConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -120,11 +119,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareDataSourceData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -138,11 +135,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, array<int>|bool|null>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, array<int>|bool|null>
      */
     protected function preparePaginationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -155,11 +150,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareFiltersConfigurationData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -178,11 +171,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, array<int, array>|bool|string|null>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, array<int, array>|bool|string|null>
      */
     protected function prepareRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -204,11 +195,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, array<int, array>|bool|string|null>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, array<int, array>|bool|string|null>
      */
     protected function prepareBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -230,11 +219,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, bool|null>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, bool|null>
      */
     protected function prepareItemSelectionData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -244,11 +231,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, bool|null>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, bool|null>
      */
     protected function prepareSyncStateUrlData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -258,11 +243,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareSearchData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -274,11 +257,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, string|bool|null>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, string|bool|null>
      */
     protected function prepareTitle(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -300,11 +281,9 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @phpstan-return array<int|string, false>
-     *
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array
+     * @return array<int|string, false>
      */
     protected function prepareEditableData(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {

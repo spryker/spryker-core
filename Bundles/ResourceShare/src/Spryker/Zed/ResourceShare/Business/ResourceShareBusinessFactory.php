@@ -32,7 +32,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareReader(
             $this->getRepository(),
-            $this->createResourceShareValidator()
+            $this->createResourceShareValidator(),
         );
     }
 
@@ -43,7 +43,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceShareActivator(
             $this->createResourceShareReader(),
-            $this->getResourceShareActivatorStrategyPlugins()
+            $this->getResourceShareActivatorStrategyPlugins(),
         );
     }
 
@@ -55,7 +55,7 @@ class ResourceShareBusinessFactory extends AbstractBusinessFactory
         return new ResourceShareWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createResourceShareValidator()
+            $this->createResourceShareValidator(),
         );
     }
 

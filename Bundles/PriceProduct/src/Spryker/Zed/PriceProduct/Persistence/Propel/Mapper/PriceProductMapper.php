@@ -41,12 +41,12 @@ class PriceProductMapper
             $priceTypeTransfer,
             $moneyValueTransfer,
             $priceProductDimensionTransfer,
-            $priceProductStoreEntityData
+            $priceProductStoreEntityData,
         );
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
      * @param array<string> $allowedProductSkus
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
@@ -68,7 +68,7 @@ class PriceProductMapper
                 $priceProductTransfers,
                 $priceProductStoreEntity,
                 $priceProductTransfer,
-                $allowedProductSkus
+                $allowedProductSkus,
             );
         }
 

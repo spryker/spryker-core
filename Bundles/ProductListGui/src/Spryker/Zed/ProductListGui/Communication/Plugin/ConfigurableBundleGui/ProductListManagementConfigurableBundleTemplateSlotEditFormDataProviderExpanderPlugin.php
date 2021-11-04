@@ -23,7 +23,7 @@ class ProductListManagementConfigurableBundleTemplateSlotEditFormDataProviderExp
      *
      * @api
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */

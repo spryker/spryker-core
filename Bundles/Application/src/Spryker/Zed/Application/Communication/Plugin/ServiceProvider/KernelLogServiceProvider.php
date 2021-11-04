@@ -35,7 +35,7 @@ class KernelLogServiceProvider extends AbstractPlugin implements ServiceProvider
     public function boot(Application $app)
     {
         $this->getDispatcher($app)->addSubscriber(
-            $this->getFactory()->createKernelLogListener()
+            $this->getFactory()->createKernelLogListener(),
         );
     }
 

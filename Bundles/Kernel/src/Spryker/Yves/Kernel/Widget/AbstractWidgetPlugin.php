@@ -47,7 +47,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
         if (!isset($this->widgets[$name])) {
             throw new MissingWidgetPluginException(sprintf(
                 'Missing "%s" widget plugin. You need to register your sub-widgets in order to use them. You can use $this->addWidgets() and $this->addWidget() methods.',
-                $name
+                $name,
             ));
         }
 

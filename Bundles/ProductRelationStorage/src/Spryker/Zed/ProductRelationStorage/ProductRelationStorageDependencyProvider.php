@@ -24,18 +24,22 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
     /**
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
+
     /**
      * @var string
      */
@@ -94,7 +98,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductRelationStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -110,7 +114,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationStorageToProductRelationFacadeBridge(
-                $container->getLocator()->productRelation()->facade()
+                $container->getLocator()->productRelation()->facade(),
             );
         });
 

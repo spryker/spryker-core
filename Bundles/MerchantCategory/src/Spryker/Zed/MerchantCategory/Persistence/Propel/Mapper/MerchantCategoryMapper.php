@@ -29,7 +29,7 @@ class MerchantCategoryMapper
     ): MerchantCategoryTransfer {
         $merchantCategoryTransfer->fromArray($merchantCategoryEntity->toArray(), true);
         $merchantCategoryTransfer->setCategory(
-            $this->mapCategoryEntityToCategoryTransfer($merchantCategoryEntity->getSpyCategory(), new CategoryTransfer())
+            $this->mapCategoryEntityToCategoryTransfer($merchantCategoryEntity->getSpyCategory(), new CategoryTransfer()),
         );
 
         return $merchantCategoryTransfer;
@@ -53,7 +53,7 @@ class MerchantCategoryMapper
             $categoryLocalizedAttributesTransfers[] = (new CategoryLocalizedAttributesTransfer())
                 ->fromArray($categoryAttributeEntity->toArray(), true)
                 ->setLocale(
-                    (new LocaleTransfer())->fromArray($categoryAttributeEntity->getLocale()->toArray(), true)
+                    (new LocaleTransfer())->fromArray($categoryAttributeEntity->getLocale()->toArray(), true),
                 );
         }
 

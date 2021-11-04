@@ -10,10 +10,8 @@ namespace Spryker\Zed\GuiTable\Dependency\Facade;
 interface GuiTableToTranslatorFacadeInterface
 {
     /**
-     * @phpstan-param array<mixed> $parameters
-     *
      * @param string $id
-     * @param array $parameters
+     * @param array<mixed> $parameters
      * @param string|null $domain
      * @param string|null $locale
      *

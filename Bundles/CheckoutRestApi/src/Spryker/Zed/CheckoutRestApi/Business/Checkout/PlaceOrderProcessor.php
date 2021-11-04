@@ -116,7 +116,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             if (!$quoteResponseTransfer->getIsSuccessful()) {
                 return $this->createRestCheckoutResponseError(
                     $quoteResponseTransfer,
-                    CheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART
+                    CheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART,
                 );
             }
         }
@@ -158,7 +158,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $restCheckoutResponseTransfer
                 ->addError(
                     (new RestCheckoutErrorTransfer())
-                        ->setErrorIdentifier($errorIdentifier)
+                        ->setErrorIdentifier($errorIdentifier),
                 );
         }
 
@@ -166,7 +166,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             $restCheckoutResponseTransfer->addError(
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier($errorIdentifier)
-                    ->setDetail($quoteErrorTransfer->getMessage())
+                    ->setDetail($quoteErrorTransfer->getMessage()),
             );
         }
 
@@ -187,7 +187,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
             return $restCheckoutResponseTransfer
                 ->addError(
                     (new RestCheckoutErrorTransfer())
-                        ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
+                        ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED),
                 );
         }
 
@@ -196,7 +196,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_ORDER_NOT_PLACED)
                     ->setDetail($errorTransfer->getMessage())
-                    ->setParameters($errorTransfer->getParameters())
+                    ->setParameters($errorTransfer->getParameters()),
             );
         }
 

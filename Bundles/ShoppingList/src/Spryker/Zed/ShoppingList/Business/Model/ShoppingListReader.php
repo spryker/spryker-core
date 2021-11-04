@@ -168,7 +168,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListItemCollection = $this->expandShoppingListItemCollectionTransfer(
             $shoppingListOverviewResponseTransfer->getItemsCollection(),
             $shoppingListOverviewRequestTransfer->getCurrencyIsoCode(),
-            $shoppingListOverviewRequestTransfer->getPriceMode()
+            $shoppingListOverviewRequestTransfer->getPriceMode(),
         );
         $shoppingListOverviewResponseTransfer->setItemsCollection($shoppingListItemCollection);
 
@@ -206,16 +206,16 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         if ($customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
             $customerSharedShoppingLists = $this->shoppingListRepository->findCompanyUserSharedShoppingLists(
-                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(),
             );
 
             $businessUnitSharedShoppingLists = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingLists(
-                $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit()
+                $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit(),
             );
 
             $businessUnitSharedShoppingLists = $this->filterBlacklistedShoppingLists(
                 $businessUnitSharedShoppingLists,
-                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(),
             );
         }
 
@@ -289,17 +289,17 @@ class ShoppingListReader implements ShoppingListReaderInterface
             array_unique(array_merge(
                 $this->shoppingListRepository->findCompanyUserSharedShoppingListsIds($companyUserTransfer->getIdCompanyUser()),
                 $companyBusinessUnitSharedShoppingListIds,
-                $companyUserOwnShoppingListIds
-            ))
+                $companyUserOwnShoppingListIds,
+            )),
         );
 
         $companyUserSharedShoppingListIds = $this->shoppingListRepository->getCompanyUserSharedShoppingListIdsByPermissionGroupName(
             $companyUserTransfer->getIdCompanyUser(),
-            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS,
         );
         $companyBusinessUnitSharedShoppingListIds = $this->shoppingListRepository->getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(
             $companyUserTransfer->getFkCompanyBusinessUnit(),
-            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS
+            ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS,
         );
         $companyBusinessUnitSharedShoppingListIds = array_diff($companyBusinessUnitSharedShoppingListIds, $companyBusinessUnitBlacklistedShoppingListIds);
 
@@ -308,8 +308,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
             array_unique(array_merge(
                 $companyUserSharedShoppingListIds,
                 $companyBusinessUnitSharedShoppingListIds,
-                $companyUserOwnShoppingListIds
-            ))
+                $companyUserOwnShoppingListIds,
+            )),
         );
 
         return $companyUserPermissionCollectionTransfer;
@@ -450,14 +450,14 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $keyedProductConcreteTransfers = $this->getKeyedProductConcreteTransfers($productConcreteTransfers);
         $shoppingListItemTransfers = $this->mapProductConcreteIdToShoppingListItem(
             $shoppingListItemCollectionTransfer->getItems(),
-            $keyedProductConcreteTransfers
+            $keyedProductConcreteTransfers,
         );
         $shoppingListItemCollectionTransfer->setItems($shoppingListItemTransfers);
 
         $shoppingListItemCollectionTransfer = $this->expandShoppingListItemCollectionTransferWithCurrencyParameters(
             $shoppingListItemCollectionTransfer,
             $currencyIsoCode,
-            $priceMode
+            $priceMode,
         );
 
         return $this->expandShoppingListItemCollectionTransferWithPlugins($shoppingListItemCollectionTransfer);
@@ -519,7 +519,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
 
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $expandedShoppingListItemTransfers->append(
-                $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer)
+                $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer),
             );
         }
 
@@ -614,7 +614,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         return $this->can(
             'ReadShoppingListPermissionPlugin',
             $shoppingListTransfer->getIdCompanyUser(),
-            $shoppingListTransfer->getIdShoppingList()
+            $shoppingListTransfer->getIdShoppingList(),
         );
     }
 
@@ -626,7 +626,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     protected function findCompanyUserShoppingListIds(CompanyUserTransfer $companyUserTransfer): array
     {
         $companyUserOwnShoppingLists = $this->shoppingListRepository->findCustomerShoppingLists(
-            $companyUserTransfer->getCustomer()->getCustomerReference()
+            $companyUserTransfer->getCustomer()->getCustomerReference(),
         );
         $companyUserOwnShoppingListIds = [];
 

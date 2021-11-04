@@ -15,6 +15,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::CONTENT_TYPE_BANNER
      *
      * Content item banner
+     *
      * @var string
      */
     public const CONTENT_TYPE_BANNER = 'Banner';
@@ -23,18 +24,21 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::CONTENT_TERM_BANNER
      *
      * Content item banner
+     *
      * @var string
      */
     public const CONTENT_TERM_BANNER = 'Banner';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
+     *
      * @var string
      */
     protected const TWIG_FUNCTION_NAME = 'content_banner';
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
@@ -48,6 +52,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
 
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     *
      * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
@@ -62,7 +67,7 @@ class ContentBannerGuiConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getContentWidgetTemplates(): array
     {

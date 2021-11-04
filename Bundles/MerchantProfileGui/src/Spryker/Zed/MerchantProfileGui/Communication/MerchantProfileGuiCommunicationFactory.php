@@ -38,7 +38,7 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
         return new MerchantProfileFormDataProvider(
             $this->getConfig(),
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -48,7 +48,7 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createMerchantProfileAddressFormDataProvider(): MerchantProfileAddressFormDataProvider
     {
         return new MerchantProfileAddressFormDataProvider(
-            $this->getCountryFacade()
+            $this->getCountryFacade(),
         );
     }
 

@@ -25,12 +25,14 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
 {
     /**
      * @uses \SprykerTest\Zed\MerchantSearch\MerchantSearchBusinessTester::MERCHANT_COUNT
+     *
      * @var int
      */
     protected const MERCHANT_COUNT = 3;
 
     /**
      * @uses \Generated\Shared\Search\MerchantIndexMap::SEARCH_RESULT_DATA
+     *
      * @var string
      */
     protected const SEARCH_RESULT_DATA = 'search-result-data';
@@ -42,6 +44,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
 
     /**
      * @uses \Orm\Zed\MerchantSearch\Persistence\Map\SpyMerchantSearchTableMap::COL_FK_MERCHANT
+     *
      * @var string
      */
     protected const COL_FK_MERCHANT = 'spy_merchant_search.fk_merchant';
@@ -75,13 +78,13 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
                 new FilterTransfer(),
-                $merchantIds
+                $merchantIds,
             );
 
         // Assert
         $this->assertCount(
             static::MERCHANT_COUNT,
-            $synchronizationDataTransfers
+            $synchronizationDataTransfers,
         );
     }
 
@@ -97,7 +100,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
-                (new FilterTransfer())->setOffset(0)->setLimit(1)->setOrderBy(static::COL_FK_MERCHANT)
+                (new FilterTransfer())->setOffset(0)->setLimit(1)->setOrderBy(static::COL_FK_MERCHANT),
             );
         $synchronizationData = $synchronizationDataTransfers[0]->getData();
 
@@ -119,7 +122,7 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
         $synchronizationDataTransfers = $this->tester->getFacade()
             ->getSynchronizationDataTransfersByMerchantIds(
                 (new FilterTransfer())->setOffset(0)->setLimit(1),
-                [$merchantIds[0]]
+                [$merchantIds[0]],
             );
 
         // Assert

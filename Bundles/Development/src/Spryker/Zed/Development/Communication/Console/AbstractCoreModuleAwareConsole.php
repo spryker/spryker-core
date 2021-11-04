@@ -62,7 +62,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     }
 
     /**
-     * @param array $modulesToValidate
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $modulesToValidate
      *
      * @return bool
      */
@@ -282,7 +282,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     }
 
     /**
-     * @param array $modulesToValidate
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $modulesToValidate
      *
      * @return bool
      */
@@ -296,7 +296,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     }
 
     /**
-     * @param array $modulesToValidate
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $modulesToValidate
      *
      * @return bool
      */

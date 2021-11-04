@@ -61,22 +61,22 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
     ): ConfigurableBundleTemplatePageSearchTransfer {
         $configurableBundleTemplatePageSearchTransfer = $this->mapConfigurableBundleTemplateTransferToConfigurableBundleTemplatePageSearchTransfer(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplatePageSearchTransfer
+            $configurableBundleTemplatePageSearchTransfer,
         );
 
         $configurableBundleTemplatePageSearchTransfer->setLocale($localeTransfer->getLocaleName());
 
         $configurableBundleTemplatePageSearchTransfer = $this->configurableBundleTemplatePageSearchExpander->expand(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplatePageSearchTransfer
+            $configurableBundleTemplatePageSearchTransfer,
         );
 
         $configurableBundleTemplatePageSearchTransfer->setData(
-            $this->getConfigurableBundleTemplatePageSearchTransferData($configurableBundleTemplatePageSearchTransfer, $localeTransfer)
+            $this->getConfigurableBundleTemplatePageSearchTransferData($configurableBundleTemplatePageSearchTransfer, $localeTransfer),
         );
 
         $configurableBundleTemplatePageSearchTransfer->setStructuredData(
-            $this->getConfigurableBundleTemplatePageSearchTransferStructuredData($configurableBundleTemplatePageSearchTransfer)
+            $this->getConfigurableBundleTemplatePageSearchTransferStructuredData($configurableBundleTemplatePageSearchTransfer),
         );
 
         return $configurableBundleTemplatePageSearchTransfer;
@@ -94,12 +94,12 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
     ): ConfigurableBundleTemplatePageSearchTransfer {
         $configurableBundleTemplatePageSearchTransfer = $configurableBundleTemplatePageSearchTransfer->fromArray(
             $configurableBundleTemplateTransfer->toArray(),
-            true
+            true,
         );
 
         return $configurableBundleTemplatePageSearchTransfer->setType(ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME)
             ->setFkConfigurableBundleTemplate(
-                $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()
+                $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
             );
     }
 
@@ -115,7 +115,7 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
     ): ?string {
         $data = $this->configurableBundlePageSearchDataMapper->mapConfigurableBundleTemplatePageSearchTransferToSearchData(
             $configurableBundleTemplatePageSearchTransfer,
-            $localeTransfer
+            $localeTransfer,
         );
 
         return $this->utilEncodingService->encodeJson($data);

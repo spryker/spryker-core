@@ -153,7 +153,7 @@ class ContentByTypeTable extends AbstractTable
             $selectedAttr,
             $contentItem[ContentTableConstants::COL_NAME],
             $contentItem[ContentTableConstants::COL_ID_CONTENT],
-            $contentItem[ContentTableConstants::COL_KEY]
+            $contentItem[ContentTableConstants::COL_KEY],
         );
     }
 

@@ -19,6 +19,7 @@ interface StorageRedisConstants
      * @api
      *
      * @deprecated Use {@link \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME} instead.
+     *
      * @var string
      */
     public const STORAGE_REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
@@ -28,6 +29,7 @@ interface StorageRedisConstants
      * - Defines a scheme|protocol (tcp:// or redis://) for Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
@@ -37,6 +39,7 @@ interface StorageRedisConstants
      * - Defines a host for Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_HOST = 'STORAGE_REDIS:STORAGE_REDIS_HOST';
@@ -46,6 +49,7 @@ interface StorageRedisConstants
      * - Defines a port for Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_PORT = 'STORAGE_REDIS:STORAGE_REDIS_PORT';
@@ -55,6 +59,7 @@ interface StorageRedisConstants
      * - Defines a Redis database to connect to.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_DATABASE = 'STORAGE_REDIS:STORAGE_REDIS_DATABASE';
@@ -64,6 +69,7 @@ interface StorageRedisConstants
      * - Defines a password for connecting to Redis.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_PASSWORD = 'STORAGE_REDIS:STORAGE_REDIS_PASSWORD';
@@ -73,6 +79,7 @@ interface StorageRedisConstants
      * - Specifies an array of DSN strings for a multi-instance cluster/replication Redis setup.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_DATA_SOURCE_NAMES = 'STORAGE_REDIS:STORAGE_REDIS_DATA_SOURCE_NAMES';
@@ -82,6 +89,7 @@ interface StorageRedisConstants
      * - Specifies an array of connection options.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_CONNECTION_OPTIONS = 'STORAGE_REDIS:STORAGE_REDIS_CONNECTION_OPTIONS';
@@ -92,6 +100,7 @@ interface StorageRedisConstants
      * - Enabling debug mode will enable access statistics for a Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_DEBUG_MODE = 'STORAGE_REDIS:STORAGE_REDIS_DEBUG_MODE';
@@ -101,6 +110,7 @@ interface StorageRedisConstants
      * - Enables/disables data persistence for a Redis connection.
      *
      * @api
+     *
      * @var string
      */
     public const STORAGE_REDIS_PERSISTENT_CONNECTION = 'STORAGE_REDIS:STORAGE_REDIS_PERSISTENT_CONNECTION';
@@ -110,6 +120,7 @@ interface StorageRedisConstants
      * - Specifies the path to rdb dump to import data from.
      *
      * @api
+     *
      * @var string
      */
     public const RDB_DUMP_PATH = 'STORAGE_REDIS:RDB_DUMP_PATH';

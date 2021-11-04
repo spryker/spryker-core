@@ -33,7 +33,7 @@ class FacetValueTransformerFactory implements FacetValueTransformerFactoryInterf
             throw new InvalidFacetSearchResultValueTransformerPluginException(sprintf(
                 'Class of "%s" is not a valid implementation of expected %s.',
                 $pluginClassName,
-                FacetSearchResultValueTransformerPluginInterface::class
+                FacetSearchResultValueTransformerPluginInterface::class,
             ));
         }
 

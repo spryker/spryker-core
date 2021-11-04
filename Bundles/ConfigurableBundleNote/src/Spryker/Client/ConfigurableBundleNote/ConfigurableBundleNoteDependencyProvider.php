@@ -18,6 +18,7 @@ class ConfigurableBundleNoteDependencyProvider extends AbstractDependencyProvide
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */

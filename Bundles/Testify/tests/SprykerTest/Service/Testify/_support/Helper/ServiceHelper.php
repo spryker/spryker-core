@@ -32,6 +32,7 @@ class ServiceHelper extends Module
      * @var string
      */
     protected const SERVICE_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sServiceFactory';
+
     /**
      * @var string
      */

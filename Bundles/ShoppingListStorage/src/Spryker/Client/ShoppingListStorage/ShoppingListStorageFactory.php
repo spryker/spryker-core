@@ -25,7 +25,7 @@ class ShoppingListStorageFactory extends AbstractFactory
     {
         return new ShoppingListCustomerStorage(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 
@@ -36,7 +36,7 @@ class ShoppingListStorageFactory extends AbstractFactory
     {
         return new ShoppingListCollectionOutdateChecker(
             $this->getCustomerClient(),
-            $this->createShoppingListCustomerStorage()
+            $this->createShoppingListCustomerStorage(),
         );
     }
 

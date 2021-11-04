@@ -180,7 +180,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
                 $dataReader,
                 $dataWriter,
                 $touchUpdater,
-                $output
+                $output,
             );
     }
 }

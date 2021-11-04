@@ -38,7 +38,7 @@ class SequenceNumber implements SequenceNumberInterface
     /**
      * @see \Spryker\Shared\SequenceNumber\SequenceNumberConstants::LIMIT_LIST
      *
-     * @var array
+     * @var array<string, int>
      */
     protected $limitList;
 
@@ -46,7 +46,7 @@ class SequenceNumber implements SequenceNumberInterface
      * @param \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface $randomNumberGenerator
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
-     * @param array $limitList
+     * @param array<string, int> $limitList
      */
     public function __construct(
         RandomNumberGeneratorInterface $randomNumberGenerator,
@@ -90,7 +90,7 @@ class SequenceNumber implements SequenceNumberInterface
             });
         } catch (Exception $e) {
             throw new InvalidSequenceNumberException(
-                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage()
+                'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage(),
             );
         }
 
@@ -158,7 +158,7 @@ class SequenceNumber implements SequenceNumberInterface
         if ($idCurrent > $this->limitList[$this->sequenceNumberSettings->getName()]) {
             throw new Exception(sprintf(
                 'The sequence limit is reached for %s',
-                $this->sequenceNumberSettings->getName()
+                $this->sequenceNumberSettings->getName(),
             ));
         }
     }

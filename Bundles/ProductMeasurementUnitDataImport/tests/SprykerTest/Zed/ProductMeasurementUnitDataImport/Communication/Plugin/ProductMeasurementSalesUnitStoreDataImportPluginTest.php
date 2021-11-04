@@ -48,7 +48,7 @@ class ProductMeasurementSalesUnitStoreDataImportPluginTest extends Unit
                 new ProductMeasurementBaseUnitDataImportPlugin(),
                 new ProductMeasurementSalesUnitDataImportPlugin(),
                 new ProductMeasurementSalesUnitStoreDataImportPlugin(),
-            ]
+            ],
         );
     }
 
@@ -78,7 +78,7 @@ class ProductMeasurementSalesUnitStoreDataImportPluginTest extends Unit
         $productMeasurementSalesUnitStoreDataImportPlugin = new ProductMeasurementSalesUnitStoreDataImportPlugin();
         $this->assertSame(
             ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_SALES_UNIT_STORE,
-            $productMeasurementSalesUnitStoreDataImportPlugin->getImportType()
+            $productMeasurementSalesUnitStoreDataImportPlugin->getImportType(),
         );
     }
 }

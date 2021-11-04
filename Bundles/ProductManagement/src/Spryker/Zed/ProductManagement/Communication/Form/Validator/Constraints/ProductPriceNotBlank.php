@@ -17,7 +17,7 @@ class ProductPriceNotBlank extends Constraint
     public $message = 'At least one price should be specified';
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function __construct(array $options = [])
     {

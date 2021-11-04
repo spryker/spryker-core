@@ -20,14 +20,17 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
      * @var string
      */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
     /**
      * @var string
      */
@@ -57,7 +60,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new CmsSlotBlockCategoryGuiToCategoryFacadeBridge(
-                $container->getLocator()->category()->facade()
+                $container->getLocator()->category()->facade(),
             );
         });
 
@@ -73,7 +76,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsSlotBlockCategoryGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -89,7 +92,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CmsSlotBlockCategoryGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 
@@ -105,7 +108,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsSlotBlockCategoryGuiToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

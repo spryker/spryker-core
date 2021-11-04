@@ -36,7 +36,7 @@ class CompanyUserAgentStub implements CompanyUserAgentStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $companyUserCollectionTransfer */
         $companyUserCollectionTransfer = $this->zedRequestClient->call(
             '/company-user-agent/gateway/get-company-user-collection-by-criteria',
-            $companyUserCriteriaTransfer
+            $companyUserCriteriaTransfer,
         );
 
         return $companyUserCollectionTransfer;

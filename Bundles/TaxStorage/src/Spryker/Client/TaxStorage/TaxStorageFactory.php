@@ -22,7 +22,7 @@ class TaxStorageFactory extends AbstractFactory
     {
         return new TaxStorageReader(
             $this->getSynchronizationService(),
-            $this->getStorageClient()
+            $this->getStorageClient(),
         );
     }
 

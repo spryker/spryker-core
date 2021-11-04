@@ -44,7 +44,7 @@ class ProductImageProductConcretePageMapExpanderPlugin extends AbstractPlugin im
         $pageMapBuilder->addSearchResultData(
             $pageMapTransfer,
             ProductConcretePageSearchTransfer::IMAGES,
-            $productData[ProductConcretePageSearchTransfer::IMAGES]
+            $productData[ProductConcretePageSearchTransfer::IMAGES],
         );
 
         return $pageMapTransfer;

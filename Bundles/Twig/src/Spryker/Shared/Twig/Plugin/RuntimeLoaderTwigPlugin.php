@@ -24,6 +24,7 @@ class RuntimeLoaderTwigPlugin implements TwigPluginInterface
      * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var string
      */
@@ -44,7 +45,7 @@ class RuntimeLoaderTwigPlugin implements TwigPluginInterface
         $httpKernelRuntime = function () use ($container) {
             $fragmentHandler = new FragmentHandler(
                 $container->get(static::SERVICE_REQUEST_STACK),
-                $container->get(static::SERVICE_FRAGMENT_RENDERERS)
+                $container->get(static::SERVICE_FRAGMENT_RENDERERS),
             );
 
             return new HttpKernelRuntime($fragmentHandler);

@@ -35,12 +35,12 @@ interface AvailabilityGuiToStockInterface
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getWarehouseToStoreMapping();
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping();
 

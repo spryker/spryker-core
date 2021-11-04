@@ -110,7 +110,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             $this->updateCategoryNodeUrlsForLocale(
                 $nodeTransfer,
                 $urlTransfers,
-                $categoryLocalizedAttributesTransfer->getLocaleOrFail()
+                $categoryLocalizedAttributesTransfer->getLocaleOrFail(),
             );
         }
     }
@@ -160,7 +160,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
             $indexedCategoryUrlPaths = $this->urlPathGenerator->bulkBuildCategoryNodeUrlForLocale(
                 $categoryNodeIds,
-                $categoryLocalizedAttributesTransfer->getLocaleOrFail()
+                $categoryLocalizedAttributesTransfer->getLocaleOrFail(),
             );
 
             $this->updateNodeUrls($urlTransfers, $localeTransfer, $indexedCategoryUrlPaths);

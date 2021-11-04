@@ -161,7 +161,7 @@ class PublishAndSynchronizeHelper extends AbstractHelper
         codecept_debug($this->format(sprintf(
             'Triggered <fg=green>%s::triggerRuntimeEvents()</> to move data from the <fg=green>%s</> database table into the event queue.',
             EventBehaviorFacadeInterface::class,
-            SpyEventBehaviorEntityChangeTableMap::TABLE_NAME
+            SpyEventBehaviorEntityChangeTableMap::TABLE_NAME,
         )));
 
         return $eventTriggerResponseTransfer;
@@ -179,7 +179,7 @@ class PublishAndSynchronizeHelper extends AbstractHelper
 
         codecept_debug($this->format(sprintf(
             'Triggered <fg=green>%s::triggerBulk()</> to manually add the required data into the event queue.',
-            EventFacadeInterface::class
+            EventFacadeInterface::class,
         )));
     }
 

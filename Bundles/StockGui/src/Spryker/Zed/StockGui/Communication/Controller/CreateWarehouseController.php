@@ -22,6 +22,7 @@ class CreateWarehouseController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\StockGui\Communication\Controller\WarehouseController::listAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL = '/stock-gui/warehouse/list';

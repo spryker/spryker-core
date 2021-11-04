@@ -103,19 +103,19 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
         if ($categoryTransfer->getParentCategoryNode()) {
             $parentStoreRelationTransfer = $this->categoryRepository->getCategoryStoreRelationByIdCategoryNode(
-                $categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail()
+                $categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail(),
             );
         }
 
         $storeIdsToAdd = $this->getStoreIdsToAdd(
             $currentStoreAssignment,
             $newStoreAssignment,
-            $parentStoreRelationTransfer ?? null
+            $parentStoreRelationTransfer ?? null,
         );
         $storeIdsToDelete = $this->getStoreIdsToDelete(
             $currentStoreAssignment,
             $newStoreAssignment,
-            $parentStoreRelationTransfer ?? null
+            $parentStoreRelationTransfer ?? null,
         );
 
         if ($storeIdsToAdd === [] && $storeIdsToDelete === []) {
@@ -148,7 +148,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
         return $this->filterOutStoreIdsMissingInParentCategoryStoreRelation(
             $parentCategoryStoreRelationTransfer->getIdStores(),
-            $storeIdsToAdd
+            $storeIdsToAdd,
         );
     }
 
@@ -171,7 +171,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
         $missingParentCategoryStoreRelationIds = $this->getStoreIdsMissingInParentCategoryStoreRelation(
             $parentCategoryStoreRelationTransfer->getIdStores(),
-            $existingStoreRelationTransfer->getIdStores()
+            $existingStoreRelationTransfer->getIdStores(),
         );
 
         return array_unique(array_merge($storeIdsToDelete, $missingParentCategoryStoreRelationIds));
@@ -221,7 +221,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     {
         $this->eventFacade->trigger(
             CategoryEvents::CATEGORY_TREE_PUBLISH,
-            (new CategoryTransfer())->setIdCategory($idCategory)
+            (new CategoryTransfer())->setIdCategory($idCategory),
         );
     }
 
@@ -268,7 +268,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
             $categoryCriteriaTransfer->setOffset($offset);
             $descendantCategoryIds = $this->categoryRepository->getDescendantCategoryIdsByIdCategory(
                 $categoryTransfer,
-                $categoryCriteriaTransfer
+                $categoryCriteriaTransfer,
             );
 
             $this->updateCategoryStoreRelations($descendantCategoryIds, $storeIdsToAdd, $storeIdsToDelete);

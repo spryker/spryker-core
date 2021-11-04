@@ -88,7 +88,7 @@ class QuoteMerger implements QuoteMergerInterface
     protected function findQuoteByCustomerReference(string $customerReference): ?QuoteTransfer
     {
         $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
+            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference),
         );
 
         $quoteTransfers = $quoteCollectionTransfer->getQuotes();

@@ -21,7 +21,7 @@ class StoresCurrencyResourceMapper implements StoresCurrencyResourceMapperInterf
     {
         return (new StoreCurrencyRestAttributesTransfer())->fromArray(
             $currencyTransfer->toArray(),
-            true
+            true,
         );
     }
 }

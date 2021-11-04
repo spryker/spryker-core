@@ -23,14 +23,17 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT_PACKAGING_UNIT = 'PROPEL_QUERY_PRODUCT_PACKAGING_UNIT';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_PACKAGING_UNIT = 'FACADE_PRODUCT_PACKAGING_UNIT';
+
     /**
      * @var string
      */
@@ -114,7 +117,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_PRODUCT_PACKAGING_UNIT, function (Container $container) {
             return new ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge(
-                $container->getLocator()->productPackagingUnit()->facade()
+                $container->getLocator()->productPackagingUnit()->facade(),
             );
         });
 
@@ -130,7 +133,7 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductPackagingUnitStorageToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 

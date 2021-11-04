@@ -23,6 +23,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
 {
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
@@ -92,7 +93,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
                     ->setUsername($username)
                     ->setWithUser(true)
                     ->setStatus('active')
-                    ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED)
+                    ->setMerchantStatus(static::MERCHANT_STATUS_APPROVED),
             );
     }
 }

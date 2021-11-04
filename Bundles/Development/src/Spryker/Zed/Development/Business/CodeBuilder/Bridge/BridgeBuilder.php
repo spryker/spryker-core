@@ -23,14 +23,17 @@ class BridgeBuilder
      * @var string
      */
     protected const TEMPLATE_INTERFACE = 'interface';
+
     /**
      * @var string
      */
     protected const TEMPLATE_BRIDGE = 'bridge';
+
     /**
      * @var string
      */
     protected const TEMPLATE_INTERFACE_METHOD = 'interface_method';
+
     /**
      * @var string
      */
@@ -40,13 +43,14 @@ class BridgeBuilder
      * @var string
      */
     protected const DEFAULT_VENDOR = 'Spryker';
+
     /**
      * @var string
      */
     protected const DEFAULT_TO_TYPE = 'Facade';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const APPLICATION_LAYER_MAP = [
         'Facade' => 'Zed',
@@ -54,7 +58,7 @@ class BridgeBuilder
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const MODULE_LAYER_MAP = [
         'Facade' => 'Business',
@@ -70,6 +74,7 @@ class BridgeBuilder
      * @var string
      */
     protected const NULLABLE_RETURN_TYPE_HINT = ': ?';
+
     /**
      * @var string
      */
@@ -79,6 +84,7 @@ class BridgeBuilder
      * @var string
      */
     protected const TYPE_HINT = 'type_hint';
+
     /**
      * @var string
      */
@@ -100,7 +106,7 @@ class BridgeBuilder
     /**
      * @param string $bundle
      * @param string $toBundle
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      *
@@ -133,7 +139,7 @@ class BridgeBuilder
                 $bridgeBuilderDataTransfer->getModule() . '\\' .
                 'Dependency\\' .
                 $bridgeBuilderDataTransfer->getToType() . '\\' .
-                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface'
+                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface',
             );
 
             foreach ($existingInterface->getMethods() as $method) {
@@ -165,7 +171,7 @@ class BridgeBuilder
                 $bridgeBuilderDataTransfer->getModule() . '\\' .
                 'Dependency\\' .
                 $bridgeBuilderDataTransfer->getToType() . '\\' .
-                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge'
+                $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge',
             );
 
             foreach ($existingBridge->getMethods() as $method) {
@@ -222,7 +228,7 @@ class BridgeBuilder
     protected function getTemplateContent(string $templateName): string
     {
         return file_get_contents(
-            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl'
+            __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl',
         );
     }
 
@@ -298,7 +304,7 @@ class BridgeBuilder
     /**
      * @param string $source
      * @param string $target
-     * @param array $methods
+     * @param array<string> $methods
      *
      * @return \Generated\Shared\Transfer\BridgeBuilderDataTransfer
      */
@@ -359,7 +365,7 @@ class BridgeBuilder
 
         throw new InvalidArgumentException(sprintf(
             'Invalid input parameter "%s", accepted format is "[VendorName.]ModuleName[.BridgeType]".',
-            $subject
+            $subject,
         ));
     }
 
@@ -505,7 +511,7 @@ class BridgeBuilder
             $targetBridgeClass,
             $bridgeBuilderDataTransfer->getMethods(),
             $this->getBridgeMethodTemplateContent(),
-            $templateContent
+            $templateContent,
         );
     }
 
@@ -534,7 +540,7 @@ class BridgeBuilder
             $targetBridgeInterface,
             $bridgeBuilderDataTransfer->getMethods(),
             $this->getInterfaceMethodTemplateContent(),
-            $templateContent
+            $templateContent,
         );
     }
 
@@ -589,7 +595,7 @@ class BridgeBuilder
             $methods .= str_replace(
                 array_keys($replacements),
                 array_values($replacements),
-                $methodTemplate
+                $methodTemplate,
             ) . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
         }
 
@@ -608,7 +614,7 @@ class BridgeBuilder
                 rtrim($methods, PHP_EOL . PHP_EOL . str_repeat(' ', 4)),
                 $useStatements,
             ],
-            $templateContent
+            $templateContent,
         );
     }
 

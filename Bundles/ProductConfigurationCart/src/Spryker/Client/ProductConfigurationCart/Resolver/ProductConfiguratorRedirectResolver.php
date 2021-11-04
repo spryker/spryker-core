@@ -21,6 +21,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
      * @var string
      */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_FOUND = 'product_configuration.error.configuration_not_found';
+
     /**
      * @var string
      */
@@ -70,20 +71,20 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
         $productConfigurationInstanceTransfer = $this->productConfigurationInstanceQuoteReader->findProductConfigurationInstanceInQuote(
             $productConfiguratorRequestDataTransfer->getItemGroupKeyOrFail(),
             $productConfiguratorRequestDataTransfer->getSkuOrFail(),
-            $this->quoteClient->getQuote()
+            $this->quoteClient->getQuote(),
         );
 
         if (!$productConfigurationInstanceTransfer) {
             return $this->addErrorToProductConfiguratorRedirect(
                 $productConfiguratorRedirectTransfer,
                 static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_NOT_FOUND,
-                [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestDataTransfer->getSkuOrFail()]
+                [static::GLOSSARY_KEY_PARAM_SKU => $productConfiguratorRequestDataTransfer->getSkuOrFail()],
             );
         }
 
         $productConfiguratorRequestTransfer = $this->mapProductConfigurationInstanceTransferToProductConfiguratorRequestTransfer(
             $productConfigurationInstanceTransfer,
-            $productConfiguratorRequestTransfer
+            $productConfiguratorRequestTransfer,
         );
 
         return $this->productConfigurationClient->sendProductConfiguratorAccessTokenRequest($productConfiguratorRequestTransfer);
@@ -101,7 +102,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     ): ProductConfiguratorRequestTransfer {
         $productConfiguratorRequestTransfer->getProductConfiguratorRequestDataOrFail()->fromArray(
             $configurationInstanceTransfer->toArray(),
-            true
+            true,
         );
 
         return $productConfiguratorRequestTransfer;

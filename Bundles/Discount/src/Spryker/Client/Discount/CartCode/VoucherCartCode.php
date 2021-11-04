@@ -21,6 +21,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
      * @var string
      */
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
      * @var string
      */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
@@ -163,7 +165,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
             $quoteTransfer->getUsedNotAppliedVoucherCodes(),
             function ($usedNotAppliedVoucherCode) use ($code) {
                 return $usedNotAppliedVoucherCode != $code;
-            }
+            },
         );
 
         $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);

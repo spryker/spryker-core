@@ -17,12 +17,14 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 {
     /**
      * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT = 'spy_product_label_product_abstract.fk_product_abstract';
 
     /**
      * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL = 'spy_product_label_store.fk_product_label';
@@ -114,7 +116,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     ): void {
         $productAbstractIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventTransfers,
-            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT
+            static::COL_PRODUCT_LABEL_PRODUCT_ABSTRACT_FK_PRODUCT_ABSTRACT,
         );
 
         $this->writeCollection($productAbstractIds);
@@ -131,21 +133,21 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
         $productAbstractLabelStorageTransfers = $this->productLabelStorageRepository
             ->getProductAbstractLabelStorageTransfersByProductAbstractIds($uniqueProductAbstractIds);
         $indexedProductAbstractLabelStorageTransfers = $this->indexProductAbstractLabelTransfersByProductAbstractIds(
-            $productAbstractLabelStorageTransfers
+            $productAbstractLabelStorageTransfers,
         );
         $groupedProductLabelIds = $this->getGroupedProductLabelIdsByProductAbstractIds($productAbstractIds);
 
         $this->storeData(
             $uniqueProductAbstractIds,
             $indexedProductAbstractLabelStorageTransfers,
-            $groupedProductLabelIds
+            $groupedProductLabelIds,
         );
     }
 
     /**
      * @param array<int> $uniqueProductAbstractIds
      * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
-     * @param array<int[]> $productLabelIds
+     * @param array<array<int>> $productLabelIds
      *
      * @return void
      */
@@ -164,7 +166,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 
     /**
      * @param int $productAbstractId
-     * @param array<int[]> $productLabelIds
+     * @param array<array<int>> $productLabelIds
      * @param \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer|null $productAbstractLabelStorageTransfer
      *
      * @return void
@@ -176,7 +178,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     ): void {
         if (empty($productLabelIds[$productAbstractId])) {
             $this->productLabelStorageEntityManager->deleteProductAbstractLabelStorageByProductAbstractId(
-                $productAbstractId
+                $productAbstractId,
             );
 
             return;
@@ -195,7 +197,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getGroupedProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -203,14 +205,14 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
             ->getProductLabelProductAbstractsByProductAbstractIds($productAbstractIds);
 
         return $this->getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
-            $productLabelProductAbstractTransfers
+            $productLabelProductAbstractTransfers,
         );
     }
 
     /**
      * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
         array $productLabelProductAbstractTransfers

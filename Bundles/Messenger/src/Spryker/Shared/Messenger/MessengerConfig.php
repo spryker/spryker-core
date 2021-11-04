@@ -13,6 +13,7 @@ class MessengerConfig
      * @var string
      */
     public const SESSION_TRAY = 'SESSION_TRAY';
+
     /**
      * @var string
      */
@@ -22,10 +23,12 @@ class MessengerConfig
      * @var string
      */
     public const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
+
     /**
      * @var string
      */
     public const FLASH_MESSAGES_ERROR = 'flash.messages.error';
+
     /**
      * @var string
      */

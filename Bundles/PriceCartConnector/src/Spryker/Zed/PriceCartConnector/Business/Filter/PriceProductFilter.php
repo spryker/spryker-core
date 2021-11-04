@@ -93,7 +93,7 @@ class PriceProductFilter implements PriceProductFilterInterface
         $priceProductFilterTransfer = $this->mapItemTransferToPriceProductFilterTransfer(
             new PriceProductFilterTransfer(),
             $cartChangeTransfer,
-            $itemTransfer
+            $itemTransfer,
         )
             ->setStoreName($this->findStoreName($cartChangeTransfer->getQuote()))
             ->setPriceMode($this->getPriceMode($cartChangeTransfer->getQuote()))
@@ -212,7 +212,7 @@ class PriceProductFilter implements PriceProductFilterInterface
                 $quantity = $this->changeItemQuantityAccordingToOperation(
                     $quantity,
                     $cartChangeItemTransfer->getQuantity(),
-                    $cartChangeTransfer->getOperation()
+                    $cartChangeTransfer->getOperation(),
                 );
             }
         }

@@ -43,7 +43,7 @@ class GiftCardMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration> $giftCardProductAbstractConfigurationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration[] $giftCardProductAbstractConfigurationEntities
      *
      * @return array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer>
      */
@@ -56,7 +56,7 @@ class GiftCardMapper
             $giftCardAbstractProductConfigurationForProductAbstractTransfers[] = $this
                 ->mapGiftCardProductAbstractConfigurationEntityToGiftCardAbstractProductConfigurationForProductAbstractTransfer(
                     $giftCardProductAbstractConfigurationEntity,
-                    new GiftCardAbstractProductConfigurationForProductAbstractTransfer()
+                    new GiftCardAbstractProductConfigurationForProductAbstractTransfer(),
                 );
         }
 
@@ -89,7 +89,7 @@ class GiftCardMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration> $giftCardProductConfigurationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration[] $giftCardProductConfigurationEntities
      *
      * @return array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer>
      */
@@ -101,7 +101,7 @@ class GiftCardMapper
         foreach ($giftCardProductConfigurationEntities as $giftCardProductConfigurationEntity) {
             $giftCardProductConfigurationForProductTransfers[] = $this->mapGiftCardProductConfigurationEntityToGiftCardProductConfigurationForProductTransfer(
                 $giftCardProductConfigurationEntity,
-                new GiftCardProductConfigurationForProductTransfer()
+                new GiftCardProductConfigurationForProductTransfer(),
             );
         }
 

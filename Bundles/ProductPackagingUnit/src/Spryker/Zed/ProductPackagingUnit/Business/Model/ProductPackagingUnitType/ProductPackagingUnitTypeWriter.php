@@ -84,7 +84,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
 
         throw new ProductPackagingUnitTypeUniqueViolationException(sprintf(
             static::ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS,
-            $productPackagingUnitTypeTransfer->getName()
+            $productPackagingUnitTypeTransfer->getName(),
         ));
     }
 
@@ -119,7 +119,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
 
         throw new ProductPackagingUnitTypeUniqueViolationException(sprintf(
             static::ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS,
-            $productPackagingUnitTypeTransfer->getName()
+            $productPackagingUnitTypeTransfer->getName(),
         ));
     }
 
@@ -149,7 +149,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
 
         $countProductPackagingUnitsByTypeId = $this->repository
             ->countProductPackagingUnitsByTypeId(
-                $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()
+                $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType(),
             );
 
         if ($countProductPackagingUnitsByTypeId <= 0) {

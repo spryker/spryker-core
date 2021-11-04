@@ -16,6 +16,7 @@ class UniqueEmail extends SymfonyConstraint
      * @var string
      */
     public const OPTION_MERCHANT_FACADE = 'merchantFacade';
+
     /**
      * @var string
      */

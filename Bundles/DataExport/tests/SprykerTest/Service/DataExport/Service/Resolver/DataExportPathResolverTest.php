@@ -27,14 +27,17 @@ class DataExportPathResolverTest extends Unit
      * @var string
      */
     protected const EXPORT_ROOT_DIR = '{application_root_dir}';
+
     /**
      * @var string
      */
     protected const DESTINATION = '{data_entity}s_{timestamp}.{extension}';
+
     /**
      * @var string
      */
     protected const DATA_ENTITY = 'test-data-entity';
+
     /**
      * @var string
      */
@@ -44,14 +47,17 @@ class DataExportPathResolverTest extends Unit
      * @var string
      */
     protected const HOOK_KEY_APPLICATION_ROOT_DIR = 'application_root_dir';
+
     /**
      * @var string
      */
     protected const HOOK_KEY_DATA_ENTITY = 'data_entity';
+
     /**
      * @var string
      */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+
     /**
      * @var string
      */
@@ -78,7 +84,7 @@ class DataExportPathResolverTest extends Unit
         //Act
         $resultDestination = (new DataExportPathResolver())->resolvePath(
             $resultDestination,
-            static::EXPORT_ROOT_DIR
+            static::EXPORT_ROOT_DIR,
         );
 
         //Assert
@@ -87,13 +93,13 @@ class DataExportPathResolverTest extends Unit
             APPLICATION_ROOT_DIR,
             static::DATA_ENTITY,
             $timestamp,
-            static::EXTENSION
+            static::EXTENSION,
         );
 
         $this->assertSame(
             $expectedDestination,
             $resultDestination,
-            'Resolved path does not equals to an expected value.'
+            'Resolved path does not equals to an expected value.',
         );
     }
 }

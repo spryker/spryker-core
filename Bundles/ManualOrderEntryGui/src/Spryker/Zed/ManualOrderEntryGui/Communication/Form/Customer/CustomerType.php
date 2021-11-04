@@ -25,14 +25,17 @@ class CustomerType extends AbstractType
      * @var string
      */
     public const FIELD_SALUTATION = 'salutation';
+
     /**
      * @var string
      */
     public const FIELD_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
@@ -40,7 +43,7 @@ class CustomerType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

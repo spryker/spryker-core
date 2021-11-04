@@ -51,7 +51,7 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
             ->setPagination(
                 (new PaginationTransfer())
                     ->setPage(($offset / $limit) + 1)
-                    ->setMaxPerPage($limit)
+                    ->setMaxPerPage($limit),
             );
 
         $productOfferTransfers = $this->getFactory()

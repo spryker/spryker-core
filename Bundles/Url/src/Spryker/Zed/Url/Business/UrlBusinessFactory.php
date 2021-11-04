@@ -81,7 +81,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     {
         return new UrlReader(
             $this->getQueryContainer(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -144,7 +144,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getTouchFacade(),
-            $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION),
         );
     }
 
@@ -159,7 +159,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createUrlManager(),
             $this->getTouchFacade(),
-            $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION),
         );
     }
 

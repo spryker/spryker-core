@@ -217,21 +217,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
+                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
+                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
+                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE),
             );
 
         $expectedQuery = (new BoolQuery())
@@ -289,21 +289,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
+                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
                     ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
+                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE),
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
                     ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
-                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
+                ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE),
             );
 
         $expectedQuery = (new BoolQuery())

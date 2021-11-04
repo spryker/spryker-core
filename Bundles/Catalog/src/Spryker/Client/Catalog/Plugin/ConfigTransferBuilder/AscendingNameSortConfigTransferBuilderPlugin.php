@@ -18,6 +18,7 @@ class AscendingNameSortConfigTransferBuilderPlugin extends AbstractPlugin implem
      * @var string
      */
     public const NAME = 'name';
+
     /**
      * @var string
      */

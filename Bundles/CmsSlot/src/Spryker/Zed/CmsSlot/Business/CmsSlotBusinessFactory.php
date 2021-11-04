@@ -38,7 +38,7 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotValidator(
             $this->getValidatorAdapter(),
-            $this->createCmsSlotConstraintsProvider()
+            $this->createCmsSlotConstraintsProvider(),
         );
     }
 
@@ -49,7 +49,7 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotTemplateValidator(
             $this->getValidatorAdapter(),
-            $this->createCmsSlotTemplateConstraintsProvider()
+            $this->createCmsSlotTemplateConstraintsProvider(),
         );
     }
 
@@ -68,7 +68,7 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotActivator(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

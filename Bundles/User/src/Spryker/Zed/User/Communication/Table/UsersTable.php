@@ -23,18 +23,22 @@ class UsersTable extends AbstractTable
      * @var string
      */
     public const ACTION = 'Action';
+
     /**
      * @var string
      */
     public const UPDATE_USER_URL = '/user/edit/update';
+
     /**
      * @var string
      */
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+
     /**
      * @var string
      */
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
+
     /**
      * @var string
      */
@@ -42,6 +46,7 @@ class UsersTable extends AbstractTable
 
     /**
      * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     *
      * @var string
      */
     public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
@@ -234,7 +239,7 @@ class UsersTable extends AbstractTable
             DeactivateUserForm::class,
             [
                 static::BUTTON_CLASS => 'btn-outline btn-danger',
-            ]
+            ],
         );
     }
 
@@ -253,7 +258,7 @@ class UsersTable extends AbstractTable
                 $buttonTransfer->getUrlOrFail(),
                 $buttonTransfer->getTitleOrFail(),
                 $buttonTransfer->getDefaultOptions(),
-                $buttonTransfer->getCustomOptions()
+                $buttonTransfer->getCustomOptions(),
             );
         }
 

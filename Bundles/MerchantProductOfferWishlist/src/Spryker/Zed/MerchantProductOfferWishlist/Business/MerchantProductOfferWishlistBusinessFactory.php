@@ -26,7 +26,7 @@ class MerchantProductOfferWishlistBusinessFactory extends AbstractBusinessFactor
     public function createWishlistItemRelationChecker(): WishlistItemRelationCheckerInterface
     {
         return new WishlistItemRelationChecker(
-            $this->getProductOfferFacade()
+            $this->getProductOfferFacade(),
         );
     }
 

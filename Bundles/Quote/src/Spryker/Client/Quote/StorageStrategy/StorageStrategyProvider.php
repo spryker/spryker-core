@@ -65,8 +65,8 @@ class StorageStrategyProvider implements StorageStrategyProviderInterface
         throw new StorageStrategyNotFound(
             sprintf(
                 'There is no quote storage strategy with name: %s',
-                $storageStrategyType
-            )
+                $storageStrategyType,
+            ),
         );
     }
 

@@ -47,7 +47,7 @@ class ShoppingListCreator implements ShoppingListCreatorInterface
 
         if ($shoppingListResponseTransfer->getIsSuccess() === false) {
             return $this->shoppingListMapper->mapShoppingListResponseErrorsToRestCodes(
-                $shoppingListResponseTransfer
+                $shoppingListResponseTransfer,
             );
         }
 

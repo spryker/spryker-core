@@ -34,7 +34,7 @@ class ProductConfigurationPriceProductExpanderPlugin extends AbstractPlugin impl
     ): array {
         return $this->getFacade()->expandPriceProductTransfersWithProductConfigurationPrices(
             $priceProductTransfers,
-            $cartChangeTransfer
+            $cartChangeTransfer,
         );
     }
 }

@@ -20,6 +20,7 @@ class RemoveRestApiValidationCacheConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'rest-api:remove-validation-cache';
+
     /**
      * @var string
      */

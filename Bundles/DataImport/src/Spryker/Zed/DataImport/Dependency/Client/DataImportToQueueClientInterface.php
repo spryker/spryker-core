@@ -22,7 +22,7 @@ interface DataImportToQueueClientInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */

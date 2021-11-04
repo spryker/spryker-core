@@ -36,7 +36,7 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createPriceGrouper(),
-            $this->getPriceProductMerchantRelationshipStorageFilterPlugins()
+            $this->getPriceProductMerchantRelationshipStorageFilterPlugins(),
         );
     }
 
@@ -49,7 +49,7 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createPriceGrouper(),
-            $this->getPriceProductMerchantRelationshipStorageFilterPlugins()
+            $this->getPriceProductMerchantRelationshipStorageFilterPlugins(),
         );
     }
 
@@ -62,7 +62,7 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
             $this->getEventBehaviorFacade(),
             $this->getMerchantRelationshipFacade(),
             $this->createPriceProductAbstractStorageWriter(),
-            $this->createPriceProductConcreteStorageWriter()
+            $this->createPriceProductConcreteStorageWriter(),
         );
     }
 

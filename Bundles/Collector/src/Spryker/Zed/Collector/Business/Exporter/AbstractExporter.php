@@ -143,7 +143,7 @@ abstract class AbstractExporter implements ExporterInterface
             $this->reader,
             $this->writer,
             $this->touchUpdater,
-            $output
+            $output,
         );
 
         $this->finishExport($result, $type, $startTime);
@@ -164,7 +164,7 @@ abstract class AbstractExporter implements ExporterInterface
             $this->marker->setLastExportMarkByTypeAndLocale(
                 $type,
                 $batchResult->getProcessedLocale(),
-                $startTime
+                $startTime,
             );
         }
     }

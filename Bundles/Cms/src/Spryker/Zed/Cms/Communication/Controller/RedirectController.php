@@ -31,10 +31,12 @@ class RedirectController extends AbstractController
      * @var string
      */
     public const REDIRECT_ADDRESS = '/cms/redirect';
+
     /**
      * @var string
      */
     public const REQUEST_ID_URL = 'id-url';
+
     /**
      * @var string
      */
@@ -44,14 +46,17 @@ class RedirectController extends AbstractController
      * @var string
      */
     public const MESSAGE_REDIRECT_CREATE_SUCCESS = 'Redirect was created successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_REDIRECT_UPDATE_SUCCESS = 'Redirect was updated successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_REDIRECT_DELETE_SUCCESS = 'Redirect was deleted successfully.';
+
     /**
      * @var string
      */
@@ -91,7 +96,7 @@ class RedirectController extends AbstractController
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
             ->getCmsRedirectForm(
-                $dataProvider->getData()
+                $dataProvider->getData(),
             )
             ->handleRequest($request);
 
@@ -134,7 +139,7 @@ class RedirectController extends AbstractController
         $dataProvider = $this->getFactory()->createCmsRedirectFormDataProvider();
         $form = $this->getFactory()
             ->getCmsRedirectForm(
-                $dataProvider->getData($idUrl)
+                $dataProvider->getData($idUrl),
             )
             ->handleRequest($request);
 

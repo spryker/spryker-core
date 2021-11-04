@@ -14,15 +14,16 @@ use Symfony\Component\Form\DataTransformerInterface;
 class ProductOfferStockTransformer implements DataTransformerInterface
 {
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
     public function transform($productOfferStockTransfers): ProductOfferStockTransfer
     {
-        return $productOfferStockTransfers[0];
+        /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
+        $productOfferStockTransfer = $productOfferStockTransfers[0];
+
+        return $productOfferStockTransfer;
     }
 
     /**

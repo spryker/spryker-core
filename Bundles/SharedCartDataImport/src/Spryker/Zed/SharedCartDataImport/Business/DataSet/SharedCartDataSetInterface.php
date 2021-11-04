@@ -13,10 +13,12 @@ interface SharedCartDataSetInterface
      * @var string
      */
     public const KEY_QUOTE = 'quote_key';
+
     /**
      * @var string
      */
     public const KEY_COMPANY_USER = 'company_user_key';
+
     /**
      * @var string
      */
@@ -26,10 +28,12 @@ interface SharedCartDataSetInterface
      * @var string
      */
     public const ID_QUOTE = 'id_quote';
+
     /**
      * @var string
      */
     public const ID_COMPANY_USER = 'id_company_user';
+
     /**
      * @var string
      */

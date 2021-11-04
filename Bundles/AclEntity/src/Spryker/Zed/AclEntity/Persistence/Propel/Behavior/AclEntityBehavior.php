@@ -25,14 +25,17 @@ class AclEntityBehavior extends Behavior
      * @var string
      */
     protected const ACTION_SELECT = 'Select';
+
     /**
      * @var string
      */
     protected const ACTION_UPDATE = 'Update';
+
     /**
      * @var string
      */
     protected const ACTION_CREATE = 'Create';
+
     /**
      * @var string
      */
@@ -110,10 +113,10 @@ class AclEntityBehavior extends Behavior
         /** @var \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer */
         $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
         $aclEntityMetadataReader = $this->getAclEntityPersistenceFactory()->createAclEntityMetadataReader(
-            $aclEntityMetadataCollectionTransfer
+            $aclEntityMetadataCollectionTransfer,
         );
         $aclEntityMetadataTransfer = $aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            $this->getEntityName()
+            $this->getEntityName(),
         );
 
         if (!$aclEntityMetadataTransfer || !$aclEntityMetadataTransfer->getHasSegmentTable()) {
@@ -130,7 +133,7 @@ class AclEntityBehavior extends Behavior
         if (!$database->hasTable($connectorTableName)) {
             $connectorTableBuilder = $this->getAclEntityPersistenceFactory()->createConnectorTableBuilder(
                 $this->getTable(),
-                $database
+                $database,
             );
             $connectorTableBuilder->build();
         }

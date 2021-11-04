@@ -27,7 +27,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     {
         return new RefundCalculator(
             $this->getRefundCalculatorPlugins(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
         );
     }
 
@@ -55,7 +55,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
         return new RefundSaver(
             $this->getSalesQueryContainer(),
             $this->getSalesFacade(),
-            $this->getCalculationFacade()
+            $this->getCalculationFacade(),
         );
     }
 

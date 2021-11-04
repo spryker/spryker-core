@@ -101,7 +101,7 @@ interface TransferFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

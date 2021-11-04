@@ -59,7 +59,7 @@ abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterfac
         $filenameWithoutExtension = pathinfo($filename, PATHINFO_FILENAME);
 
         $transferClassName = $this->buildFullyQualifiedTransferClassName(
-            $filenameWithoutExtension
+            $filenameWithoutExtension,
         );
 
         return $this->extendsExpectedBaseClass($transferClassName);

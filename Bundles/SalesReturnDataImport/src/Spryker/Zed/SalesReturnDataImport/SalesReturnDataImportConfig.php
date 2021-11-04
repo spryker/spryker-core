@@ -28,7 +28,7 @@ class SalesReturnDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'return_reason.csv',
-            static::IMPORT_TYPE_RETURN_REASON
+            static::IMPORT_TYPE_RETURN_REASON,
         );
     }
 
@@ -42,7 +42,7 @@ class SalesReturnDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

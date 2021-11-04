@@ -42,7 +42,7 @@ class MonthDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $monthDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(),
-            $this->createClauseTransfer($dateTime->format(MonthDecisionRule::DATE_FORMAT))
+            $this->createClauseTransfer($dateTime->format(MonthDecisionRule::DATE_FORMAT)),
         );
 
         $this->assertTrue($isSatisfied);

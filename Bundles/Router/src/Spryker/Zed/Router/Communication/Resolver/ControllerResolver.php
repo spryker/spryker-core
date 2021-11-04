@@ -51,8 +51,8 @@ class ControllerResolver extends SharedControllerResolver
                 '%s/%s/%s',
                 $bundleControllerAction->getBundle(),
                 $bundleControllerAction->getController(),
-                $bundleControllerAction->getAction()
-            )
+                $bundleControllerAction->getAction(),
+            ),
         );
 
         return [$controller, $bundleControllerAction->getAction() . 'Action'];

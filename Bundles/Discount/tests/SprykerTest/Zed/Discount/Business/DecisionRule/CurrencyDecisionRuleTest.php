@@ -39,7 +39,7 @@ class CurrencyDecisionRuleTest extends BaseRuleTester
         $isSatisfied = $currencyDecisionRule->isSatisfiedBy(
             $this->createQuoteTransfer(),
             $this->createItemTransfer(1000),
-            $this->createClauseTransfer('EUR')
+            $this->createClauseTransfer('EUR'),
         );
 
         $this->assertTrue($isSatisfied);

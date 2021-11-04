@@ -20,6 +20,7 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      * @var string
      */
     protected const SERVICE_SESSION = 'session';
+
     /**
      * @var string
      */

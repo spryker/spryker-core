@@ -21,6 +21,7 @@ class CustomerAccessPermissionDependencyProvider extends AbstractDependencyProvi
      * @var string
      */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+
     /**
      * @var string
      */

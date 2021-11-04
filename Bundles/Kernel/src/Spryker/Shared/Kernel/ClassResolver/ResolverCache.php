@@ -96,7 +96,7 @@ class ResolverCache implements ResolverCacheInterface
         }
 
         $this->storage->persist(
-            $this->getUnresolvableCollection()->toArray()
+            $this->getUnresolvableCollection()->toArray(),
         );
     }
 

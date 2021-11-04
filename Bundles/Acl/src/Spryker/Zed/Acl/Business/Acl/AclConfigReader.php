@@ -19,6 +19,7 @@ class AclConfigReader implements AclConfigReaderInterface
      * @var string
      */
     protected const GROUP_KEY = 'group';
+
     /**
      * @var string
      */
@@ -63,7 +64,7 @@ class AclConfigReader implements AclConfigReaderInterface
             }
             $roleTransfer = $roleTransfers[$ruleData[static::ROLE_KEY]];
             $roleTransfer->addAclRule(
-                (new RuleTransfer())->fromArray($ruleData, true)
+                (new RuleTransfer())->fromArray($ruleData, true),
             );
         }
 

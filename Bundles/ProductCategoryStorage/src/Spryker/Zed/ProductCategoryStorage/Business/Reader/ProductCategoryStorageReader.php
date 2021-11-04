@@ -20,7 +20,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
     protected $categoryTreeBuilder;
 
     /**
-     * @var array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]>
+     * @var array<array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer>>
      */
     protected static $categoryTree;
 
@@ -71,7 +71,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
             $categoryNodeAggregationTransfers = $this->extractCategoryNodeAggregationsFromCategoryTree(
                 $nodeTransfer,
                 $storeName,
-                $localeName
+                $localeName,
             );
 
             $productCategoryTransfers[] = $this->buildProductCategoryStorageTransfers($categoryNodeAggregationTransfers);

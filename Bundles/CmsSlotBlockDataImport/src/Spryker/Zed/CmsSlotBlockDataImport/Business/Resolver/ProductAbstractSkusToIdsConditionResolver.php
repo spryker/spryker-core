@@ -16,6 +16,7 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
      * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';
+
     /**
      * @var int
      */
@@ -89,8 +90,8 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find Product Abstract IDs by skus "%s".',
-                    implode(',', $productAbstractSkus)
-                )
+                    implode(',', $productAbstractSkus),
+                ),
             );
         }
 

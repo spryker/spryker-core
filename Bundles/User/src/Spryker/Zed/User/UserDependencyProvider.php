@@ -20,42 +20,52 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_GROUP = 'group plugin';
+
     /**
      * @var string
      */
     public const PLUGINS_USERS_TABLE_EXTENDER = 'PLUGINS_USERS_TABLE_EXTENDER';
+
     /**
      * @var string
      */
     public const PLUGINS_USER_TABLE_ACTION_EXPANDER = 'PLUGINS_USERS_TABLE_ACTION_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_USER_TABLE_CONFIG_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_USER_TABLE_DATA_EXPANDER = 'PLUGINS_USER_TABLE_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_POST_SAVE = 'PLUGINS_POST_SAVE';
+
     /**
      * @var string
      */
     public const PLUGINS_USER_PRE_SAVE = 'PLUGINS_USER_PRE_SAVE';
+
     /**
      * @var string
      */
     public const PLUGINS_USER_TRANSFER_EXPANDER = 'PLUGINS_USER_TRANSFER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_USER_FORM_EXPANDER = 'PLUGINS_USER_FORM_EXPANDER';
+
     /**
      * @var string
      */
     public const CLIENT_SESSION = 'client session';
+
     /**
      * @var string
      */
@@ -146,7 +156,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PLUGINS_USER_TABLE_ACTION_EXPANDER, function () {
             return array_merge(
                 $this->getUserTableActionExpanderPlugins(),
-                $this->getUsersTableExtenderPlugins()
+                $this->getUsersTableExtenderPlugins(),
             );
         });
 

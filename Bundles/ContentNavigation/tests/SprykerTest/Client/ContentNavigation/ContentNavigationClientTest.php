@@ -133,7 +133,7 @@ class ContentNavigationClientTest extends Unit
             ->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(
             ContentNavigationDependencyProvider::CLIENT_CONTENT_STORAGE,
-            $contentNavigationToContentStorageClientBridge
+            $contentNavigationToContentStorageClientBridge,
         );
     }
 

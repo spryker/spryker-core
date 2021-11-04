@@ -35,7 +35,7 @@ class MerchantRelationshipListener extends AbstractPlugin implements EventBulkHa
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(
                 $eventEntityTransfers,
-                PriceProductMerchantRelationshipStorageConfig::COL_FK_COMPANY_BUSINESS_UNIT
+                PriceProductMerchantRelationshipStorageConfig::COL_FK_COMPANY_BUSINESS_UNIT,
             );
 
         $this->getFacade()->publishAbstractPriceProductByBusinessUnits($companyBusinessUnitIds);

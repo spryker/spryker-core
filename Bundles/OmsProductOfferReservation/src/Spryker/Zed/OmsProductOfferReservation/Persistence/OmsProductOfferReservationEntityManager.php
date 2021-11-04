@@ -27,7 +27,7 @@ class OmsProductOfferReservationEntityManager extends AbstractEntityManager impl
             ->createOmsProductOfferReservationMapper()
             ->mapOmsProductOfferReservationTransferToOmsProductOfferReservationEntity(
                 $omsProductOfferReservationTransfer,
-                new SpyOmsProductOfferReservation()
+                new SpyOmsProductOfferReservation(),
             );
 
         $productOfferReservationEntity->save();

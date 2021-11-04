@@ -25,7 +25,7 @@ class MerchantRelationshipCommunicationFactory extends AbstractCommunicationFact
     public function createMerchantRelationshipHydrator(): MerchantRelationshipHydratorInterface
     {
         return new MerchantRelationshipHydrator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

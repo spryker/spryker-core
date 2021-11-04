@@ -134,7 +134,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
                 '%s@%s.%s',
                 strtolower(md5((string)random_int(0, PHP_INT_MAX))),
                 strtolower(md5((string)random_int(0, PHP_INT_MAX))),
-                strtolower(md5((string)random_int(0, PHP_INT_MAX)))
+                strtolower(md5((string)random_int(0, PHP_INT_MAX))),
             );
         } while ($this->queryContainer->queryCustomerByEmail($randomEmail)->exists());
 

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
+use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
@@ -34,18 +35,22 @@ class WriterTest extends Unit
      * @var string
      */
     public const DUMMY_TAX_RATE1_NAME = 'Local';
+
     /**
      * @var int
      */
     public const DUMMY_TAX_RATE1_PERCENTAGE = 25;
+
     /**
      * @var string
      */
     public const DUMMY_TAX_RATE2_NAME = 'Regional';
+
     /**
      * @var int
      */
     public const DUMMY_TAX_RATE2_PERCENTAGE = 10;
+
     /**
      * @var int
      */
@@ -261,7 +266,7 @@ class WriterTest extends Unit
      */
     public function testExceptionRaisedIfAttemptingToRemoveTaxRateFromTaxSetWithSingleTaxRate(): void
     {
-        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException');
+        $this->expectException(MissingTaxRateException::class);
 
         $taxRateTransfer = $this->createTaxRateTransfer();
         $rateId = $this->taxFacade->createTaxRate($taxRateTransfer)->getIdTaxRate();

@@ -62,7 +62,7 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
             }
 
             $aclEntityMetadataTransfer = $this->findAclEntityMetadataTransferForEntityClass(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
         }
 
@@ -79,7 +79,7 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
         $aclEntityMetadataTransfer = $this->findAclEntityMetadataTransferForEntityClass($entityClass);
         while ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getParent()) {
             $aclEntityMetadataTransfer = $this->findAclEntityMetadataTransferForEntityClass(
-                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
         }
 

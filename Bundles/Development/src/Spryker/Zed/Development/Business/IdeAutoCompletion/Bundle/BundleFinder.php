@@ -26,14 +26,14 @@ class BundleFinder implements BundleFinderInterface
     protected $bundleBuilder;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $directoryGlobPatterns;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
-     * @param array $directoryGlobPatterns
+     * @param array<string, string> $directoryGlobPatterns
      */
     public function __construct(Finder $finder, BundleBuilderInterface $bundleBuilder, array $directoryGlobPatterns)
     {
@@ -107,7 +107,7 @@ class BundleFinder implements BundleFinderInterface
 
         $mergedMethodTransferCollection = $this->mergeMethods(
             $existingBundleTransfer->getMethods(),
-            $bundleTransfer->getMethods()
+            $bundleTransfer->getMethods(),
         );
         $bundleTransfer->setMethods($mergedMethodTransferCollection);
 

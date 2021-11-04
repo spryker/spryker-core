@@ -28,22 +28,27 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
      * @var string
      */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'form_product_concrete_super_attributes';
+
     /**
      * @var string
      */
     public const FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL = 'Super attributes';
+
     /**
      * @var string
      */
     public const OPTION_SUPER_ATTRIBUTES = 'option_super_attributes';
+
     /**
      * @var string
      */
     public const OPTION_ID_PRODUCT_ABSTRACT = 'option_id_product_abstract';
+
     /**
      * @var string
      */
     public const CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES = 'container_product_concrete_super_attributes';
+
     /**
      * @var string
      */
@@ -51,7 +56,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -64,7 +69,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -78,7 +83,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
                 'label' => static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL,
                 'label_attr' => ['class' => static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES_LABEL_CLASS],
                 'constraints' => $this->prepareProductConcreteSuperAttributeFormConstraints($builder, $options),
-            ]
+            ],
         );
 
         return $this;
@@ -86,7 +91,7 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return array
      */
@@ -101,14 +106,14 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
             new ProductAttributeUniqueCombination(
                 $this->getFactory()->getProductFacade(),
                 (int)$options[static::OPTION_ID_PRODUCT_ABSTRACT],
-                $this->getFactory()->createProductConcreteSuperAttributeFilterHelper()
+                $this->getFactory()->createProductConcreteSuperAttributeFilterHelper(),
             ),
         ];
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -134,10 +139,10 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
                                     'checkbox' => ProductConcreteSuperAttributeForm::FIELD_CHECKBOX,
                                     'input' => ProductConcreteSuperAttributeForm::FIELD_INPUT,
                                     'type' => ProductAttributeType::TYPE_NUMBER,
-                                ]
+                                ],
                             ),
                         ],
-                    ]
+                    ],
                 );
         }
 

@@ -35,7 +35,7 @@ class ShipmentDataHelper extends Module
         $this->debug(sprintf(
             'Inserted Sales shipment: %d for sales order: %d',
             $shipmentTransfer->getIdSalesShipment(),
-            $idSalesOrder
+            $idSalesOrder,
         ));
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($shipmentTransfer): void {

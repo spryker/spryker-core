@@ -108,7 +108,7 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
                 $stateName,
                 (new OmsStateTransfer())
                     ->setName($stateName)
-                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName))
+                    ->addProcess($processName, (new OmsProcessTransfer())->setName($processName)),
             );
         }
 

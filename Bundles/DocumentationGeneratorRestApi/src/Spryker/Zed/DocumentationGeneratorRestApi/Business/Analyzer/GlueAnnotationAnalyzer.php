@@ -36,6 +36,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
      * @var string
      */
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
+
     /**
      * @var string
      */
@@ -145,7 +146,7 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
             $annotationDecoded = $this->utilEncodingService->decodeJson($annotation, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new InvalidAnnotationFormatException(
-                    sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation)
+                    sprintf(static::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT, json_last_error_msg(), $annotation),
                 );
             }
             $annotationsTransformed[] = $annotationDecoded;

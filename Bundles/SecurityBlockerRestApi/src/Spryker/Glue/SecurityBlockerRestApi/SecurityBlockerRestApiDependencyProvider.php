@@ -21,6 +21,7 @@ class SecurityBlockerRestApiDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const CLIENT_SECURITY_BLOCKER = 'CLIENT_SECURITY_BLOCKER';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class SecurityBlockerRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_SECURITY_BLOCKER, function (Container $container) {
             return new SecurityBlockerRestApiToSecurityBlockerClientBridge(
-                $container->getLocator()->securityBlocker()->client()
+                $container->getLocator()->securityBlocker()->client(),
             );
         });
 
@@ -65,7 +66,7 @@ class SecurityBlockerRestApiDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new SecurityBlockerRestApiToGlossaryStorageClientBridge(
-                $container->getLocator()->glossaryStorage()->client()
+                $container->getLocator()->glossaryStorage()->client(),
             );
         });
 

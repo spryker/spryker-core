@@ -28,10 +28,12 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
      * @var string
      */
     protected const HEADER_MERCHANT_RELATION_ID = 'ID Merchant Relation';
+
     /**
      * @var string
      */
     protected const HEADER_MERCHANT_NAME = 'Merchant Name';
+
     /**
      * @var string
      */

@@ -30,6 +30,7 @@ class NumberOfChildrenTest extends Unit
      * @var int
      */
     public const NUMBER_OF_CHILDREN = 2;
+
     /**
      * @var int
      */

@@ -15,10 +15,12 @@ class ProductOptionConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_TYPE_PRODUCT_OPTION = 'product_option';
+
     /**
      * @var string
      */
     public const PRODUCT_OPTION_TRANSLATION_PREFIX = 'product.option.';
+
     /**
      * @var string
      */

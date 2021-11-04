@@ -25,6 +25,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      * @var string
      */
     protected const PATTERN_MINUS_ONE_DAY = '-1 day';
+
     /**
      * @var string
      */
@@ -171,7 +172,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
             $this->productPriceUpdater->updateCurrentPriceProduct(
                 $fallbackPriceProduct,
-                $priceProductTransfer->getPriceType()
+                $priceProductTransfer->getPriceType(),
             );
 
             return;

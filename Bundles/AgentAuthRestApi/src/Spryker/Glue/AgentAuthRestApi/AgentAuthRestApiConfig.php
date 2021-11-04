@@ -15,10 +15,12 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS = 'agent-customer-impersonation-access-tokens';
+
     /**
      * @var string
      */
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
+
     /**
      * @var string
      */
@@ -26,12 +28,14 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS
+     *
      * @var string
      */
     public const GRANT_TYPE_AGENT_CREDENTIALS = 'agent_credentials';
 
     /**
      * @uses \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig::GRANT_TYPE_CUSTOMER_IMPERSONATION
+     *
      * @var string
      */
     public const GRANT_TYPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
@@ -45,6 +49,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_INVALID_LOGIN = '4101';
+
     /**
      * @var string
      */
@@ -54,6 +59,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_INVALID_ACCESS_TOKEN = '4102';
+
     /**
      * @var string
      */
@@ -63,6 +69,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_AGENT_ONLY = '4103';
+
     /**
      * @var string
      */
@@ -72,6 +79,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_FAILED_TO_IMPERSONATE_CUSTOMER = '4104';
+
     /**
      * @var string
      */

@@ -27,6 +27,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_MERCHANT_ORDER = 'merchant-order';
+
     /**
      * @var string
      */
@@ -36,6 +37,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_MERCHANT_ORDER_ITEM = 'merchant-order-item';
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_MERCHANT_ORDER_EXPENSE = 'merchant-order-expense';
+
     /**
      * @var string
      */
@@ -85,7 +88,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrder($this->merchantTransfer->getMerchantReference());
 
@@ -99,7 +102,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertSame(
             1,
             $dataExportResultTransfer->getExportCount(),
-            'Exported rows count does not equals to an expected value.'
+            'Exported rows count does not equals to an expected value.',
         );
     }
 
@@ -111,7 +114,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrder($this->merchantTransfer->getMerchantReference());
 
@@ -123,7 +126,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertCount(
             1,
             $dataExportReportTransfer->getDataExportResults(),
-            'Number of result transfers does not equals to an expected value.'
+            'Number of result transfers does not equals to an expected value.',
         );
     }
 
@@ -135,7 +138,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrder($this->merchantTransfer->getMerchantReference());
 
@@ -149,7 +152,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertSame(
             sprintf(static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER, $this->timestamp),
             $dataExportResultTransfer->getFileName(),
-            'File name does not equals to an expected value'
+            'File name does not equals to an expected value',
         );
 
         $exportFilePath = APPLICATION_ROOT_DIR . 'data/export' .
@@ -169,7 +172,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER,
-            $this->timestamp
+            $this->timestamp,
         );
 
         // Act
@@ -178,7 +181,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $dataExportReportTransfer->getIsSuccessful(),
-            'The data export is successful despite the empty data.'
+            'The data export is successful despite the empty data.',
         );
     }
 
@@ -190,7 +193,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_ITEM,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrderItem($this->merchantTransfer->getMerchantReference());
 
@@ -204,7 +207,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertSame(
             1,
             $dataExportResultTransfer->getExportCount(),
-            'Exported rows count does not equals to an expected value.'
+            'Exported rows count does not equals to an expected value.',
         );
     }
 
@@ -216,7 +219,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_ITEM,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrderItem($this->merchantTransfer->getMerchantReference());
 
@@ -228,7 +231,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertCount(
             1,
             $dataExportReportTransfer->getDataExportResults(),
-            'Number of result transfers does not equals to an expected value.'
+            'Number of result transfers does not equals to an expected value.',
         );
     }
 
@@ -240,7 +243,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_ITEM,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrderItem($this->merchantTransfer->getMerchantReference());
 
@@ -254,7 +257,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertSame(
             sprintf(static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER_ITEM, $this->timestamp),
             $dataExportResultTransfer->getFileName(),
-            'File name does not equals to an expected value'
+            'File name does not equals to an expected value',
         );
 
         $exportFilePath = APPLICATION_ROOT_DIR . 'data/export' .
@@ -274,7 +277,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_ITEM,
-            $this->timestamp
+            $this->timestamp,
         );
 
         // Act
@@ -283,7 +286,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $dataExportReportTransfer->getIsSuccessful(),
-            'The data export is successful despite the empty data.'
+            'The data export is successful despite the empty data.',
         );
     }
 
@@ -295,7 +298,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_EXPENSE,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrderExpense($this->merchantTransfer->getMerchantReference());
 
@@ -309,7 +312,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertSame(
             1,
             $dataExportResultTransfer->getExportCount(),
-            'Exported rows count does not equals to an expected value.'
+            'Exported rows count does not equals to an expected value.',
         );
     }
 
@@ -321,7 +324,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_EXPENSE,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrderExpense($this->merchantTransfer->getMerchantReference());
 
@@ -333,7 +336,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertCount(
             1,
             $dataExportReportTransfer->getDataExportResults(),
-            'Number of result transfers does not equals to an expected value.'
+            'Number of result transfers does not equals to an expected value.',
         );
     }
 
@@ -345,7 +348,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_EXPENSE,
-            $this->timestamp
+            $this->timestamp,
         );
         $this->tester->createMerchantOrderExpense($this->merchantTransfer->getMerchantReference());
 
@@ -359,7 +362,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         $this->assertSame(
             sprintf(static::DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER_EXPENSE, $this->timestamp),
             $dataExportResultTransfer->getFileName(),
-            'File name does not equals to an expected value'
+            'File name does not equals to an expected value',
         );
 
         $exportFilePath = APPLICATION_ROOT_DIR . 'data/export' .
@@ -379,7 +382,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Arrange
         $dataExportConfigurationTransfer = $this->tester->createDataExportConfigurationTransfer(
             static::DATA_ENTITY_MERCHANT_ORDER_EXPENSE,
-            $this->timestamp
+            $this->timestamp,
         );
 
         // Act
@@ -388,7 +391,7 @@ class MerchantSalesOrderDataExportFacadeTest extends Unit
         // Assert
         $this->assertFalse(
             $dataExportReportTransfer->getIsSuccessful(),
-            'The data export is successful despite the empty data.'
+            'The data export is successful despite the empty data.',
         );
     }
 }

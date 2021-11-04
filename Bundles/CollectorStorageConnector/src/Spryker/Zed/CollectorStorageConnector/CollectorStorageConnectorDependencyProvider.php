@@ -18,6 +18,7 @@ class CollectorStorageConnectorDependencyProvider extends AbstractBundleDependen
      * @var string
      */
     public const FACADE_STORAGE = 'storage facade';
+
     /**
      * @var string
      */

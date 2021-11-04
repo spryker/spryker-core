@@ -43,6 +43,7 @@ class QuoteRequestFacadeTest extends Unit
      * @var string
      */
     protected const FAKE_QUOTE_REQUEST_REFERENCE = 'FAKE_QUOTE_REQUEST_REFERENCE';
+
     /**
      * @var string
      */
@@ -50,42 +51,49 @@ class QuoteRequestFacadeTest extends Unit
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserWriter::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
@@ -183,7 +191,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertSame(SharedQuoteRequestConfig::STATUS_DRAFT, $storedQuoteRequestTransfer->getStatus());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getQuote()
+            $storedQuoteRequestTransfer->getLatestVersion()->getQuote(),
         );
     }
 
@@ -255,7 +263,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -280,11 +288,11 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote()->getItems(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getQuote()->getItems()
+            $storedQuoteRequestTransfer->getLatestVersion()->getQuote()->getItems(),
         );
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getMetadata(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getMetadata()
+            $storedQuoteRequestTransfer->getLatestVersion()->getMetadata(),
         );
     }
 
@@ -381,7 +389,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -400,7 +408,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -421,7 +429,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_CANCELED,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus(),
         );
     }
 
@@ -444,7 +452,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -465,7 +473,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -486,12 +494,12 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
-            (new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            (new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference()),
         );
 
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_CLOSED,
-            $quoteRequestCollection->getQuoteRequests()[0]->getStatus()
+            $quoteRequestCollection->getQuoteRequests()[0]->getStatus(),
         );
     }
 
@@ -512,12 +520,12 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
-            (new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            (new QuoteRequestFilterTransfer())->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference()),
         );
 
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_DRAFT,
-            $quoteRequestCollection->getQuoteRequests()[0]->getStatus()
+            $quoteRequestCollection->getQuoteRequests()[0]->getStatus(),
         );
     }
 
@@ -530,7 +538,7 @@ class QuoteRequestFacadeTest extends Unit
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus();
 
         $this->quoteTransfer->setQuoteRequestVersionReference(
-            $quoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
 
         // Act
@@ -549,11 +557,11 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
-            (new DateTime('+1 hour'))->format('Y-m-d H:i:s')
+            (new DateTime('+1 hour'))->format('Y-m-d H:i:s'),
         );
 
         $this->quoteTransfer->setQuoteRequestVersionReference(
-            $quoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
 
         // Act
@@ -601,7 +609,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND,
-            $checkoutResponseTransfer->getErrors()[0]->getMessage()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -613,7 +621,7 @@ class QuoteRequestFacadeTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInDraftStatus();
         $this->quoteTransfer->setQuoteRequestVersionReference(
-            $quoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -627,7 +635,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS,
-            $checkoutResponseTransfer->getErrors()[0]->getMessage()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -638,10 +646,10 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
-            (new DateTime('+1 second'))->format('Y-m-d H:i:s')
+            (new DateTime('+1 second'))->format('Y-m-d H:i:s'),
         );
         $this->quoteTransfer->setQuoteRequestVersionReference(
-            $quoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
@@ -656,7 +664,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertSame(
             static::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL,
-            $checkoutResponseTransfer->getErrors()[0]->getMessage()
+            $checkoutResponseTransfer->getErrors()[0]->getMessage(),
         );
     }
 
@@ -729,7 +737,7 @@ class QuoteRequestFacadeTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus(
             (new DateTime('+1 hour'))->format('Y-m-d H:i:s'),
-            null
+            null,
         );
 
         // Act
@@ -762,7 +770,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -783,7 +791,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -811,7 +819,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -833,11 +841,11 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus(),
         );
         $this->assertNotEquals(
             $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $storedQuoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
     }
 
@@ -859,11 +867,11 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_IN_PROGRESS,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus(),
         );
         $this->assertNotEquals(
             $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $storedQuoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
     }
 
@@ -886,7 +894,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -907,7 +915,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -929,11 +937,11 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_DRAFT,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus(),
         );
         $this->assertNotEquals(
             $quoteRequestTransfer->getLatestVersion()->getVersionReference(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getVersionReference()
+            $storedQuoteRequestTransfer->getLatestVersion()->getVersionReference(),
         );
     }
 
@@ -956,7 +964,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -977,7 +985,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1038,7 +1046,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_WAITING,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus(),
         );
     }
 
@@ -1061,7 +1069,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1082,7 +1090,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1110,7 +1118,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1131,7 +1139,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             SharedQuoteRequestConfig::STATUS_CANCELED,
-            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus()
+            $quoteRequestResponseTransfer->getQuoteRequest()->getStatus(),
         );
     }
 
@@ -1154,7 +1162,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1179,7 +1187,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1202,7 +1210,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertNotNull($storedQuoteRequestTransfer->getLatestVersion());
         $this->assertSame(
             $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser(),
-            $storedQuoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
+            $storedQuoteRequestTransfer->getCompanyUser()->getIdCompanyUser(),
         );
     }
 
@@ -1244,7 +1252,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
-            (new DateTime('+1 second'))->format('Y-m-d H:i:s')
+            (new DateTime('+1 second'))->format('Y-m-d H:i:s'),
         );
 
         // Act
@@ -1263,7 +1271,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus(
-            (new DateTime('+1 second'))->format('Y-m-d H:i:s')
+            (new DateTime('+1 second'))->format('Y-m-d H:i:s'),
         );
 
         // Act
@@ -1298,7 +1306,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInReadyStatus(
-            (new DateTime('+1 hour'))->format('Y-m-d H:i:s')
+            (new DateTime('+1 hour'))->format('Y-m-d H:i:s'),
         );
 
         // Act
@@ -1334,11 +1342,11 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertSame($quoteRequestTransfer->getIsLatestVersionVisible(), $storedQuoteRequestTransfer->getIsLatestVersionVisible());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote()->getItems(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getQuote()->getItems()
+            $storedQuoteRequestTransfer->getLatestVersion()->getQuote()->getItems(),
         );
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getMetadata(),
-            $storedQuoteRequestTransfer->getLatestVersion()->getMetadata()
+            $storedQuoteRequestTransfer->getLatestVersion()->getMetadata(),
         );
     }
 
@@ -1405,7 +1413,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1424,7 +1432,7 @@ class QuoteRequestFacadeTest extends Unit
         $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertSame(
             static::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS,
-            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -1508,10 +1516,10 @@ class QuoteRequestFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(
-            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
+            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser(),
         );
         $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
-            $this->createFilterTransfer($quoteRequestTransfer)
+            $this->createFilterTransfer($quoteRequestTransfer),
         );
 
         // Assert
@@ -1602,7 +1610,7 @@ class QuoteRequestFacadeTest extends Unit
     {
         return $this->tester->createQuoteRequest(
             $this->tester->createQuoteRequestVersion($this->quoteTransfer),
-            $this->companyUserTransfer
+            $this->companyUserTransfer,
         );
     }
 

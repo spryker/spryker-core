@@ -62,7 +62,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
 
         $productConcreteIdsChunks = array_chunk(
             $productConcreteIds,
-            $this->productListStorageConfig->getProductListProductConcretePublishChunkSize()
+            $this->productListStorageConfig->getProductListProductConcretePublishChunkSize(),
         );
 
         foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
@@ -72,12 +72,12 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
             $savedProductConcreteProductListStorageEntities = $this->saveProductConcreteProductListStorageEntities(
                 $productConcreteIdsChunk,
                 $indexedProductConcreteProductListStorageEntities,
-                $productLists
+                $productLists,
             );
 
             $this->deleteProductConcreteProductListStorageEntitiesWithoutLists(
                 $indexedProductConcreteProductListStorageEntities,
-                $savedProductConcreteProductListStorageEntities
+                $savedProductConcreteProductListStorageEntities,
             );
         }
 
@@ -103,7 +103,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
         foreach ($productConcreteIds as $idProductConcrete) {
             $productConcreteProductListsStorageTransfer = $this->getProductConcreteProductListsStorageTransfer(
                 $idProductConcrete,
-                $productLists
+                $productLists,
             );
 
             if (
@@ -115,7 +115,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
 
             $productConcreteProductListStorageEntity = $this->getProductConcreteProductListStorageEntity(
                 $idProductConcrete,
-                $productConcreteProductListStorageEntities
+                $productConcreteProductListStorageEntities,
             );
 
             $productConcreteProductListStorageEntity->setFkProduct($idProductConcrete)
@@ -222,7 +222,7 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     ): void {
         $productConcreteProductListStorageEntitiesToDelete = array_diff_key(
             $productConcreteProductListStorageEntities,
-            $productConcreteProductListStorageEntitiesWithLists
+            $productConcreteProductListStorageEntitiesWithLists,
         );
 
         foreach ($productConcreteProductListStorageEntitiesToDelete as $productConcreteProductListStorageEntity) {

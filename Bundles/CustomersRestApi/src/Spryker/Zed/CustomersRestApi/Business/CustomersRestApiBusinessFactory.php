@@ -65,7 +65,7 @@ class CustomersRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCustomerAddressValidator(): CustomerAddressValidatorInterface
     {
         return new CustomerAddressValidator(
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 

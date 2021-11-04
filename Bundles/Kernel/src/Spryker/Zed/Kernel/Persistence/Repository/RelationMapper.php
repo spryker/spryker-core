@@ -79,10 +79,10 @@ class RelationMapper implements RelationMapperInterface
     }
 
     /**
-     * @param array $collection
+     * @param array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface> $collection
      * @param string $foreignPhpIdName
      *
-     * @return array
+     * @return array<string>
      */
     protected function extractPrimaryIds(array $collection, $foreignPhpIdName)
     {
@@ -97,7 +97,7 @@ class RelationMapper implements RelationMapperInterface
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Propel\Runtime\Map\RelationMap $symRelationMap
-     * @param array $primaryIds
+     * @param array<string> $primaryIds
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface>
@@ -157,13 +157,13 @@ class RelationMapper implements RelationMapperInterface
     }
 
     /**
-     * @param array $collection
+     * @param array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface> $collection
      * @param \Propel\Runtime\Map\RelationMap $relationMap
-     * @param array $relatedObjects
+     * @param array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface> $relatedObjects
      * @param string $foreignPhpIdName
      * @param string $localPhpIdName
      *
-     * @return array
+     * @return array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface>
      */
     protected function mapRelations(
         array &$collection,

@@ -26,34 +26,42 @@ class ProductTable extends AbstractProductTable
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_TAX_SET = 'tax_set';
+
     /**
      * @var string
      */
     public const COL_VARIANT_COUNT = 'variants';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */
     public const COL_STORE_RELATION = 'store_relation';
+
     /**
      * @var string
      */
@@ -63,6 +71,7 @@ class ProductTable extends AbstractProductTable
      * @var string
      */
     protected const COL_NAME_FALLBACK = 'name_fallback';
+
     /**
      * @var string
      */
@@ -123,7 +132,7 @@ class ProductTable extends AbstractProductTable
     {
         $url = Url::generate(
             '/table',
-            $this->getRequest()->query->all()
+            $this->getRequest()->query->all(),
         );
 
         $config->setUrl($url);
@@ -182,7 +191,7 @@ class ProductTable extends AbstractProductTable
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
             ->addJoinCondition(
                 static::RELATION_LOCALE_FALLBACK,
-                '(SpyProductAbstractLocalizedAttributes.name is null OR SpyProductAbstractLocalizedAttributes.name = \'\')'
+                '(SpyProductAbstractLocalizedAttributes.name is null OR SpyProductAbstractLocalizedAttributes.name = \'\')',
             )
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
@@ -252,7 +261,7 @@ class ProductTable extends AbstractProductTable
         foreach ($productAbstractStoreCollection as $productAbstractStoreEntity) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $productAbstractStoreEntity->getSpyStore()->getName()
+                $productAbstractStoreEntity->getSpyStore()->getName(),
             );
         }
 
@@ -300,21 +309,21 @@ class ProductTable extends AbstractProductTable
             Url::generate('/product-management/view', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-management/edit', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-attribute-gui/view/product-abstract', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'Manage Attributes'
+            'Manage Attributes',
         );
 
         return $urls;

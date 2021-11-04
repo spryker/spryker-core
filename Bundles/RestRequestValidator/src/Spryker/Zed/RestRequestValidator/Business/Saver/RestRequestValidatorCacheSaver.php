@@ -55,7 +55,7 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     {
         $this->filesystem->dumpFile(
             $this->getStoreCacheFilePath($storeName),
-            $this->yaml->dump($validatorConfig)
+            $this->yaml->dump($validatorConfig),
         );
     }
 
@@ -75,7 +75,7 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
 
         $this->filesystem->dumpFile(
             $this->getCodeBucketCacheFilePath($codeBucket),
-            $this->yaml->dump($validatorConfig)
+            $this->yaml->dump($validatorConfig),
         );
     }
 

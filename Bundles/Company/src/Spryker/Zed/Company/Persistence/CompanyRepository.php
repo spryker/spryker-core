@@ -94,7 +94,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     public function getCompanies(): CompanyCollectionTransfer
     {
         $spyCompanies = $this->buildQueryFromCriteria(
-            $this->getFactory()->createCompanyQuery()
+            $this->getFactory()->createCompanyQuery(),
         )->find();
 
         $spyCompanies = new ArrayObject($spyCompanies);
@@ -137,7 +137,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
 
         $companyQuery = $this->setCompanyFilters(
             $companyQuery,
-            $companyCriteriaFilterTransfer
+            $companyCriteriaFilterTransfer,
         );
 
         return $this->getFactory()

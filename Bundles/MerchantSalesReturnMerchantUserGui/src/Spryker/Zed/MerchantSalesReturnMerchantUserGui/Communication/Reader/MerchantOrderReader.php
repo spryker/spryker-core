@@ -89,11 +89,9 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     }
 
     /**
-     * @phpstan-return array <int,\Generated\Shared\Transfer\MerchantOrderItemTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>
+     * @return array <int, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function getMerchantOrderItemsIndexedByIdOrderItem(
         MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers

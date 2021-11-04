@@ -28,6 +28,7 @@ class EditController extends AbstractController
      * @var string
      */
     public const PARAM_ID_USER = 'id-user';
+
     /**
      * @var string
      */
@@ -37,26 +38,32 @@ class EditController extends AbstractController
      * @var string
      */
     public const MESSAGE_USER_CREATE_SUCCESS = 'User was created successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_UPDATE_SUCCESS = 'User was updated successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_ACTIVATE_SUCCESS = 'User was activated successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_DEACTIVATE_SUCCESS = 'User was deactivated successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_DELETE_SUCCESS = 'User was deleted successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_PASSWORD_UPDATE_SUCCESS = 'User password was updated successfully.';
+
     /**
      * @var string
      */
@@ -66,22 +73,27 @@ class EditController extends AbstractController
      * @var string
      */
     public const MESSAGE_USER_CREATE_ERROR = 'User entity was not created.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_UPDATE_ERROR = 'User entity was not updated.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_ACTIVATE_ERROR = 'User was not activated.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_DEACTIVATE_ERROR = 'User was not deactivated.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_DELETE_ERROR = 'User was not deleted.';
+
     /**
      * @var string
      */
@@ -104,7 +116,7 @@ class EditController extends AbstractController
         $userForm = $this->getFactory()
             ->createUserForm(
                 [],
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -162,7 +174,7 @@ class EditController extends AbstractController
         $userForm = $this->getFactory()
             ->createUpdateUserForm(
                 $providerData,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -286,7 +298,7 @@ class EditController extends AbstractController
         }
 
         $userTransfer = $this->getFacade()->findUser(
-            (new UserCriteriaTransfer())->setIdUser($idUser)
+            (new UserCriteriaTransfer())->setIdUser($idUser),
         );
 
         if (!$userTransfer) {
@@ -367,7 +379,7 @@ class EditController extends AbstractController
         if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
             $currentUserTransfer->setPassword(
-                $formData[ResetPasswordForm::FIELD_PASSWORD]
+                $formData[ResetPasswordForm::FIELD_PASSWORD],
             );
 
             try {
@@ -417,7 +429,7 @@ class EditController extends AbstractController
         foreach ($userGroups->getGroups() as $groupTransfer) {
             $groupPlugin->removeUserFromGroup(
                 $idUser,
-                $groupTransfer->getIdAclGroupOrFail()
+                $groupTransfer->getIdAclGroupOrFail(),
             );
         }
     }

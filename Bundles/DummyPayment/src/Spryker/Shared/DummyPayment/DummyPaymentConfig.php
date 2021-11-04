@@ -13,18 +13,22 @@ interface DummyPaymentConfig
      * @var string
      */
     public const PROVIDER_NAME = 'DummyPayment';
+
     /**
      * @var string
      */
     public const PAYMENT_METHOD_INVOICE = 'dummyPaymentInvoice';
+
     /**
      * @var string
      */
     public const PAYMENT_METHOD_CREDIT_CARD = 'dummyPaymentCreditCard';
+
     /**
      * @var string
      */
     public const PAYMENT_METHOD_NAME_INVOICE = 'invoice';
+
     /**
      * @var string
      */

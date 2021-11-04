@@ -20,6 +20,8 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilter;
+use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
@@ -58,6 +60,11 @@ class CalculatorTest extends Unit
      * @var int
      */
     public const ITEM_GROSS_PRICE_500 = 500;
+
+    /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -111,7 +118,7 @@ class CalculatorTest extends Unit
             DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
             true,
-            true
+            true,
         );
 
         $calculator = $this->getCalculator();
@@ -120,7 +127,7 @@ class CalculatorTest extends Unit
 
         $result = $calculator->calculate(
             $discountCollection,
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         $this->assertSame(1, count($result));
@@ -161,7 +168,8 @@ class CalculatorTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitGrossPrice(self::ITEM_GROSS_PRICE_500);
+        $itemTransfer->setUnitGrossPrice(static::ITEM_GROSS_PRICE_500);
+        $itemTransfer->setUnitPrice(static::ITEM_GROSS_PRICE_500);
         $itemTransfer->setSku('sku1');
         $quoteTransfer->addItem($itemTransfer);
         $quoteTransfer->addItem(clone $itemTransfer);
@@ -185,7 +193,8 @@ class CalculatorTest extends Unit
             $messengerFacade,
             $distributor,
             $calculatorPlugins,
-            []
+            [],
+            $this->createCollectedDiscountItemFilter(),
         );
     }
 
@@ -199,7 +208,7 @@ class CalculatorTest extends Unit
             $this->createCollectorSpecificationProvider(),
             $this->createComparatorOperators(),
             $this->createClauseValidator(),
-            $this->createMetaDataProvider()
+            $this->createMetaDataProvider(),
         );
     }
 
@@ -220,7 +229,7 @@ class CalculatorTest extends Unit
     {
         return new ClauseValidator(
             $this->createComparatorOperators(),
-            $this->createMetaDataProvider()
+            $this->createMetaDataProvider(),
         );
     }
 
@@ -232,7 +241,7 @@ class CalculatorTest extends Unit
         return new MetaDataProvider(
             $this->createDecisionRulePlugins(),
             $this->createComparatorOperators(),
-            $this->createLogicalOperators()
+            $this->createLogicalOperators(),
         );
     }
 
@@ -275,7 +284,7 @@ class CalculatorTest extends Unit
     {
         return new Distributor(
             $this->createDiscountableItemTransformer(),
-            $this->createDiscountableItemTransformerStrategyPlugins()
+            $this->createDiscountableItemTransformerStrategyPlugins(),
         );
     }
 
@@ -544,7 +553,7 @@ class CalculatorTest extends Unit
             $specificationBuilderMock,
             $this->createMessengerFacadeBridgeMock(),
             $this->createDistributorMock(),
-            $calculatorMock
+            $calculatorMock,
         );
 
         $collectedDiscounts = $calculator->calculate([$discountTransfer], $quoteTransfer);
@@ -611,7 +620,8 @@ class CalculatorTest extends Unit
             $messengerFacadeMock,
             $distributorMock,
             $calculatorPlugins,
-            $this->getCollectedDiscountGroupingPlugins()
+            $this->getCollectedDiscountGroupingPlugins(),
+            $this->createCollectedDiscountItemFilter(),
         );
     }
 
@@ -694,5 +704,13 @@ class CalculatorTest extends Unit
         $discountTransfer->setAmount($amount);
 
         return $discountTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface
+     */
+    protected function createCollectedDiscountItemFilter(): CollectedDiscountItemFilterInterface
+    {
+        return new CollectedDiscountItemFilter();
     }
 }

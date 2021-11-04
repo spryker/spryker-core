@@ -34,7 +34,7 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     public function getCmsSlotBlockDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getCmsSlotBlockDataImporterConfiguration()
+            $this->getConfig()->getCmsSlotBlockDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -91,7 +91,7 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     {
         return new CmsSlotBlockCategoryConditionsStep(
             $this->createAllConditionsResolver(),
-            $this->createCategoryKeysToIdsConditionsResolver()
+            $this->createCategoryKeysToIdsConditionsResolver(),
         );
     }
 
@@ -103,7 +103,7 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
         return new CmsSlotBlockProductCategoryConditionsStep(
             $this->createAllConditionsResolver(),
             $this->createProductAbstractSkusToIdsConditionsResolver(),
-            $this->createCategoryKeysToIdsConditionsResolver()
+            $this->createCategoryKeysToIdsConditionsResolver(),
         );
     }
 
@@ -114,7 +114,7 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     {
         return new CmsPageKeysToIdsConditionsStep(
             $this->createAllConditionsResolver(),
-            $this->createCmsPageKeysToIdsConditionsResolver()
+            $this->createCmsPageKeysToIdsConditionsResolver(),
         );
     }
 

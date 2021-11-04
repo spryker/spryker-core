@@ -60,7 +60,7 @@ class RefundCalculatorTest extends Unit
     {
         $refund = new RefundCalculator(
             $refundCalculatorPlugins,
-            $this->getSalesFacadeMock()
+            $this->getSalesFacadeMock(),
         );
 
         return $refund;

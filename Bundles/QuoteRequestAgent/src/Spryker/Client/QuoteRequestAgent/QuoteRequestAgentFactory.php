@@ -34,7 +34,7 @@ class QuoteRequestAgentFactory extends AbstractFactory
     {
         return new QuoteRequestAgentConverter(
             $this->getQuoteClient(),
-            $this->createQuoteRequestAgentStatus()
+            $this->createQuoteRequestAgentStatus(),
         );
     }
 
@@ -52,7 +52,7 @@ class QuoteRequestAgentFactory extends AbstractFactory
     public function createQuoteRequestReader(): QuoteRequestReaderInterface
     {
         return new QuoteRequestReader(
-            $this->getQuoteRequestClient()
+            $this->getQuoteRequestClient(),
         );
     }
 

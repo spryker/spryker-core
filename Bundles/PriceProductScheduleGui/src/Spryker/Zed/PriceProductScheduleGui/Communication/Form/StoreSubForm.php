@@ -46,7 +46,7 @@ class StoreSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -107,14 +107,14 @@ class StoreSubForm extends AbstractType
                 ->createPriceProductScheduleFormDataProvider()
                 ->getOptions(
                     null,
-                    $storeTransfer->getIdStore()
-                )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+                    $storeTransfer->getIdStore(),
+                )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
         );
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

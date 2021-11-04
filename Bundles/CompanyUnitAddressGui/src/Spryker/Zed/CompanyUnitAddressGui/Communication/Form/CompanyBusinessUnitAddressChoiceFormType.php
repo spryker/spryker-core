@@ -29,7 +29,7 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -53,7 +53,7 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
                 'property_path' => CompanyBusinessUnitTransfer::ADDRESS_COLLECTION . '.' . CompanyUnitAddressCollectionTransfer::COMPANY_UNIT_ADDRESSES,
                 'choices' => array_flip($options[static::OPTION_VALUES_ADDRESSES_CHOICES]),
                 'multiple' => true,
-            ]
+            ],
         );
 
         $this->addModelTransformer($builder);
@@ -102,8 +102,8 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
                     }
 
                     return new ArrayObject($labels);
-                }
-            )
+                },
+            ),
         );
     }
 }

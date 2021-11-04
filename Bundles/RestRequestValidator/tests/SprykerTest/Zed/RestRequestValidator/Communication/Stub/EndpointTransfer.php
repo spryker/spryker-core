@@ -15,14 +15,17 @@ class EndpointTransfer extends AbstractTransfer
      * @var string
      */
     public const EMAIL_FIELD = 'emailField';
+
     /**
      * @var string
      */
     public const STRING_FIELD = 'stringField';
+
     /**
      * @var string
      */
     public const INTEGER_FIELD = 'integerField';
+
     /**
      * @var string
      */

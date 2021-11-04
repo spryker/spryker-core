@@ -25,10 +25,12 @@ class CreateBlockController extends AbstractController
      * @var string
      */
     public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+
     /**
      * @var string
      */
     public const ERROR_MESSAGE_LOST_TEMPLATE = 'Selected template doesn\'t exist anymore.';
+
     /**
      * @var string
      */
@@ -110,7 +112,7 @@ class CreateBlockController extends AbstractController
     {
         return Url::generate(
             '/cms-block-gui/edit-glossary',
-            [EditGlossaryController::URL_PARAM_ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock()]
+            [EditGlossaryController::URL_PARAM_ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock()],
         )
             ->build();
     }

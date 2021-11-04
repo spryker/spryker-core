@@ -40,8 +40,8 @@ class CountryMapper implements CountryMapperInterface
         foreach ($countryEntityTransfers as $countryEntityTransfer) {
             $countryCollectionTransfer->addCountries(
                 $this->mapCountryTransfer(
-                    $countryEntityTransfer
-                )
+                    $countryEntityTransfer,
+                ),
             );
         }
 
@@ -60,7 +60,7 @@ class CountryMapper implements CountryMapperInterface
 
         foreach ($countryEntityTransfer->getSpyRegions() as $regionEntityTransfer) {
             $countryTransfer->addRegion(
-                $this->mapRegionTransfer($regionEntityTransfer)
+                $this->mapRegionTransfer($regionEntityTransfer),
             );
         }
 

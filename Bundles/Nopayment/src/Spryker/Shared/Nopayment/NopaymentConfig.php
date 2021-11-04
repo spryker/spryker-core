@@ -15,6 +15,7 @@ class NopaymentConfig extends AbstractBundleConfig
      * @var string
      */
     public const PAYMENT_PROVIDER_NAME = 'Nopayment';
+
     /**
      * @var string
      */

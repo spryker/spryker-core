@@ -51,7 +51,7 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
         foreach ($productOfferAvailabilityStorageTransfers as $productOfferReference => $productOfferAvailabilityStorageTransfer) {
             $productOfferAvailabilityRestResources[$productOfferReference] = $this->createProductOfferAvailabilityRestResource(
                 $productOfferAvailabilityStorageTransfer,
-                $productOfferReference
+                $productOfferReference,
             );
         }
 
@@ -103,13 +103,13 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
         $restProductOfferAvailabilitiesAttributesTransfer = $this->productOfferAvailabilityMapper
             ->mapProductOfferAvailabilityStorageTransferToRestProductOfferAvailabilitiesAttributesTransfer(
                 $productOfferAvailabilityStorageTransfer,
-                new RestProductOfferAvailabilitiesAttributesTransfer()
+                new RestProductOfferAvailabilitiesAttributesTransfer(),
             );
 
         $productOfferAvailabilityRestResource = $this->restResourceBuilder->createRestResource(
             ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFER_AVAILABILITIES,
             $productOfferReference,
-            $restProductOfferAvailabilitiesAttributesTransfer
+            $restProductOfferAvailabilitiesAttributesTransfer,
         );
 
         $productOfferAvailabilityRestResource->addLink(
@@ -118,8 +118,8 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
                 '%s/%s/%s',
                 ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFERS,
                 $productOfferReference,
-                ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFER_AVAILABILITIES
-            )
+                ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFER_AVAILABILITIES,
+            ),
         );
 
         return $productOfferAvailabilityRestResource;

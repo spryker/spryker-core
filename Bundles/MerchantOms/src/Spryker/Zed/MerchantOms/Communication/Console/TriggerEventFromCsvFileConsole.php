@@ -27,18 +27,22 @@ class TriggerEventFromCsvFileConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'merchant-oms:trigger-event:from-csv-file';
+
     /**
      * @var string
      */
     protected const COMMAND_DESCRIPTION = 'Triggers event for merchant order items from given file.';
+
     /**
      * @var string
      */
     protected const ARGUMENT_FILE_PATH = 'file-path';
+
     /**
      * @var string
      */
     protected const OPTION_IGNORE_ERRORS = 'ignore-errors';
+
     /**
      * @var string
      */
@@ -48,18 +52,22 @@ class TriggerEventFromCsvFileConsole extends Console
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_ROW_NUMBER = 'row_number';
+
     /**
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_REFERENCE = 'merchant_order_item_reference';
+
     /**
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_MERCHANT_ORDER_ITEM_OMS_EVENT_STATE = 'merchant_order_item_oms_event_state';
+
     /**
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_RESULT = 'result';
+
     /**
      * @var string
      */
@@ -96,19 +104,19 @@ class TriggerEventFromCsvFileConsole extends Console
             ->addArgument(
                 static::ARGUMENT_FILE_PATH,
                 InputArgument::REQUIRED,
-                'Path to the file. It can be absolute or relative to application root directory.'
+                'Path to the file. It can be absolute or relative to application root directory.',
             )
             ->addOption(
                 static::OPTION_IGNORE_ERRORS,
                 null,
                 InputOption::VALUE_NONE,
-                'Suppress errors if an input file row was not processed.'
+                'Suppress errors if an input file row was not processed.',
             )
             ->addOption(
                 static::OPTION_START_FROM,
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Start file processing from the defined row number.'
+                'Start file processing from the defined row number.',
             );
 
         parent::configure();
@@ -170,14 +178,14 @@ class TriggerEventFromCsvFileConsole extends Console
                 $this->logOutput(
                     $rowNumber,
                     $merchantOmsTriggerRequestTransfer,
-                    $isSuccessfulMerchantOmsTriggerResponse
+                    $isSuccessfulMerchantOmsTriggerResponse,
                 );
             } catch (Throwable $exception) {
                 $this->logOutput(
                     $rowNumber,
                     $merchantOmsTriggerRequestTransfer,
                     false,
-                    $exception->getMessage()
+                    $exception->getMessage(),
                 );
             }
         }

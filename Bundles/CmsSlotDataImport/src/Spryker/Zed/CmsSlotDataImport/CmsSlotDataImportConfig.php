@@ -16,14 +16,17 @@ class CmsSlotDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_CMS_SLOT_FILE_NAME = 'cms_slot.csv';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_CMS_SLOT = 'cms-slot';
+
     /**
      * @var string
      */
     public const IMPORT_CMS_SLOT_TEMPLATE_FILE_NAME = 'cms_slot_template.csv';
+
     /**
      * @var string
      */
@@ -63,7 +66,7 @@ class CmsSlotDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

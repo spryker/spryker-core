@@ -13,7 +13,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.7.0",
         "spryker/price-cart-connector-extension": "^1.1.0",
-        "spryker/product-configuration": "^0.2.0",
+        "spryker/product-configuration": "^0.2.1",
         "spryker/product-configuration-storage": "^0.2.0",
         "spryker/quote": "^2.0.0",
         "spryker/quote-request-extension": "^1.1.0",

@@ -19,7 +19,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>|mixed $value
+     * @param \ArrayAccess<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>|mixed $value
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */

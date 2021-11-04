@@ -31,7 +31,7 @@ class CustomerApiBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCustomerEntityMapper(),
             $this->createCustomerTransferMapper(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
         );
     }
 

@@ -22,14 +22,17 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_MONITORING = 'SERVICE_MONITORING';
+
     /**
      * @var string
      */
     public const CLIENT_REDIS = 'CLIENT_REDIS';
+
     /**
      * @var string
      */
     public const PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR = 'PLUGINS_SESSION_REDIS_LIFE_TIME_CALCULATOR';
+
     /**
      * @var string
      */
@@ -64,7 +67,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_REDIS, function (Container $container) {
             return new SessionRedisToRedisClientBridge(
-                $container->getLocator()->redis()->client()
+                $container->getLocator()->redis()->client(),
             );
         });
 
@@ -80,7 +83,7 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_MONITORING, function () use ($container) {
             return new SessionRedisToMonitoringServiceBridge(
-                $container->getLocator()->monitoring()->service()
+                $container->getLocator()->monitoring()->service(),
             );
         });
 

@@ -52,13 +52,13 @@ class SharedCartDeleter implements SharedCartDeleterInterface
 
         $shareCartRequestTransfer = $this->createShareCartRequestTransfer(
             $sharedCartUuid,
-            $restRequest->getRestUser()->getNaturalIdentifier()
+            $restRequest->getRestUser()->getNaturalIdentifier(),
         );
 
         $shareCartResponseTransfer = $this->sharedCartsRestApiClient->delete($shareCartRequestTransfer);
         if (!$shareCartResponseTransfer->getIsSuccessful()) {
             return $this->sharedCartRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $shareCartResponseTransfer->getErrorIdentifier()
+                $shareCartResponseTransfer->getErrorIdentifier(),
             );
         }
 

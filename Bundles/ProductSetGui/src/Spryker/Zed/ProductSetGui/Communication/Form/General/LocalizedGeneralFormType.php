@@ -34,22 +34,27 @@ class LocalizedGeneralFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_URL = 'url';
+
     /**
      * @var string
      */
     public const FIELD_URL_PREFIX = 'url_prefix';
+
     /**
      * @var string
      */
     public const FIELD_ORIGINAL_URL = 'original_url';
+
     /**
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
@@ -94,7 +99,7 @@ class LocalizedGeneralFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -109,12 +114,12 @@ class LocalizedGeneralFormType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            [$this, 'onPreSetData']
+            [$this, 'onPreSetData'],
         );
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
-            [$this, 'onSubmit']
+            [$this, 'onSubmit'],
         );
     }
 

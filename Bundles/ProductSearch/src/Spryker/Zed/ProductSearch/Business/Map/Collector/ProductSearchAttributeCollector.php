@@ -87,7 +87,7 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
             throw new InvalidFilterTypeException(sprintf(
                 'Invalid filter type "%s"! Available options are [%s].',
                 $productSearchAttributeTransfer->getFilterType(),
-                implode(', ', array_keys($availableProductSearchFilterConfigs))
+                implode(', ', array_keys($availableProductSearchFilterConfigs)),
             ));
         }
     }

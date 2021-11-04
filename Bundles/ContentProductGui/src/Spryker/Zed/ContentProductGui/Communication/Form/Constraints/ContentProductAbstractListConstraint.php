@@ -19,7 +19,7 @@ class ContentProductAbstractListConstraint extends SymfonyConstraint
 
     /**
      * @param \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToContentProductInterface $contentProductFacade
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct(ContentProductGuiToContentProductInterface $contentProductFacade, $options = null)
     {

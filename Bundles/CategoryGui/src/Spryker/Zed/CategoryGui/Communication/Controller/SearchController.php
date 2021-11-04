@@ -38,7 +38,7 @@ class SearchController extends AbstractController
             ->getAllStoresWithStateByIdCategoryNode($idCategoryNode);
 
         return $this->jsonResponse(
-            $this->extractStoresWithStateFromCollection($storeWithStateCollectionTransfer)
+            $this->extractStoresWithStateFromCollection($storeWithStateCollectionTransfer),
         );
     }
 

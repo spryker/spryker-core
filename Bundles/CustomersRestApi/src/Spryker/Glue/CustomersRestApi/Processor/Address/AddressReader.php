@@ -87,7 +87,7 @@ class AddressReader implements AddressReaderInterface
         $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
-            $restResponse
+            $restResponse,
         );
 
         if (count($restResponse->getErrors()) > 0) {
@@ -138,7 +138,7 @@ class AddressReader implements AddressReaderInterface
         foreach ($customerTransfer->getAddresses()->getAddresses() as $addressTransfer) {
             if ($addressTransfer->getUuid() == $addressUuid) {
                 return $restResponse->addResource(
-                    $this->getAddressResource($addressTransfer, $customerTransfer)
+                    $this->getAddressResource($addressTransfer, $customerTransfer),
                 );
             }
         }
@@ -179,7 +179,7 @@ class AddressReader implements AddressReaderInterface
         return $this->addressRestResponseBuilder->createAddressRestResource(
             $addressTransfer->getUuid(),
             $customerTransfer->getCustomerReference(),
-            $restAddressAttributesTransfer
+            $restAddressAttributesTransfer,
         );
     }
 }

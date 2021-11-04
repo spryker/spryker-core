@@ -58,13 +58,13 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
         $availableCompanyRolePermissions = $this->getAvailableCompanyRolePermissions(
             $availablePermissions,
             $companyRolePermissions,
-            $companyRoleTransfer
+            $companyRoleTransfer,
         );
 
         $permissions = new ArrayObject();
         foreach ($availableCompanyRolePermissions as $permissionTransfer) {
             $permissionData = $this->transformPermissionTransferToArray(
-                $availableCompanyRolePermissions[$permissionTransfer->getKey()]
+                $availableCompanyRolePermissions[$permissionTransfer->getKey()],
             );
 
             $permissions->append($permissionData);
@@ -114,7 +114,7 @@ class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInte
         foreach ($availablePermissions as $availablePermission) {
             $assignedCompanyRolePermission = $this->findAssignedCompanyRolePermission(
                 $availablePermission,
-                $companyRolePermissions
+                $companyRolePermissions,
             );
 
             if ($assignedCompanyRolePermission) {

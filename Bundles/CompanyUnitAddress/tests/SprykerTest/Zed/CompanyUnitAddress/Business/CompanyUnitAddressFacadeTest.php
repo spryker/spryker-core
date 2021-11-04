@@ -41,6 +41,7 @@ class CompanyUnitAddressFacadeTest extends Test
      * @var int
      */
     protected const VALUE_COMPANY_UNIT_ADDRESSES_MAX_PER_PAGE = 2;
+
     /**
      * @var int
      */
@@ -108,7 +109,7 @@ class CompanyUnitAddressFacadeTest extends Test
         // Assert
         $this->assertNull(
             $this->tester->getFacade()
-                ->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+                ->findCompanyUnitAddressById($companyUnitAddressTransfer->getIdCompanyUnitAddress()),
         );
     }
 
@@ -133,7 +134,7 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressCollectionTransfer = $this->tester->getFacade()
             ->getCompanyUnitAddressCollection(
                 (new CompanyUnitAddressCriteriaFilterTransfer())
-                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()),
             );
         $companyUnitAddressIdsActual = $this->tester->extractAddressIdsFromCollection($companyUnitAddressCollectionTransfer);
 
@@ -222,7 +223,7 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressCollectionTransfer = $this->tester->getFacade()
             ->getCompanyUnitAddressCollection(
                 (new CompanyUnitAddressCriteriaFilterTransfer())
-                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()),
             );
 
         // Assert
@@ -243,7 +244,7 @@ class CompanyUnitAddressFacadeTest extends Test
         $companyUnitAddressCollectionTransfer = $this->tester->getFacade()
             ->getCompanyUnitAddressCollection(
                 (new CompanyUnitAddressCriteriaFilterTransfer())
-                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+                    ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()),
             );
 
         // Assert
@@ -272,13 +273,13 @@ class CompanyUnitAddressFacadeTest extends Test
 
         // Act
         $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
-            $companyUnitAddressCriteriaFilterTransfer
+            $companyUnitAddressCriteriaFilterTransfer,
         );
 
         // Assert
         $this->assertCount(
             static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT_EXPECTED,
-            $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()
+            $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
         );
     }
 }

@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
 {
     public const GENERATED_FILE_OUTPUT_DIRECTORY = APPLICATION_SOURCE_DIR . '/Generated/Glue/Specification/';
+
     /**
      * @var string
      */
@@ -24,10 +25,12 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const REST_API_DOCUMENTATION_INFO_VERSION = '1.0.0';
+
     /**
      * @var string
      */
     public const REST_API_DOCUMENTATION_INFO_TITLE = 'Spryker API';
+
     /**
      * @var string
      */
@@ -37,10 +40,12 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const REST_API_DOCUMENTATION_CONTACT_NAME = 'Spryker';
+
     /**
      * @var string
      */
     protected const REST_API_DOCUMENTATION_CONTACT_URL = 'https://support.spryker.com/';
+
     /**
      * @var string
      */
@@ -50,6 +55,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const APPLICATION_PROJECT_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Controller/';
+
     /**
      * @var string
      */
@@ -148,13 +154,13 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getAnnotationSourceDirectories(): array
     {
         return array_merge(
             $this->getCoreAnnotationSourceDirectoryPatterns(),
-            $this->getProjectAnnotationSourceDirectoryPatterns()
+            $this->getProjectAnnotationSourceDirectoryPatterns(),
         );
     }
 
@@ -169,7 +175,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getProjectAnnotationSourceDirectoryPatterns(): array
     {

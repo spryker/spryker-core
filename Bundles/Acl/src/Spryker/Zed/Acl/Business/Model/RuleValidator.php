@@ -14,12 +14,12 @@ use Spryker\Shared\Acl\AclConstants;
 class RuleValidator implements RuleValidatorInterface
 {
     /**
-     * @var array
+     * @var array<\Generated\Shared\Transfer\RuleTransfer>
      */
     protected $allowedRules = [];
 
     /**
-     * @var array
+     * @var array<\Generated\Shared\Transfer\RuleTransfer>
      */
     protected $deniedRules = [];
 
@@ -121,7 +121,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getAllowedRules()
     {
@@ -129,7 +129,7 @@ class RuleValidator implements RuleValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getDeniedRules()
     {

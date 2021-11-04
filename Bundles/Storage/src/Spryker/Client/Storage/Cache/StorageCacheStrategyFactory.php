@@ -72,7 +72,7 @@ class StorageCacheStrategyFactory
     protected function createCacheReplaceStrategy()
     {
         return new StorageCacheReplaceStrategy(
-            $this->createStorageCacheStrategyHelper()
+            $this->createStorageCacheStrategyHelper(),
         );
     }
 
@@ -83,7 +83,7 @@ class StorageCacheStrategyFactory
     {
         return new StorageCacheIncrementalStrategy(
             $this->createStorageCacheStrategyHelper(),
-            $this->storageClientConfig
+            $this->storageClientConfig,
         );
     }
 
@@ -102,7 +102,7 @@ class StorageCacheStrategyFactory
     {
         return new StorageCacheStrategyHelper(
             $this->storageClient,
-            $this->storageClientConfig
+            $this->storageClientConfig,
         );
     }
 }

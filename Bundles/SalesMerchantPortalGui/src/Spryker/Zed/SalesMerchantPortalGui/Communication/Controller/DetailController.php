@@ -28,6 +28,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     *
      * @var string
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
@@ -49,7 +50,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
                     ->setIdMerchantOrder($idMerchantOrder)
                     ->setWithOrder(true)
                     ->setWithItems(true)
-                    ->setWithUniqueProductsCount(true)
+                    ->setWithUniqueProductsCount(true),
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
@@ -87,7 +88,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             ->findMerchantOrder(
                 (new MerchantOrderCriteriaTransfer())
                     ->setIdMerchantOrder($idMerchantOrder)
-                    ->setWithItems(true)
+                    ->setWithItems(true),
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
@@ -96,7 +97,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
 
         $salesOrderItemIds = $this->getSalesOrderItemIds($merchantOrderTransfer);
         $itemCollectionTransfer = $this->getFactory()->getSalesFacade()->getOrderItems(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds),
         );
 
         $responseData = [
@@ -127,7 +128,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             ->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())
                     ->setCustomerReference($customerReference)
-                    ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+                    ->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             );
 
         return $customerMerchantOrderNumber;
@@ -171,7 +172,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>>
      */
     protected function getMerchantOrderItemTransfersIndexedByIdShipment(MerchantOrderTransfer $merchantOrderTransfer): array
     {

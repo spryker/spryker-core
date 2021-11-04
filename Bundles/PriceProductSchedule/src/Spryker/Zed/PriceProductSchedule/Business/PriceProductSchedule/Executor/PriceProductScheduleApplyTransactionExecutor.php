@@ -130,7 +130,7 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
         }
 
         $priceProductTransfersForUpdate = $this->priceProductFacade->findPriceProductFor(
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         if (!$this->priceProductFacade->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer)) {

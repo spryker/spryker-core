@@ -42,7 +42,7 @@ class ProductOfferAvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferAvailabilityProvider(
             $this->getOmsFacade(),
-            $this->getProductOfferStockFacade()
+            $this->getProductOfferStockFacade(),
         );
     }
 }

@@ -26,10 +26,12 @@ class CmsSlotBlockStorageServiceTest extends Test
      * @var string
      */
     protected const KEY_SLOT = 'slt-1';
+
     /**
      * @var string
      */
     protected const PATH_TEMPLATE = '@Home/index/home.tpl';
+
     /**
      * @var string
      */

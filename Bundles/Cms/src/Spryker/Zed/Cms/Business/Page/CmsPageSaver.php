@@ -144,8 +144,8 @@ class CmsPageSaver implements CmsPageSaverInterface
             throw new MissingPageException(
                 sprintf(
                     'CMS page with id "%d" was not found',
-                    $cmsPageTransfer->getFkPage()
-                )
+                    $cmsPageTransfer->getFkPage(),
+                ),
             );
         }
 
@@ -233,7 +233,7 @@ class CmsPageSaver implements CmsPageSaverInterface
             $urlTransfer = $this->createUrlTransfer(
                 $cmsPageAttributesTransfer,
                 $cmsPageAttributesTransfer->getIdCmsPage(),
-                $url
+                $url,
             );
             $urlTransfer->setIdUrl($urlEntity->getIdUrl());
             $this->urlFacade->updateUrl($urlTransfer);
@@ -329,7 +329,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         $cmsPageLocalizedAttributesEntity->save();
 
         $cmsPageAttributesTransfer->setIdCmsPageLocalizedAttributes(
-            $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()
+            $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes(),
         );
 
         $this->createPageUrl($cmsPageAttributesTransfer, $cmsPageEntity->getIdCmsPage());
@@ -402,7 +402,7 @@ class CmsPageSaver implements CmsPageSaverInterface
         foreach ($cmsPageTransfer->getMetaAttributes() as $cmsPageMetaAttributesTransfer) {
             if ($cmsPageMetaAttributesTransfer->getFkLocale() === $cmsPageLocalizedAttributesEntity->getFkLocale()) {
                 $cmsPageMetaAttributesTransfer->setIdCmsPageLocalizedAttributes(
-                    $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()
+                    $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes(),
                 );
             }
         }
@@ -420,12 +420,12 @@ class CmsPageSaver implements CmsPageSaverInterface
             $cmsPageLocalizedAttributesEntity = $localizedAttributeEntities[$cmsPageMetaAttributesTransfer->getFkLocale()];
             $cmsPageLocalizedAttributesEntity = $this->mapCmsPageLocalizedMetaAttributes(
                 $cmsPageLocalizedAttributesEntity,
-                $cmsPageMetaAttributesTransfer
+                $cmsPageMetaAttributesTransfer,
             );
             $cmsPageLocalizedAttributesEntity->save();
 
             $cmsPageMetaAttributesTransfer->setIdCmsPageLocalizedAttributes(
-                $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()
+                $cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes(),
             );
         }
     }
@@ -445,7 +445,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
             $cmsPageLocalizedAttributesEntity = $this->mapCmsPageLocalizedMetaAttributes(
                 $cmsPageLocalizedAttributesEntity,
-                $cmsPageMetaAttributesTransfer
+                $cmsPageMetaAttributesTransfer,
             );
 
             $cmsPageLocalizedAttributesEntity->save();

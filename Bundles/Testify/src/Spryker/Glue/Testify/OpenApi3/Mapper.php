@@ -49,8 +49,8 @@ class Mapper implements MapperInterface
                     $propertyName,
                     $this->createPropertyValue(
                         $definition,
-                        $payload->{$propertyName} ?? null
-                    )
+                        $payload->{$propertyName} ?? null,
+                    ),
                 );
             }
         }
@@ -104,28 +104,28 @@ class Mapper implements MapperInterface
             trigger_error(sprintf(
                 'Class %s should implement %s interface to be processed by `$ref`',
                 $class,
-                ReferableInterface::class
+                ReferableInterface::class,
             ), E_USER_WARNING);
         }
 
         if ($instance instanceof ObjectInterface) {
             return new PropertyValue(
                 $definition,
-                $this->mapObjectFromPayload($instance, $payload)
+                $this->mapObjectFromPayload($instance, $payload),
             );
         }
 
         if ($instance instanceof CollectionInterface) {
             return new PropertyValue(
                 $definition,
-                $this->mapCollectionFromPayload($instance, $payload)
+                $this->mapCollectionFromPayload($instance, $payload),
             );
         }
 
         if ($instance instanceof PrimitiveInterface) {
             return new PropertyValue(
                 $definition,
-                $this->mapPrimitiveFromPayload($instance, $payload)
+                $this->mapPrimitiveFromPayload($instance, $payload),
             );
         }
 
@@ -136,12 +136,12 @@ class Mapper implements MapperInterface
                 ObjectInterface::class,
                 CollectionInterface::class,
                 PrimitiveInterface::class,
-            ])
+            ]),
         ), E_USER_WARNING);
 
         return new PropertyValue(
             $definition,
-            $this->mapPrimitiveFromPayload(new Any(), $payload)
+            $this->mapPrimitiveFromPayload(new Any(), $payload),
         );
     }
 }

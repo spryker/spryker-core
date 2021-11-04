@@ -65,7 +65,7 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
             (new RestErrorMessageTransfer())
                 ->setCode(CmsPagesRestApiConfig::RESPONSE_CODE_CMS_PAGE_NOT_FOUND)
                 ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(CmsPagesRestApiConfig::RESPONSE_DETAIL_CMS_PAGE_NOT_FOUND)
+                ->setDetail(CmsPagesRestApiConfig::RESPONSE_DETAIL_CMS_PAGE_NOT_FOUND),
         );
     }
 
@@ -110,7 +110,7 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
         return $this->restResourceBuilder->createRestResource(
             CmsPagesRestApiConfig::RESOURCE_CMS_PAGES,
             $cmsPageUuid,
-            $restCmsPagesAttributesTransfer
+            $restCmsPagesAttributesTransfer,
         );
     }
 }

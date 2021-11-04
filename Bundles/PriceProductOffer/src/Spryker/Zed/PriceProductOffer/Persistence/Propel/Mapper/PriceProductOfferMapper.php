@@ -58,7 +58,7 @@ class PriceProductOfferMapper
         foreach ($priceProductOfferEntities as $priceProductOfferEntity) {
             $priceProductTransfer = $this->mapPriceProductOfferEntityToPriceProductTransfer(
                 $priceProductOfferEntity,
-                new PriceProductTransfer()
+                new PriceProductTransfer(),
             );
             $priceProductTransfers->append($priceProductTransfer);
         }
@@ -78,12 +78,12 @@ class PriceProductOfferMapper
     ): PriceProductTransfer {
         $priceProductTransfer = $this->mapPriceProductStoreEntityToPriceProductTransfer(
             $priceProductOfferEntity->getSpyPriceProductStore(),
-            $priceProductTransfer
+            $priceProductTransfer,
         );
         $priceProductTransfer->setPriceDimension(
             (new PriceProductDimensionTransfer())
                 ->setIdProductOffer($priceProductOfferEntity->getFkProductOffer())
-                ->setIdPriceProductOffer((int)$priceProductOfferEntity->getIdPriceProductOffer())
+                ->setIdPriceProductOffer((int)$priceProductOfferEntity->getIdPriceProductOffer()),
         );
 
         return $priceProductTransfer;
@@ -104,14 +104,14 @@ class PriceProductOfferMapper
         $priceProductTransfer = $priceProductTransfer->setMoneyValue(
             $this->mapPriceProductStoreEntityToMoneyValueTransfer(
                 $priceProductStoreEntity,
-                new MoneyValueTransfer()
-            )
+                new MoneyValueTransfer(),
+            ),
         );
         $priceProductTransfer->setPriceType(
             $this->mapPriceTypeEntityToPriceTypeTransfer(
                 $priceProductStoreEntity->getPriceProduct()->getPriceType(),
-                new PriceTypeTransfer()
-            )
+                new PriceTypeTransfer(),
+            ),
         );
 
         return $priceProductTransfer;
@@ -134,10 +134,10 @@ class PriceProductOfferMapper
         $moneyValueTransfer->setGrossAmount($priceProductStoreEntity->getGrossPrice());
         $moneyValueTransfer->setNetAmount($priceProductStoreEntity->getNetPrice());
         $moneyValueTransfer->setCurrency(
-            $this->mapCurrencyEntityToTransfer($priceProductStoreEntity->getCurrency(), new CurrencyTransfer())
+            $this->mapCurrencyEntityToTransfer($priceProductStoreEntity->getCurrency(), new CurrencyTransfer()),
         );
         $moneyValueTransfer->setStore(
-            $this->mapStoreEntityToStoreTransfer($storeEntity, new StoreTransfer())
+            $this->mapStoreEntityToStoreTransfer($storeEntity, new StoreTransfer()),
         );
 
         return $moneyValueTransfer;

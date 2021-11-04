@@ -18,6 +18,7 @@ class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollecto
      * @var string
      */
     protected const NAME = 'exception';
+
     /**
      * @var string
      */

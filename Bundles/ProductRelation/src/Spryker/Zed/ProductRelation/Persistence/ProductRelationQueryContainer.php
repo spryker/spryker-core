@@ -30,30 +30,37 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      * @var string
      */
     public const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
+
     /**
      * @var string
      */
     public const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
+
     /**
      * @var string
      */
     public const COL_CATEGORY_NAME = 'category_name';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+
     /**
      * @var string
      */
@@ -213,9 +220,9 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->withColumn(
                 sprintf(
                     'GROUP_CONCAT(%s)',
-                    SpyCategoryAttributeTableMap::COL_NAME
+                    SpyCategoryAttributeTableMap::COL_NAME,
                 ),
-                static::COL_ASSIGNED_CATEGORIES
+                static::COL_ASSIGNED_CATEGORIES,
             )
             ->leftJoinPriceProduct()
             ->useSpyProductAbstractLocalizedAttributesQuery()
@@ -233,11 +240,11 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->addJoin(
                 [SpyProductCategoryTableMap::COL_FK_CATEGORY, $idLocale],
                 [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->withColumn(
                 'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-                static::COL_IS_ACTIVE_AGGREGATION
+                static::COL_IS_ACTIVE_AGGREGATION,
             )
             ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
@@ -403,14 +410,14 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->clearSelectColumns()
             ->withColumn(
                 'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-                static::COL_IS_ACTIVE_AGGREGATION
+                static::COL_IS_ACTIVE_AGGREGATION,
             )
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-                static::COL_CATEGORY_NAME
+                static::COL_CATEGORY_NAME,
             );
     }
 

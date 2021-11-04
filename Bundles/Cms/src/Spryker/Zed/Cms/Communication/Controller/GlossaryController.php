@@ -37,14 +37,17 @@ class GlossaryController extends AbstractController
      * @var string
      */
     protected const REDIRECT_ADDRESS = '/cms/glossary';
+
     /**
      * @var int
      */
     protected const SEARCH_LIMIT = 10;
+
     /**
      * @var string
      */
     protected const ID_FORM = 'id-form';
+
     /**
      * @var string
      */
@@ -354,7 +357,7 @@ class GlossaryController extends AbstractController
         $dataProvider = $this->getFactory()->createCmsGlossaryFormDataProvider();
         $form = $this->getFactory()
             ->getCmsGlossaryForm(
-                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale)
+                $dataProvider->getData($idPage, $idMapping, $placeholder, $fkLocale),
             )
             ->handleRequest($request);
 
@@ -401,7 +404,7 @@ class GlossaryController extends AbstractController
 
         if ($cmsPage === null) {
             throw new MissingPageException(
-                sprintf('Page with id %s not found', $idPage)
+                sprintf('Page with id %s not found', $idPage),
             );
         }
 

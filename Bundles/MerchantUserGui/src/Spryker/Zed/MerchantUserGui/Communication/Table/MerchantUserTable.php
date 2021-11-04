@@ -22,48 +22,56 @@ class MerchantUserTable extends AbstractTable
 {
     /**
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::getPhpName()
+     *
      * @var string
      */
     protected const USER_PHP_TABLE_NAME = 'SpyUser';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS
+     *
      * @var string
      */
     protected const USER_COLUMN_STATUS = 'spy_user.status';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_FIRST_NAME
+     *
      * @var string
      */
     protected const USER_COLUMN_FIRST_NAME = 'spy_user.first_name';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_LAST_NAME
+     *
      * @var string
      */
     protected const USER_COLUMN_LAST_NAME = 'spy_user.last_name';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_USERNAME
+     *
      * @var string
      */
     protected const USER_COLUMN_USERNAME = 'spy_user.username';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
      * @var string
      */
     protected const USER_STATUS_ACTIVE = 'active';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     *
      * @var string
      */
     protected const USER_STATUS_BLOCKED = 'blocked';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED
+     *
      * @var string
      */
     protected const USER_STATUS_DELETED = 'deleted';
@@ -72,30 +80,34 @@ class MerchantUserTable extends AbstractTable
      * @var string
      */
     protected const MERCHANT_USER_STATUS = 'status';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_NAME = 'username';
+
     /**
      * @var string
      */
     protected const MERCHANT_USER_ID = 'id';
+
     /**
      * @var string
      */
     protected const ACTIONS = 'actions';
 
     /**
-     * @phpstan-var array<string, array<string, string>>
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const STATUS_LABEL_MAPPING = [
         'active' => [
@@ -113,8 +125,7 @@ class MerchantUserTable extends AbstractTable
     ];
 
     /**
-     * @phpstan-var array<string, array<string, string>>
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected const STATUS_CHANGE_ACTION_MAPPING = [
         'active' => [
@@ -251,9 +262,9 @@ class MerchantUserTable extends AbstractTable
                 [
                     EditMerchantUserController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                ]
+                ],
             ),
-            'Edit'
+            'Edit',
         );
 
         $buttons[] = $this->buildAvailableStatusButton($router, $item);
@@ -265,9 +276,9 @@ class MerchantUserTable extends AbstractTable
                     [
                         DeleteMerchantUserController::PARAM_MERCHANT_USER_ID =>
                             $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
-                    ]
+                    ],
                 ),
-                'Delete'
+                'Delete',
             );
         }
 
@@ -289,7 +300,7 @@ class MerchantUserTable extends AbstractTable
 
         return $this->generateLabel(
             static::STATUS_LABEL_MAPPING[$currentStatus]['title'],
-            static::STATUS_LABEL_MAPPING[$currentStatus]['class']
+            static::STATUS_LABEL_MAPPING[$currentStatus]['class'],
         );
     }
 
@@ -312,13 +323,13 @@ class MerchantUserTable extends AbstractTable
                     MerchantUserStatusController::PARAM_MERCHANT_USER_ID =>
                         $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
                     'status' => $availableStatus,
-                ]
+                ],
             ),
             static::STATUS_CHANGE_ACTION_MAPPING[$availableStatus]['title'],
             [
                 'icon' => 'fa fa-key',
                 'class' => static::STATUS_CHANGE_ACTION_MAPPING[$availableStatus]['class'],
-            ]
+            ],
         );
     }
 }

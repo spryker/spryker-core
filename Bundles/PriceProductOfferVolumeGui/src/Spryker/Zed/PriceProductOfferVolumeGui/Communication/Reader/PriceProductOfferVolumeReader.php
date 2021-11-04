@@ -17,10 +17,12 @@ class PriceProductOfferVolumeReader implements PriceProductOfferVolumeReaderInte
      * @var string
      */
     protected const KEY_PRICE_DATA_VOLUME_PRICES = 'volume_prices';
+
     /**
      * @var string
      */
     protected const KEY_VOLUME_PRICES = 'volumePrices';
+
     /**
      * @var string
      */
@@ -40,14 +42,12 @@ class PriceProductOfferVolumeReader implements PriceProductOfferVolumeReaderInte
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param string $storeName
      * @param string $currencyCode
      * @param string|null $priceType
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getVolumePricesData(
         ProductOfferTransfer $productOfferTransfer,

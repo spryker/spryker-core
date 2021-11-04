@@ -37,7 +37,7 @@ class EventTriggerMerchantOrderPostCreatePlugin extends AbstractPlugin implement
         $this->getFacade()->triggerForNewMerchantOrderItems(
             (new MerchantOmsTriggerRequestTransfer())
                 ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
-                ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+                ->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
         );
     }
 }

@@ -116,6 +116,10 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="WishlistPreUpdateItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
     <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
         <property name="errorMessages" type="Message[]" singular="errorMessage"/>
@@ -132,12 +136,19 @@
     </transfer>
 
     <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="WishlistItemCriteria">
         <property name="sku" type="string"/>
         <property name="idWishlistItem" type="int"/>
         <property name="fkWishlist" type="int"/>
+    </transfer>
+
+    <transfer name="WishlistItemResponse">
+        <property name="wishlistItem" type="WishlistItem"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

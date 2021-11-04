@@ -23,14 +23,17 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
      * @var string
      */
     public const RESOURCE_CATEGORY = 'RESOURCE_CATEGORY';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_CATEGORY_STORAGE = 'CLIENT_PRODUCT_CATEGORY_STORAGE';
+
     /**
      * @var string
      */
@@ -61,7 +64,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     {
         $container->set(static::RESOURCE_CATEGORY, function (Container $container) {
             return new ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge(
-                $container->getLocator()->categoriesRestApi()->resource()
+                $container->getLocator()->categoriesRestApi()->resource(),
             );
         });
 
@@ -77,7 +80,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -93,7 +96,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     {
         $container->set(static::CLIENT_PRODUCT_CATEGORY_STORAGE, function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge(
-                $container->getLocator()->productCategoryStorage()->client()
+                $container->getLocator()->productCategoryStorage()->client(),
             );
         });
 
@@ -109,7 +112,7 @@ class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractB
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductsCategoriesResourceRelationshipToStoreClientBridge(
-                $container->getLocator()->store()->client()
+                $container->getLocator()->store()->client(),
             );
         });
 

@@ -40,7 +40,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return \Generator<\Generated\Shared\Transfer\ProductAbstractTransfer[]>
+     * @return \Generator<array<\Generated\Shared\Transfer\ProductAbstractTransfer>>
      */
     public function getRelatedProducts(ProductRelationTransfer $productRelationTransfer): Generator
     {
@@ -52,7 +52,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
             $productRelationCriteriaFilterTransfer = $this->createProductRelationCriteriaFilterTransfer(
                 $productRelationTransfer,
                 $limit,
-                $offset
+                $offset,
             );
 
             yield $this->productRelationRepository

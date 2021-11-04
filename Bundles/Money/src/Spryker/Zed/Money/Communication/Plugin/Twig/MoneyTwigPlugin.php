@@ -28,6 +28,7 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      * @var string
      */
     protected const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
+
     /**
      * @var string
      */
@@ -144,10 +145,10 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
                     $this->getConfig()->getMoneyTableTemplatePath(),
                     [
                         'moneyValueFormViewCollection' => $moneyValueFormViewCollection,
-                    ]
+                    ],
                 );
             },
-            $options
+            $options,
         );
     }
 }

@@ -96,7 +96,7 @@ class UrlResolver implements UrlResolverInterface
         }
 
         $urlRedirectStorageTransfer = $this->urlStorageClient->findUrlRedirectStorageById(
-            $urlStorageTransfer->getFkResourceRedirect()
+            $urlStorageTransfer->getFkResourceRedirect(),
         );
 
         if (!$urlRedirectStorageTransfer) {

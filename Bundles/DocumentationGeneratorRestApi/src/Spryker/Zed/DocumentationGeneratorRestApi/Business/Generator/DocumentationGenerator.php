@@ -38,7 +38,7 @@ class DocumentationGenerator implements DocumentationGeneratorInterface
     public function generateDocumentation(): void
     {
         $this->documentationWriter->write(
-            $this->resourcePluginAnalyzer->createRestApiDocumentationFromPlugins()
+            $this->resourcePluginAnalyzer->createRestApiDocumentationFromPlugins(),
         );
     }
 }

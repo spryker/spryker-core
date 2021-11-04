@@ -36,14 +36,17 @@ class TwigFilesystemLoaderZedTest extends Unit
      * @var string
      */
     public const CONTENT_PROJECT_FILE = 'project zed file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_CORE_FILE = 'core zed file' . PHP_EOL;
+
     /**
      * @var string
      */
     public const CONTENT_CORE_NON_SPLIT_FILE = 'core zed non split file' . PHP_EOL;
+
     /**
      * @var string
      */

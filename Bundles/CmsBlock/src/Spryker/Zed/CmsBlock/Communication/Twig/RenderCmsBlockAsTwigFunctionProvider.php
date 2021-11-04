@@ -61,7 +61,7 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
                 'Could no find a CMS block for CMS block name "%s", store "%s" and locale "%s"',
                 $cmsBlockName,
                 $storeName,
-                $localeName
+                $localeName,
             ));
         }
 
@@ -70,14 +70,14 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
         $placeholdersContent = $this->getPlaceholdersContent(
             $environment,
             $cmsBlockTransfer->getGlossary(),
-            $templateContext
+            $templateContext,
         );
 
         $templateContext['placeholders'] = $placeholdersContent;
 
         return $environment->render(
             $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath(),
-            $templateContext
+            $templateContext,
         );
     }
 

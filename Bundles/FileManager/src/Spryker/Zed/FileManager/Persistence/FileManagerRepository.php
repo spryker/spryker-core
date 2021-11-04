@@ -156,7 +156,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         foreach ($files as $file) {
             $directoryFilesCollection->append(
-                $mapper->mapFileEntityToTransfer($file, new FileTransfer())
+                $mapper->mapFileEntityToTransfer($file, new FileTransfer()),
             );
         }
 
@@ -188,7 +188,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         foreach ($fileDrectoryEntities as $fileDirectoryEntity) {
             $fileDirectoryTransferCollection->append(
-                $mapper->mapFileDirectoryEntityToTransfer($fileDirectoryEntity, new FileDirectoryTransfer())
+                $mapper->mapFileDirectoryEntityToTransfer($fileDirectoryEntity, new FileDirectoryTransfer()),
             );
         }
 
@@ -259,7 +259,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         foreach ($mimeTypeCollection as $mimeType) {
             $mimeTypeCollectionTransfer->addMimeType(
-                $mapper->mapMimeTypeEntityToTransfer($mimeType, new MimeTypeTransfer())
+                $mapper->mapMimeTypeEntityToTransfer($mimeType, new MimeTypeTransfer()),
             );
         }
 

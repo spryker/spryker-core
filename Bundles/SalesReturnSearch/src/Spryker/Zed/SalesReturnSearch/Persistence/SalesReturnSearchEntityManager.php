@@ -46,7 +46,7 @@ class SalesReturnSearchEntityManager extends AbstractEntityManager implements Sa
             ->findOneOrCreate();
 
         $returnReasonSearchEntity->fromArray(
-            $returnReasonSearchTransfer->toArray()
+            $returnReasonSearchTransfer->toArray(),
         );
 
         $returnReasonSearchEntity->setFkSalesReturnReason($returnReasonSearchTransfer->getIdSalesReturnReason());

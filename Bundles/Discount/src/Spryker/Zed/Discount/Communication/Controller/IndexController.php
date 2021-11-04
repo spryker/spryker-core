@@ -29,18 +29,22 @@ class IndexController extends AbstractController
      * @var string
      */
     public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+
     /**
      * @var string
      */
     public const URL_PARAM_BATCH_PARAMETER = 'batch';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_POOL = 'id-pool';
+
     /**
      * @var string
      */
     public const URL_PARAM_VISIBILITY = 'visibility';
+
     /**
      * @var string
      */
@@ -48,6 +52,7 @@ class IndexController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     *
      * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
@@ -70,7 +75,7 @@ class IndexController extends AbstractController
             $this->addSuccessMessage('Discount successfully created, but not activated.');
 
             return new RedirectResponse(
-                $this->createEditRedirectUrl($idDiscount, $discountType)
+                $this->createEditRedirectUrl($idDiscount, $discountType),
             );
         }
 
@@ -108,7 +113,7 @@ class IndexController extends AbstractController
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
         $voucherForm = $this->getFactory()->getVoucherForm(
-            $voucherFormDataProvider->getData($idDiscount)
+            $voucherFormDataProvider->getData($idDiscount),
         );
         $isVoucherFormSubmittedSuccessfully = $this->isVoucherFormSubmittedSuccessfully($request, $voucherForm);
 
@@ -242,7 +247,7 @@ class IndexController extends AbstractController
         $table = $this->getFactory()->createDiscountsTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 
@@ -258,7 +263,7 @@ class IndexController extends AbstractController
         $table = $this->getGeneratedCodesTable($request, $idPool, $idDiscount);
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 
@@ -294,7 +299,7 @@ class IndexController extends AbstractController
         } else {
             $this->addSuccessMessage(sprintf(
                 'Discount successfully %s.',
-                $isActive ? 'activated' : 'deactivated'
+                $isActive ? 'activated' : 'deactivated',
             ));
         }
 
@@ -340,7 +345,7 @@ class IndexController extends AbstractController
             $tableParameters,
             $idPool,
             $idDiscount,
-            $batch
+            $batch,
         );
     }
 
@@ -360,7 +365,7 @@ class IndexController extends AbstractController
             '/discount/index/edit',
             [
                     self::URL_PARAM_ID_DISCOUNT => $idDiscount,
-                ]
+                ],
         )->build() . $hash;
 
         return $redirectUrl;
@@ -381,7 +386,7 @@ class IndexController extends AbstractController
             $voucherCodesTable = $this->getGeneratedCodesTable(
                 $request,
                 $discountConfiguratorTransfer->getDiscountVoucher()->getFkDiscountVoucherPool(),
-                $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount()
+                $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount(),
             )->render();
         }
 

@@ -18,15 +18,19 @@ class EditCompanyBusinessUnitController extends AbstractController
 {
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     *
      * @var string
      */
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+
     /**
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
+     *
      * @var string
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
@@ -35,6 +39,7 @@ class EditCompanyBusinessUnitController extends AbstractController
      * @var string
      */
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit "%s" has been updated.';
+
     /**
      * @var string
      */
@@ -67,7 +72,7 @@ class EditCompanyBusinessUnitController extends AbstractController
         $form = $this->getFactory()
             ->getCompanyBusinessUnitEditForm(
                 $companyBusinessUnitTransfer,
-                $dataProvider->getOptions($idCompanyBusinessUnit)
+                $dataProvider->getOptions($idCompanyBusinessUnit),
             )
             ->handleRequest($request);
 

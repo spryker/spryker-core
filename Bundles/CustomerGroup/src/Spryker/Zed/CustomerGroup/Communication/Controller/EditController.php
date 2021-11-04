@@ -22,6 +22,7 @@ class EditController extends AbstractController
      * @var string
      */
     public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
+
     /**
      * @var string
      */
@@ -40,7 +41,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->createCustomerGroupForm(
                 $dataProvider->getData($idCustomerGroup),
-                $dataProvider->getOptions($idCustomerGroup)
+                $dataProvider->getOptions($idCustomerGroup),
             )
             ->handleRequest($request);
 
@@ -53,7 +54,7 @@ class EditController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_CUSTOMER_GROUP_UPDATE_SUCCESS);
 
             return $this->redirectResponse(
-                sprintf('/customer-group/view?%s=%d', static::PARAM_ID_CUSTOMER_GROUP, $idCustomerGroup)
+                sprintf('/customer-group/view?%s=%d', static::PARAM_ID_CUSTOMER_GROUP, $idCustomerGroup),
             );
         }
 

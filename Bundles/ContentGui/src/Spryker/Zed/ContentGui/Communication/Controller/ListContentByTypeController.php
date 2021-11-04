@@ -21,10 +21,12 @@ class ListContentByTypeController extends AbstractController
      * @var string
      */
     public const PARAM_CONTENT_TYPE = 'type';
+
     /**
      * @var string
      */
     public const PARAM_CONTENT_KEY = 'contentKey';
+
     /**
      * @var string
      */

@@ -19,6 +19,7 @@ class ProductListExporter implements ProductListExporterInterface
      * @var string
      */
     protected const FILE_HEADER = 'Sku';
+
     /**
      * @var string
      */
@@ -96,7 +97,7 @@ class ProductListExporter implements ProductListExporterInterface
             function ($item) {
                 return [$item];
             },
-            $productsSku
+            $productsSku,
         );
     }
 }

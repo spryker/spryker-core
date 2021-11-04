@@ -27,14 +27,14 @@ class ProductOfferValidityEntityManager extends AbstractEntityManager implements
 
         $productOfferValidityEntity = $productOfferValidityMapper->mapProductOfferValidityTransferToProductOfferValidityEntity(
             $productOfferValidityTransfer,
-            new SpyProductOfferValidity()
+            new SpyProductOfferValidity(),
         );
 
         $productOfferValidityEntity->save();
 
         return $productOfferValidityMapper->productOfferValidityEntityToProductOfferValidityTransfer(
             $productOfferValidityEntity,
-            $productOfferValidityTransfer
+            $productOfferValidityTransfer,
         );
     }
 
@@ -54,13 +54,13 @@ class ProductOfferValidityEntityManager extends AbstractEntityManager implements
         $productOfferValidityMapper = $this->getFactory()->createProductOfferValidityMapper();
         $productOfferValidityEntity = $productOfferValidityMapper->mapProductOfferValidityTransferToProductOfferValidityEntity(
             $productOfferValidityTransfer,
-            $productOfferValidityEntity
+            $productOfferValidityEntity,
         );
         $productOfferValidityEntity->save();
 
         return $productOfferValidityMapper->productOfferValidityEntityToProductOfferValidityTransfer(
             $productOfferValidityEntity,
-            $productOfferValidityTransfer
+            $productOfferValidityTransfer,
         );
     }
 }

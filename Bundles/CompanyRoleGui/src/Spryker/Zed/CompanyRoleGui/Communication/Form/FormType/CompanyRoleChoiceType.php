@@ -21,7 +21,7 @@ class CompanyRoleChoiceType extends ChoiceType
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -31,7 +31,7 @@ class CompanyRoleChoiceType extends ChoiceType
 
         $callbackTransformer = new CallbackTransformer(
             [$this, 'roleCollectionInputDataTransformer'],
-            [$this, 'getOutputDataCallbackRoleCollectionTransformer']
+            [$this, 'getOutputDataCallbackRoleCollectionTransformer'],
         );
 
         $builder->addModelTransformer($callbackTransformer);

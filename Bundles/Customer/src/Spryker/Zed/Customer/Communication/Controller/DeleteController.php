@@ -28,6 +28,7 @@ class DeleteController extends AbstractController
      * @var string
      */
     protected const URL_CUSTOMER_LIST_PAGE = '/customer';
+
     /**
      * @var string
      */
@@ -113,7 +114,7 @@ class DeleteController extends AbstractController
             return $this->redirectResponse(
                 Url::generate(static::URL_CUSTOMER_DELETE_PAGE, [
                     CustomerConstants::PARAM_ID_CUSTOMER => $customerTransfer->getIdCustomer(),
-                ])
+                ]),
             );
         }
 

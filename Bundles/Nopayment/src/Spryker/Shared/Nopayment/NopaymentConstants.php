@@ -16,6 +16,7 @@ interface NopaymentConstants
      * @var string
      */
     public const NO_PAYMENT_METHODS = 'NO_PAYMENT_METHODS';
+
     /**
      * @var string
      */

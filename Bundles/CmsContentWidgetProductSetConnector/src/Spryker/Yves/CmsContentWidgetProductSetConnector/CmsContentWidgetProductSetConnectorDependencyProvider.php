@@ -18,6 +18,7 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
      * @var string
      */
     public const PRODUCT_SET_CLIENT = 'PRODUCT SET CLIENT';
+
     /**
      * @var string
      */

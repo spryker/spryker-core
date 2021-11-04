@@ -44,6 +44,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      * @var int
      */
     public const DEFAULT_TAX_RATE = 19;
+
     /**
      * @var string
      */
@@ -229,7 +230,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         return new ShipmentTaxRateCalculator(
             $this->createQueryContainerMock($countryTaxRate),
             $this->createProductOptionToTaxBridgeMock(),
-            $this->tester->getShipmentService()
+            $this->tester->getShipmentService(),
         );
     }
 

@@ -33,7 +33,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
         $configurableBundleTemplateEntity->save();
 
         $configurableBundleTemplateTransfer->setIdConfigurableBundleTemplate(
-            $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()
+            $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
         );
 
         return $configurableBundleTemplateTransfer;
@@ -76,7 +76,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
         $configurableBundleTemplateSlotEntity->save();
 
         $configurableBundleTemplateSlotTransfer->setIdConfigurableBundleTemplateSlot(
-            $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot()
+            $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot(),
         );
 
         return $configurableBundleTemplateSlotTransfer;

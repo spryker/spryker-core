@@ -16,6 +16,7 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_USER = 'company-user-on-behalf';
+
     /**
      * @var string
      */
@@ -36,7 +37,7 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::IMPORT_FILE,
-            static::IMPORT_TYPE_COMPANY_USER
+            static::IMPORT_TYPE_COMPANY_USER,
         );
     }
 
@@ -50,7 +51,7 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

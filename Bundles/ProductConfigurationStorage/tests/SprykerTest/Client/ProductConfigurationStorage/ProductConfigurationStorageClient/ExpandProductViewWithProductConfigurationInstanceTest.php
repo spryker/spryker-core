@@ -65,12 +65,12 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertNotNull(
             $productViewTransfer->getProductConfigurationInstance(),
-            'Expects that product view will be expanded with product configuration.'
+            'Expects that product view will be expanded with product configuration.',
         );
         $this->assertEquals(
             $productConfigurationInstanceTransfer,
             $productViewTransfer->getProductConfigurationInstance(),
-            'Expects that product view will be expanded with same product configuration.'
+            'Expects that product view will be expanded with same product configuration.',
         );
     }
 
@@ -95,7 +95,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertNull(
             $productViewTransfer->getProductConfigurationInstance(),
-            'Expects that product view will not be expanded with product configuration when no product configuration.'
+            'Expects that product view will not be expanded with product configuration when no product configuration.',
         );
     }
 
@@ -121,7 +121,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertNull(
             $productViewTransfer->getProductConfigurationInstance(),
-            'Expects that product view will not be expanded with product configuration for non create product.'
+            'Expects that product view will not be expanded with product configuration for non create product.',
         );
     }
 
@@ -154,7 +154,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         // Assert
         $this->assertNotNull(
             $productViewTransfer->getProductConfigurationInstance(),
-            'Expects that product view will be expanded with product configuration from storage.'
+            'Expects that product view will be expanded with product configuration from storage.',
         );
     }
 

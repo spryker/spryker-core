@@ -19,6 +19,7 @@ class WebProfilerTwigDataCollectorPlugin implements WebProfilerDataCollectorPlug
      * @var string
      */
     protected const NAME = 'twig';
+
     /**
      * @var string
      */

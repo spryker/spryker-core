@@ -29,7 +29,7 @@ class ProductLabelConfig extends AbstractBundleConfig
     {
         return $this->get(
             ProductLabelConstants::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE,
-            static::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE
+            static::PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE,
         );
     }
 }

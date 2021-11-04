@@ -24,6 +24,7 @@ class CompanyTable extends AbstractTable
     public const COL_NAME = SpyCompanyTableMap::COL_NAME;
     public const COL_IS_ACTIVE = SpyCompanyTableMap::COL_IS_ACTIVE;
     public const COL_STATUS = SpyCompanyTableMap::COL_STATUS;
+
     /**
      * @var string
      */
@@ -38,18 +39,22 @@ class CompanyTable extends AbstractTable
      * @var string
      */
     public const URL_COMPANY_DEACTIVATE = '/company-gui/edit-company/deactivate';
+
     /**
      * @var string
      */
     public const URL_COMPANY_ACTIVATE = '/company-gui/edit-company/activate';
+
     /**
      * @var string
      */
     public const URL_COMPANY_DENY = '/company-gui/edit-company/deny';
+
     /**
      * @var string
      */
     public const URL_COMPANY_APPROVE = '/company-gui/edit-company/approve';
+
     /**
      * @var string
      */
@@ -168,7 +173,7 @@ class CompanyTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             sprintf(static::URL_COMPANY_EDIT, $item[static::COL_ID_COMPANY]),
-            'Edit'
+            'Edit',
         );
         $buttons[] = $this->generateStatusChangeButton($item);
         $buttons = array_merge($buttons, $this->generateCompanyStatusChangeButton($item));
@@ -182,7 +187,7 @@ class CompanyTable extends AbstractTable
                 $button->getUrl(),
                 $button->getTitle(),
                 $button->getDefaultOptions(),
-                $button->getCustomOptions()
+                $button->getCustomOptions(),
             );
         }
 
@@ -206,7 +211,7 @@ class CompanyTable extends AbstractTable
                 [
                     static::BUTTON_ICON => 'fa-trash',
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ],
             );
         } else {
             return $this->generateFormButton(
@@ -214,7 +219,7 @@ class CompanyTable extends AbstractTable
                     static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                 ]),
                 'Activate',
-                ActivateCompanyForm::class
+                ActivateCompanyForm::class,
             );
         }
     }
@@ -234,7 +239,7 @@ class CompanyTable extends AbstractTable
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
                     'Approve',
-                    ApproveCompanyForm::class
+                    ApproveCompanyForm::class,
                 );
                 $buttons[] = $this->generateFormButton(
                     Url::generate(static::URL_COMPANY_DENY, [
@@ -245,7 +250,7 @@ class CompanyTable extends AbstractTable
                     [
                         static::BUTTON_ICON => 'fa-trash',
                         static::BUTTON_CLASS => 'btn-danger safe-submit',
-                    ]
+                    ],
                 );
 
                 break;
@@ -259,7 +264,7 @@ class CompanyTable extends AbstractTable
                     [
                         static::BUTTON_ICON => 'fa-trash',
                         static::BUTTON_CLASS => 'btn-danger safe-submit',
-                    ]
+                    ],
                 );
 
                 break;
@@ -269,7 +274,7 @@ class CompanyTable extends AbstractTable
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
                     'Approve',
-                    ApproveCompanyForm::class
+                    ApproveCompanyForm::class,
                 );
 
                 break;

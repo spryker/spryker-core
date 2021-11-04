@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
@@ -38,10 +39,12 @@ class FinderTest extends Unit
      * @var string
      */
     public const STATE_DISPLAY_VALUE = 'name display value';
+
     /**
      * @var string
      */
     public const STATE_SUB_PROCESS_DISPLAY_VALUE = 'sub process state display value';
+
     /**
      * @var string
      */
@@ -81,7 +84,7 @@ class FinderTest extends Unit
      */
     public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound(): void
     {
-        $this->expectException('Spryker\Zed\Oms\Business\Exception\StateNotFoundException');
+        $this->expectException(StateNotFoundException::class);
         $this->expectExceptionMessage('State with name "not existing" not found in any StateMachine processes.');
         $finder = $this->createFinder();
 
@@ -107,7 +110,7 @@ class FinderTest extends Unit
             $builder,
             [
                 self::TEST_STATE_MACHINE_NAME,
-            ]
+            ],
         );
     }
 
@@ -147,7 +150,7 @@ class FinderTest extends Unit
             new State(),
             new Transition(),
             new Process($drawerMock),
-            $this->getProcessLocation()
+            $this->getProcessLocation(),
         );
     }
 

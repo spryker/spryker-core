@@ -58,7 +58,7 @@ class ProductConfigurationsRestApiFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->mapCartItemRequestTransferToPersistentCartChangeTransfer(
             $cartItemRequestTransfer,
-            $persistentCartChangeTransfer
+            $persistentCartChangeTransfer,
         );
 
         // Assert
@@ -66,7 +66,7 @@ class ProductConfigurationsRestApiFacadeTest extends Unit
         $this->assertNotNull($itemTransfer);
         $this->assertEquals(
             $itemTransfer->getProductConfigurationInstance()->toArray(),
-            $productConfigurationInstanceTransfer->toArray()
+            $productConfigurationInstanceTransfer->toArray(),
         );
     }
 

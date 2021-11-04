@@ -40,7 +40,7 @@ class ShipmentMethodRestResponseBuilder implements ShipmentMethodRestResponseBui
         return $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS,
             $idShipmentMethod,
-            $restShipmentMethodsAttributesTransfer
+            $restShipmentMethodsAttributesTransfer,
         );
     }
 }

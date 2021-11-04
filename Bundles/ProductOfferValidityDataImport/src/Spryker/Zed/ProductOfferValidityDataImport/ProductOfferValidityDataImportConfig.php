@@ -28,7 +28,7 @@ class ProductOfferValidityDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_offer_validity.csv',
-            static::IMPORT_TYPE_PRODUCT_OFFER_VALIDITY
+            static::IMPORT_TYPE_PRODUCT_OFFER_VALIDITY,
         );
     }
 
@@ -42,7 +42,7 @@ class ProductOfferValidityDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

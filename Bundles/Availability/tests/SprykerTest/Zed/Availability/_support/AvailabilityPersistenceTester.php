@@ -57,7 +57,7 @@ class AvailabilityPersistenceTester extends Actor
 
         $productConcreteTransfer = $this->haveProduct(
             [ProductConcreteTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]],
-            [ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]]
+            [ProductAbstractTransfer::LOCALIZED_ATTRIBUTES => [$localizedAttributes]],
         );
 
         foreach ($stockTransfers as $stockTransfer) {

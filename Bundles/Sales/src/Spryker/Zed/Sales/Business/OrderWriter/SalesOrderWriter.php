@@ -285,7 +285,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         $salesOrderAddressEntityTransfer->fromArray($addressTransfer->toArray(), true);
         if (!$salesOrderAddressEntityTransfer->getFkCountry()) {
             $salesOrderAddressEntityTransfer->setFkCountry(
-                $this->getIdCountryForAddress($addressTransfer)
+                $this->getIdCountryForAddress($addressTransfer),
             );
         }
 

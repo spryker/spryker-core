@@ -245,7 +245,7 @@ class ControllerFilter implements ControllerFilterInterface
 
         return new Response(
             Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
-            Response::HTTP_INTERNAL_SERVER_ERROR
+            Response::HTTP_INTERNAL_SERVER_ERROR,
         );
     }
 

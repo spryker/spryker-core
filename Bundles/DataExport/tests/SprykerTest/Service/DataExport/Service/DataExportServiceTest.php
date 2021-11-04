@@ -30,6 +30,7 @@ class DataExportServiceTest extends Unit
 {
     /**
      * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     *
      * @var string
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
@@ -38,6 +39,7 @@ class DataExportServiceTest extends Unit
      * @var string
      */
     protected const DATA_ENTITY_PRIMARY = 'data-entity-primary';
+
     /**
      * @var string
      */
@@ -47,6 +49,7 @@ class DataExportServiceTest extends Unit
      * @var string
      */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+
     /**
      * @var string
      */
@@ -56,6 +59,7 @@ class DataExportServiceTest extends Unit
      * @var string
      */
     protected const DESTINATION_DIR = 'test-folder';
+
     /**
      * @var string
      */
@@ -97,7 +101,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
             $primaryDataExportConfigurationTransfer,
-            $secondaryDataExportConfigurationTransfer
+            $secondaryDataExportConfigurationTransfer,
         );
 
         //Assert
@@ -118,7 +122,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->mergeDataExportConfigurationTransfers(
             $primaryDataExportConfigurationTransfer,
-            $secondaryDataExportConfigurationTransfer
+            $secondaryDataExportConfigurationTransfer,
         );
 
         //Assert
@@ -158,7 +162,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportWriteResponseTransfer = $this->tester->getService()->write(
             $batch,
-            $dataExportConfigurationTransfer
+            $dataExportConfigurationTransfer,
         );
 
         //Assert
@@ -218,7 +222,7 @@ class DataExportServiceTest extends Unit
         //Act
         $dataExportConfigurationTransfer = $this->tester->getService()->resolveDataExportActionConfiguration(
             $originalDataExportConfigurationTransfer,
-            $additionalDataExportConfigurationsTransfer
+            $additionalDataExportConfigurationsTransfer,
         );
 
         //Assert

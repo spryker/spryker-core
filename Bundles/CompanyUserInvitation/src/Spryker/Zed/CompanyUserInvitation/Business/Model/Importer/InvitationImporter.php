@@ -59,8 +59,8 @@ class InvitationImporter implements InvitationImporterInterface
                     sprintf(
                         'Invitation %s : %s',
                         $invitationCounter,
-                        $companyUserInvitationCreateResponseTransfer->getError()
-                    )
+                        $companyUserInvitationCreateResponseTransfer->getError(),
+                    ),
                 );
             }
             $invitationCounter++;

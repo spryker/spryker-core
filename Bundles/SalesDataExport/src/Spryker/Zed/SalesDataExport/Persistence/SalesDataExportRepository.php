@@ -27,18 +27,22 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @var string
      */
     public const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
+
     /**
      * @var string
      */
     public const FILTER_CRITERIA_KEY_ORDER_CREATED_AT = 'order_created_at';
+
     /**
      * @var string
      */
     public const FILTER_CRITERIA_KEY_ORDER_UPDATED_AT = 'order_updated_at';
+
     /**
      * @var string
      */
     public const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+
     /**
      * @var string
      */
@@ -48,6 +52,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * @var string
      */
     public const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+
     /**
      * @var string
      */
@@ -162,7 +167,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         $salesOrderItemQuery = $this->applyFilterCriteriaToSalesOrderItemQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $salesOrderItemQuery
+            $salesOrderItemQuery,
         );
 
         $salesOrderItemQuery->select($selectedColumns);
@@ -210,7 +215,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
 
         $salesExpenseQuery = $this->applyFilterCriteriaToSalesExpenseQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $salesExpenseQuery
+            $salesExpenseQuery,
         );
 
         $salesExpenseQuery->select($selectedColumns);
@@ -331,11 +336,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -347,11 +350,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -363,11 +364,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {

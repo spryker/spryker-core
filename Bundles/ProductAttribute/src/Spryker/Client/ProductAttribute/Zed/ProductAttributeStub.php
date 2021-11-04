@@ -39,7 +39,7 @@ class ProductAttributeStub implements ProductAttributeStubInterface
         /** @var \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer */
         $productManagementAttributeCollectionTransfer = $this->zedRequestClient->call(
             '/product-attribute/gateway/get-product-management-attributes',
-            $productManagementAttributeFilterTransfer
+            $productManagementAttributeFilterTransfer,
         );
 
         return $productManagementAttributeCollectionTransfer;

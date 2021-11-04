@@ -24,10 +24,12 @@ class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePlugi
      * @var string
      */
     protected const GLOSSARY_KEY_MAIL_ORDER_INVOICE_SUBJECT = 'mail.order_invoice.subject';
+
     /**
      * @var string
      */
     protected const GLOSSARY_KEY_MAIL_SENDER_EMAIL = 'mail.sender.email';
+
     /**
      * @var string
      */
@@ -115,7 +117,7 @@ class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePlugi
 
         $mailBuilder->addRecipient(
             $orderTransfer->getEmail(),
-            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName()
+            $orderTransfer->getFirstName() . ' ' . $orderTransfer->getLastName(),
         );
 
         return $this;

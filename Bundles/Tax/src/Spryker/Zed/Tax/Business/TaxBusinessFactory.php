@@ -32,7 +32,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     {
         return new TaxReader(
             $this->getQueryContainer(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -44,7 +44,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
         return new TaxWriter(
             $this->getQueryContainer(),
             $this->getRepository(),
-            $this->getTaxChangePlugins()
+            $this->getTaxChangePlugins(),
         );
     }
 

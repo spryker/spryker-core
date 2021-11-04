@@ -33,14 +33,17 @@ class ProductCartConnectorFacadeTest extends Unit
      * @var string
      */
     protected const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
+
     /**
      * @var int
      */
     protected const PRODUCT_ABSTRACT_ID = 777;
+
     /**
      * @var string
      */
     protected const PRODUCT_URL_EN = '/en/product-1';
+
     /**
      * @var string
      */

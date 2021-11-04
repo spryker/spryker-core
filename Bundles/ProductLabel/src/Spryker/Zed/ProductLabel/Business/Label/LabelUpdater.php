@@ -22,6 +22,7 @@ class LabelUpdater implements LabelUpdaterInterface
 
     /**
      * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap::COL_IS_ACTIVE
+     *
      * @var string
      */
     protected const COL_IS_ACTIVE = 'spy_product_label.is_active';

@@ -51,7 +51,7 @@ class TaxPersistenceFactory extends AbstractPersistenceFactory
     public function createTaxSetMapper(): TaxSetMapper
     {
         return new TaxSetMapper(
-            $this->createTaxRateMapper()
+            $this->createTaxRateMapper(),
         );
     }
 }

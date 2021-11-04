@@ -58,14 +58,14 @@ class EditCompanyUserController extends AbstractController
         $companyUserForm = $this->getFactory()
             ->getCompanyUserEditForm(
                 $companyUserTransfer,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
             return $this->updateCompanyUser(
                 $companyUserForm,
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE),
             );
         }
 

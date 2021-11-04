@@ -37,90 +37,112 @@ class DocumentationGeneratorRestApiTester extends Actor
      * @var string
      */
     protected const METHOD_GET = 'get';
+
     /**
      * @var string
      */
     protected const METHOD_POST = 'post';
+
     /**
      * @var string
      */
     protected const METHOD_PATCH = 'patch';
+
     /**
      * @var string
      */
     protected const METHOD_DELETE = 'delete';
+
     /**
      * @var string
      */
     protected const TEST_SUMMARY = 'Test summary.';
+
     /**
      * @var string
      */
     protected const TEST_PATH = '/test-path';
+
     /**
      * @var string
      */
     protected const TEST_PATH_WITH_ID = '/test-path/{test-resource-id}';
+
     /**
      * @var string
      */
     protected const PARAMETER_IN_HEADER = 'header';
+
     /**
      * @var string
      */
     protected const PARAMETER_IN_PATH = 'path';
+
     /**
      * @var string
      */
     protected const TEST_RESOURCE_ID = 'test-resource-id';
+
     /**
      * @var string
      */
     protected const TEST_RESOURCE = 'test-resource';
+
     /**
      * @var string
      */
     protected const TEST_RESOURCE_PATH = '/test-resource';
+
     /**
      * @var string
      */
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_BAD_REQUEST = 400;
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_NOT_FOUND = 404;
+
     /**
      * @var string
      */
     protected const RESPONSE_CODE_DEFAULT = 'default';
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_OK = 200;
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_CREATED = 201;
+
     /**
      * @var int
      */
     protected const RESPONSE_CODE_NO_CONTENT = 204;
+
     /**
      * @var string
      */
     protected const RESPONSE_DESCRIPTION_BAD_REQUEST = 'Bad Request';
+
     /**
      * @var string
      */
     protected const RESPONSE_DESCRIPTION_NOT_FOUND = 'Item not found';
+
     /**
      * @var string
      */
     protected const RESPONSE_DESCRIPTION_DEFAULT = 'Expected response to a bad request.';
+
     /**
      * @var string
      */
@@ -130,42 +152,52 @@ class DocumentationGeneratorRestApiTester extends Actor
      * @var string
      */
     protected const TEST_RESOURCE_ID_WITH_BRACKETS = '{testResourceId}';
+
     /**
      * @var string
      */
     protected const DEFAULT_GET_RESOURCE_SUMMARY = 'Get test resource.';
+
     /**
      * @var string
      */
     protected const DEFAULT_GET_COLLECTION_SUMMARY = 'Get collection of test resource.';
+
     /**
      * @var string
      */
     protected const DEFAULT_DELETE_SUMMARY = 'Delete test resource.';
+
     /**
      * @var string
      */
     protected const DEFAULT_PATCH_SUMMARY = 'Update test resource.';
+
     /**
      * @var string
      */
     protected const DEFAULT_POST_SUMMARY = 'Create test resource.';
+
     /**
      * @var string
      */
     protected const SUCCESSFUL_RESPONSE_DESCRIPTION = 'Expected response to a valid request.';
+
     /**
      * @var string
      */
     protected const DEFAULT_RESPONSE_DESCRIPTION = 'Expected response to a bad request.';
+
     /**
      * @var string
      */
     protected const DEFAULT_REQUEST_DESCRIPTION = 'Expected request body.';
+
     /**
      * @var string
      */
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';
+
     /**
      * @var string
      */
@@ -175,134 +207,167 @@ class DocumentationGeneratorRestApiTester extends Actor
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_RESPONSE_COLLECTION = '#/components/schemas/RestTestCollectionResponse';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_REQUEST = '#/components/schemas/RestTestRequest';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_ERROR_MESSAGE = '#/components/schemas/RestErrorMessage';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_RESPONSE = '#/components/schemas/RestTestResponse';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_LINKS = '#/components/schemas/RestLinks';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_RELATIONSHIPS_DATA = '#/components/schemas/RestRelationshipsData';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_ALTERNATIVE_RELATIONSHIPS = '#/components/schemas/RestTestAlternativeRelationships';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_ALTERNATIVE_RESPONSE_ATTRIBUTES = '#/components/schemas/RestTestAlternativeAttributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_ALTERNATIVE_RESPONSE_RESOURCE_DATA = '#/components/schemas/RestTestAlternativeResponseData';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_RELATIONSHIPS = '#/components/schemas/RestTestRelationships';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_REQUEST_ATTRIBUTES = '#/components/schemas/RestTestRequestAttributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_REQUEST_DATA = '#/components/schemas/RestTestRequestData';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_RESPONSE_ATTRIBUTES = '#/components/schemas/RestTestAttributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_RESPONSE_COLLECTION_DATA = '#/components/schemas/RestTestCollectionResponseData';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_RESPONSE_RESOURCE_DATA = '#/components/schemas/RestTestResponseData';
+
     /**
      * @var string
      */
     protected const SCHEMA_REF_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY = '#/components/schemas/RestTestAttributesWithNullableProperty';
+
     /**
      * @var string
      */
     protected const SHEMA_REF_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY_TRANSFER = '#/components/schemas/RestTestAttributesWithNullablePropertyTransfer';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_ERROR_MESSAGE = 'RestErrorMessage';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_LINKS = 'RestLinks';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_RELATIONSHIPS = 'RestRelationships';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RELATIONSHIPS = 'RestTestAlternativeRelationships';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RESPONSE_ATTRIBUTES = 'RestTestAlternativeAttributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RESPONSE_RESOURCE = 'RestTestAlternativeResponse';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RESPONSE_RESOURCE_DATA = 'RestTestAlternativeResponseData';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_REQUEST = 'RestTestRequest';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_REQUEST_ATTRIBUTES = 'RestTestRequestAttributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_REQUEST_DATA = 'RestTestRequestData';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_ATTRIBUTES = 'RestTestAttributes';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_COLLECTION = 'RestTestCollectionResponse';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_COLLECTION_DATA = 'RestTestCollectionResponseData';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE = 'RestTestResponse';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE_DATA = 'RestTestResponseData';
+
     /**
      * @var string
      */
     protected const SCHEMA_NAME_REST_TEST_ATTRIBUTES_WITH_NULLABLE_PROPERTY = 'RestTestAttributesWithNullableProperty';
+
     /**
      * @var string
      */

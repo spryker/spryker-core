@@ -30,38 +30,47 @@ class VariantTable extends AbstractProductTable
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT = 'id_product';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
+
     /**
      * @var string
      */
     public const COL_IS_BUNDLE = 'is_bundle';
+
     /**
      * @var string
      */
     public const COL_VALID_FROM = 'valid_from';
+
     /**
      * @var string
      */
@@ -106,7 +115,7 @@ class VariantTable extends AbstractProductTable
             'variant-table?%s=%d&type=%s',
             EditController::PARAM_ID_PRODUCT_ABSTRACT,
             $idProductAbstract,
-            $type
+            $type,
         );
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
         $this->type = $type;
@@ -236,9 +245,9 @@ class VariantTable extends AbstractProductTable
                 $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $productEntity->getFkProductAbstract(),
-                $this->type
+                $this->type,
             ),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateEditButton(
@@ -248,16 +257,16 @@ class VariantTable extends AbstractProductTable
                 $productEntity->getIdProduct(),
                 EditController::PARAM_ID_PRODUCT_ABSTRACT,
                 $productEntity->getFkProductAbstract(),
-                $this->type
+                $this->type,
             ),
-            'Edit'
+            'Edit',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-attribute-gui/view/product', [
                 EditController::PARAM_ID_PRODUCT => $productEntity->getIdProduct(),
             ]),
-            'Manage Attributes'
+            'Manage Attributes',
         );
 
         return $urls;

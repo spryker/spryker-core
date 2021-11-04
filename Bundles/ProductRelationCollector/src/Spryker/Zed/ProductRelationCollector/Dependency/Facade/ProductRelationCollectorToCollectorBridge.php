@@ -61,7 +61,7 @@ class ProductRelationCollectorToCollectorBridge implements ProductRelationCollec
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

@@ -43,7 +43,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
             $taxRateTransfer ?: $this->getTaxRateFormData($taxRateFormDataProvider),
             [
                 'data_class' => TaxRateTransfer::class,
-            ]
+            ],
         );
     }
 
@@ -83,7 +83,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
             $taxSetTransfer ?? $this->getTaxSetFormData($taxSetFormDataProvider),
             [
                 'data_class' => TaxSetTransfer::class,
-            ]
+            ],
         );
     }
 
@@ -130,7 +130,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
         return new TaxRateFormDataProvider(
             $this->getCountryFacade(),
             $this->getFacade(),
-            $taxRateTransfer
+            $taxRateTransfer,
         );
     }
 

@@ -26,7 +26,7 @@ class PersistentCartShareBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteReader(
             $this->getResourceShareFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
         );
     }
 

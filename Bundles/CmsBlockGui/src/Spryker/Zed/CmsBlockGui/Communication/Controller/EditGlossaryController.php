@@ -93,7 +93,7 @@ class EditGlossaryController extends AbstractCmsBlockController
 
         $redirectUrl = Url::generate(
             '/cms-block-gui/edit-glossary/index',
-            [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock]
+            [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock],
         )->build();
 
         return $this->redirectResponse($redirectUrl);

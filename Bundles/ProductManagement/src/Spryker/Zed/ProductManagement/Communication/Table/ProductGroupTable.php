@@ -25,22 +25,27 @@ class ProductGroupTable extends AbstractProductTable
      * @var string
      */
     public const COL_ID_PRODUCT_GROUP = 'id_product_group';
+
     /**
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_STATUS = 'status';
+
     /**
      * @var string
      */
@@ -84,7 +89,7 @@ class ProductGroupTable extends AbstractProductTable
         $this->defaultUrl = sprintf(
             'product-group-table?%s=%d',
             ViewController::PARAM_ID_PRODUCT_ABSTRACT,
-            $idProductAbstract
+            $idProductAbstract,
         );
         $this->productGroupQueryContainer = $productGroupQueryContainer;
     }
@@ -184,14 +189,14 @@ class ProductGroupTable extends AbstractProductTable
             Url::generate('/product-management/view', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'View'
+            'View',
         );
 
         $urls[] = $this->generateEditButton(
             Url::generate('/product-management/edit', [
                 EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         return $urls;

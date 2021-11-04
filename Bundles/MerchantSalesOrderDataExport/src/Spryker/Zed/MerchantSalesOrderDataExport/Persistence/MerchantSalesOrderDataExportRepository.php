@@ -29,12 +29,14 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_NAME
+     *
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS
+     *
      * @var string
      */
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
@@ -43,6 +45,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT = 'merchant_order_created_at';
+
     /**
      * @var string
      */
@@ -52,6 +55,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const FILTER_CRITERIA_PARAM_OFFSET = 'offset';
+
     /**
      * @var string
      */
@@ -61,6 +65,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+
     /**
      * @var string
      */
@@ -70,6 +75,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      * @var string
      */
     protected const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+
     /**
      * @var string
      */
@@ -100,23 +106,23 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $selectedFields
+            $selectedFields,
         );
 
         $merchantSalesOrderQuery = $this->buildMerchantSalesOrderBaseQuery(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT],
         );
 
         $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderQuery
+            $merchantSalesOrderQuery,
         );
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
             $merchantSalesOrderQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
         }
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $merchantSalesOrderDataEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $merchantSalesOrderDataEntities */
         $merchantSalesOrderDataEntities = $merchantSalesOrderQuery->find();
         $merchantSalesOrderData = $merchantSalesOrderDataEntities->toArray();
 
@@ -163,24 +169,24 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $selectedFields
+            $selectedFields,
         );
 
         $merchantSalesOrderItemQuery = $this->buildMerchantSalesOrderItemBaseQuery(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT],
         );
 
         $merchantSalesOrderItemQuery = $this->applyFilterCriteriaToMerchantSalesOrderItemQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderItemQuery
+            $merchantSalesOrderItemQuery,
         );
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
             $merchantSalesOrderItemQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
         }
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemDataEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemDataEntities */
         $merchantSalesOrderItemDataEntities = $merchantSalesOrderItemQuery->find();
         $merchantSalesOrderItemData = $merchantSalesOrderItemDataEntities->toArray();
 
@@ -215,24 +221,24 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
         $dataExportBatchTransfer = $this->getDataExportBatchTransfer(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $selectedFields
+            $selectedFields,
         );
 
         $merchantSalesOrderQuery = $this->buildMerchantSalesOrderWithExpenseBaseQuery(
             $filterCriteria[static::FILTER_CRITERIA_PARAM_OFFSET],
-            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT]
+            $filterCriteria[static::FILTER_CRITERIA_PARAM_LIMIT],
         );
 
         $merchantSalesOrderQuery = $this->applyFilterCriteriaToMerchantSalesOrderQuery(
             $dataExportConfigurationTransfer->getFilterCriteria(),
-            $merchantSalesOrderQuery
+            $merchantSalesOrderQuery,
         );
 
         foreach ($selectedColumns as $selectedField => $selectedColumn) {
             $merchantSalesOrderQuery->addAsColumn(sprintf('"%s"', $selectedColumn), $selectedColumn);
         }
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $merchantOrderExpenseDataEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $merchantOrderExpenseDataEntities */
         $merchantOrderExpenseDataEntities = $merchantSalesOrderQuery->find();
         $merchantOrderExpenseData = $merchantOrderExpenseDataEntities->toArray();
 
@@ -341,14 +347,14 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $spyMerchantSalesOrderQuery */
         $spyMerchantSalesOrderQuery = $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
             ->orderByMerchantReference()
             ->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->leftJoinMerchantSalesOrderTotal()
             ->useOrderQuery()
@@ -376,7 +382,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderItemBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderItemQuery
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $spyMerchantSalesOrderItemQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $spyMerchantSalesOrderItemQuery */
         $spyMerchantSalesOrderItemQuery = $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()
             ->leftJoinStateMachineItemState()
@@ -389,7 +395,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
                 ->addJoin(
                     SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                     SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                    Criteria::INNER_JOIN
+                    Criteria::INNER_JOIN,
                 )
                 ->orderByMerchantReference()
                 ->useOrderQuery()
@@ -425,14 +431,14 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      */
     protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder[] $spyMerchantSalesOrderQuery */
         $spyMerchantSalesOrderQuery = $this->getFactory()
             ->getMerchantSalesOrderPropelQuery()
             ->orderByMerchantReference()
             ->addJoin(
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->useOrderQuery()
                 ->orderByStore()
@@ -449,11 +455,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getMerchantSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -465,11 +469,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getMerchantSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -481,11 +483,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -497,15 +497,13 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @phpstan-return array<int, \Generated\Shared\Transfer\CommentTransfer>
-     *
      * @param array<int> $salesOrderIds
      *
      * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByOrderIds(array $salesOrderIds): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderComment> $salesOrderCommentEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderComment[] $salesOrderCommentEntities */
         $salesOrderCommentEntities = $this->getFactory()
             ->getSalesOrderCommentPropelQuery()
             ->filterByFkSalesOrder_In($salesOrderIds)
@@ -535,9 +533,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param array<string[]> $rowItemsData
+     * @param array<array<string>> $rowItemsData
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function formatRowItemDataKeys(array $rowItemsData): array
     {

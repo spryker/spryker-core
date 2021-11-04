@@ -56,9 +56,7 @@ class MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge implements Merchan
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
-     * @return array
+     * @return array<mixed>
      */
     public function getAllSalutations(): array
     {

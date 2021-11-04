@@ -30,6 +30,7 @@ class DeleteShipmentMethodController extends AbstractController
      * @var string
      */
     protected const MESSAGE_DELIVERY_METHOD_NOT_FOUND = 'Delivery method not found.';
+
     /**
      * @var string
      */

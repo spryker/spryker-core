@@ -10,7 +10,7 @@ namespace Spryker\Zed\Propel\Business\Model;
 interface PropelGroupedSchemaFinderInterface
 {
     /**
-     * @return array
+     * @return array<string, array>
      */
     public function getGroupedSchemaFiles();
 }

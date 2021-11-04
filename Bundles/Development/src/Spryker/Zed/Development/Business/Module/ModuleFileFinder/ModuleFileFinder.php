@@ -69,7 +69,7 @@ class ModuleFileFinder implements ModuleFileFinderInterface
             $directories,
             function (string $directory) {
                 return glob($directory, GLOB_NOSORT | GLOB_ONLYDIR);
-            }
+            },
         );
 
         return $directories;

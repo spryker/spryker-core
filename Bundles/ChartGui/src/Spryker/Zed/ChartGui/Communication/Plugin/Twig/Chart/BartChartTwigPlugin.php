@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 
-namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
-
 /**
  * @deprecated Use {@link \Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\BarChartTwigPlugin} instead.
  *

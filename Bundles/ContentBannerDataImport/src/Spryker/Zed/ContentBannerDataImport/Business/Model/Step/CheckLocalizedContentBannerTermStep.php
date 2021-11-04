@@ -59,8 +59,8 @@ class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
                     sprintf(
                         static::ERROR_MESSAGE,
                         $idLocale,
-                        implode(';', $errorMessages)
-                    )
+                        implode(';', $errorMessages),
+                    ),
                 );
             }
             $validatedContentBannerTerms[$idLocale] = $contentBannerTerm;

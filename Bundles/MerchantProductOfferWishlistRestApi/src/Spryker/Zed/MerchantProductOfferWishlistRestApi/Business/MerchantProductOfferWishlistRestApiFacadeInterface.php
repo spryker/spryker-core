@@ -18,8 +18,6 @@ interface MerchantProductOfferWishlistRestApiFacadeInterface
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
@@ -35,8 +33,6 @@ interface MerchantProductOfferWishlistRestApiFacadeInterface
      * - Deletes wishlist item without product offer reference.
      *
      * @api
-     *
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers

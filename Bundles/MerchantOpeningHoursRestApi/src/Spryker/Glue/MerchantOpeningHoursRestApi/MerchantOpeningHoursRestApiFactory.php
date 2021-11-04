@@ -36,7 +36,7 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
             $this->getMerchantOpeningHoursStorageClient(),
             $this->getMerchantStorageClient(),
             $this->createMerchantOpeningHoursRestResponseBuilder(),
-            $this->createMerchantOpeningHoursTranslator()
+            $this->createMerchantOpeningHoursTranslator(),
         );
     }
 
@@ -47,7 +47,7 @@ class MerchantOpeningHoursRestApiFactory extends AbstractFactory
     {
         return new MerchantOpeningHoursRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createMerchantOpeningHoursMapper()
+            $this->createMerchantOpeningHoursMapper(),
         );
     }
 

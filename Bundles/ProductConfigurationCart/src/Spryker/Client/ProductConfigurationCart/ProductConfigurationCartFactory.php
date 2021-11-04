@@ -35,7 +35,7 @@ class ProductConfigurationCartFactory extends AbstractFactory
     public function createProductConfigurationInstanceCartChangeExpander(): ProductConfigurationInstanceCartChangeExpanderInterface
     {
         return new ProductConfigurationInstanceCartChangeExpander(
-            $this->getProductConfigurationStorageClient()
+            $this->getProductConfigurationStorageClient(),
         );
     }
 
@@ -62,7 +62,7 @@ class ProductConfigurationCartFactory extends AbstractFactory
     {
         return new QuoteItemReplacer(
             $this->getQuoteClient(),
-            $this->getCartClient()
+            $this->getCartClient(),
         );
     }
 
@@ -74,7 +74,7 @@ class ProductConfigurationCartFactory extends AbstractFactory
         return new ProductConfiguratorResponseProcessor(
             $this->getProductConfigurationClient(),
             $this->createProductConfiguratorResponseValidator(),
-            $this->createQuoteItemReplacer()
+            $this->createQuoteItemReplacer(),
         );
     }
 
@@ -84,7 +84,7 @@ class ProductConfigurationCartFactory extends AbstractFactory
     public function createProductConfiguratorResponseValidator(): ProductConfiguratorResponseValidatorInterface
     {
         return new ProductConfiguratorResponseValidator(
-            $this->getProductConfigurationClient()
+            $this->getProductConfigurationClient(),
         );
     }
 
@@ -96,7 +96,7 @@ class ProductConfigurationCartFactory extends AbstractFactory
         return new ProductConfiguratorRedirectResolver(
             $this->getProductConfigurationClient(),
             $this->getQuoteClient(),
-            $this->createProductConfigurationInstanceQuoteReader()
+            $this->createProductConfigurationInstanceQuoteReader(),
         );
     }
 

@@ -23,7 +23,7 @@ class ProductGroupStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractGroupStorageWriter(
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 }

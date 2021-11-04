@@ -15,6 +15,7 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
      * @var string
      */
     public const PATH_SEPARATOR = '.';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
         if ($facetConfigTransfer->getAggregationParams()) {
             $nestedFieldName = $this->addNestedFieldPrefix(
                 $nestedFieldName,
-                $facetConfigTransfer->getName()
+                $facetConfigTransfer->getName(),
             );
         }
 

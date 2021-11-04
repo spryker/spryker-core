@@ -24,6 +24,7 @@ class ConnectionProvider implements ConnectionProviderInterface
      * @var string
      */
     protected const CONNECTION_NAME = 'storage connection';
+
     /**
      * @var string
      */
@@ -106,7 +107,7 @@ class ConnectionProvider implements ConnectionProviderInterface
             static::$connection = Propel::getConnection(static::CONNECTION_NAME, ServiceContainerInterface::CONNECTION_READ);
 
             static::$connection->useDebug(
-                $this->config->isDbDebug()
+                $this->config->isDbDebug(),
             );
         } catch (Throwable $e) {
             throw new ConnectionFailedException($e->getMessage());
@@ -116,7 +117,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     /**
      * @throws \Spryker\Client\StorageDatabase\Exception\InvalidConnectionConfigurationException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getPropelConfig(): array
     {

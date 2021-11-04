@@ -27,10 +27,12 @@ class CustomerWriter implements CustomerWriterInterface
      * @var string
      */
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID = 'customer.email.format.invalid';
+
     /**
      * @var string
      */
@@ -118,7 +120,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomersAttributesTransfer::PASSWORD,
-                RestCustomersAttributesTransfer::CONFIRM_PASSWORD
+                RestCustomersAttributesTransfer::CONFIRM_PASSWORD,
             );
         }
 
@@ -128,7 +130,7 @@ class CustomerWriter implements CustomerWriterInterface
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $this->restApiError->processCustomerErrorOnRegistration(
                 $restResponse,
-                $customerResponseTransfer
+                $customerResponseTransfer,
             );
         }
 
@@ -138,13 +140,13 @@ class CustomerWriter implements CustomerWriterInterface
         $restCustomersResponseAttributesTransfer = $this->customerResourceMapper
             ->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
                 $customerTransfer,
-                new RestCustomersResponseAttributesTransfer()
+                new RestCustomersResponseAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
-            $restCustomersResponseAttributesTransfer
+            $restCustomersResponseAttributesTransfer,
         );
 
         return $restResponse->addResource($restResource);
@@ -173,7 +175,7 @@ class CustomerWriter implements CustomerWriterInterface
             return $this->restApiError->addPasswordsDoNotMatchError(
                 $restResponse,
                 RestCustomersAttributesTransfer::PASSWORD,
-                RestCustomersAttributesTransfer::CONFIRM_PASSWORD
+                RestCustomersAttributesTransfer::CONFIRM_PASSWORD,
             );
         }
 
@@ -189,7 +191,7 @@ class CustomerWriter implements CustomerWriterInterface
 
         $customerResponseTransfer->getCustomerTransfer()->fromArray(
             $this->getCustomerData($restCustomersAttributesTransfer),
-            true
+            true,
         );
 
         $customerResponseTransfer = $this->customerClient->updateCustomer($customerResponseTransfer->getCustomerTransfer());
@@ -197,20 +199,20 @@ class CustomerWriter implements CustomerWriterInterface
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $this->restApiError->processCustomerErrorOnUpdate(
                 $restResponse,
-                $customerResponseTransfer
+                $customerResponseTransfer,
             );
         }
 
         $restCustomersResponseAttributesTransfer = $this->customerResourceMapper
             ->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
                 $customerResponseTransfer->getCustomerTransfer(),
-                new RestCustomersResponseAttributesTransfer()
+                new RestCustomersResponseAttributesTransfer(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
             $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
-            $restCustomersResponseAttributesTransfer
+            $restCustomersResponseAttributesTransfer,
         );
 
         return $restResponse->addResource($restResource);
@@ -273,7 +275,7 @@ class CustomerWriter implements CustomerWriterInterface
         $restResponse = $this->restApiValidator->validateCustomerResponseTransfer(
             $customerResponseTransfer,
             $restRequest,
-            $restResponse
+            $restResponse,
         );
 
         if (count($restResponse->getErrors()) > 0) {
@@ -311,7 +313,7 @@ class CustomerWriter implements CustomerWriterInterface
             $customerAttributes[RestCustomersAttributesTransfer::CREATED_AT],
             $customerAttributes[RestCustomersAttributesTransfer::UPDATED_AT],
             $customerAttributes[RestCustomersAttributesTransfer::PASSWORD],
-            $customerAttributes[RestCustomersAttributesTransfer::CONFIRM_PASSWORD]
+            $customerAttributes[RestCustomersAttributesTransfer::CONFIRM_PASSWORD],
         );
 
         return $customerAttributes;

@@ -49,7 +49,7 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
         $this->getFactory()
             ->createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
             ->filterByIdCompanyUnitAddressLabelToCompanyUnitAddress_In(
-                $labelToAddressRelationIds
+                $labelToAddressRelationIds,
             )
             ->delete();
     }

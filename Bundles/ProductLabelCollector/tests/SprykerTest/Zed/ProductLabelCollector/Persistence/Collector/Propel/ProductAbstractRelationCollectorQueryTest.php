@@ -50,11 +50,11 @@ class ProductAbstractRelationCollectorQueryTest extends Unit
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer1->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
         $this->tester->haveProductLabelToAbstractProductRelation(
             $productLabelTransfer2->getIdProductLabel(),
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
         );
 
         $productAbstractRelationCollectorQuery = new ProductAbstractRelationCollectorQuery();

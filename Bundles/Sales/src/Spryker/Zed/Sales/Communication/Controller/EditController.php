@@ -35,7 +35,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->getCustomerForm(
                 $dataProvider->getData($idSalesOrder),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -50,8 +50,8 @@ class EditController extends AbstractController
                     '/sales/detail',
                     [
                         SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
-                    ]
-                )->build()
+                    ],
+                )->build(),
             );
         }
 
@@ -75,7 +75,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->getAddressForm(
                 $dataProvider->getData($idOrderAddress),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -92,8 +92,8 @@ class EditController extends AbstractController
                     '/sales/detail',
                     [
                         SalesConfig::PARAM_ID_SALES_ORDER => $idSalesOrder,
-                    ]
-                )->build()
+                    ],
+                )->build(),
             );
         }
 

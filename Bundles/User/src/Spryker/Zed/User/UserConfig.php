@@ -21,6 +21,7 @@ class UserConfig extends AbstractBundleConfig
      * @var int
      */
     protected const MIN_LENGTH_USER_PASSWORD = 8;
+
     /**
      * @var int
      */
@@ -29,7 +30,7 @@ class UserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getSystemUsers()
     {
@@ -46,7 +47,7 @@ class UserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<array>
      */
     public function getInstallerUsers()
     {
@@ -81,7 +82,7 @@ class UserConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     private function getUserFromGlobalConfig()
     {

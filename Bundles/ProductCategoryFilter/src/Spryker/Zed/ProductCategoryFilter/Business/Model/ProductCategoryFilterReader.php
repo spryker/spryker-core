@@ -53,7 +53,7 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
         return $this->productCategoryFilterTransferGenerator->generateTransferFromJson(
             $productCategoryFilterEntity->getIdProductCategoryFilter(),
             $categoryId,
-            $productCategoryFilterEntity->getFilterData()
+            $productCategoryFilterEntity->getFilterData(),
         );
     }
 

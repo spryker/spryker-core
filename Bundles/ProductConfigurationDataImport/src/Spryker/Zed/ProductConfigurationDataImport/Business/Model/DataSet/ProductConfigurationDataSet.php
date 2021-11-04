@@ -13,18 +13,22 @@ interface ProductConfigurationDataSet
      * @var string
      */
     public const KEY_CONCRETE_SKU = 'concrete_sku';
+
     /**
      * @var string
      */
     public const KEY_CONFIGURATION_KEY = 'configurator_key';
+
     /**
      * @var string
      */
     public const KEY_IS_COMPLETE = 'is_complete';
+
     /**
      * @var string
      */
     public const KEY_DEFAULT_CONFIGURATION = 'default_configuration';
+
     /**
      * @var string
      */

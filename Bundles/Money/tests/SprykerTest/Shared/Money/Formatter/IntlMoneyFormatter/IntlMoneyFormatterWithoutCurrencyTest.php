@@ -30,10 +30,12 @@ class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTe
      * @var string
      */
     public const AMOUNT = '1000';
+
     /**
      * @var string
      */
     public const CURRENCY = 'EUR';
+
     /**
      * @var string
      */

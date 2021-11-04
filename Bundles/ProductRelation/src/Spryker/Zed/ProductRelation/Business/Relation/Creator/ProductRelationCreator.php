@@ -152,7 +152,7 @@ class ProductRelationCreator implements ProductRelationCreatorInterface
     {
         $this->touchFacade->touchActive(
             ProductRelationConstants::RESOURCE_TYPE_PRODUCT_RELATION,
-            $idProductAbstract
+            $idProductAbstract,
         );
     }
 }

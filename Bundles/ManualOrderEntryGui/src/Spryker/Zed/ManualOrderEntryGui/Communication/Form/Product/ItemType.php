@@ -28,14 +28,17 @@ class ItemType extends AbstractType
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+
     /**
      * @var string
      */
@@ -50,10 +53,12 @@ class ItemType extends AbstractType
      * @var string
      */
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
+
     /**
      * @var string
      */
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+
     /**
      * @var string
      */
@@ -77,7 +82,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -93,20 +98,20 @@ class ItemType extends AbstractType
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) use ($options) {
                 $this->convertIntToMoney($event, $options);
-            }
+            },
         );
 
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use ($options) {
                 $this->convertMoneyToInt($event, $options);
-            }
+            },
         );
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -122,7 +127,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -141,7 +146,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -160,7 +165,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -174,7 +179,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
@@ -190,7 +195,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
@@ -206,7 +211,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return string
      */
@@ -222,7 +227,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -242,7 +247,7 @@ class ItemType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

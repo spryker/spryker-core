@@ -37,6 +37,7 @@ class QuoteApprovalShipmentConnectorClientTester extends Actor
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     *
      * @var string
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
@@ -62,16 +63,16 @@ class QuoteApprovalShipmentConnectorClientTester extends Actor
                     ->withShipment(
                         (new ShipmentBuilder([ShipmentTransfer::SHIPMENT_SELECTION => 'custom']))
                             ->withShippingAddress()
-                            ->withMethod()
-                    )
+                            ->withMethod(),
+                    ),
             )
             ->withAnotherItem(
                 (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder([ShipmentTransfer::SHIPMENT_SELECTION => 'custom']))
                             ->withShippingAddress()
-                            ->withMethod()
-                    )
+                            ->withMethod(),
+                    ),
             )
             ->withBillingAddress()
             ->withCustomer()
@@ -82,7 +83,7 @@ class QuoteApprovalShipmentConnectorClientTester extends Actor
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $quoteTransfer->addExpense(
                 (new ExpenseTransfer())->setType(static::SHIPMENT_EXPENSE_TYPE)
-                ->setShipment($itemTransfer->getShipment())
+                ->setShipment($itemTransfer->getShipment()),
             );
         }
 

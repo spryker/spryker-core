@@ -40,8 +40,6 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -53,7 +51,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         foreach ($messageTransfers as $messageTransfer) {
             $restErrorMessageTransfer = $this->mapMessageToRestErrorMessage(
                 $messageTransfer,
-                new RestErrorMessageTransfer()
+                new RestErrorMessageTransfer(),
             );
 
             $restResponse->addError($restErrorMessageTransfer);
@@ -92,7 +90,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
         if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
             return $restErrorMessageTransfer->fromArray(
                 $errorIdentifierToRestErrorMapping[$errorIdentifier],
-                true
+                true,
             );
         }
 

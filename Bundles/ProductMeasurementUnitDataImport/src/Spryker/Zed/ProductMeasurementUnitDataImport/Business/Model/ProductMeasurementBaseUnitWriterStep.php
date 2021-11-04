@@ -64,7 +64,7 @@ class ProductMeasurementBaseUnitWriterStep extends PublishAwareStep implements D
 
         if (!$spyProductAbstractEntity) {
             throw new EntityNotFoundException(
-                sprintf('Product abstract with SKU "%s" was not found during import.', $productAbstractSku)
+                sprintf('Product abstract with SKU "%s" was not found during import.', $productAbstractSku),
             );
         }
 

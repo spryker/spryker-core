@@ -45,7 +45,7 @@ class CategoryNodeStorageByCategoryEventsDeleter implements CategoryNodeStorageB
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->categoryNodeStorageDeleter->deleteCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 }

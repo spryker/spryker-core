@@ -45,11 +45,11 @@ class CategoryNodePageSearchByCategoryStoreEventsWriter implements CategoryNodeP
     {
         $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCategoryStoreTableMap::COL_FK_CATEGORY
+            SpyCategoryStoreTableMap::COL_FK_CATEGORY,
         );
 
         $this->categoryNodePageSearchWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 
@@ -63,7 +63,7 @@ class CategoryNodePageSearchByCategoryStoreEventsWriter implements CategoryNodeP
         $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
 
         $this->categoryNodePageSearchWriter->writeCategoryNodeStorageCollectionByCategoryNodeCriteria(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
+            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds),
         );
     }
 }

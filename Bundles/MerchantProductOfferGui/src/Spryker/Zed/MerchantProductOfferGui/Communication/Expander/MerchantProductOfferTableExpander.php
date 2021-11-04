@@ -21,6 +21,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
      * @var string
      */
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
+
     /**
      * @var string
      */
@@ -59,7 +60,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
 
         return $this->merchantProductOfferGuiRepository->expandQueryCriteriaTransfer(
             $queryCriteriaTransfer,
-            (new MerchantProductOfferCriteriaTransfer())->setIdMerchant($idMerchant)
+            (new MerchantProductOfferCriteriaTransfer())->setIdMerchant($idMerchant),
         );
     }
 
@@ -74,7 +75,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
         $header = $this->insertAfterHeader(
             $header,
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-            [MerchantTransfer::NAME => static::COL_MERCHANT_NAME]
+            [MerchantTransfer::NAME => static::COL_MERCHANT_NAME],
         );
         $config->setHeader($header);
 
@@ -88,36 +89,26 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     }
 
     /**
-     * @phpstan-param array<string, mixed> $rowData
-     * @phpstan-param array<string, mixed> $productOfferData
+     * @param array<string, mixed> $rowData
+     * @param array<string, mixed> $productOfferData
      *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $rowData
-     * @param array $productOfferData
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expandData(array $rowData, array $productOfferData): array
     {
         return $this->insertAfterHeader(
             $rowData,
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-            [MerchantTransfer::NAME => $productOfferData[MerchantTransfer::NAME]]
+            [MerchantTransfer::NAME => $productOfferData[MerchantTransfer::NAME]],
         );
     }
 
     /**
-     * @phpstan-param array<string, mixed> $rowData
-     * @phpstan-param array<string, mixed> $extensionData
-     *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array $rowData
+     * @param array<string, mixed> $rowData
      * @param string $key
-     * @param array $extensionData
+     * @param array<string, mixed> $extensionData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function insertAfterHeader(array $rowData, string $key, array $extensionData): array
     {

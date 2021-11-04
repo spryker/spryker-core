@@ -28,7 +28,7 @@ class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
         return new MerchantProductStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getMerchantProductFacade(),
-            $this->getProductStorageFacade()
+            $this->getProductStorageFacade(),
         );
     }
 

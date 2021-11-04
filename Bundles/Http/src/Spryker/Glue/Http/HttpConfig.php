@@ -19,6 +19,7 @@ class HttpConfig extends AbstractBundleConfig
      * @var int
      */
     protected const DEFAULT_REQUEST_HTTP_PORT = 80;
+
     /**
      * @var int
      */
@@ -85,11 +86,9 @@ class HttpConfig extends AbstractBundleConfig
     }
 
     /**
-     * @phpstan-return array<string, mixed>
-     *
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getStrictTransportSecurityConfig(): array
     {

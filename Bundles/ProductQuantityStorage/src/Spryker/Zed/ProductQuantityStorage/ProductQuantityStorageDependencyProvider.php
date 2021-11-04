@@ -22,10 +22,12 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_QUANTITY = 'FACADE_PRODUCT_QUANTITY';
+
     /**
      * @var string
      */

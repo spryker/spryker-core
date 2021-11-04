@@ -27,10 +27,12 @@ class CreateCompanyUserController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+
     /**
      * @var string
      */
@@ -52,14 +54,14 @@ class CreateCompanyUserController extends AbstractController
         $companyUserForm = $this->getFactory()
             ->getCompanyUserForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
         if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
             return $this->createCompanyUser(
                 $companyUserForm,
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE)
+                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE),
             );
         }
 
@@ -83,7 +85,7 @@ class CreateCompanyUserController extends AbstractController
         $form = $this->getFactory()
             ->getCustomerCompanyAttachForm(
                 $companyUserTransfer,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -103,7 +105,7 @@ class CreateCompanyUserController extends AbstractController
                     function (ResponseMessageTransfer $responseMessageTransfer) {
                         $this->addErrorMessage($responseMessageTransfer->getText());
                     },
-                    $companyUserResponseTransfer->getMessages()->getArrayCopy()
+                    $companyUserResponseTransfer->getMessages()->getArrayCopy(),
                 );
             } else {
                 $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);

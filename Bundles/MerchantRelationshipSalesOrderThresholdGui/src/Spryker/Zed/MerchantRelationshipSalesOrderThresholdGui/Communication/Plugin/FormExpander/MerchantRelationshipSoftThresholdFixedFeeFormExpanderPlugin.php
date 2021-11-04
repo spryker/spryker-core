@@ -70,7 +70,7 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -114,7 +114,7 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
             ->setSalesOrderThresholdType(
                 (new SalesOrderThresholdTypeTransfer())
                     ->setKey($this->getThresholdKey())
-                    ->setThresholdGroup($this->getThresholdGroup())
+                    ->setThresholdGroup($this->getThresholdGroup()),
             );
 
         return $salesOrderThresholdValueTransfer;
@@ -122,7 +122,7 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

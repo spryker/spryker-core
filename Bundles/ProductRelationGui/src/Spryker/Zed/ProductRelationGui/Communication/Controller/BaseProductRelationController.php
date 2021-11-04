@@ -41,7 +41,7 @@ class BaseProductRelationController extends AbstractController
             ->createProductRuleTable($productRelationTransfer);
 
         return $this->jsonResponse(
-            $productRuleTable->fetchData()
+            $productRuleTable->fetchData(),
         );
     }
 

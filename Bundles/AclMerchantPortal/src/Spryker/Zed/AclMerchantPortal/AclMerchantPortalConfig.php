@@ -45,15 +45,18 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::VALIDATOR_WILDCARD
+     *
      * @var string
      */
     protected const RULE_VALIDATOR_WILDCARD = '*';
 
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
+     *
      * @var string
      */
     protected const RULE_TYPE_ALLOW = 'allow';
+
     /**
      * @var string
      */
@@ -63,6 +66,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      * @var string
      */
     protected const ACL_ROLE_PRODUCT_VIEWER_NAME = 'Product Viewer for Offer creation';
+
     /**
      * @var string
      */
@@ -171,7 +175,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             ->setEntity(SpySalesOrderTotals::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE,
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
@@ -228,35 +232,35 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             ->setEntity(SpyOmsTransitionLog::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE,
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpyUrlRedirect::class)
             ->setScope(AclEntityConstants::SCOPE_GLOBAL)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_DELETE
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_DELETE,
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpySalesExpense::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
+                AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE,
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpyRefund::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_CREATE
+                AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_CREATE,
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpyCustomer::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_READ
+                AclEntityConstants::OPERATION_MASK_READ,
             );
 
         return $aclEntityRuleTransfers;

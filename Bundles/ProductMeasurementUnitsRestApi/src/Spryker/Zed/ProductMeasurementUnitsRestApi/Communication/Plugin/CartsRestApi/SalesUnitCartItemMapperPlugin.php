@@ -36,7 +36,7 @@ class SalesUnitCartItemMapperPlugin extends AbstractPlugin implements CartItemMa
         return $this->getFacade()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

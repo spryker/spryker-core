@@ -57,8 +57,8 @@ class ItemResponseBuilder implements ItemResponseBuilderInterface
             $this->cartItemMapper->mapItemTransferToRestItemsAttributesTransfer(
                 $itemTransfer,
                 (new RestItemsAttributesTransfer()),
-                $localeName
-            )
+                $localeName,
+            ),
         );
 
         return $this->addSelfLinkToCartItemResource($itemResource, $cartResource, $itemTransfer);
@@ -82,8 +82,8 @@ class ItemResponseBuilder implements ItemResponseBuilderInterface
             $this->cartItemMapper->mapItemTransferToRestItemsAttributesTransfer(
                 $itemTransfer,
                 (new RestItemsAttributesTransfer()),
-                $localeName
-            )
+                $localeName,
+            ),
         );
 
         return $this->addSelfLinkToCartGuestItemResource($itemResource, $guestCartResource, $itemTransfer);
@@ -108,8 +108,8 @@ class ItemResponseBuilder implements ItemResponseBuilderInterface
                 CartsRestApiConfig::RESOURCE_CARTS,
                 $cartResource->getId(),
                 CartsRestApiConfig::RESOURCE_CART_ITEMS,
-                $itemTransfer->getGroupKey()
-            )
+                $itemTransfer->getGroupKey(),
+            ),
         );
     }
 
@@ -132,8 +132,8 @@ class ItemResponseBuilder implements ItemResponseBuilderInterface
                 CartsRestApiConfig::RESOURCE_GUEST_CARTS,
                 $guestCartResource->getId(),
                 CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-                $itemTransfer->getGroupKey()
-            )
+                $itemTransfer->getGroupKey(),
+            ),
         );
     }
 }

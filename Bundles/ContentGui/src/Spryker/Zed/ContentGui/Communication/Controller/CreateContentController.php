@@ -20,14 +20,17 @@ class CreateContentController extends AbstractController
      * @var string
      */
     protected const PARAM_TERM_KEY = 'term-key';
+
     /**
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
     protected const URL_REDIRECT_CONTENT_LIST_PAGE = '/content-gui/list-content';
+
     /**
      * @var string
      */
@@ -49,7 +52,7 @@ class CreateContentController extends AbstractController
         $contentForm = $this->getFactory()
             ->getContentForm(
                 $dataProvider->getData($termKey),
-                $dataProvider->getOptions($termKey)
+                $dataProvider->getOptions($termKey),
             )
             ->handleRequest($request);
 
@@ -64,8 +67,8 @@ class CreateContentController extends AbstractController
             return $this->redirectResponse(
                 $request->query->get(
                     static::PARAM_REDIRECT_URL,
-                    static::URL_REDIRECT_CONTENT_LIST_PAGE
-                )
+                    static::URL_REDIRECT_CONTENT_LIST_PAGE,
+                ),
             );
         }
 

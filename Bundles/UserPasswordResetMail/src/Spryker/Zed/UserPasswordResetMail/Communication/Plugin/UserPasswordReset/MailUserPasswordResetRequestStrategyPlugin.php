@@ -50,7 +50,7 @@ class MailUserPasswordResetRequestStrategyPlugin extends AbstractPlugin implemen
             ->handleMail(
                 (new MailTransfer())
                 ->fromArray($userPasswordResetRequestTransfer->toArray(), true)
-                ->setType(UserPasswordResetMailTypePlugin::MAIL_TYPE)
+                ->setType(UserPasswordResetMailTypePlugin::MAIL_TYPE),
             );
     }
 }

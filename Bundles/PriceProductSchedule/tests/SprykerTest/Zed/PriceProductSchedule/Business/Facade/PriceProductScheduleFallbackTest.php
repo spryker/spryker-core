@@ -36,6 +36,7 @@ class PriceProductScheduleFallbackTest extends Unit
      * @var int
      */
     public const DEFAULT_PRICE_TYPE_ID = 1;
+
     /**
      * @var int
      */
@@ -134,7 +135,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductScheduleFacade = $this->tester->getFacade();
         $priceProductScheduleFacade->setFactory(
             (new PriceProductScheduleBusinessFactory())
-                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName()))
+                ->setConfig($this->getConfigMock($defaultPriceTypeTransfer->getName(), $fallbackPriceTypeTransfer->getName())),
         );
 
         // Act
@@ -151,12 +152,12 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->assertEquals(
             $fallbackPriceProductTransfer->getMoneyValue()->getNetAmount(),
             $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
-            'Net product price should have been reverted after scheduled price is over.'
+            'Net product price should have been reverted after scheduled price is over.',
         );
         $this->assertEquals(
             $fallbackPriceProductTransfer->getMoneyValue()->getGrossAmount(),
             $actualPriceProductTransfer->getMoneyValue()->getGrossAmount(),
-            'Gross product price should have been reverted after scheduled price is over.'
+            'Gross product price should have been reverted after scheduled price is over.',
         );
     }
 
@@ -241,12 +242,12 @@ class PriceProductScheduleFallbackTest extends Unit
         $this->assertEquals(
             200,
             $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
-            'Net product price should have been reverted after scheduled price is over.'
+            'Net product price should have been reverted after scheduled price is over.',
         );
         $this->assertEquals(
             200,
             $actualPriceProductTransfer->getMoneyValue()->getGrossAmount(),
-            'Gross product price should have been reverted after scheduled price is over.'
+            'Gross product price should have been reverted after scheduled price is over.',
         );
     }
 
@@ -276,7 +277,7 @@ class PriceProductScheduleFallbackTest extends Unit
         $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
         $this->assertNull(
             $priceProductTransfer,
-            'Product price type should be removed after scheduled price is over if no fallback price os configured.'
+            'Product price type should be removed after scheduled price is over if no fallback price os configured.',
         );
     }
 

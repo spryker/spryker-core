@@ -18,7 +18,7 @@ class PaymentFactory extends AbstractFactory
     public function createZedStub()
     {
         return new PaymentStub(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 

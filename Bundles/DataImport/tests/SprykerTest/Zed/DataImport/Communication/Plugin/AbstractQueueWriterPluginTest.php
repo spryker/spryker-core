@@ -114,7 +114,7 @@ class AbstractQueueWriterPluginTest extends Unit
                 $this->equalTo(static::DUMMY_QUEUE_NAME),
                 $this->callback(function (array $dataItemTransfers) use ($expectedChunkSizeToWrite) {
                     return is_array($dataItemTransfers) && count($dataItemTransfers) === $expectedChunkSizeToWrite;
-                })
+                }),
             );
 
         return $queueDataWriterFacadeMock;

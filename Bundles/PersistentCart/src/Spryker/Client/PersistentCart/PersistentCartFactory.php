@@ -47,7 +47,7 @@ class PersistentCartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->getZedRequestClient(),
             $this->createZedPersistentCartStub(),
-            $this->createQuoteUpdatePluginExecutor()
+            $this->createQuoteUpdatePluginExecutor(),
         );
     }
 
@@ -59,7 +59,7 @@ class PersistentCartFactory extends AbstractFactory
         return new QuoteUpdater(
             $this->getQuoteClient(),
             $this->createZedPersistentCartStub(),
-            $this->createQuoteUpdatePluginExecutor()
+            $this->createQuoteUpdatePluginExecutor(),
         );
     }
 
@@ -70,7 +70,7 @@ class PersistentCartFactory extends AbstractFactory
     {
         return new QuoteWriter(
             $this->getQuotePersistPlugin(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
         );
     }
 
@@ -84,7 +84,7 @@ class PersistentCartFactory extends AbstractFactory
             $this->getZedRequestClient(),
             $this->getCustomerClient(),
             $this->createZedPersistentCartStub(),
-            $this->createQuoteUpdatePluginExecutor()
+            $this->createQuoteUpdatePluginExecutor(),
         );
     }
 
@@ -145,7 +145,7 @@ class PersistentCartFactory extends AbstractFactory
             $this->createZedPersistentCartStub(),
             $this->getQuoteClient(),
             $this->createQuoteUpdatePluginExecutor(),
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -158,7 +158,7 @@ class PersistentCartFactory extends AbstractFactory
             $this->createZedPersistentCartStub(),
             $this->getQuoteClient(),
             $this->createQuoteUpdatePluginExecutor(),
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 

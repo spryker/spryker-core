@@ -22,6 +22,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      * @var int|null
      */
     protected const DEFAULT_MAX = null;
+
     /**
      * @var int
      */
@@ -76,7 +77,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
 
         if (!$spyProductEntity) {
             throw new EntityNotFoundException(
-                sprintf('Product concrete with "%s" SKU was not found during data import', $productConcreteSku)
+                sprintf('Product concrete with "%s" SKU was not found during data import', $productConcreteSku),
             );
         }
 

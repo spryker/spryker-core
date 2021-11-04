@@ -46,10 +46,8 @@ class PriceProductToTouchFacadeBridge implements PriceProductToTouchFacadeInterf
     }
 
     /**
-     * @phpstan-param array<int> $itemIds
-     *
      * @param string $itemType
-     * @param array $itemIds
+     * @param array<int> $itemIds
      *
      * @return int
      */
@@ -59,10 +57,8 @@ class PriceProductToTouchFacadeBridge implements PriceProductToTouchFacadeInterf
     }
 
     /**
-     * @phpstan-param array<int> $itemIds
-     *
      * @param string $itemType
-     * @param array $itemIds
+     * @param array<int> $itemIds
      *
      * @return int
      */

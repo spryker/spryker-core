@@ -18,6 +18,7 @@ class CompanyMailConnectorDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
     /**
      * @var string
      */

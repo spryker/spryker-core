@@ -61,7 +61,7 @@ class ProductLabelCollectorToCollectorBridge implements ProductLabelCollectorToC
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

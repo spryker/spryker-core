@@ -19,7 +19,7 @@ interface CmsBlockStorageInterface
     public function getBlocksByNames(array $blockNames, $localeName, $storeName): array;
 
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      * @param string $localeName
      * @param string $storeName
      *

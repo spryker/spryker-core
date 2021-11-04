@@ -60,7 +60,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            'import/product_alternative_with_invalid_sku.csv'
+            'import/product_alternative_with_invalid_sku.csv',
         );
         $dataImportConfigurationTransfer->setThrowException(true);
 
@@ -80,7 +80,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            'import/product_alternative_with_no_alternatives.csv'
+            'import/product_alternative_with_no_alternatives.csv',
         );
         $dataImportConfigurationTransfer->setThrowException(true);
 
@@ -100,7 +100,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
-            'import/product_alternative_with_both_alternatives.csv'
+            'import/product_alternative_with_both_alternatives.csv',
         );
         $dataImportConfigurationTransfer->setThrowException(true);
 
@@ -122,7 +122,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
 
         $this->assertSame(
             ProductAlternativeDataImportConfig::IMPORT_TYPE_PRODUCT_ALTERNATIVE,
-            $productAlternativeDataImportPlugin->getImportType()
+            $productAlternativeDataImportPlugin->getImportType(),
         );
     }
 

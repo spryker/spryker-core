@@ -69,7 +69,7 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     {
         return new ProductRelationRuleQueryCreator(
             $this->getQueryPropelQueryBuilderContainer(),
-            $this->createProductQuery()
+            $this->createProductQuery(),
         );
     }
 
@@ -91,7 +91,7 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
             $this->createStoreRelationMapper(),
             $this->createRuleSetMapper(),
             $this->createProductMapper(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 
@@ -117,7 +117,7 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     public function createRuleSetMapper(): RuleSetMapper
     {
         return new RuleSetMapper(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

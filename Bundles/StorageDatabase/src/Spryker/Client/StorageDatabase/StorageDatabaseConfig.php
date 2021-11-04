@@ -20,10 +20,12 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      * @var string
      */
     protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
+
     /**
      * @var string
      */
     protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
+
     /**
      * @var string
      */
@@ -32,7 +34,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getConnectionConfigForCurrentEngine(): array
     {
@@ -70,7 +72,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getResourceNameToStorageTableMap(): array
     {
@@ -118,7 +120,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     protected function getConnectionConfigData(): array
     {
@@ -155,7 +157,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
             $this->getDbEngineName(),
             $this->get(StorageDatabaseConstants::DB_HOST),
             $this->get(StorageDatabaseConstants::DB_PORT),
-            $this->get(StorageDatabaseConstants::DB_DATABASE)
+            $this->get(StorageDatabaseConstants::DB_DATABASE),
         );
     }
 }

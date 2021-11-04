@@ -35,10 +35,12 @@ class CreateController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
+
     /**
      * @var string
      */
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
+
     /**
      * @var string
      */
@@ -68,7 +70,7 @@ class CreateController extends AbstractController
         $form = $this->getFactory()
             ->createShipmentCreateForm(
                 $dataProvider->getData($orderTransfer, $this->createDefaultShipmentTransfer()),
-                $dataProvider->getOptions($orderTransfer)
+                $dataProvider->getOptions($orderTransfer),
             )
             ->handleRequest($request);
 
@@ -85,7 +87,7 @@ class CreateController extends AbstractController
 
             $redirectUrl = Url::generate(
                 static::REDIRECT_URL_DEFAULT,
-                [static::PARAM_ID_SALES_ORDER => $idSalesOrder]
+                [static::PARAM_ID_SALES_ORDER => $idSalesOrder],
             )->build();
 
             return $this->redirectResponse($redirectUrl);

@@ -21,7 +21,7 @@ class ProductAbstractListTermToProductAbstractListTypeExecutor implements Conten
     public function execute(ContentTypeContextTransfer $contentTypeContextTransfer): ContentProductAbstractListTypeTransfer
     {
         $contentProductAbstractListTermTransfer = $this->mapContentTypeContextTransferToContentProductAbstractListTermTransfer(
-            $contentTypeContextTransfer
+            $contentTypeContextTransfer,
         );
 
         $contentProductAbstractListTypeTransfer = new ContentProductAbstractListTypeTransfer();

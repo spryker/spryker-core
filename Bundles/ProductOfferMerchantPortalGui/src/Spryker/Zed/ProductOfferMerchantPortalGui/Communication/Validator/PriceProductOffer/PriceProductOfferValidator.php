@@ -58,13 +58,13 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         $constraintViolationList = $this->validator
             ->validate(
                 $priceProductOfferCollectionTransfer,
-                $this->priceProductOfferConstraintProvider->getConstraints()
+                $this->priceProductOfferConstraintProvider->getConstraints(),
             );
 
         if ($constraintViolationList->count() !== 0) {
             return $this->mapConstraintViolationListToValidationResponseTransfer(
                 $constraintViolationList,
-                new ValidationResponseTransfer()
+                new ValidationResponseTransfer(),
             );
         }
 
@@ -87,7 +87,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
         foreach ($constraintViolationList as $constraintViolation) {
             $validationError = $this->mapConstraintViolationToValidationErrorTransfer(
                 $constraintViolation,
-                new ValidationErrorTransfer()
+                new ValidationErrorTransfer(),
             );
 
             $validationResponseTransfer->addValidationError($validationError);

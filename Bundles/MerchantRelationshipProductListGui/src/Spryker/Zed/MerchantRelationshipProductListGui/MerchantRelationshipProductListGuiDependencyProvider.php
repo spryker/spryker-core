@@ -21,6 +21,7 @@ class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundl
      * @var string
      */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+
     /**
      * @var string
      */

@@ -82,7 +82,7 @@ class OfferDataProvider
                         ->setShippingAddress(new AddressTransfer())
                         ->setBillingAddress(new AddressTransfer())
                         ->setCartRuleDiscounts(new ArrayObject())
-                        ->setVoucherDiscounts(new ArrayObject())
+                        ->setVoucherDiscounts(new ArrayObject()),
             );
         }
 
@@ -92,7 +92,7 @@ class OfferDataProvider
 
         if ($this->request->query->has(EditOfferType::FIELD_CUSTOMER_REFERENCE)) {
             $offerTransfer->getQuote()->getCustomer()->setCustomerReference(
-                $this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE)
+                $this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE),
             );
 
             $offerTransfer->setCustomerReference($this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE));

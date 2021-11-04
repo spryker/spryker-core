@@ -32,7 +32,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
     {
         $resourceRouteCollection->addGet(
             ContentProductAbstractListsRestApiConfig::ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET,
-            false
+            false,
         );
 
         return $resourceRouteCollection;

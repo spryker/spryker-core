@@ -21,6 +21,7 @@ class CreateMerchantRelationshipController extends AbstractController
      * @var string
      */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+
     /**
      * @var string
      */
@@ -30,6 +31,7 @@ class CreateMerchantRelationshipController extends AbstractController
      * @var string
      */
     protected const MESSAGE_MERCHANT_RELATION_CREATE_SUCCESS = 'Merchant relation created successfully.';
+
     /**
      * @var string
      */
@@ -49,7 +51,7 @@ class CreateMerchantRelationshipController extends AbstractController
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipCreateForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions($isSubmitPersist, $idCompany)
+                $dataProvider->getOptions($isSubmitPersist, $idCompany),
             )
             ->handleRequest($request);
 

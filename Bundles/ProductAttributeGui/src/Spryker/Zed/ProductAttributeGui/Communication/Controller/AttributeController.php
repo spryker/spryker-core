@@ -20,14 +20,17 @@ class AttributeController extends AbstractController
      * @var string
      */
     public const PARAM_ID = 'id';
+
     /**
      * @var string
      */
     public const PARAM_SEARCH_TEXT = 'q';
+
     /**
      * @var string
      */
     public const PARAM_TERM = 'term';
+
     /**
      * @var string
      */
@@ -37,14 +40,17 @@ class AttributeController extends AbstractController
      * @var string
      */
     public const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+
     /**
      * @var string
      */
     public const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+
     /**
      * @var string
      */
@@ -74,7 +80,7 @@ class AttributeController extends AbstractController
             ->createAttributeTable();
 
         return $this->jsonResponse(
-            $attributeTable->fetchData()
+            $attributeTable->fetchData(),
         );
     }
 
@@ -114,7 +120,7 @@ class AttributeController extends AbstractController
 
             return $this->redirectResponse(sprintf(
                 '/product-attribute-gui/attribute/translate?id=%d',
-                $attributeTransfer->getIdProductManagementAttribute()
+                $attributeTransfer->getIdProductManagementAttribute(),
             ));
         }
 
@@ -122,7 +128,7 @@ class AttributeController extends AbstractController
 
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
-            $attributeTransfer->getIdProductManagementAttribute()
+            $attributeTransfer->getIdProductManagementAttribute(),
         ));
     }
 
@@ -165,7 +171,7 @@ class AttributeController extends AbstractController
 
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/view?id=%d',
-            $idProductManagementAttribute
+            $idProductManagementAttribute,
         ));
     }
 
@@ -222,7 +228,7 @@ class AttributeController extends AbstractController
 
         return $this->redirectResponse(sprintf(
             '/product-attribute-gui/attribute/translate?id=%d',
-            $attributeTransfer->getIdProductManagementAttribute()
+            $attributeTransfer->getIdProductManagementAttribute(),
         ));
     }
 

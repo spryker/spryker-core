@@ -68,13 +68,13 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
             $response = $this->httpClient->request(
                 Request::METHOD_POST,
                 $productConfiguratorRequestTransfer->getAccessTokenRequestUrlOrFail(),
-                $this->buildAccessTokenRequestOptions($productConfiguratorRequestTransfer)
+                $this->buildAccessTokenRequestOptions($productConfiguratorRequestTransfer),
             );
         } catch (ProductConfigurationHttpRequestException $productConfigurationHttpRequestException) {
             return $this->addProductConfigurationError(
                 $productConfiguratorRedirectTransfer,
                 static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN,
-                $productConfigurationHttpRequestException
+                $productConfigurationHttpRequestException,
             );
         }
 
@@ -83,12 +83,12 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
 
         if ($productConfiguratorPageResponseTransfer->getIsSuccessful()) {
             return $productConfiguratorRedirectTransfer->setConfiguratorRedirectUrl(
-                $productConfiguratorPageResponseTransfer->getConfiguratorRedirectUrl()
+                $productConfiguratorPageResponseTransfer->getConfiguratorRedirectUrl(),
             );
         }
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)->addMessage(
-            (new MessageTransfer())->setValue($productConfiguratorPageResponseTransfer->getMessage())
+            (new MessageTransfer())->setValue($productConfiguratorPageResponseTransfer->getMessage()),
         );
     }
 
@@ -120,11 +120,11 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
     ): ProductConfiguratorRedirectTransfer {
         $this->getLogger()->error(
             $message,
-            ['exception' => $configurationHttpRequestException]
+            ['exception' => $configurationHttpRequestException],
         );
 
         return $productConfiguratorRedirectTransfer->setIsSuccessful(false)->addMessage(
-            (new MessageTransfer())->setValue($message)
+            (new MessageTransfer())->setValue($message),
         );
     }
 }

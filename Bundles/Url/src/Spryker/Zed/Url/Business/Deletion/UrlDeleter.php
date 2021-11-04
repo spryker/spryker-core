@@ -120,7 +120,7 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
         if (!$urlEntity) {
             throw new MissingUrlException(sprintf(
                 'Tried to retrieve a missing url with id %s',
-                $urlTransfer->getIdUrl()
+                $urlTransfer->getIdUrl(),
             ));
         }
 
@@ -145,7 +145,7 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
         if (!$redirectEntity) {
             throw new MissingRedirectException(sprintf(
                 'Tried to retrieve a missing redirect with id %s',
-                $urlRedirectTransfer->getIdUrlRedirect()
+                $urlRedirectTransfer->getIdUrlRedirect(),
             ));
         }
 

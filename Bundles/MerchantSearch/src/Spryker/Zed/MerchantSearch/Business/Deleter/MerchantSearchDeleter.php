@@ -61,7 +61,7 @@ class MerchantSearchDeleter implements MerchantSearchDeleterInterface
             (new MerchantCriteriaTransfer())
                 ->setMerchantIds($merchantIds)
                 ->setIsActive(true)
-                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
+                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED),
         );
         $activeMerchantIds = array_map(function (MerchantTransfer $merchant) {
             return $merchant->getIdMerchant();

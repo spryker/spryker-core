@@ -25,22 +25,27 @@ class GraphController extends AbstractController
      * @var string
      */
     public const URL_PARAM_PROCESS = 'process';
+
     /**
      * @var string
      */
     public const URL_PARAM_FORMAT = 'format';
+
     /**
      * @var string
      */
     public const URL_PARAM_FONT_SIZE = 'font';
+
     /**
      * @var string
      */
     public const URL_PARAM_HIGHLIGHT_STATE = 'highlight-state';
+
     /**
      * @var string
      */
     public const URL_PARAM_STATE_MACHINE = 'state-machine';
+
     /**
      * @var string
      */
@@ -84,8 +89,8 @@ class GraphController extends AbstractController
                         self::URL_PARAM_FONT_SIZE => $fontSize,
                         self::URL_PARAM_HIGHLIGHT_STATE => $highlightState,
                         self::URL_PARAM_STATE_MACHINE => $stateMachine,
-                    ]
-                )->build()
+                    ],
+                )->build(),
             );
         }
 
@@ -102,7 +107,7 @@ class GraphController extends AbstractController
         return $this->streamedResponse(
             $callback,
             Response::HTTP_OK,
-            $this->getStreamedResponseHeaders($format)
+            $this->getStreamedResponseHeaders($format),
         );
     }
 
@@ -126,7 +131,7 @@ class GraphController extends AbstractController
         $stateMachineProcessTransfer->setProcessName($processName);
 
         return new Response(
-            $this->getFacade()->drawProcess($stateMachineProcessTransfer, $highlightState, $format, $fontSize)
+            $this->getFacade()->drawProcess($stateMachineProcessTransfer, $highlightState, $format, $fontSize),
         );
     }
 

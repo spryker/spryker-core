@@ -48,18 +48,22 @@ class StateMachineFacadeTest extends Unit
      * @var string
      */
     public const TESTING_SM = 'TestingSm';
+
     /**
      * @var string
      */
     public const TEST_PROCESS_NAME = 'TestProcess';
+
     /**
      * @var string
      */
     public const TEST_PROCESS_WITHOUT_EVENTS_NAME = 'TestProcessWithoutEvent';
+
     /**
      * @var string
      */
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
+
     /**
      * @var int
      */
@@ -300,46 +304,46 @@ class StateMachineFacadeTest extends Unit
         $firstBeforeUpdateStateMachineItemTransfer = $stateMachineItems[0];
         $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getIdItemState(),
-            $firstBeforeUpdateStateMachineItemTransfer->getIdItemState()
+            $firstBeforeUpdateStateMachineItemTransfer->getIdItemState(),
         );
         $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getProcessName(),
-            $firstBeforeUpdateStateMachineItemTransfer->getProcessName()
+            $firstBeforeUpdateStateMachineItemTransfer->getProcessName(),
         );
         $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getIdStateMachineProcess(),
-            $firstBeforeUpdateStateMachineItemTransfer->getIdStateMachineProcess()
+            $firstBeforeUpdateStateMachineItemTransfer->getIdStateMachineProcess(),
         );
         $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getStateName(),
-            $firstBeforeUpdateStateMachineItemTransfer->getStateName()
+            $firstBeforeUpdateStateMachineItemTransfer->getStateName(),
         );
         $this->assertSame(
             $firstUpdatedStateMachineItemTransfer->getIdentifier(),
-            $firstBeforeUpdateStateMachineItemTransfer->getIdentifier()
+            $firstBeforeUpdateStateMachineItemTransfer->getIdentifier(),
         );
 
         $secondUpdatedStateMachineItemTransfer = $updatedStateMachineItems[1];
         $secondBeforeUpdateStateMachineItemTransfer = $stateMachineItems[1];
         $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getIdItemState(),
-            $secondBeforeUpdateStateMachineItemTransfer->getIdItemState()
+            $secondBeforeUpdateStateMachineItemTransfer->getIdItemState(),
         );
         $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getProcessName(),
-            $secondBeforeUpdateStateMachineItemTransfer->getProcessName()
+            $secondBeforeUpdateStateMachineItemTransfer->getProcessName(),
         );
         $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getIdStateMachineProcess(),
-            $secondBeforeUpdateStateMachineItemTransfer->getIdStateMachineProcess()
+            $secondBeforeUpdateStateMachineItemTransfer->getIdStateMachineProcess(),
         );
         $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getStateName(),
-            $secondBeforeUpdateStateMachineItemTransfer->getStateName()
+            $secondBeforeUpdateStateMachineItemTransfer->getStateName(),
         );
         $this->assertSame(
             $secondUpdatedStateMachineItemTransfer->getIdentifier(),
-            $secondBeforeUpdateStateMachineItemTransfer->getIdentifier()
+            $secondBeforeUpdateStateMachineItemTransfer->getIdentifier(),
         );
     }
 
@@ -369,23 +373,23 @@ class StateMachineFacadeTest extends Unit
 
         $this->assertSame(
             $updatedStateMachineItemTransfer->getIdItemState(),
-            $stateMachineItemTransfer->getIdItemState()
+            $stateMachineItemTransfer->getIdItemState(),
         );
         $this->assertSame(
             $updatedStateMachineItemTransfer->getProcessName(),
-            $stateMachineItemTransfer->getProcessName()
+            $stateMachineItemTransfer->getProcessName(),
         );
         $this->assertSame(
             $updatedStateMachineItemTransfer->getIdStateMachineProcess(),
-            $stateMachineItemTransfer->getIdStateMachineProcess()
+            $stateMachineItemTransfer->getIdStateMachineProcess(),
         );
         $this->assertSame(
             $updatedStateMachineItemTransfer->getStateName(),
-            $stateMachineItemTransfer->getStateName()
+            $stateMachineItemTransfer->getStateName(),
         );
         $this->assertSame(
             $updatedStateMachineItemTransfer->getIdentifier(),
-            $stateMachineItemTransfer->getIdentifier()
+            $stateMachineItemTransfer->getIdentifier(),
         );
     }
 
@@ -410,7 +414,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
             $stateMachineItemTransfer->getIdStateMachineProcess(),
-            $identifier
+            $identifier,
         );
 
         $this->assertCount(3, $stateMachineItemTransfers);
@@ -446,7 +450,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
-            'Flag1'
+            'Flag1',
         );
 
         $this->assertCount(2, $stateMachineItemsWithGivenFlag);
@@ -462,7 +466,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
-            'Flag2'
+            'Flag2',
         );
 
         $this->assertCount(1, $stateMachineItemsWithGivenFlag);
@@ -490,7 +494,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
-            'Flag1'
+            'Flag1',
         );
 
         foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
@@ -500,7 +504,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
             'Flag1',
-            'DESC'
+            'DESC',
         );
 
         foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
@@ -528,7 +532,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemsWithoutGivenFlag = $stateMachineFacade->getItemsWithoutFlag(
             $stateMachineProcessTransfer,
-            'Flag1'
+            'Flag1',
         );
 
         $this->assertCount(1, $stateMachineItemsWithoutGivenFlag);
@@ -540,7 +544,7 @@ class StateMachineFacadeTest extends Unit
 
         $stateMachineItemsWithoutGivenFlag = $stateMachineFacade->getItemsWithoutFlag(
             $stateMachineProcessTransfer,
-            'Flag2'
+            'Flag2',
         );
 
         $stateMachineItemTransfer = $stateMachineItemsWithoutGivenFlag[0];

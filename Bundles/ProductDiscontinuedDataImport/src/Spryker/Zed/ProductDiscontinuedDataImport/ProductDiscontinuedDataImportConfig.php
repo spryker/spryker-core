@@ -14,6 +14,7 @@ class ProductDiscontinuedDataImportConfig extends DataImportConfig
 {
     /**
      * @uses \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig::DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE
+     *
      * @var int
      */
     public const DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE = 180;
@@ -34,7 +35,7 @@ class ProductDiscontinuedDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_discontinued.csv',
-            static::IMPORT_TYPE_PRODUCT_DISCONTINUED
+            static::IMPORT_TYPE_PRODUCT_DISCONTINUED,
         );
     }
 
@@ -48,7 +49,7 @@ class ProductDiscontinuedDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

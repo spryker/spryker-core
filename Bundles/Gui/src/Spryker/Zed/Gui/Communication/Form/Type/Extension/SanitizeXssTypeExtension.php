@@ -21,10 +21,12 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
      * @var string
      */
     public const OPTION_SANITIZE_XSS = 'sanitize_xss';
+
     /**
      * @var string
      */
     public const OPTION_ALLOWED_ATTRIBUTES = 'allowed_attributes';
+
     /**
      * @var string
      */
@@ -87,7 +89,7 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

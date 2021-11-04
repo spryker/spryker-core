@@ -26,6 +26,7 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
+
     /**
      * @var string
      */
@@ -35,10 +36,12 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_SALES_ORDER = 'PROPEL_QUERY_SALES_ORDER';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
+
     /**
      * @var string
      */
@@ -124,7 +127,7 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container): SalesDataExportToUtilEncodingServiceInterface {
             return new SalesDataExportToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -140,7 +143,7 @@ class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_DATA_EXPORT, function (Container $container): SalesDataExportToDataExportServiceInterface {
             return new SalesDataExportToDataExportServiceBridge(
-                $container->getLocator()->dataExport()->service()
+                $container->getLocator()->dataExport()->service(),
             );
         });
 

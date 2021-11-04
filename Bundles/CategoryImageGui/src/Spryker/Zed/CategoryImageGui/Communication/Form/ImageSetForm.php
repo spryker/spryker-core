@@ -29,18 +29,22 @@ class ImageSetForm extends AbstractType
      * @var string
      */
     public const FIELD_ID = 'idCategoryImageSet';
+
     /**
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE = 'locale';
+
     /**
      * @var string
      */
     public const FIELD_CATEGORY = 'idCategory';
+
     /**
      * @var string
      */
@@ -86,7 +90,7 @@ class ImageSetForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -139,7 +143,7 @@ class ImageSetForm extends AbstractType
         $builder->add(static::FIELD_LOCALE, HiddenType::class);
         $builder->get(static::FIELD_LOCALE)
             ->addModelTransformer(
-                $this->getFactory()->createLocaleTransformer()
+                $this->getFactory()->createLocaleTransformer(),
             );
 
         return $this;
@@ -191,7 +195,7 @@ class ImageSetForm extends AbstractType
             ]);
 
         $builder->get(static::CATEGORY_IMAGES)->addModelTransformer(
-            $this->getFactory()->createImageCollectionTransformer()
+            $this->getFactory()->createImageCollectionTransformer(),
         );
 
         return $this;

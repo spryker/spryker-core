@@ -90,7 +90,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     /**
      * @param array $projectOrganizationModuleDirectories
      *
-     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
+     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
     protected function getProjectModuleFinder(array $projectOrganizationModuleDirectories): Finder
     {
@@ -110,7 +110,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     protected function getFilenameSortCallback(): callable
     {
         return function (SplFileInfo $fileOne, SplFileInfo $fileTwo) {
-            return strcmp($fileOne->getRealpath(), $fileTwo->getRealpath());
+            return strcmp((string)$fileOne->getRealpath(), (string)$fileTwo->getRealpath());
         };
     }
 
@@ -180,7 +180,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
      */
     protected function getOrganizationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        $pathFragments = explode(DIRECTORY_SEPARATOR, (string)$directoryInfo->getRealPath());
         $srcPosition = array_search('src', $pathFragments);
 
         $organizationName = $pathFragments[$srcPosition + 1];
@@ -195,7 +195,7 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
      */
     protected function getApplicationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        $pathFragments = explode(DIRECTORY_SEPARATOR, (string)$directoryInfo->getRealPath());
         $srcPosition = array_search('src', $pathFragments);
 
         $organizationName = $pathFragments[$srcPosition + 2];

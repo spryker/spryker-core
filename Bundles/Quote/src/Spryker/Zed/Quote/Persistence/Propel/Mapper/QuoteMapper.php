@@ -86,7 +86,7 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $quoteData = $this->filterDisallowedQuoteData(
             $quoteTransfer->modifiedToArray(true, true),
-            $quoteFieldsAllowedForSaving
+            $quoteFieldsAllowedForSaving,
         );
 
         return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);

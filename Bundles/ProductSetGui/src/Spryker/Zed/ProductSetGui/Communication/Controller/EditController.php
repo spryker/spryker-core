@@ -29,7 +29,7 @@ class EditController extends AbstractProductSetController
         $productSetForm = $this->getFactory()
             ->getUpdateProductSetForm(
                 $dataProvider->getData($idProductSet),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -49,7 +49,7 @@ class EditController extends AbstractProductSetController
             return $this->redirectResponse(
                 Url::generate('/product-set-gui/view', [
                     static::PARAM_ID => $idProductSet,
-                ])->build()
+                ])->build(),
             );
         }
 
@@ -76,7 +76,7 @@ class EditController extends AbstractProductSetController
             $this->addErrorMessage('CSRF token is not valid.');
 
             return $this->redirectResponse(
-                Url::generate('/product-set-gui')->build()
+                Url::generate('/product-set-gui')->build(),
             );
         }
 
@@ -96,7 +96,7 @@ class EditController extends AbstractProductSetController
         ]);
 
         return $this->redirectResponse(
-            Url::generate('/product-set-gui')->build()
+            Url::generate('/product-set-gui')->build(),
         );
     }
 
@@ -112,7 +112,7 @@ class EditController extends AbstractProductSetController
             $this->addErrorMessage('CSRF token is not valid.');
 
             return $this->redirectResponse(
-                Url::generate('/product-set-gui')->build()
+                Url::generate('/product-set-gui')->build(),
             );
         }
 
@@ -132,7 +132,7 @@ class EditController extends AbstractProductSetController
         ]);
 
         return $this->redirectResponse(
-            Url::generate('/product-set-gui')->build()
+            Url::generate('/product-set-gui')->build(),
         );
     }
 }

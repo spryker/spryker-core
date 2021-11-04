@@ -21,6 +21,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
      * @var string
      */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+
     /**
      * @var string
      */
@@ -93,7 +94,7 @@ class AbstractProductAvailabilitiesReader implements AbstractProductAvailabiliti
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $productAbstractSku,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
 
         if (!$productAbstractData) {

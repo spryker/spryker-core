@@ -11,9 +11,13 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
 
+use Propel\Common\Exception\SetColumnConverterException;
+use Propel\Common\Util\SetColumnConverter;
 use Propel\Generator\Builder\Om\QueryBuilder as PropelQueryBuilder;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\PropelTypes;
+use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class QueryBuilder extends PropelQueryBuilder
 {
@@ -150,8 +154,8 @@ SCRIPT;
         $allowedArrayFilters = $this->getAllowedArrayFilters();
         $implodedArrayComparisons = implode(', ', $allowedArrayFilters);
 
-        $this->declareClass('Spryker\\Zed\\Propel\\Business\\Exception\\AmbiguousComparisonException');
-        $this->declareClass('Spryker\\Zed\\PropelOrm\\Business\\Runtime\\ActiveQuery\\Criteria', 'Spryker');
+        $this->declareClass(AmbiguousComparisonException::class);
+        $this->declareClass(Criteria::class, 'Spryker');
 
         $colPhpName = $col->getPhpName();
         $colName = $col->getName();
@@ -314,8 +318,8 @@ SCRIPT;
         }";
         } elseif ($col->isSetType()) {
             $this->declareClasses(
-                'Propel\Common\Util\SetColumnConverter',
-                'Propel\Common\Exception\SetColumnConverterException'
+                SetColumnConverter::class,
+                SetColumnConverterException::class,
             );
             $script .= "
         \$valueSet = " . $this->getTableMapClassName() . '::getValueSet(' . $this->getColumnConstant($col) . ");

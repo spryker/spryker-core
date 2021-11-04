@@ -23,10 +23,12 @@ class SuperAttributeForm extends AbstractType
      * @var string
      */
     protected const FIELD_VALUE = 'value';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */

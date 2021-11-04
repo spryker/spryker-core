@@ -29,7 +29,7 @@ class ProductOfferValidityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferSwitcher(
             $this->getRepository(),
-            $this->getProductOfferFacade()
+            $this->getProductOfferFacade(),
         );
     }
 

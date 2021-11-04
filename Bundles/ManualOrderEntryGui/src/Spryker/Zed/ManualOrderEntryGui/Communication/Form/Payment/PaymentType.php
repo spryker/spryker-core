@@ -37,6 +37,7 @@ class PaymentType extends AbstractType
      * @var string
      */
     public const KEY_SUBFORM = 'SUBFORM';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class PaymentType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -60,7 +61,7 @@ class PaymentType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -99,7 +100,7 @@ class PaymentType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -108,7 +109,7 @@ class PaymentType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $paymentMethodSubForms
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -122,7 +123,7 @@ class PaymentType extends AbstractType
                     'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm[static::KEY_PLUGIN]->getPropertyPath(),
                     'error_bubbling' => true,
                     static::OPTIONS_FIELD_NAME => $options[static::OPTIONS_FIELD_NAME],
-                ]
+                ],
             );
         }
 

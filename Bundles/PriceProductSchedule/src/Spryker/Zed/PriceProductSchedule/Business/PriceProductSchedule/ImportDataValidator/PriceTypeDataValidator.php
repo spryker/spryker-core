@@ -43,7 +43,7 @@ class PriceTypeDataValidator extends AbstractImportDataValidator
             return $this->createPriceProductScheduleListImportErrorTransfer(
                 $priceProductScheduleImportTransfer,
                 static::ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND,
-                ['%sku%' => $priceProductScheduleImportTransfer->getPriceTypeName()]
+                ['%sku%' => $priceProductScheduleImportTransfer->getPriceTypeName()],
             );
         }
 

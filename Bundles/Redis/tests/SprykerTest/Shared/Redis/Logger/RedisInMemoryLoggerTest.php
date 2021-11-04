@@ -113,7 +113,7 @@ class RedisInMemoryLoggerTest extends Unit
             $protocol ?? RedisClientTester::DEFAULT_REDIS_SCHEME,
             $host ?? RedisClientTester::DEFAULT_REDIS_HOST,
             $port ?? RedisClientTester::DEFAULT_REDIS_PORT,
-            $database ?? RedisClientTester::DEFAULT_REDIS_DATABASE
+            $database ?? RedisClientTester::DEFAULT_REDIS_DATABASE,
         );
     }
 }

@@ -27,6 +27,7 @@ class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @var string
      */
@@ -55,7 +56,7 @@ class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new GuiTableToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade()
+                $container->getLocator()->translator()->facade(),
             );
         });
 
@@ -71,7 +72,7 @@ class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new GuiTableToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -87,7 +88,7 @@ class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new GuiTableToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
+                $container->getLocator()->utilDateTime()->service(),
             );
         });
 

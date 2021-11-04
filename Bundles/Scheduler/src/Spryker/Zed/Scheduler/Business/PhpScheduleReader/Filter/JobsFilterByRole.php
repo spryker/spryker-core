@@ -15,6 +15,7 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
 {
     /**
      * @see \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper::KEY_ROLE
+     *
      * @var string
      */
     protected const KEY_ROLE = 'role';
@@ -78,7 +79,7 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
             if (!in_array($role, $this->roles, true)) {
                 throw new RoleNotAllowedException(sprintf(
                     '%s is not in the list of allowed job roles.',
-                    $role
+                    $role,
                 ));
             }
         }

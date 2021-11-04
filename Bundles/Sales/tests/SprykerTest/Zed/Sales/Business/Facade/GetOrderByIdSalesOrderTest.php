@@ -31,6 +31,7 @@ class GetOrderByIdSalesOrderTest extends Test
      * @var string
      */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+
     /**
      * @var string
      */
@@ -59,7 +60,7 @@ class GetOrderByIdSalesOrderTest extends Test
         // Arrange
         $this->tester->setDependency(
             SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER,
-            [$this->getOrderItemExpanderPluginMock()]
+            [$this->getOrderItemExpanderPluginMock()],
         );
 
         $idSalesOrder = $this->tester->haveOrder([], static::DEFAULT_OMS_PROCESS_NAME)->getIdSalesOrder();

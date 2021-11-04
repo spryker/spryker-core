@@ -43,7 +43,7 @@ class ProductListProductConcreteDataImportPluginTest extends Unit
         // Act
         $productListProductConcreteDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
         $dataImporterReportTransfer = $productListProductConcreteDataImportPlugin->import(
-            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product.csv')
+            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product.csv'),
         );
 
         // Assert

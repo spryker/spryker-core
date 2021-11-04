@@ -65,7 +65,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleNameGenerator(): ConfigurableBundleNameGeneratorInterface
     {
         return new ConfigurableBundleNameGenerator(
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 
@@ -83,7 +83,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductListDeleteChecker(): ProductListDeleteCheckerInterface
     {
         return new ProductListDeleteChecker(
-            $this->createConfigurableBundleTemplateSlotReader()
+            $this->createConfigurableBundleTemplateSlotReader(),
         );
     }
 
@@ -95,7 +95,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new ConfigurableBundleTemplateCleaner(
             $this->getEntityManager(),
             $this->createConfigurableBundleTemplateReader(),
-            $this->getProductImageFacade()
+            $this->getProductImageFacade(),
         );
     }
 
@@ -106,7 +106,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateSlotCleaner(
             $this->getEntityManager(),
-            $this->createConfigurableBundleTemplateSlotReader()
+            $this->createConfigurableBundleTemplateSlotReader(),
         );
     }
 
@@ -116,7 +116,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfiguredBundleItemCleaner(): ConfiguredBundleItemCleanerInterface
     {
         return new ConfiguredBundleItemCleaner(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -126,7 +126,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleTemplateSlotProductListExpander(): ConfigurableBundleTemplateSlotProductListExpanderInterface
     {
         return new ConfigurableBundleTemplateSlotProductListExpander(
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
         );
     }
 
@@ -137,7 +137,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTranslationExpander(
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -150,7 +150,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
-            $this->createEventTriggerer()
+            $this->createEventTriggerer(),
         );
     }
 
@@ -164,7 +164,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
             $this->createConfigurableBundleTemplateReader(),
-            $this->createEventTriggerer()
+            $this->createEventTriggerer(),
         );
     }
 
@@ -178,7 +178,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
             $this->createProductListWriter(),
-            $this->createConfigurableBundleTemplateReader()
+            $this->createConfigurableBundleTemplateReader(),
         );
     }
 
@@ -192,7 +192,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
             $this->createProductListWriter(),
-            $this->createConfigurableBundleTemplateSlotReader()
+            $this->createConfigurableBundleTemplateSlotReader(),
         );
     }
 
@@ -202,7 +202,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleTranslationWriter(): ConfigurableBundleTranslationWriterInterface
     {
         return new ConfigurableBundleTranslationWriter(
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -213,7 +213,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListWriter(
             $this->getProductListFacade(),
-            $this->createProductListTitleGenerator()
+            $this->createProductListTitleGenerator(),
         );
     }
 
@@ -226,7 +226,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createConfigurableBundleTranslationExpander(),
             $this->getLocaleFacade(),
-            $this->createConfigurableBundleTemplateImageSetExpander()
+            $this->createConfigurableBundleTemplateImageSetExpander(),
         );
     }
 
@@ -237,7 +237,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateImageSetExpander(
             $this->getRepository(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -250,7 +250,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createConfigurableBundleTranslationExpander(),
             $this->createConfigurableBundleTemplateSlotProductListExpander(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 

@@ -48,7 +48,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade(),
             $this->getConfig(),
             $this->getCmsFacade(),
-            $this->getCmsPageTableExpanderPlugins()
+            $this->getCmsPageTableExpanderPlugins(),
         );
     }
 
@@ -96,7 +96,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CmsVersionFormType::class,
             $cmsVersionDataProvider->getData($idCmsPage, $version),
-            $cmsVersionDataProvider->getOptions($idCmsPage)
+            $cmsVersionDataProvider->getOptions($idCmsPage),
         );
     }
 
@@ -119,7 +119,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CmsPageFormType::class,
             $cmsPageTransfer,
-            $cmsPageFormTypeDataProvider->getOptions()
+            $cmsPageFormTypeDataProvider->getOptions(),
         );
     }
 
@@ -147,7 +147,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CmsGlossaryFormType::class,
             $cmsGlossaryFormTypeDataProvider->getData($idCmsPage),
-            $cmsGlossaryFormTypeDataProvider->getOptions()
+            $cmsGlossaryFormTypeDataProvider->getOptions(),
         );
     }
 
@@ -159,7 +159,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CmsPageFormTypeDataProvider(
             $this->getCmsQueryContainer(),
             $this->getCmsFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -169,7 +169,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsVersionFormDataProvider()
     {
         return new CmsVersionDataProvider(
-            $this->getCmsFacade()
+            $this->getCmsFacade(),
         );
     }
 
@@ -180,7 +180,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsGlossaryFormTypeDataProvider(
             $this->getCmsFacade(),
-            $this->createCmsGlossaryUpdater()
+            $this->createCmsGlossaryUpdater(),
         );
     }
 
@@ -230,7 +230,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsVersionMapper(
             $this->getCmsQueryContainer(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

@@ -22,10 +22,12 @@ class ContentFileListSelectedTable extends AbstractTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'file-list-selected-table';
+
     /**
      * @var string
      */
     public const TABLE_CLASS = 'item-list-selected-table gui-table-data';
+
     /**
      * @var string
      */
@@ -35,10 +37,12 @@ class ContentFileListSelectedTable extends AbstractTable
      * @var string
      */
     public const COL_ID_FILE = 'ID';
+
     /**
      * @var string
      */
     public const COL_FILE_NAME = 'File Name';
+
     /**
      * @var string
      */
@@ -48,10 +52,12 @@ class ContentFileListSelectedTable extends AbstractTable
      * @var string
      */
     public const BUTTON_DELETE = 'Delete';
+
     /**
      * @var string
      */
     public const BUTTON_MOVE_UP = 'Move Up';
+
     /**
      * @var string
      */
@@ -210,7 +216,7 @@ class ContentFileListSelectedTable extends AbstractTable
                 'data-id' => $idFile,
                 'icon' => 'fa-trash',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -221,7 +227,7 @@ class ContentFileListSelectedTable extends AbstractTable
                 'data-direction' => 'up',
                 'icon' => 'fa-arrow-up',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
         $actionButtons[] = $this->generateButton(
             '#',
@@ -232,7 +238,7 @@ class ContentFileListSelectedTable extends AbstractTable
                 'data-direction' => 'down',
                 'icon' => 'fa-arrow-down',
                 'onclick' => 'return false;',
-            ]
+            ],
         );
 
         return implode(' ', $actionButtons);

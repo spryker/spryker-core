@@ -24,14 +24,17 @@ class LocalizedSeoFormType extends AbstractType
      * @var string
      */
     public const FIELD_META_TITLE = 'meta_title';
+
     /**
      * @var string
      */
     public const FIELD_META_KEYWORDS = 'meta_keywords';
+
     /**
      * @var string
      */
     public const FIELD_META_DESCRIPTION = 'meta_description';
+
     /**
      * @var string
      */
@@ -39,7 +42,7 @@ class LocalizedSeoFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

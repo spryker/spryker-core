@@ -108,8 +108,8 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
                 sprintf(
                     '"%s" or "%s" are required.',
                     MerchantProfileAddressDataSetInterface::COUNTRY_ISO2_CODE,
-                    MerchantProfileAddressDataSetInterface::COUNTRY_ISO3_CODE
-                )
+                    MerchantProfileAddressDataSetInterface::COUNTRY_ISO3_CODE,
+                ),
             );
         }
     }

@@ -10,14 +10,14 @@ namespace Spryker\Zed\Development\Business\CodeStyleSniffer\Config;
 interface CodeStyleSnifferConfigurationInterface
 {
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return $this
      */
     public function setModuleConfig(array $moduleConfig);
 
     /**
-     * @param array $configurationOptions
+     * @param array<string, mixed> $configurationOptions
      *
      * @return $this
      */

@@ -76,7 +76,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $orderCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer>
      */
@@ -95,7 +95,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
             $orderTransfer = $this->orderHydratorStrategyResolver
                 ->resolveByOrderItemEntities($salesOrderEntity->getItems())
                 ->hydrateOrderTransferFromPersistenceByIdSalesOrder(
-                    $salesOrderEntity->getIdSalesOrder()
+                    $salesOrderEntity->getIdSalesOrder(),
                 );
 
             $orders->append($orderTransfer);
@@ -116,7 +116,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         }
 
         $excludeFromCustomer = $this->omsFacade->isOrderFlaggedExcludeFromCustomer(
-            $salesOrderEntity->getIdSalesOrder()
+            $salesOrderEntity->getIdSalesOrder(),
         );
 
         return $excludeFromCustomer;

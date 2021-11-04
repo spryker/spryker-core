@@ -42,7 +42,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
         return new AclEntitySegmentWriter(
             $this->getEntityManager(),
             $this->getAclEntityService(),
-            $this->createAclEntitySegmentConnectorValidator()
+            $this->createAclEntitySegmentConnectorValidator(),
         );
     }
 
@@ -53,7 +53,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new AclEntityRuleWriter(
             $this->getEntityManager(),
-            $this->createAclEntityRuleValidator()
+            $this->createAclEntityRuleValidator(),
         );
     }
 
@@ -63,7 +63,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function createAclRolesExpander(): AclRolesExpanderInterface
     {
         return new AclRolesExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -74,7 +74,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new AclEntityMetadataConfigReader(
             $this->getAclEntityMetadataCollectionExpanderPlugins(),
-            $this->createAclEntityMetadataConfigValidator()
+            $this->createAclEntityMetadataConfigValidator(),
         );
     }
 
@@ -85,7 +85,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new AclEntityReader(
             $this->getIsAclEntityEnabled(),
-            $this->getAclEntityDisablerPlugins()
+            $this->getAclEntityDisablerPlugins(),
         );
     }
 
@@ -95,7 +95,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function getAclEntityMetadataCollectionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(
-            AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER
+            AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER,
         );
     }
 
@@ -105,7 +105,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function getAclEntityDisablerPlugins(): array
     {
         return $this->getProvidedDependency(
-            AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_DISABLER
+            AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_DISABLER,
         );
     }
 
@@ -132,7 +132,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new AclEntityRuleValidator(
             $this->getRepository(),
-            $this->createAclEntityMetadataConfigReader()
+            $this->createAclEntityMetadataConfigReader(),
         );
     }
 

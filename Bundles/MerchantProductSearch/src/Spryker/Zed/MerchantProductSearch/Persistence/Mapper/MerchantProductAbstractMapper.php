@@ -13,32 +13,34 @@ class MerchantProductAbstractMapper
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_PRODUCT_ABSTRACT_ID
+     *
      * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_ID = 'id_product_abstract';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAME
+     *
      * @var string
      */
     protected const KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_MERCHANT_NAMES
+     *
      * @var string
      */
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepository::KEY_STORE_NAME
+     *
      * @var string
      */
     protected const KEY_STORE_NAME = 'store_name';
 
     /**
-     * @phpstan-param array<int, mixed> $merchantData
-     *
-     * @param array $merchantData
+     * @param array<int, mixed> $merchantData
      * @param array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer> $productAbstractMerchantTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
@@ -55,13 +57,9 @@ class MerchantProductAbstractMapper
     }
 
     /**
-     * @phpstan-param array<int, mixed> $merchantData
+     * @param array<int, mixed> $merchantData
      *
-     * @phpstan-return array<int, mixed>
-     *
-     * @param array $merchantData
-     *
-     * @return array
+     * @return array<int, mixed>
      */
     protected function groupMerchantDataByIdProductAbstract(array $merchantData): array
     {

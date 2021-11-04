@@ -54,7 +54,7 @@ class ProductImageWriterTest extends Unit
     protected function setUp(): void
     {
         $this->writer = new Writer(
-            new ProductImageQueryContainer()
+            new ProductImageQueryContainer(),
         );
 
         $this->localeFacade = new LocaleFacade();

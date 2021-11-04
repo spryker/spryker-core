@@ -26,14 +26,17 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
      * @var string
      */
     public const RESOURCE_DATA_NAME = 'name';
+
     /**
      * @var string
      */
     public const RESOURCE_DATA_VALUE = 'value';
+
     /**
      * Used to map a row to its resource type
      *
      * @see AbstractSpyUrlQuery::RESOURCE_PREFIX
+     *
      * @var string
      */
     public const RESOURCE_PREFIX = 'fk_resource_';
@@ -82,8 +85,8 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
         throw new MissingResourceException(
             sprintf(
                 'Encountered a URL entity that is missing a resource: %s',
-                json_encode($this->toArray())
-            )
+                json_encode($this->toArray()),
+            ),
         );
     }
 
@@ -118,8 +121,8 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
             throw new UnknownResourceTypeException(
                 sprintf(
                     'Tried to set a resource type that is unknown. ResourceType: %s',
-                    $resourceType
-                )
+                    $resourceType,
+                ),
             );
         }
 

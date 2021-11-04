@@ -60,7 +60,7 @@ class ProductQuantityDataImportPluginTest extends Unit
         $productQuantityDataImportPlugin = new ProductQuantityDataImportPlugin();
         $this->assertSame(
             ProductQuantityDataImportConfig::IMPORT_TYPE_PRODUCT_QUANTITY,
-            $productQuantityDataImportPlugin->getImportType()
+            $productQuantityDataImportPlugin->getImportType(),
         );
     }
 }

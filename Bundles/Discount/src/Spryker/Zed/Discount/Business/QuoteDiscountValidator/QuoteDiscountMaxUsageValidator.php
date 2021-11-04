@@ -53,7 +53,7 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
             $this->addError(
                 $this->createVoucherCodeLimitReachedMessageTransfer($voucherCode),
                 static::ERROR_VOUCHER_CODE_LIMIT_REACHED,
-                $checkoutResponseTransfer
+                $checkoutResponseTransfer,
             );
         }
 
@@ -83,7 +83,7 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
     {
         return $this->discountRepository
             ->findVoucherCodesExceedingUsageLimit(
-                $this->getVoucherCodes($voucherDiscounts)
+                $this->getVoucherCodes($voucherDiscounts),
             );
     }
 

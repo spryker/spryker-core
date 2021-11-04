@@ -36,22 +36,27 @@ class ProductCartPluginTest extends Unit
      * @var string
      */
     public const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
+
     /**
      * @var string
      */
     public const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
+
     /**
      * @var string
      */
     public const TAX_SET_NAME = 'Sales Tax';
+
     /**
      * @var string
      */
     public const TAX_RATE_NAME = 'VAT';
+
     /**
      * @var int
      */
     public const TAX_RATE_PERCENTAGE = 10;
+
     /**
      * @var string
      */

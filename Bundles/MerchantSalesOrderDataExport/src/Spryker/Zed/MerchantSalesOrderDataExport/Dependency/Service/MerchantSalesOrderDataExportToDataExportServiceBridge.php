@@ -49,7 +49,7 @@ class MerchantSalesOrderDataExportToDataExportServiceBridge implements MerchantS
     ): DataExportConfigurationTransfer {
         return $this->dataExportService->resolveDataExportActionConfiguration(
             $dataExportActionConfigurationTransfer,
-            $additionalDataExportConfigurationsTransfer
+            $additionalDataExportConfigurationsTransfer,
         );
     }
 

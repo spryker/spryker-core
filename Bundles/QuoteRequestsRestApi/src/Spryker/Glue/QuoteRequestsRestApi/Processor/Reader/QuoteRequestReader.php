@@ -80,7 +80,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         return $this->quoteRequestRestResponseBuilder
             ->createQuoteRequestRestResponse(
                 $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
     }
 
@@ -115,7 +115,7 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
 
         return $this->quoteRequestRestResponseBuilder->createQuoteRequestCollectionRestResponse(
             $quoteRequestCollectionTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 }

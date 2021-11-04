@@ -115,7 +115,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->findPermissionByIdCompanyRoleByIdPermission(
             $permissionTransfer->getIdCompanyRole(),
-            $permissionTransfer->getIdPermission()
+            $permissionTransfer->getIdPermission(),
         );
     }
 

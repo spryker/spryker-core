@@ -19,6 +19,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
 {
     /**
      * @uses \Orm\Zed\MerchantCategory\Persistence\Map\SpyMerchantCategoryTableMap::COL_FK_MERCHANT
+     *
      * @var string
      */
     protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
@@ -106,7 +107,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
             (new MerchantCriteriaTransfer())
                 ->setMerchantIds($merchantIds)
                 ->setIsActive(true)
-                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED)
+                ->setStatus(MerchantSearchConfig::MERCHANT_STATUS_APPROVED),
         );
 
         if (!$merchantCollectionTransfer->getMerchants()->count()) {
@@ -115,7 +116,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
 
         $merchantSearchCollectionTransfer = $this->merchantSearchMapper->mapMerchantCollectionTransferToMerchantSearchCollectionTransfer(
             $merchantCollectionTransfer,
-            new MerchantSearchCollectionTransfer()
+            new MerchantSearchCollectionTransfer(),
         );
 
         $merchantSearchCollectionTransfer = $this->expandMerchantSearchData($merchantSearchCollectionTransfer);

@@ -24,7 +24,7 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
         return new ProductAbstractStorageBySkuReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 
@@ -44,7 +44,7 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
         return new ProductConcreteStorageBySkuReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore()
+            $this->getStore(),
         );
     }
 

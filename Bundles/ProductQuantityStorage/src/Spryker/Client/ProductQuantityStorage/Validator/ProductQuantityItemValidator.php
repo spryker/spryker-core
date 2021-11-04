@@ -18,26 +18,32 @@ class ProductQuantityItemValidator implements ProductQuantityItemValidatorInterf
      * @var string
      */
     protected const WARNING_MESSAGE_QUANTITY_MIN_NOT_FULFILLED = 'product-quantity.warning.quantity.min.failed';
+
     /**
      * @var string
      */
     protected const WARNING_MESSAGE_QUANTITY_MAX_NOT_FULFILLED = 'product-quantity.warning.quantity.max.failed';
+
     /**
      * @var string
      */
     protected const WARNING_MESSAGE_QUANTITY_INTERVAL_NOT_FULFILLED = 'product-quantity.warning.quantity.interval.failed';
+
     /**
      * @var string
      */
     protected const WARNING_MESSAGE_PARAM_MIN = '%min%';
+
     /**
      * @var string
      */
     protected const WARNING_MESSAGE_PARAM_MAX = '%max%';
+
     /**
      * @var string
      */
     protected const WARNING_MESSAGE_PARAM_STEP = '%step%';
+
     /**
      * @var string
      */

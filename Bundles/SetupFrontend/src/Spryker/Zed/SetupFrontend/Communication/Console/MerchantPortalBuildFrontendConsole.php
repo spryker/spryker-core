@@ -22,6 +22,7 @@ class MerchantPortalBuildFrontendConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:mp:build';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class MerchantPortalBuildFrontendConsole extends Console
      * @var string
      */
     protected const OPTION_ENVIRONMENT = 'environment';
+
     /**
      * @var string
      */
     protected const OPTION_ENVIRONMENT_SHORT = 'e';
+
     /**
      * @var string
      */
@@ -52,7 +55,7 @@ class MerchantPortalBuildFrontendConsole extends Console
             static::OPTION_ENVIRONMENT,
             static::OPTION_ENVIRONMENT_SHORT,
             InputOption::VALUE_REQUIRED,
-            static::OPTION_ENVIRONMENT_DESCRIPTION
+            static::OPTION_ENVIRONMENT_DESCRIPTION,
         );
 
         parent::configure();

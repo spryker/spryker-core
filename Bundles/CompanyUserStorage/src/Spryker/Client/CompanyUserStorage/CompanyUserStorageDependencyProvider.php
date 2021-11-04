@@ -61,7 +61,7 @@ class CompanyUserStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CompanyUserStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

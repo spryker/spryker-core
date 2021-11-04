@@ -24,7 +24,7 @@ class ConfigurableBundlesProductsResourceRelationshipFactory extends AbstractFac
     {
         return new ProductConcreteExpander(
             $this->createProductConcreteReader(),
-            $this->getProductsRestApiResource()
+            $this->getProductsRestApiResource(),
         );
     }
 

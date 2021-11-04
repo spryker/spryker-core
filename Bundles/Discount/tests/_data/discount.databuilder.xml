@@ -11,7 +11,9 @@
         <property name="amount" dataBuilderRule="=1"/>
         <property name="isActive" dataBuilderRule="=true"/>
         <property name="validFrom" dataBuilderRule="=2016-01-01"/>
-        <property name="validTo" dataBuilderRule="time('Y-m-d', '+10 years')"/>
+        <property name="validTo" dataBuilderRule="dateTimeInInterval('+1 days', '+10 years')->format('Y-m-d')"/>
+        <property name="calculatorPlugin" dataBuilderRule="=PLUGIN_CALCULATOR_FIXED"/>
+        <property name="discountType" dataBuilderRule="=cart_rule"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">

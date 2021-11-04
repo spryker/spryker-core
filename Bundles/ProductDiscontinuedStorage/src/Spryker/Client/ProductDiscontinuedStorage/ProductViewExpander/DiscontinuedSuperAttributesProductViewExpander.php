@@ -18,14 +18,17 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
      * @var string
      */
     protected const GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED = 'product_discontinued.super_attribute_discontinued';
+
     /**
      * @var string
      */
     protected const PATTERN_DISCONTINUED_ATTRIBUTE_NAME = '%s - %s';
+
     /**
      * @var string
      */
     protected const PATTERN_ATTRIBUTE_KEY_VALUE_KEY = '%s:%s';
+
     /**
      * @var string
      */
@@ -96,7 +99,7 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
             foreach ($attribute as $valueKey => $value) {
                 $idProductConcrete = $this->findIdProductConcreteByAttributeValueKey(
                     $this->getAttributeValueKey($attributeKey, $value),
-                    $attributeMapStorageTransfer
+                    $attributeMapStorageTransfer,
                 );
                 if (!$idProductConcrete) {
                     continue;
@@ -140,7 +143,7 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
                 $superAttributes[$attributeName] = $this->expandSuperAttributeValues(
                     $superAttributes[$attributeName],
                     $attributeValue,
-                    $expandedAttributeValue
+                    $expandedAttributeValue,
                 );
             }
         }
@@ -183,7 +186,7 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
         return sprintf(
             static::PATTERN_ATTRIBUTE_KEY_VALUE_KEY,
             $attributeKey,
-            $attributeName
+            $attributeName,
         );
     }
 
@@ -224,7 +227,7 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
             $value = sprintf(
                 static::PATTERN_DISCONTINUED_ATTRIBUTE_NAME,
                 $value,
-                $this->glossaryStorageClient->translate(static::GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED, $localeName)
+                $this->glossaryStorageClient->translate(static::GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED, $localeName),
             );
         }
 

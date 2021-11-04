@@ -17,12 +17,14 @@ class ProductLabelProductAbstractWriterStep extends PublishAwareStep implements 
 {
     /**
      * @uses \Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH = 'ProductLabel.product_abstract_label.publish';
 
     /**
      * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_PUBLISH
+     *
      * @var string
      */
     protected const EVENT_PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';

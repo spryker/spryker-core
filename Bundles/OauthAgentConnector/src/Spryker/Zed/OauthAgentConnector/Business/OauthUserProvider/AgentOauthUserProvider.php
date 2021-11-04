@@ -62,7 +62,7 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
         $isAuthorized = $this->passwordEncoderAdapter->isPasswordValid(
             $findAgentResponseTransfer->getAgent()->getPassword(),
             $oauthUserTransfer->getPassword(),
-            null
+            null,
         );
 
         if (!$isAuthorized) {

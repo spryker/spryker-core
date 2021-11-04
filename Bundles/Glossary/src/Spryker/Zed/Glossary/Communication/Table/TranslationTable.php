@@ -25,10 +25,12 @@ class TranslationTable extends AbstractTable
      * @var string
      */
     public const ACTIONS = 'Actions';
+
     /**
      * @var string
      */
     public const URL_GLOSSARY_EDIT = '/glossary/edit';
+
     /**
      * @var string
      */
@@ -172,7 +174,7 @@ class TranslationTable extends AbstractTable
             Url::generate(self::URL_GLOSSARY_EDIT, [
                 EditController::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
             ]),
-            'Edit'
+            'Edit',
         );
 
         return $urls;

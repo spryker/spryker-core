@@ -43,7 +43,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     {
         return new RelatedProductReader(
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -54,7 +54,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     {
         return new RelatedProductUpdater(
             $this->createRelatedProductReader(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -67,7 +67,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getTouchFacade(),
             $this->createRelatedProductUpdater(),
-            $this->createProductRelationStoreRelationUpdater()
+            $this->createProductRelationStoreRelationUpdater(),
         );
     }
 
@@ -80,7 +80,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createRelatedProductUpdater(),
             $this->getTouchFacade(),
-            $this->createProductRelationStoreRelationUpdater()
+            $this->createProductRelationStoreRelationUpdater(),
         );
     }
 
@@ -92,7 +92,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
         return new ProductRelationDeleter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
         );
     }
 
@@ -103,7 +103,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductRelationStoreRelationUpdater(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -113,7 +113,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     public function createProductRelationReader()
     {
         return new ProductRelationReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -133,7 +133,7 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
         return new ProductRelationBuilder(
             $this->createProductRelationUpdater(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

@@ -14,7 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductAbstractLabelStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage> $productAbstractLabelStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage[] $productAbstractLabelStorageEntities
      * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer>
@@ -26,7 +26,7 @@ class ProductAbstractLabelStorageMapper
         foreach ($productAbstractLabelStorageEntities as $productAbstractLabelStorageEntity) {
             $productAbstractLabelStorageTransfers[] = $this->mapProductAbstractLabelStorageEntityToProductAbstractLabelStorageTransfer(
                 $productAbstractLabelStorageEntity,
-                new ProductAbstractLabelStorageTransfer()
+                new ProductAbstractLabelStorageTransfer(),
             );
         }
 

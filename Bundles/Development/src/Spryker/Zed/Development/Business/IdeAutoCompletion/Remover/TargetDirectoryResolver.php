@@ -38,16 +38,16 @@ class TargetDirectoryResolver
 
         $baseDirectory = rtrim(
             $options[IdeAutoCompletionOptionConstants::TARGET_BASE_DIRECTORY],
-            DIRECTORY_SEPARATOR
+            DIRECTORY_SEPARATOR,
         );
 
         $applicationPathFragment = trim(
             str_replace(
                 IdeAutoCompletionConstants::APPLICATION_NAME_PLACEHOLDER,
                 $application,
-                $options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN]
+                $options[IdeAutoCompletionOptionConstants::TARGET_DIRECTORY_PATTERN],
             ),
-            DIRECTORY_SEPARATOR
+            DIRECTORY_SEPARATOR,
         );
 
         return "{$baseDirectory}/{$applicationPathFragment}/";

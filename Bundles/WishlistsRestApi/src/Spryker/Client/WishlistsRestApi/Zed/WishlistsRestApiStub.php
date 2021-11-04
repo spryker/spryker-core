@@ -41,7 +41,7 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
         $wishlistResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/update-wishlist',
-            $wishlistRequestTransfer
+            $wishlistRequestTransfer,
         );
 
         return $wishlistResponseTransfer;
@@ -59,7 +59,7 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
         $wishlistResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/delete-wishlist',
-            $wishlistFilterTransfer
+            $wishlistFilterTransfer,
         );
 
         return $wishlistResponseTransfer;
@@ -77,7 +77,7 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
         $wishlistItemResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/add-wishlist-item',
-            $wishlistItemRequestTransfer
+            $wishlistItemRequestTransfer,
         );
 
         return $wishlistItemResponseTransfer;
@@ -95,7 +95,25 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
         $wishlistItemResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/delete-wishlist-item',
-            $wishlistItemRequestTransfer
+            $wishlistItemRequestTransfer,
+        );
+
+        return $wishlistItemResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\WishlistsRestApi\Communication\Controller\GatewayController::updateWishlistItemAction()
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
+        $wishlistItemResponseTransfer = $this->zedStubClient->call(
+            '/wishlists-rest-api/gateway/update-wishlist-item',
+            $wishlistItemRequestTransfer,
         );
 
         return $wishlistItemResponseTransfer;

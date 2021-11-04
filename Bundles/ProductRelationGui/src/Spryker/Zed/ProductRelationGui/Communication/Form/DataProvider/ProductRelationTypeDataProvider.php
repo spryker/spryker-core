@@ -20,6 +20,7 @@ class ProductRelationTypeDataProvider
      * @var string
      */
     public const TYPE_RELATED_PRODUCTS = 'related-products';
+
     /**
      * @var string
      */

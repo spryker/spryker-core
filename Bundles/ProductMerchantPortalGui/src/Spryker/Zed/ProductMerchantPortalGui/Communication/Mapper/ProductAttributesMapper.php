@@ -34,7 +34,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
      * @param \Symfony\Component\Form\FormErrorIterator $errors
      * @param array $attributesInitialData
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapErrorsToAttributesData(FormErrorIterator $errors, array $attributesInitialData): array
     {
@@ -53,7 +53,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
 
         if (isset($attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS])) {
             $attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS] = $this->fillNotExistingNumericArrayElements(
-                $attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS]
+                $attributesInitialData[GuiTableEditableInitialDataTransfer::ERRORS],
             );
         }
 
@@ -61,7 +61,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @param array<string[][]> $attributesInitialData
+     * @param array<array<array<string>>> $attributesInitialData
      * @param array<string> $attributes
      *
      * @return array<string>
@@ -83,11 +83,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
-     * @param array<string[][]> $attributesInitialData
+     * @param array<array<array<string>>> $attributesInitialData
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
@@ -122,11 +118,6 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
      *
@@ -139,7 +130,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
         foreach ($destinationLocalizedAttributesTransfers as $destinationLocalizedAttributeTransfer) {
             $sourceLocalizedAttributeTransfer = $this->productAttributeDataProvider->findLocalizedAttribute(
                 $sourceLocalizedAttributesTransfers,
-                $destinationLocalizedAttributeTransfer->getLocaleOrFail()->getIdLocaleOrFail()
+                $destinationLocalizedAttributeTransfer->getLocaleOrFail()->getIdLocaleOrFail(),
             );
 
             if ($sourceLocalizedAttributeTransfer) {
@@ -151,11 +142,6 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $destinationLocalizedAttributesTransfers
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $sourceLocalizedAttributesTransfers
      *
@@ -166,7 +152,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
         foreach ($destinationLocalizedAttributesTransfers as $destinationLocalizedAttribute) {
             $sourceLocalizedAttributesTransfer = $this->productAttributeDataProvider->findLocalizedAttribute(
                 $sourceLocalizedAttributesTransfers,
-                $destinationLocalizedAttribute->getLocaleOrFail()->getIdLocaleOrFail()
+                $destinationLocalizedAttribute->getLocaleOrFail()->getIdLocaleOrFail(),
             );
 
             if ($sourceLocalizedAttributesTransfer) {

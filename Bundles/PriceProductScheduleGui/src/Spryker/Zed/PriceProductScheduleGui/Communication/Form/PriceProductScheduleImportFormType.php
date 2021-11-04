@@ -29,14 +29,17 @@ class PriceProductScheduleImportFormType extends AbstractType
      * @var string
      */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME = 'priceProductScheduleName';
+
     /**
      * @var int
      */
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH = 255;
+
     /**
      * @var string
      */
     public const FIELD_FILE_UPLOAD = 'fileUpload';
+
     /**
      * @var string
      */
@@ -66,7 +69,7 @@ class PriceProductScheduleImportFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -95,7 +98,7 @@ class PriceProductScheduleImportFormType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Eg: Christmas sales, etc.',
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -134,8 +137,8 @@ class PriceProductScheduleImportFormType extends AbstractType
                         }
 
                         return $this->mapSymfonyUploadedFileToUploadedFile($uploadedFile);
-                    }
-                )
+                    },
+                ),
             );
 
         return $this;
@@ -152,7 +155,7 @@ class PriceProductScheduleImportFormType extends AbstractType
             $uploadedFile->getRealPath(),
             $uploadedFile->getClientOriginalName(),
             $uploadedFile->getClientMimeType(),
-            $uploadedFile->getSize()
+            $uploadedFile->getSize(),
         );
     }
 }

@@ -41,7 +41,7 @@ class CompanyUserIdentifierExpander implements CompanyUserIdentifierExpanderInte
         }
 
         $companyUserIdentifierTransfer->setPermissions(
-            $this->permissionFacade->getPermissionsByIdentifier((string)$companyUserTransfer->getIdCompanyUser())
+            $this->permissionFacade->getPermissionsByIdentifier((string)$companyUserTransfer->getIdCompanyUser()),
         );
 
         return $companyUserIdentifierTransfer;

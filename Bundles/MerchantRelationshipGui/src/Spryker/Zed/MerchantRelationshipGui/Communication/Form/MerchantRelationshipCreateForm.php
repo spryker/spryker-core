@@ -25,18 +25,22 @@ class MerchantRelationshipCreateForm extends AbstractType
      * @var string
      */
     public const OPTION_SELECTED_COMPANY = 'id_company';
+
     /**
      * @var string
      */
     public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
+
     /**
      * @var string
      */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+
     /**
      * @var string
      */
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
+
     /**
      * @var string
      */
@@ -46,14 +50,17 @@ class MerchantRelationshipCreateForm extends AbstractType
      * @var string
      */
     protected const FIELD_FK_COMPANY = 'fk_company';
+
     /**
      * @var string
      */
     protected const FIELD_FK_MERCHANT = 'fk_merchant';
+
     /**
      * @var string
      */
     protected const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+
     /**
      * @var string
      */
@@ -62,35 +69,42 @@ class MerchantRelationshipCreateForm extends AbstractType
     /**
      * @var string
      */
-    protected const  COMPANY_FIELD_LABEL = 'Company';
+    protected const COMPANY_FIELD_LABEL = 'Company';
+
     /**
      * @var string
      */
-    protected const  COMPANY_FIELD_PLACEHOLDER = 'Select Company';
+    protected const COMPANY_FIELD_PLACEHOLDER = 'Select Company';
+
     /**
      * @var string
      */
-    protected const  MERCHANT_FIELD_LABEL = 'Merchant';
+    protected const MERCHANT_FIELD_LABEL = 'Merchant';
+
     /**
      * @var string
      */
-    protected const  MERCHANT_FIELD_PLACEHOLDER = 'Select merchant';
+    protected const MERCHANT_FIELD_PLACEHOLDER = 'Select merchant';
+
     /**
      * @var string
      */
-    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Business Unit Owner';
+    protected const FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Business Unit Owner';
+
     /**
      * @var string
      */
-    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Unit';
+    protected const FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Unit';
+
     /**
      * @var string
      */
-    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Assigned Business Units';
+    protected const ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Assigned Business Units';
+
     /**
      * @var string
      */
-    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Units';
+    protected const ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Units';
 
     /**
      * @return string
@@ -116,7 +130,7 @@ class MerchantRelationshipCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -137,7 +151,7 @@ class MerchantRelationshipCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -153,7 +167,7 @@ class MerchantRelationshipCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -195,7 +209,7 @@ class MerchantRelationshipCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -248,8 +262,8 @@ class MerchantRelationshipCreateForm extends AbstractType
         $builder->get(static::FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT)->addModelTransformer(
             new CallbackTransformer(
                 $this->getAssignedBusinessUnitTransformer(),
-                $this->getAssignedBusinessUnitReverseTransformer()
-            )
+                $this->getAssignedBusinessUnitReverseTransformer(),
+            ),
         );
     }
 
@@ -285,7 +299,7 @@ class MerchantRelationshipCreateForm extends AbstractType
             foreach ($data as $id) {
                 $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
                     (new CompanyBusinessUnitTransfer())
-                        ->setIdCompanyBusinessUnit($id)
+                        ->setIdCompanyBusinessUnit($id),
                 );
             }
 

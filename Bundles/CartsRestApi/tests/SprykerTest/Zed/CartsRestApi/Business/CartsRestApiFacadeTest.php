@@ -625,7 +625,7 @@ class CartsRestApiFacadeTest extends Unit
                 'getCartItemMapperPlugins',
                 'getQuoteItemReadValidatorPlugins',
                 'createQuoteReloader',
-            ]
+            ],
         );
 
         $cartsRestApiBusinessFactoryMock = $this->addMockQuoteFacade($cartsRestApiBusinessFactoryMock);
@@ -649,7 +649,7 @@ class CartsRestApiFacadeTest extends Unit
             [
                 'findQuoteByUuid',
                 'getQuoteCollection',
-            ]
+            ],
         );
 
         $quoteFacadeMock->method('findQuoteByUuid')
@@ -674,7 +674,7 @@ class CartsRestApiFacadeTest extends Unit
             [
                 'reloadItems',
                 'addToCart',
-            ]
+            ],
         );
 
         $cartFacadeMock->method('reloadItems')
@@ -705,7 +705,7 @@ class CartsRestApiFacadeTest extends Unit
                 'add',
                 'changeItemQuantity',
                 'remove',
-            ]
+            ],
         );
 
         $persistentCartFacadeMock->method('updateQuote')
@@ -735,7 +735,7 @@ class CartsRestApiFacadeTest extends Unit
             StoreFacade::class,
             [
                 'getCurrentStore',
-            ]
+            ],
         );
 
         $storeFacadeMock
@@ -758,7 +758,7 @@ class CartsRestApiFacadeTest extends Unit
     {
         $mockQuoteCreatorPlugin = $this->createPartialMock(
             QuoteCreatorPluginInterface::class,
-            ['createQuote']
+            ['createQuote'],
         );
         $mockQuoteCreatorPlugin
             ->method('createQuote')

@@ -13,6 +13,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
 {
     /**
      * @uses \Spryker\Zed\BusinessOnBehalfGui\Communication\Controller\CustomerController::attachCustomerAction
+     *
      * @var string
      */
     protected const PATH_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
@@ -21,6 +22,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
      * @var string
      */
     protected const PARAM_ID_CUSTOMER = 'id-customer';
+
     /**
      * @var string
      */
@@ -30,6 +32,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
      * @var string
      */
     protected const COL_FK_CUSTOMER = 'spy_company_user.fk_customer';
+
     /**
      * @var string
      */
@@ -61,7 +64,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
         return $this->generateButtonTransfer(
             $url,
             static::BUTTON_ATTACH_TO_BUSINESS_UNIT_TITLE,
-            $defaultOptions
+            $defaultOptions,
         );
     }
 }

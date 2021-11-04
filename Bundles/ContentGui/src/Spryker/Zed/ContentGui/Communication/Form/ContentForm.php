@@ -28,18 +28,22 @@ class ContentForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
+
     /**
      * @var string
      */
     public const FIELD_CONTENT_TERM_KEY = 'content_term_key';
+
     /**
      * @var string
      */
     public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
+
     /**
      * @var string
      */
@@ -49,6 +53,7 @@ class ContentForm extends AbstractType
      * @var string
      */
     public const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
@@ -58,6 +63,7 @@ class ContentForm extends AbstractType
      * @var string
      */
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
+
     /**
      * @var string
      */
@@ -81,7 +87,7 @@ class ContentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -108,7 +114,7 @@ class ContentForm extends AbstractType
                 $this->getFieldDefaultConstraints(),
                 [
                     new Length(['max' => 255]),
-                ]
+                ],
             ),
         ]);
 
@@ -142,7 +148,7 @@ class ContentForm extends AbstractType
     {
         $builder->add(
             static::FIELD_CONTENT_TERM_KEY,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;
@@ -157,7 +163,7 @@ class ContentForm extends AbstractType
     {
         $builder->add(
             static::FIELD_CONTENT_TYPE_KEY,
-            HiddenType::class
+            HiddenType::class,
         );
 
         return $this;
@@ -165,7 +171,7 @@ class ContentForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

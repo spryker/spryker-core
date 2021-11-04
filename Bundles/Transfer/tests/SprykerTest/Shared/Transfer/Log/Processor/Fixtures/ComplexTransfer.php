@@ -34,7 +34,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     protected $transferCollection;
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [
         'array' => [

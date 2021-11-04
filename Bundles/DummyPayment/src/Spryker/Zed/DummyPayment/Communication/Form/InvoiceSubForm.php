@@ -28,10 +28,12 @@ class InvoiceSubForm extends AbstractType
      * @var string
      */
     public const PAYMENT_METHOD = 'invoice';
+
     /**
      * @var string
      */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+
     /**
      * @var string
      */
@@ -44,7 +46,7 @@ class InvoiceSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -88,7 +90,7 @@ class InvoiceSubForm extends AbstractType
                     $this->createNotBlankConstraint(),
                     $this->createBirthdayConstraint(),
                 ],
-            ]
+            ],
         );
 
         return $this;

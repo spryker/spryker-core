@@ -158,7 +158,7 @@ class LogFactory extends AbstractFactory
     {
         return new Sanitizer(
             $this->getConfig()->getSanitizerFieldNames(),
-            $this->getConfig()->getSanitizedFieldValue()
+            $this->getConfig()->getSanitizedFieldValue(),
         );
     }
 
@@ -177,7 +177,7 @@ class LogFactory extends AbstractFactory
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getLogDestinationPath(),
-            $this->getConfig()->getLogLevel()
+            $this->getConfig()->getLogLevel(),
         );
 
         $streamHandler->setFormatter($this->createLogstashFormatter());
@@ -200,7 +200,7 @@ class LogFactory extends AbstractFactory
     {
         $streamHandler = new StreamHandler(
             $this->getConfig()->getExceptionLogDestinationPath(),
-            Logger::ERROR
+            Logger::ERROR,
         );
         $streamHandler->setFormatter($this->createExceptionFormatter());
 
@@ -245,7 +245,7 @@ class LogFactory extends AbstractFactory
     {
         return new QueueHandler(
             $this->getProvidedDependency(LogDependencyProvider::CLIENT_QUEUE),
-            $this->getConfig()->getQueueName()
+            $this->getConfig()->getQueueName(),
         );
     }
 }

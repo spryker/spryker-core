@@ -50,7 +50,7 @@ class DataReaderHelper extends Module
         $this->assertSame($expectedNumberOfDataSets, $givenCount, sprintf(
             'Expected "%s" data sets found "%s".',
             $expectedNumberOfDataSets,
-            $givenCount
+            $givenCount,
         ));
     }
 

@@ -34,18 +34,22 @@ class RuleForm extends AbstractType
      * @var string
      */
     public const FIELD_BUNDLE = 'bundle';
+
     /**
      * @var string
      */
     public const FIELD_CONTROLLER = 'controller';
+
     /**
      * @var string
      */
     public const FIELD_ACTION = 'action';
+
     /**
      * @var string
      */
     public const FIELD_TYPE = 'type';
+
     /**
      * @var string
      */
@@ -75,7 +79,7 @@ class RuleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

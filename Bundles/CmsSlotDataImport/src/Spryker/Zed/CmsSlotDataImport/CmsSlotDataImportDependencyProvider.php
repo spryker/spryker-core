@@ -21,6 +21,7 @@ class CmsSlotDataImportDependencyProvider extends DataImportDependencyProvider
      * @var string
      */
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+
     /**
      * @var string
      */
@@ -49,7 +50,7 @@ class CmsSlotDataImportDependencyProvider extends DataImportDependencyProvider
     {
         $container->set(static::FACADE_CMS_SLOT, function (Container $container) {
             return new CmsSlotDataImportToCmsSlotFacadeBridge(
-                $container->getLocator()->cmsSlot()->facade()
+                $container->getLocator()->cmsSlot()->facade(),
             );
         });
 
@@ -65,7 +66,7 @@ class CmsSlotDataImportDependencyProvider extends DataImportDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new CmsSlotDataImportToUtilTextServiceBridge(
-                $container->getLocator()->utilText()->service()
+                $container->getLocator()->utilText()->service(),
             );
         });
 

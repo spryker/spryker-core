@@ -90,7 +90,7 @@ class CustomerCompanyAttachFormDataProvider
             $key = sprintf(
                 '%s (ID: %d)',
                 $companyTransfer->getName(),
-                $companyTransfer->getIdCompany()
+                $companyTransfer->getIdCompany(),
             );
             $companies[$key] = $companyTransfer->getIdCompany();
         }

@@ -53,7 +53,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $productAbstractSkuList)
+            $this->getContent($context, $productAbstractSkuList),
         );
     }
 

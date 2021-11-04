@@ -12,7 +12,7 @@ class ProductRelationStorageGrouper implements ProductRelationStorageGrouperInte
     /**
      * @param array<\Generated\Shared\Transfer\ProductRelationTransfer> $productRelationTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\ProductRelationTransfer>>>
      */
     public function groupProductRelationsByProductAbstractAndStore(
         array $productRelationTransfers

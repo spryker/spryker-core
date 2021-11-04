@@ -27,6 +27,7 @@ class ReturnSlipController extends AbstractController
      * @var string
      */
     protected const ERROR_MESSAGE_RETURN_NOT_FOUND = 'Return with id "%id%" was not found.';
+
     /**
      * @var string
      */
@@ -34,6 +35,7 @@ class ReturnSlipController extends AbstractController
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui';
@@ -87,7 +89,7 @@ class ReturnSlipController extends AbstractController
         $returnTransfer->getReturnItems()->uasort(
             function (ReturnItemTransfer $firstReturnItemTransfer, ReturnItemTransfer $secondReturnItemTransfer) {
                 return strcmp($firstReturnItemTransfer->getOrderItem()->getOrderReference(), $secondReturnItemTransfer->getOrderItem()->getOrderReference());
-            }
+            },
         );
 
         return $returnTransfer;
@@ -101,7 +103,7 @@ class ReturnSlipController extends AbstractController
     protected function findReturn(Request $request): ?ReturnTransfer
     {
         $idSalesReturn = $this->castId(
-            $request->get(static::PARAM_ID_RETURN)
+            $request->get(static::PARAM_ID_RETURN),
         );
 
         return $this->getFactory()

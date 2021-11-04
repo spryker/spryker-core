@@ -26,7 +26,7 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     {
         return new PriceProductMatcher(
             $this->getPriceProductDecisionPlugins(),
-            $this->createSinglePriceProductFilterStrategy()
+            $this->createSinglePriceProductFilterStrategy(),
         );
     }
 

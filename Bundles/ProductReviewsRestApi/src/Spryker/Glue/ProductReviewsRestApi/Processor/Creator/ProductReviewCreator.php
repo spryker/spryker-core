@@ -25,6 +25,7 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
 
     /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     *
      * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -77,7 +78,7 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         $productAbstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $parentResource->getId(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         if (!$productAbstractData) {
@@ -88,8 +89,8 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
             $this->createProductReviewRequestTransfer(
                 $restProductReviewsAttributesTransfer,
                 $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
-                $restRequest
-            )
+                $restRequest,
+            ),
         );
 
         if (!$productReviewResponseTransfer->getIsSuccess()) {

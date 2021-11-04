@@ -34,6 +34,7 @@ class TaxBusinessTester extends Actor
      * @var int
      */
     public const DEFAULT_QUANTITY = 1;
+
     /**
      * @var string
      */

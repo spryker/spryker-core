@@ -28,10 +28,12 @@ class ChangePasswordForm extends AbstractType
      * @var string
      */
     protected const FIELD_CURRENT_PASSWORD = 'current_password';
+
     /**
      * @var string
      */
     public const FIELD_NEW_PASSWORD = 'new_password';
+
     /**
      * @var string
      */
@@ -41,14 +43,17 @@ class ChangePasswordForm extends AbstractType
      * @var string
      */
     protected const LABEL_CURRENT_PASSWORD = 'Current password';
+
     /**
      * @var string
      */
     protected const LABEL_NEW_PASSWORD = 'New password';
+
     /**
      * @var string
      */
     protected const LABEL_NEW_PASSWORD_REPEAT = 'Repeat new password';
+
     /**
      * @var string
      */
@@ -69,7 +74,7 @@ class ChangePasswordForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -100,7 +105,7 @@ class ChangePasswordForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::LABEL_CURRENT_PASSWORD,
                 ],
-            ]
+            ],
         );
 
         return $this;

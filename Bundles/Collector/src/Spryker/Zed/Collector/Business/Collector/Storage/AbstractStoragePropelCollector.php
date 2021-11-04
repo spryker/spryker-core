@@ -68,7 +68,7 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
                 $localeTransfer->requireIdLocale()->getIdLocale(),
                 $this->getCurrentStore()->requireIdStore()->getIdStore(),
             ],
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
     }
 
@@ -82,7 +82,7 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
         $touchQuery->addJoin(
             [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchStorageTableMap::COL_FK_STORE],
             [SpyTouchStorageTableMap::COL_FK_TOUCH, $this->getCurrentStore()->requireIdStore()->getIdStore()],
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
     }
 

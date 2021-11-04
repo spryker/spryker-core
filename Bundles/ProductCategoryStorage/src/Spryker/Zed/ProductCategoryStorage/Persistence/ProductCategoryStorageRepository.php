@@ -38,6 +38,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      * @var string
      */
     protected const COL_BOOSTED_DEPTH = 'boostedDepth';
+
     /**
      * @var int
      */
@@ -57,7 +58,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->addJoin(
                 SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
-                Criteria::LEFT_JOIN
+                Criteria::LEFT_JOIN,
             )
             ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyCategoryAttributeTableMap::COL_FK_LOCALE);
 
@@ -156,7 +157,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->createProductAbstractLocalizedAttributesMapper()
             ->mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers(
                 $productAbstractLocalizedAttributesEntities,
-                []
+                [],
             );
     }
 
@@ -174,7 +175,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->addAnd(
                 SpyCategoryTableMap::COL_IS_ACTIVE,
                 true,
-                Criteria::EQUAL
+                Criteria::EQUAL,
             )
             ->joinWithSpyCategory()
             ->joinWith('SpyCategory.Node')
@@ -188,7 +189,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
+     * @return array<array<array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>>>
      */
     public function getMappedProductAbstractCategoryStorages(array $productAbstractIds): array
     {
@@ -202,7 +203,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->createProductCategoryStorageMapper()
             ->mapProductAbstractCategoryStorageEntitiesToProductAbstractCategoryStorageTransfers(
                 $productAbstractCategoryStorageEntities,
-                []
+                [],
             );
     }
 
@@ -236,7 +237,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
         $filterTransfer = $this->createFilterTransfer(
             $offset,
             $limit,
-            SpyProductAbstractCategoryStorageTableMap::COL_ID_PRODUCT_ABSTRACT_CATEGORY_STORAGE
+            SpyProductAbstractCategoryStorageTableMap::COL_ID_PRODUCT_ABSTRACT_CATEGORY_STORAGE,
         );
 
         $query = $this->getFactory()->createProductAbstractCategoryStoragePropelQuery();
@@ -293,7 +294,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
         $depthToBoostClause = sprintf(
             '(CASE WHEN %s = %s THEN 1 ELSE 0 END)',
             SpyCategoryClosureTableTableMap::COL_DEPTH,
-            static::DEPTH_TO_BOOST
+            static::DEPTH_TO_BOOST,
         );
 
         $categoryNodeQuery

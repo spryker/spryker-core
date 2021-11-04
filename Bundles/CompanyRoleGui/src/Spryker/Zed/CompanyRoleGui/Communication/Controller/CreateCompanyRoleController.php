@@ -24,6 +24,7 @@ class CreateCompanyRoleController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_CREATE = 'Company role has been successfully created';
+
     /**
      * @var string
      */

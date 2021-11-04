@@ -13,10 +13,8 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 interface ProductAttributeGuiTableConfigurationProviderInterface
 {
     /**
-     * @phpstan-param ArrayObject<string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
      * @param array<string> $attributes
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     * @param \ArrayObject<int|string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

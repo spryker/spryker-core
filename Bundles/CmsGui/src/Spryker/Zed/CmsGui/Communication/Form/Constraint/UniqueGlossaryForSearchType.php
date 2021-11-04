@@ -15,6 +15,7 @@ class UniqueGlossaryForSearchType extends SymfonyConstraint
      * @var string
      */
     public const OPTION_GLOSSARY_FACADE = 'glossaryFacade';
+
     /**
      * @var int
      */

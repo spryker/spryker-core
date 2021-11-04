@@ -52,7 +52,7 @@ class ProductStorageClientTester extends Actor
     {
         return (new ProductViewTransfer())
             ->setAttributeMap(
-                (new AttributeMapStorageTransfer())->setProductConcreteIds([static::TEST_PRODUCT_CONCRETE_ID])
+                (new AttributeMapStorageTransfer())->setProductConcreteIds([static::TEST_PRODUCT_CONCRETE_ID]),
             );
     }
 }

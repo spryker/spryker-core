@@ -82,7 +82,7 @@ class SecurityBlockerCustomerControllerAfterActionPluginTest extends Unit
         $this->securityBlockerCustomerControllerAfterActionPlugin->afterAction(
             SecurityBlockerRestApiConfig::RESOURCE_ACCESS_TOKENS,
             $restRequestMock,
-            $restResponseMock
+            $restResponseMock,
         );
     }
 
@@ -111,7 +111,7 @@ class SecurityBlockerCustomerControllerAfterActionPluginTest extends Unit
         $this->securityBlockerCustomerControllerAfterActionPlugin->afterAction(
             SecurityBlockerRestApiConfig::RESOURCE_ACCESS_TOKENS,
             $restRequestMock,
-            $restResponseMock
+            $restResponseMock,
         );
     }
 

@@ -62,25 +62,25 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             $shipmentTransfer = $this->expandShipmentTransferWithShippingAddress(
                 $restShipmentsTransfer,
                 $quoteTransfer,
-                $shipmentTransfer
+                $shipmentTransfer,
             );
 
             $shipmentTransfer = $this->expandShipmentTransferWithShipmentMethod(
                 $restShipmentsTransfer,
                 $quoteTransfer,
-                $shipmentTransfer
+                $shipmentTransfer,
             );
 
             $quoteTransfer = $this->assignShipmentTransferToItems(
                 $quoteTransfer,
                 $restShipmentsTransfer->getItems(),
-                $shipmentTransfer
+                $shipmentTransfer,
             );
 
             $quoteTransfer = $this->assignShipmentTransferToBundleItems(
                 $quoteTransfer,
                 $restShipmentsTransfer->getItems(),
-                $shipmentTransfer
+                $shipmentTransfer,
             );
         }
 
@@ -174,7 +174,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ItemTransfer>>
      */
     protected function mapBundledItemsByBundleItemIdentifier(QuoteTransfer $quoteTransfer): array
     {
@@ -234,7 +234,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         }
 
         $shipmentTransfer->setShippingAddress(
-            $this->getAddressTransfer($restShipmentsTransfer->getShippingAddress(), $quoteTransfer)
+            $this->getAddressTransfer($restShipmentsTransfer->getShippingAddress(), $quoteTransfer),
         );
 
         return $shipmentTransfer;

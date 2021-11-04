@@ -104,7 +104,7 @@ class ShoppingListPersistenceFactory extends AbstractPersistenceFactory
     public function createShoppingListMapper(): ShoppingListMapperInterface
     {
         return new ShoppingListMapper(
-            $this->createShoppingListItemMapper()
+            $this->createShoppingListItemMapper(),
         );
     }
 

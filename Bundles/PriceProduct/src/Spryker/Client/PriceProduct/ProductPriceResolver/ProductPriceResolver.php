@@ -86,9 +86,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     /**
      * {@inheritDoc}
      *
-     * @phpstan-param array<mixed> $priceMap
-     *
-     * @param array $priceMap
+     * @param array<mixed> $priceMap
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
@@ -116,7 +114,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         return $this->prepareCurrentProductPriceTransfer(
             $priceProductTransfers,
             $currentProductPriceTransfer,
-            $priceProductFilter
+            $priceProductFilter,
         );
     }
 
@@ -140,7 +138,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         return $this->prepareCurrentProductPriceTransfer(
             $priceProductTransfers,
             $currentProductPriceTransfer,
-            $priceProductFilter
+            $priceProductFilter,
         );
     }
 
@@ -158,7 +156,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     ): CurrentProductPriceTransfer {
         $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
             $priceProductTransfers,
-            $priceProductFilter
+            $priceProductFilter,
         );
 
         if (!$priceProductTransfer) {
@@ -182,7 +180,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         $priceProductAllPriceTypesTransfers = $this->priceProductService->resolveProductPricesByPriceProductFilter(
             $priceProductTransfers,
-            $priceProductFilterAllPriceTypes
+            $priceProductFilterAllPriceTypes,
         );
 
         $prices = [];
@@ -231,7 +229,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         if ($priceProductFilterTransfer) {
             $builtPriceProductFilterTransfer->fromArray(
                 $priceProductFilterTransfer->toArray(),
-                true
+                true,
             );
         }
 
@@ -270,9 +268,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $priceMap
-     *
-     * @param array $priceMap
+     * @param array<mixed> $priceMap
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
@@ -297,11 +293,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                         $priceProductTransfers[$index] = (new PriceProductTransfer())
                             ->setPriceDimension(
                                 (new PriceProductDimensionTransfer())
-                                    ->setType($this->priceProductConfig->getPriceDimensionDefault())
+                                    ->setType($this->priceProductConfig->getPriceDimensionDefault()),
                             )
                             ->setMoneyValue(
                                 (new MoneyValueTransfer())
-                                    ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                                    ->setCurrency((new CurrencyTransfer())->setCode($currencyCode)),
                             )
                             ->setPriceTypeName($priceType);
                     }

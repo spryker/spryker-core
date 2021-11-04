@@ -25,26 +25,32 @@ class TriggerController extends AbstractController
      * @var string
      */
     public const URL_PARAM_IDENTIFIER = 'identifier';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_STATE = 'id-state';
+
     /**
      * @var string
      */
     public const URL_PARAM_ID_PROCESS = 'id-process';
+
     /**
      * @var string
      */
     public const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+
     /**
      * @var string
      */
     public const URL_PARAM_PROCESS_NAME = 'process-name';
+
     /**
      * @var string
      */
     public const URL_PARAM_REDIRECT = 'redirect';
+
     /**
      * @var string
      */
@@ -71,7 +77,7 @@ class TriggerController extends AbstractController
     {
         trigger_error(
             'This action is deprecated, please use submitTriggerEventForNewItemAction() instead.',
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
 
         $stateMachineName = $request->query->get(self::URL_PARAM_STATE_MACHINE_NAME);
@@ -124,7 +130,7 @@ class TriggerController extends AbstractController
     {
         trigger_error(
             'This action is deprecated, please use submitTriggerEventAction() instead.',
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
 
         $identifier = $this->castId($request->query->get(self::URL_PARAM_IDENTIFIER));

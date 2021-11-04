@@ -43,7 +43,7 @@ class ProductImageSetFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -96,7 +96,7 @@ class ProductImageSetFormType extends AbstractType
     {
         $builder->add(ProductImageSetTransfer::LOCALE, HiddenType::class);
         $builder->get(ProductImageSetTransfer::LOCALE)->addModelTransformer(
-            $this->getFactory()->createLocaleTransformer()
+            $this->getFactory()->createLocaleTransformer(),
         );
 
         return $this;

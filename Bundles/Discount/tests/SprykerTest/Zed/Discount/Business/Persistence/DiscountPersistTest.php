@@ -260,7 +260,7 @@ class DiscountPersistTest extends Unit
                     $discountStoreRelationWriterMock,
                     $postCreatePlugins,
                     $postUpdatePlugins,
-                ]
+                ],
             )
             ->getMock();
 

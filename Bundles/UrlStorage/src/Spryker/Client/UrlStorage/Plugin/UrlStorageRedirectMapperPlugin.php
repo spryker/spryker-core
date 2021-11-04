@@ -23,7 +23,7 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
 {
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
@@ -52,7 +52,7 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
                 '%s.%s.resource.redirect.%s',
                 strtolower(Store::getInstance()->getStoreName()),
                 strtolower(Store::getInstance()->getCurrentLocale()),
-                $idRedirectUrl
+                $idRedirectUrl,
             );
 
             return $collectorDataKey;

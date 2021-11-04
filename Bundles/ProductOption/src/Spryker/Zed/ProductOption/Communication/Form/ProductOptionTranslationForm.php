@@ -28,14 +28,17 @@ class ProductOptionTranslationForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_CODE = 'localeCode';
+
     /**
      * @var string
      */
     public const FIELD_KEY = 'key';
+
     /**
      * @var string
      */

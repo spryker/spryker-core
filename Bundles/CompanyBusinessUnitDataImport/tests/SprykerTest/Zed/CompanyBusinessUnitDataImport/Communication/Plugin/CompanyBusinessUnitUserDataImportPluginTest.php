@@ -32,10 +32,12 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
      * @var string
      */
     protected const COMPANY_KEY = 'spryker';
+
     /**
      * @var string
      */
     protected const COMPANY_USER_KEY = 'ComUser--1';
+
     /**
      * @var string
      */
@@ -45,6 +47,7 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
      * @var string
      */
     protected const IMPORT_COMPANY_BUSINESS_UNIT_USER_CSV = 'import/company_business_unit_user.csv';
+
     /**
      * @var string
      */
@@ -102,13 +105,13 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT,
-            $companyBusinessUnitDataImportPlugin->getImportType()
+            $companyBusinessUnitDataImportPlugin->getImportType(),
         );
 
         $companyBusinessUnitUserDataImportPlugin = new CompanyBusinessUnitUserDataImportPlugin();
         $this->assertSame(
             CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT_USER,
-            $companyBusinessUnitUserDataImportPlugin->getImportType()
+            $companyBusinessUnitUserDataImportPlugin->getImportType(),
         );
     }
 }

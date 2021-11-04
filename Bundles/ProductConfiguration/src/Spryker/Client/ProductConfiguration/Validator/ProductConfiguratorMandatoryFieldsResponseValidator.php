@@ -42,12 +42,12 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
             $this->getLogger()->error(
                 static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR,
-                ['exception' => $requiredTransferPropertyException]
+                ['exception' => $requiredTransferPropertyException],
             );
 
             return $this->addErrorToResponse(
                 $productConfiguratorResponseProcessorResponseTransfer,
-                static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR
+                static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR,
             );
         }
 

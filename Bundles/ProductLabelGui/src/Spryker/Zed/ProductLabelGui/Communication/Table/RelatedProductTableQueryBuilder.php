@@ -27,18 +27,22 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
      * @var string
      */
     public const RESULT_FIELD_PRODUCT_ABSTRACT_NAME = 'abstract_product_name';
+
     /**
      * @var string
      */
     public const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
+
     /**
      * @var string
      */
     public const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
+
     /**
      * @var string
      */
     public const RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT = 'abstract_product_relation_count';
+
     /**
      * @var string
      */
@@ -93,7 +97,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
 
         $query->where(sprintf(
             '%s IS NULL',
-            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL
+            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,
         ));
 
         return $query;
@@ -110,7 +114,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
 
         $query->where(sprintf(
             '%s IS NOT NULL',
-            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL
+            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,
         ));
 
         return $query;
@@ -147,7 +151,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->withColumn(
                     SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
-                    static::RESULT_FIELD_PRODUCT_ABSTRACT_NAME
+                    static::RESULT_FIELD_PRODUCT_ABSTRACT_NAME,
                 )
                 ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse();
@@ -167,7 +171,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                         ->withColumn(
                             sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
-                            static::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV
+                            static::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV,
                         )
                         ->filterByFkLocale($localeTransfer->getIdLocale())
                         ->_or()
@@ -189,7 +193,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
                     sprintf('GROUP_CONCAT(CAST(%s AS int))', SpyProductTableMap::COL_IS_ACTIVE),
-                    static::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV
+                    static::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV,
                 )
             ->endUse()
             ->groupByIdProductAbstract();
@@ -206,7 +210,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $relationJoin = new Join(
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
-            Criteria::LEFT_JOIN
+            Criteria::LEFT_JOIN,
         );
 
         $query->addJoinObject($relationJoin, 'relationJoin');
@@ -216,8 +220,8 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             sprintf(
                 '%s = %s',
                 SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,
-                $idProductLabel ?: 'NULL'
-            )
+                $idProductLabel ?: 'NULL',
+            ),
         );
     }
 
@@ -234,14 +238,14 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             ->where(sprintf(
                 '%s = %s',
                 SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             ))
             ->groupByFkProductAbstract()
             ->addSelfSelectColumns()
             ->clearSelectColumns()
             ->withColumn(
                 sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
-                static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
+                static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
             )
             ->select([
                 static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT => static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
@@ -250,7 +254,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $params = [];
         $query->withColumn(
             sprintf('(%s)', $subQuery->createSelectSql($params)),
-            static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
+            static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
         );
     }
 }

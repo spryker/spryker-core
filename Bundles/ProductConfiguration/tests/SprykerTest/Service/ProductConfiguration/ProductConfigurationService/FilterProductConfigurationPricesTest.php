@@ -27,6 +27,7 @@ class FilterProductConfigurationPricesTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
@@ -57,7 +58,7 @@ class FilterProductConfigurationPricesTest extends Unit
         // Act
         $priceProductTransfers = $this->tester->getLocator()->productConfiguration()->service()->filterProductConfigurationPrices(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert
@@ -74,7 +75,7 @@ class FilterProductConfigurationPricesTest extends Unit
         $productConfigurationPriceProductTransfer = $this->createPriceProductTransfer(true);
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductConfigurationInstance(
-            (new ProductConfigurationInstanceTransfer())->addPrice($productConfigurationPriceProductTransfer)
+            (new ProductConfigurationInstanceTransfer())->addPrice($productConfigurationPriceProductTransfer),
         );
 
         $priceProductTransfers = [
@@ -86,7 +87,7 @@ class FilterProductConfigurationPricesTest extends Unit
         // Act
         $priceProductTransfers = $this->tester->getLocator()->productConfiguration()->service()->filterProductConfigurationPrices(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert
@@ -94,7 +95,7 @@ class FilterProductConfigurationPricesTest extends Unit
         $this->assertSame(
             $priceProductTransfers[0]->getPriceDimension()->getProductConfigurationInstanceHash(),
             $productConfigurationPriceProductTransfer->getPriceDimension()->getProductConfigurationInstanceHash(),
-            'Expects product configuration instance hash to be the same as for price from configuration instance.'
+            'Expects product configuration instance hash to be the same as for price from configuration instance.',
         );
     }
 
@@ -105,7 +106,7 @@ class FilterProductConfigurationPricesTest extends Unit
     {
         // Arrange
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())->setProductConfigurationInstance(
-            (new ProductConfigurationInstanceTransfer())->addPrice($this->createPriceProductTransfer(true))
+            (new ProductConfigurationInstanceTransfer())->addPrice($this->createPriceProductTransfer(true)),
         );
 
         $priceProductTransfers = [
@@ -116,7 +117,7 @@ class FilterProductConfigurationPricesTest extends Unit
         // Act
         $priceProductTransfers = $this->tester->getLocator()->productConfiguration()->service()->filterProductConfigurationPrices(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
 
         // Assert

@@ -23,12 +23,14 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
 {
     /**
      * @uses \Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap::COL_ID_FILE
+     *
      * @var string
      */
     protected const ORDER_BY_COLUMN = 'spy_file.id_file';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     *
      * @var string
      */
     protected const ORDER_DIRECTION = 'ASC';

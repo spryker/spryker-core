@@ -21,6 +21,7 @@ class PaginatedReturnReasonSearchQueryExpanderPlugin extends AbstractPlugin impl
      * @var string
      */
     protected const PARAMETER_OFFSET = 'offset';
+
     /**
      * @var string
      */

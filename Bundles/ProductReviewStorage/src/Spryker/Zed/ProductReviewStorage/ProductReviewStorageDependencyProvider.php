@@ -21,6 +21,7 @@ class ProductReviewStorageDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
+
     /**
      * @var string
      */

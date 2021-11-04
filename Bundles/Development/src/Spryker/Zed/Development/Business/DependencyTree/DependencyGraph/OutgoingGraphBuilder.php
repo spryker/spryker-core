@@ -38,7 +38,7 @@ class OutgoingGraphBuilder
     protected $dependencyManager;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $bundlesToFilter;
 
@@ -47,7 +47,7 @@ class OutgoingGraphBuilder
      * @param \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin $graph
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleDependencyParser
      * @param \Spryker\Zed\Development\Business\Dependency\ManagerInterface $dependencyManager
-     * @param array $bundlesToFilter
+     * @param array<string> $bundlesToFilter
      */
     public function __construct(
         $bundleName,

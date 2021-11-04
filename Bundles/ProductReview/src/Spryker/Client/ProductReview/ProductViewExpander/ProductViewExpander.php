@@ -17,12 +17,14 @@ class ProductViewExpander implements ProductViewExpanderInterface
 {
     /**
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const KEY_RATING_AGGREGATION = 'ratingAggregation';
 
     /**
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRatingAggregationBulkResultFormatterPlugin::NAME
+     *
      * @var string
      */
     protected const KEY_PRODUCT_BULK_AGGREGATION = 'productAggregation';
@@ -105,7 +107,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
 
             if (isset($productViewTransfers[$productId])) {
                 $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
-                    $this->createRatingAggregationTransfer($productReviews)
+                    $this->createRatingAggregationTransfer($productReviews),
                 );
 
                 $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer);

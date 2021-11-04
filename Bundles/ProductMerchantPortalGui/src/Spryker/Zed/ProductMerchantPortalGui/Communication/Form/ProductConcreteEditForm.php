@@ -27,22 +27,27 @@ class ProductConcreteEditForm extends AbstractType
      * @var string
      */
     protected const FIELD_PRODUCT_CONCRETE = 'productConcrete';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+
     /**
      * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
+
     /**
      * @var string
      */
@@ -62,18 +67,22 @@ class ProductConcreteEditForm extends AbstractType
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_NAME = 'Use Abstract Product Name';
+
     /**
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'Use Abstract Product Description';
+
     /**
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_PRICES = 'Use Abstract Product prices';
+
     /**
      * @var string
      */
     protected const LABEL_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'Use Abstract Product Image Sets';
+
     /**
      * @var string
      */
@@ -86,6 +95,7 @@ class ProductConcreteEditForm extends AbstractType
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     *
      * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
@@ -110,10 +120,9 @@ class ProductConcreteEditForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -202,7 +211,7 @@ class ProductConcreteEditForm extends AbstractType
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail());
 
         $builder->get(static::FIELD_PRODUCT_CONCRETE)->get(ProductConcreteTransfer::PRICES)->addModelTransformer(
-            $priceProductTransformer
+            $priceProductTransformer,
         );
 
         return $this;
@@ -240,10 +249,9 @@ class ProductConcreteEditForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -260,7 +268,7 @@ class ProductConcreteEditForm extends AbstractType
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_SEARCHABILITY,
                 ],
-            ]
+            ],
         );
 
         return $this;

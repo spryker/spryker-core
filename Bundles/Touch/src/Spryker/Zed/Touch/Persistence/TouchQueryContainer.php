@@ -24,6 +24,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @var string
      */
     public const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
+
     /**
      * @var string
      */

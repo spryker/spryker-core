@@ -26,6 +26,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @var string
      */
     protected const URI_SUFFIX_INDEX = '\/index$';
+
     /**
      * @var string
      */
@@ -35,6 +36,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @var string
      */
     protected const TWIG_FUNCTION_NAME_NAVIGATION = 'navigation';
+
     /**
      * @var string
      */
@@ -44,6 +46,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @var string
      */
     protected const TWIG_GLOBAL_VARIABLE_NAME_NAVIGATION = 'navigation';
+
     /**
      * @var string
      */
@@ -60,7 +63,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     protected $navigation;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $navigations = [];
 
@@ -173,7 +176,7 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string|null $navigationType
      *
-     * @return array
+     * @return array<string, array>
      */
     protected function buildNavigation(Request $request, ?string $navigationType = null): array
     {

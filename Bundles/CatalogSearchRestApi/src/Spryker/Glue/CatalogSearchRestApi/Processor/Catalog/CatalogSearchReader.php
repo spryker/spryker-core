@@ -24,18 +24,21 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
 {
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE
+     *
      * @var int
      */
     protected const DEFAULT_ITEMS_PER_PAGE = 12;
 
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE
+     *
      * @var string
      */
     protected const PARAMETER_NAME_PAGE = 'page';
 
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE
+     *
      * @var string
      */
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
@@ -140,7 +143,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
             null,
-            $restSuggestionsAttributesTransfer
+            $restSuggestionsAttributesTransfer,
         );
 
         return $response->addResource($restResource);
@@ -183,13 +186,13 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restSuggestionsAttributesTransfer = $this
             ->catalogSearchSuggestionsResourceMapper
             ->mapSuggestionsToRestAttributesTransfer(
-                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse()
+                $this->catalogSearchSuggestionsResourceMapper->getEmptySearchResponse(),
             );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH_SUGGESTIONS,
             null,
-            $restSuggestionsAttributesTransfer
+            $restSuggestionsAttributesTransfer,
         );
 
         return $response->addResource($restResource);
@@ -222,7 +225,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
             null,
-            $restSearchAttributesTransfer
+            $restSearchAttributesTransfer,
         );
 
         $response = $this->restResourceBuilder->createRestResponse($restSearchAttributesTransfer->getPagination()->getNumFound());

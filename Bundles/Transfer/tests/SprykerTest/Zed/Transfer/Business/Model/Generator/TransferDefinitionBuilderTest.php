@@ -69,7 +69,7 @@ class TransferDefinitionBuilderTest extends Unit
     }
 
     /**
-     * @param array $sourceDirectories
+     * @param array<string> $sourceDirectories
      * @param \Spryker\Zed\Transfer\TransferConfig|null $config
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
@@ -82,7 +82,7 @@ class TransferDefinitionBuilderTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition($config ?: new TransferConfig())
+            new ClassDefinition($config ?: new TransferConfig()),
         );
 
         return $definitionBuilder;

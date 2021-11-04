@@ -23,22 +23,27 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const COL_KEY_STATE = 'state';
+
     /**
      * @var string
      */
@@ -51,6 +56,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\ItemListController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/item-list/table-data';
@@ -156,7 +162,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
             'orderItemStates',
             'States',
             true,
-            $this->getStatesOptions()
+            $this->getStatesOptions(),
         );
 
         return $guiTableConfigurationBuilder;
@@ -193,8 +199,8 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
                 sprintf(
                     '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=[${rowId}]',
                     $merchantOrderTransfer->getIdMerchantOrder(),
-                    $manualEvent
-                )
+                    $manualEvent,
+                ),
             );
         }
 
@@ -221,15 +227,15 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
                 sprintf(
                     '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=${rowIds}',
                     $merchantOrderTransfer->getIdMerchantOrder(),
-                    $manualEvent
-                )
+                    $manualEvent,
+                ),
             );
         }
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
             ->setAvailableBatchActionsPath(static::COL_KEY_ACTION_IDS)
             ->setNoBatchActionsMessage(
-                $this->translatorFacade->trans(static::MESSAGE_NO_BATCH_ACTION_AVAILABLE_FOR_ITEMS)
+                $this->translatorFacade->trans(static::MESSAGE_NO_BATCH_ACTION_AVAILABLE_FOR_ITEMS),
             );
 
         return $guiTableConfigurationBuilder;

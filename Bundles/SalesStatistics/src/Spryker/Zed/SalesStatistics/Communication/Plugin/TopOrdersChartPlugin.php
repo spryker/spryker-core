@@ -24,16 +24,19 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
      * @var int
      */
     public const COUNT_PRODUCT = 10;
+
     /**
      * @var string
      */
     public const NAME = 'top-orders';
+
     /**
      * @var string
      */
     public const TITLE = 'Top Orders';
+
     /**
-     * @var array
+     * @var array<string, string>
      */
     public const OPTIONS = [
         'orientation' => 'h',
@@ -66,7 +69,7 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
         $data->addTrace(
             $this->getFacade()->getTopOrderStatistic(static::COUNT_PRODUCT)
                 ->addOption(static::OPTIONS)
-                ->setType(ChartConfig::CHART_TYPE_BAR)
+                ->setType(ChartConfig::CHART_TYPE_BAR),
         );
         $data->setKey($dataIdentifier);
         $data->setTitle(static::TITLE);
@@ -86,7 +89,7 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
         return $this->getFactory()
             ->getTwigEnvironment()
             ->createTemplate(
-                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME)
+                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME),
             )
             ->render([]);
     }

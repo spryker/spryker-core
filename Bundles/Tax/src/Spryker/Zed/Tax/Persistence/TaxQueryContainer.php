@@ -86,22 +86,22 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
             ->addJoin(
                 SpyTaxSetTableMap::COL_ID_TAX_SET,
                 SpyTaxSetTaxTableMap::COL_FK_TAX_SET,
-                Criteria::LEFT_JOIN // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
+                Criteria::LEFT_JOIN, // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
             )
             ->addJoin(
                 SpyTaxSetTaxTableMap::COL_FK_TAX_RATE,
                 SpyTaxRateTableMap::COL_ID_TAX_RATE,
-                Criteria::LEFT_JOIN // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
+                Criteria::LEFT_JOIN, // @TODO Change to Criteria::INNER_JOIN as soon as there is a Tax GUI/Importer in Zed
             );
 
         $expandableQuery
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyTaxRateTableMap::COL_NAME . ')',
-                'tax_rate_names'
+                'tax_rate_names',
             )
             ->withColumn(
                 'GROUP_CONCAT(DISTINCT ' . SpyTaxRateTableMap::COL_RATE . ')',
-                'tax_rate_rates'
+                'tax_rate_rates',
             );
 
         return $this;

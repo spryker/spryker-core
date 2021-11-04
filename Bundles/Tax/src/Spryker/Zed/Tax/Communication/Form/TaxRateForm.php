@@ -28,14 +28,17 @@ class TaxRateForm extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_RATE = 'rate';
+
     /**
      * @var string
      */
     public const FIELD_COUNTRY = 'fkCountry';
+
     /**
      * @var string
      */
@@ -70,7 +73,7 @@ class TaxRateForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
-            ]
+            ],
         );
 
         return $this;
@@ -119,7 +122,7 @@ class TaxRateForm extends AbstractType
                         'max' => 100,
                     ]),
                 ],
-            ]
+            ],
         );
 
         $builder->get(self::FIELD_RATE)

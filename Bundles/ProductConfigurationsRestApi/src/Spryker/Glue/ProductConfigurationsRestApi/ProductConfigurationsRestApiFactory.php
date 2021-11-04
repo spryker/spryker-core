@@ -47,7 +47,7 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     {
         return new ProductConfigurationCartItemExpander(
             $this->createProductConfigurationInstanceMapper(),
-            $this->getProductConfigurationStorageClient()
+            $this->getProductConfigurationStorageClient(),
         );
     }
 
@@ -59,7 +59,7 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
         return new ProductConfigurationInstanceMapper(
             $this->createProductConfigurationInstancePriceMapper(),
             $this->getProductConfigurationPriceMapperPlugins(),
-            $this->getRestProductConfigurationPriceMapperPlugins()
+            $this->getRestProductConfigurationPriceMapperPlugins(),
         );
     }
 
@@ -77,7 +77,7 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     public function createCartItemProductConfigurationRestRequestValidator(): CartItemProductConfigurationRestRequestValidatorInterface
     {
         return new CartItemProductConfigurationRestRequestValidator(
-            $this->getProductConfigurationStorageClient()
+            $this->getProductConfigurationStorageClient(),
         );
     }
 

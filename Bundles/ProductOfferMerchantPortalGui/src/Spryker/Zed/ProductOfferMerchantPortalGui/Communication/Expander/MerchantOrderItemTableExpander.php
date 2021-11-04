@@ -20,6 +20,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
      * @var string
      */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
+
     /**
      * @var string
      */
@@ -27,6 +28,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     *
      * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
@@ -103,7 +105,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
         }
 
         $productOfferCollectionTransfer = $this->productOfferFacade->get(
-            (new ProductOfferCriteriaTransfer())->setProductOfferReferences($productOfferReferences)
+            (new ProductOfferCriteriaTransfer())->setProductOfferReferences($productOfferReferences),
         );
         $merchantSkus = $this->getMerchantSkusIndexedByProductOfferReferences($productOfferCollectionTransfer);
 
@@ -126,11 +128,9 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getMerchantSkusIndexedByProductOfferReferences(
         ProductOfferCollectionTransfer $productOfferCollectionTransfer

@@ -47,7 +47,7 @@ class ProductAbstractRestUrlResolverAttributesReader implements ProductAbstractR
 
         $data = $this->productStorageClient->findProductAbstractStorageData(
             $urlStorageTransfer->getFkResourceProductAbstract(),
-            $localeName
+            $localeName,
         );
 
         if (!$data) {

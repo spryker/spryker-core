@@ -27,7 +27,7 @@ class PropelQueryBuilderConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getJsonMapperClassNameMappings()
     {

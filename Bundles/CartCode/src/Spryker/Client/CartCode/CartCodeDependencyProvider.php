@@ -19,14 +19,17 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_CALCULATION = 'CLIENT_CALCULATION';
+
     /**
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     /**
      * @var string
      */
@@ -107,7 +110,7 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CartCodeToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 

@@ -45,7 +45,7 @@ class InvitationReader implements InvitationReaderInterface
         }
 
         return $this->repository->getCompanyUserInvitationCollection(
-            $companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter()
+            $companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter(),
         );
     }
 

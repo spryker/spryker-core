@@ -41,7 +41,7 @@ class AuthRestApiFactory extends AbstractFactory
         return new AccessTokensReader(
             $this->getClient(),
             $this->getResourceBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -53,7 +53,7 @@ class AuthRestApiFactory extends AbstractFactory
         return new RefreshTokensReader(
             $this->getOauthClient(),
             $this->getResourceBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -64,7 +64,7 @@ class AuthRestApiFactory extends AbstractFactory
     {
         return new RefreshTokensRevoker(
             $this->getOauthClient(),
-            $this->getResourceBuilder()
+            $this->getResourceBuilder(),
         );
     }
 
@@ -92,7 +92,7 @@ class AuthRestApiFactory extends AbstractFactory
         return new AccessTokenUserFinder(
             $this->getOauthService(),
             $this->getUtilEncodingService(),
-            $this->getRestUserExpanderPlugins()
+            $this->getRestUserExpanderPlugins(),
         );
     }
 

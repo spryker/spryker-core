@@ -44,7 +44,7 @@ class SessionHelper extends Module
         $this->ensureCleanSessionState();
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getSessionApplicationPluginStub()
+            $this->getSessionApplicationPluginStub(),
         );
 
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new SessionEventDispatcherPlugin());

@@ -44,7 +44,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getMerchantUserPostCreatePlugins()
+            $this->getMerchantUserPostCreatePlugins(),
         );
     }
 
@@ -57,7 +57,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
             $this->getUserFacade(),
             $this->getUserPasswordResetFacade(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -67,7 +67,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function createMerchantUserDeleter(): MerchantUserDeleterInterface
     {
         return new MerchantUserDeleter(
-            $this->getUserFacade()
+            $this->getUserFacade(),
         );
     }
 
@@ -78,7 +78,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantUserReader(
             $this->getRepository(),
-            $this->getUserFacade()
+            $this->getUserFacade(),
         );
     }
 
@@ -90,7 +90,7 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new CurrentMerchantUserReader(
             $this->getUserFacade(),
             $this->getRepository(),
-            $this->getMerchantFacade()
+            $this->getMerchantFacade(),
         );
     }
 

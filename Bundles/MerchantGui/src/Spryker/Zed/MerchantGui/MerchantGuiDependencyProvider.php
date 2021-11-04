@@ -25,46 +25,57 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
     /**
      * @var string
      */
     public const PROPEL_MERCHANT_QUERY = 'PROPEL_MERCHANT_QUERY';
+
     /**
      * @var string
      */
     public const FACADE_URL = 'FACADE_URL';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_FORM_EXPANDER = 'PLUGINS_MERCHANT_FORM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_TABLE_DATA_EXPANDER = 'PLUGINS_MERCHANT_TABLE_DATA_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER = 'PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER = 'PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER = 'PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_FORM_TABS_EXPANDER = 'PLUGINS_MERCHANT_FORM_TABS_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER = 'PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER';
+
     /**
      * @var string
      */
@@ -275,8 +286,8 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own MerchantGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage merchants.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 

@@ -19,6 +19,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
      * @var string
      */
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
      * @var string
      */
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+
     /**
      * @var string
      */
@@ -56,10 +58,8 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     }
 
     /**
-     * @phpstan-param ArrayObject<string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
      * @param array<string> $attributes
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
+     * @param \ArrayObject<int|string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
@@ -77,7 +77,7 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 true,
-                true
+                true,
             );
         }
 

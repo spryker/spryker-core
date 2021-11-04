@@ -15,18 +15,22 @@ class MultiCartConfig extends AbstractSharedConfig
      * @var string
      */
     public const QUOTE_NAME_DEFAULT_GUEST = 'Guest shopping cart';
+
     /**
      * @var string
      */
     public const QUOTE_NAME_DEFAULT_CUSTOMER = 'Shopping cart';
+
     /**
      * @var string
      */
     public const QUOTE_NAME_DUPLICATE = '%s Copied At %s';
+
     /**
      * @var string
      */
     public const QUOTE_NAME_REORDER = 'Cart from order %s';
+
     /**
      * @var string
      */

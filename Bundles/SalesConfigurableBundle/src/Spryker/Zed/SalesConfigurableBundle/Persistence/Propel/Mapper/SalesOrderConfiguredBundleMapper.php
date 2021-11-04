@@ -30,7 +30,7 @@ class SalesOrderConfiguredBundleMapper
         foreach ($bundleEntities as $bundleEntity) {
             $bundleTransfer = $this->mapBundleEntityToBundleTransfer(
                 $bundleEntity,
-                new SalesOrderConfiguredBundleTransfer()
+                new SalesOrderConfiguredBundleTransfer(),
             );
             $bundleCollectionTransfer->addSalesOrderConfiguredBundle($bundleTransfer);
         }
@@ -66,7 +66,7 @@ class SalesOrderConfiguredBundleMapper
         $bundleTransfer = $bundleTransfer->fromArray($bundleEntity->toArray(), true);
 
         $bundleTransfer->setSalesOrderConfiguredBundleItems(
-            new ArrayObject($this->mapBundleEntityToBundleItemTransfers($bundleEntity))
+            new ArrayObject($this->mapBundleEntityToBundleItemTransfers($bundleEntity)),
         );
 
         return $bundleTransfer;

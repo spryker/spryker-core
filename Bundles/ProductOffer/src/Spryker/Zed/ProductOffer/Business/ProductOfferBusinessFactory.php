@@ -46,7 +46,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->createProductOfferReferenceGenerator(),
             $this->getConfig(),
             $this->getProductOfferPostCreatePlugins(),
-            $this->getProductOfferPostUpdatePlugins()
+            $this->getProductOfferPostUpdatePlugins(),
         );
     }
 
@@ -58,7 +58,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
         return new InactiveProductOfferItemsFilter(
             $this->getRepository(),
             $this->getStoreFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
         );
     }
 
@@ -101,7 +101,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferReader(
             $this->getRepository(),
-            $this->getProductOfferExpanderPlugins()
+            $this->getProductOfferExpanderPlugins(),
         );
     }
 

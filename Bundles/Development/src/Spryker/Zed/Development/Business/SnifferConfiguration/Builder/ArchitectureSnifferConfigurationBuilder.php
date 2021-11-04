@@ -17,14 +17,17 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      * @var string
      */
     protected const CONFIG_NAME = 'architecture-sniffer';
+
     /**
      * @var string
      */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+
     /**
      * @var int
      */
     protected const CONFIG_PRIORITY_SKIP_VALUE = 0;
+
     /**
      * @var string
      */
@@ -52,7 +55,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
 
     /**
      * @param string $absoluteModulePath
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @throws \RuntimeException
      *
@@ -64,7 +67,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
 
         $priority = $this->getPriority(
             $moduleConfig,
-            $options
+            $options,
         );
 
         if ($priority === static::CONFIG_PRIORITY_SKIP_VALUE) {
@@ -78,8 +81,8 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $moduleConfig
-     * @param array $options
+     * @param array<string, mixed> $moduleConfig
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Zed\Development\Business\Exception\ArchitectureSniffer\InvalidTypeException
      *
@@ -103,7 +106,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return int
      */
@@ -123,7 +126,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return bool
      */
@@ -133,7 +136,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return array
      */
@@ -143,7 +146,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $architectureSnifferConfig
+     * @param array<string, mixed> $architectureSnifferConfig
      *
      * @return bool
      */
@@ -153,7 +156,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $architectureSnifferConfig
+     * @param array<string, mixed> $architectureSnifferConfig
      *
      * @return int
      */
@@ -163,7 +166,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     }
 
     /**
-     * @param array $moduleConfig
+     * @param array<string, mixed> $moduleConfig
      *
      * @return array<string>
      */

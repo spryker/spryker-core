@@ -22,14 +22,17 @@ class ErrorHandlerFactory
      * @var string
      */
     public const APPLICATION_ZED = 'ZED';
+
     /**
      * @var string
      */
     public const APPLICATION_GLUE = 'GLUE';
+
     /**
      * @var string
      */
     public const SAPI_CLI = 'cli';
+
     /**
      * @var string
      */
@@ -56,7 +59,7 @@ class ErrorHandlerFactory
         $errorHandler = new ErrorHandler(
             ErrorLogger::getInstance(),
             $this->createErrorRenderer(),
-            $this->getUtilSanitizeService()
+            $this->getUtilSanitizeService(),
         );
 
         return $errorHandler;

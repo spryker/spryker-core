@@ -35,7 +35,7 @@ class ProductLabelAggregateFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -58,7 +58,7 @@ class ProductLabelAggregateFormType extends AbstractType
             ProductLabelFormType::class,
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;
@@ -76,7 +76,7 @@ class ProductLabelAggregateFormType extends AbstractType
             RelatedProductFormType::class,
             [
                 'label' => false,
-            ]
+            ],
         );
 
         return $this;

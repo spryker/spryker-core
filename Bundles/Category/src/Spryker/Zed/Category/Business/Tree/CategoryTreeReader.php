@@ -41,7 +41,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         $nodeCollectionTransfer = new NodeCollectionTransfer();
         $categoryNodes = $this->categoryRepository->getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
             $categoryTransfer,
-            $categoryCriteriaTransfer
+            $categoryCriteriaTransfer,
         );
 
         if ($categoryNodes === []) {
@@ -54,7 +54,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\NodeTransfer[]> $categoryNodes
+     * @param array<array<\Generated\Shared\Transfer\NodeTransfer>> $categoryNodes
      * @param \Generated\Shared\Transfer\NodeTransfer $parentNodeTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -72,7 +72,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\NodeTransfer[]> $categoryNodesCollection
+     * @param array<array<\Generated\Shared\Transfer\NodeTransfer>> $categoryNodesCollection
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
      * @return array<\Generated\Shared\Transfer\NodeTransfer>

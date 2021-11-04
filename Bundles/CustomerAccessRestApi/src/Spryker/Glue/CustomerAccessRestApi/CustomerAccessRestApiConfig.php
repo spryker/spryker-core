@@ -17,7 +17,7 @@ class CustomerAccessRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CUSTOMER_ACCESS = 'customer-access';
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected const CUSTOMER_ACCESS_CONTENT_TYPE_TO_RESOURCE_TYPE_MAPPING = [];
 
@@ -27,7 +27,7 @@ class CustomerAccessRestApiConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getCustomerAccessContentTypeToResourceTypeMapping(): array
     {

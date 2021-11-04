@@ -144,7 +144,7 @@ class MerchantProductOptionFacadeTest extends Unit
         // Act
         $checkoutResponseTransfer = $this->tester->getFacade()->validateMerchantProductOptionsOnCheckout(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
 
         // Assert
@@ -171,7 +171,7 @@ class MerchantProductOptionFacadeTest extends Unit
         // Act
         $checkoutResponseTransfer = $this->tester->getFacade()->validateMerchantProductOptionsOnCheckout(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
 
         // Assert
@@ -197,7 +197,7 @@ class MerchantProductOptionFacadeTest extends Unit
 
         // Act
         $productOptionGroupTransfer = $this->tester->getFacade()->expandProductOptionGroup(
-            $productOptionGroupTransfer
+            $productOptionGroupTransfer,
         );
 
         // Assert
@@ -227,7 +227,7 @@ class MerchantProductOptionFacadeTest extends Unit
         // Act
         $checkoutResponseTransfer = $this->tester->getFacade()->validateMerchantProductOptionsOnCheckout(
             $quoteTransfer,
-            $checkoutResponseTransfer
+            $checkoutResponseTransfer,
         );
 
         // Assert

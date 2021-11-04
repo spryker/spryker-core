@@ -48,6 +48,7 @@ class RestRequestValidatorToFinderAdapter implements RestRequestValidatorToFinde
     /**
      * @return \Iterator<\SplFileInfo>
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->finder->getIterator();

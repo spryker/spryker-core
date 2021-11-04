@@ -75,13 +75,13 @@ class ProductReservationReader implements ProductReservationReaderInterface
                 $idProductAbstract,
                 $idLocale,
                 $idStore,
-                $stockNames
+                $stockNames,
             )
             ->findOne();
 
         if (!$productAbstractEntity) {
             throw new ProductAbstractAvailabilityNotFoundException(
-                sprintf('The product abstract availability was not found with this product abstract ID: %d', $idProductAbstract)
+                sprintf('The product abstract availability was not found with this product abstract ID: %d', $idProductAbstract),
             );
         }
 
@@ -108,7 +108,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
                 $idProductAbstract,
                 $idLocale,
                 $idStore,
-                $stockTypes
+                $stockTypes,
             )
             ->findOne();
 
@@ -206,7 +206,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
         $availabilityData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->getAbstractNeverOutOfStock($productAbstractEntity);
         $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY);
         $availabilityData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
-            $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY) ?? ''
+            $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY) ?? '',
         );
 
         return (new ProductAbstractAvailabilityTransfer())->fromArray($availabilityData, true);

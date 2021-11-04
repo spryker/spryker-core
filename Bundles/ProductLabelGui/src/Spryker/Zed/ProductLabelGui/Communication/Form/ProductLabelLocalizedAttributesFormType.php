@@ -25,10 +25,12 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
      * @var string
      */
     public const FIELD_LOCALE_ID = 'localeId';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_NAME = 'localeName';
+
     /**
      * @var string
      */
@@ -50,7 +52,7 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -73,7 +75,7 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
             HiddenType::class,
             [
                 'property_path' => 'fkLocale',
-            ]
+            ],
         );
 
         return $this;
@@ -104,7 +106,7 @@ class ProductLabelLocalizedAttributesFormType extends AbstractType
             [
                 'label' => 'Name',
                 'required' => false,
-            ]
+            ],
         );
     }
 

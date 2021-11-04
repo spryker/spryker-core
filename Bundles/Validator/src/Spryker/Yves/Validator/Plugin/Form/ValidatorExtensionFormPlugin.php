@@ -37,7 +37,7 @@ class ValidatorExtensionFormPlugin extends AbstractPlugin implements FormPluginI
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addExtension(
-            $this->createValidatorExtension($container)
+            $this->createValidatorExtension($container),
         );
 
         return $formFactoryBuilder;
@@ -51,7 +51,7 @@ class ValidatorExtensionFormPlugin extends AbstractPlugin implements FormPluginI
     protected function createValidatorExtension(ContainerInterface $container): ValidatorExtension
     {
         return new ValidatorExtension(
-            $container->get(static::SERVICE_VALIDATOR)
+            $container->get(static::SERVICE_VALIDATOR),
         );
     }
 }

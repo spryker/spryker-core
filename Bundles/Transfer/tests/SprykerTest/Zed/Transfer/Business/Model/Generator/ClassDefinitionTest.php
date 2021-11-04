@@ -768,7 +768,7 @@ class ClassDefinitionTest extends Unit
     protected function createClassDefinition(): ClassDefinition
     {
         $classDefinition = new ClassDefinition(
-            $this->tester->getModuleConfig()
+            $this->tester->getModuleConfig(),
         );
 
         return $classDefinition;

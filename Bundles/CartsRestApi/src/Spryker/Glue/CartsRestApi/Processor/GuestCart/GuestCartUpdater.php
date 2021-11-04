@@ -74,7 +74,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
         $quoteTransfer = $this->cartMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
-            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
+            (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier()),
         );
 
         $quoteTransfer
@@ -90,7 +90,7 @@ class GuestCartUpdater implements GuestCartUpdaterInterface
 
         return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

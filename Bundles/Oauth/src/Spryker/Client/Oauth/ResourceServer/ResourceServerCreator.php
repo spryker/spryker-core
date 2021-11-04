@@ -50,7 +50,7 @@ class ResourceServerCreator implements ResourceServerCreatorInterface
         return new ResourceServer(
             $this->keyLoader->loadKeys(),
             $this->accessTokenRepository,
-            $this->authorizationValidatorPlugins
+            $this->authorizationValidatorPlugins,
         );
     }
 }

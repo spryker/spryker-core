@@ -16,10 +16,12 @@ class CompanyRoleDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_ROLE = 'company-role';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_COMPANY_ROLE_PERMISSION = 'company-role-permission';
+
     /**
      * @var string
      */
@@ -34,7 +36,7 @@ class CompanyRoleDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_role.csv']),
-            static::IMPORT_TYPE_COMPANY_ROLE
+            static::IMPORT_TYPE_COMPANY_ROLE,
         );
     }
 
@@ -47,7 +49,7 @@ class CompanyRoleDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_role_permission.csv']),
-            static::IMPORT_TYPE_COMPANY_ROLE_PERMISSION
+            static::IMPORT_TYPE_COMPANY_ROLE_PERMISSION,
         );
     }
 
@@ -60,7 +62,7 @@ class CompanyRoleDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'company_user_role.csv']),
-            static::IMPORT_TYPE_COMPANY_USER_ROLE
+            static::IMPORT_TYPE_COMPANY_USER_ROLE,
         );
     }
 

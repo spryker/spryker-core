@@ -107,7 +107,7 @@ class DiscountPersist implements DiscountPersistInterface
         $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
         $this->saveDiscountStoreRelation(
             $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
-            $discountEntity->getIdDiscount()
+            $discountEntity->getIdDiscount(),
         );
 
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
@@ -138,8 +138,8 @@ class DiscountPersist implements DiscountPersistInterface
             throw new PersistenceException(
                 sprintf(
                     'Discount with id "%d" not found in database.',
-                    $idDiscount
-                )
+                    $idDiscount,
+                ),
             );
         }
 
@@ -192,8 +192,8 @@ class DiscountPersist implements DiscountPersistInterface
             throw new PersistenceException(
                 sprintf(
                     'Discount with id "%d" not found in database.',
-                    $discountVoucherTransfer->getIdDiscount()
-                )
+                    $discountVoucherTransfer->getIdDiscount(),
+                ),
             );
         }
 
@@ -218,8 +218,8 @@ class DiscountPersist implements DiscountPersistInterface
             throw new PersistenceException(
                 sprintf(
                     'Discount with id "%d" not found in database.',
-                    $idDiscount
-                )
+                    $idDiscount,
+                ),
             );
         }
 

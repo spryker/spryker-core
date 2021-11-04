@@ -17,10 +17,12 @@ class AvailableProductConcreteRelationTabs extends AbstractTabs
      * @var string
      */
     public const AVAILABLE_TAB_NAME = 'available_product';
+
     /**
      * @var string
      */
     public const AVAILABLE_TAB_TITLE = 'Select Products to assign';
+
     /**
      * @var string
      */
@@ -30,10 +32,12 @@ class AvailableProductConcreteRelationTabs extends AbstractTabs
      * @var string
      */
     public const ASSIGNED_TAB_NAME = 'assignment_product';
+
     /**
      * @var string
      */
     public const ASSIGNED_TAB_TITLE = 'Products to be assigned';
+
     /**
      * @var string
      */

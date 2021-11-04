@@ -21,6 +21,7 @@ class CleanTranslationCacheConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'translator:clean-cache';
+
     /**
      * @var string
      */

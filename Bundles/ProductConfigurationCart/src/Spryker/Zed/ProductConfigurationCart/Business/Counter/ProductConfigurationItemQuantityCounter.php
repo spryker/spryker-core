@@ -21,6 +21,7 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     *
      * @var string
      */
     protected const OPERATION_REMOVE = 'remove';
@@ -63,7 +64,7 @@ class ProductConfigurationItemQuantityCounter implements ProductConfigurationIte
                 $currentItemQuantity = $this->changeItemQuantityAccordingToOperation(
                     $currentItemQuantity,
                     $cartChangeItemTransfer->getQuantity(),
-                    $cartChangeTransfer->getOperation()
+                    $cartChangeTransfer->getOperation(),
                 );
             }
         }

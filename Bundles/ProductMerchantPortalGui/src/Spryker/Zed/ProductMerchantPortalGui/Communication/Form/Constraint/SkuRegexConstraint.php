@@ -15,13 +15,14 @@ class SkuRegexConstraint extends Regex
      * @var string
      */
     protected const REGEX_PATTERN = '/^[a-zA-Z0-9-_\.]+$/u';
+
     /**
      * @var string
      */
     protected const MESSAGE = 'Invalid value provided. Please use only alphanumeric characters and  . - _';
 
     /**
-     * @param array|null $options
+     * @param array<string, mixed>|null $options
      */
     public function __construct($options = null)
     {

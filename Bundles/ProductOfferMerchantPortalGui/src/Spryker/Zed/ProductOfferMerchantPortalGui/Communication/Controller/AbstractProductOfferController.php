@@ -35,6 +35,7 @@ class AbstractProductOfferController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Offer is saved.';
+
     /**
      * @var string
      */
@@ -54,11 +55,11 @@ class AbstractProductOfferController extends AbstractController
     ): array {
         $productAbstractLocalizedAttributes = $this->getLocalizedAttributesByLocale(
             $productAbstractTransfer->getLocalizedAttributes()->getArrayCopy(),
-            $localeTransfer
+            $localeTransfer,
         );
         $productConcreteLocalizedAttributes = $this->getLocalizedAttributesByLocale(
             $productConcreteTransfer->getLocalizedAttributes()->getArrayCopy(),
-            $localeTransfer
+            $localeTransfer,
         );
         $rawProductAttributesTransfer = (new RawProductAttributesTransfer())
             ->setAbstractAttributes($productAbstractTransfer->getAttributes())
@@ -70,8 +71,6 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
-     *
      * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -95,12 +94,10 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $formName
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getDefaultInitialData(Request $request, string $formName): array
     {
@@ -112,7 +109,7 @@ class AbstractProductOfferController extends AbstractController
 
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
             $requestTableData[PriceProductOfferTableViewTransfer::PRICES],
-            true
+            true,
         );
 
         if (!$requestTableData) {
@@ -142,14 +139,10 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<string, mixed> $responseData
-     *
-     * @phpstan-return array<string, mixed>
-     *
-     * @param array<mixed> $responseData
+     * @param array<string, mixed> $responseData
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer|null $productOfferResponseTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addErrorResponseDataToResponse(array $responseData, ?ProductOfferResponseTransfer $productOfferResponseTransfer = null): array
     {

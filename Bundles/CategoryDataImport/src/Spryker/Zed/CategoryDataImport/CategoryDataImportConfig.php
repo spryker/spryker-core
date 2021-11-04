@@ -16,6 +16,7 @@ class CategoryDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_CATEGORY = 'category';
+
     /**
      * @var string
      */
@@ -44,7 +45,7 @@ class CategoryDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'category_store.csv',
-            static::IMPORT_TYPE_CATEGORY_STORE
+            static::IMPORT_TYPE_CATEGORY_STORE,
         );
     }
 
@@ -58,7 +59,7 @@ class CategoryDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

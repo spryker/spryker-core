@@ -14,7 +14,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface as Extension
  */
 class_alias(
     ExtensionQueryInterface::class,
-    'Spryker\Client\Search\Dependency\Plugin\QueryInterface'
+    'Spryker\Client\Search\Dependency\Plugin\QueryInterface',
 );
 
 // This is done to support Composer's --classmap-authoritative option.

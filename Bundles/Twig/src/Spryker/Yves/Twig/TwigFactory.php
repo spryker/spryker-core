@@ -30,7 +30,7 @@ class TwigFactory extends AbstractFactory
         return new TwigFilesystemLoader(
             $this->getConfig()->getTemplatePaths(),
             $this->createFilesystemCache(),
-            $this->createTemplateNameExtractor()
+            $this->createTemplateNameExtractor(),
         );
     }
 
@@ -50,7 +50,7 @@ class TwigFactory extends AbstractFactory
         $filesystemLoaderCache = new FilesystemCache(
             $this->createFilesystemCacheLoader(),
             $this->createFilesystemCacheWriter(),
-            $this->getConfig()->isPathCacheEnabled()
+            $this->getConfig()->isPathCacheEnabled(),
         );
 
         return $filesystemLoaderCache;
@@ -71,7 +71,7 @@ class TwigFactory extends AbstractFactory
     {
         return new FilesystemCacheWriter(
             $this->getConfig()->getCacheFilePath(),
-            $this->getConfig()->getPermissionMode()
+            $this->getConfig()->getPermissionMode(),
         );
     }
 

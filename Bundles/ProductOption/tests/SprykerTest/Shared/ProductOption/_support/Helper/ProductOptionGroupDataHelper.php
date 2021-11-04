@@ -28,6 +28,7 @@ class ProductOptionGroupDataHelper extends Module
      * @var string
      */
     public const DEFAULT_STORE = 'DE';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class ProductOptionGroupDataHelper extends Module
      * @var string
      */
     public const CURRENCY_CODE = 'currencyCode';
+
     /**
      * @var string
      */
@@ -52,7 +54,7 @@ class ProductOptionGroupDataHelper extends Module
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($override))->build();
 
         $productOptionGroupTransfer->setIdProductOptionGroup(
-            $this->saveGroup($productOptionGroupTransfer)
+            $this->saveGroup($productOptionGroupTransfer),
         );
 
         return $productOptionGroupTransfer;
@@ -98,7 +100,7 @@ class ProductOptionGroupDataHelper extends Module
     {
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($overrideGroup))->build();
         $productOptionGroupTransfer->addGroupNameTranslation(
-            $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName())
+            $this->createProductOptionTranslationTransfer($productOptionGroupTransfer->getName()),
         );
 
         $idProductOptionGroup = $this->getProductOptionFacade()->saveProductOptionGroup($productOptionGroupTransfer);
@@ -112,7 +114,7 @@ class ProductOptionGroupDataHelper extends Module
             $productOptionValueTransfer = $this->createProductOptionValueTransfer($overrideValue, $overridePrices);
             $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
             $productOptionGroupTransfer->addProductOptionValueTranslation(
-                $this->createProductOptionTranslationTransfer($productOptionValueTransfer->getValue())
+                $this->createProductOptionTranslationTransfer($productOptionValueTransfer->getValue()),
             );
         }
 
@@ -132,8 +134,7 @@ class ProductOptionGroupDataHelper extends Module
             ->setPrices(new ArrayObject());
 
         foreach ($overridePrices as $overridePrice) {
-            $currencyCode = isset($overridePrice[static::CURRENCY_CODE]) ?
-                $overridePrice[static::CURRENCY_CODE] :
+            $currencyCode = $overridePrice[static::CURRENCY_CODE] ??
                 static::DEFAULT_CURRENCY;
             $storeName = array_key_exists(static::STORE_NAME, $overridePrice) ?
                 $overridePrice[static::STORE_NAME] :
@@ -143,7 +144,7 @@ class ProductOptionGroupDataHelper extends Module
                 (new MoneyValueBuilder($overridePrice))
                     ->build()
                     ->setFkCurrency($this->getIdCurrency($currencyCode))
-                    ->setFkStore($this->getIdStore($storeName))
+                    ->setFkStore($this->getIdStore($storeName)),
             );
         }
 

@@ -39,7 +39,7 @@ class AclRoleReferenceToIdAclRoleStep implements DataImportStepInterface
         $aclRoleEntity = SpyAclRoleQuery::create()->findOneByReference($aclRoleReference);
         if (!$aclRoleEntity) {
             throw new EntityNotFoundException(
-                sprintf('Could not find AclRole by reference: "%s"', $aclRoleReference)
+                sprintf('Could not find AclRole by reference: "%s"', $aclRoleReference),
             );
         }
 

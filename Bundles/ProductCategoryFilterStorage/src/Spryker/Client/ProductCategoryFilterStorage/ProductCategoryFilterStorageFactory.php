@@ -19,7 +19,7 @@ class ProductCategoryFilterStorageFactory extends AbstractFactory
     {
         return new ProductCategoryFilterStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
         );
     }
 

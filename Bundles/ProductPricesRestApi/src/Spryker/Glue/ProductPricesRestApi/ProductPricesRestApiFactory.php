@@ -46,7 +46,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
         return new ProductPricesMapper(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getRestProductPricesAttributesMapperPlugins()
+            $this->getRestProductPricesAttributesMapperPlugins(),
         );
     }
 
@@ -60,7 +60,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getPriceProductStorageClient(),
             $this->getPriceProductClient(),
             $this->getResourceBuilder(),
-            $this->createProductPricesMapper()
+            $this->createProductPricesMapper(),
         );
     }
 
@@ -74,7 +74,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
             $this->getPriceProductStorageClient(),
             $this->getPriceProductClient(),
             $this->getResourceBuilder(),
-            $this->createProductPricesMapper()
+            $this->createProductPricesMapper(),
         );
     }
 
@@ -85,7 +85,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
     {
         return new CurrencyValidator(
             $this->getCurrencyClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
         );
     }
 
@@ -120,7 +120,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
     {
         return new AbstractProductPricesRelationshipExpander(
             $this->createAbstractProductPricesReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -131,7 +131,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
     {
         return new ConcreteProductPricesRelationshipExpander(
             $this->createConcreteProductPricesReader(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

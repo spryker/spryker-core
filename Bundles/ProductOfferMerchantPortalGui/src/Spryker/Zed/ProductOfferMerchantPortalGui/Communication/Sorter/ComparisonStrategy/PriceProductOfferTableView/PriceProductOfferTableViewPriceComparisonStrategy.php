@@ -14,12 +14,14 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_NET
+     *
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_GROSS
+     *
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
@@ -57,7 +59,7 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
         [$priceTypeName, $moneyValueType] = explode('_', $fieldName);
         $priceKey = $this->columnIdCreator->createPriceKey(
             $priceTypeName,
-            $moneyValueType . 'Amount'
+            $moneyValueType . 'Amount',
         );
 
         return function (
@@ -85,7 +87,7 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
         $pattern = sprintf(
             '/(%s|%s)$/',
             static::SUFFIX_PRICE_TYPE_GROSS,
-            static::SUFFIX_PRICE_TYPE_NET
+            static::SUFFIX_PRICE_TYPE_NET,
         );
 
         preg_match($pattern, $fieldName, $matches);

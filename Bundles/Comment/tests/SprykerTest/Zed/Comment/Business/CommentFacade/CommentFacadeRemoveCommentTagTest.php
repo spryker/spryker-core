@@ -38,12 +38,14 @@ class CommentFacadeRemoveCommentTagTest extends Unit
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_NOT_FOUND
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
 
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentTagWriter::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE
+     *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE = 'comment.validation.error.comment_tag_not_available';
@@ -186,7 +188,7 @@ class CommentFacadeRemoveCommentTagTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 
@@ -213,7 +215,7 @@ class CommentFacadeRemoveCommentTagTest extends Unit
         $this->assertFalse($commentThreadResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             static::GLOSSARY_KEY_COMMENT_NOT_FOUND,
-            $commentThreadResponseTransfer->getMessages()[0]->getValue()
+            $commentThreadResponseTransfer->getMessages()[0]->getValue(),
         );
     }
 

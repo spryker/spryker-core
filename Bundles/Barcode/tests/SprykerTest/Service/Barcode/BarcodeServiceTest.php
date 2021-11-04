@@ -32,6 +32,7 @@ class BarcodeServiceTest extends Test
      * @var string
      */
     protected const GENERATED_CODE = 'generated string';
+
     /**
      * @var string
      */
@@ -70,7 +71,7 @@ class BarcodeServiceTest extends Test
     public function testGenerateBarcode(): void
     {
         $barcodeResponseTransfer = $this->tester->generateBarcodeUsingBarcodeService(
-            get_class($this->activeBarcodeGeneratorPlugin)
+            get_class($this->activeBarcodeGeneratorPlugin),
         );
 
         $this->assertSame(BarcodeGeneratorPluginMockRegistered1::GENERATED_CODE, $barcodeResponseTransfer->getCode());
@@ -85,7 +86,7 @@ class BarcodeServiceTest extends Test
         $barcodeResponseTransfer = $this
             ->tester
             ->generateBarcodeUsingBarcodeService(
-                get_class($this->activeBarcodeGeneratorPlugin)
+                get_class($this->activeBarcodeGeneratorPlugin),
             );
 
         $this->assertInstanceOf(BarcodeResponseTransfer::class, $barcodeResponseTransfer);
@@ -97,7 +98,7 @@ class BarcodeServiceTest extends Test
     public function testGeneratedBarcodeResponseIsNotEmpty(): void
     {
         $barcodeResponseTransfer = $this->tester->generateBarcodeUsingBarcodeService(
-            get_class($this->activeBarcodeGeneratorPlugin)
+            get_class($this->activeBarcodeGeneratorPlugin),
         );
 
         $this->assertNotEmpty($barcodeResponseTransfer->getCode());

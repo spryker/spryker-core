@@ -16,10 +16,12 @@ class ProductLabelDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_PRODUCT_LABEL = 'product-label';
+
     /**
      * @var string
      */
     public const IMPORT_TYPE_PRODUCT_LABEL_STORE = 'product-label-store';
+
     /**
      * @var int
      */
@@ -36,7 +38,7 @@ class ProductLabelDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_label.csv',
-            static::IMPORT_TYPE_PRODUCT_LABEL
+            static::IMPORT_TYPE_PRODUCT_LABEL,
         );
     }
 
@@ -51,7 +53,7 @@ class ProductLabelDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'product_label_store.csv',
-            static::IMPORT_TYPE_PRODUCT_LABEL_STORE
+            static::IMPORT_TYPE_PRODUCT_LABEL_STORE,
         );
     }
 
@@ -69,7 +71,7 @@ class ProductLabelDataImportConfig extends DataImportConfig
     protected function getModuleRoot(): string
     {
         return realpath(
-            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL)
+            dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL),
         ) . DIRECTORY_SEPARATOR;
     }
 }

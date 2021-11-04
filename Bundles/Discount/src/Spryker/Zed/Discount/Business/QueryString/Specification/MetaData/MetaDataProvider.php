@@ -93,7 +93,7 @@ class MetaDataProvider implements MetaDataProviderInterface
             if ($specificationPlugin instanceof DiscountRuleWithAttributesPluginInterface) {
                 $queryStringFields = array_merge(
                     $queryStringFields,
-                    $this->getAttributeTypes($specificationPlugin)
+                    $this->getAttributeTypes($specificationPlugin),
                 );
             } else {
                 $queryStringFields[] = $specificationPlugin->getFieldName();
@@ -125,7 +125,7 @@ class MetaDataProvider implements MetaDataProviderInterface
 
         throw new QueryStringException(sprintf(
             'No specification plugin found for "%s" field. Have you added it to DiscountDependencyProvider::getCollectorPlugins or getDecisionRulePlugins respectively?',
-            $fieldName
+            $fieldName,
         ));
     }
 

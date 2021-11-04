@@ -27,7 +27,7 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageProductGroupCollector()
     {
         $storageProductGroupCollector = new ProductGroupCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
         );
 
         $storageProductGroupCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -42,7 +42,7 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     public function createStorageProductAbstractGroupsCollector()
     {
         $storageProductGroupCollector = new ProductAbstractGroupsCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
         );
 
         $storageProductGroupCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -98,7 +98,7 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductGroupCollectorRunner(
             $this->createStorageProductAbstractGroupsCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 
@@ -109,7 +109,7 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductGroupCollectorRunner(
             $this->createStorageProductGroupCollector(),
-            $this->getCollectorFacade()
+            $this->getCollectorFacade(),
         );
     }
 }

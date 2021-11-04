@@ -35,7 +35,7 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
         $companyRoleCollection = $this->getFactory()
             ->getCompanyRoleFacade()
             ->getCompanyRoleCollection(
-                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser)
+                (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($idCompanyUser),
             );
 
         $companyUserRoleNames = $this->getFactory()
@@ -46,7 +46,7 @@ class CompanyRoleCompanyUserTablePrepareDataExpanderPlugin extends AbstractPlugi
             $companyUserDataItem,
             [
                 CompanyRoleGuiConfig::COL_COMPANY_ROLE_NAMES => $companyUserRoleNames,
-            ]
+            ],
         );
     }
 }

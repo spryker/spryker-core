@@ -83,7 +83,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
         $formData[ProductFormAdd::FIELD_TAX_RATE] = $productAbstractTransfer->getIdTaxSet();
         $formData[ProductFormAdd::FIELD_PRICES] = $this->getProductAbstractPricesByPriceDimension(
             $productAbstractTransfer,
-            $formData
+            $formData,
         );
 
         return $formData;

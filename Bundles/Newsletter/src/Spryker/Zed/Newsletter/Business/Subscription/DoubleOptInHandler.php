@@ -28,7 +28,7 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
         if ($subscriberEntity === null) {
             throw new MissingNewsletterSubscriberException(sprintf(
                 'Newsletter subscriber #%d could not be found.',
-                $subscriberTransfer->getIdNewsletterSubscriber()
+                $subscriberTransfer->getIdNewsletterSubscriber(),
             ));
         }
 

@@ -73,7 +73,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartRestResponseBuilder(),
             $this->getClient(),
             $this->getCustomerExpanderPlugins(),
-            $this->createCartsRestApiValidator()
+            $this->createCartsRestApiValidator(),
         );
     }
 
@@ -85,7 +85,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartCreator(
             $this->createCartMapper(),
             $this->getClient(),
-            $this->createCartRestResponseBuilder()
+            $this->createCartRestResponseBuilder(),
         );
     }
 
@@ -98,7 +98,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartRestResponseBuilder(),
             $this->getClient(),
             $this->createCartMapper(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -111,7 +111,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartMapper(),
             $this->createCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -124,7 +124,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
             $this->getCustomerExpanderPlugins(),
-            $this->getCartItemExpanderPlugins()
+            $this->getCartItemExpanderPlugins(),
         );
     }
 
@@ -136,7 +136,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -148,7 +148,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemUpdater(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -160,7 +160,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartReader(
             $this->createGuestCartRestResponseBuilder(),
             $this->createCartReader(),
-            $this->getClient()
+            $this->getClient(),
         );
     }
 
@@ -173,7 +173,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createGuestCartRestResponseBuilder(),
             $this->getClient(),
             $this->createCartMapper(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -186,7 +186,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->createGuestCartRestResponseBuilder(),
             $this->createCartRestResponseBuilder(),
-            $this->getCartItemExpanderPlugins()
+            $this->getCartItemExpanderPlugins(),
         );
     }
 
@@ -198,7 +198,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemUpdater(
             $this->getClient(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -210,7 +210,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
         );
     }
 
@@ -224,7 +224,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartMapper(),
             $this->createItemResponseBuilder(),
             $this->getConfig(),
-            $this->getCartItemFilterPlugins()
+            $this->getCartItemFilterPlugins(),
         );
     }
 
@@ -238,7 +238,7 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartMapper(),
             $this->createItemResponseBuilder(),
             $this->getConfig(),
-            $this->getCartItemFilterPlugins()
+            $this->getCartItemFilterPlugins(),
         );
     }
 
@@ -265,7 +265,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new SingleQuoteCreator(
             $this->createCartReader(),
-            $this->getClient()
+            $this->getClient(),
         );
     }
 
@@ -292,7 +292,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartMapper(
             $this->getResourceBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -304,7 +304,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemByQuoteResourceRelationshipExpander(
             $this->createCartReader(),
             $this->getCartItemFilterPlugins(),
-            $this->createItemResponseBuilder()
+            $this->createItemResponseBuilder(),
         );
     }
 
@@ -315,7 +315,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new ItemResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCartItemMapper()
+            $this->createCartItemMapper(),
         );
     }
 

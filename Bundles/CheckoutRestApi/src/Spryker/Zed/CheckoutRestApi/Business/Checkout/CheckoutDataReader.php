@@ -76,7 +76,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restCheckoutDataTransfer = (new RestCheckoutDataTransfer())->setQuote($quoteTransfer);
         $restCheckoutDataTransfer = $this->checkoutExpander->expandCheckoutData(
             $restCheckoutDataTransfer,
-            $restCheckoutRequestAttributesTransfer
+            $restCheckoutRequestAttributesTransfer,
         );
 
         return (new RestCheckoutDataResponseTransfer())

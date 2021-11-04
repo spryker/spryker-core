@@ -56,7 +56,7 @@ class IndexInstallerTest extends Unit
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
             $this->createMessengerMock(),
-            $this->createSearchConfigMock()
+            $this->createSearchConfigMock(),
         );
 
         $installer->install();

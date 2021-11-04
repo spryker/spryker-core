@@ -33,9 +33,9 @@ abstract class AbstractObject implements ObjectInterface
                 sprintf(
                     'Invalid argument for hydration: expected %s, but %s found',
                     PropertyValueInterface::class,
-                    get_class($content)
+                    get_class($content),
                 ),
-                E_USER_WARNING
+                E_USER_WARNING,
             );
 
             return $this;

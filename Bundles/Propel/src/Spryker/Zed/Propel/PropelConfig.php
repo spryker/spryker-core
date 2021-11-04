@@ -21,6 +21,7 @@ class PropelConfig extends AbstractBundleConfig
      * @var string
      */
     public const DB_ENGINE_MYSQL = 'mysql';
+
     /**
      * @var string
      */
@@ -38,6 +39,7 @@ class PropelConfig extends AbstractBundleConfig
      * - It can be modified by editing the sourcecode of postgres, which is not advised.
      *
      * @api
+     *
      * @var int
      */
     public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
@@ -163,7 +165,7 @@ class PropelConfig extends AbstractBundleConfig
     {
         return array_unique(array_merge(
             $this->getCorePropelSchemaPathPatterns(),
-            $this->getProjectPropelSchemaPathPatterns()
+            $this->getProjectPropelSchemaPathPatterns(),
         ));
     }
 

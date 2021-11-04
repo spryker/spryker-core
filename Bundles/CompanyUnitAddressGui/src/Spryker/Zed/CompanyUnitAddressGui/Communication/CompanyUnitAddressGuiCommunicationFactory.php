@@ -31,7 +31,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getCompanyUnitAddressPropelQuery(),
             $this->getCompanyUnitAddressTableConfigExpanderPlugins(),
             $this->getCompanyUnitAddressTableHeaderExpanderPlugins(),
-            $this->getCompanyUnitAddressTableDataExpanderPlugins()
+            $this->getCompanyUnitAddressTableDataExpanderPlugins(),
         );
     }
 
@@ -41,7 +41,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function getCompanyUnitAddressFacade(): CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface
     {
         return $this->getProvidedDependency(
-            CompanyUnitAddressGuiDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS
+            CompanyUnitAddressGuiDependencyProvider::FACADE_COMPANY_UNIT_ADDRESS,
         );
     }
 
@@ -51,7 +51,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function getCompanyFacade(): CompanyUnitAddressGuiToCompanyFacadeInterface
     {
         return $this->getProvidedDependency(
-            CompanyUnitAddressGuiDependencyProvider::FACADE_COMPANY
+            CompanyUnitAddressGuiDependencyProvider::FACADE_COMPANY,
         );
     }
 
@@ -61,7 +61,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function getCountryFacade(): CompanyUnitAddressGuiToCountryFacadeInterface
     {
         return $this->getProvidedDependency(
-            CompanyUnitAddressGuiDependencyProvider::FACADE_COUNTRY
+            CompanyUnitAddressGuiDependencyProvider::FACADE_COUNTRY,
         );
     }
 
@@ -77,7 +77,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
         return $this->getFormFactory()->create(
             CompanyUnitAddressForm::class,
             $companyUnitAddressDataProvider->getData($idCompanyUnitAddress),
-            $companyUnitAddressDataProvider->getOptions()
+            $companyUnitAddressDataProvider->getOptions(),
         );
     }
 
@@ -121,7 +121,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
         return new CompanyUnitAddressFormDataProvider(
             $this->getCompanyUnitAddressFacade(),
             $this->getCompanyFacade(),
-            $this->getCountryFacade()
+            $this->getCountryFacade(),
         );
     }
 
@@ -131,7 +131,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function createCompanyBusinessUnitAddressChoiceFormDataProvider(): CompanyBusinessUnitAddressFormDataProvider
     {
         return new CompanyBusinessUnitAddressFormDataProvider(
-            $this->getCompanyUnitAddressFacade()
+            $this->getCompanyUnitAddressFacade(),
         );
     }
 

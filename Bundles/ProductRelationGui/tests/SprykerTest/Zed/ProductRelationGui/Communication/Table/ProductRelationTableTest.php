@@ -37,12 +37,14 @@ class ProductRelationTableTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     *
      * @var string
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
@@ -51,10 +53,12 @@ class ProductRelationTableTest extends Unit
      * @var string
      */
     protected const PRODUCT_RELATION_KEY_1 = 'PRODUCT_RELATION_KEY_1';
+
     /**
      * @var string
      */
     protected const PRODUCT_RELATION_KEY_2 = 'PRODUCT_RELATION_KEY_2';
+
     /**
      * @var string
      */
@@ -86,14 +90,14 @@ class ProductRelationTableTest extends Unit
             $this->tester->haveFullProduct()->getSku(),
             $this->tester->haveFullProduct()->getFkProductAbstract(),
             static::PRODUCT_RELATION_KEY_1,
-            static::PRODUCT_RELATION_TYPE
+            static::PRODUCT_RELATION_TYPE,
         );
 
         $productRelation2 = $this->tester->haveProductRelation(
             $this->tester->haveFullProduct()->getSku(),
             $this->tester->haveFullProduct()->getFkProductAbstract(),
             static::PRODUCT_RELATION_KEY_2,
-            static::PRODUCT_RELATION_TYPE
+            static::PRODUCT_RELATION_TYPE,
         );
 
         // Act
@@ -117,7 +121,7 @@ class ProductRelationTableTest extends Unit
             $productRelationQuery,
             $this->getProductRelationGuiToProductFacadeMock(),
             $this->getProductRelationGuiConfigMock(),
-            $this->getProductRelationGuiToLocaleFacadeMock()
+            $this->getProductRelationGuiToLocaleFacadeMock(),
         );
     }
 

@@ -75,7 +75,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     {
         return $this->getFactory()->createMoneyFormatter()->format(
             $moneyTransfer,
-            MoneyFormatterCollection::FORMATTER_WITH_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITH_SYMBOL,
         );
     }
 
@@ -92,7 +92,7 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
     {
         return $this->getFactory()->createMoneyFormatter()->format(
             $moneyTransfer,
-            MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL
+            MoneyFormatterCollection::FORMATTER_WITHOUT_SYMBOL,
         );
     }
 

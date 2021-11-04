@@ -18,7 +18,7 @@ class CompanyUserEditForm extends CompanyUserForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -32,7 +32,7 @@ class CompanyUserEditForm extends CompanyUserForm
                 'label' => false,
                 CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $options[CompanyUserCustomerForm::OPTION_GENDER_CHOICES],
                 CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $options[CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES],
-            ]
+            ],
         );
 
         return $this;

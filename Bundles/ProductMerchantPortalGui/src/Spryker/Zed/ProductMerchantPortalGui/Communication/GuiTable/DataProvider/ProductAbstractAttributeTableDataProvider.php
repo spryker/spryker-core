@@ -28,6 +28,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
 
     /**
      * @uses ProductAbstractAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     *
      * @var string
      */
     protected const ATTRIBUTES_DEFAULT_SORT_FIELD = 'attribute_name';
@@ -107,7 +108,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
         $attributes = $this->sortAttributesArray(
             $attributes,
             $criteriaTransfer->getOrderBy() ?? static::ATTRIBUTES_DEFAULT_SORT_FIELD,
-            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC
+            $criteriaTransfer->getOrderDirection() ?? static::ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC,
         );
 
         return $this->getGuiTableDataResponseTransfer($attributes);
@@ -115,9 +116,9 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
 
     /**
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     * @param array<string[]> $data
+     * @param array<array<string>> $data
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     protected function addLocalizedAttributes(
         LocalizedAttributesTransfer $localizedAttributesTransfer,
@@ -137,7 +138,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
     }
 
     /**
-     * @param array<string[]> $attributes
+     * @param array<array<string>> $attributes
      * @param string $orderBy
      * @param string $orderDirection
      *
@@ -159,9 +160,9 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
 
                 return $direction ? strcasecmp($comparableValue, $comparatorValue) : strcasecmp(
                     $comparatorValue,
-                    $comparableValue
+                    $comparableValue,
                 );
-            }
+            },
         );
 
         return $attributes;

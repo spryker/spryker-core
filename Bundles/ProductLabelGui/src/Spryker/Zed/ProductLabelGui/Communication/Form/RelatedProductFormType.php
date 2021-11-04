@@ -25,14 +25,17 @@ class RelatedProductFormType extends AbstractType
      * @var string
      */
     public const FIELD_ID_PRODUCT_LABEL = 'idProductLabel';
+
     /**
      * @var string
      */
     public const FIELD_IDS_PRODUCT_ABSTRACT_CSV = 'idsProductAbstractCsv';
+
     /**
      * @var string
      */
     public const FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV = 'idsProductAbstractToAssignCsv';
+
     /**
      * @var string
      */
@@ -56,7 +59,7 @@ class RelatedProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -80,7 +83,7 @@ class RelatedProductFormType extends AbstractType
             HiddenType::class,
             [
                 'property_path' => 'idProductLabel',
-            ]
+            ],
         );
 
         return $this;
@@ -101,7 +104,7 @@ class RelatedProductFormType extends AbstractType
                 'attr' => [
                     'id' => 'js-abstract-products-to-assign-ids-csv-field',
                 ],
-            ]
+            ],
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_PRODUCT_ABSTRACT_TO_ASSIGN_CSV, $builder);
@@ -124,7 +127,7 @@ class RelatedProductFormType extends AbstractType
                 'attr' => [
                     'id' => 'js-abstract-products-to-de-assign-ids-csv-field',
                 ],
-            ]
+            ],
         );
 
         $this->addIdsCsvModelTransformer(static::FIELD_IDS_PRODUCT_ABSTRACT_TO_DE_ASSIGN_CSV, $builder);
@@ -156,7 +159,7 @@ class RelatedProductFormType extends AbstractType
                     }
 
                     return explode(',', $idsProductAbstractAsCsv);
-                }
+                },
             ));
     }
 

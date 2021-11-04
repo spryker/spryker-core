@@ -65,7 +65,7 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
         return $this->quoteRequestRestResponseBuilder
             ->createQuoteRequestRestResponse(
                 $quoteRequestResponseTransfer,
-                $restRequest->getMetadata()->getLocale()
+                $restRequest->getMetadata()->getLocale(),
             );
     }
 }

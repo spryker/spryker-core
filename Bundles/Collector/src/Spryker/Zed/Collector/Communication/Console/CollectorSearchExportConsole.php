@@ -20,6 +20,7 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
      * @var string
      */
     public const COMMAND_NAME = 'collector:search:export';
+
     /**
      * @var string
      */

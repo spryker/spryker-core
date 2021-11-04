@@ -100,7 +100,7 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
         return $this->priceProductScheduleRepository
             ->findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
                 $storeTransfer,
-                $priceProductScheduleTransfer->getPriceProduct()->getIdProduct()
+                $priceProductScheduleTransfer->getPriceProduct()->getIdProduct(),
             );
     }
 }

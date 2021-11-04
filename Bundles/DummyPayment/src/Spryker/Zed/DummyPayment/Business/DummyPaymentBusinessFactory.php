@@ -22,7 +22,7 @@ class DummyPaymentBusinessFactory extends AbstractBusinessFactory
     public function createRefund()
     {
         return new Refund(
-            $this->getRefundFacade()
+            $this->getRefundFacade(),
         );
     }
 

@@ -24,13 +24,14 @@ class IndexController extends AbstractController
      * @var string
      */
     public const DEFAULT_FORMAT = 'svg';
+
     /**
      * @var int
      */
     public const DEFAULT_FONT_SIZE = 14;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $formatContentTypes = [
         'jpg' => 'image/jpeg',
@@ -102,7 +103,7 @@ class IndexController extends AbstractController
         $processEntity = $orderItem->getProcess();
 
         return new Response(
-            $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize)
+            $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize),
         );
     }
 

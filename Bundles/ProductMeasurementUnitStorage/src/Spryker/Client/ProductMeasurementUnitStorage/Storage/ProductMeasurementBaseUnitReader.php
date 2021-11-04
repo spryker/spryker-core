@@ -48,7 +48,7 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
         }
 
         return $this->productMeasurementUnitReader->findProductMeasurementUnit(
-            $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit()
+            $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit(),
         );
     }
 

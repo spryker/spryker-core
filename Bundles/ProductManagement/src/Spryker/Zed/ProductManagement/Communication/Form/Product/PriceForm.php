@@ -32,10 +32,12 @@ class PriceForm extends AbstractType
      * @var string
      */
     public const FIELD_PRICE = 'price';
+
     /**
      * @var string
      */
     public const FIELD_PRICES = 'prices';
+
     /**
      * @var string
      */
@@ -45,22 +47,27 @@ class PriceForm extends AbstractType
      * @var string
      */
     public const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
+
     /**
      * @var string
      */
     public const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+
     /**
      * @var string
      */
     public const OPTION_MONEY_FACADE = 'money-facade';
+
     /**
      * @var string
      */
     public const OPTION_CURRENCY_FACADE = 'currency-facade';
+
     /**
      * @var int
      */
     public const DEFAULT_SCALE = 2;
+
     /**
      * @var int
      */
@@ -88,7 +95,7 @@ class PriceForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -102,7 +109,7 @@ class PriceForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -133,7 +140,7 @@ class PriceForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -199,7 +206,7 @@ class PriceForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -229,7 +236,7 @@ class PriceForm extends AbstractType
             'value' => static::MAX_PRICE_SIZE,
             'message' => sprintf(
                 'This value should be less than or equal to "%s".',
-                $this->getMaxPriceValue($currencyTransfer)
+                $this->getMaxPriceValue($currencyTransfer),
             ),
         ]);
     }
@@ -245,7 +252,7 @@ class PriceForm extends AbstractType
             static::MAX_PRICE_SIZE / $this->getDivisor($currencyTransfer),
             $this->getDivisor($currencyTransfer),
             '.',
-            ''
+            '',
         );
     }
 }

@@ -21,10 +21,12 @@ class CartChangePreCheck implements CartChangePreCheckInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CART_PRE_CHECK_PRODUCT_DISCONTINUED = 'cart.pre.check.product_discontinued';
+
     /**
      * @var string
      */
     protected const GLOSSARY_PARAM_NAME = '%name%';
+
     /**
      * @var string
      */
@@ -53,7 +55,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $cartPreCheckResponseTransfer = $this->addDiscontinuedErrorMessagesToCartPreCheckResponseTransfer(
             $cartPreCheckResponseTransfer,
-            $cartChangeTransfer
+            $cartChangeTransfer,
         );
 
         return $cartPreCheckResponseTransfer;
@@ -78,13 +80,13 @@ class CartChangePreCheck implements CartChangePreCheckInterface
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($this->isProductDiscontinued($itemTransfer, $indexedProductDiscontinuedTransfers)) {
                 $cartPreCheckResponseTransfer->addMessage(
-                    $this->createItemIsDiscontinuedMessageTransfer($itemTransfer)
+                    $this->createItemIsDiscontinuedMessageTransfer($itemTransfer),
                 );
             }
         }
 
         $cartPreCheckResponseTransfer->setIsSuccess(
-            !$cartPreCheckResponseTransfer->getMessages()->count()
+            !$cartPreCheckResponseTransfer->getMessages()->count(),
         );
 
         return $cartPreCheckResponseTransfer;

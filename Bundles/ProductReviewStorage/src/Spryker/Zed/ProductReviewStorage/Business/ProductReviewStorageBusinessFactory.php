@@ -23,7 +23,7 @@ class ProductReviewStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductReviewStorageWriter(
             $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 }

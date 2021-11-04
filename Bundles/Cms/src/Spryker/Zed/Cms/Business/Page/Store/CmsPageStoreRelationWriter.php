@@ -59,7 +59,7 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
     protected function getIdStoresByIdCmsPage(int $idCmsPage): array
     {
         $storeRelation = $this->cmsPageStoreRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())->setIdEntity($idCmsPage)
+            (new StoreRelationTransfer())->setIdEntity($idCmsPage),
         );
 
         return $storeRelation->getIdStores();

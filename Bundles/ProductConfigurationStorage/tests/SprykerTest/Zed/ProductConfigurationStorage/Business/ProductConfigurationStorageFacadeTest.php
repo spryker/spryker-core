@@ -84,7 +84,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            ]
+            ],
         );
 
         $eventTransfers = [
@@ -97,19 +97,19 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         // Assert
         $productConfigurationStorageEntity = SpyProductConfigurationStorageQuery::create()->filterByFkProductConfiguration(
-            $productConfigurationTransfer->getIdProductConfiguration()
+            $productConfigurationTransfer->getIdProductConfiguration(),
         )->findOne();
 
         $this->assertSame(
             $productTransfer->getSku(),
             $productConfigurationStorageEntity->getSku(),
-            'Expected that product configuration will be saved to the storage.'
+            'Expected that product configuration will be saved to the storage.',
         );
 
         $this->assertSame(
             $productConfigurationTransfer->getIdProductConfiguration(),
             $productConfigurationStorageEntity->getFkProductConfiguration(),
-            'Expects that will save product configuration to the storage.'
+            'Expects that will save product configuration to the storage.',
         );
     }
 
@@ -124,7 +124,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            ]
+            ],
         );
 
         $productConfigurationStorageTransfer = $this->tester->haveProductConfigurationStorage([
@@ -141,13 +141,13 @@ class ProductConfigurationStorageFacadeTest extends Unit
             ->deleteCollectionByProductConfigurationEvents($eventTransfers);
 
         $productConfigurationStorageEntity = SpyProductConfigurationStorageQuery::create()->filterByIdProductConfigurationStorage(
-            $productConfigurationStorageTransfer->getIdProductConfigurationStorage()
+            $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
         )->findOne();
 
         // Assert
         $this->assertEmpty(
             $productConfigurationStorageEntity,
-            'Expected that product configuration will be removed from the storage.'
+            'Expected that product configuration will be removed from the storage.',
         );
     }
 
@@ -173,14 +173,14 @@ class ProductConfigurationStorageFacadeTest extends Unit
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getFilteredProductConfigurationStorageDataTransfers(
             $filter,
-            [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
+            [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()],
         );
 
         // Assert
         $this->assertCount(
             1,
             $synchronizationDataTransfers,
-            'Expects that will return synchronization data transfer.'
+            'Expects that will return synchronization data transfer.',
         );
     }
 }

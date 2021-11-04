@@ -39,7 +39,7 @@ class MvcRoutingServiceProvider implements ServiceProviderInterface
                 $chainRouter->add(new MvcRouter($app));
 
                 return $chainRouter;
-            })
+            }),
         );
     }
 }

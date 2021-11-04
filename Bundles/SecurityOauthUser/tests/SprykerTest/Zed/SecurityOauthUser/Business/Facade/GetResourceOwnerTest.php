@@ -32,10 +32,12 @@ class GetResourceOwnerTest extends Unit
      * @var string
      */
     protected const RESOURCE_OWNER_WRONG_REQUEST_CODE = 'test';
+
     /**
      * @var string
      */
     protected const SOME_CODE = 'SOME_CODE';
+
     /**
      * @var string
      */
@@ -64,11 +66,11 @@ class GetResourceOwnerTest extends Unit
         //Assert
         $this->assertTrue(
             $resourceOwnerResponseTransfer->getIsSuccessful(),
-            'Expected that `IsSuccessful` flag equals to true.'
+            'Expected that `IsSuccessful` flag equals to true.',
         );
         $this->assertNotNull(
             $resourceOwnerResponseTransfer->getResourceOwner(),
-            'Expected that resource owner must be provided.'
+            'Expected that resource owner must be provided.',
         );
     }
 
@@ -89,11 +91,11 @@ class GetResourceOwnerTest extends Unit
         // Assert
         $this->assertFalse(
             $resourceOwnerResponseTransfer->getIsSuccessful(),
-            'Expected that `IsSuccessful` flag equals to false.'
+            'Expected that `IsSuccessful` flag equals to false.',
         );
         $this->assertNull(
             $resourceOwnerResponseTransfer->getResourceOwner(),
-            'Expected that resource owner must not be provided.'
+            'Expected that resource owner must not be provided.',
         );
     }
 
@@ -115,7 +117,7 @@ class GetResourceOwnerTest extends Unit
     }
 
     /**
-     * @return array<\Generated\Shared\Transfer\ResourceOwnerRequestTransfer[]>
+     * @return array<array<\Generated\Shared\Transfer\ResourceOwnerRequestTransfer>>
      */
     public function getResourceOwnerThrowExceptionWhenRequiredDataIsNotProvidedDataProvider(): array
     {

@@ -17,22 +17,27 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REDIRECT = 'redirect';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_NOTIFICATION = 'notification';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REFRESH_TABLE = 'refresh-table';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REFRESH_PARENT_TABLE = 'refresh-parent-table';
+
     /**
      * @var string
      */
     protected const RESPONSE_ACTION_TYPE_REFRESH_DRAWER = 'refresh-drawer';
+
     /**
      * @var string
      */
@@ -42,14 +47,17 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_TYPE_INFO = 'info';
+
     /**
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_TYPE_SUCCESS = 'success';
+
     /**
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
@@ -82,8 +90,8 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
                 $this->createResponseAction(
                     static::RESPONSE_ACTION_TYPE_NOTIFICATION,
                     null,
-                    $this->notifications
-                )
+                    $this->notifications,
+                ),
             );
         }
 
@@ -110,7 +118,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_INFO,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -134,7 +142,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_SUCCESS,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -158,7 +166,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_WARNING,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -182,7 +190,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_ERROR,
             $closable,
-            $description
+            $description,
         );
     }
 
@@ -242,7 +250,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     public function addActionRefreshTable(?string $tableId = null): ZedUiFormResponseBuilderInterface
     {
         $zedUiFormResponseActionTransfer = $this->createResponseAction(
-            static::RESPONSE_ACTION_TYPE_REFRESH_TABLE
+            static::RESPONSE_ACTION_TYPE_REFRESH_TABLE,
         );
         $zedUiFormResponseActionTransfer->setTableId($tableId);
 

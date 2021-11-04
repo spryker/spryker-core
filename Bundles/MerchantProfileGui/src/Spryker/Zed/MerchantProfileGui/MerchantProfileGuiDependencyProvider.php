@@ -22,10 +22,12 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+
     /**
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */

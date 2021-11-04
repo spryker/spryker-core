@@ -69,7 +69,7 @@ class SecurityBlockerValidator implements SecurityBlockerValidatorInterface
 
         return $this->restErrorCollectionBuilder->createRestErrorCollectionTransfer(
             $securityCheckAuthResponseTransfer,
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
     }
 

@@ -24,6 +24,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+
     /**
      * @var string
      */

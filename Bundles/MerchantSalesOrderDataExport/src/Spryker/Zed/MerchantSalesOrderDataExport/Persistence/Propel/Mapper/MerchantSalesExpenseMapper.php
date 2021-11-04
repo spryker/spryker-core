@@ -16,8 +16,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
 class MerchantSalesExpenseMapper
 {
     /**
-     * @phpstan-var array<string, string>
-     * @var array
+     * @var array<string, string>
      */
     protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
@@ -42,9 +41,7 @@ class MerchantSalesExpenseMapper
     ];
 
     /**
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getFieldMapping(): array
     {
@@ -52,9 +49,9 @@ class MerchantSalesExpenseMapper
     }
 
     /**
-     * @param array<mixed[]> $merchantSalesExpenseRows
+     * @param array<array<mixed>> $merchantSalesExpenseRows
      *
-     * @return array<mixed[]>
+     * @return array<array<mixed>>
      */
     public function mapMerchantSalesExpenseDataByField(array $merchantSalesExpenseRows): array
     {

@@ -20,10 +20,12 @@ class StateMachineDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_STATE_MACHINE_HANDLERS = 'PLUGINS_STATE_MACHINE_HANDLERS';
+
     /**
      * @var string
      */
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+
     /**
      * @var string
      */

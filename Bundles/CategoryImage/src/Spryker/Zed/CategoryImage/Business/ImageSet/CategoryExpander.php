@@ -33,12 +33,12 @@ class CategoryExpander implements CategoryExpanderInterface
     public function expandCategoryWithImageSets(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $categoryImageSets = $this->imageSetReader->getCategoryImageSetsByIdCategory(
-            $categoryTransfer->requireIdCategory()->getIdCategory()
+            $categoryTransfer->requireIdCategory()->getIdCategory(),
         );
 
         if ($categoryImageSets) {
             $categoryTransfer->setImageSets(
-                new ArrayObject($categoryImageSets)
+                new ArrayObject($categoryImageSets),
             );
         }
 

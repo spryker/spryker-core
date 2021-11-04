@@ -32,6 +32,7 @@ class PropelSchemaMergerTest extends Unit
      * @var string
      */
     public const LEVEL_PROJECT = 'Project';
+
     /**
      * @var string
      */
@@ -149,10 +150,10 @@ class PropelSchemaMergerTest extends Unit
     {
         return new PropelSchemaMerger(
             new PropelToUtilTextServiceBridge(
-                $this->tester->getLocator()->utilText()->service()
+                $this->tester->getLocator()->utilText()->service(),
             ),
             new PropelSchemaElementFilter([]),
-            new PropelConfig()
+            new PropelConfig(),
         );
     }
 }

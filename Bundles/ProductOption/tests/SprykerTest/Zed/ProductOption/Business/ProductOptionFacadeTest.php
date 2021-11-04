@@ -52,14 +52,17 @@ class ProductOptionFacadeTest extends Unit
      * @var int
      */
     public const DEFAULT_ID_CURRENCY = 5;
+
     /**
      * @var int|null
      */
     public const DEFAULT_ID_STORE = null;
+
     /**
      * @var int
      */
     public const DEFAULT_NET_PRICE = 100;
+
     /**
      * @var int
      */
@@ -81,7 +84,7 @@ class ProductOptionFacadeTest extends Unit
 
         $this->getProductOptionFacade()->addProductAbstractToProductOptionGroup(
             $productAbstractTransfer->getSku(),
-            $productOptionGroupTransfer->getIdProductOptionGroup()
+            $productOptionGroupTransfer->getIdProductOptionGroup(),
         );
 
         // Act
@@ -163,7 +166,7 @@ class ProductOptionFacadeTest extends Unit
             static::DEFAULT_ID_STORE,
             static::DEFAULT_ID_CURRENCY,
             $expectedNetResult,
-            $expectedGrossResult
+            $expectedGrossResult,
         );
 
         // Act
@@ -331,7 +334,7 @@ class ProductOptionFacadeTest extends Unit
             static::DEFAULT_ID_STORE,
             static::DEFAULT_ID_CURRENCY,
             $expectedNetResult,
-            $expectedGrossResult
+            $expectedGrossResult,
         );
 
         // Act
@@ -427,7 +430,7 @@ class ProductOptionFacadeTest extends Unit
                         [ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD'],
                     ],
                 ],
-            ]
+            ],
         );
 
         $expectedCurrencies = ['EUR', 'USD'];
@@ -441,7 +444,7 @@ class ProductOptionFacadeTest extends Unit
             function (MoneyValueTransfer $moneyValueTransfer) {
                 return $moneyValueTransfer->getCurrency()->getCode();
             },
-            $actualProductGroupOption->getProductOptionValues()[0]->getPrices()->getArrayCopy()
+            $actualProductGroupOption->getProductOptionValues()[0]->getPrices()->getArrayCopy(),
         );
 
         $this->assertEquals($expectedCurrencies, $actualCurrencies);
@@ -477,13 +480,13 @@ class ProductOptionFacadeTest extends Unit
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         // Act
         $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
-            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
+            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue(),
         );
 
         // Assert
@@ -521,13 +524,13 @@ class ProductOptionFacadeTest extends Unit
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         // Act
         $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
-            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
+            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue(),
         );
 
         // Assert
@@ -567,13 +570,13 @@ class ProductOptionFacadeTest extends Unit
                         ],
                     ],
                 ],
-            ]
+            ],
         );
 
         // Act
         $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
-            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
+            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue(),
         );
 
         // Assert
@@ -708,7 +711,7 @@ class ProductOptionFacadeTest extends Unit
 
         $productOptionFacade->addProductAbstractToProductOptionGroup(
             $productAbstractEntity->getSku(),
-            $idOfPersistedOptionGroup
+            $idOfPersistedOptionGroup,
         );
 
         $groupProducts = SpyProductOptionGroupQuery::create()
@@ -732,14 +735,14 @@ class ProductOptionFacadeTest extends Unit
                 ->setFkCurrency(93)
                 ->setFkStore($idCurrentStore)
                 ->setGrossAmount(100)
-                ->setNetAmount(200)
+                ->setNetAmount(200),
         );
         $prices->append(
             (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore($idCurrentStore)
                 ->setGrossAmount(300)
-                ->setNetAmount(400)
+                ->setNetAmount(400),
         );
         $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
         $expectedResult = [
@@ -773,14 +776,14 @@ class ProductOptionFacadeTest extends Unit
                 ->setFkCurrency(93)
                 ->setFkStore($idCurrentStore)
                 ->setGrossAmount(100)
-                ->setNetAmount(200)
+                ->setNetAmount(200),
         );
         $prices->append(
             (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore(static::DEFAULT_ID_STORE)
                 ->setGrossAmount(300)
-                ->setNetAmount(400)
+                ->setNetAmount(400),
         );
         $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
         $expectedResult = [
@@ -814,28 +817,28 @@ class ProductOptionFacadeTest extends Unit
                 ->setFkCurrency(93)
                 ->setFkStore($idCurrentStore)
                 ->setGrossAmount(100)
-                ->setNetAmount(null)
+                ->setNetAmount(null),
         );
         $prices->append(
             (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore($idCurrentStore)
                 ->setGrossAmount(null)
-                ->setNetAmount(400)
+                ->setNetAmount(400),
         );
         $prices->append(
             (new MoneyValueTransfer())
                 ->setFkCurrency(93)
                 ->setFkStore(static::DEFAULT_ID_STORE)
                 ->setGrossAmount(500)
-                ->setNetAmount(600)
+                ->setNetAmount(600),
         );
         $prices->append(
             (new MoneyValueTransfer())
                 ->setFkCurrency(250)
                 ->setFkStore(static::DEFAULT_ID_STORE)
                 ->setGrossAmount(700)
-                ->setNetAmount(800)
+                ->setNetAmount(800),
         );
         $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
         $expectedResult = [
@@ -1078,7 +1081,7 @@ class ProductOptionFacadeTest extends Unit
             static::DEFAULT_ID_STORE,
             static::DEFAULT_ID_CURRENCY,
             static::DEFAULT_NET_PRICE,
-            static::DEFAULT_GROSS_PRICE
+            static::DEFAULT_GROSS_PRICE,
         );
 
         return $productOptionValueTransfer;

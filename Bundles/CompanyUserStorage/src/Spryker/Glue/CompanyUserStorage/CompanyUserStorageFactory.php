@@ -25,7 +25,7 @@ class CompanyUserStorageFactory extends AbstractFactory
     {
         return new CompanyUserStorageProvider(
             $this->getClient(),
-            $this->createCompanyUserMapper()
+            $this->createCompanyUserMapper(),
         );
     }
 

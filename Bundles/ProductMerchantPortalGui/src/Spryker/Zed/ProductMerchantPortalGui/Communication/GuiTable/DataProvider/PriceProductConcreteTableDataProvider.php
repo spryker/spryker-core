@@ -45,7 +45,7 @@ class PriceProductConcreteTableDataProvider extends AbstractPriceProductTableDat
             $priceProductTableDataMapper,
             $priceProductTableViewSorter,
             $merchantUserFacade,
-            $moneyFacade
+            $moneyFacade,
         );
     }
 

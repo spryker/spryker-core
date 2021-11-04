@@ -37,7 +37,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CmsBlockFormDataProvider(
             $this->getCmsBlockQueryContainer(),
             $this->getCmsBlockFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -92,7 +92,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             CmsBlockForm::class,
             $cmsBlockFormDataProvider->getData($idCmsBlock),
-            $cmsBlockFormDataProvider->getOptions()
+            $cmsBlockFormDataProvider->getOptions(),
         );
     }
 
@@ -106,7 +106,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return new CmsBlockTable(
             $cmsBlockQuery,
-            $this->getCmsBlockQueryContainer()
+            $this->getCmsBlockQueryContainer(),
         );
     }
 
@@ -127,7 +127,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsBlockGlossaryFormDataProvider(
             $this->getCmsBlockFacade(),
-            $this->createCmsBlockGlossaryUpdater()
+            $this->createCmsBlockGlossaryUpdater(),
         );
     }
 
@@ -145,7 +145,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
             ->create(
                 CmsBlockGlossaryForm::class,
                 $cmsBlockGlossaryFormDataProvider->getData($idCmsBlock),
-                $cmsBlockGlossaryFormDataProvider->getOptions()
+                $cmsBlockGlossaryFormDataProvider->getOptions(),
             );
     }
 
@@ -198,7 +198,7 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CmsBlockGlossaryUpdater(
             $this->getCmsBlockGlossaryAfterFindPlugins(),
-            $this->getCmsBlockGlossaryBeforeSavePlugins()
+            $this->getCmsBlockGlossaryBeforeSavePlugins(),
         );
     }
 

@@ -39,7 +39,7 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyTable(
             $this->getPropelCompanyQuery(),
-            $this->createCompanyPluginExecutor()
+            $this->createCompanyPluginExecutor(),
         );
     }
 
@@ -52,13 +52,13 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyTableConfigExpanderPlugins(),
             $this->getCompanyTableHeaderExpanderPlugins(),
             $this->getCompanyTableDataExpanderPlugins(),
-            $this->getCompanyTableActionExpanderPlugins()
+            $this->getCompanyTableActionExpanderPlugins(),
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer|array|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -73,7 +73,7 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCompanyFormDataProvider(): CompanyFormDataProvider
     {
         return new CompanyFormDataProvider(
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 

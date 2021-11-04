@@ -42,7 +42,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getProductOptionStorageClient(),
             $this->createProductOptionTranslator(),
-            $this->createProductOptionRestResponseBuilder()
+            $this->createProductOptionRestResponseBuilder(),
         );
     }
 
@@ -55,7 +55,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createProductOptionMapper(),
             $this->createProductOptionSorter(),
-            $this->getCurrencyClient()
+            $this->getCurrencyClient(),
         );
     }
 
@@ -145,7 +145,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function createQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
     {
         return new QuoteRequestItemExpander(
-            $this->getGlossaryStorageClient()
+            $this->getGlossaryStorageClient(),
         );
     }
 }

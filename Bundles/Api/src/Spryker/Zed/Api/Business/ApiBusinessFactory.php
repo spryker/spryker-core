@@ -54,7 +54,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
         return new Dispatcher(
             $this->createResourceHandler(),
             $this->createProcessor(),
-            $this->createValidator()
+            $this->createValidator(),
         );
     }
 
@@ -65,7 +65,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     {
         return new ResourceHandler(
             $this->getApiPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -76,7 +76,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     {
         return new Processor(
             $this->getPreProcessorStack(),
-            $this->getPostProcessorStack()
+            $this->getPostProcessorStack(),
         );
     }
 
@@ -86,7 +86,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createValidator()
     {
         return new ApiValidator(
-            $this->getApiValidatorPlugins()
+            $this->getApiValidatorPlugins(),
         );
     }
 
@@ -242,7 +242,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createPaginationByQueryFilterPreProcessor()
     {
         return new PaginationByQueryFilterPreProcessor(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -252,7 +252,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createPaginationByHeaderFilterPreProcessor()
     {
         return new PaginationByHeaderFilterPreProcessor(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -294,7 +294,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createAddActionPostProcessor()
     {
         return new AddActionPostProcessor(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -328,7 +328,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createCorsFilterPostProcessor()
     {
         return new CorsFilterPostProcessor(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -338,7 +338,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     protected function createFindActionPostProcessor()
     {
         return new FindActionPostProcessor(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

@@ -71,14 +71,14 @@ class ProductOfferPackagingUnitFacadeTest extends Unit
             $storeTransfer,
             $packagingUnitProductConcreteTransfer->getSku(),
             $amountForPackagingUnit,
-            $leadProductConcreteTransfer->getSku()
+            $leadProductConcreteTransfer->getSku(),
         );
         $this->tester->haveSalesOrderWithItems(
             $productOfferTransfer->getProductOfferReference(),
             $itemsCount,
             $quantity,
             $storeTransfer,
-            $productOfferTransfer->getConcreteSku()
+            $productOfferTransfer->getConcreteSku(),
         );
 
         // Act
@@ -87,9 +87,9 @@ class ProductOfferPackagingUnitFacadeTest extends Unit
                 ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->setSku($productOfferTransfer->getConcreteSku())
                 ->setReservedStates(
-                    $this->tester->getOmsStateCollectionTransfer($salesOrderEntity)
+                    $this->tester->getOmsStateCollectionTransfer($salesOrderEntity),
                 )
-                ->setStore($storeTransfer)
+                ->setStore($storeTransfer),
         );
 
         // Assert
@@ -99,7 +99,7 @@ class ProductOfferPackagingUnitFacadeTest extends Unit
         // SUM(amount in PU) + SUM(quantity)
         $this->assertSame(
             $result->toString(),
-            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
+            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString(),
         );
     }
 }

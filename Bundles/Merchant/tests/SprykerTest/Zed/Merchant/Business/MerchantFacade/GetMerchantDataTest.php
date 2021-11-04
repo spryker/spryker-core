@@ -118,7 +118,7 @@ class GetMerchantDataTest extends Unit
 
         $this->assertNotEquals(
             $merchantCollectionOrderByNameDescTransfer->getMerchants()[0]->getIdMerchant(),
-            $merchantCollectionWithPaginationTransfer->getMerchants()[0]->getIdMerchant()
+            $merchantCollectionWithPaginationTransfer->getMerchants()[0]->getIdMerchant(),
         );
     }
 

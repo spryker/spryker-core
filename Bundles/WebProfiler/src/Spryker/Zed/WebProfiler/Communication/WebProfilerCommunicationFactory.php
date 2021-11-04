@@ -94,7 +94,7 @@ class WebProfilerCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ResolvedTypeFactoryDataCollectorProxy(
             $this->createResolvedFormTypeFactory(),
-            $this->createFormDataCollector()
+            $this->createFormDataCollector(),
         );
     }
 

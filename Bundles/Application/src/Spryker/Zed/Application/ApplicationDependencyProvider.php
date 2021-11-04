@@ -34,14 +34,17 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
+
     /**
      * @var string
      */
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
+
     /**
      * @var string
      */
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
+
     /**
      * @var string
      */
@@ -49,17 +52,21 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION} instead.
+     *
      * @var string
      */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+
     /**
      * @var string
      */
     public const PLUGINS_BACKOFFICE_APPLICATION = 'PLUGINS_BACKOFFICE_APPLICATION';
+
     /**
      * @var string
      */
     public const PLUGINS_BACKEND_GATEWAY_APPLICATION = 'PLUGINS_BACKEND_GATEWAY_APPLICATION';
+
     /**
      * @var string
      */
@@ -67,12 +74,14 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const SERVICE_ENCODING = 'util encoding service';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ENVIRONMENT = 'ENVIRONMENT';
@@ -244,7 +253,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     {
         trigger_error(
             '\Spryker\Zed\Application\ApplicationDependencyProvider::getServiceProviders is deprecated, please copy all required ServiceProvider and remove the call to this method',
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
 
         $providers = [

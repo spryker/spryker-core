@@ -38,10 +38,12 @@ class SalesPaymentFacadeTest extends Unit
      * @var string
      */
     protected const TEST_PROVIDER_ONE = 'Test one';
+
     /**
      * @var string
      */
     protected const TEST_PROVIDER_TWO = 'Test two';
+
     /**
      * @var int
      */
@@ -51,10 +53,12 @@ class SalesPaymentFacadeTest extends Unit
      * @var string
      */
     protected const ITEM_NAME = 'ITEM_NAME';
+
     /**
      * @var string
      */
     protected const CURRENCY_ISO_CODE = 'CODE';
+
     /**
      * @var string
      */
@@ -129,7 +133,7 @@ class SalesPaymentFacadeTest extends Unit
             SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS,
             [
                 $salesPaymentExpanderPluginMock,
-            ]
+            ],
         );
 
         // Act
@@ -177,7 +181,7 @@ class SalesPaymentFacadeTest extends Unit
             SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS,
             [
                 $salesPaymentExpanderPluginMock,
-            ]
+            ],
         );
 
         // Act

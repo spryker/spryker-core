@@ -49,7 +49,7 @@ class QuotePersistenceTester extends Actor
         $this->assertCount(
             count($quoteAllowedFields),
             $decodedQuoteData,
-            'Decoded quote data doesn\'t contain required count of indexes'
+            'Decoded quote data doesn\'t contain required count of indexes',
         );
 
         foreach ($quoteAllowedFields as $key => $value) {
@@ -61,8 +61,8 @@ class QuotePersistenceTester extends Actor
                 sprintf(
                     'Index "%s" was not found in array "%s"',
                     $fieldName,
-                    $this->getLocator()->utilEncoding()->service()->encodeJson($decodedQuoteData)
-                )
+                    $this->getLocator()->utilEncoding()->service()->encodeJson($decodedQuoteData),
+                ),
             );
 
             if (is_array($value)) {

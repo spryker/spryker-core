@@ -69,7 +69,7 @@ class ZedRequestFactory extends AbstractFactory
     public function createZedRequestHealthChecker(): HealthCheckInterface
     {
         return new ZedRequestHealthCheck(
-            $this->getZedRequestClient()
+            $this->getZedRequestClient(),
         );
     }
 
@@ -87,7 +87,7 @@ class ZedRequestFactory extends AbstractFactory
     public function createRedisDataCollector(): DataCollectorInterface
     {
         return new ZedRequestDataCollector(
-            $this->createZedRequestLogger()
+            $this->createZedRequestLogger(),
         );
     }
 
@@ -97,7 +97,7 @@ class ZedRequestFactory extends AbstractFactory
     public function createZedRequestLogger(): ZedRequestLoggerInterface
     {
         return new ZedRequestInMemoryLogger(
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
     }
 

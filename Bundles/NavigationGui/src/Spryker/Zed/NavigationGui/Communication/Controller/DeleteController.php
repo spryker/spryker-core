@@ -28,6 +28,7 @@ class DeleteController extends AbstractController
      * @var string
      */
     protected const MESSAGE_NAVIGATION_REMOVAL_SUCCESS = 'Navigation element %d was deleted successfully.';
+
     /**
      * @var string
      */
@@ -81,7 +82,7 @@ class DeleteController extends AbstractController
         $this->getFactory()->getNavigationFacade()->deleteNavigation($navigationTransfer);
         $this->addSuccessMessage(
             static::MESSAGE_NAVIGATION_REMOVAL_SUCCESS,
-            [static::MESSAGE_PARAM => $navigationTransfer->getIdNavigation()]
+            [static::MESSAGE_PARAM => $navigationTransfer->getIdNavigation()],
         );
 
         return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());

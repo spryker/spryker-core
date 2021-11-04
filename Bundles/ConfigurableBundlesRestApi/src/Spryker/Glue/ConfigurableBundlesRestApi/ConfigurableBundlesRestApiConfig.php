@@ -15,10 +15,12 @@ class ConfigurableBundlesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES = 'configurable-bundle-templates';
+
     /**
      * @var string
      */
     public const RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS = 'configurable-bundle-template-slots';
+
     /**
      * @var string
      */
@@ -28,6 +30,7 @@ class ConfigurableBundlesRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     public const RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = '3901';
+
     /**
      * @var string
      */

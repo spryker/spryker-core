@@ -45,7 +45,7 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
 
         foreach ($productDiscontinuedStorageEntities as $productDiscontinuedStorageEntity) {
             $this->discontinuedStorageEntityManager->deleteProductDiscontinuedStorageEntity(
-                $productDiscontinuedStorageEntity
+                $productDiscontinuedStorageEntity,
             );
         }
     }

@@ -56,7 +56,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param int $idSalesOrder
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
     protected function findOrderItemsByIdSalesOrder($idSalesOrder)
     {
@@ -84,7 +84,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
             $bundledProducts = $this->productBundlePriceCalculation->calculateForBundleItems(
                 $orderTransfer,
                 $salesOrderItemEntity,
-                $bundledProducts
+                $bundledProducts,
             );
         }
 

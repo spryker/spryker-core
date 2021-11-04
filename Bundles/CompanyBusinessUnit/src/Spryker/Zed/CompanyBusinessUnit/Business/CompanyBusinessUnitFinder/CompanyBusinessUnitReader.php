@@ -69,7 +69,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransferIndex => $companyBusinessUnitTransfer) {
             $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->offsetSet(
                 $companyBusinessUnitTransferIndex,
-                $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer)
+                $this->companyBusinessUnitPluginExecutor->executeTransferExpanderPlugins($companyBusinessUnitTransfer),
             );
         }
 
@@ -86,7 +86,7 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
         $companyBusinessUnitTransfer->requireUuid();
 
         $companyBusinessUnitTransfer = $this->companyBusinessUnitRepository->findCompanyBusinessUnitByUuid(
-            $companyBusinessUnitTransfer->getUuid()
+            $companyBusinessUnitTransfer->getUuid(),
         );
 
         $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();

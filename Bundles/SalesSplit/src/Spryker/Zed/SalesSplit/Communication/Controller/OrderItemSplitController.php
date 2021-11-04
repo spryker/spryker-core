@@ -21,6 +21,7 @@ class OrderItemSplitController extends AbstractController
      * @var string
      */
     public const SALES_ORDER_DETAIL_URL = '/sales/detail?id-sales-order=%d';
+
     /**
      * @var string
      */
@@ -43,7 +44,7 @@ class OrderItemSplitController extends AbstractController
         if ($orderItemForm->isSubmitted() && $orderItemForm->isValid()) {
             $itemSplitResponseTransfer = $this->getFacade()->splitSalesOrderItem(
                 $formData[OrderItemSplitForm::FIELD_ID_ORDER_ITEM],
-                $formData[OrderItemSplitForm::FIELD_QUANTITY]
+                $formData[OrderItemSplitForm::FIELD_QUANTITY],
             );
 
             if (!$itemSplitResponseTransfer->getSuccess()) {

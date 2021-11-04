@@ -34,7 +34,7 @@ class DiscountPromotionsRestApiFacade extends AbstractFacade implements Discount
             ->createDiscountPromotionMapper()
             ->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
     }
 }

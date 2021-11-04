@@ -45,7 +45,7 @@ class CsvReader implements CsvReaderInterface
         if (!is_file($filename) || !is_readable($filename)) {
             throw new Exception(sprintf(
                 'Could not open CSV file "%s"',
-                $filename
+                $filename,
             ));
         }
 
@@ -94,7 +94,7 @@ class CsvReader implements CsvReaderInterface
 
         return array_combine(
             array_values($columns),
-            array_values($data)
+            array_values($data),
         );
     }
 
@@ -119,7 +119,7 @@ class CsvReader implements CsvReaderInterface
                 count($columns),
                 count($data),
                 $filename,
-                $lineNumber
+                $lineNumber,
             ));
         }
 
@@ -183,7 +183,7 @@ class CsvReader implements CsvReaderInterface
             throw new UnexpectedValueException(sprintf(
                 'Malformed data at line %d in %s',
                 $this->readIndex,
-                $this->csvFilename
+                $this->csvFilename,
             ));
         }
 
@@ -191,7 +191,7 @@ class CsvReader implements CsvReaderInterface
             $this->getCsvMeta()->getColumns(),
             $data,
             $this->getFile()->getRealPath(),
-            $this->readIndex + 1
+            $this->readIndex + 1,
         );
 
         $this->readIndex++;
@@ -242,7 +242,7 @@ class CsvReader implements CsvReaderInterface
                 $csvMeta->getColumns(),
                 $line,
                 $csvFile->getRealPath(),
-                $currentLine++
+                $currentLine++,
             );
         }
 

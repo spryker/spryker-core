@@ -29,7 +29,7 @@ abstract class AbstractCrudMerchantUserController extends AbstractController
                 [
                     'id-merchant' => $idMerchant,
                     '_fragment' => 'tab-content-merchant-user',
-                ]
+                ],
             );
     }
 

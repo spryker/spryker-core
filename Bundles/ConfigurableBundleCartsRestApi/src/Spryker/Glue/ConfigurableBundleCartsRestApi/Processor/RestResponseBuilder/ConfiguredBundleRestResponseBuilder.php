@@ -58,8 +58,8 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
             $restResponse->addError(
                 $this->configuredBundleMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
-                    new RestErrorMessageTransfer()
-                )
+                    new RestErrorMessageTransfer(),
+                ),
             );
         }
 

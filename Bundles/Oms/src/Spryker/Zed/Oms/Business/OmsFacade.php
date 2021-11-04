@@ -294,7 +294,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = [])
     {
@@ -483,7 +483,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -758,7 +758,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {

@@ -20,9 +20,7 @@ class SalesOrderMapper
     protected $salesOrderCommentMapper;
 
     /**
-     * @phpstan-var array<string, string>
-     *
-     * @var array<string>
+     * @var array<string, string>
      */
     protected $fieldMapping = [
         'order_reference' => 'SpySalesOrder.OrderReference',
@@ -74,9 +72,7 @@ class SalesOrderMapper
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getFieldMapping(): array
     {

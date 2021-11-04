@@ -45,7 +45,7 @@ class BearerTokenAuthorizationValidatorPlugin extends AbstractPlugin implements 
         return $this->getClient()->validateAuthorization(
             $request,
             $publicKeys,
-            $accessTokenRepository
+            $accessTokenRepository,
         );
     }
 }

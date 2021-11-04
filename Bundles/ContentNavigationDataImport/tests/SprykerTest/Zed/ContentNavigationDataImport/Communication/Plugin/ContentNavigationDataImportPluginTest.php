@@ -40,7 +40,7 @@ class ContentNavigationDataImportPluginTest extends Unit
         $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation']);
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
         $dataImportConfigurationTransfer = $this->createDataImportConfigurationTransfer(
-            codecept_data_dir() . 'import/content_navigation.csv'
+            codecept_data_dir() . 'import/content_navigation.csv',
         );
 
         // Act
@@ -59,7 +59,7 @@ class ContentNavigationDataImportPluginTest extends Unit
         $this->tester->haveNavigation([NavigationTransfer::KEY => 'content_navigation_without_default_locale']);
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
         $dataImportConfigurationTransfer = $this->createDataImportConfigurationTransfer(
-            codecept_data_dir() . 'import/content_navigation_without_default_locale.csv'
+            codecept_data_dir() . 'import/content_navigation_without_default_locale.csv',
         );
 
         // Act
@@ -77,7 +77,7 @@ class ContentNavigationDataImportPluginTest extends Unit
         // Arrange
         $contentNavigationDataImportPlugin = new ContentNavigationDataImportPlugin();
         $dataImportConfigurationTransfer = $this->createDataImportConfigurationTransfer(
-            codecept_data_dir() . 'import/content_navigation_with_invalid_navigation_key.csv'
+            codecept_data_dir() . 'import/content_navigation_with_invalid_navigation_key.csv',
         );
 
         // Act

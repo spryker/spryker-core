@@ -21,10 +21,12 @@ class RestRequestValidator implements RestRequestValidatorInterface
      * @var string
      */
     protected const EXCEPTION_MESSAGE_POST_DATA_IS_INVALID = 'Post data is invalid.';
+
     /**
      * @var string
      */
     protected const EXCEPTION_MESSAGE_RESOURCE_TYPE_IS_INVALID = 'Invalid type.';
+
     /**
      * @var string
      */
@@ -114,7 +116,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
 
         $allResources = $restRequest->getHttpRequest()->attributes->get(
             RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES,
-            []
+            [],
         );
 
         if ($this->checkResourcesHaveId($allResources)) {

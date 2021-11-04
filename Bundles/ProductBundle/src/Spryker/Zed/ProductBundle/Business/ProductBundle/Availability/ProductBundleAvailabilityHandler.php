@@ -128,7 +128,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundledProductSku
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
     protected function getBundlesUsingProductBySku($bundledProductSku)
     {
@@ -162,7 +162,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             $this->availabilityFacade->saveProductAvailabilityForStore(
                 $bundleProductSku,
                 $bundleAvailabilityQuantity,
-                $storeTransfer
+                $storeTransfer,
             );
         }
     }
@@ -179,7 +179,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             $this->availabilityFacade->saveProductAvailabilityForStore(
                 $bundleProductSku,
                 new Decimal(0),
-                $storeTransfer
+                $storeTransfer,
             );
         }
     }
@@ -224,7 +224,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
 
             $bundledProductAvailabilityTransfer = $this->findBundledItemAvailabilityBySku(
                 $bundledItemSku,
-                $storeTransfer
+                $storeTransfer,
             );
 
             if ($this->skipBundledItem($bundledProductAvailabilityTransfer)) {
@@ -238,7 +238,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             $bundleAvailabilityQuantity = $this->calculateBundledItemQuantity(
                 $bundledProductAvailabilityTransfer,
                 $bundleItemEntity,
-                $bundleAvailabilityQuantity
+                $bundleAvailabilityQuantity,
             );
         }
 

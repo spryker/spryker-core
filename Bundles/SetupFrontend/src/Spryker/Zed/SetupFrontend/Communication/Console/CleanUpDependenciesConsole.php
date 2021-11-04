@@ -20,6 +20,7 @@ class CleanUpDependenciesConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'frontend:project:cleanup-dependencies';
+
     /**
      * @var string
      */

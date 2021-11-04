@@ -76,8 +76,8 @@ class PriceProductFacadeStub extends PriceProductFacade
                     ->setGrossAmount($price)
                     ->setCurrency(
                         (new CurrencyTransfer())
-                            ->setCode(static::EUR_ISO_CODE)
-                    )
+                            ->setCode(static::EUR_ISO_CODE),
+                    ),
             );
     }
 

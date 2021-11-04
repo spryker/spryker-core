@@ -18,6 +18,7 @@ class SynchronizationStorage implements SynchronizationInterface
      * @var string
      */
     public const KEY = 'key';
+
     /**
      * @var string
      */

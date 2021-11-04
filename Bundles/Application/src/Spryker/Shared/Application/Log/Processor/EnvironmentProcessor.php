@@ -23,22 +23,27 @@ class EnvironmentProcessor
      * @var string
      */
     public const APPLICATION = 'application';
+
     /**
      * @var string
      */
     public const ENVIRONMENT = 'environment';
+
     /**
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */
     public const CODE_BUCKET = 'codeBucket';
+
     /**
      * @var string
      */
     public const LOCALE = 'locale';
+
     /**
      * @var string
      */

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Transfer\Business\Model;
 interface TransferValidatorInterface
 {
     /**
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

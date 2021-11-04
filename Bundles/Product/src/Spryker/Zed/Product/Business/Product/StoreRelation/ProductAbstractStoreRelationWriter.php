@@ -116,7 +116,7 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
     {
         $storeRelation = $this->productAbstractStoreRelationReader->getStoreRelation(
             (new StoreRelationTransfer())
-                ->setIdEntity($idProductAbstract)
+                ->setIdEntity($idProductAbstract),
         );
 
         return $storeRelation->getIdStores();

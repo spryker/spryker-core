@@ -30,10 +30,12 @@ class ModuleBridgeCreateConsole extends Console
      * @var string
      */
     public const OPTION_BRIDGE_TYPE = 'bridge type';
+
     /**
      * @var string
      */
     public const OPTION_MODULE = 'from module';
+
     /**
      * @var string
      */
@@ -43,6 +45,7 @@ class ModuleBridgeCreateConsole extends Console
      * @var string
      */
     public const OPTION_METHODS = 'methods';
+
     /**
      * @var string
      */

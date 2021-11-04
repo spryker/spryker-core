@@ -28,7 +28,7 @@ class MerchantCategoryDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'merchant_category.csv',
-            static::IMPORT_TYPE_MERCHANT_CATEGORY
+            static::IMPORT_TYPE_MERCHANT_CATEGORY,
         );
     }
 
@@ -42,7 +42,7 @@ class MerchantCategoryDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

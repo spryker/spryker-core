@@ -285,7 +285,7 @@ class ProductOfferStockFacadeTest extends Unit
 
         // Act
         $productOfferStockTransfers = $this->tester->getFacade()->expandProductOfferWithProductOfferStockCollection(
-            (new ProductOfferTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            (new ProductOfferTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference()),
         )->getProductOfferStocks();
         $productOfferStockTransferFromDb = $this->tester->getProductOfferStockRepository()->findOne($productOfferStockRequestTransfer);
 

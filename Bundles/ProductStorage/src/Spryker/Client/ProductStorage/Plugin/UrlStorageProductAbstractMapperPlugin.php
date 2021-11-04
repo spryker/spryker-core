@@ -34,7 +34,7 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
 
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
@@ -64,7 +64,7 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
                 '%s.%s.resource.product_abstract.%s',
                 strtolower(Store::getInstance()->getStoreName()),
                 strtolower($locale),
-                $idProductAbstract
+                $idProductAbstract,
             );
 
             return $collectorDataKey;

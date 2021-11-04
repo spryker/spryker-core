@@ -25,14 +25,14 @@ class MerchantUserViewMerchantUpdateFormViewExpanderPlugin extends AbstractPlugi
      *
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormView
      */
     public function expand(FormView $view, FormInterface $form, array $options): FormView
     {
         $view->vars['tables']['merchantUsersTable'] = $this->getFactory()->createMerchantUserTable(
-            $form->getData()['idMerchant']
+            $form->getData()['idMerchant'],
         )->render();
 
         return $view;

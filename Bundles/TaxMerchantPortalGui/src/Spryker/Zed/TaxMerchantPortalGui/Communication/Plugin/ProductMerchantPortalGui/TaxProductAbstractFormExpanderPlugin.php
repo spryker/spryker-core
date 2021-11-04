@@ -21,6 +21,7 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm::GROUP_WITH_STORES
+     *
      * @var string
      */
     protected const GROUP_WITH_STORES = 'stores';
@@ -47,12 +48,11 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
      * @api
      *
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @phpstan-return \Symfony\Component\Form\FormBuilderInterface<mixed>
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */

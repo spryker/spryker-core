@@ -22,7 +22,7 @@ class PriceFactory extends AbstractFactory
     {
         return new PriceModeSwitcher(
             $this->getQuoteClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

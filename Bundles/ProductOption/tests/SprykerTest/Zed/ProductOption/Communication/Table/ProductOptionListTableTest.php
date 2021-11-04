@@ -33,6 +33,7 @@ class ProductOptionListTableTest extends Unit
      * @var string
      */
     protected const PRODUCT_OPTION_VALUE_SKU_1 = 'PRODUCT_OPTION_VALUE_SKU_1';
+
     /**
      * @var string
      */
@@ -83,7 +84,7 @@ class ProductOptionListTableTest extends Unit
             $productOptionQueryContainer,
             $this->getProductOptionToCurrencyFacadeMock(),
             $this->getProductOptionToMoneyFacadeMock(),
-            $productOptionRepository
+            $productOptionRepository,
         );
     }
 

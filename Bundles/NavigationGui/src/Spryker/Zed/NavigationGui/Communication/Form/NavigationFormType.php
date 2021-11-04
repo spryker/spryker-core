@@ -29,10 +29,12 @@ class NavigationFormType extends AbstractType
      * @var string
      */
     public const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     public const FIELD_KEY = 'key';
+
     /**
      * @var string
      */
@@ -54,7 +56,7 @@ class NavigationFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

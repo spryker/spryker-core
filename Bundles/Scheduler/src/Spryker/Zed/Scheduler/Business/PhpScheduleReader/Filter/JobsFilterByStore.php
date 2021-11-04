@@ -13,6 +13,7 @@ class JobsFilterByStore extends AbstractJobsFilter implements ChainableJobsFilte
 {
     /**
      * @see \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper\PhpScheduleMapper::KEY_STORES
+     *
      * @var string
      */
     protected const KEY_STORES = 'stores';

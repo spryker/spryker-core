@@ -21,12 +21,14 @@ class CmsSlotBlockCategoryConditionsStep implements DataImportStepInterface
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     *
      * @var string
      */
     protected const KEY_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionResolver::KEY_CONDITION_CATEGORY_IDS
+     *
      * @var string
      */
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
@@ -63,12 +65,12 @@ class CmsSlotBlockCategoryConditionsStep implements DataImportStepInterface
         $conditionsArray = $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? [];
 
         $conditionsArray[static::KEY_CONDITION_CATEGORY] = $this->allConditionsResolver->getConditions(
-            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_ALL]
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_ALL],
         );
 
         $conditionsArray[static::KEY_CONDITION_CATEGORY] = $this->categoryKeysToIdsConditionsResolver->getConditions(
             $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_KEYS],
-            $conditionsArray[static::KEY_CONDITION_CATEGORY]
+            $conditionsArray[static::KEY_CONDITION_CATEGORY],
         );
 
         if (!array_filter($conditionsArray[static::KEY_CONDITION_CATEGORY])) {

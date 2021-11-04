@@ -29,7 +29,7 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
     public function getContentProductAbstractListDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getContentProductAbstractListDataImporterConfiguration()
+            $this->getConfig()->getContentProductAbstractListDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
@@ -67,7 +67,7 @@ class ContentProductDataImportBusinessFactory extends DataImportBusinessFactory
     {
         return new ContentProductAbstractListPrepareLocalizedTermsStep(
             $this->getUtilEncodingService(),
-            $this->getContentProductFacade()
+            $this->getContentProductFacade(),
         );
     }
 

@@ -71,7 +71,7 @@ class CommentFacadeFindCommentThreadByOwnerTest extends Unit
         $this->assertEquals($commentTransfer->getMessage(), $storedCommentTransfer->getMessage());
         $this->assertEquals(
             $commentTransfer->getCustomer()->getIdCustomer(),
-            $storedCommentTransfer->getCustomer()->getIdCustomer()
+            $storedCommentTransfer->getCustomer()->getIdCustomer(),
         );
     }
 

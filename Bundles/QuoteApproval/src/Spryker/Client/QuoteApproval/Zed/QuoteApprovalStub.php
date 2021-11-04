@@ -38,7 +38,7 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/create-quote-approval',
-            $quoteApprovalRequestTransfer
+            $quoteApprovalRequestTransfer,
         );
 
         return $quoteResponseTransfer;
@@ -54,7 +54,7 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/remove-quote-approval',
-            $quoteApprovalRequestTransfer
+            $quoteApprovalRequestTransfer,
         );
 
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
@@ -72,7 +72,7 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserCollectionTransfer $potentialQuoteApproversCollection */
         $potentialQuoteApproversCollection = $this->zedRequestClient->call(
             '/quote-approval/gateway/get-quote-approver-list',
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         return $potentialQuoteApproversCollection;
@@ -88,7 +88,7 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/approve-quote-approval',
-            $quoteApprovalRequestTransfer
+            $quoteApprovalRequestTransfer,
         );
 
         return $quoteApprovalResponseTransfer;
@@ -104,7 +104,7 @@ class QuoteApprovalStub implements QuoteApprovalStubInterface
         /** @var \Generated\Shared\Transfer\QuoteApprovalResponseTransfer $quoteApprovalResponseTransfer */
         $quoteApprovalResponseTransfer = $this->zedRequestClient->call(
             '/quote-approval/gateway/decline-quote-approval',
-            $quoteApprovalRequestTransfer
+            $quoteApprovalRequestTransfer,
         );
 
         return $quoteApprovalResponseTransfer;

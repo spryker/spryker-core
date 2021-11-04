@@ -53,7 +53,7 @@ class ProductConfigurationCartItemExpander implements ProductConfigurationCartIt
             $productConfigurationInstanceTransfer = $this->productConfigurationInstanceMapper
                ->mapRestCartItemProductConfigurationToProductConfigurationInstance(
                    $restCartItemProductConfigurationInstanceAttributesTransfer,
-                   new ProductConfigurationInstanceTransfer()
+                   new ProductConfigurationInstanceTransfer(),
                );
 
             return $cartItemRequestTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);

@@ -28,7 +28,7 @@ class DecimalToIntegerConverter implements DecimalToIntegerConverterInterface
         if (!is_float($value)) {
             throw new InvalidConverterArgumentException(sprintf(
                 'Only float values allowed for conversion to int. Current type is "%s"',
-                gettype($value)
+                gettype($value),
             ));
         }
 

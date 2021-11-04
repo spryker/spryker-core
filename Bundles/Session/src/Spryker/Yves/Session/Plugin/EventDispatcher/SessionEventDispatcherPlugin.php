@@ -28,6 +28,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      * @var string
      */
     protected const SERVICE_SESSION = 'session';
+
     /**
      * @var string
      */
@@ -37,6 +38,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      * @var int
      */
     protected const EVENT_PRIORITY_EARLY_KERNEL_REQUEST = 128;
+
     /**
      * @var int
      */
@@ -158,7 +160,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             $params['secure'],
             $params['httponly'],
             false,
-            $params['samesite'] ?? Cookie::SAMESITE_LAX
+            $params['samesite'] ?? Cookie::SAMESITE_LAX,
         );
 
         return $cookie;

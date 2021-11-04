@@ -56,7 +56,7 @@ class AddressSourceCheckoutDataValidator implements AddressSourceCheckoutDataVal
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->setCode(ShipmentsRestApiConfig::ERROR_RESPONSE_CODE_ADDRESS_NOT_VALID)
-                    ->setDetail(ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_ADDRESS_NOT_VALID)
+                    ->setDetail(ShipmentsRestApiConfig::ERROR_RESPONSE_DETAIL_ADDRESS_NOT_VALID),
             );
         }
 

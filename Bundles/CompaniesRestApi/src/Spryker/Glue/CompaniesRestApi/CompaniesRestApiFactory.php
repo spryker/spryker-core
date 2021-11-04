@@ -33,7 +33,7 @@ class CompaniesRestApiFactory extends AbstractFactory
     {
         return new CompanyByCompanyUserResourceRelationshipExpander(
             $this->createCompanyRestResponseBuilder(),
-            $this->createCompanyMapper()
+            $this->createCompanyMapper(),
         );
     }
 
@@ -44,7 +44,7 @@ class CompaniesRestApiFactory extends AbstractFactory
     {
         return new CompanyByCompanyRoleResourceRelationshipExpander(
             $this->createCompanyRestResponseBuilder(),
-            $this->createCompanyMapper()
+            $this->createCompanyMapper(),
         );
     }
 
@@ -55,7 +55,7 @@ class CompaniesRestApiFactory extends AbstractFactory
     {
         return new CompanyByCompanyBusinessUnitResourceRelationshipExpander(
             $this->createCompanyRestResponseBuilder(),
-            $this->createCompanyMapper()
+            $this->createCompanyMapper(),
         );
     }
 
@@ -66,7 +66,7 @@ class CompaniesRestApiFactory extends AbstractFactory
     {
         return new CompanyByQuoteRequestResourceRelationshipExpander(
             $this->createCompanyRestResponseBuilder(),
-            $this->createCompanyMapper()
+            $this->createCompanyMapper(),
         );
     }
 
@@ -78,7 +78,7 @@ class CompaniesRestApiFactory extends AbstractFactory
         return new CompanyReader(
             $this->getCompanyClient(),
             $this->createCompanyMapper(),
-            $this->createCompanyRestResponseBuilder()
+            $this->createCompanyRestResponseBuilder(),
         );
     }
 

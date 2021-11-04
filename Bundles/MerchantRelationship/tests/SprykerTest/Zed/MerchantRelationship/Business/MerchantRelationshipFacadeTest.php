@@ -31,14 +31,17 @@ class MerchantRelationshipFacadeTest extends Unit
      * @var string
      */
     protected const MR_KEY_TEST = 'mr-test';
+
     /**
      * @var string
      */
     protected const BU_OWNER_KEY_OWNER = 'unit-owner';
+
     /**
      * @var string
      */
     protected const BU_KEY_UNIT_1 = 'unit-1';
+
     /**
      * @var string
      */
@@ -46,6 +49,7 @@ class MerchantRelationshipFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableMapper::ENTITY_TITLE
+     *
      * @var string
      */
     protected const MR_ENTITY_TITLE = 'Merchant Relationship';
@@ -95,7 +99,7 @@ class MerchantRelationshipFacadeTest extends Unit
         $this->assertNotNull($merchantRelationship->getIdMerchantRelationship());
         $this->assertSame(
             $merchantRelationship->getOwnerCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
-            $merchantRelationship->getFkCompanyBusinessUnit()
+            $merchantRelationship->getFkCompanyBusinessUnit(),
         );
     }
 
@@ -117,7 +121,7 @@ class MerchantRelationshipFacadeTest extends Unit
             ->setFkMerchant($merchantTransfer->getIdMerchant())
             ->setAssigneeCompanyBusinessUnits(
                 (new CompanyBusinessUnitCollectionTransfer())
-                    ->addCompanyBusinessUnit($companyBusinessUnitTransfer)
+                    ->addCompanyBusinessUnit($companyBusinessUnitTransfer),
             );
 
         // Action
@@ -140,7 +144,7 @@ class MerchantRelationshipFacadeTest extends Unit
         $merchantRelationship = $this->tester->createMerchantRelationship(
             static::MR_KEY_TEST,
             static::BU_OWNER_KEY_OWNER,
-            [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2]
+            [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2],
         );
 
         // Assert
@@ -188,12 +192,12 @@ class MerchantRelationshipFacadeTest extends Unit
         // Prepare
         $expectedMerchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $expectedMerchantRelationship->setName(
-            sprintf('%s - %s', $expectedMerchantRelationship->getIdMerchantRelationship(), $expectedMerchantRelationship->getOwnerCompanyBusinessUnit()->getName())
+            sprintf('%s - %s', $expectedMerchantRelationship->getIdMerchantRelationship(), $expectedMerchantRelationship->getOwnerCompanyBusinessUnit()->getName()),
         );
 
         $merchantRelationship = (new MerchantRelationshipTransfer())
             ->setIdMerchantRelationship(
-                $expectedMerchantRelationship->getIdMerchantRelationship()
+                $expectedMerchantRelationship->getIdMerchantRelationship(),
             );
 
         // Act
@@ -230,7 +234,7 @@ class MerchantRelationshipFacadeTest extends Unit
         $merchantRelationship = $this->tester->createMerchantRelationship(
             static::MR_KEY_TEST,
             static::BU_OWNER_KEY_OWNER,
-            [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2]
+            [static::BU_OWNER_KEY_OWNER, static::BU_KEY_UNIT_1, static::BU_KEY_UNIT_2],
         );
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
@@ -238,7 +242,7 @@ class MerchantRelationshipFacadeTest extends Unit
         $this->tester->getFacade()
             ->deleteMerchantRelationship(
                 (new MerchantRelationshipTransfer())
-                    ->setIdMerchantRelationship($idMerchantRelationship)
+                    ->setIdMerchantRelationship($idMerchantRelationship),
             );
 
         // Assert
@@ -268,7 +272,7 @@ class MerchantRelationshipFacadeTest extends Unit
         // Arrange
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setMerchantRelationshipIds(
-            [$merchantRelationshipTransfer->getIdMerchantRelationship()]
+            [$merchantRelationshipTransfer->getIdMerchantRelationship()],
         );
 
         // Act

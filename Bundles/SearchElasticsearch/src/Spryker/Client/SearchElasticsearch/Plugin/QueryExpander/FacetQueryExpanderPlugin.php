@@ -27,6 +27,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @var string
      */
     public const AGGREGATION_FILTER_NAME = 'filter';
+
     /**
      * @var string
      */

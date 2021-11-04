@@ -25,18 +25,22 @@ class BannerContentTermForm extends AbstractType
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_SUBTITLE = 'subtitle';
+
     /**
      * @var string
      */
     public const FIELD_IMAGE_URL = 'imageUrl';
+
     /**
      * @var string
      */
     public const FIELD_CLICK_URL = 'clickUrl';
+
     /**
      * @var string
      */
@@ -46,18 +50,22 @@ class BannerContentTermForm extends AbstractType
      * @var string
      */
     public const LABEL_TITLE = 'Title';
+
     /**
      * @var string
      */
     public const LABEL_SUBTITLE = 'Subtitle';
+
     /**
      * @var string
      */
     public const LABEL_IMAGE_URL = 'Image URL';
+
     /**
      * @var string
      */
     public const LABEL_CLICK_URL = 'Click URL';
+
     /**
      * @var string
      */
@@ -107,7 +115,7 @@ class BannerContentTermForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

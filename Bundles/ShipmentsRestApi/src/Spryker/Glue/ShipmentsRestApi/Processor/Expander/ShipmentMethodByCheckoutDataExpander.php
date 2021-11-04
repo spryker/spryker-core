@@ -67,12 +67,12 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
             }
 
             $restShipmentMethodsAttributesTransfers = $this->mapRestShipmentMethodsAttributesTransfers(
-                $shipmentMethodsTransfer
+                $shipmentMethodsTransfer,
             );
 
             $restShipmentMethodsAttributesTransfers = $this->sortRestShipmentMethodsAttributesTransfers(
                 $restShipmentMethodsAttributesTransfers,
-                $restRequest
+                $restRequest,
             );
 
             $this->addShipmentMethodResourceRelationships($restShipmentMethodsAttributesTransfers, $resource);
@@ -89,7 +89,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     ): array {
         return $this->shipmentMethodMapper
             ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-                $shipmentMethodsTransfer->getMethods()
+                $shipmentMethodsTransfer->getMethods(),
             );
     }
 
@@ -120,7 +120,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
         foreach ($restShipmentMethodAttributesTransfers as $idShipmentMethod => $restShipmentMethodAttributesTransfer) {
             $shipmentMethodRestResource = $this->shipmentMethodRestResponseBuilder->createShipmentMethodRestResource(
                 (string)$idShipmentMethod,
-                $restShipmentMethodAttributesTransfer
+                $restShipmentMethodAttributesTransfer,
             );
 
             $resource->addRelationship($shipmentMethodRestResource);

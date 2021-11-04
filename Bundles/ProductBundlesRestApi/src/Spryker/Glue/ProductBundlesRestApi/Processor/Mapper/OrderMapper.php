@@ -46,7 +46,7 @@ class OrderMapper implements OrderMapperInterface
         foreach ($orderTransfer->getBundleItems() as $itemTransfer) {
             $restOrderItemsAttributesTransfer = $this->ordersRestApiResource->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
-                new RestOrderItemsAttributesTransfer()
+                new RestOrderItemsAttributesTransfer(),
             );
 
             $restOrderItemsAttributesTransfers->append($restOrderItemsAttributesTransfer);

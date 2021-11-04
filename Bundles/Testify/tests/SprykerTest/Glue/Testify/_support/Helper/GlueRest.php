@@ -69,8 +69,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 sprintf(
                     'Failed to parse json string "%s", error: "%s"',
                     $jsonResponse,
-                    json_last_error_msg()
-                )
+                    json_last_error_msg(),
+                ),
             );
         }
 
@@ -105,7 +105,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             'Expected HTTP Status Code: %s. Actual Status Code: %s with the response "%s"',
             HttpCode::getDescription($code),
             HttpCode::getDescription($this->grabResponseCode()),
-            strlen($rawResponse) > $responseLimit ? substr($rawResponse, 0, $responseLimit) . '...' : $rawResponse
+            strlen($rawResponse) > $responseLimit ? substr($rawResponse, 0, $responseLimit) . '...' : $rawResponse,
         );
         $this->assertSame($code, $this->grabResponseCode(), $failureMessage);
     }
@@ -193,7 +193,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             '$.data.relationships.%1$s.data[?(@.id == %2$s and @.type == %3$s)]',
             $type,
             json_encode($id),
-            json_encode($type)
+            json_encode($type),
         ));
     }
 
@@ -272,7 +272,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         $jsonPath = sprintf(
             '$..included[?(@.type == \'%s\' and @.id == \'%s\')].attributes',
             $resourceName,
-            $identifier
+            $identifier,
         );
 
         return $this->grabDataFromResponseByJsonPath($jsonPath)[0];
@@ -291,7 +291,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             [
                 'id' => $id,
             ],
-            sprintf('$.data[?(@.id == %s)]', json_encode($id))
+            sprintf('$.data[?(@.id == %s)]', json_encode($id)),
         );
     }
 
@@ -307,7 +307,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     {
         $this->getJsonPathModule()->seeResponseJsonPathContains(
             $attributes,
-            sprintf('$.data[?(@.id == %s)].attributes', json_encode($id))
+            sprintf('$.data[?(@.id == %s)].attributes', json_encode($id)),
         );
     }
 
@@ -330,7 +330,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             json_encode($id),
             $relationType,
             json_encode($relationId),
-            json_encode($relationType)
+            json_encode($relationType),
         ));
     }
 
@@ -348,7 +348,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             [
                 'self' => $link,
             ],
-            sprintf('$.data[?(@.id == %s)].links', json_encode($id))
+            sprintf('$.data[?(@.id == %s)].links', json_encode($id)),
         );
     }
 
@@ -370,8 +370,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             sprintf(
                 '$.included[?(@.id == %1$s and @.type == %2$s)]',
                 json_encode($id),
-                json_encode($type)
-            )
+                json_encode($type),
+            ),
         );
     }
 
@@ -385,7 +385,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     public function dontSeeIncludesContainResourceOfType(string $type): void
     {
         $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
-            sprintf('$.included[?(@.type == %1$s)]', json_encode($type))
+            sprintf('$.included[?(@.type == %1$s)]', json_encode($type)),
         );
     }
 
@@ -405,8 +405,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             sprintf(
                 '$.included[?(@.id == %1$s and @.type == %2$s)].attributes',
                 json_encode($id),
-                json_encode($type)
-            )
+                json_encode($type),
+            ),
         );
     }
 
@@ -435,7 +435,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             json_encode($type),
             $relationType,
             json_encode($relationId),
-            json_encode($relationType)
+            json_encode($relationType),
         ));
     }
 
@@ -457,8 +457,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             sprintf(
                 '$.included[?(@.id == %1$s and @.type == %2$s)].links',
                 json_encode($id),
-                json_encode($type)
-            )
+                json_encode($type),
+            ),
         );
     }
 
@@ -474,8 +474,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         $this->getJsonPathModule()->seeResponseMatchesJsonPath(
             sprintf(
                 '$.data.attributes.%s',
-                $attribute
-            )
+                $attribute,
+            ),
         );
     }
 
@@ -491,8 +491,8 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         $this->getJsonPathModule()->seeResponseMatchesJsonPath(
             sprintf(
                 '$.data[*].attributes.%s',
-                $attribute
-            )
+                $attribute,
+            ),
         );
     }
 

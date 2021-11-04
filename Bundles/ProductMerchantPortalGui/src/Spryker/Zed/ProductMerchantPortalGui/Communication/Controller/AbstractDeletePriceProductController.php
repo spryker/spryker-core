@@ -24,14 +24,13 @@ abstract class AbstractDeletePriceProductController extends AbstractController
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
+
     /**
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Something went wrong, please try again.';
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<int> $priceProductDefaultIds
      * @param int $volumeQuantity
@@ -45,7 +44,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     ): ValidationResponseTransfer {
         $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
             $priceProductTransfers,
-            $priceProductDefaultIds
+            $priceProductDefaultIds,
         );
 
         return $this->getFactory()
@@ -54,8 +53,6 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array<int> $priceProductDefaultIds
      *
@@ -91,8 +88,8 @@ abstract class AbstractDeletePriceProductController extends AbstractController
             'intval',
             $this->getFactory()->getUtilEncodingService()->decodeJson(
                 $request->get(PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS),
-                true
-            ) ?: []
+                true,
+            ) ?: [],
         );
     }
 

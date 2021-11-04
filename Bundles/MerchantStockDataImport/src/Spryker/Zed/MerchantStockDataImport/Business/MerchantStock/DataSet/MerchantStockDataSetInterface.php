@@ -13,14 +13,17 @@ interface MerchantStockDataSetInterface
      * @var string
      */
     public const MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @var string
      */
     public const MERCHANT_ID = 'id_merchant';
+
     /**
      * @var string
      */
     public const STOCK_NAME = 'stock_name';
+
     /**
      * @var string
      */

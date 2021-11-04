@@ -45,7 +45,7 @@ class BarcodeServiceHelper extends Module
             ->getBarcodeService()
             ->generateBarcode(
                 static::GENERATED_CODE,
-                $generatorPlugin
+                $generatorPlugin,
             );
     }
 }

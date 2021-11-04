@@ -32,10 +32,12 @@ class CmsSlotDataImportPluginTest extends Unit
      * @var string
      */
     protected const CMS_SLOT_TEMPLATE_PATH = '@CatalogPage/views/catalog/search.twig';
+
     /**
      * @var string
      */
     protected const CMS_SLOT_TEMPLATE_NAME = 'Catalog Search';
+
     /**
      * @var string
      */

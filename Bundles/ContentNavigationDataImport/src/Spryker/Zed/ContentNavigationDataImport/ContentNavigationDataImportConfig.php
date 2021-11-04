@@ -16,6 +16,7 @@ class ContentNavigationDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_FILE_NAME = 'content_navigation.csv';
+
     /**
      * @var string
      */
@@ -32,7 +33,7 @@ class ContentNavigationDataImportConfig extends DataImportConfig
 
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . static::IMPORT_FILE_NAME,
-            static::IMPORT_TYPE_CONTENT_NAVIGATION
+            static::IMPORT_TYPE_CONTENT_NAVIGATION,
         );
     }
 
@@ -46,7 +47,7 @@ class ContentNavigationDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

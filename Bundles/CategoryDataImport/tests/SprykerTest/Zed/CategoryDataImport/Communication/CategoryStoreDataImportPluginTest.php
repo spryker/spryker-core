@@ -32,18 +32,22 @@ class CategoryStoreDataImportPluginTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
     protected const STORE_NAME_AT = 'AT';
+
     /**
      * @var string
      */
     protected const CATEGORY_NAME_TEST = 'test-category';
+
     /**
      * @var string
      */
     protected const CATEGORY_PARENT_NAME_TEST = 'parent-test-category';
+
     /**
      * @var string
      */
@@ -56,6 +60,7 @@ class CategoryStoreDataImportPluginTest extends Unit
 
     /**
      * @uses \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE
+     *
      * @var string
      */
     protected const IMPORT_TYPE_CATEGORY_STORE = 'category-store';
@@ -74,7 +79,7 @@ class CategoryStoreDataImportPluginTest extends Unit
 
         $this->tester->setDependency(
             CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
-            new MainChildrenPropagationCategoryStoreAssignerPlugin()
+            new MainChildrenPropagationCategoryStoreAssignerPlugin(),
         );
     }
 
@@ -108,8 +113,8 @@ class CategoryStoreDataImportPluginTest extends Unit
             sprintf(
                 'Imported number of category stores is %s, expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
-                static::EXPECTED_IMPORT_COUNT
-            )
+                static::EXPECTED_IMPORT_COUNT,
+            ),
         );
     }
 
@@ -147,12 +152,12 @@ class CategoryStoreDataImportPluginTest extends Unit
         $this->assertSame(
             2,
             $this->tester->countCategoryStoreRelations($parentCategoryTransfer->getIdCategoryOrFail()),
-            'Number of store does not match expected value.'
+            'Number of store does not match expected value.',
         );
         $this->assertSame(
             1,
             $this->tester->countCategoryStoreRelations($categoryTransfer->getIdCategoryOrFail()),
-            'Number of store does not match expected value.'
+            'Number of store does not match expected value.',
         );
     }
 

@@ -31,7 +31,7 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createEntityMapper(),
             $this->createTransferMapper(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 

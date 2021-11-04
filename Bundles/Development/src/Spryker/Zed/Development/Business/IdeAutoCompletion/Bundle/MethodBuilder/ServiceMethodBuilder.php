@@ -29,7 +29,7 @@ class ServiceMethodBuilder extends AbstractBundleMethodBuilder
         return sprintf(
             '%s%s/',
             $bundleTransfer->getDirectory(),
-            $bundleTransfer->getName()
+            $bundleTransfer->getName(),
         );
     }
 }

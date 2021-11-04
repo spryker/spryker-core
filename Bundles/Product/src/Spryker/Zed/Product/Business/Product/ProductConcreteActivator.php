@@ -207,7 +207,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     protected function getProductAbstractTransfer(ProductConcreteTransfer $productConcreteTransfer)
     {
         $productAbstractTransfer = $this->productAbstractManager->findProductAbstractById(
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $this->assertProductAbstract($productConcreteTransfer->getIdProductConcrete(), $productAbstractTransfer);
@@ -228,7 +228,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         if (!$productConcrete) {
             throw new ProductConcreteNotFoundException(sprintf(
                 'Could not activate product concrete [%s]',
-                $idProductConcrete
+                $idProductConcrete,
             ));
         }
     }
@@ -246,7 +246,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         if (!$productAbstract) {
             throw new ProductConcreteNotFoundException(sprintf(
                 'Product abstract [%s] does not exist',
-                $idProductAbstract
+                $idProductAbstract,
             ));
         }
     }

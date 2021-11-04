@@ -17,18 +17,22 @@ class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
      * @var string
      */
     protected const KEY_SPY_AVAILABILITIES = 'SpyAvailabilities';
+
     /**
      * @var string
      */
     protected const KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const KEY_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+
     /**
      * @var string
      */
     protected const KEY_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
@@ -49,7 +53,7 @@ class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
 
         $productConcreteAvailabilityTransfers = $this->mapProductConcreteAvailabilityDataToProductConcreteAvailabilityTransfers(
             $availabilityStorageData[static::KEY_SPY_AVAILABILITIES],
-            new ArrayObject()
+            new ArrayObject(),
         );
 
         $productAbstractAvailabilityTransfer->setProductConcreteAvailabilities($productConcreteAvailabilityTransfers);

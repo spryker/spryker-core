@@ -179,7 +179,7 @@ class ProductListRestrictionFilterTest extends Unit
     protected function createProductListRestrictionFilter(): ProductListRestrictionFilterInterface
     {
         return new ProductListRestrictionFilter(
-            $this->productListReaderMock
+            $this->productListReaderMock,
         );
     }
 

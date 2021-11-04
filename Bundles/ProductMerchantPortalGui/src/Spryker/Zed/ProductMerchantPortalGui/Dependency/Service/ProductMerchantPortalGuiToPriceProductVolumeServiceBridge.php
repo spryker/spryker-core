@@ -78,7 +78,7 @@ class ProductMerchantPortalGuiToPriceProductVolumeServiceBridge implements Produ
             ->replaceVolumePrice(
                 $priceProductTransfer,
                 $volumePriceProductTransferToReplace,
-                $newVolumePriceProductTransfer
+                $newVolumePriceProductTransfer,
             );
     }
 

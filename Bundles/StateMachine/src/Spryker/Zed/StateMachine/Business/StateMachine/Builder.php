@@ -22,6 +22,7 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const STATE_NAME_ATTRIBUTE = 'name';
+
     /**
      * @var string
      */
@@ -31,10 +32,12 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const PROCESS_NAME_ATTRIBUTE = 'name';
+
     /**
      * @var string
      */
     public const PROCESS_FILE_ATTRIBUTE = 'file';
+
     /**
      * @var string
      */
@@ -44,14 +47,17 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const EVENT_COMMAND_ATTRIBUTE = 'command';
+
     /**
      * @var string
      */
     public const EVENT_MANUAL_ATTRIBUTE = 'manual';
+
     /**
      * @var string
      */
     public const EVENT_ON_ENTER_ATTRIBUTE = 'onEnter';
+
     /**
      * @var string
      */
@@ -61,6 +67,7 @@ class Builder implements BuilderInterface
      * @var string
      */
     public const TRANSITION_CONDITION_ATTRIBUTE = 'condition';
+
     /**
      * @var string
      */
@@ -267,8 +274,8 @@ class Builder implements BuilderInterface
             throw new StateMachineException(
                 sprintf(
                     'State machine XML file not found in "%s".',
-                    $pathToXml
-                )
+                    $pathToXml,
+                ),
             );
         }
 
@@ -277,8 +284,8 @@ class Builder implements BuilderInterface
             throw new StateMachineException(
                 sprintf(
                     'State machine XML file "%s" could not be read.',
-                    $pathToXml
-                )
+                    $pathToXml,
+                ),
             );
         }
 
@@ -513,15 +520,15 @@ class Builder implements BuilderInterface
         $transition->setCondition(
             $this->getAttributeString(
                 $xmlTransition,
-                self::TRANSITION_CONDITION_ATTRIBUTE
-            )
+                self::TRANSITION_CONDITION_ATTRIBUTE,
+            ),
         );
 
         $transition->setHappyCase(
             $this->getAttributeBoolean(
                 $xmlTransition,
-                self::TRANSITION_HAPPY_PATH_ATTRIBUTE
-            )
+                self::TRANSITION_HAPPY_PATH_ATTRIBUTE,
+            ),
         );
 
         $sourceState = (string)$xmlTransition->source;
@@ -573,8 +580,8 @@ class Builder implements BuilderInterface
                 sprintf(
                     'Target: "%s" does not exist from source: "%s"',
                     $targetStateName,
-                    $sourceName
-                )
+                    $sourceName,
+                ),
             );
         }
 
@@ -671,8 +678,8 @@ class Builder implements BuilderInterface
                 sprintf(
                     'Event: "%s" does not exist from source: "%s"',
                     $eventName,
-                    $sourceName
-                )
+                    $sourceName,
+                ),
             );
         }
     }

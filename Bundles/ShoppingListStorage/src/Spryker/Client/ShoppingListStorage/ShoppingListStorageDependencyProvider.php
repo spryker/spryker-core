@@ -19,10 +19,12 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT = 'SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT';
+
     /**
      * @var string
      */
     public const SHOPPING_LIST_STORAGE_STORAGE_CLIENT = 'SHOPPING_LIST_STORAGE_STORAGE_CLIENT';
+
     /**
      * @var string
      */
@@ -80,7 +82,7 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE, function (Container $container) {
             return new ShoppingListStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+                $container->getLocator()->synchronization()->service(),
             );
         });
 

@@ -24,9 +24,7 @@ class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements Pr
      *
      * @api
      *
-     * @phpstan-param array<string, \Generated\Shared\Transfer\ProductPayloadTransfer> $productData
-     *
-     * @param array $productData
+     * @param array<string, \Generated\Shared\Transfer\ProductPayloadTransfer> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void

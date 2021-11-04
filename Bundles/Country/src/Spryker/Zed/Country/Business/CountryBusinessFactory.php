@@ -31,15 +31,15 @@ class CountryBusinessFactory extends AbstractBusinessFactory
             $this->createCountryManager(),
             $this->createRegionManager(),
             $this->createCldrDataProvider(
-                $this->getConfig()->getCldrDir() . '/en/territories.json'
+                $this->getConfig()->getCldrDir() . '/en/territories.json',
             ),
             $this->createCldrDataProvider(
-                $this->getConfig()->getCldrDir() . '/supplemental/codeMappings.json'
+                $this->getConfig()->getCldrDir() . '/supplemental/codeMappings.json',
             ),
             $this->createCldrDataProvider(
-                $this->getConfig()->getCldrDir() . '/supplemental/postalCodeData.json'
+                $this->getConfig()->getCldrDir() . '/supplemental/postalCodeData.json',
             ),
-            $this->getConfig()
+            $this->getConfig(),
         );
 
         return $installer;
@@ -51,7 +51,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     public function createCountryManager()
     {
         return new CountryManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -61,7 +61,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     protected function createRegionManager()
     {
         return new RegionManager(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
         );
     }
 
@@ -71,7 +71,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     public function createCountryReader(): CountryReaderInterface
     {
         return new CountryReader(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -82,7 +82,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     {
         return new CountryCheckoutDataValidator(
             $this->createCountryManager(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -94,7 +94,7 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     protected function createCldrDataProvider($filePath)
     {
         return new JsonFileCldrDataProvider(
-            $filePath
+            $filePath,
         );
     }
 }

@@ -193,7 +193,7 @@ class MetaDataProviderTest extends Unit
                 $decisionRulePluginMock,
             ],
             $comparatorOperators,
-            $logicalComparatorsMock
+            $logicalComparatorsMock,
         );
     }
 

@@ -54,6 +54,7 @@ class PriceProductFacadeTest extends Unit
      * @var string
      */
     public const EUR_ISO_CODE = 'EUR';
+
     /**
      * @var string
      */
@@ -81,12 +82,14 @@ class PriceProductFacadeTest extends Unit
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     *
      * @var string
      */
     protected const PRICE_DATA = 'priceData';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA_BY_PRICE_TYPE
+     *
      * @var string
      */
     protected const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
@@ -152,7 +155,7 @@ class PriceProductFacadeTest extends Unit
             90,
             '',
             '',
-            self::USD_ISO_CODE
+            self::USD_ISO_CODE,
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -204,7 +207,7 @@ class PriceProductFacadeTest extends Unit
         $priceProductTransfer = $this->createProductWithAmount(50, 40);
 
         $this->assertTrue(
-            $priceProductFacade->hasValidPrice($priceProductTransfer->getSkuProduct())
+            $priceProductFacade->hasValidPrice($priceProductTransfer->getSkuProduct()),
         );
     }
 
@@ -221,7 +224,7 @@ class PriceProductFacadeTest extends Unit
             ->setSku($priceProductTransfer->getSkuProduct());
 
         $this->assertTrue(
-            $priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)
+            $priceProductFacade->hasValidPriceFor($priceProductFilterTransfer),
         );
     }
 
@@ -246,7 +249,7 @@ class PriceProductFacadeTest extends Unit
         $idPriceProduct = $priceProductFacade->getIdPriceProduct(
             $priceProductTransfer->getSkuProduct(),
             $priceProductFacade->getDefaultPriceTypeName(),
-            $this->createCurrencyFacade()->getCurrent()->getCode()
+            $this->createCurrencyFacade()->getCurrent()->getCode(),
         );
 
         $this->assertSame($idPriceProduct, $priceProductTransfer->getIdPriceProduct());
@@ -399,7 +402,7 @@ class PriceProductFacadeTest extends Unit
 
         $storedPrices = $priceProductFacade->findProductAbstractPrices(
             $productAbstractTransfer->getIdProductAbstract(),
-            $this->createPriceProductCriteriaTransfer()
+            $this->createPriceProductCriteriaTransfer(),
         );
 
         $this->assertCount(2, $storedPrices);
@@ -427,7 +430,7 @@ class PriceProductFacadeTest extends Unit
         $storedPrices = $priceProductFacade->findProductConcretePrices(
             $productConcreteTransfer->getIdProductConcrete(),
             $productConcreteTransfer->getFkProductAbstract(),
-            $this->createPriceProductCriteriaTransfer()
+            $this->createPriceProductCriteriaTransfer(),
         );
 
         $this->assertCount(1, $storedPrices);
@@ -661,7 +664,7 @@ class PriceProductFacadeTest extends Unit
 
         $this->assertSame(
             count($foundPrices),
-            count($prices)
+            count($prices),
         );
     }
 
@@ -696,7 +699,7 @@ class PriceProductFacadeTest extends Unit
                 (new MoneyValueTransfer())
                     ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
                     ->setGrossAmount($grossAmount)
-                    ->setNetAmount($netAmount)
+                    ->setNetAmount($netAmount),
             );
     }
 
@@ -737,7 +740,7 @@ class PriceProductFacadeTest extends Unit
             $grossAmount,
             $netAmount,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
@@ -821,7 +824,7 @@ class PriceProductFacadeTest extends Unit
             $grossPrice,
             $netPrice,
             $storeTransfer,
-            $currencyTransfer
+            $currencyTransfer,
         );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
@@ -909,7 +912,7 @@ class PriceProductFacadeTest extends Unit
             90,
             '',
             '',
-            self::EUR_ISO_CODE
+            self::EUR_ISO_CODE,
         );
 
         // Act
@@ -952,7 +955,7 @@ class PriceProductFacadeTest extends Unit
                 $netPrice,
                 '',
                 '',
-                static::EUR_ISO_CODE
+                static::EUR_ISO_CODE,
             );
         }
         $priceProductFilterTransfers = [];
@@ -987,7 +990,7 @@ class PriceProductFacadeTest extends Unit
                 $netPrice,
                 $productConcreteTransfer->getAbstractSku(),
                 '',
-                static::EUR_ISO_CODE
+                static::EUR_ISO_CODE,
             );
         }
         $priceProductFilterTransfers = [];
@@ -1015,7 +1018,7 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductTransfer = $this->createPriceProductForAbstractProduct(
             $productConcreteTransfer->getAbstractSku(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -1034,11 +1037,11 @@ class PriceProductFacadeTest extends Unit
         $this->assertSame($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount(),
         );
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount(),
         );
     }
 
@@ -1052,7 +1055,7 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductTransfer = $this->createPriceProductForConcreteProduct(
             $productConcreteTransfer->getAbstractSku(),
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -1071,11 +1074,11 @@ class PriceProductFacadeTest extends Unit
         $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount(),
         );
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount(),
         );
     }
 
@@ -1089,13 +1092,13 @@ class PriceProductFacadeTest extends Unit
 
         $this->createPriceProductForAbstractProduct(
             $productConcreteTransfer->getAbstractSku(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         $priceProductTransfer = $this->createPriceProductForConcreteProduct(
             $productConcreteTransfer->getAbstractSku(),
             $productConcreteTransfer->getIdProductConcrete(),
-            $productConcreteTransfer->getSku()
+            $productConcreteTransfer->getSku(),
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -1113,11 +1116,11 @@ class PriceProductFacadeTest extends Unit
 
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount(),
         );
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount(),
         );
     }
 
@@ -1132,14 +1135,14 @@ class PriceProductFacadeTest extends Unit
         $priceProductTransfer = $this->createPriceProductForAbstractProduct(
             $productConcreteTransfer->getAbstractSku(),
             $productConcreteTransfer->getFkProductAbstract(),
-            static::EUR_ISO_CODE
+            static::EUR_ISO_CODE,
         );
 
         $this->createPriceProductForConcreteProduct(
             $productConcreteTransfer->getAbstractSku(),
             $productConcreteTransfer->getIdProductConcrete(),
             $productConcreteTransfer->getSku(),
-            static::USD_ISO_CODE
+            static::USD_ISO_CODE,
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
@@ -1157,15 +1160,15 @@ class PriceProductFacadeTest extends Unit
 
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getFkCurrency(),
-            $resultPriceProductTransfer->getMoneyValue()->getFkCurrency()
+            $resultPriceProductTransfer->getMoneyValue()->getFkCurrency(),
         );
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount(),
         );
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount(),
         );
     }
 
@@ -1178,7 +1181,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $priceProductTransfer = $this->createPriceProductForConcreteProduct(
             $productConcreteTransfer->getAbstractSku(),
-            $productConcreteTransfer->getIdProductConcrete()
+            $productConcreteTransfer->getIdProductConcrete(),
         );
 
         //Act
@@ -1191,11 +1194,11 @@ class PriceProductFacadeTest extends Unit
         $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount(),
         );
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getGrossAmount(),
-            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount()
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount(),
         );
     }
 
@@ -1208,7 +1211,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $this->createPriceProductForAbstractProduct(
             $productConcreteTransfer->getAbstractSku(),
-            $productConcreteTransfer->getFkProductAbstract()
+            $productConcreteTransfer->getFkProductAbstract(),
         );
 
         //Act
@@ -1266,7 +1269,7 @@ class PriceProductFacadeTest extends Unit
         $this->assertCount(1, $validationResponseTransfer->getValidationErrors());
         $this->assertSame(
             'The set of inputs Store and Currency needs to be unique.',
-            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage()
+            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -1287,7 +1290,7 @@ class PriceProductFacadeTest extends Unit
                     ->setFkStore($storeTransfer->getIdStore())
                     ->setFkCurrency($currencyTransfer->getIdCurrency())
                     ->setGrossAmount(1)
-                    ->setNetAmount(1)
+                    ->setNetAmount(1),
             );
 
         // Act
@@ -1301,9 +1304,9 @@ class PriceProductFacadeTest extends Unit
             sprintf(
                 'Currency "%s" is not assigned to the store "%s"',
                 static::FAKE_CURRENCY,
-                $priceProductTransfer->getMoneyValue()->getStore()->getName()
+                $priceProductTransfer->getMoneyValue()->getStore()->getName(),
             ),
-            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage()
+            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -1327,7 +1330,7 @@ class PriceProductFacadeTest extends Unit
         $this->assertFalse($validationResponseTransfer->getIsSuccess());
         $this->assertSame(
             'This value is not valid.',
-            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage()
+            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage(),
         );
     }
 
@@ -1394,7 +1397,7 @@ class PriceProductFacadeTest extends Unit
             $priceTypeTransfer,
             10,
             9,
-            self::EUR_ISO_CODE
+            self::EUR_ISO_CODE,
         );
         $priceProductTransfer = $this->tester->havePriceProduct($priceProductTransfer->toArray());
 
@@ -1456,14 +1459,14 @@ class PriceProductFacadeTest extends Unit
             ->setSkuProductAbstract($abstractSku)
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault())
+                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault()),
             );
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             rand(10, 100),
             rand(1, 9),
             $this->createStoreFacade()->getCurrentStore(),
-            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE)
+            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE),
         );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
@@ -1491,14 +1494,14 @@ class PriceProductFacadeTest extends Unit
             ->setSkuProduct($sku)
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault())
+                    ->setType($this->createSharedPriceProductConfig()->getPriceDimensionDefault()),
             );
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             rand(10, 100),
             rand(1, 9),
             $this->createStoreFacade()->getCurrentStore(),
-            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE)
+            $this->getCurrencyTransfer($currencyIsoCode ?? static::EUR_ISO_CODE),
         );
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);

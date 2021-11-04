@@ -15,6 +15,7 @@ class DiscountConfig extends AbstractBundleConfig
      * @var int
      */
     public const DEFAULT_VOUCHER_CODE_LENGTH = 6;
+
     /**
      * @var int
      */
@@ -24,10 +25,12 @@ class DiscountConfig extends AbstractBundleConfig
      * @var string
      */
     public const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
+
     /**
      * @var string
      */
     public const KEY_VOUCHER_CODE_VOWELS = 'vowels';
+
     /**
      * @var string
      */
@@ -51,7 +54,7 @@ class DiscountConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string, array<mixed>>
      */
     public function getVoucherCodeCharacters()
     {

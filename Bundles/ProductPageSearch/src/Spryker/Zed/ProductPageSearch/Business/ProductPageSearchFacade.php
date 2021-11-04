@@ -192,7 +192,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
                 $pageMapTransfer,
                 $pageMapBuilder,
                 $productData,
-                $localeTransfer
+                $localeTransfer,
             );
     }
 

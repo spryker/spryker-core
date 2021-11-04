@@ -86,11 +86,11 @@ class ProductAlternativeStorageListenerTest extends Unit
         // Act
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
             ->findProductAlternativeStorageEntities(
-                [$this->targetProductConcrete->getIdProductConcrete()]
+                [$this->targetProductConcrete->getIdProductConcrete()],
             );
 
         // Assert
@@ -115,17 +115,17 @@ class ProductAlternativeStorageListenerTest extends Unit
         // Act
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $this->tester->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
             ->findProductAlternativeStorageEntities(
-                [$this->targetProductConcrete->getIdProductConcrete()]
+                [$this->targetProductConcrete->getIdProductConcrete()],
             );
 
         // Assert

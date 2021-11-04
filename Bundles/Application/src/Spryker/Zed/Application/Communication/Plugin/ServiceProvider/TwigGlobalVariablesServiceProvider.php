@@ -42,7 +42,7 @@ class TwigGlobalVariablesServiceProvider extends AbstractPlugin implements Servi
                 ];
 
                 return $variables;
-            })
+            }),
         );
     }
 

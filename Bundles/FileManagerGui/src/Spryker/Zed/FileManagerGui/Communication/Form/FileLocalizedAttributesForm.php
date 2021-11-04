@@ -26,18 +26,22 @@ class FileLocalizedAttributesForm extends AbstractType
      * @var string
      */
     public const FIELD_ALT = 'alt';
+
     /**
      * @var string
      */
     public const FIELD_TITLE = 'title';
+
     /**
      * @var string
      */
     public const FIELD_LOCALE_NAME = 'localeName';
+
     /**
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
@@ -50,7 +54,7 @@ class FileLocalizedAttributesForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

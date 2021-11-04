@@ -31,6 +31,7 @@ class MoneyPluginTest extends Unit
      */
     public const AMOUNT_INTEGER = 1000;
     public const AMOUNT_FLOAT = 10.00;
+
     /**
      * @var string
      */
@@ -40,10 +41,12 @@ class MoneyPluginTest extends Unit
      * @var string
      */
     public const CURRENCY_EUR = 'EUR';
+
     /**
      * @var string
      */
     public const LOCALE_DE_DE = 'de_DE';
+
     /**
      * @var string
      */

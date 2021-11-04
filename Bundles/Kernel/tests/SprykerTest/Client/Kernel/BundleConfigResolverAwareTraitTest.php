@@ -29,7 +29,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     {
         $bundleConfigResolverAwareTraitMock = $this->getBundleConfigResolverAwareTraitMock();
         $returned = $bundleConfigResolverAwareTraitMock->setConfig(
-            $this->getAbstractBundleConfigMock()
+            $this->getAbstractBundleConfigMock(),
         );
 
         $this->assertSame($bundleConfigResolverAwareTraitMock, $returned);

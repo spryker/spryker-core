@@ -96,13 +96,13 @@ class AttributeLoader implements AttributeLoaderInterface
         foreach ($productAbstractEntity->getSpyProducts() as $productEntity) {
             $rawProductAttributesTransfer->setConcreteAttributes(array_merge(
                 $rawProductAttributesTransfer->getConcreteAttributes(),
-                $this->getConcreteAttributes($productEntity)
+                $this->getConcreteAttributes($productEntity),
             ));
 
             if ($localeTransfer) {
                 $rawProductAttributesTransfer->setConcreteLocalizedAttributes(array_merge(
                     $rawProductAttributesTransfer->getConcreteLocalizedAttributes(),
-                    $this->getConcreteLocalizedAttributes($productEntity, $localeTransfer)
+                    $this->getConcreteLocalizedAttributes($productEntity, $localeTransfer),
                 ));
             }
         }
@@ -218,7 +218,7 @@ class AttributeLoader implements AttributeLoaderInterface
         if (!$productAbstractEntity) {
             throw new MissingProductException(sprintf(
                 'Abstract product %d not found!',
-                $productAbstractTransfer->getIdProductAbstract()
+                $productAbstractTransfer->getIdProductAbstract(),
             ));
         }
 
@@ -255,7 +255,7 @@ class AttributeLoader implements AttributeLoaderInterface
         if (!$productEntity) {
             throw new MissingProductException(sprintf(
                 'Concrete product %d not found!',
-                $productConcreteTransfer->getIdProductConcrete()
+                $productConcreteTransfer->getIdProductConcrete(),
             ));
         }
 

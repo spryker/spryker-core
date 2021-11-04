@@ -27,6 +27,7 @@ class HIncludeRendererFragmentHandlerPlugin extends AbstractPlugin implements Fr
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     protected const SERVICE_TWIG = 'twig';
@@ -60,7 +61,7 @@ class HIncludeRendererFragmentHandlerPlugin extends AbstractPlugin implements Fr
             $container->get(static::SERVICE_TWIG),
             $this->getFactory()->createUriSigner(),
             $this->getConfig()->getHIncludeRendererGlobalTemplate(),
-            $container->get(static::SERVICE_CHARSET)
+            $container->get(static::SERVICE_CHARSET),
         );
         $renderer->setFragmentPath($this->getConfig()->getHttpFragmentPath());
 

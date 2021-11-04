@@ -48,7 +48,7 @@ class PriceProductOfferVolumeBusinessFactory extends AbstractBusinessFactory
             $this->getValidationAdapter(),
             $this->createPriceProductOfferConstraintProvider(),
             $this->createPriceProductConstraintProvider(),
-            $this->getPriceProductOfferVolumeService()
+            $this->getPriceProductOfferVolumeService(),
         );
     }
 
@@ -97,7 +97,7 @@ class PriceProductOfferVolumeBusinessFactory extends AbstractBusinessFactory
     public function createUniqueStoreCurrencyVolumeQuantityConstraint(): Constraint
     {
         return new UniqueStoreCurrencyVolumeQuantityConstraint(
-            $this->getPriceProductOfferVolumeService()
+            $this->getPriceProductOfferVolumeService(),
         );
     }
 
@@ -107,7 +107,7 @@ class PriceProductOfferVolumeBusinessFactory extends AbstractBusinessFactory
     public function createVolumePriceHasBasePriceConstraint(): Constraint
     {
         return new VolumePriceHasBasePriceConstraint(
-            $this->getPriceProductVolumeService()
+            $this->getPriceProductVolumeService(),
         );
     }
 

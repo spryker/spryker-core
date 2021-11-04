@@ -36,7 +36,7 @@ class PriceGrouper implements PriceGrouperInterface
         $groupedPrices = $this->filterPriceData($groupedPrices, PriceProductMerchantRelationshipStorageConfig::PRICE_DATA);
 
         return $priceProductMerchantRelationshipStorageTransfer->setPrices(
-            $this->formatData($groupedPrices)
+            $this->formatData($groupedPrices),
         );
     }
 

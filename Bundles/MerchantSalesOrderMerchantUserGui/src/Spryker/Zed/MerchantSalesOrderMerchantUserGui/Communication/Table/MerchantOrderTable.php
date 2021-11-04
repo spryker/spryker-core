@@ -26,21 +26,26 @@ class MerchantOrderTable extends AbstractTable
 {
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER
+     *
      * @var string
      */
     protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+
     /**
      * @var string
      */
     protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
+
     /**
      * @var string
      */
     protected const COL_ITEM_COUNT = 'itemCount';
+
     /**
      * @var string
      */
     protected const COL_ORDER_STATE = 'orderState';
+
     /**
      * @var string
      */
@@ -48,6 +53,7 @@ class MerchantOrderTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     *
      * @var string
      */
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
@@ -216,22 +222,20 @@ class MerchantOrderTable extends AbstractTable
             ])
             ->withColumn(
                 sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStateMachineItemStateTableMap::COL_NAME),
-                static::COL_ORDER_STATE
+                static::COL_ORDER_STATE,
             )
             ->withColumn(
                 sprintf('COUNT(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM),
-                static::COL_ITEM_COUNT
+                static::COL_ITEM_COUNT,
             );
 
         return $this->merchantSalesOrderQuery;
     }
 
     /**
-     * @phpstan-return array<mixed>
-     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -264,9 +268,7 @@ class MerchantOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */
@@ -276,18 +278,16 @@ class MerchantOrderTable extends AbstractTable
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 static::ROUTE_REDIRECT,
-                [static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
+                [static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]],
             ),
-            'View'
+            'View',
         );
 
         return implode(' ', $buttons);
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */
@@ -299,7 +299,7 @@ class MerchantOrderTable extends AbstractTable
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $item[SpySalesOrderTableMap::COL_FIRST_NAME],
-            $item[SpySalesOrderTableMap::COL_LAST_NAME]
+            $item[SpySalesOrderTableMap::COL_LAST_NAME],
         );
 
         $fullCustomerName = $this->sanitizeService->escapeHtml($fullCustomerName);
@@ -309,7 +309,7 @@ class MerchantOrderTable extends AbstractTable
         }
 
         $customerTransfer = $this->customerFacade->findByReference(
-            $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
+            $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE],
         );
 
         if (!$customerTransfer) {
@@ -337,9 +337,7 @@ class MerchantOrderTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param array<string, mixed> $item
-     *
-     * @param array $item
+     * @param array<string, mixed> $item
      *
      * @return string
      */

@@ -37,7 +37,7 @@ class ShipmentsRestQuoteRequestAttributesExpanderPlugin extends AbstractPlugin i
             ->expandRestQuoteRequestItemWithShipments(
                 $restQuoteRequestsAttributesTransfers,
                 $quoteRequestTransfers,
-                $localeName
+                $localeName,
             );
     }
 }

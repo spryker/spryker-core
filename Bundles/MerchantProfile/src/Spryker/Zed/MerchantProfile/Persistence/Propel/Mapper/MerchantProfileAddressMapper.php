@@ -25,14 +25,14 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
         SpyMerchantProfileAddress $merchantProfileAddressEntity
     ): SpyMerchantProfileAddress {
         $merchantProfileAddressEntity->fromArray(
-            $merchantProfileAddressTransfer->modifiedToArray(false)
+            $merchantProfileAddressTransfer->modifiedToArray(false),
         );
 
         return $merchantProfileAddressEntity;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress> $merchantProfileAddressEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
      * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
@@ -45,8 +45,8 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
             $merchantProfileAddressTransfers->append(
                 $this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
                     $merchantProfileAddressEntity,
-                    new MerchantProfileAddressTransfer()
-                )
+                    new MerchantProfileAddressTransfer(),
+                ),
             );
         }
 
@@ -65,7 +65,7 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     ): MerchantProfileAddressTransfer {
         $merchantProfileAddressTransfer->fromArray(
             $merchantProfileAddressEntity->toArray(),
-            true
+            true,
         );
 
         if ($merchantProfileAddressEntity->getSpyCountry() !== null) {

@@ -35,7 +35,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     {
         return new PermissionExecutor(
             $this->getPermissionStoragePlugins(),
-            $this->createPermissionFinder()
+            $this->createPermissionFinder(),
         );
     }
 
@@ -48,7 +48,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
             $this->getPermissionPlugins(),
             $this->getRepository(),
             $this->getPermissionClient(),
-            $this->getPermissionStoragePlugins()
+            $this->getPermissionStoragePlugins(),
         );
     }
 
@@ -60,7 +60,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
         return new PermissionSynchronizer(
             $this->getPermissionClient(),
             $this->createPermissionFinder(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 

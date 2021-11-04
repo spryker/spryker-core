@@ -19,7 +19,7 @@ class MonitoringServiceFactory extends AbstractServiceFactory
     public function createMonitoring(): MonitoringInterface
     {
         return new Monitoring(
-            $this->getMonitoringExtensions()
+            $this->getMonitoringExtensions(),
         );
     }
 

@@ -32,6 +32,7 @@ class StorageDatabaseTest extends Unit
      * @var string
      */
     protected const DUMMY_KEY = 'dummy_key';
+
     /**
      * @var string
      */
@@ -134,7 +135,7 @@ class StorageDatabaseTest extends Unit
         $this->storageReaderPluginMock
             ->method('getMulti')
             ->willReturn(
-                $this->getMultiResult()
+                $this->getMultiResult(),
             );
 
         $this->assertEquals($this->getMultiResultWithPrefixedKeys(), $this->storageDatabase->getMulti(['key1', 'key2']));
@@ -261,7 +262,7 @@ class StorageDatabaseTest extends Unit
     {
         $this->storageDatabase = new StorageDatabase(
             $this->createUtilEncodingService(),
-            $this->storageReaderPluginMock
+            $this->storageReaderPluginMock,
         );
     }
 
@@ -271,7 +272,7 @@ class StorageDatabaseTest extends Unit
     protected function createUtilEncodingService(): StorageDatabaseToUtilEncodingInterface
     {
         return new StorageDatabaseToUtilEncodingBridge(
-            $this->tester->getLocator()->utilEncoding()->service()
+            $this->tester->getLocator()->utilEncoding()->service(),
         );
     }
 }

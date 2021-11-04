@@ -9,21 +9,10 @@ namespace SprykerTest\Zed\Discount\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
-use DateTime;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Currency\Persistence\SpyCurrency;
-use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use Orm\Zed\Discount\Persistence\SpyDiscountStore;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
@@ -52,6 +41,31 @@ class DiscountFacadeCalculateTest extends Unit
     use InstancePoolingHelperTrait;
 
     /**
+     * @var string
+     */
+    protected const SKU_ITEM_1 = '123';
+
+    /**
+     * @var string
+     */
+    protected const SKU_ABSTRACT_ITEM_1 = '888';
+
+    /**
+     * @var string
+     */
+    protected const SKU_ITEM_2 = '431';
+
+    /**
+     * @var string
+     */
+    protected const SKU_ABSTRACT_ITEM_2 = '321';
+
+    /**
+     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -70,22 +84,40 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testCalculateWhenQueryStringMatchesAllItemsIncludeAllProvidedDiscounts(): void
     {
-        $discountEntity = $this->createDiscountEntity(
-            '(sku = "123" or sku = "431")',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
-        );
+        // Arrange
+        $discountTransfer = $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '(sku = "123" or sku = "431")',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
+        ]);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
+        // Act
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
+        // Assert
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
         $this->assertCount(1, $cartRuleDiscounts);
-
-        $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
     /**
@@ -93,18 +125,37 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(): void
     {
-        $this->createDiscountEntity(
-            '(sku = "123")',
-            'sku = "123"',
-            DiscountConstants::TYPE_CART_RULE,
-            2
-        );
+        // Arrange
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '(sku = "123")',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "123"',
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_CART_RULE,
+        ], 2);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
+        // Act
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
+        // Assert
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
         $this->assertCount(0, $cartRuleDiscounts);
@@ -115,24 +166,41 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(): void
     {
-        $discountEntity = $this->createDiscountEntity(
-            '(sku = "123" or sku = "431")',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
-            DiscountConstants::TYPE_CART_RULE,
-            2
-        );
+        // Arrange
+        $discountTransfer = $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '(sku = "123" or sku = "431")',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_CART_RULE,
+        ], 2);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
+        // Act
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
+        // Assert
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
         $this->assertCount(1, $cartRuleDiscounts);
-
-        $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
     /**
@@ -140,22 +208,40 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testCalculateWithEmptyDecisionRuleShouldIncludeDiscount(): void
     {
-        $discountEntity = $this->createDiscountEntity(
-            '',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
-        );
+        // Arrange
+        $discountTransfer = $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
+        ]);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
+        // Act
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
+        // Assert
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
         $this->assertCount(1, $cartRuleDiscounts);
-
-        $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
     /**
@@ -163,16 +249,36 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testCalculateWithIncorrectDecisionRuleShouldSkipDiscount(): void
     {
-        $this->createDiscountEntity(
-            'alskdhas jkashdj asjkdhjashdjs ahjdhas1293820',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
-        );
+        // Arrange
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => 'alskdhas jkashdj asjkdhjashdjs ahjdhas1293820',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
+        ]);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
+        // Act
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
+        // Assert
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
         $this->assertCount(0, $cartRuleDiscounts);
@@ -183,38 +289,56 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce(): void
     {
+        // Arrange
         $this->disableInstancePooling();
 
-        $discountEntity = $this->createDiscountEntity(
-            '',
-            'sku = "*"',
-            DiscountConstants::TYPE_VOUCHER
-        );
+        $discountTransfer = $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "*"',
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+        ]);
 
         $code1 = 'code1';
         $code2 = 'code2';
 
-        $this->createVoucherCode($code1, $discountEntity);
-        $this->createVoucherCode($code2, $discountEntity);
+        $this->tester->haveDiscountVoucher($code1, $discountTransfer);
+        $this->tester->haveDiscountVoucher($code2, $discountTransfer);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode($code1);
-        $quoteTransfer->addVoucherDiscount($discountTransfer);
+        $voucherDiscountTransfer = new DiscountTransfer();
+        $voucherDiscountTransfer->setVoucherCode($code1);
+        $quoteTransfer->addVoucherDiscount($voucherDiscountTransfer);
 
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode($code2);
-        $quoteTransfer->addVoucherDiscount($discountTransfer);
+        $voucherDiscountTransfer = new DiscountTransfer();
+        $voucherDiscountTransfer->setVoucherCode($code2);
+        $quoteTransfer->addVoucherDiscount($voucherDiscountTransfer);
 
+        // Act
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
-        $discountTransfer = $quoteTransfer->getVoucherDiscounts()[0];
-
+        // Assert
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
         $this->assertCount(1, $quoteTransfer->getUsedNotAppliedVoucherCodes());
-        $this->assertSame($code1, $discountTransfer->getVoucherCode());
+        $this->assertSame($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
     }
 
     /**
@@ -222,14 +346,32 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testWhenDiscountFilterUsedShouldFilterOutItems(): void
     {
-        $discountEntity = $this->createDiscountEntity(
-            '(sku = "123" or sku = "431")',
-            'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"'
-        );
+        // Arrange
+        $discountTransfer = $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '(sku = "123" or sku = "431")',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
+        ]);
 
         $filterPluginMock = $this->createDiscountableItemFilterPluginMock();
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
         $filterPluginMock
             ->expects($this->once())
@@ -249,14 +391,14 @@ class DiscountFacadeCalculateTest extends Unit
 
         $discountFacade = $this->createMockedDiscountFacade($filterPluginMock);
 
+        // Act
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
 
+        // Assert
         $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
         $this->assertCount(1, $cartRuleDiscounts);
-
-        $discountTransfer = $cartRuleDiscounts[0];
-        $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
+        $this->assertSame($discountTransfer->getAmount(), $cartRuleDiscounts[0]->getAmount());
     }
 
     /**
@@ -265,16 +407,33 @@ class DiscountFacadeCalculateTest extends Unit
     public function testWhenQuoteHaveUsedNotAppliedVoucherCodes(): void
     {
         // Arrange
-        $discountEntity = $this->createDiscountEntity(
-            '',
-            'sku = "*"',
-            DiscountConstants::TYPE_VOUCHER
-        );
+        $discountTransfer = $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "*"',
+            DiscountTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+        ]);
 
         $code1 = 'code1';
-        $this->createVoucherCode($code1, $discountEntity);
+        $this->tester->haveDiscountVoucher($code1, $discountTransfer);
 
-        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 15000,
+                ItemTransfer::UNIT_PRICE => 15000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
         $quoteTransfer->addUsedNotAppliedVoucherCode($code1);
 
         // Act
@@ -287,101 +446,132 @@ class DiscountFacadeCalculateTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
-    protected function createQuoteTransfer(): QuoteTransfer
+    public function testCalculateDiscountsShouldNotFilterApplicableDiscounts(): void
     {
-        $quoteTransfer = new QuoteTransfer();
+        // Arrange
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "*"',
+            DiscountTransfer::AMOUNT => 150,
+        ]);
 
-        $quoteTransfer->setStore($this->getCurrentStore());
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => sprintf('sku = "%s"', static::SKU_ITEM_1),
+            DiscountTransfer::COLLECTOR_QUERY_STRING => sprintf('sku = "%s"', static::SKU_ITEM_1),
+            DiscountTransfer::AMOUNT => 100,
+        ]);
 
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode('EUR');
-        $quoteTransfer->setCurrency($currencyTransfer);
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_GROSS_PRICE => 1000,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::ABSTRACT_SKU => static::SKU_ABSTRACT_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_GROSS_PRICE => 500,
+                ItemTransfer::UNIT_PRICE => 500,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku('123');
-        $itemTransfer->setSku('123');
-        $itemTransfer->setUnitGrossPrice(15000);
-        $itemTransfer->setQuantity(1);
+        // Act
+        $quoteTransfer = $this->getFacade()->calculateDiscounts($quoteTransfer);
 
-        $quoteTransfer->addItem($itemTransfer);
+        // Assert
+        $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setAbstractSku('321');
-        $itemTransfer->setSku('431');
-        $itemTransfer->setUnitGrossPrice(1000);
-        $itemTransfer->setQuantity(1);
-
-        $quoteTransfer->addItem($itemTransfer);
-
-        return $quoteTransfer;
+        $this->assertCount(2, $cartRuleDiscounts);
+        $this->assertSame(150, $cartRuleDiscounts[0]->getAmount());
+        $this->assertSame(100, $cartRuleDiscounts[1]->getAmount());
     }
 
     /**
-     * @param string $decisionRuleQueryString
-     * @param string $collectorQueryString
-     * @param string $discountType
-     * @param int $minimumItemAmount
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
+     * @return void
      */
-    protected function createDiscountEntity(
-        string $decisionRuleQueryString,
-        string $collectorQueryString,
-        string $discountType = DiscountConstants::TYPE_CART_RULE,
-        int $minimumItemAmount = 1
-    ): SpyDiscount {
-        $discountVoucherPool = new SpyDiscountVoucherPool();
-        $discountVoucherPool->setIsActive(true);
-        $discountVoucherPool->setName('test');
-        $discountVoucherPool->save();
+    public function testCalculateDiscountsShouldFilterNotApplicableDiscounts(): void
+    {
+        // Arrange
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => 'sku = "*"',
+            DiscountTransfer::AMOUNT => 150,
+        ]);
 
-        $discountEntity = new SpyDiscount();
-        $discountEntity->setAmount(100);
-        $discountEntity->setFkDiscountVoucherPool($discountVoucherPool->getIdDiscountVoucherPool());
-        $discountEntity->setDecisionRuleQueryString($decisionRuleQueryString);
-        $discountEntity->setCollectorQueryString($collectorQueryString);
-        $discountEntity->setMinimumItemAmount($minimumItemAmount);
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => sprintf('sku = "%s"', static::SKU_ITEM_1),
+            DiscountTransfer::AMOUNT => 1000,
+        ]);
 
-        $discountEntity->setDisplayName('display name');
-        $discountEntity->setCalculatorPlugin(DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED);
-        $discountEntity->setDiscountType($discountType);
-        $discountEntity->setIsActive(1);
-        $discountEntity->setValidFrom(new DateTime('yesterday'));
-        $discountEntity->setValidTo(new DateTime('tomorrow'));
-        $discountEntity->save();
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+            [
+                ItemTransfer::ID => static::SKU_ITEM_2,
+                ItemTransfer::SKU => static::SKU_ITEM_2,
+                ItemTransfer::UNIT_PRICE => 500,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
 
-        (new SpyDiscountStore())
-            ->setFkStore($this->getCurrentStore()->getIdStore())
-            ->setFkDiscount($discountEntity->getIdDiscount())
-            ->save();
+        // Act
+        $quoteTransfer = $this->getFacade()->calculateDiscounts($quoteTransfer);
 
-        $discountAmount = new SpyDiscountAmount();
-        $currencyEntity = $this->getCurrency();
-        $discountAmount->setFkCurrency($currencyEntity->getIdCurrency());
-        $discountAmount->setGrossAmount(100);
-        $discountAmount->setFkDiscount($discountEntity->getIdDiscount());
-        $discountAmount->save();
+        // Assert
+        $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
 
-        return $discountEntity;
+        $this->assertCount(2, $cartRuleDiscounts);
+        $this->assertSame(1000, $cartRuleDiscounts[0]->getAmount());
+        $this->assertSame(50, $cartRuleDiscounts[1]->getAmount());
     }
 
     /**
-     * @param string $voucherCode
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
+     * @return void
      */
-    protected function createVoucherCode(string $voucherCode, SpyDiscount $discountEntity): SpyDiscountVoucher
+    public function testCalculateDiscountsShouldFilterRemoveDiscountsWithoutItems(): void
     {
-        $voucherEntity = new SpyDiscountVoucher();
-        $voucherEntity->setFkDiscountVoucherPool($discountEntity->getFkDiscountVoucherPool());
-        $voucherEntity->setCode($voucherCode);
-        $voucherEntity->setIsActive(true);
-        $voucherEntity->save();
+        // Arrange
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => sprintf('sku = "%s"', static::SKU_ITEM_1),
+            DiscountTransfer::AMOUNT => 100,
+        ]);
 
-        return $voucherEntity;
+        $this->tester->createDiscountTransferWithDiscountVoucherPool([
+            DiscountTransfer::DECISION_RULE_QUERY_STRING => '',
+            DiscountTransfer::COLLECTOR_QUERY_STRING => sprintf('sku = "%s"', static::SKU_ITEM_1),
+            DiscountTransfer::AMOUNT => 1000,
+        ]);
+
+        $quoteTransfer = $this->tester->createQuoteTransferWithItems([
+            [
+                ItemTransfer::ID => static::SKU_ITEM_1,
+                ItemTransfer::SKU => static::SKU_ITEM_1,
+                ItemTransfer::UNIT_PRICE => 1000,
+                ItemTransfer::QUANTITY => 1,
+            ],
+        ]);
+
+        // Act
+        $quoteTransfer = $this->getFacade()->calculateDiscounts($quoteTransfer);
+
+        // Assert
+        $cartRuleDiscounts = $quoteTransfer->getCartRuleDiscounts();
+
+        $this->assertCount(1, $cartRuleDiscounts);
+        $this->assertSame(1000, $cartRuleDiscounts[0]->getAmount());
     }
 
     /**
@@ -473,23 +663,5 @@ class DiscountFacadeCalculateTest extends Unit
     protected function createDiscountableItemFilterPluginMock(): DiscountableItemFilterPluginInterface
     {
         return $this->getMockBuilder(DiscountableItemFilterPluginInterface::class)->getMock();
-    }
-
-    /**
-     * @return \Orm\Zed\Currency\Persistence\SpyCurrency
-     */
-    protected function getCurrency(): SpyCurrency
-    {
-        return SpyCurrencyQuery::create()->findOneByCode('EUR');
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function getCurrentStore(): StoreTransfer
-    {
-        return (new StoreTransfer())
-            ->setIdStore(1)
-            ->setName('DE');
     }
 }

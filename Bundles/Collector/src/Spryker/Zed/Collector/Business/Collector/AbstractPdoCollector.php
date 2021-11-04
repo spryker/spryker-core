@@ -62,14 +62,14 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         if (!($this->criteriaBuilder instanceof CriteriaBuilderInterface)) {
             throw new DependencyException(sprintf(
                 'criteriaBuilder does not implement CriteriaBuilder\CriteriaBuilderInterface in %s',
-                static::class
+                static::class,
             ));
         }
 
         if (!($this->queryBuilder instanceof AbstractPdoCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractPdoCollectorQuery in %s',
-                static::class
+                static::class,
             ));
         }
     }
@@ -84,7 +84,7 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
             $this->touchQueryContainer,
             $this->chunkSize,
             CollectorConfig::COLLECTOR_TOUCH_ID,
-            Criteria::ASC
+            Criteria::ASC,
         );
     }
 
@@ -122,7 +122,7 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
             CollectorConfig::COLLECTOR_TOUCH_ID,
             CollectorConfig::COLLECTOR_RESOURCE_ID,
             CollectorConfig::COLLECTOR_STORAGE_KEY,
-            CollectorConfig::COLLECTOR_SEARCH_KEY
+            CollectorConfig::COLLECTOR_SEARCH_KEY,
         );
 
         $this->criteriaBuilder->sql($sql);

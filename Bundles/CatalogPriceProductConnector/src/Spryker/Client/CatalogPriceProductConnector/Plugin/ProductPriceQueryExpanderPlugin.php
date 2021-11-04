@@ -59,7 +59,7 @@ class ProductPriceQueryExpanderPlugin extends AbstractPlugin implements QueryExp
             throw new InvalidArgumentException(sprintf(
                 'Product Price Query Expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery)
+                get_class($boolQuery),
             ));
         }
 

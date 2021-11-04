@@ -33,7 +33,7 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
         return [
             new ValidUniqueStoreCurrencyCollectionConstraint(),
             new AllConstraint(
-                $this->priceProductTransferConstraints
+                $this->priceProductTransferConstraints,
             ),
         ];
     }

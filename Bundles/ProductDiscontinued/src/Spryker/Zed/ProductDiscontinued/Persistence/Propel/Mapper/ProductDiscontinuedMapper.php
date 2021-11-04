@@ -30,7 +30,7 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         $productEntity = $productDiscontinuedEntity->getProduct();
         if ($productEntity) {
             $productDiscontinuedTransfer->setSku(
-                $productDiscontinuedEntity->getProduct()->getSku()
+                $productDiscontinuedEntity->getProduct()->getSku(),
             );
         }
 
@@ -38,7 +38,7 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         $productDiscontinuedNotes = $productDiscontinuedEntity->getSpyProductDiscontinuedNotes();
         if ($productDiscontinuedNotes) {
             $productDiscontinuedTransfer->setProductDiscontinuedNotes(
-                $this->mapProductDiscontinuedNotes($productDiscontinuedEntity)
+                $this->mapProductDiscontinuedNotes($productDiscontinuedEntity),
             );
         }
 
@@ -71,8 +71,8 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         foreach ($productDiscontinuedEntityCollection as $productDiscontinuedEntity) {
             $productDiscontinuedCollectionTransfer->addDiscontinuedProduct(
                 $this->mapProductDiscontinuedTransfer(
-                    $productDiscontinuedEntity
-                )
+                    $productDiscontinuedEntity,
+                ),
             );
         }
 

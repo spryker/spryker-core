@@ -87,7 +87,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
         $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();
 
         $criteriaRuleSet = $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson(
-            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()
+            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson(),
         );
 
         $criteriaTransfer = new PropelQueryBuilderCriteriaTransfer();
@@ -109,12 +109,12 @@ class ApiRequestMapper implements ApiRequestMapperInterface
 
         $columnSelectionTransfer = $this->buildColumnSelection(
             $apiRequestTransfer->getFilter()->getFields(),
-            $criteriaTransfer->getColumnSelection()
+            $criteriaTransfer->getColumnSelection(),
         );
 
         $paginationTransfer = $this->buildPagination(
             $apiRequestTransfer->getFilter(),
-            $criteriaTransfer->getColumnSelection()
+            $criteriaTransfer->getColumnSelection(),
         );
 
         $criteriaTransfer->setPagination($paginationTransfer);

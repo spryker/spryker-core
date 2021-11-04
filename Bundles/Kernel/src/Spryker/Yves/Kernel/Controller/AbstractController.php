@@ -28,6 +28,7 @@ abstract class AbstractController
      * @var string
      */
     protected const SERVICE_LOCALE = 'locale';
+
     /**
      * @var string
      */
@@ -35,24 +36,28 @@ abstract class AbstractController
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     *
      * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
      * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     *
      * @var string
      */
     protected const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::BC_REDIRECT_URL_VALIDATION_HANDLED
+     *
      * @var string
      */
     protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';
@@ -158,7 +163,7 @@ abstract class AbstractController
 
         trigger_error(
             'Please add `RedirectUrlValidationEventDispatcherPlugin` to `Pyz\Yves\EventDispatcher\EventDispatcherDependencyProvider::getEventDispatcherPlugins()`.',
-            E_USER_DEPRECATED
+            E_USER_DEPRECATED,
         );
 
         return $this->deprecatedRedirectResponseExternal($absoluteUrl, $code);

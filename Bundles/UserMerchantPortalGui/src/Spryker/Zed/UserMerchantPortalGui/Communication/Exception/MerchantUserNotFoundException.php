@@ -30,7 +30,7 @@ class MerchantUserNotFoundException extends Exception
     {
         return sprintf(
             'Merchant user not found for idUser %d.',
-            $idUser
+            $idUser,
         );
     }
 }

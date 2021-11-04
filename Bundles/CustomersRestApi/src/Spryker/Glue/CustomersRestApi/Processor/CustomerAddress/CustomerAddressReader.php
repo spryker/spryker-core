@@ -63,15 +63,15 @@ class CustomerAddressReader implements CustomerAddressReaderInterface
             $restAddressAttributesTransfer = $this->addressesResourceMapper
                 ->mapAddressTransferToRestAddressAttributesTransfer(
                     $addressTransfer,
-                    $customerResponseTransfer->getCustomerTransfer()
+                    $customerResponseTransfer->getCustomerTransfer(),
                 );
 
             $restResource->addRelationship(
                 $this->addressRestResponseBuilder->createAddressRestResource(
                     $addressTransfer->getUuid(),
                     $customerResponseTransfer->getCustomerTransfer()->getCustomerReference(),
-                    $restAddressAttributesTransfer
-                )
+                    $restAddressAttributesTransfer,
+                ),
             );
         }
 

@@ -13,6 +13,7 @@ interface ContentBannerDataSetInterface
      * @var string
      */
     public const CONTENT_BANNER_KEY = 'key';
+
     /**
      * @var string
      */

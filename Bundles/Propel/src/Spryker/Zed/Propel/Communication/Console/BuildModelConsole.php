@@ -21,6 +21,7 @@ class BuildModelConsole extends Console
      * @var string
      */
     public const COMMAND_NAME = 'propel:model:build';
+
     /**
      * @var string
      */
@@ -52,7 +53,7 @@ class BuildModelConsole extends Console
         $exitCode = $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
-            $output
+            $output,
         );
 
         if ($exitCode === static::CODE_SUCCESS) {

@@ -19,6 +19,7 @@ class ExtensionQueryBuilder extends PropelExtensionQueryObjectBuilder
      * @var int
      */
     public const POSITION_OF_ORM = 0;
+
     /**
      * @var int
      */

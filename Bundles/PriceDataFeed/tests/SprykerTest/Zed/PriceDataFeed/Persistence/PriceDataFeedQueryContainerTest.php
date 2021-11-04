@@ -71,7 +71,7 @@ class PriceDataFeedQueryContainerTest extends Unit
 
         $expectedJoinedTables = array_merge(
             $this->getDefaultJoinedTables(),
-            $this->getTypeJoinedTables()
+            $this->getTypeJoinedTables(),
         );
         $joinedTables = $this->getJoinedTablesNames($query);
         $expectedJoinedTables = $this->getSortedExpectedJoinedTables($expectedJoinedTables);

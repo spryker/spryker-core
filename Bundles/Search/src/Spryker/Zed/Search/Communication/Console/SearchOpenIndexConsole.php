@@ -23,6 +23,7 @@ class SearchOpenIndexConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'search:index:open';
+
     /**
      * @var string
      */

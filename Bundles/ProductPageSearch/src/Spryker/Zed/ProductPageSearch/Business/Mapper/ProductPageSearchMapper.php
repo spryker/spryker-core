@@ -59,7 +59,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
             $productAbstractLocalizedData['SpyProductAbstract']['attributes'],
             $productAbstractLocalizedData['attributes'],
             $concreteData['concreteAttributes'],
-            $concreteData['concreteLocalizedAttributes']
+            $concreteData['concreteLocalizedAttributes'],
         );
 
         $productPageSearchTransfer = new ProductPageSearchTransfer();
@@ -108,7 +108,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     {
         return $this->productAbstractSearchDataMapper->mapProductDataToSearchData(
             $productPageSearchTransfer->toArray(),
-            (new LocaleTransfer())->setLocaleName($productPageSearchTransfer->getLocale())
+            (new LocaleTransfer())->setLocaleName($productPageSearchTransfer->getLocale()),
         );
     }
 
@@ -155,7 +155,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
                 $idLocale,
                 $concreteNames,
                 $concreteDescriptions,
-                $concreteLocalizedAttributes
+                $concreteLocalizedAttributes,
             );
         }
 

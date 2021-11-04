@@ -22,6 +22,7 @@ class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyPr
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
@@ -56,7 +57,7 @@ class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductBundlesRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -72,7 +73,7 @@ class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::CLIENT_PRODUCT_BUNDLE_STORAGE, function (Container $container) {
             return new ProductBundlesRestApiToProductBundleStorageClientBridge(
-                $container->getLocator()->productBundleStorage()->client()
+                $container->getLocator()->productBundleStorage()->client(),
             );
         });
 
@@ -88,7 +89,7 @@ class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::RESOURCE_ORDERS_REST_API, function (Container $container) {
             return new ProductBundlesRestApiToOrdersRestApiResourceBridge(
-                $container->getLocator()->ordersRestApi()->resource()
+                $container->getLocator()->ordersRestApi()->resource(),
             );
         });
 

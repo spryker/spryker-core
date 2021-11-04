@@ -46,6 +46,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_UUID_1';
+
     /**
      * @var string
      */
@@ -55,18 +56,22 @@ class SalesConfigurableBundleFacadeTest extends Unit
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
+
     /**
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2';
+
     /**
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3';
+
     /**
      * @var string
      */
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4';
+
     /**
      * @var string
      */
@@ -144,7 +149,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         $this->assertCount(1, $salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems());
         $this->assertSame(
             static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1,
-            $salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems()->offsetGet(0)->getConfigurableBundleTemplateSlotUuid()
+            $salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems()->offsetGet(0)->getConfigurableBundleTemplateSlotUuid(),
         );
     }
 
@@ -474,7 +479,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         $this->assertCount(2, $orderTransfer->getSalesOrderConfiguredBundles());
         $this->assertInstanceOf(
             SalesOrderConfiguredBundleItemTransfer::class,
-            $orderTransfer->getItems()->offsetGet(0)->getSalesOrderConfiguredBundleItem()
+            $orderTransfer->getItems()->offsetGet(0)->getSalesOrderConfiguredBundleItem(),
         );
     }
 
@@ -526,7 +531,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
     {
         //Act
         $itemCollectionTransfer = $this->tester->getFacade()->transformConfiguredBundleOrderItems(
-            (new OrderTransfer())->addItem($itemTransfer)
+            (new OrderTransfer())->addItem($itemTransfer),
         );
 
         //Assert
@@ -565,12 +570,12 @@ class SalesConfigurableBundleFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(
             SalesOrderConfiguredBundleItemTransfer::class,
-            $itemTransfers[0]->getSalesOrderConfiguredBundleItem()
+            $itemTransfers[0]->getSalesOrderConfiguredBundleItem(),
         );
 
         $this->assertInstanceOf(
             SalesOrderConfiguredBundleTransfer::class,
-            $itemTransfers[0]->getSalesOrderConfiguredBundle()
+            $itemTransfers[0]->getSalesOrderConfiguredBundle(),
         );
     }
 

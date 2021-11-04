@@ -16,6 +16,7 @@ class PropelCommandConfigurator implements PropelCommandConfiguratorInterface
      * @var string
      */
     protected const KEY_CONFIG_PROPEL_GENERATOR = 'generator';
+
     /**
      * @var string
      */
@@ -45,7 +46,7 @@ class PropelCommandConfigurator implements PropelCommandConfiguratorInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function buildPropelConfig(): array
     {

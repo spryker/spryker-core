@@ -29,7 +29,7 @@ class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements Mercha
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -51,7 +51,7 @@ class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements Mercha
         $builder->add(
             static::FIELD_MERCHANT_PROFILE,
             MerchantProfileFormType::class,
-            $options
+            $options,
         );
 
         return $this;

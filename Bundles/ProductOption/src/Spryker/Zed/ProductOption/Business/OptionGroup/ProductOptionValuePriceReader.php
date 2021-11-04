@@ -86,7 +86,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrency($currencyCode)->getIdCurrency()
+            $this->getCurrency($currencyCode)->getIdCurrency(),
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -111,7 +111,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     {
         $priceMap = $this->getCurrencyFilteredPriceMap(
             $productOptionValueEntity->getProductOptionValuePrices(),
-            $this->getCurrency($currencyCode)->getIdCurrency()
+            $this->getCurrency($currencyCode)->getIdCurrency(),
         );
 
         $currentIdStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -127,7 +127,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice> $priceCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
      * @param int $idCurrency
      *
      * @return array<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice> Keys are store ids, values are ProductOptionValuePrice entities.

@@ -28,18 +28,22 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
     /**
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+
     /**
      * @var string
      */
@@ -112,7 +116,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container): ProductLabelSearchToUtilSanitizeServiceInterface {
             return new ProductLabelSearchToUtilSanitizeServiceBridge(
-                $container->getLocator()->utilSanitize()->service()
+                $container->getLocator()->utilSanitize()->service(),
             );
         });
 
@@ -128,7 +132,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container): ProductLabelSearchToEventBehaviorFacadeInterface {
             return new ProductLabelSearchToEventBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -144,7 +148,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container): ProductLabelSearchToProductLabelInterface {
             return new ProductLabelSearchToProductLabelBridge(
-                $container->getLocator()->productLabel()->facade()
+                $container->getLocator()->productLabel()->facade(),
             );
         });
 
@@ -160,7 +164,7 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container): ProductLabelSearchToProductPageSearchInterface {
             return new ProductLabelSearchToProductPageSearchBridge(
-                $container->getLocator()->productPageSearch()->facade()
+                $container->getLocator()->productPageSearch()->facade(),
             );
         });
 

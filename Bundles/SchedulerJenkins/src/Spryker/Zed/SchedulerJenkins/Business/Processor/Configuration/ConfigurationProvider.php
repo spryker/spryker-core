@@ -44,7 +44,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
         if (
             !array_key_exists(
                 SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CREDENTIALS,
-                $schedulerJenkinsConfiguration
+                $schedulerJenkinsConfiguration,
             )
         ) {
             return [];
@@ -67,7 +67,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
         if (
             !array_key_exists(
                 SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL,
-                $schedulerJenkinsConfiguration
+                $schedulerJenkinsConfiguration,
             )
         ) {
             throw new InvalidJenkinsConfiguration('');
@@ -86,7 +86,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
         if (
             array_key_exists(
                 SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED,
-                $schedulerJenkinsConfiguration
+                $schedulerJenkinsConfiguration,
             )
         ) {
             return $schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED];

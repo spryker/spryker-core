@@ -136,7 +136,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return new AddressFormDataProvider(
             $this->getQueryContainer(),
-            $this->getCountryFacade()
+            $this->getCountryFacade(),
         );
     }
 
@@ -151,7 +151,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
-            $this->getSalesTablePlugins()
+            $this->getSalesTablePlugins(),
         );
     }
 
@@ -170,7 +170,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
             $customerReference,
             $this->getQueryContainer(),
-            $this->getSalesTablePlugins()
+            $this->getSalesTablePlugins(),
         );
     }
 

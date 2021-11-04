@@ -45,7 +45,7 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
         $bundleItemRestResource = $this->restResourceBuilder->createRestResource(
             ProductBundleCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
             $itemTransfer->getGroupKey(),
-            $restItemsAttributesTransfer
+            $restItemsAttributesTransfer,
         );
         $bundleItemRestResource->setPayload($quoteTransfer);
 
@@ -54,7 +54,7 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
             ProductBundleCartsRestApiConfig::RESOURCE_CARTS,
             $quoteTransfer->getUuid(),
             ProductBundleCartsRestApiConfig::RESOURCE_CART_ITEMS,
-            $itemTransfer->getGroupKey()
+            $itemTransfer->getGroupKey(),
         );
 
         return $bundleItemRestResource->addLink(RestLinkInterface::LINK_SELF, $bundleItemSelfLink);
@@ -75,7 +75,7 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
         $bundleItemRestResource = $this->restResourceBuilder->createRestResource(
             ProductBundleCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
             $itemTransfer->getGroupKey(),
-            $restItemsAttributesTransfer
+            $restItemsAttributesTransfer,
         );
         $bundleItemRestResource->setPayload($quoteTransfer);
 
@@ -84,7 +84,7 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
             ProductBundleCartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
             ProductBundleCartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
-            $itemTransfer->getGroupKey()
+            $itemTransfer->getGroupKey(),
         );
 
         return $bundleItemRestResource->addLink(RestLinkInterface::LINK_SELF, $bundleItemSelfLink);
@@ -103,7 +103,7 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
         return $this->restResourceBuilder->createRestResource(
             ProductBundleCartsRestApiConfig::RESOURCE_BUNDLED_ITEMS,
             $bundleItemTransfer->getGroupKey(),
-            $restItemsAttributesTransfer
+            $restItemsAttributesTransfer,
         );
     }
 }

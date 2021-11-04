@@ -154,7 +154,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         $salesOrderItemQuery = $this->setSalesOrderItemQueryFilters(
             $salesOrderItemQuery,
-            $orderItemFilterTransfer
+            $orderItemFilterTransfer,
         );
 
         return $this->getFactory()
@@ -216,7 +216,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->createOmsMapper()
             ->mapOmsProductReservationEntityToOmsProductReservationTransfer(
                 $omsProductReservationEntity,
-                new OmsProductReservationTransfer()
+                new OmsProductReservationTransfer(),
             );
     }
 
@@ -258,7 +258,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         foreach ($omsProductReservationStoreEntities as $omsProductReservationStoreEntity) {
             $reservationResponseTransfers[] = $omsMapper->mapOmsProductReservationStoreEntityToReservationResponseTransfer(
                 $omsProductReservationStoreEntity,
-                new ReservationResponseTransfer()
+                new ReservationResponseTransfer(),
             );
         }
 

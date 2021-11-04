@@ -58,7 +58,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
                     'order' => $sortConfig->getSortDirection($sortParamName),
                     'mode' => 'min',
                 ],
-            ]
+            ],
         );
     }
 }

@@ -27,18 +27,22 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+
     /**
      * @var string
      */
     public const FACADE_PRICE = 'FACADE_PRICE';
+
     /**
      * @var string
      */
@@ -48,6 +52,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
     /**
      * @var string
      */
@@ -57,30 +62,37 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
+
     /**
      * @var string
      */
     public const PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
+
     /**
      * @var string
      */

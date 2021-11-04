@@ -22,6 +22,7 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+
     /**
      * @var string
      */

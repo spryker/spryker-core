@@ -35,6 +35,7 @@ class FormHelper extends Module
      * @var string
      */
     protected const MODULE_NAME = 'Form';
+
     /**
      * @var string
      */
@@ -46,7 +47,7 @@ class FormHelper extends Module
     protected $formPlugins = [];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $config = [
         self::CONFIG_KEY_FORM_PLUGINS => [],
@@ -82,7 +83,7 @@ class FormHelper extends Module
         $this->addDependencies();
 
         $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getFormApplicationPluginStub()
+            $this->getFormApplicationPluginStub(),
         );
     }
 

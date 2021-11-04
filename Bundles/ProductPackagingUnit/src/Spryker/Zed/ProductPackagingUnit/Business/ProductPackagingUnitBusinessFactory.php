@@ -83,7 +83,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitTypeInstaller(
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
@@ -94,7 +94,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitTypeReader(
             $this->getRepository(),
-            $this->createProductPackagingUnitTypeTranslationReader()
+            $this->createProductPackagingUnitTypeTranslationReader(),
         );
     }
 
@@ -107,7 +107,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createProductPackagingUnitTypeTranslationWriter(),
-            $this->createProductPackagingUnitTypeKeyGenerator()
+            $this->createProductPackagingUnitTypeKeyGenerator(),
         );
     }
 
@@ -118,7 +118,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitTypeTranslationReader(
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -129,7 +129,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitTypeTranslationWriter(
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
         );
     }
 
@@ -157,7 +157,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitAvailabilityHandler(
             $this->getRepository(),
             $this->getAvailabilityFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
         );
     }
 
@@ -168,7 +168,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitReservationHandler(
             $this->getRepository(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
         );
     }
 
@@ -179,7 +179,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitCartPreCheck(
             $this->getRepository(),
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
         );
     }
 
@@ -189,7 +189,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitCheckoutPreCheck(): ProductPackagingUnitCheckoutPreCheckInterface
     {
         return new ProductPackagingUnitCheckoutPreCheck(
-            $this->getAvailabilityFacade()
+            $this->getAvailabilityFacade(),
         );
     }
 
@@ -263,7 +263,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createAmountGroupKeyItemExpander(): AmountGroupKeyItemExpanderInterface
     {
         return new AmountGroupKeyItemExpander(
-            $this->createProductPackagingUnitGroupKeyGenerator()
+            $this->createProductPackagingUnitGroupKeyGenerator(),
         );
     }
 
@@ -273,7 +273,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createAmountSalesUnitItemExpander(): AmountSalesUnitItemExpanderInterface
     {
         return new AmountSalesUnitItemExpander(
-            $this->getProductMeasurementUnitFacade()
+            $this->getProductMeasurementUnitFacade(),
         );
     }
 
@@ -283,7 +283,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitItemExpander(): ProductPackagingUnitItemExpanderInterface
     {
         return new ProductPackagingUnitItemExpander(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -303,7 +303,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new OrderItemExpander(
             $this->getRepository(),
             $this->getProductFacade(),
-            $this->getProductMeasurementUnitFacade()
+            $this->getProductMeasurementUnitFacade(),
         );
     }
 
@@ -337,7 +337,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitAmountRestrictionValidator(): ProductPackagingUnitAmountRestrictionValidatorInterface
     {
         return new ProductPackagingUnitAmountRestrictionValidator(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -347,7 +347,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitTypeKeyGenerator(): ProductPackagingUnitTypeKeyGeneratorInterface
     {
         return new ProductPackagingUnitTypeKeyGenerator(
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
         );
     }
 
@@ -368,7 +368,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new AmountLeadProductHydrateOrder(
             $this->getRepository(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -381,7 +381,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new AmountSalesUnitHydrateOrder(
             $this->getRepository(),
-            $this->getProductMeasurementUnitFacade()
+            $this->getProductMeasurementUnitFacade(),
         );
     }
 
@@ -399,7 +399,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitItemQuantityValidator(): ProductPackagingUnitItemQuantityValidatorInterface
     {
         return new ProductPackagingUnitItemQuantityValidator(
-            $this->getSalesQuantityFacade()
+            $this->getSalesQuantityFacade(),
         );
     }
 }

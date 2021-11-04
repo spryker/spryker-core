@@ -34,7 +34,7 @@ class ProductLabelSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductLabelSearchWriter(
             $this->getEventBehaviorFacade(),
             $this->getProductPageSearchFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -45,7 +45,7 @@ class ProductLabelSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPageDataTransferExpander(
             $this->createProductLabelMapper(),
-            $this->getProductLabelFacade()
+            $this->getProductLabelFacade(),
         );
     }
 

@@ -20,6 +20,7 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
      * @var string
      */
     protected const KEY_CUSTOMER_REFERENCE = 'customer_reference';
+
     /**
      * @var string
      */
@@ -126,7 +127,7 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
     ): RestUserTransfer {
         $customerIdentifier = $this->utilEncodingService->decodeJson(
             $oauthAccessTokenDataTransfer->getOauthUserId(),
-            true
+            true,
         );
 
         $restUserTransfer = (new RestUserTransfer())

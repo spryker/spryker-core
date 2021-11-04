@@ -36,6 +36,7 @@ class SharedCartsRestApiFacadeTest extends Test
      * @var string
      */
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+
     /**
      * @var string
      */
@@ -45,6 +46,7 @@ class SharedCartsRestApiFacadeTest extends Test
      * @var string
      */
     protected const READ_SHARED_CART_PERMISSION_PLUGIN_KEY = 'ReadSharedCartPermissionPlugin';
+
     /**
      * @var string
      */
@@ -54,10 +56,12 @@ class SharedCartsRestApiFacadeTest extends Test
      * @var string
      */
     protected const WRONG_QUOTE_UUID = 'WRONG_QUOTE_UUID';
+
     /**
      * @var string
      */
     protected const WRONG_CUSTOMER_REFERENCE = 'WRONG_CUSTOMER_REFERENCE';
+
     /**
      * @var string
      */
@@ -156,7 +160,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $this->quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
             $this->otherCompanyUserTransfer,
             $quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         // Act
@@ -192,7 +196,7 @@ class SharedCartsRestApiFacadeTest extends Test
         //Arrange
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $this->readOnlyQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -222,7 +226,7 @@ class SharedCartsRestApiFacadeTest extends Test
         //Arrange
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $this->readOnlyQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -265,7 +269,7 @@ class SharedCartsRestApiFacadeTest extends Test
         //Arrange
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $this->readOnlyQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
@@ -292,7 +296,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
@@ -301,7 +305,7 @@ class SharedCartsRestApiFacadeTest extends Test
         ]);
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $fullAccessQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
@@ -334,7 +338,7 @@ class SharedCartsRestApiFacadeTest extends Test
         ]);
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $fullAccessQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
@@ -360,7 +364,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $quoteCompanyUserTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $fullAccessQuotePermissionGroup = $this->tester->haveQuotePermissionGroup(static::QUOTE_PERMISSION_GROUP_FULL_ACCESS, [
@@ -369,7 +373,7 @@ class SharedCartsRestApiFacadeTest extends Test
         ]);
         $quotePermissionGroupTransfer = (new QuotePermissionGroupTransfer())->fromArray(
             $fullAccessQuotePermissionGroup->toArray(),
-            true
+            true,
         );
         $shareDetailTransfer = (new ShareDetailTransfer())
             ->setQuotePermissionGroup($quotePermissionGroupTransfer)
@@ -395,7 +399,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $shareDetailTransfer = (new ShareDetailTransfer())
@@ -407,7 +411,7 @@ class SharedCartsRestApiFacadeTest extends Test
         //Act
         $shareCartResponseTransfer = $this->tester->getFacade()->delete($shareCartRequestTransfer);
         $shareDetailCollectionTransfer = $this->getSharedCartFacade()->findQuoteCompanyUserByUuid(
-            (new QuoteCompanyUserTransfer())->fromArray($quoteCompanyUserEntityTransfer->toArray(), true)
+            (new QuoteCompanyUserTransfer())->fromArray($quoteCompanyUserEntityTransfer->toArray(), true),
         );
 
         //Assert
@@ -444,7 +448,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $quoteCompanyUserEntityTransfer = $this->tester->haveQuoteCompanyUser(
             $this->companyUserTransfer,
             $this->quoteTransfer,
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $shareDetailTransfer = (new ShareDetailTransfer())
@@ -484,7 +488,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $quoteTransfer = $this->tester->haveSharedQuote(
             $ownerCustomerTransfer,
             $otherCustomerTransfer->getCompanyUserTransfer(),
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
 
         $quoteTransfer->setCustomer($otherCustomerTransfer);
@@ -496,7 +500,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $this->assertNotNull($quoteTransfer->getQuotePermissionGroup());
         $this->assertSame(
             $quoteTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup(),
-            $this->readOnlyQuotePermissionGroup->getIdQuotePermissionGroup()
+            $this->readOnlyQuotePermissionGroup->getIdQuotePermissionGroup(),
         );
     }
 
@@ -515,7 +519,7 @@ class SharedCartsRestApiFacadeTest extends Test
         $quoteTransfer = $this->tester->haveSharedQuote(
             $ownerCustomerTransfer,
             $otherCustomerTransfer->getCompanyUserTransfer(),
-            $this->readOnlyQuotePermissionGroup
+            $this->readOnlyQuotePermissionGroup,
         );
         $otherCustomerTransfer->setCompanyUserTransfer(null);
         $quoteTransfer->setCustomer($otherCustomerTransfer);

@@ -30,6 +30,7 @@ class ClientHelper extends Module
      * @var string
      */
     protected const CLIENT_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sClient';
+
     /**
      * @var string
      */

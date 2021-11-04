@@ -54,7 +54,7 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
         $this->assertCount(3, $productBundleTransfers);
         $this->assertEquals(
             $productBundleTransfers->offsetGet(0),
-            $productBundleTransfers->offsetGet(1)
+            $productBundleTransfers->offsetGet(1),
         );
     }
 
@@ -142,7 +142,7 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
         $this->assertCount(1, $productBundleTransfers);
         $this->assertCount(
             1,
-            $productBundleTransfers->getIterator()->current()->getBundledProducts()
+            $productBundleTransfers->getIterator()->current()->getBundledProducts(),
         );
     }
 
@@ -161,14 +161,14 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
                     ->getBundledProducts()
                     ->getIterator()
                     ->current()
-                    ->getIdProductConcrete()
+                    ->getIdProductConcrete(),
             )
             ->addIdBundledProduct(
                 $secondProductConcreteBundleTransfer->getProductBundle()
                     ->getBundledProducts()
                     ->getIterator()
                     ->current()
-                    ->getIdProductConcrete()
+                    ->getIdProductConcrete(),
             )
             ->setApplyGrouped(true);
 
@@ -181,11 +181,11 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
         $this->assertCount(2, $productBundleTransfers);
         $this->assertCount(
             1,
-            $productBundleTransfers->getIterator()->offsetGet(0)->getBundledProducts()
+            $productBundleTransfers->getIterator()->offsetGet(0)->getBundledProducts(),
         );
         $this->assertCount(
             1,
-            $productBundleTransfers->getIterator()->offsetGet(1)->getBundledProducts()
+            $productBundleTransfers->getIterator()->offsetGet(1)->getBundledProducts(),
         );
     }
 
@@ -196,7 +196,7 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
     {
         // Arrange
         $firstProductConcreteBundleTransfer = $this->tester->haveProductBundle(
-            $this->tester->haveFullProduct(['isActive' => false])
+            $this->tester->haveFullProduct(['isActive' => false]),
         );
 
         $secondProductConcreteBundleTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());

@@ -36,7 +36,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
 
             $quantity = $this->getNearestAllowedQuantity(
                 $quantity,
-                $this->getAllowedQuantities($min, $max, $interval, $quantity)
+                $this->getAllowedQuantities($min, $max, $interval, $quantity),
             );
         }
 

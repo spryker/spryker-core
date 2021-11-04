@@ -13,48 +13,56 @@ class MerchantGuiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\ListMerchantController::indexAction()
+     *
      * @var string
      */
     public const URL_MERCHANT_LIST = '/merchant-gui/list-merchant';
 
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController::indexAction()
+     *
      * @var string
      */
     public const URL_MERCHANT_EDIT = '/merchant-gui/edit-merchant';
 
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController::activateAction()
+     *
      * @var string
      */
     public const URL_MERCHANT_ACTIVATE = '/merchant-gui/edit-merchant/activate';
 
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController::deactivateAction()
+     *
      * @var string
      */
     public const URL_MERCHANT_DEACTIVATE = '/merchant-gui/edit-merchant/deactivate';
 
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\MerchantStatusController::indexAction()
+     *
      * @var string
      */
     public const URL_MERCHANT_STATUS = '/merchant-gui/merchant-status';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_WAITING_FOR_APPROVAL
+     *
      * @var string
      */
     public const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     public const STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_DENIED
+     *
      * @var string
      */
     public const STATUS_DENIED = 'denied';

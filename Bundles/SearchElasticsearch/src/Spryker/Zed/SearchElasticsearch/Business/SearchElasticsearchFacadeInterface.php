@@ -168,7 +168,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */
@@ -234,7 +234,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      */

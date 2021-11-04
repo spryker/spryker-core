@@ -18,18 +18,22 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
      * @var string
      */
     public const KEY = 'key';
+
     /**
      * @var string
      */
     public const SECRET = 'secret';
+
     /**
      * @var string
      */
     public const REGION = 'region';
+
     /**
      * @var string
      */
     public const VERSION = 'version';
+
     /**
      * @var string
      */

@@ -25,7 +25,7 @@ class ProductOfferStockGuiCommunicationFactory extends AbstractCommunicationFact
     {
         return new ProductOfferStockReader(
             $this->getProductOfferStockFacade(),
-            $this->getProductOfferStockTableExpanderPlugins()
+            $this->getProductOfferStockTableExpanderPlugins(),
         );
     }
 

@@ -35,42 +35,52 @@ class ContentStorageFacadeTest extends Unit
      * @var string
      */
     protected const CONTENT_STORAGE_DATA_KEY = 'data';
+
     /**
      * @var string
      */
     protected const CONTENT_STORAGE_LOCALE_KEY = 'locale';
+
     /**
      * @var string
      */
     protected const EN_LOCALE = 'en_US';
+
     /**
      * @var string
      */
     protected const FR_LOCALE = 'fr_FR';
+
     /**
      * @var string
      */
     protected const DE_LOCALE = 'de_DE';
+
     /**
      * @var string
      */
     protected const PL_LOCALE = 'pl_PL';
+
     /**
      * @var string
      */
     protected const DE_LOCALE_KEY = 'de';
+
     /**
      * @var string
      */
     protected const EN_LOCALE_NAME = 'en';
+
     /**
      * @var string
      */
     protected const FR_LOCALE_NAME = 'fr';
+
     /**
      * @var string
      */
     protected const PL_LOCALE_NAME = 'pl';
+
     /**
      * @var int
      */
@@ -121,7 +131,7 @@ class ContentStorageFacadeTest extends Unit
             ContentTransfer::ID_CONTENT => $contentTransfer->getIdContent(),
             ContentStorageConfig::TERM_KEY => $data[ContentTransfer::CONTENT_TERM_KEY],
             ContentStorageConfig::CONTENT_KEY => json_decode(
-                $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS]
+                $data[ContentTransfer::LOCALIZED_CONTENTS][0][LocalizedContentTransfer::PARAMETERS],
             ),
         ]);
 

@@ -25,10 +25,12 @@ class PathMethodRenderer implements PathMethodRendererInterface
      * @var string
      */
     protected const PATTERN_REGEX_RESOURCE_ID = '/(?<=\{)[\w\-_]+?(?=\})/';
+
     /**
      * @var string
      */
     protected const PATTERN_REGEX_WORD_SLICE = '/(?=[A-Z])/';
+
     /**
      * @var string
      */
@@ -38,10 +40,12 @@ class PathMethodRenderer implements PathMethodRendererInterface
      * @var string
      */
     protected const PARAMETER_LOCATION_PATH = 'path';
+
     /**
      * @var string
      */
     protected const PARAMETER_SCHEMA_TYPE_STRING = 'string';
+
     /**
      * @var string
      */

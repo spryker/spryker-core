@@ -105,7 +105,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         return $this->companyUserRestResponseBuilder->createCompanyUserCollectionResponse(
             $companyUserCollectionTransfer,
             $companyUserCollectionTransfer->getTotal(),
-            $companyUserCollectionTransfer->getFilter()->getLimit()
+            $companyUserCollectionTransfer->getFilter()->getLimit(),
         );
     }
 
@@ -162,12 +162,12 @@ class CompanyUserReader implements CompanyUserReaderInterface
     ): CompanyUserCriteriaFilterTransfer {
         $companyUserCriteriaFilterTransfer = $this->applyCompanyBusinessUnitsResourceFilter(
             $restRequest,
-            $companyUserCriteriaFilterTransfer
+            $companyUserCriteriaFilterTransfer,
         );
 
         $companyUserCriteriaFilterTransfer = $this->applyCompanyRolesResourceFilter(
             $restRequest,
-            $companyUserCriteriaFilterTransfer
+            $companyUserCriteriaFilterTransfer,
         );
 
         return $companyUserCriteriaFilterTransfer;

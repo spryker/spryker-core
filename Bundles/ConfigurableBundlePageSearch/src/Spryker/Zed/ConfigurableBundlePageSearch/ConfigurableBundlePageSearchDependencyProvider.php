@@ -24,6 +24,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
      * @var string
      */
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
+
     /**
      * @var string
      */
@@ -31,9 +32,11 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+
     /**
      * @var string
      */
@@ -51,9 +54,11 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER} instead.
+     *
      * @var string
      */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER';
+
     /**
      * @var string
      */
@@ -118,7 +123,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
             return new ConfigurableBundlePageSearchToConfigurableBundleFacadeBridge(
-                $container->getLocator()->configurableBundle()->facade()
+                $container->getLocator()->configurableBundle()->facade(),
             );
         });
 
@@ -134,7 +139,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ConfigurableBundlePageSearchToEvenBehaviorFacadeBridge(
-                $container->getLocator()->eventBehavior()->facade()
+                $container->getLocator()->eventBehavior()->facade(),
             );
         });
 
@@ -150,7 +155,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ConfigurableBundlePageSearchToProductImageFacadeBridge(
-                $container->getLocator()->productImage()->facade()
+                $container->getLocator()->productImage()->facade(),
             );
         });
 
@@ -166,7 +171,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ConfigurableBundlePageSearchToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 

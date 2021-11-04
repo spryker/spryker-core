@@ -53,7 +53,7 @@ class ShipmentDataCheckoutRequestValidatorPluginTest extends Unit
         $this->assertCount(
             $expectedErrorsCount,
             $restErrorCollectionTransfer->getRestErrors(),
-            $message
+            $message,
         );
     }
 

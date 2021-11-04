@@ -28,7 +28,7 @@ class SharedCartDataImportBusinessFactory extends DataImportBusinessFactory
     public function createSharedCartDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getSharedCartDataImporterConfiguration()
+            $this->getConfig()->getSharedCartDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

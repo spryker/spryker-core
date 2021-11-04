@@ -30,6 +30,7 @@ class ViewController extends AddController
      * @var string
      */
     public const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+
     /**
      * @var string
      */
@@ -43,7 +44,7 @@ class ViewController extends AddController
     public function indexAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productAbstractTransfer = $this->getFactory()
@@ -128,11 +129,11 @@ class ViewController extends AddController
     public function variantAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $idProduct = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT
+            self::PARAM_ID_PRODUCT,
         ));
 
         $productTransfer = $this->getFactory()
@@ -195,7 +196,7 @@ class ViewController extends AddController
     public function variantTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $variantTable = $this
@@ -203,7 +204,7 @@ class ViewController extends AddController
             ->createVariantTable($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR);
 
         return $this->jsonResponse(
-            $variantTable->fetchData()
+            $variantTable->fetchData(),
         );
     }
 
@@ -215,7 +216,7 @@ class ViewController extends AddController
     public function productGroupTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT
+            self::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productGroupTable = $this
@@ -223,7 +224,7 @@ class ViewController extends AddController
             ->createProductGroupTable($idProductAbstract);
 
         return $this->jsonResponse(
-            $productGroupTable->fetchData()
+            $productGroupTable->fetchData(),
         );
     }
 

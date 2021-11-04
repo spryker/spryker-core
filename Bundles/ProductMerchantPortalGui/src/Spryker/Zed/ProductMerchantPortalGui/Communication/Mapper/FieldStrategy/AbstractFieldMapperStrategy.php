@@ -18,12 +18,14 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
@@ -62,7 +64,7 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setPriceDimension(
                     (new PriceProductDimensionTransfer())
-                        ->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
+                        ->setType(static::PRICE_DIMENSION_TYPE_DEFAULT),
                 );
         }
 
@@ -96,7 +98,7 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setPriceType($priceTypeTransfer)
                 ->setPriceDimension(
-                    (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
+                    (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT),
                 )
                 ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
         }
@@ -138,8 +140,6 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null

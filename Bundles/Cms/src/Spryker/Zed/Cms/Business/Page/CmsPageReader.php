@@ -78,14 +78,14 @@ class CmsPageReader implements CmsPageReaderInterface
         foreach ($availableLocales as $idLocale => $localeName) {
             $cmsPageLocalizedAttributesEntity = $this->getLocalizedAttributesByLocale(
                 $localizedAttributesIdEntityMap,
-                $idLocale
+                $idLocale,
             );
 
             $url = $this->getLocalizedUrl($urlLocaleMap, $cmsPageLocalizedAttributesEntity);
 
             $cmsPageAttributesTransfer = $this->cmsPageMapper->mapCmsLocalizedAttributesTransfer(
                 $cmsPageLocalizedAttributesEntity,
-                $url
+                $url,
             );
             $cmsPageTransfer->addPageAttribute($cmsPageAttributesTransfer);
 

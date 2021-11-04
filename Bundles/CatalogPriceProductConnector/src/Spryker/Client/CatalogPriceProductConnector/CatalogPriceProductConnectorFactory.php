@@ -20,7 +20,7 @@ class CatalogPriceProductConnectorFactory extends AbstractFactory
         return new PriceIdentifierBuilder(
             $this->getCurrencyClient(),
             $this->getPriceClient(),
-            $this->getPriceProductClient()
+            $this->getPriceProductClient(),
         );
     }
 

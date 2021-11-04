@@ -22,14 +22,17 @@ class StorageDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
     public const STORAGE_CLIENT = 'storage client';
+
     /**
      * @var string
      */

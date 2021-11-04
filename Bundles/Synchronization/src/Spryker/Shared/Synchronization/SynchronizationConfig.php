@@ -14,6 +14,7 @@ class SynchronizationConfig
      * - Routing key for failed messages
      *
      * @api
+     *
      * @var string
      */
     public const MESSAGE_ROUTING_KEY_ERROR = 'error';

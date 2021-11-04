@@ -38,7 +38,7 @@ class StockDataImportCommunicationTester extends Actor
 
         $this->assertTrue(
             $stockCount > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 
@@ -51,7 +51,7 @@ class StockDataImportCommunicationTester extends Actor
 
         $this->assertTrue(
             $stockStoreCount > 0,
-            'Expected at least one entry in the database table but database table is empty.'
+            'Expected at least one entry in the database table but database table is empty.',
         );
     }
 

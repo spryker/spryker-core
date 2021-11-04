@@ -67,7 +67,7 @@ class CartItemReplacer implements CartItemReplacerInterface
 
         $persistentQuoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentItemReplaceTransfer->getIdQuote(),
-            $persistentItemReplaceTransfer->getCustomer()
+            $persistentItemReplaceTransfer->getCustomer(),
         );
 
         if (!$persistentQuoteResponseTransfer->getIsSuccessful()) {
@@ -76,7 +76,7 @@ class CartItemReplacer implements CartItemReplacerInterface
 
         $quoteTransfer = $this->mergeQuotes(
             (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true),
-            $persistentItemReplaceTransfer->getQuote()
+            $persistentItemReplaceTransfer->getQuote(),
         );
 
         $itemsToRemoval = $this->prepareItemsForRemoval($persistentItemReplaceTransfer, $quoteTransfer);

@@ -101,8 +101,8 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
                 sprintf(
                     '%s could not acquire access to the session %s',
                     self::class,
-                    $sessionId
-                )
+                    $sessionId,
+                ),
             );
         }
 
@@ -122,7 +122,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
         return $this->redisClient->setex(
             $this->keyBuilder->buildSessionKey($sessionId),
             $this->sessionRedisLifeTimeCalculator->getSessionLifeTime(),
-            $data
+            $data,
         );
     }
 
@@ -144,6 +144,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function gc($maxLifeTime): bool
     {
         return true;

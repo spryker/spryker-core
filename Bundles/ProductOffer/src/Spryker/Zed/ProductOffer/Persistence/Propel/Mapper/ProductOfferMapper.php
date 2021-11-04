@@ -27,7 +27,7 @@ class ProductOfferMapper
     ): ProductOfferTransfer {
         $productOfferTransfer = $productOfferTransfer->fromArray(
             $productOfferEntity->toArray(),
-            true
+            true,
         );
 
         return $productOfferTransfer;
@@ -44,7 +44,7 @@ class ProductOfferMapper
         SpyProductOffer $productOfferEntity
     ): SpyProductOffer {
         $productOfferEntity->fromArray(
-            $productOfferTransfer->modifiedToArray(false)
+            $productOfferTransfer->modifiedToArray(false),
         );
 
         return $productOfferEntity;
@@ -64,7 +64,7 @@ class ProductOfferMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore> $productOfferStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore[] $productOfferStoreEntities
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */

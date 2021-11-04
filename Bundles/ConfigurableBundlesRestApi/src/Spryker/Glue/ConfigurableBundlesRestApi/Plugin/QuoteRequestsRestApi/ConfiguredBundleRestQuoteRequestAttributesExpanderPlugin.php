@@ -37,7 +37,7 @@ class ConfiguredBundleRestQuoteRequestAttributesExpanderPlugin extends AbstractP
             ->expandRestQuoteRequestItemWithConfiguredBundle(
                 $restQuoteRequestsAttributesTransfers,
                 $quoteRequestTransfers,
-                $localeName
+                $localeName,
             );
     }
 }

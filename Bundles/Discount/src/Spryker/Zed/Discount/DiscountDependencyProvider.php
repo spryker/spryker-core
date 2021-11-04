@@ -42,14 +42,17 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MESSENGER = 'MESSENGER_FACADE';
+
     /**
      * @var string
      */
     public const FACADE_MONEY = 'MONEY_FACADE';
+
     /**
      * @var string
      */
     public const FACADE_CURRENCY = 'CURRENCY_FACADE';
+
     /**
      * @var string
      */
@@ -59,66 +62,82 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
+
     /**
      * @var string
      */
     public const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNTABLE_ITEM_FILTER = 'PLUGIN_DISCOUNTABLE_ITEM_FILTER';
+
     /**
      * @var string
      */
     public const PLUGIN_COLLECTOR_STRATEGY_PLUGINS = 'PLUGIN_COLLECTOR_STRATEGY';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_POST_CREATE = 'PLUGIN_DISCOUNT_POST_CREATE';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_POST_UPDATE = 'PLUGIN_DISCOUNT_POST_UPDATE';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER = 'PLUGIN_DISCOUNT_CONFIGURATION_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER = 'PLUGIN_DISCOUNT_FORM_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS = 'PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS';
+
     /**
      * @var string
      */
     public const PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY';
+
     /**
      * @var string
      */
     public const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
+
     /**
      * @var string
      */
     public const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
+
     /**
      * @var string
      */
     public const COLLECTED_DISCOUNT_GROUPING_PLUGINS = 'COLLECTED_DISCOUNT_GROUPING_PLUGINS';
+
     /**
      * @var string
      */
     public const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
+
     /**
      * @var string
      */
@@ -589,8 +608,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own DiscountDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage discounts.',
-                FormTypeInterface::class
-            )
+                FormTypeInterface::class,
+            ),
         );
     }
 }

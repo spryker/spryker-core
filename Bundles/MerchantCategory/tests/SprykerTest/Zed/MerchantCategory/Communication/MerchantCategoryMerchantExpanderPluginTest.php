@@ -37,14 +37,14 @@ class MerchantCategoryMerchantExpanderPluginTest extends Unit
             (new MerchantCategoryResponseTransfer())
                 ->addMerchantCategory(
                     (new MerchantCategoryTransfer())
-                        ->setCategory(new CategoryTransfer())
+                        ->setCategory(new CategoryTransfer()),
                 )
-                ->setIsSuccessful(true)
+                ->setIsSuccessful(true),
         );
 
         // Act
         $merchantTransfer = $merchantCategoryMerchantExpanderPluginMock->expand(
-            (new MerchantTransfer())->setIdMerchant(1)
+            (new MerchantTransfer())->setIdMerchant(1),
         );
 
         // Assert
@@ -61,14 +61,14 @@ class MerchantCategoryMerchantExpanderPluginTest extends Unit
             (new MerchantCategoryResponseTransfer())
                 ->addMerchantCategory(
                     (new MerchantCategoryTransfer())
-                        ->setCategory(new CategoryTransfer())
+                        ->setCategory(new CategoryTransfer()),
                 )
-                ->setIsSuccessful(false)
+                ->setIsSuccessful(false),
         );
 
         // Act
         $merchantTransfer = $merchantCategoryMerchantExpanderPluginMock->expand(
-            (new MerchantTransfer())->setIdMerchant(1)
+            (new MerchantTransfer())->setIdMerchant(1),
         );
 
         // Assert

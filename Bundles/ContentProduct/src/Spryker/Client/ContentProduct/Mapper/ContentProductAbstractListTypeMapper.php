@@ -53,7 +53,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
 
         if (!isset($this->contentProductTermExecutors[$term])) {
             throw new InvalidProductAbstractListTermException(
-                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term)
+                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term),
             );
         }
 
@@ -63,18 +63,16 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
     }
 
     /**
-     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
-     *
      * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return array<\Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
      */
     public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array
     {
         $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
             $contentKeys,
-            $localeName
+            $localeName,
         );
 
         if (!$contentTypeContextTransfers) {

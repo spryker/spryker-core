@@ -103,7 +103,7 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
                 $eventDispatcher->addListener(
                     $eventName,
                     $listener,
-                    $existingEventDispatcher->getListenerPriority($eventName, $listener)
+                    $existingEventDispatcher->getListenerPriority($eventName, $listener),
                 );
             }
         }

@@ -23,26 +23,32 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
     /**
      * @var string
      */
     public const PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE_CREATE';
+
     /**
      * @var string
      */
     public const PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE_DELETE';
+
     /**
      * @var string
      */
     public const PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE = 'PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE';
+
     /**
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
     /**
      * @var string
      */
@@ -88,7 +94,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAlternativeToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
+                $container->getLocator()->locale()->facade(),
             );
         });
 
@@ -104,7 +110,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeToProductFacadeBridge(
-                $container->getLocator()->product()->facade()
+                $container->getLocator()->product()->facade(),
             );
         });
 

@@ -19,6 +19,7 @@ class WebProfilerLoggerDataCollectorPlugin implements WebProfilerDataCollectorPl
      * @var string
      */
     protected const NAME = 'logger';
+
     /**
      * @var string
      */

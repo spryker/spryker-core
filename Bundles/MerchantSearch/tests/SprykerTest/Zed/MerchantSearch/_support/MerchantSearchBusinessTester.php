@@ -44,6 +44,7 @@ class MerchantSearchBusinessTester extends Actor
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     *
      * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
@@ -106,7 +107,7 @@ class MerchantSearchBusinessTester extends Actor
             function (MerchantTransfer $merchantTransfer) {
                 return $merchantTransfer->getIdMerchant();
             },
-            $merchantTransfers
+            $merchantTransfers,
         );
     }
 
@@ -144,7 +145,7 @@ class MerchantSearchBusinessTester extends Actor
     /**
      * @param array<int> $merchantIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
      */
     public function getSynchronizationDataTransfersByMerchantIds(array $merchantIds): ObjectCollection
     {
@@ -170,7 +171,7 @@ class MerchantSearchBusinessTester extends Actor
                 return [
                     $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
                 ];
-            }
+            },
         );
     }
 

@@ -43,7 +43,7 @@ class CompanyRolesRestApiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::CLIENT_COMPANY_ROLE, function (Container $container) {
             return new CompanyRolesRestApiToCompanyRoleClientBridge(
-                $container->getLocator()->companyRole()->client()
+                $container->getLocator()->companyRole()->client(),
             );
         });
 

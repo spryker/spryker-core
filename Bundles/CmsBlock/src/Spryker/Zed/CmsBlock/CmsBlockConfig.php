@@ -16,14 +16,17 @@ class CmsBlockConfig extends AbstractBundleConfig
      * @var string
      */
     protected const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
+
     /**
      * @var string
      */
     protected const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+
     /**
      * @var string
      */
     protected const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+
     /**
      * @var string
      */
@@ -54,7 +57,7 @@ class CmsBlockConfig extends AbstractBundleConfig
      *
      * @param string $templateRelativePath
      *
-     * @return array
+     * @return array<string>
      */
     public function getTemplateRealPaths($templateRelativePath): array
     {
@@ -87,14 +90,14 @@ class CmsBlockConfig extends AbstractBundleConfig
             $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
             $twigLayer,
             $themeName,
-            $templateRelativePath
+            $templateRelativePath,
         );
     }
 
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getThemeNames(): array
     {
@@ -122,7 +125,7 @@ class CmsBlockConfig extends AbstractBundleConfig
                 '%s/%s/Shared/CmsBlock/Theme/%s',
                 APPLICATION_SOURCE_DIR,
                 $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
-                static::THEME_NAME_DEFAULT
+                static::THEME_NAME_DEFAULT,
             ),
         ];
     }

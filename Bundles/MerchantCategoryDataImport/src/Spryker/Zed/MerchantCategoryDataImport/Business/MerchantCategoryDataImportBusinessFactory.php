@@ -27,7 +27,7 @@ class MerchantCategoryDataImportBusinessFactory extends DataImportBusinessFactor
     public function getMerchantCategoryDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getMerchantCategoryDataImporterConfiguration()
+            $this->getConfig()->getMerchantCategoryDataImporterConfiguration(),
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();

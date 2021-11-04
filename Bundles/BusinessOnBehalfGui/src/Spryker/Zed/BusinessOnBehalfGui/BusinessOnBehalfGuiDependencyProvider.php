@@ -23,14 +23,17 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
     /**
      * @var string
      */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+
     /**
      * @var string
      */
@@ -68,7 +71,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyFacadeBridge(
-                $container->getLocator()->company()->facade()
+                $container->getLocator()->company()->facade(),
             );
         });
 
@@ -84,7 +87,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new BusinessOnBehalfGuiToCustomerFacadeBridge(
-                $container->getLocator()->customer()->facade()
+                $container->getLocator()->customer()->facade(),
             );
         });
 
@@ -100,7 +103,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyUserFacadeBridge(
-                $container->getLocator()->companyUser()->facade()
+                $container->getLocator()->companyUser()->facade(),
             );
         });
 
@@ -116,7 +119,7 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         });
 

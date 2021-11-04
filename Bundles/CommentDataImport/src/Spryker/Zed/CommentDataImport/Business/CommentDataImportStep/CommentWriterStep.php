@@ -77,7 +77,7 @@ class CommentWriterStep implements DataImportStepInterface
         }
 
         throw new EntityNotFoundException(
-            sprintf('Could not find owner id by owner key "%s"', $dataSet[CommentDataSetInterface::COLUMN_OWNER_KEY])
+            sprintf('Could not find owner id by owner key "%s"', $dataSet[CommentDataSetInterface::COLUMN_OWNER_KEY]),
         );
     }
 

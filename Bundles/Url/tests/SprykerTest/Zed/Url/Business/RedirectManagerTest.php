@@ -44,7 +44,7 @@ class RedirectManagerTest extends Unit
             $queryContainer,
             $this->getMockBuilder(UrlManagerInterface::class)->getMock(),
             $this->getMockBuilder(UrlToTouchInterface::class)->getMock(),
-            $this->getMockBuilder(ConnectionInterface::class)->getMock()
+            $this->getMockBuilder(ConnectionInterface::class)->getMock(),
         );
 
         $redirectedManager->deleteUrlRedirect(new RedirectTransfer());

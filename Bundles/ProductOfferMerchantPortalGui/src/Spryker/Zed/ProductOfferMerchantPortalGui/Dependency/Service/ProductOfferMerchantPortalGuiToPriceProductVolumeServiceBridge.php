@@ -73,7 +73,7 @@ class ProductOfferMerchantPortalGuiToPriceProductVolumeServiceBridge implements 
     ): ?PriceProductTransfer {
         return $this->priceProductVolumeService->extractVolumePrice(
             $priceProductTransfer,
-            $volumePriceProductTransfer
+            $volumePriceProductTransfer,
         );
     }
 }

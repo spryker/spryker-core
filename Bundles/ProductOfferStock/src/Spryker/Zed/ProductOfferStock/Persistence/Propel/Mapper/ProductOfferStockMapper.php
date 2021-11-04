@@ -28,7 +28,7 @@ class ProductOfferStockMapper
     ): ArrayObject {
         foreach ($productOfferStockEntities as $productOfferStockEntity) {
             $productOfferStockTransfers->append(
-                $this->mapProductOfferStockEntityToProductOfferStockTransfer($productOfferStockEntity, new ProductOfferStockTransfer())
+                $this->mapProductOfferStockEntityToProductOfferStockTransfer($productOfferStockEntity, new ProductOfferStockTransfer()),
             );
         }
 
@@ -49,7 +49,7 @@ class ProductOfferStockMapper
         $productOfferStockTransfer->setIdProductOffer($productOfferStockEntity->getFkProductOffer());
         $productOfferStockTransfer->setProductOfferReference($productOfferStockEntity->getSpyProductOffer()->getProductOfferReference());
         $productOfferStockTransfer->setStock(
-            $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer())
+            $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer()),
         );
 
         return $productOfferStockTransfer;

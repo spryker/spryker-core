@@ -76,7 +76,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         }
 
         $companyRoleCollectionTransfer = $this->companyRoleClient->getCompanyRoleCollection(
-            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())
+            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser()),
         );
 
         if (!$companyRoleCollectionTransfer->getRoles()->count()) {
@@ -94,7 +94,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
     protected function getCurrentUserCompanyRoleByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyRoleResponseTransfer = $this->companyRoleClient->findCompanyRoleByUuid(
-            (new CompanyRoleTransfer())->setUuid($restRequest->getResource()->getId())
+            (new CompanyRoleTransfer())->setUuid($restRequest->getResource()->getId()),
         );
 
         if (
@@ -107,14 +107,14 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         $restCompanyRoleAttributesTransfer = $this->companyRoleMapperInterface
             ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
                 $companyRoleResponseTransfer->getCompanyRoleTransfer(),
-                new RestCompanyRoleAttributesTransfer()
+                new RestCompanyRoleAttributesTransfer(),
             );
 
         return $this->companyRoleRestResponseBuilder
             ->createCompanyRoleRestResponse(
                 $companyRoleResponseTransfer->getCompanyRoleTransfer()->getUuid(),
                 $restCompanyRoleAttributesTransfer,
-                $companyRoleResponseTransfer->getCompanyRoleTransfer()
+                $companyRoleResponseTransfer->getCompanyRoleTransfer(),
             );
     }
 
@@ -131,7 +131,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
             $companyRoleRestResources[] = $this->companyRoleRestResponseBuilder->createCompanyRoleRestResource(
                 $companyRoleTransfer->getUuid(),
                 $this->getRestCompanyRoleAttributesTransfer($companyRoleTransfer),
-                $companyRoleTransfer
+                $companyRoleTransfer,
             );
         }
 
@@ -149,7 +149,7 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
         return $this->companyRoleMapperInterface
             ->mapCompanyRoleTransferToRestCompanyRoleAttributesTransfer(
                 $companyRoleTransfer,
-                new RestCompanyRoleAttributesTransfer()
+                new RestCompanyRoleAttributesTransfer(),
             );
     }
 

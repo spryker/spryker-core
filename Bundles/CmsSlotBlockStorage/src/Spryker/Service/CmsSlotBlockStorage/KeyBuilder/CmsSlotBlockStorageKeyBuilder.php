@@ -25,7 +25,7 @@ class CmsSlotBlockStorageKeyBuilder implements CmsSlotBlockStorageKeyBuilderInte
         return sprintf(
             static::FORMAT_SLOT_TEMPLATE_KEY,
             $cmsSlotTemplatePath,
-            $cmsSlotKey
+            $cmsSlotKey,
         );
     }
 }

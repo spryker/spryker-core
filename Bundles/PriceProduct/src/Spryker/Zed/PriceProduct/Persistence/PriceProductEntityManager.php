@@ -32,7 +32,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->createPriceProductDimensionQueryExpander()
             ->expandPriceProductStoreQueryWithPriceDimensionForDelete(
                 $priceProductStoreQuery,
-                new PriceProductCriteriaTransfer()
+                new PriceProductCriteriaTransfer(),
             );
 
         if (!$priceProductStoreQuery->getAsColumns()) {

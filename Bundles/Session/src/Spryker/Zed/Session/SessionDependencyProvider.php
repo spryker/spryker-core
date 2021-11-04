@@ -20,18 +20,22 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SESSION_CLIENT = 'SESSION_CLIENT';
+
     /**
      * @var string
      */
     public const MONITORING_SERVICE = 'monitoring service';
+
     /**
      * @var string
      */
     public const PLUGINS_SESSION_HANDLER = 'PLUGINS_SESSION_HANDLER';
+
     /**
      * @var string
      */
     public const PLUGINS_YVES_SESSION_LOCK_RELEASER = 'PLUGINS_YVES_SESSION_LOCK_RELEASER';
+
     /**
      * @var string
      */
@@ -89,7 +93,7 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::MONITORING_SERVICE, function () use ($container) {
             $sessionToMonitoringServiceBridge = new SessionToMonitoringServiceBridge(
-                $container->getLocator()->monitoring()->service()
+                $container->getLocator()->monitoring()->service(),
             );
 
             return $sessionToMonitoringServiceBridge;

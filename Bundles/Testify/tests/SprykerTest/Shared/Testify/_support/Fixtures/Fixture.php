@@ -66,8 +66,8 @@ class Fixture extends Test implements ScenarioDriven
         $this->getMetadata()->setParamsFromAnnotations(
             Annotation::forMethod(
                 $this->testClassInstance,
-                $this->testMethod
-            )->raw()
+                $this->testMethod,
+            )->raw(),
         );
         $this->getMetadata()->getService('di')->injectDependencies($this->testClassInstance);
     }
@@ -138,7 +138,7 @@ class Fixture extends Test implements ScenarioDriven
         return sprintf(
             '%s: %s',
             ReflectionHelper::getClassShortName($this->getTestClass()),
-            Message::ucfirst($this->getFeature())
+            Message::ucfirst($this->getFeature()),
         );
     }
 

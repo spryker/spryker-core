@@ -34,11 +34,11 @@ class CustomerAuthorizationClientTest extends Unit
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
             ->setIdentity(
                 (new AuthorizationIdentityTransfer())
-                    ->setIdentifier('test')
+                    ->setIdentifier('test'),
             )
             ->setEntity(
                 (new AuthorizationEntityTransfer())
-                    ->setIdentifier('test')
+                    ->setIdentifier('test'),
             );
 
         // Act
@@ -59,11 +59,11 @@ class CustomerAuthorizationClientTest extends Unit
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
             ->setIdentity(
                 (new AuthorizationIdentityTransfer())
-                    ->setIdentifier('test')
+                    ->setIdentifier('test'),
             )
             ->setEntity(
                 (new AuthorizationEntityTransfer())
-                    ->setIdentifier('wrongIdentifier')
+                    ->setIdentifier('wrongIdentifier'),
             );
 
         // Act

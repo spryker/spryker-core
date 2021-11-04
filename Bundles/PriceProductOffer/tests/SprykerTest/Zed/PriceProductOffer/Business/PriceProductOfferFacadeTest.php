@@ -165,7 +165,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertCount(1, $priceProductTransfers);
         $this->assertSame(
             $priceProductTransfer->getIdPriceProduct(),
-            $priceProductTransfers[0]->getIdPriceProduct()
+            $priceProductTransfers[0]->getIdPriceProduct(),
         );
     }
 
@@ -180,7 +180,7 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductTransfer->getMoneyValue()->setGrossAmount(100);
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())
             ->setProductOffer(
-                (new ProductOfferTransfer())->addPrice($priceProductTransfer)
+                (new ProductOfferTransfer())->addPrice($priceProductTransfer),
             );
         $priceProductOfferCollectionTransfer = (new PriceProductOfferCollectionTransfer())
             ->addPriceProductOffer($priceProductOfferTransfer);
@@ -227,7 +227,7 @@ class PriceProductOfferFacadeTest extends Unit
             'The set of Store and Currency needs to be unique.',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
-                ->getMessage()
+                ->getMessage(),
         );
     }
 
@@ -262,7 +262,7 @@ class PriceProductOfferFacadeTest extends Unit
             'Currency FAKE_CURRENCY is not assigned to the store DE',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
-                ->getMessage()
+                ->getMessage(),
         );
     }
 
@@ -296,7 +296,7 @@ class PriceProductOfferFacadeTest extends Unit
             'This value is not valid.',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
-                ->getMessage()
+                ->getMessage(),
         );
     }
 
@@ -335,11 +335,11 @@ class PriceProductOfferFacadeTest extends Unit
         $validationError = $collectionValidationResponseTransfer->getValidationErrors()->offsetGet(0);
         $this->assertSame(
             'This field is missing.',
-            $validationError->getMessage()
+            $validationError->getMessage(),
         );
         $this->assertSame(
             '[priceProductOffers][0][productOffer][prices][0][moneyValue:default][fkCurrency]',
-            $validationError->getPropertyPath()
+            $validationError->getPropertyPath(),
         );
     }
 
@@ -368,11 +368,11 @@ class PriceProductOfferFacadeTest extends Unit
         $validationError = $collectionValidationResponseTransfer->getValidationErrors()->offsetGet(0);
         $this->assertSame(
             'This field is missing.',
-            $validationError->getMessage()
+            $validationError->getMessage(),
         );
         $this->assertSame(
             '[priceProductOffers][0][productOffer][prices][0][moneyValue:default][fkStore]',
-            $validationError->getPropertyPath()
+            $validationError->getPropertyPath(),
         );
     }
 
@@ -412,9 +412,9 @@ class PriceProductOfferFacadeTest extends Unit
 
         $priceProductOfferCollectionTransfer = new PriceProductOfferCollectionTransfer();
         $priceProductOfferCollectionTransfer->addPriceProductOffer(
-            (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer1)
+            (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer1),
         )->addPriceProductOffer(
-            (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer2)
+            (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer2),
         );
 
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
@@ -468,7 +468,7 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProduct = $this->tester->havePriceProductSaved([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
         $priceProductOfferCriteriaTransfer->setPriceProductOfferIds(
-            [$priceProduct->getPriceDimension()->getIdPriceProductOffer()]
+            [$priceProduct->getPriceDimension()->getIdPriceProductOffer()],
         );
 
         $wishlistItemTransfer = (new WishlistItemTransfer())
@@ -482,7 +482,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertSame(1, $wishlistItemTransfer->getPrices()->count());
         $this->assertSame(
             $priceProduct->getPriceDimension()->getIdPriceProductOffer(),
-            $wishlistItemTransfer->getPrices()->getIterator()->current()->getPriceDimension()->getIdPriceProductOffer()
+            $wishlistItemTransfer->getPrices()->getIterator()->current()->getPriceDimension()->getIdPriceProductOffer(),
         );
     }
 

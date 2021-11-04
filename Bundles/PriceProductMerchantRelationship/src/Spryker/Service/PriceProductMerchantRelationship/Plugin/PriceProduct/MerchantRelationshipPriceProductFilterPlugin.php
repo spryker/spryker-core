@@ -37,7 +37,7 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
     {
         return $this->getService()->filterPriceProductsByMerchantRelationship(
             $priceProductTransfers,
-            $priceProductFilterTransfer
+            $priceProductFilterTransfer,
         );
     }
 

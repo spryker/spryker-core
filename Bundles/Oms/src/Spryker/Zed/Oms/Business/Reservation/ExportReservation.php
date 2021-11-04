@@ -157,7 +157,7 @@ class ExportReservation implements ExportReservationInterface
     {
         foreach ($reservations as $reservation) {
             $this->executeExportReservationPlugins(
-                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservation)
+                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservation),
             );
         }
     }
@@ -166,7 +166,7 @@ class ExportReservation implements ExportReservationInterface
      * @param int $lastExportedVersion
      * @param int $maxVisibleVersion
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion[]
      */
     protected function findReservations($lastExportedVersion, $maxVisibleVersion)
     {

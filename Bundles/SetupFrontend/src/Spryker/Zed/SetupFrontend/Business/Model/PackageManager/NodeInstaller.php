@@ -108,7 +108,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
     {
         return sprintf(
             'curl -sL https://deb.nodesource.com/setup_%s.x | sudo -E bash -',
-            $this->setupFrontendConfig->getNodeJsMinimumRequiredMajorVersion()
+            $this->setupFrontendConfig->getNodeJsMinimumRequiredMajorVersion(),
         );
     }
 

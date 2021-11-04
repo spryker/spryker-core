@@ -20,14 +20,17 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
      * @var string
      */
     protected const FACET_NAME = 'facet-name';
+
     /**
      * @var string
      */
     protected const FACET_VALUE = 'facet-value';
+
     /**
      * @var string
      */
     protected const ALL_PARENTS = 'all-parents';
+
     /**
      * @var string
      */
@@ -90,7 +93,7 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
             return $this->searchFacade->transformPageMapToDocumentByMapperName(
                 $data,
                 $localeTransfer,
-                ProductPageSearchConfig::PRODUCT_ABSTRACT_RESOURCE_NAME
+                ProductPageSearchConfig::PRODUCT_ABSTRACT_RESOURCE_NAME,
             );
         }
 

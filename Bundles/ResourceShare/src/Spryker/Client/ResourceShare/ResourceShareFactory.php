@@ -32,7 +32,7 @@ class ResourceShareFactory extends AbstractFactory
         return new ResourceShareActivator(
             $this->createZedResourceShareStub(),
             $this->getBeforeZedResourceShareActivatorStrategyPlugins(),
-            $this->getAfterZedResourceShareActivatorStrategyPlugins()
+            $this->getAfterZedResourceShareActivatorStrategyPlugins(),
         );
     }
 

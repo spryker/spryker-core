@@ -76,12 +76,12 @@ class StorageClientTest extends Unit
             ->method('updateCache')
             ->with(
                 $this->equalTo(self::STORAGE_CACHE_STRATEGY),
-                $this->equalTo($expectedCacheKey)
+                $this->equalTo($expectedCacheKey),
             );
 
         $this->storageClientMock->persistCacheForRequest(
             $request,
-            static::STORAGE_CACHE_STRATEGY
+            static::STORAGE_CACHE_STRATEGY,
         );
     }
 
@@ -100,7 +100,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithNoGetParameter(): void
     {
         $this->markTestSkipped(
-            'This test will be updated in the next major.'
+            'This test will be updated in the next major.',
         );
 
         $uri = '/en/cameras-&-camcorders';
@@ -115,7 +115,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithOneAllowedGetParameterAndOneIsGiven(): void
     {
         $this->markTestSkipped(
-            'This test will be updated in the next major.'
+            'This test will be updated in the next major.',
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
@@ -125,7 +125,7 @@ class StorageClientTest extends Unit
         $this->testStorageCacheAllowedGetParameters(
             $uri,
             $expectedCacheKey,
-            $getParameters
+            $getParameters,
         );
     }
 
@@ -135,7 +135,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithTwoAllowedGetParameterAndOneIsGiven(): void
     {
         $this->markTestSkipped(
-            'This test will be updated in the next major.'
+            'This test will be updated in the next major.',
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1';
@@ -145,7 +145,7 @@ class StorageClientTest extends Unit
         $this->testStorageCacheAllowedGetParameters(
             $uri,
             $expectedCacheKey,
-            $getParameters
+            $getParameters,
         );
     }
 
@@ -155,7 +155,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithOneAllowedGetParameterAndTwoAreGiven(): void
     {
         $this->markTestSkipped(
-            'This test will be updated in the next major.'
+            'This test will be updated in the next major.',
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
@@ -165,7 +165,7 @@ class StorageClientTest extends Unit
         $this->testStorageCacheAllowedGetParameters(
             $uri,
             $expectedCacheKey,
-            $getParameters
+            $getParameters,
         );
     }
 
@@ -175,7 +175,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoOrderedAreGiven(): void
     {
         $this->markTestSkipped(
-            'This test will be updated in the next major.'
+            'This test will be updated in the next major.',
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter1=1&allowedParameter2=2';
@@ -185,7 +185,7 @@ class StorageClientTest extends Unit
         $this->testStorageCacheAllowedGetParameters(
             $uri,
             $expectedCacheKey,
-            $getParameters
+            $getParameters,
         );
     }
 
@@ -195,7 +195,7 @@ class StorageClientTest extends Unit
     public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoNotOrderedAreGiven(): void
     {
         $this->markTestSkipped(
-            'This test will be updated in the next major.'
+            'This test will be updated in the next major.',
         );
 
         $uri = '/en/cameras-&-camcorders?allowedParameter2=2&allowedParameter1=1';
@@ -205,7 +205,7 @@ class StorageClientTest extends Unit
         $this->testStorageCacheAllowedGetParameters(
             $uri,
             $expectedCacheKey,
-            $getParameters
+            $getParameters,
         );
     }
 
@@ -236,7 +236,7 @@ class StorageClientTest extends Unit
 
         $this->storageClientMock->persistCacheForRequest(
             Request::createFromGlobals(),
-            static::STORAGE_CACHE_STRATEGY
+            static::STORAGE_CACHE_STRATEGY,
         );
     }
 
@@ -256,7 +256,7 @@ class StorageClientTest extends Unit
 
         $this->storageClientMock->persistCacheForRequest(
             $request,
-            static::STORAGE_CACHE_STRATEGY
+            static::STORAGE_CACHE_STRATEGY,
         );
     }
 

@@ -61,7 +61,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         }
 
         $productOptionGroupTransfer->setValues(
-            $this->filterOptionValuesWithEmptyPrice($productOptionGroupTransfer->getValues())
+            $this->filterOptionValuesWithEmptyPrice($productOptionGroupTransfer->getValues()),
         );
     }
 
@@ -79,7 +79,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         $productOptionValueTransfer->setPrice(
             isset($prices[$currencyCode]) ?
                 $prices[$currencyCode][$priceMode][ProductOptionConstants::AMOUNT] :
-                null
+                null,
         );
     }
 
@@ -93,7 +93,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         return new ArrayObject(
             array_filter((array)$productOptionValueCollection, function (StorageProductOptionValueTransfer $productOptionValueTransfer) {
                 return $productOptionValueTransfer->getPrice() === null ? false : true;
-            })
+            }),
         );
     }
 

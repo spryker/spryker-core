@@ -21,6 +21,7 @@ class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDepe
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
     /**
      * @var string
      */
@@ -50,7 +51,7 @@ class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_MAIL, function (Container $container) {
             return new MerchantUserPasswordResetMailToMailFacadeBridge(
-                $container->getLocator()->mail()->facade()
+                $container->getLocator()->mail()->facade(),
             );
         });
 
@@ -66,7 +67,7 @@ class MerchantUserPasswordResetMailDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new MerchantUserPasswordResetMailToMerchantUserFacadeBridge(
-                $container->getLocator()->merchantUser()->facade()
+                $container->getLocator()->merchantUser()->facade(),
             );
         });
 

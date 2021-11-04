@@ -9,7 +9,7 @@ namespace Spryker\Shared\Application\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension as DoubleSubmitProtectionExtension;
+use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\SessionStorage;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -27,7 +27,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
     public function register(Application $app)
     {
         $app['form.extension.double_submit_protection'] = $app->share(function ($app) {
-            $translator = isset($app['translator']) ? $app['translator'] : null;
+            $translator = $app['translator'] ?? null;
 
             return $this->createDoubleSubmitProtectionExtension($app, $translator);
         });
@@ -68,7 +68,7 @@ class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements Se
         return new DoubleSubmitProtectionExtension(
             $this->createTokenGenerator(),
             $this->createTokenStorage($app),
-            $translator
+            $translator,
         );
     }
 

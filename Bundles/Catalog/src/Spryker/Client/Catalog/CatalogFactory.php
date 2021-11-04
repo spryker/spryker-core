@@ -70,7 +70,7 @@ class CatalogFactory extends AbstractFactory
             $this->getSearchClient(),
             $this->getProductConcretePageSearchQueryPlugin(),
             $this->getProductConcretePageSearchQueryExpanderPlugins(),
-            $this->getProductConcretePageSearchResultFormatterPlugins()
+            $this->getProductConcretePageSearchResultFormatterPlugins(),
         );
     }
 

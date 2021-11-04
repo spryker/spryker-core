@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -108,7 +109,7 @@ class Reader implements ReaderInterface
 
         $wishlistEntity = $this->getWishlistEntityByCustomerIdAndWishlistName(
             $wishlistTransfer->getFkCustomer(),
-            $wishlistTransfer->getName()
+            $wishlistTransfer->getName(),
         );
 
         return $this->transferMapper->convertWishlist($wishlistEntity);
@@ -128,7 +129,7 @@ class Reader implements ReaderInterface
         $wishlistPaginationTransfer = $this->buildWishlistPaginationTransfer($wishlistOverviewRequestTransfer);
         $wishlistOverviewResponseTransfer = $this->buildWishlistOverviewResponseTransfer(
             $wishlistOverviewRequestTransfer->getWishlist(),
-            $wishlistPaginationTransfer
+            $wishlistPaginationTransfer,
         );
 
         $wishlistEntity = $this->findWishlistEntity($wishlistOverviewRequestTransfer->getWishlist());
@@ -142,7 +143,7 @@ class Reader implements ReaderInterface
 
         $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
         $wishlistPaginationTransfer = $this->updatePaginationTransfer($wishlistPaginationTransfer, $itemPaginationModel);
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[] $wishlistItemCollection */
         $wishlistItemCollection = $itemPaginationModel->getResults();
         $wishlistItems = $this->transferMapper->convertWishlistItemCollection($wishlistItemCollection);
 
@@ -157,8 +158,8 @@ class Reader implements ReaderInterface
         $wishlistOverviewMetaTransfer->setWishlistItemMetaCollection(
             $this->transferMapper->mapWishlistItemTransfersToWishlistItemMetaTransfers(
                 $wishlistTransfer->getWishlistItems(),
-                $wishlistOverviewMetaTransfer->getWishlistItemMetaCollection()
-            )
+                $wishlistOverviewMetaTransfer->getWishlistItemMetaCollection(),
+            ),
         );
 
         $wishlistOverviewResponseTransfer
@@ -186,6 +187,25 @@ class Reader implements ReaderInterface
         $wishlistItemTransfer = $this->executeWishlistItemExpanderPlugins($wishlistItemTransfer);
 
         return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer
+    {
+        $wishlistItemResponseTransfer = new WishlistItemResponseTransfer();
+        $wishlistItemTransfer = $this->findWishlistItem($wishlistItemCriteriaTransfer);
+
+        if (!$wishlistItemTransfer) {
+            return $wishlistItemResponseTransfer->setIsSuccess(false);
+        }
+
+        return $wishlistItemResponseTransfer
+            ->setIsSuccess(true)
+            ->setWishlistItem($wishlistItemTransfer);
     }
 
     /**
@@ -269,7 +289,7 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
-     * @return \Propel\Runtime\Util\PropelModelPager<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem>
+     * @return \Propel\Runtime\Util\PropelModelPager|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]
      */
     protected function getWishlistOverviewPaginationModel(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
@@ -285,7 +305,7 @@ class Reader implements ReaderInterface
             ->getItemsPerPage();
 
         $itemsQuery = $this->queryContainer->queryItemsByWishlistId(
-            $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist()
+            $wishlistOverviewRequestTransfer->getWishlist()->getIdWishlist(),
         );
 
         return $itemsQuery->paginate($page, $maxPerPage);
@@ -356,7 +376,7 @@ class Reader implements ReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[]
      */
     protected function getProductCollection(array $itemCollection)
     {
@@ -369,11 +389,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @phpstan-return array<int, string>
-     *
      * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
-     * @return array
+     * @return array<int, string>
      */
     protected function getSkuCollection(array $itemCollection)
     {
@@ -413,7 +431,7 @@ class Reader implements ReaderInterface
         if (!$wishlistEntity) {
             throw new MissingWishlistException(sprintf(
                 'Wishlist with id %s not found',
-                $idWishlist
+                $idWishlist,
             ));
         }
 
@@ -439,7 +457,7 @@ class Reader implements ReaderInterface
             throw new MissingWishlistException(sprintf(
                 'Wishlist: %s for customer with id: %s not found',
                 $name,
-                $idCustomer
+                $idCustomer,
             ));
         }
 

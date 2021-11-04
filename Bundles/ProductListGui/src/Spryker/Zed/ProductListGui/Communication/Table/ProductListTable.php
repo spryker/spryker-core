@@ -23,6 +23,7 @@ class ProductListTable extends AbstractTable
     protected const COLUMN_ID_PRODUCT_LIST = SpyProductListTableMap::COL_ID_PRODUCT_LIST;
     protected const COLUMN_TITLE = SpyProductListTableMap::COL_TITLE;
     protected const COLUMN_TYPE = SpyProductListTableMap::COL_TYPE;
+
     /**
      * @var string
      */
@@ -101,14 +102,14 @@ class ProductListTable extends AbstractTable
                 static::COLUMN_ID_PRODUCT_LIST,
                 static::COLUMN_TITLE,
                 static::COLUMN_TYPE,
-            ]
+            ],
         );
 
         $config->setSearchable(
             [
                 static::COLUMN_ID_PRODUCT_LIST,
                 static::COLUMN_TITLE,
-            ]
+            ],
         );
 
         $config->setDefaultSortField(static::COLUMN_ID_PRODUCT_LIST, TableConfiguration::SORT_DESC);
@@ -176,7 +177,7 @@ class ProductListTable extends AbstractTable
                 $button->getUrl(),
                 $button->getTitle(),
                 $button->getDefaultOptions(),
-                $button->getCustomOptions()
+                $button->getCustomOptions(),
             );
         }
 
@@ -229,7 +230,7 @@ class ProductListTable extends AbstractTable
         if ($queryJoinTransfer->getCondition()) {
             $this->productListQuery->addJoinCondition(
                 $queryJoinTransfer->getRelation(),
-                $queryJoinTransfer->getCondition()
+                $queryJoinTransfer->getCondition(),
             );
         }
     }
@@ -244,7 +245,7 @@ class ProductListTable extends AbstractTable
         $this->productListQuery->addJoin(
             $queryJoinTransfer->getLeft(),
             $queryJoinTransfer->getRight(),
-            $queryJoinTransfer->getJoinType()
+            $queryJoinTransfer->getJoinType(),
         );
     }
 }

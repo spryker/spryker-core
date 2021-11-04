@@ -41,7 +41,7 @@ class ProductListProductConcreteSearchListener extends AbstractPlugin implements
 
         $this->getFactory()->getProductPageSearchFacade()->refresh(
             $this->getFacade()->getProductAbstractIdsByConcreteIds($concreteIds),
-            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA]
+            [ProductListSearchConfig::PLUGIN_PRODUCT_LIST_DATA],
         );
     }
 }

@@ -68,7 +68,7 @@ class CategoryReader implements CategoryReaderInterface
     {
         $categoryTree = $this->categoryStorageClient->getCategories(
             $locale,
-            $this->storeClient->getCurrentStore()->getName()
+            $this->storeClient->getCurrentStore()->getName(),
         );
         $restCategoryTreesTransfer = $this->categoryMapper
             ->mapCategoryTreeToRestCategoryTreesTransfer((array)$categoryTree);
@@ -79,7 +79,7 @@ class CategoryReader implements CategoryReaderInterface
             ->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY_TREES,
                 null,
-                $restCategoryTreesTransfer
+                $restCategoryTreesTransfer,
             );
 
         return $restResponse->addResource($restResource);
@@ -219,7 +219,7 @@ class CategoryReader implements CategoryReaderInterface
             ->createRestResource(
                 CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES,
                 (string)$restCategoryNodesAttributesTransfer->getNodeId(),
-                $restCategoryNodesAttributesTransfer
+                $restCategoryNodesAttributesTransfer,
             );
     }
 }

@@ -17,6 +17,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
      * @var string
      */
     public const ID_URL_REDIRECT = 'id_url_redirect';
+
     /**
      * @var string
      */

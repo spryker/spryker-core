@@ -26,6 +26,7 @@ class ResetPasswordForm extends AbstractType
      * @var string
      */
     public const FIELD_CURRENT_PASSWORD = 'current_password';
+
     /**
      * @var string
      */
@@ -51,7 +52,7 @@ class ResetPasswordForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

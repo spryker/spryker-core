@@ -99,6 +99,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->batchData;
@@ -107,6 +108,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->loadChunk();
@@ -115,6 +117,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->offset;
@@ -123,6 +126,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return count($this->batchData);
@@ -133,6 +137,7 @@ class PdoBatchIterator implements CountableIteratorInterface
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->offset = 0;
@@ -142,6 +147,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         $this->criteriaBuilder->setLimit(null);

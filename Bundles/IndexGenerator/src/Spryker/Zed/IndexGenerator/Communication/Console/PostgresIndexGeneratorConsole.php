@@ -21,6 +21,7 @@ class PostgresIndexGeneratorConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'propel:postgres-indexes:generate';
+
     /**
      * @var string
      */

@@ -57,7 +57,7 @@ class ShoppingListItemPermissionValidator implements ShoppingListItemPermissionV
         return $this->can(
             'WriteShoppingListPermissionPlugin',
             $shoppingListTransfer->getIdCompanyUser(),
-            $shoppingListTransfer->getIdShoppingList()
+            $shoppingListTransfer->getIdShoppingList(),
         );
     }
 }

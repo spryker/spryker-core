@@ -103,7 +103,7 @@ class CustomerSession implements CustomerSessionInterface
     {
         $this->sessionClient->set(
             self::SESSION_KEY,
-            $customerTransfer
+            $customerTransfer,
         );
 
         foreach ($this->customerSessionSetPlugins as $customerSessionSetPlugin) {
@@ -124,7 +124,7 @@ class CustomerSession implements CustomerSessionInterface
     {
         $this->sessionClient->set(
             static::SESSION_KEY,
-            $customerTransfer
+            $customerTransfer,
         );
 
         $this->invalidateCustomerTransferCache();

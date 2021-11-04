@@ -60,7 +60,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productAttributeEntity
-     * @param array<string[]> $translationsByLocaleNameAndGlossaryKey
+     * @param array<array<string>> $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
@@ -82,7 +82,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute> $productAttributeEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[] $productAttributeEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
@@ -94,7 +94,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $glossaryKeyTransfers = $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers(
             $glossaryKeys,
-            $localeTransfers
+            $localeTransfers,
         );
         $indexedTranslationTransfers = $this->translationMapper
             ->mapTranslationsByKeyNameAndLocaleName($translationTransfers, $localeTransfers, $glossaryKeyTransfers);
@@ -116,7 +116,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
         $glossaryKeys = [];
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
             $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
-                $productAttributeEntity->getSpyProductAttributeKey()->getKey()
+                $productAttributeEntity->getSpyProductAttributeKey()->getKey(),
             );
         }
 
@@ -160,7 +160,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $productAttributeValueEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[] $productAttributeValueEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>
      */
@@ -176,7 +176,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
-     * @param array<string[]> $translationsByLocaleNameAndGlossaryKey
+     * @param array<array<string>> $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */

@@ -18,6 +18,7 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CHECKOUT_DUPLICATE_ORDER = 'checkout.order.duplicate';
+
     /**
      * @var string
      */
@@ -75,7 +76,7 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
 
         return (bool)$this->salesRepository->findCustomerOrderIdByOrderReference(
             $customerTransfer->getCustomerReference(),
-            $quoteTransfer->getOrderReference()
+            $quoteTransfer->getOrderReference(),
         );
     }
 
@@ -88,7 +89,7 @@ class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
     protected function setCheckoutResponseData(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         $checkoutResponseTransfer->getSaveOrder()->setOrderReference(
-            $quoteTransfer->getOrderReference()
+            $quoteTransfer->getOrderReference(),
         );
 
         if ($quoteTransfer->getIsOrderPlacedSuccessfully() === true) {

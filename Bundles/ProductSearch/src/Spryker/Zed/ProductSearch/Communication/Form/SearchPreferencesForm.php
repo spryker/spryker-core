@@ -24,18 +24,22 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      * @var string
      */
     public const FIELD_ID_PRODUCT_ATTRIBUTE_KEY = 'idProductAttributeKey';
+
     /**
      * @var string
      */
     public const FIELD_FULL_TEXT = 'fullText';
+
     /**
      * @var string
      */
     public const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
+
     /**
      * @var string
      */
     public const FIELD_SUGGESTION_TERMS = 'suggestionTerms';
+
     /**
      * @var string
      */
@@ -61,7 +65,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -90,7 +94,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -210,7 +214,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
             },
             function ($submittedValue) {
                 return $submittedValue === 'yes' ? true : false;
-            }
+            },
         ));
     }
 }

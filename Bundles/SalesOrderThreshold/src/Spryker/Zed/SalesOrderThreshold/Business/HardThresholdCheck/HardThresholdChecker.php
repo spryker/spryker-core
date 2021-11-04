@@ -25,10 +25,12 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
      * @var string
      */
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+
     /**
      * @var string
      */
     protected const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+
     /**
      * @var string
      */
@@ -87,7 +89,7 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
             [
                 SalesOrderThresholdConfig::GROUP_HARD,
                 SalesOrderThresholdConfig::GROUP_HARD_MAX,
-            ]
+            ],
         );
 
         if (empty($salesOrderThresholdValueTransfers)) {
@@ -134,9 +136,9 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
                 ->setMessage($salesOrderThresholdValueTransfer->getMessageGlossaryKey())
                 ->setParameters([
                     static::THRESHOLD_GLOSSARY_PARAMETER => $this->moneyFacade->formatWithSymbol(
-                        $this->createMoneyTransfer($salesOrderThresholdValueTransfer, $currencyTransfer)
+                        $this->createMoneyTransfer($salesOrderThresholdValueTransfer, $currencyTransfer),
                     ),
-                ])
+                ]),
         );
     }
 
@@ -152,7 +154,7 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
     ): MoneyTransfer {
         return (new MoneyTransfer())
             ->setAmount(
-                (string)$salesOrderThresholdValueTransfer->getThreshold()
+                (string)$salesOrderThresholdValueTransfer->getThreshold(),
             )->setCurrency($currencyTransfer);
     }
 

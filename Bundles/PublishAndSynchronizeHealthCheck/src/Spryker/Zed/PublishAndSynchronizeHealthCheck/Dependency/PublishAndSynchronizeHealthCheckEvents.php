@@ -14,6 +14,7 @@ interface PublishAndSynchronizeHealthCheckEvents
      * - This events will be used for spy_publish_and_synchronize_health_check entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_CREATE = 'Entity.spy_publish_and_synchronize_health_check.create';
@@ -23,6 +24,7 @@ interface PublishAndSynchronizeHealthCheckEvents
      * - This events will be used for spy_publish_and_synchronize_health_check_key entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_UPDATE = 'Entity.spy_publish_and_synchronize_health_check.update';
@@ -32,6 +34,7 @@ interface PublishAndSynchronizeHealthCheckEvents
      * - This events will be used for spy_publish_and_synchronize_health_check_key entity deletion.
 
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_DELETE = 'Entity.spy_publish_and_synchronize_health_check.delete';

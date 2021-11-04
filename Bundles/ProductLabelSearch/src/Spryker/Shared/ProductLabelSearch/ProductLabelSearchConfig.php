@@ -14,6 +14,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_UPDATE = 'Entity.spy_product_label.update';
@@ -23,6 +24,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_DELETE = 'Entity.spy_product_label.delete';
@@ -32,6 +34,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label_product_abstract entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_label_product_abstract.create';
@@ -41,6 +44,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label_product_abstract entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_label_product_abstract.update';
@@ -50,6 +54,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label_product_abstract entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_label_product_abstract.delete';
@@ -59,6 +64,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label_store entity creation.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_STORE_CREATE = 'Entity.spy_product_label_store.create';
@@ -68,6 +74,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label_store entity changes.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_STORE_UPDATE = 'Entity.spy_product_label_store.update';
@@ -77,6 +84,7 @@ interface ProductLabelSearchConfig
      * - This events will be used for spy_product_label_store entity deletion.
      *
      * @api
+     *
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_LABEL_STORE_DELETE = 'Entity.spy_product_label_store.delete';

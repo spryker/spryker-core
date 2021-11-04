@@ -33,6 +33,7 @@ class PermissionContextProviderTest extends Unit
      * @var int
      */
     protected const QUOTE_GRAND_TOTAL = 12345;
+
     /**
      * @var int
      */
@@ -47,7 +48,7 @@ class PermissionContextProviderTest extends Unit
         $quoteTransfer = $this->buildQuoteTransfer();
 
         $permissionContextProvider = new PermissionContextProvider(
-            $this->getMockedZedConfig(true)
+            $this->getMockedZedConfig(true),
         );
 
         // Act
@@ -67,7 +68,7 @@ class PermissionContextProviderTest extends Unit
         $quoteTransfer = $this->buildQuoteTransfer();
 
         $permissionContextProvider = new PermissionContextProvider(
-            $this->getMockedZedConfig(false)
+            $this->getMockedZedConfig(false),
         );
 
         // Act
@@ -109,7 +110,7 @@ class PermissionContextProviderTest extends Unit
             ->withTotals([TotalsTransfer::GRAND_TOTAL => static::QUOTE_GRAND_TOTAL])
             ->withShipment(
                 (new ShipmentBuilder())
-                    ->withMethod([ShipmentMethodTransfer::STORE_CURRENCY_PRICE => static::QUOTE_SHIPMENT_PRICE])
+                    ->withMethod([ShipmentMethodTransfer::STORE_CURRENCY_PRICE => static::QUOTE_SHIPMENT_PRICE]),
             )
             ->build();
     }

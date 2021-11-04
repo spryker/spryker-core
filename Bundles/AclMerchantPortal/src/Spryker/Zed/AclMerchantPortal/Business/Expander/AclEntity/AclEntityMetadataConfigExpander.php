@@ -146,9 +146,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesDiscount::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
+                        ->setEntityName(SpySalesOrderItem::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsTransitionLog::class,
@@ -156,8 +156,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyOmsTransitionLog::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
-                )
+                        ->setEntityName(SpySalesOrderItem::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpySalesShipment::class,
@@ -165,9 +165,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesShipment::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpySalesPayment::class,
@@ -175,9 +175,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesPayment::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpySalesExpense::class,
@@ -185,8 +185,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesExpense::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
-                )
+                        ->setEntityName(SpySalesOrder::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyMerchantSalesOrderTotals::class,
@@ -194,9 +194,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantSalesOrderTotals::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantSalesOrder::class)
+                        ->setEntityName(SpyMerchantSalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -205,8 +205,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderTotals::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
-                )
+                        ->setEntityName(SpySalesOrder::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -215,9 +215,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderComment::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -226,9 +226,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderInvoice::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -237,9 +237,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderThreshold::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -248,9 +248,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderThresholdTaxSet::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -259,9 +259,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderThresholdType::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
+                        ->setEntityName(SpySalesOrder::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -270,9 +270,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantSalesOrderItem::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantSalesOrder::class)
+                        ->setEntityName(SpyMerchantSalesOrder::class),
                 )
-            ->setIsSubEntity(false)
+            ->setIsSubEntity(false),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -281,9 +281,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderItemOption::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
+                        ->setEntityName(SpySalesOrderItem::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -292,9 +292,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderItemGiftCard::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
+                        ->setEntityName(SpySalesOrderItem::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -303,9 +303,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderItemMetadata::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
+                        ->setEntityName(SpySalesOrderItem::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -314,8 +314,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrderItem::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantSalesOrderItem::class)
-                )
+                        ->setEntityName(SpyMerchantSalesOrderItem::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -324,8 +324,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpySalesOrder::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
-                )
+                        ->setEntityName(SpySalesOrderItem::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -334,8 +334,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyRefund::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrder::class)
-                )
+                        ->setEntityName(SpySalesOrder::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -348,9 +348,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                         ->setConnection(
                             (new AclEntityParentConnectionMetadataTransfer())
                                 ->setReference('customer_reference')
-                                ->setReferencedColumn('customer_reference')
-                        )
-                )
+                                ->setReferencedColumn('customer_reference'),
+                        ),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -363,9 +363,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                         ->setConnection(
                             (new AclEntityParentConnectionMetadataTransfer())
                                 ->setReference('merchant_reference')
-                                ->setReferencedColumn('merchant_reference')
-                        )
-                )
+                                ->setReferencedColumn('merchant_reference'),
+                        ),
+                ),
         );
 
         return $aclEntityMetadataConfigTransfer;
@@ -394,10 +394,10 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                     ->setConnection(
                         (new AclEntityParentConnectionMetadataTransfer())
                             ->setReference('sku')
-                            ->setReferencedColumn('sku')
-                    )
+                            ->setReferencedColumn('sku'),
+                    ),
                 )
-            ->setIsSubEntity(true)
+            ->setIsSubEntity(true),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyAvailability::class,
@@ -405,9 +405,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyAvailability::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyAvailabilityAbstract::class)
+                        ->setEntityName(SpyAvailabilityAbstract::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyAvailabilityAbstract::class,
@@ -419,10 +419,10 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                         ->setConnection(
                             (new AclEntityParentConnectionMetadataTransfer())
                                 ->setReference('abstract_sku')
-                                ->setReferencedColumn('sku')
-                        )
+                                ->setReferencedColumn('sku'),
+                        ),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -431,21 +431,21 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductImageSetToProductImage::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductImageSet::class)
+                        ->setEntityName(SpyProductImageSet::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductImage::class,
             (new AclEntityMetadataTransfer())
-                ->setEntityName(SpyProductImage::class)
+                ->setEntityName(SpyProductImage::class),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductImageSet::class,
             (new AclEntityMetadataTransfer())
-                ->setEntityName(SpyProductImageSet::class)
+                ->setEntityName(SpyProductImageSet::class),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -454,9 +454,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductLocalizedAttributes::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProduct::class)
+                        ->setEntityName(SpyProduct::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -465,9 +465,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductAbstractLocalizedAttributes::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAbstract::class)
+                        ->setEntityName(SpyProductAbstract::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -477,8 +477,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProduct::class)
-                )
+                        ->setEntityName(SpyProduct::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -488,8 +488,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProduct::class)
-                )
+                        ->setEntityName(SpyProduct::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -498,9 +498,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductCategory::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAbstract::class)
+                        ->setEntityName(SpyProductAbstract::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -509,9 +509,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProduct::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAbstract::class)
+                        ->setEntityName(SpyProductAbstract::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -520,9 +520,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyStockProduct::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyStock::class)
+                        ->setEntityName(SpyStock::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -531,9 +531,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductAbstract::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantProductAbstract::class)
+                        ->setEntityName(SpyMerchantProductAbstract::class),
                 )
-                ->setIsSubEntity(false)
+                ->setIsSubEntity(false),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -542,8 +542,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantProductAbstract::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
-                )
+                        ->setEntityName(SpyMerchant::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -553,8 +553,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantUser::class)
-                )
+                        ->setEntityName(SpyMerchantUser::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -565,8 +565,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
-                )
+                        ->setEntityName(SpyMerchant::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -574,7 +574,7 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyMerchant::class)
                 ->setHasSegmentTable(true)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_CRUD)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_CRUD),
         );
 
         return $aclEntityMetadataConfigTransfer;
@@ -599,9 +599,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantProfileAddress::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantProfile::class)
+                        ->setEntityName(SpyMerchantProfile::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -610,9 +610,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantProfile::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
+                        ->setEntityName(SpyMerchant::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -621,9 +621,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantStock::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
+                        ->setEntityName(SpyMerchant::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -632,9 +632,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantStore::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
+                        ->setEntityName(SpyMerchant::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -643,9 +643,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyMerchantCategory::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchant::class)
+                        ->setEntityName(SpyMerchant::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         return $aclEntityMetadataConfigTransfer;
@@ -670,9 +670,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyPriceProductOffer::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductOffer::class)
+                        ->setEntityName(SpyProductOffer::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -681,8 +681,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductOfferStore::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductOffer::class)
-                )
+                        ->setEntityName(SpyProductOffer::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -691,9 +691,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductOfferValidity::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductOffer::class)
+                        ->setEntityName(SpyProductOffer::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -706,9 +706,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                         ->setConnection(
                             (new AclEntityParentConnectionMetadataTransfer())
                                 ->setReference('merchant_reference')
-                                ->setReferencedColumn('merchant_reference')
-                        )
-                )
+                                ->setReferencedColumn('merchant_reference'),
+                        ),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -718,8 +718,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategory::class)
-                )
+                        ->setEntityName(SpyCategory::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategoryClosureTable::class,
@@ -728,8 +728,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategoryNode::class)
-                )
+                        ->setEntityName(SpyCategoryNode::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategoryNode::class,
@@ -738,8 +738,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategory::class)
-                )
+                        ->setEntityName(SpyCategory::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategoryStore::class,
@@ -748,8 +748,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategory::class)
-                )
+                        ->setEntityName(SpyCategory::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -759,8 +759,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyStock::class)
-                )
+                        ->setEntityName(SpyStock::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -769,9 +769,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setEntityName(SpyProductOfferStock::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyStock::class)
+                        ->setEntityName(SpyStock::class),
                 )
-                ->setIsSubEntity(true)
+                ->setIsSubEntity(true),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -781,8 +781,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyMerchantStock::class)
-                )
+                        ->setEntityName(SpyMerchantStock::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -792,8 +792,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAbstract::class)
-                )
+                        ->setEntityName(SpyProductAbstract::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategoryImage::class,
@@ -802,8 +802,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategoryImageSetToCategoryImage::class)
-                )
+                        ->setEntityName(SpyCategoryImageSetToCategoryImage::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategoryImageSetToCategoryImage::class,
@@ -812,8 +812,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategoryImageSet::class)
-                )
+                        ->setEntityName(SpyCategoryImageSet::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -823,8 +823,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCategory::class)
-                )
+                        ->setEntityName(SpyCategory::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductManagementAttributeValue::class,
@@ -833,8 +833,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductManagementAttribute::class)
-                )
+                        ->setEntityName(SpyProductManagementAttribute::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductManagementAttribute::class,
@@ -843,8 +843,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAttributeKey::class)
-                )
+                        ->setEntityName(SpyProductAttributeKey::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyPriceProductDefault::class,
@@ -853,8 +853,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyPriceProductStore::class)
-                )
+                        ->setEntityName(SpyPriceProductStore::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyPriceProductStore::class,
@@ -863,8 +863,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyPriceProduct::class)
-                )
+                        ->setEntityName(SpyPriceProduct::class),
+                ),
         );
 
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
@@ -874,8 +874,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyCountry::class)
-                )
+                        ->setEntityName(SpyCountry::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyGlossaryTranslation::class,
@@ -884,8 +884,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ->setIsSubEntity(true)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyGlossaryKey::class)
-                )
+                        ->setEntityName(SpyGlossaryKey::class),
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsProductOfferReservation::class,
@@ -897,9 +897,9 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                     ->setConnection(
                         (new AclEntityParentConnectionMetadataTransfer())
                             ->setReference('product_offer_reference')
-                            ->setReferencedColumn('product_offer_reference')
-                    )
-                )
+                            ->setReferencedColumn('product_offer_reference'),
+                    ),
+                ),
         );
 
         return $aclEntityMetadataConfigTransfer;
@@ -922,241 +922,241 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             SpyStore::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStore::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCurrency::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCurrency::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCountry::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCountry::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyLocale::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyLocale::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategory::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCategory::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCategoryTemplate::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCategoryTemplate::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyTaxSet::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyTaxSet::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyGlossaryKey::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyGlossaryKey::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_CRUD)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_CRUD),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductAttributeKey::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProductAttributeKey::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductManagementAttributeValueTranslation::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProductManagementAttributeValueTranslation::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyPriceProduct::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyPriceProduct::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyPriceType::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyPriceType::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyShipmentCarrier::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyShipmentCarrier::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyShipmentMethod::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyShipmentMethod::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyShipmentMethodPrice::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyShipmentMethodPrice::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyShipmentMethodStore::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyShipmentMethodStore::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpySalesPaymentMethodType::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpySalesPaymentMethodType::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsOrderProcess::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyOmsOrderProcess::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCommentThread::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCommentThread::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsStateMachineLock::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyOmsStateMachineLock::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_DELETE
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_DELETE,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsOrderItemState::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyOmsOrderItemState::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsOrderItemStateHistory::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyOmsOrderItemStateHistory::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyStateMachineItemState::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStateMachineItemState::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyStateMachineItemStateHistory::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStateMachineItemStateHistory::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyUrlRedirect::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyUrlRedirect::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyResetPassword::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyResetPassword::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCmsBlock::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCmsBlock::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyUrl::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyUrl::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyStateMachineProcess::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStateMachineProcess::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyStateMachineTransitionLog::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStateMachineTransitionLog::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductOptionGroup::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProductOptionGroup::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyProductOptionValue::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProductOptionValue::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyEventBehaviorEntityChange::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyEventBehaviorEntityChange::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyStateMachineLock::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyStateMachineLock::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_DELETE
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_DELETE,
+                ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCmsBlockTemplate::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCmsBlockTemplate::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyCmsBlockGlossaryKeyMapping::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCmsBlockGlossaryKeyMapping::class)
-                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             SpyOmsProductReservationChangeVersion::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyOmsProductReservationChangeVersion::class)
                 ->setDefaultGlobalOperationMask(
-                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
-                )
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
+                ),
         );
 
         return $aclEntityMetadataConfigTransfer;

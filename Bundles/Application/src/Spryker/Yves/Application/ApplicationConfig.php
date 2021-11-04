@@ -76,7 +76,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getSslExcludedResources()
     {
@@ -86,7 +86,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedProxies()
     {
@@ -102,14 +102,14 @@ class ApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(
             ApplicationConstants::YVES_TRUSTED_HEADER,
-            Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO
+            Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO,
         );
     }
 
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getTrustedHosts()
     {

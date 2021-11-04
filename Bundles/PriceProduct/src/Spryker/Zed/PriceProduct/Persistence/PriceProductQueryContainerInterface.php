@@ -18,6 +18,7 @@ interface PriceProductQueryContainerInterface
      * @var string
      */
     public const COL_GROSS_PRICE = 'gross_price';
+
     /**
      * @var string
      */

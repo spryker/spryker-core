@@ -26,10 +26,10 @@ class DataExportConfigurationMerger implements DataExportConfigurationMergerInte
         }
 
         $primaryDataExportConfigurationTransfer->setHooks(
-            $this->mergeDataExportConfigurationHooks($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer)
+            $this->mergeDataExportConfigurationHooks($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer),
         );
         $primaryDataExportConfigurationTransfer->setFilterCriteria(
-            $this->mergeDataExportConfigurationFilterCriteria($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer)
+            $this->mergeDataExportConfigurationFilterCriteria($primaryDataExportConfigurationTransfer, $secondaryDataExportConfigurationTransfer),
         );
 
         return $secondaryDataExportConfigurationTransfer->fromArray($primaryDataExportConfigurationTransfer->modifiedToArray());
@@ -47,7 +47,7 @@ class DataExportConfigurationMerger implements DataExportConfigurationMergerInte
     ): array {
         return array_merge(
             $secondaryDataExportConfigurationTransfer->getHooks(),
-            $primaryDataExportConfigurationTransfer->getHooks()
+            $primaryDataExportConfigurationTransfer->getHooks(),
         );
     }
 
@@ -63,7 +63,7 @@ class DataExportConfigurationMerger implements DataExportConfigurationMergerInte
     ): array {
         return array_merge(
             $secondaryDataExportConfigurationTransfer->getFilterCriteria(),
-            $primaryDataExportConfigurationTransfer->getFilterCriteria()
+            $primaryDataExportConfigurationTransfer->getFilterCriteria(),
         );
     }
 }

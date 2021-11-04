@@ -21,6 +21,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */
@@ -96,7 +97,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     {
         $numberFormatter = new NumberFormatter(
             $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
+            NumberFormatter::CURRENCY,
         );
 
         return $numberFormatter;

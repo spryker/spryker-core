@@ -15,6 +15,7 @@ class DateOfBirthValueConstraint extends SymfonyConstraint
      * @var string
      */
     protected const ERROR_MESSAGE = 'checkout.step.payment.must_be_older_than_18_years';
+
     /**
      * @var string
      */

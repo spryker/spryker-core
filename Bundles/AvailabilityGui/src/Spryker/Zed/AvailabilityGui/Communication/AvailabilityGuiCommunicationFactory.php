@@ -38,7 +38,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getStoreFacade(),
             $idStore,
             $idLocale,
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 
@@ -56,7 +56,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getStoreFacade(),
             $idProductAbstract,
             $idLocale,
-            $idStore
+            $idStore,
         );
     }
 
@@ -81,7 +81,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $idLocale,
             $idStore,
             $idAbstractProductBundle,
-            $idBundleProductAbstract
+            $idBundleProductAbstract,
         );
     }
 
@@ -101,7 +101,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             AvailabilityStockForm::class,
             $availabilityGuiStockFormDataProvider->getData($idProduct, $sku),
-            $availabilityGuiStockFormDataProvider->getOptions()
+            $availabilityGuiStockFormDataProvider->getOptions(),
         );
     }
 
@@ -116,7 +116,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getStoreFacade(),
             $this->getStockFacade(),
             $this->getOmsFacade(),
-            $this->getAvailabilityService()
+            $this->getAvailabilityService(),
         );
     }
 

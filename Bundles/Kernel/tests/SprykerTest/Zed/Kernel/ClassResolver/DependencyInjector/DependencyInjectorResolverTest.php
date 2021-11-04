@@ -101,7 +101,7 @@ class DependencyInjectorResolverTest extends Unit
 
         $this->assertInstanceOf(
             DependencyInjectorCollectionInterface::class,
-            $dependencyInjectorCollection
+            $dependencyInjectorCollection,
         );
 
         $this->assertCount(0, $dependencyInjectorCollection);
@@ -125,7 +125,7 @@ class DependencyInjectorResolverTest extends Unit
 
         $this->assertInstanceOf(
             DependencyInjectorCollectionInterface::class,
-            $dependencyInjectorCollection
+            $dependencyInjectorCollection,
         );
 
         $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());
@@ -151,7 +151,7 @@ class DependencyInjectorResolverTest extends Unit
 
         $this->assertInstanceOf(
             DependencyInjectorCollectionInterface::class,
-            $dependencyInjectorCollection
+            $dependencyInjectorCollection,
         );
 
         $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());
@@ -177,7 +177,7 @@ class DependencyInjectorResolverTest extends Unit
 
         $this->assertInstanceOf(
             DependencyInjectorCollectionInterface::class,
-            $dependencyInjectorCollection
+            $dependencyInjectorCollection,
         );
 
         $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());

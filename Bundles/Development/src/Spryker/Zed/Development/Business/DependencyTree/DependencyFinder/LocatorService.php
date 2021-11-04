@@ -16,6 +16,7 @@ class LocatorService extends AbstractDependencyFinder
      * @var string
      */
     public const NO_LAYER = 'Default';
+
     /**
      * @var string
      */

@@ -55,12 +55,12 @@ class DiscountPromotionsRestApiFacadeTest extends Unit
         // Assert
         $this->assertNotNull(
             $changedPersistentCartChangeTransfer->getItems()[0]->getIdDiscountPromotion(),
-            'Discount promotion id should be set for the first item in PersistentCartChangeTransfer.'
+            'Discount promotion id should be set for the first item in PersistentCartChangeTransfer.',
         );
         $this->assertSame(
             $changedPersistentCartChangeTransfer->getItems()[0]->getIdDiscountPromotion(),
             $savedDiscountPromotionTransfer->getIdDiscountPromotion(),
-            'Discount promotion id should be the same as the persisted in the database.'
+            'Discount promotion id should be the same as the persisted in the database.',
         );
     }
 }

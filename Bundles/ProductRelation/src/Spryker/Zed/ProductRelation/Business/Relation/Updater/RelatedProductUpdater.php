@@ -45,11 +45,14 @@ class RelatedProductUpdater implements RelatedProductUpdaterInterface
         $productRelationTransfer->requireIdProductRelation();
 
         foreach ($this->relatedProductReader->getRelatedProducts($productRelationTransfer) as $relatedProductTransfers) {
+            foreach ($relatedProductTransfers as $relatedProductTransfer) {
+                $relatedProductTransfer->getAttributes();
+            }
             $productAbstractIds = $this->collectProductAbstractIds($relatedProductTransfers);
 
             $this->productRelationEntityManager->saveRelatedProducts(
                 $productAbstractIds,
-                $productRelationTransfer->getIdProductRelation()
+                $productRelationTransfer->getIdProductRelation(),
             );
         }
     }

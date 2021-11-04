@@ -57,7 +57,7 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 
@@ -97,7 +97,7 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
             $dataReader,
             $dataWriter,
             $touchUpdater,
-            $output
+            $output,
         );
     }
 }

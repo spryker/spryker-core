@@ -19,10 +19,12 @@ abstract class AbstractStorageReader implements StorageReaderInterface
      * @var string
      */
     protected const FIELD_DATA = 'data';
+
     /**
      * @var string
      */
     protected const FIELD_KEY = 'key';
+
     /**
      * @var string
      */

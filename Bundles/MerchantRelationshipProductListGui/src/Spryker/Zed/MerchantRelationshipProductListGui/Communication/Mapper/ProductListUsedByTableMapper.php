@@ -24,8 +24,9 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
      * @var string
      */
     protected const EDIT_BUTTON_TITLE = 'Edit Merchant Relationship';
+
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const EDIT_BUTTON_OPTIONS = [
         'class' => 'btn-edit btn-xs',
@@ -34,9 +35,11 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
     /**
      * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\EditMerchantRelationshipController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_EDIT_MERCHANT_RELATIONSHIP = '/merchant-relationship-gui/edit-merchant-relationship';
+
     /**
      * @var string
      */

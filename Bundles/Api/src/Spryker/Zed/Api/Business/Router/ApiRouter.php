@@ -22,10 +22,12 @@ class ApiRouter implements RouterInterface
      * @var string
      */
     protected const MODULE_NAME = 'Api';
+
     /**
      * @var string
      */
     protected const CONTROLLER_NAME = 'Rest';
+
     /**
      * @var string
      */
@@ -112,7 +114,7 @@ class ApiRouter implements RouterInterface
         $bundleControllerAction = new BundleControllerAction(
             static::MODULE_NAME,
             static::CONTROLLER_NAME,
-            static::ACTION_NAME
+            static::ACTION_NAME,
         );
 
         /** @var \Spryker\Zed\Kernel\Communication\Controller\AbstractController $controller */
@@ -138,7 +140,7 @@ class ApiRouter implements RouterInterface
             throw new ResourceNotFoundException(sprintf(
                 'Invalid URI prefix, expected %s in path %s',
                 ApiConfig::ROUTE_PREFIX_API_REST,
-                $path
+                $path,
             ));
         }
     }

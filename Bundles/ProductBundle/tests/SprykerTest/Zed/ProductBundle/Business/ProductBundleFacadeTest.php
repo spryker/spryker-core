@@ -46,10 +46,12 @@ class ProductBundleFacadeTest extends Unit
      * @var string
      */
     public const SKU_BUNDLED_1 = 'sku-1-test-tester';
+
     /**
      * @var string
      */
     public const SKU_BUNDLED_2 = 'sku-2-test-tester';
+
     /**
      * @var string
      */
@@ -59,14 +61,17 @@ class ProductBundleFacadeTest extends Unit
      * @var int
      */
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
+
     /**
      * @var int
      */
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
+
     /**
      * @var int
      */
     public const ID_STORE = 1;
+
     /**
      * @var string
      */
@@ -152,7 +157,7 @@ class ProductBundleFacadeTest extends Unit
         foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
             //Act
             $productBundleCollection = $this->getProductBundleFacade()->getProductBundleCollectionByCriteriaFilter(
-                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete())
+                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($bundledProduct->getIdProductConcrete()),
             );
 
             /** @var \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer */
@@ -188,7 +193,7 @@ class ProductBundleFacadeTest extends Unit
 
         $this->assertSame(
             $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . '1',
-            $itemTransfer->getGroupKey()
+            $itemTransfer->getGroupKey(),
         );
     }
 
@@ -397,7 +402,7 @@ class ProductBundleFacadeTest extends Unit
             [
                 $productConcreteTransferToAssign1,
                 $productConcreteTransferToAssign2,
-            ]
+            ],
         );
 
         $storeTransfer = (new StoreTransfer())->setIdStore(static::ID_STORE);
@@ -411,7 +416,7 @@ class ProductBundleFacadeTest extends Unit
         $bundledProductAvailability = $this->createAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 static::BUNDLE_SKU_3,
-                $storeTransfer
+                $storeTransfer,
             );
 
         // Assert
@@ -488,7 +493,7 @@ class ProductBundleFacadeTest extends Unit
         // Act
         $bundledProducts = $this->getProductBundleFacade()
             ->findBundledProductsByIdProductConcrete(
-                $productConcreteBundleTransfer->getIdProductConcrete()
+                $productConcreteBundleTransfer->getIdProductConcrete(),
             );
 
         $this->assertCount(2, $bundledProducts);

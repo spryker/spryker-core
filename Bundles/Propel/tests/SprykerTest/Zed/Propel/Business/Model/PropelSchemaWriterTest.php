@@ -27,6 +27,7 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
      * @var string
      */
     public const TEST_FILE_NAME = 'test_file';
+
     /**
      * @var string
      */
@@ -43,7 +44,7 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
         $this->assertTrue(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME));
         $this->assertSame(
             self::TEST_CONTENT,
-            file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME)
+            file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME),
         );
     }
 }

@@ -24,7 +24,7 @@ class StorageRedisFactory extends AbstractFactory
     {
         return new StorageRedisWrapper(
             $this->getRedisClient(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

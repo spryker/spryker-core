@@ -223,7 +223,7 @@ class Environment extends Module
         }
 
         throw new StoreNotFoundException(
-            'Could not find a defined store name. Please make sure that you have a "stores.php" and a "default_store.php" in the configuration directory "config/Shared/".'
+            'Could not find a defined store name. Please make sure that you have a "stores.php" and a "default_store.php" in the configuration directory "config/Shared/".',
         );
     }
 

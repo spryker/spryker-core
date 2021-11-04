@@ -15,6 +15,7 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
      * @var int
      */
     public const CONVERSION_PRECISION = 100;
+
     /**
      * @var int
      */
@@ -48,14 +49,14 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
         if (isset($rangeValues['min'])) {
             $rangeValues['min'] =
                 $this->adjustLowerThreshold(
-                    $this->normalizeRatingForFilter($rangeValues['min'])
+                    $this->normalizeRatingForFilter($rangeValues['min']),
                 );
         }
 
         if (isset($rangeValues['max'])) {
             $rangeValues['max'] =
                 $this->adjustUpperThreshold(
-                    $this->normalizeRatingForFilter($rangeValues['max'])
+                    $this->normalizeRatingForFilter($rangeValues['max']),
                 );
         }
 

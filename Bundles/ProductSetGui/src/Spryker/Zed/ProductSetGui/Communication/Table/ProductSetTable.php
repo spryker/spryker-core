@@ -33,18 +33,22 @@ class ProductSetTable extends AbstractTable
      */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+
     /**
      * @var string
      */
     public const COL_PRODUCT_COUNT = 'product_count';
+
     /**
      * @var string
      */
     public const COL_WEIGHT = 'weight';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
@@ -175,14 +179,14 @@ class ProductSetTable extends AbstractTable
             Url::generate('/product-set-gui/view', [
                 ViewController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'View'
+            'View',
         );
 
         $actions[] = $this->generateEditButton(
             Url::generate('/product-set-gui/edit', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Edit'
+            'Edit',
         );
 
         $actions[] = $productSetEntity->getIsActive() ? $this->generateDeactivateButton($productSetEntity) : $this->generateActivateButton($productSetEntity);
@@ -193,7 +197,7 @@ class ProductSetTable extends AbstractTable
             ]),
             'Delete',
             [],
-            DeleteProductSetForm::class
+            DeleteProductSetForm::class,
         );
 
         return implode(' ', $actions);
@@ -211,7 +215,7 @@ class ProductSetTable extends AbstractTable
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
             'Activate',
-            ActivateProductSetForm::class
+            ActivateProductSetForm::class,
         );
     }
 
@@ -230,7 +234,7 @@ class ProductSetTable extends AbstractTable
             DeactivateProductSetForm::class,
             [
                 static::BUTTON_CLASS => 'btn-danger safe-submit',
-            ]
+            ],
         );
     }
 }

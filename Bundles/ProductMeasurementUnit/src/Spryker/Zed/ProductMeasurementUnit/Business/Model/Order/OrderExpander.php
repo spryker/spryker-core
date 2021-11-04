@@ -56,7 +56,7 @@ class OrderExpander implements OrderExpanderInterface
         foreach ($salesOrderItemEntityTransfers as $salesOrderItemEntityTransfer) {
             $itemTransfer = $this->findItemTransferByIdSalesOrderItem(
                 $orderTransfer,
-                $salesOrderItemEntityTransfer->getIdSalesOrderItem()
+                $salesOrderItemEntityTransfer->getIdSalesOrderItem(),
             );
 
             if ($itemTransfer === null || $salesOrderItemEntityTransfer->getQuantityMeasurementUnitName() === null) {
@@ -64,7 +64,7 @@ class OrderExpander implements OrderExpanderInterface
             }
 
             $itemTransfer->setQuantitySalesUnit(
-                $this->hydrateQuantitySalesUnitTransfer($salesOrderItemEntityTransfer)
+                $this->hydrateQuantitySalesUnitTransfer($salesOrderItemEntityTransfer),
             );
         }
 
@@ -87,7 +87,7 @@ class OrderExpander implements OrderExpanderInterface
 
         $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer(
             $salesOrderItemEntityTransfer->getQuantityMeasurementUnitName(),
-            $salesOrderItemEntityTransfer->getQuantityMeasurementUnitCode()
+            $salesOrderItemEntityTransfer->getQuantityMeasurementUnitCode(),
         );
         $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
 

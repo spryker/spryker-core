@@ -57,7 +57,7 @@ class CompanyBusinessUnitAddressRestResponseBuilder implements CompanyBusinessUn
         $restResource = $this->restResourceBuilder->createRestResource(
             CompanyBusinessUnitAddressesRestApiConfig::RESOURCE_COMPANY_BUSINESS_UNIT_ADDRESSES,
             $companyBusinessUnitAddressUuid,
-            $restCompanyBusinessUnitAddressesAttributesTransfer
+            $restCompanyBusinessUnitAddressesAttributesTransfer,
         );
 
         return $restResource;

@@ -21,15 +21,18 @@ class CreateController extends BaseProductRelationController
 {
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\ListController::indexAction()
+     *
      * @var string
      */
     protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
+
     /**
      * @var string
      */
@@ -48,7 +51,7 @@ class CreateController extends BaseProductRelationController
         $productRelationForm = $this->getFactory()
             ->createRelationForm(
                 $productRelationFormTypeDataProvider->getData(),
-                $productRelationFormTypeDataProvider->getOptions()
+                $productRelationFormTypeDataProvider->getOptions(),
             );
 
         $productRelationTabs = $this->getFactory()
@@ -62,7 +65,7 @@ class CreateController extends BaseProductRelationController
 
         $productTable = $this->getFactory()->createProductTable();
         $productRuleTable = $this->getFactory()->createProductRuleTable(
-            $productRelationFormTypeDataProvider->getData()
+            $productRelationFormTypeDataProvider->getData(),
         );
 
         return [
@@ -99,7 +102,7 @@ class CreateController extends BaseProductRelationController
             static::REDIRECT_URL_EDIT,
             [
                 EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationTransfer->getIdProductRelation(),
-            ]
+            ],
         )->build();
 
         return $this->redirectResponse($editProductRelationUrl);
@@ -113,7 +116,7 @@ class CreateController extends BaseProductRelationController
         $productTable = $this->getFactory()->createProductTable();
 
         return $this->jsonResponse(
-            $productTable->fetchData()
+            $productTable->fetchData(),
         );
     }
 

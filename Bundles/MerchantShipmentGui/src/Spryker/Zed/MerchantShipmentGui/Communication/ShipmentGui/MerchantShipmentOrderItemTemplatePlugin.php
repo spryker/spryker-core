@@ -41,26 +41,25 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array<mixed>
      */
     public function getTemplateData(ArrayObject $itemTransfers): array
     {
+        $merchantTemplateData = [];
         $merchantTemplateData[static::MERCHANT_NAME] = [];
 
         $merchantReferences = array_map(
             function (ItemTransfer $itemTransfer) {
                 return $itemTransfer->getMerchantReference();
             },
-            $itemTransfers->getArrayCopy()
+            $itemTransfers->getArrayCopy(),
         );
         $merchantReferences = array_unique(array_filter($merchantReferences));
 
         $merchantCollectionTransfer = $this->getFactory()->getMerchantFacade()->get(
-            (new MerchantCriteriaTransfer())->setMerchantReferences($merchantReferences)
+            (new MerchantCriteriaTransfer())->setMerchantReferences($merchantReferences),
         );
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {

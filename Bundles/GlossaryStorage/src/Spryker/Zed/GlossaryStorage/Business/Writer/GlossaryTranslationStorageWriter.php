@@ -18,6 +18,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
 {
     /**
      * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY
+     *
      * @var string
      */
     protected const COL_FK_GLOSSARY_KEY = 'spy_glossary_translation.fk_glossary_key';
@@ -110,7 +111,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         [$glossaryStorageInactiveEntityTransfer, $glossaryTranslationEntityTransfers] = $this
             ->filterInactiveAndEmptyLocalizedStorageEntityTransfers(
                 $glossaryTranslationEntityTransfers,
-                $mappedGlossaryStorageEntityTransfers
+                $mappedGlossaryStorageEntityTransfers,
             );
 
         /** @var \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageInactiveEntity */

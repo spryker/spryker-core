@@ -63,7 +63,7 @@ class ConfigurableBundleCartBusinessFactory extends AbstractBusinessFactory
     public function createConfiguredBundleTemplateSlotChecker(): ConfiguredBundleTemplateSlotCheckerInterface
     {
         return new ConfiguredBundleTemplateSlotChecker(
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 }

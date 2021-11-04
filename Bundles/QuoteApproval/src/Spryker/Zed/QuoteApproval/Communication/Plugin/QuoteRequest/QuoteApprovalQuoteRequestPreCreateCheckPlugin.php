@@ -34,7 +34,7 @@ class QuoteApprovalQuoteRequestPreCreateCheckPlugin extends AbstractPlugin imple
                 ->requireLatestVersion()
                 ->getLatestVersion()
                 ->requireQuote()
-                ->getQuote()
+                ->getQuote(),
         );
     }
 }

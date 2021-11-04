@@ -37,10 +37,12 @@ class SalesFacadeExpandItemsTest extends Test
      * @var string
      */
     protected const ITEM_NAME = 'ITEM_NAME';
+
     /**
      * @var string
      */
     protected const CURRENCY_ISO_CODE = 'CODE';
+
     /**
      * @var string
      */
@@ -79,7 +81,7 @@ class SalesFacadeExpandItemsTest extends Test
             (new OrderBuilder())->build()->fromArray([
                 OrderTransfer::ORDER_REFERENCE => $saveOrderTransfer->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
-            ])
+            ]),
         );
 
         // Act
@@ -107,7 +109,7 @@ class SalesFacadeExpandItemsTest extends Test
             (new OrderBuilder())->build()->fromArray([
                 OrderTransfer::ORDER_REFERENCE => $saveOrderTransfer->getOrderReference(),
                 OrderTransfer::CUSTOMER_REFERENCE => $quoteTransfer->getCustomerReference(),
-            ])
+            ]),
         );
 
         // Act

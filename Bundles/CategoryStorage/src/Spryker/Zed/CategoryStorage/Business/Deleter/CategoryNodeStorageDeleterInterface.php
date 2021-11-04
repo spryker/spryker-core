@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 interface CategoryNodeStorageDeleterInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]> $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
+     * @param array<array<array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>>> $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
      * @param array<int> $categoryNodeIds
      *
      * @return void

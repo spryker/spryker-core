@@ -132,7 +132,7 @@ class CategoryDataHelper extends Module
 
         $categoryTransfer = $categoryTransfer->fromArray(
             $categoryEntity->toArray(),
-            true
+            true,
         );
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryTransfer): void {

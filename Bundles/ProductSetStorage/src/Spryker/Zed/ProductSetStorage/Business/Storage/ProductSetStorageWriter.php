@@ -20,6 +20,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      * @var string
      */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
+
     /**
      * @var string
      */
@@ -94,7 +95,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
             if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
                 $this->storeDataSet(
                     $spyProductSetLocalizedEntity,
-                    $spyProductSetStorageEntities[$idProductSet][$localeName]
+                    $spyProductSetStorageEntities[$idProductSet][$localeName],
                 );
 
                 continue;
@@ -201,7 +202,7 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     {
         $filteredProductImageSets = $this->filterProductImagesSetsByLocale(
             $spyProductSetLocalizedEntity['SpyProductSet']['SpyProductImageSets'],
-            $spyProductSetLocalizedEntity['fk_locale']
+            $spyProductSetLocalizedEntity['fk_locale'],
         );
         $productImageSet = new ArrayObject();
         foreach ($filteredProductImageSets as $spyProductImageSets) {

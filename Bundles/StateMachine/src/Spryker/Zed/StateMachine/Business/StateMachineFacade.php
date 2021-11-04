@@ -159,7 +159,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
 
         return $this->getFactory()
             ->createGraphDrawer(
-                $stateMachineProcessTransfer->getStateMachineName()
+                $stateMachineProcessTransfer->getStateMachineName(),
             )->draw($process, $highlightState, $format, $fontSize);
     }
 
@@ -202,7 +202,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
      *
      * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {

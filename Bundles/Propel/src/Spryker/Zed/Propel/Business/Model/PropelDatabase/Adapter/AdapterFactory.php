@@ -50,7 +50,7 @@ class AdapterFactory implements AdapterFactoryInterface
             $this->createMySqlExportCommand(),
             $this->createMySqlImportCommand(),
             $this->createDropMySqlDatabaseTablesCommand(),
-            $this->createMySqlTableExistenceCommand()
+            $this->createMySqlTableExistenceCommand(),
         );
 
         return $mySqlAdapter;
@@ -108,7 +108,7 @@ class AdapterFactory implements AdapterFactoryInterface
             $this->createPostgreSqlExportCommand(),
             $this->createPostgreSqlImportCommand(),
             $this->createDropPostgreSqlDatabaseTablesCommand(),
-            $this->createPostgreSqlTableExistenceCommand()
+            $this->createPostgreSqlTableExistenceCommand(),
         );
 
         return $postgreSqlAdapter;

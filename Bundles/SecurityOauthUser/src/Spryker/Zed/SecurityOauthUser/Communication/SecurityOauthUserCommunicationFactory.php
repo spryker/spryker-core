@@ -62,7 +62,7 @@ class SecurityOauthUserCommunicationFactory extends AbstractCommunicationFactory
         return new PostAuthenticationGuardToken(
             $user,
             $providerKey,
-            $user->getRoles()
+            $user->getRoles(),
         );
     }
 

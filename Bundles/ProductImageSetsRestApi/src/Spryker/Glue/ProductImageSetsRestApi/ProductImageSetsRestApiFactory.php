@@ -50,7 +50,7 @@ class ProductImageSetsRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getProductImageStorageClient(),
             $this->getResourceBuilder(),
-            $this->createAbstractProductImageSetsMapper()
+            $this->createAbstractProductImageSetsMapper(),
         );
     }
 
@@ -63,7 +63,7 @@ class ProductImageSetsRestApiFactory extends AbstractFactory
             $this->getProductStorageClient(),
             $this->getProductImageStorageClient(),
             $this->getResourceBuilder(),
-            $this->createConcreteProductImageSetsMapper()
+            $this->createConcreteProductImageSetsMapper(),
         );
     }
 

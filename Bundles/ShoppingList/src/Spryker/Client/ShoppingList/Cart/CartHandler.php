@@ -78,7 +78,7 @@ class CartHandler implements CartHandlerInterface
         foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $shoppingListAddToCartRequestTransfer) {
             $this->assertRequestTransfer($shoppingListAddToCartRequestTransfer);
             $cartChangeTransfer->addItem(
-                $this->createItemTransfer($shoppingListAddToCartRequestTransfer)
+                $this->createItemTransfer($shoppingListAddToCartRequestTransfer),
             );
         }
 
@@ -86,7 +86,7 @@ class CartHandler implements CartHandlerInterface
         $this->addErrorMessages();
         $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,
-            $quoteTransfer
+            $quoteTransfer,
         );
 
         return $failedToMoveRequestCollectionTransfer;

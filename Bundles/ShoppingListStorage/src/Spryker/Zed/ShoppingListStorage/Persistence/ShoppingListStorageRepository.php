@@ -23,22 +23,27 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
      * @var string
      */
     protected const COMPANY_USER_CUSTOMER_ALIAS = 'companyUserCustomer';
+
     /**
      * @var string
      */
     protected const COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS = 'companyBusinessUnitCustomer';
+
     /**
      * @var string
      */
     protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
+
     /**
      * @var string
      */
     protected const COMPANY_USER_REFERENCES_NAME = 'companyUserReferences';
+
     /**
      * @var string
      */
     protected const COMPANY_BUSINESS_UNIT_REFERENCES_NAME = 'companyBusinessUnitReferences';
+
     /**
      * @var string
      */
@@ -74,7 +79,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $customerReferences
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
      */
     public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
     {
@@ -87,7 +92,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array<string> $customerReferences
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]
      */
     public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection
     {
@@ -100,7 +105,7 @@ class ShoppingListStorageRepository extends AbstractRepository implements Shoppi
     /**
      * @param array $shoppingListCustomerStorageIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
      */
     public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection
     {

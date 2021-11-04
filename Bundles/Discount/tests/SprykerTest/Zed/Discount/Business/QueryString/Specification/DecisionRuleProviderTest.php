@@ -39,7 +39,7 @@ class DecisionRuleProviderTest extends Unit
         $decisionRuleProvider = $this->createDecisionRuleProvider();
         $compositeSpecification = $decisionRuleProvider->createAnd(
             $this->createDecisionRuleSpecificationMock(),
-            $this->createDecisionRuleSpecificationMock()
+            $this->createDecisionRuleSpecificationMock(),
         );
 
         $this->assertInstanceOf(DecisionRuleAndSpecification::class, $compositeSpecification);
@@ -53,7 +53,7 @@ class DecisionRuleProviderTest extends Unit
         $decisionRuleProvider = $this->createDecisionRuleProvider();
         $compositeSpecification = $decisionRuleProvider->createOr(
             $this->createDecisionRuleSpecificationMock(),
-            $this->createDecisionRuleSpecificationMock()
+            $this->createDecisionRuleSpecificationMock(),
         );
 
         $this->assertInstanceOf(DecisionRuleOrSpecification::class, $compositeSpecification);

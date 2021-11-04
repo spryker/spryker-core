@@ -64,7 +64,7 @@ class UserTableActionExpanderPlugin extends AbstractPlugin implements UserTableA
             ControllerEditController::PAGE_EDIT,
             [
                 EditController::PARAM_ID_USER => $idUser,
-            ]
+            ],
         );
     }
 }

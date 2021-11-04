@@ -29,7 +29,7 @@ class SalesProductConfigurationRepository extends AbstractRepository implements 
 
         $salesOrderItemConfigurationQuery = $this->setSalesOrderItemConfigurationFilters(
             $salesOrderItemConfigurationQuery,
-            $salesOrderItemConfigurationFilterTransfer
+            $salesOrderItemConfigurationFilterTransfer,
         );
 
         return $this->getFactory()

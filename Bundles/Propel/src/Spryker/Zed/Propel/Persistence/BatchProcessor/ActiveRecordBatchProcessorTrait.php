@@ -30,16 +30,12 @@ use Throwable;
 trait ActiveRecordBatchProcessorTrait
 {
     /**
-     * @phpstan-var array<string, array<int, \Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
-     *
-     * @var array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]>
+     * @var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
     protected $entitiesToInsert = [];
 
     /**
-     * @phpstan-var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
-     *
-     * @var array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]>
+     * @var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      */
     protected $entitiesToUpdate = [];
 
@@ -107,9 +103,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
-     *
-     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToInsert
+     * @param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToInsert
      *
      * @return void
      */
@@ -130,9 +124,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * All entities have to be identical in terms of modified columns.
      *
-     * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
-     *
-     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToInsert
+     * @param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToInsert
      *
      * @return void
      */
@@ -149,9 +141,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
-     *
-     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToUpdate
+     * @param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>> $entitiesToUpdate
      *
      * @return void
      */
@@ -321,7 +311,7 @@ trait ActiveRecordBatchProcessorTrait
                 $tableMapClass,
                 $entityClassName::TABLE_MAP,
                 $entity,
-                $this->requiresPrimaryKeyValue()
+                $this->requiresPrimaryKeyValue(),
             );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
@@ -336,7 +326,7 @@ trait ActiveRecordBatchProcessorTrait
                 'INSERT INTO %s (%s) VALUES (%s);',
                 $tableMapClass->getName(),
                 implode(', ', array_keys($columnNamesForInsertWithPdoPlaceholder)),
-                implode(', ', $columnNamesForInsertWithPdoPlaceholder)
+                implode(', ', $columnNamesForInsertWithPdoPlaceholder),
             );
 
             $statement = $this->prepareStatement($sql, $connection);
@@ -372,7 +362,7 @@ trait ActiveRecordBatchProcessorTrait
                 $tableMapClass,
                 $entityClassName::TABLE_MAP,
                 $entity,
-                $requiresPrimaryKeyValue
+                $requiresPrimaryKeyValue,
             );
 
             foreach ($valuesForInsert as $columnDetails) {
@@ -395,7 +385,7 @@ trait ActiveRecordBatchProcessorTrait
             'INSERT INTO %s (%s) VALUES %s;',
             $tableMapClass->getName(),
             implode(', ', array_keys($valuesForInsert)),
-            implode(', ', $entitiesQueryParams)
+            implode(', ', $entitiesQueryParams),
         );
 
         $statement = $this->prepareStatement($sql, $connection);
@@ -427,7 +417,7 @@ trait ActiveRecordBatchProcessorTrait
                 $tableMapClass,
                 $entityClassName::TABLE_MAP,
                 $entity,
-                $this->requiresPrimaryKeyValue()
+                $this->requiresPrimaryKeyValue(),
             );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
@@ -442,7 +432,7 @@ trait ActiveRecordBatchProcessorTrait
                 'INSERT INTO %s (%s) VALUES (%s);',
                 $tableMapClass->getName(),
                 implode(', ', array_keys($columnNamesForInsertWithPdoPlaceholder)),
-                implode(', ', $columnNamesForInsertWithPdoPlaceholder)
+                implode(', ', $columnNamesForInsertWithPdoPlaceholder),
             );
 
             $statement = $this->prepareStatement($sql, $connection);
@@ -461,7 +451,7 @@ trait ActiveRecordBatchProcessorTrait
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param bool $requiresPrimaryKeyValue
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareValuesForInsert(
         array $columnMapCollection,
@@ -476,7 +466,7 @@ trait ActiveRecordBatchProcessorTrait
 
         foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
             $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
-            if ($columnMap->isPrimaryKey()) {
+            if ($columnMap->isPrimaryKey() && !$columnMap->isForeignKey()) {
                 if (!$requiresPrimaryKeyValue || $tableMapClass->getPrimaryKeyMethodInfo() === null) {
                     continue;
                 }
@@ -527,7 +517,10 @@ trait ActiveRecordBatchProcessorTrait
     protected function bindInsertValues(StatementInterface $statement, array $values): StatementInterface
     {
         $values = array_filter($values, function (array $columnDetails) {
-            return !$columnDetails['columnMap']->isPrimaryKey();
+            /** @var \Propel\Runtime\Map\ColumnMap $columnMap */
+            $columnMap = $columnDetails['columnMap'];
+
+            return !($columnMap->isPrimaryKey() && !$columnMap->isForeignKey());
         });
 
         foreach (array_values($values) as $index => $value) {
@@ -557,7 +550,7 @@ trait ActiveRecordBatchProcessorTrait
      * @param array $entityData
      * @param string|null $defaultValue
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareValuesForSave(ColumnMap $columnMap, array $entityData, ?string $defaultValue = null): array
     {
@@ -594,7 +587,7 @@ trait ActiveRecordBatchProcessorTrait
                 $tableMapClass->getColumns(),
                 $tableMapClass,
                 $entityClassName::TABLE_MAP,
-                $entity
+                $entity,
             );
 
             $columnNamesForUpdateWithPdoPlaceholder = array_map(function ($columnName) use (&$keyIndex, $tableMapClass) {
@@ -613,7 +606,7 @@ trait ActiveRecordBatchProcessorTrait
                 'UPDATE %s SET %s WHERE %s;',
                 $tableMapClass->getName(),
                 implode(', ', $columnNamesForUpdateWithPdoPlaceholder),
-                implode(' AND ', $whereClauses)
+                implode(' AND ', $whereClauses),
             );
 
             $statement = $this->prepareStatement($sql, $connection);

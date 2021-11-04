@@ -25,22 +25,27 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+
     /**
      * @var string
      */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+
     /**
      * @var string
      */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     /**
      * @var string
      */
@@ -79,7 +84,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToPriceProductStorageClientBridge(
-                $container->getLocator()->priceProductStorage()->client()
+                $container->getLocator()->priceProductStorage()->client(),
             );
         });
 
@@ -95,7 +100,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToProductStorageClientBridge(
-                $container->getLocator()->productStorage()->client()
+                $container->getLocator()->productStorage()->client(),
             );
         });
 
@@ -111,7 +116,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ProductPricesRestApiToPriceProductClientBridge(
-                $container->getLocator()->priceProduct()->client()
+                $container->getLocator()->priceProduct()->client(),
             );
         });
 
@@ -127,7 +132,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductPricesRestApiToPriceClientBridge(
-                $container->getLocator()->price()->client()
+                $container->getLocator()->price()->client(),
             );
         });
 
@@ -143,7 +148,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     {
         $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductPricesRestApiToCurrencyClientBridge(
-                $container->getLocator()->currency()->client()
+                $container->getLocator()->currency()->client(),
             );
         });
 

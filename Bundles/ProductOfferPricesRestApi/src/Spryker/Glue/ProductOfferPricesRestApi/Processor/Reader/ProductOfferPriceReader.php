@@ -23,14 +23,17 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
      * @var string
      */
     protected const MAPPING_TYPE_SKU = 'sku';
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     protected const PRODUCT_CONCRETE_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
@@ -97,7 +100,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
         $productOfferPriceRestResources = $this->getProductOfferPriceRestResources(
             [$productOfferRestResource->getId()],
-            $restRequest->getMetadata()->getLocale()
+            $restRequest->getMetadata()->getLocale(),
         );
 
         $productOfferPriceRestResource = $productOfferPriceRestResources[$productOfferRestResource->getId()] ?? null;
@@ -145,7 +148,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
 
                 $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
                     $priceProductTransfers,
-                    $priceProductFilterTransfer
+                    $priceProductFilterTransfer,
                 );
 
                 $productOfferPriceRestResources[$productOfferReference] = $this->productOfferPriceRestResponseBuilder
@@ -157,11 +160,9 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, string>
-     *
      * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     protected function getProductConcreteSkus(array $productOfferStorageTransfers): array
     {

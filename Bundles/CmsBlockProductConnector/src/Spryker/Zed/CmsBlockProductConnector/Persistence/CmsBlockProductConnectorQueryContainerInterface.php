@@ -13,6 +13,7 @@ interface CmsBlockProductConnectorQueryContainerInterface
      * @var string
      */
     public const COL_PRODUCT_ABSTRACT_NAME = 'name';
+
     /**
      * @var string
      */

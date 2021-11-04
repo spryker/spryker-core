@@ -62,7 +62,7 @@ class MerchantRelationshipHardMaximumThresholdFormExpanderPlugin extends Abstrac
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -101,7 +101,7 @@ class MerchantRelationshipHardMaximumThresholdFormExpanderPlugin extends Abstrac
         $salesOrderThresholdValueTransfer->setSalesOrderThresholdType(
             (new SalesOrderThresholdTypeTransfer())
                 ->setKey($this->getThresholdKey())
-                ->setThresholdGroup($this->getThresholdGroup())
+                ->setThresholdGroup($this->getThresholdGroup()),
         );
 
         return $salesOrderThresholdValueTransfer;

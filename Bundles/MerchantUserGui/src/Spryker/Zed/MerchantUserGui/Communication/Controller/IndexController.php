@@ -33,7 +33,7 @@ class IndexController extends AbstractController
         $categoryTable = $this->getFactory()->createMerchantUserTable($idMerchant);
 
         return $this->jsonResponse(
-            $categoryTable->fetchData()
+            $categoryTable->fetchData(),
         );
     }
 }

@@ -27,7 +27,7 @@ class StorageRedisCommunicationFactory extends AbstractCommunicationFactory
     {
         return new StorageRedisImporter(
             $this->getRedisFacade(),
-            $this->getConfig()->getRdbDumpPath()
+            $this->getConfig()->getRdbDumpPath(),
         );
     }
 
@@ -39,7 +39,7 @@ class StorageRedisCommunicationFactory extends AbstractCommunicationFactory
         return new StorageRedisExporter(
             $this->getRedisFacade(),
             $this->getConfig()->getRedisPort(),
-            $this->getConfig()->getRedisHost()
+            $this->getConfig()->getRedisHost(),
         );
     }
 

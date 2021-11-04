@@ -31,8 +31,9 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
      * @var string
      */
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
+
     /**
-     * @var array
+     * @var array<string>
      */
     protected const SUBSCRIBED_TERMINATION_NAMES = [
         'add',
@@ -174,7 +175,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
         $isAllowed = $this->getFactory()->getPermissionFacade()->can(
             static::KEY,
             $identifier,
-            $quoteTransfer->getTotals()->getGrandTotal()
+            $quoteTransfer->getTotals()->getGrandTotal(),
         );
 
         if ($isAllowed) {
@@ -185,7 +186,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
             ->getMessengerFacade()
             ->addErrorMessage(
                 (new MessageTransfer())
-                    ->setValue('global.permission.failed')
+                    ->setValue('global.permission.failed'),
             );
 
         return true;

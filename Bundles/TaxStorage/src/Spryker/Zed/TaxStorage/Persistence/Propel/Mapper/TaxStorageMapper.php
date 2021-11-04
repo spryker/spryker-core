@@ -93,7 +93,7 @@ class TaxStorageMapper
     {
         $taxSetStorageTransfer->fromArray($spyTaxSet->toArray(), true);
         $taxSetStorageTransfer->setTaxRates(
-            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates()->getArrayCopy())
+            $this->mapSpyTaxRatesToTaxRateTransfers($spyTaxSet->getSpyTaxRates()->getArrayCopy()),
         );
 
         return $taxSetStorageTransfer;
@@ -110,7 +110,7 @@ class TaxStorageMapper
 
         foreach ($spyTaxRates as $spyTaxRate) {
             $taxRateTransfers->append(
-                $this->mapSpyTaxRateToTaxRateStorageTransfer($spyTaxRate, new TaxRateStorageTransfer())
+                $this->mapSpyTaxRateToTaxRateStorageTransfer($spyTaxRate, new TaxRateStorageTransfer()),
             );
         }
 

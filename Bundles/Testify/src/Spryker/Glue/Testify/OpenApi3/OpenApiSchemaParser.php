@@ -25,7 +25,7 @@ class OpenApiSchemaParser implements OpenApiSchemaParserInterface
 
         $mapper->mapObjectFromPayload(
             $document,
-            $reader->read()
+            $reader->read(),
         );
 
         return $document;

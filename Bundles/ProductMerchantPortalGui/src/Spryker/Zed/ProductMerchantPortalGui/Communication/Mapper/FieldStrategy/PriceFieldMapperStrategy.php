@@ -21,6 +21,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
      * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = 'net';
+
     /**
      * @var string
      */
@@ -28,6 +29,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     *
      * @var string
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
@@ -98,7 +100,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
             $priceProductTransferToReplace->setVolumeQuantity($volumeQuantity);
             $priceProductTransferToReplace = $this->priceProductVolumeService->extractVolumePrice(
                 $priceProductTransfer,
-                $priceProductTransferToReplace
+                $priceProductTransferToReplace,
             );
 
             if (!$priceProductTransferToReplace) {
@@ -109,7 +111,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
             $this->mapDataToMoneyValueTransfer($data, $priceProductTransferToReplace->getMoneyValueOrFail());
             $this->priceProductVolumeService->deleteVolumePrice(
                 $priceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity)
+                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity),
             );
 
             $this->priceProductVolumeService->addVolumePrice($priceProductTransfer, $priceProductTransferToReplace);
@@ -123,8 +125,6 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
      * @param string $priceTypeName
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -153,7 +153,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
         $pattern = sprintf(
             '/(\[%sAmount]|\[%sAmount])$/',
             static::SUFFIX_PRICE_TYPE_GROSS,
-            static::SUFFIX_PRICE_TYPE_NET
+            static::SUFFIX_PRICE_TYPE_NET,
         );
 
         preg_match($pattern, $fieldName, $matches);

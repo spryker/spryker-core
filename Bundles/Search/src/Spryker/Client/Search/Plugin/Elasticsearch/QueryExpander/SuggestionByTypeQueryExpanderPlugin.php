@@ -24,6 +24,7 @@ class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements Quer
      * @var string
      */
     public const AGGREGATION_NAME = 'suggestion-by-type';
+
     /**
      * @var string
      */

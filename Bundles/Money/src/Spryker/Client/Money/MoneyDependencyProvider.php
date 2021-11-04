@@ -22,10 +22,12 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const STORE = 'store';
+
     /**
      * @var string
      */
     public const PLUGIN_CURRENCY = 'currency plugin';
+
     /**
      * @var string
      */
@@ -116,7 +118,7 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     {
         $numberFormatter = new NumberFormatter(
             $this->getStore()->getCurrentLocale(),
-            NumberFormatter::CURRENCY
+            NumberFormatter::CURRENCY,
         );
 
         return $numberFormatter;

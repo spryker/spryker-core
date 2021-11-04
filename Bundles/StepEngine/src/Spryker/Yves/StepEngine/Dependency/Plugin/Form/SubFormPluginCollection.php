@@ -38,6 +38,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->subForms[$this->position];
@@ -46,6 +47,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->position;
@@ -54,6 +56,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->position;
@@ -62,6 +65,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return isset($this->subForms[$this->position]);
@@ -70,6 +74,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->position = 0;
@@ -78,6 +83,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
     /**
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->subForms);
@@ -88,6 +94,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->subForms[$offset]);
@@ -98,6 +105,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->subForms[$offset];
@@ -109,6 +117,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->subForms[$offset] = $value;
@@ -119,6 +128,7 @@ class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->subForms[$offset]);

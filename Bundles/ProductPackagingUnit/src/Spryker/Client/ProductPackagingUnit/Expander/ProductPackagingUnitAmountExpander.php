@@ -18,6 +18,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      * @var string
      */
     protected const PARAM_AMOUNT = 'amount';
+
     /**
      * @var string
      */

@@ -22,6 +22,7 @@ class DiscountCreatePage
      * @var string
      */
     public const MESSAGE_SUCCESSFUL_ALERT_CREATION = 'Discount successfully created, but not activated.';
+
     /**
      * @var string
      */
@@ -32,10 +33,12 @@ class DiscountCreatePage
      * @var string
      */
     public const DISCOUNT_VALID_EXCLUSIVE = 'validExclusiveDiscount';
+
     /**
      * @var string
      */
     public const EMPTY_DISCOUNT = 'emptyDiscount';
+
     /**
      * @var string
      */
@@ -46,18 +49,22 @@ class DiscountCreatePage
      * @var string
      */
     public const BTN_CALCULATION_GET = '#btn-calculation-get';
+
     /**
      * @var string
      */
     public const FIELD_DISCOUNT_QUERY = '#discount_discountCalculator_collector_query_string';
+
     /**
      * @var string
      */
     public const DISCOUNT_CALCULATION_GROUP = '#builder_calculation_group_0';
+
     /**
      * @var string
      */
     public const CURRENT_TAB = '.nav-tabs li.active';
+
     /**
      * @var string
      */

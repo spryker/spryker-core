@@ -32,6 +32,7 @@ class FixedTest extends Unit
      * @var int
      */
     public const ITEM_GROSS_PRICE_1000 = 1000;
+
     /**
      * @var int
      */
@@ -48,7 +49,7 @@ class FixedTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new FixedType();
@@ -68,7 +69,7 @@ class FixedTest extends Unit
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
                 self::ITEM_GROSS_PRICE_1000,
-            ]
+            ],
         );
 
         $calculator = new FixedType();

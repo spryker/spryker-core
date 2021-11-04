@@ -24,22 +24,27 @@ class Reader implements ReaderInterface
      * @var string
      */
     public const OPEN_MODE = 'r';
+
     /**
      * @var int
      */
     public const HEADER_OFFSET = 0;
+
     /**
      * @var int
      */
     public const FIRST_HEADER_KEY = 0;
+
     /**
      * @var int
      */
     public const MIN_COLUMNS = 0;
+
     /**
      * @var string
      */
     public const UTF_16 = 'utf-16';
+
     /**
      * @var string
      */
@@ -83,7 +88,7 @@ class Reader implements ReaderInterface
                 $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueTransfer(
                     $datasetColumnValueTransfers[$key],
                     $datasetRowValueTransfer,
-                    $value
+                    $value,
                 ));
             }
         }

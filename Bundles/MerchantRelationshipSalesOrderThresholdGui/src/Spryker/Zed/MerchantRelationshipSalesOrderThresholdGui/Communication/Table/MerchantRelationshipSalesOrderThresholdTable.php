@@ -24,6 +24,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
      * @var string
      */
     protected const REQUEST_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
+
     /**
      * @var string
      */
@@ -35,22 +36,27 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
      * @var string
      */
     protected const COL_COMPANY_NAME = 'company_name';
+
     /**
      * @var string
      */
     protected const COL_MERCHANT_RELATIONSHIP_NAME = 'merchant_relationship_name';
+
     /**
      * @var string
      */
     protected const COL_BUSINESS_UNIT_NAME = 'business_unit_name';
+
     /**
      * @var string
      */
     protected const COL_THRESHOLDS = 'merchant_relationship_thresholds';
+
     /**
      * @var string
      */
     protected const COL_THRESHOLD_GROUP = 'threshold_group';
+
     /**
      * @var string
      */
@@ -183,7 +189,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
         $urlParams = [static::REQUEST_ID_MERCHANT_RELATIONSHIP => $item[static::COL_ID_MERCHANT_RELATIONSHIP]];
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_MERCHANT_RELATIONSHIP_EDIT, $urlParams),
-            'Edit'
+            'Edit',
         );
 
         return implode(' ', $buttons);
@@ -214,7 +220,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
 
             if (isset($thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]])) {
                 $row[static::COL_THRESHOLDS] = $this->formatThresholdsColumn(
-                    $thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]]
+                    $thresholdMerchantRelationshipMapping[$row[static::COL_ID_MERCHANT_RELATIONSHIP]],
                 );
             }
 

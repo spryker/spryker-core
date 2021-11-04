@@ -73,7 +73,7 @@ class ProductFormEdit extends ProductFormAdd
 
                             if ($skuCount > 0) {
                                 $context->addViolation(
-                                    sprintf('The SKU "%s" is already used', $sku)
+                                    sprintf('The SKU "%s" is already used', $sku),
                                 );
                             }
                         },
@@ -87,7 +87,7 @@ class ProductFormEdit extends ProductFormAdd
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

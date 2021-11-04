@@ -18,6 +18,7 @@ class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
      * @var string
      */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
@@ -31,14 +32,14 @@ class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
         $this->touchQuery->addJoin(
             SpyTouchTableMap::COL_ITEM_ID,
             SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT,
-            Criteria::INNER_JOIN
+            Criteria::INNER_JOIN,
         );
 
         $this->touchQuery->withColumn(SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_ID_PRODUCT_ABSTRACT);
         $this->touchQuery->withColumn(sprintf(
             'GROUP_CONCAT(DISTINCT %s ORDER BY %s)',
             SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP,
-            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP
+            SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_GROUP,
         ), static::FIELD_ID_PRODUCT_GROUPS);
 
         $this->touchQuery->groupBy(static::FIELD_ID_PRODUCT_ABSTRACT);

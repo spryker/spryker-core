@@ -20,6 +20,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
      * @var string
      */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+
     /**
      * @var string
      */
@@ -67,7 +68,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
             ->setSkus($skus)
             ->setIsActive(true)
             ->setIdStore(
-                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
+                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore(),
             );
 
         $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);

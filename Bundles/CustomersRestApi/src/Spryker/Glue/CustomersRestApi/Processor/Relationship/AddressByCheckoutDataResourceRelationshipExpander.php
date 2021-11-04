@@ -61,7 +61,7 @@ class AddressByCheckoutDataResourceRelationshipExpander implements AddressResour
 
             foreach ($addressesTransfer->getAddresses() as $addressTransfer) {
                 $resource->addRelationship(
-                    $this->createAddressRestResource($addressTransfer, $customerTransfer)
+                    $this->createAddressRestResource($addressTransfer, $customerTransfer),
                 );
             }
         }
@@ -117,7 +117,7 @@ class AddressByCheckoutDataResourceRelationshipExpander implements AddressResour
         return $this->addressRestResponseBuilder->createAddressRestResource(
             $addressTransfer->getUuid(),
             $customerTransfer->getCustomerReference(),
-            $restAddressAttributesTransfer
+            $restAddressAttributesTransfer,
         );
     }
 }

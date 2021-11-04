@@ -25,6 +25,7 @@ class AddController extends AbstractController
      * @var string
      */
     protected const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
+
     /**
      * @var string
      */

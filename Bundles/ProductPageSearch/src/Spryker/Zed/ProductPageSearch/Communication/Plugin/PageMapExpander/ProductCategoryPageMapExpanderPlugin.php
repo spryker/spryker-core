@@ -67,13 +67,13 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
             $pageMapTransfer,
             $allParentCategories,
             $directParentCategories,
-            $productData
+            $productData,
         );
 
         $this->setSorting(
             $pageMapBuilder,
             $pageMapTransfer,
-            $productData
+            $productData,
         );
 
         return $pageMapTransfer;
@@ -131,7 +131,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
                 SortedCategoryQueryExpanderPlugin::buildSortFieldName($idCategoryNode),
-                $sortedCategory['product_order']
+                $sortedCategory['product_order'],
             );
 
             $this->setSortingForTreeParents(
@@ -139,7 +139,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
                 $pageMapTransfer,
                 $idCategoryNode,
                 $sortedCategory['product_order'],
-                $productData
+                $productData,
             );
         }
     }
@@ -169,7 +169,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
             $pageMapBuilder->addIntegerSort(
                 $pageMapTransfer,
                 SortedCategoryQueryExpanderPlugin::buildSortFieldName($idParentCategoryNode),
-                $productOrder
+                $productOrder,
             );
         }
     }

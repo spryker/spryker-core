@@ -16,6 +16,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
      * @var string
      */
     public const SCOPE_CUSTOMER = 'customer';
+
     /**
      * @var string
      */
@@ -23,6 +24,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Zed\Oauth\OauthConfig::GRANT_TYPE_PASSWORD
+     *
      * @var string
      */
     public const GRANT_TYPE_PASSWORD = 'password';
@@ -63,7 +65,7 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getCustomerScopes(): array
     {

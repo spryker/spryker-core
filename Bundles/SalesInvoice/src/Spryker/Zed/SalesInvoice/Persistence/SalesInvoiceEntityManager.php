@@ -43,7 +43,7 @@ class SalesInvoiceEntityManager extends AbstractEntityManager implements SalesIn
         $columnPhpName = SpySalesOrderInvoiceTableMap::translateFieldName(
             SpySalesOrderInvoiceTableMap::COL_EMAIL_SENT,
             SpySalesOrderInvoiceTableMap::TYPE_COLNAME,
-            SpySalesOrderInvoiceTableMap::TYPE_PHPNAME
+            SpySalesOrderInvoiceTableMap::TYPE_PHPNAME,
         );
 
         $this->getFactory()

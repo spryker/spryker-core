@@ -41,7 +41,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getCompanyBusinessUnitFacade(),
             $this->createCompanyBusinessUnitAddressReader(),
-            $this->createCompanyUnitAddressPluginExecutor()
+            $this->createCompanyUnitAddressPluginExecutor(),
         );
     }
 
@@ -52,7 +52,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitAddressWriter(
             $this->createCompanyBusinessUnitAddressReader(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -63,7 +63,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitAddressReader(
             $this->getRepository(),
-            $this->createCompanyUnitAddressPluginExecutor()
+            $this->createCompanyUnitAddressPluginExecutor(),
         );
     }
 
@@ -74,7 +74,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUnitAddressPluginExecutor(
             $this->getCompanyUnitAddressHydratePlugins(),
-            $this->getCompanyUnitAddressPostSavePlugins()
+            $this->getCompanyUnitAddressPostSavePlugins(),
         );
     }
 

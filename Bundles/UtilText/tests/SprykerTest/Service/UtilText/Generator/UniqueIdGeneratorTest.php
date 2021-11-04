@@ -25,6 +25,7 @@ class UniqueIdGeneratorTest extends Unit
      * @var string
      */
     protected const PARAM_EMPTY_PREFIX = '';
+
     /**
      * @var string
      */

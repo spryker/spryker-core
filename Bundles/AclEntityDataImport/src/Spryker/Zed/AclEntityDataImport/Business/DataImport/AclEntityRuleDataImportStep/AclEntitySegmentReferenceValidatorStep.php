@@ -41,7 +41,7 @@ class AclEntitySegmentReferenceValidatorStep implements DataImportStepInterface
 
         if (!$aclEntitySegmentCount) {
             throw new EntityNotFoundException(
-                sprintf('Could not find AclEntitySegment by reference: "%s"', $aclEntitySegmentReference)
+                sprintf('Could not find AclEntitySegment by reference: "%s"', $aclEntitySegmentReference),
             );
         }
 

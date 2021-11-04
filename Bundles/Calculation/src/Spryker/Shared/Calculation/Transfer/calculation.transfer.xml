@@ -183,4 +183,8 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CalculatedDiscountCollection">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
 </transfers>

@@ -32,10 +32,12 @@ class GroupController extends AbstractController
      * @var string
      */
     public const USER_LIST_URL = '/acl/users';
+
     /**
      * @var string
      */
     public const PARAMETER_ID_GROUP = 'id-group';
+
     /**
      * @var string
      */
@@ -45,18 +47,22 @@ class GroupController extends AbstractController
      * @var string
      */
     public const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
+
     /**
      * @var string
      */
     public const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
+
     /**
      * @var string
      */
@@ -82,7 +88,7 @@ class GroupController extends AbstractController
         $table = $this->getFactory()->createGroupTable();
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $table->fetchData(),
         );
     }
 
@@ -98,7 +104,7 @@ class GroupController extends AbstractController
         $form = $this->getFactory()
             ->createGroupForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -109,7 +115,7 @@ class GroupController extends AbstractController
 
             $groupTransfer = $this->getFacade()->addGroup(
                 $formData[GroupForm::FIELD_TITLE],
-                $roles
+                $roles,
             );
 
             $this->addSuccessMessage(static::MESSAGE_GROUP_CREATE_SUCCESS);
@@ -144,7 +150,7 @@ class GroupController extends AbstractController
         $form = $this->getFactory()
             ->createGroupForm(
                 $formData,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 
@@ -201,7 +207,7 @@ class GroupController extends AbstractController
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
         return $this->jsonResponse(
-            $usersTable->fetchData()
+            $usersTable->fetchData(),
         );
     }
 

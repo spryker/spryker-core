@@ -28,7 +28,7 @@ class ProductAbstractNotFoundException extends NotFoundHttpException
     {
         return sprintf(
             'Product abstract is not found for product abstract id %d.',
-            $idProductConcrete
+            $idProductConcrete,
         );
     }
 }

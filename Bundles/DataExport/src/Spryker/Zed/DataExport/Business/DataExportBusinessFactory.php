@@ -27,7 +27,7 @@ class DataExportBusinessFactory extends AbstractBusinessFactory
             $this->getDataEntityExporterPlugins(),
             $this->getDataExportService(),
             $this->getConfig(),
-            $this->getGracefulRunnerFacade()
+            $this->getGracefulRunnerFacade(),
         );
     }
 

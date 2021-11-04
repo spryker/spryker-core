@@ -53,7 +53,7 @@ class CategoryImageFormExpander implements CategoryImageFormExpanderInterface
         ]);
 
         $builder->get(static::FIELD_IMAGE_SETS)->addModelTransformer(
-            $this->imageSetCollectionTransformer
+            $this->imageSetCollectionTransformer,
         );
     }
 }

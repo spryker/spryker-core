@@ -14,7 +14,7 @@ class CompanyRoleEditForm extends CompanyRoleCreateForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

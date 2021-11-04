@@ -24,6 +24,7 @@ class CreatePageController extends AbstractController
      * @var string
      */
     public const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+
     /**
      * @var string
      */
@@ -39,7 +40,7 @@ class CreatePageController extends AbstractController
         $this->getFactory()
             ->getCmsFacade()
             ->syncTemplate(
-                $this->getCmsFolderPath()
+                $this->getCmsFolderPath(),
             );
 
         $pageTabs = $this->getFactory()->createPageTabs();
@@ -108,7 +109,7 @@ class CreatePageController extends AbstractController
 
             return Url::generate(
                 '/cms-gui/create-glossary/index',
-                [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
+                [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage],
             )
                 ->build();
         } catch (TemplateFileNotFoundException $exception) {

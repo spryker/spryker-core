@@ -70,7 +70,7 @@ class CmsPageDataHelper extends Module
 
         $cmsPageTransfer->setStoreRelation(
             (new StoreRelationTransfer())
-                ->fromArray($seedData[CmsPageTransfer::STORE_RELATION])
+                ->fromArray($seedData[CmsPageTransfer::STORE_RELATION]),
         );
     }
 

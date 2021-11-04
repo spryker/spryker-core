@@ -15,6 +15,7 @@ class StabilityUpdater implements UpdaterInterface
      * @var string
      */
     public const KEY_MINIMUM_STABILITY = 'minimum-stability';
+
     /**
      * @var string
      */

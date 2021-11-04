@@ -105,7 +105,7 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getWarehouseToStoreMapping(): array
     {
@@ -115,7 +115,7 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function getStoreToWarehouseMapping(): array
     {

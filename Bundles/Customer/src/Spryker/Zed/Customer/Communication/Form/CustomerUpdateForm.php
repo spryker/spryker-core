@@ -23,6 +23,7 @@ class CustomerUpdateForm extends CustomerForm
      * @var string
      */
     public const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+
     /**
      * @var string
      */
@@ -47,7 +48,7 @@ class CustomerUpdateForm extends CustomerForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

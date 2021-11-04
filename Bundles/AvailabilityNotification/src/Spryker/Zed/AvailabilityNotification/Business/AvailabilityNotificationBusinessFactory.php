@@ -58,7 +58,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getUtilValidateService(),
             $this->createAvailabilityNotificationReader(),
             $this->getConfig(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
         );
     }
 
@@ -70,7 +70,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
         return new AvailabilityNotificationUnsubscriber(
             $this->getEntityManager(),
             $this->createAvailabilityNotificationUnsubscriptionSender(),
-            $this->createAvailabilityNotificationReader()
+            $this->createAvailabilityNotificationReader(),
         );
     }
 
@@ -91,7 +91,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createSubscriptionKeyGenerator(),
             $this->getStoreFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
         );
     }
 
@@ -101,7 +101,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function createSubscriptionAnonymizer(): AvailabilityNotificationSubscriptionAnonymizerInterface
     {
         return new AvailabilityNotificationSubscriptionAnonymizer(
-            $this->getEntityManager()
+            $this->getEntityManager(),
         );
     }
 
@@ -114,7 +114,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getProductFacade(),
             $this->createUrlGenerator(),
-            $this->createProductAttributesFinder()
+            $this->createProductAttributesFinder(),
         );
     }
 
@@ -127,7 +127,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getProductFacade(),
             $this->createUrlGenerator(),
-            $this->createProductAttributesFinder()
+            $this->createProductAttributesFinder(),
         );
     }
 
@@ -141,7 +141,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createUrlGenerator(),
             $this->getRepository(),
-            $this->createProductAttributesFinder()
+            $this->createProductAttributesFinder(),
         );
     }
 
@@ -152,7 +152,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeFinder(
             $this->getProductFacade(),
-            $this->createUrlGenerator()
+            $this->createUrlGenerator(),
         );
     }
 
@@ -163,7 +163,7 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     {
         return new AvailabilityNotificationSubscriptionReader(
             $this->getStoreFacade(),
-            $this->getRepository()
+            $this->getRepository(),
         );
     }
 

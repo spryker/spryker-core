@@ -28,6 +28,7 @@ class ProductAbstractListContentTermForm extends AbstractType
      * @var string
      */
     public const FIELD_ID_ABSTRACT_PRODUCTS = 'idProductAbstracts';
+
     /**
      * @var string
      */
@@ -69,18 +70,18 @@ class ProductAbstractListContentTermForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['tables']['productAbstractViewTable'] = $this->getFactory()->createProductAbstractViewTable(
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['tables']['productAbstractSelectedTable'] = $this->getFactory()->createProductAbstractSelectedTable(
             $view->vars['value']->getIdProductAbstracts(),
-            $view->parent->vars['name']
+            $view->parent->vars['name'],
         );
         $view->vars['attr']['template_path'] = static::TEMPLATE_PATH;
     }
@@ -95,7 +96,7 @@ class ProductAbstractListContentTermForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -134,7 +135,7 @@ class ProductAbstractListContentTermForm extends AbstractType
                 $ids = array_filter(array_values($event->getData()));
                 $event->setData($ids);
                 $event->getForm()->setData($ids);
-            }
+            },
         );
 
         return $this;

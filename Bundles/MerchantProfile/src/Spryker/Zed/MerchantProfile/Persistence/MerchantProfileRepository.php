@@ -30,7 +30,7 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     {
         $merchantProfileEntity = $this->applyFilters(
             $this->getFactory()->createMerchantProfileQuery(),
-            $merchantProfileCriteriaTransfer
+            $merchantProfileCriteriaTransfer,
         )->findOne();
 
         if (!$merchantProfileEntity) {

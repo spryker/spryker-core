@@ -47,7 +47,7 @@ class SalesBusinessTester extends Actor
     ): OrderTransfer {
         $quoteTransfer = $this->buildFakeQuote(
             $customerTransfer ?? $this->haveCustomer(),
-            $this->haveStore([StoreTransfer::NAME => 'DE'])
+            $this->haveStore([StoreTransfer::NAME => 'DE']),
         );
 
         $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);

@@ -13,18 +13,22 @@ interface PriceProductScheduleDataSetInterface
      * @var string
      */
     public const KEY_ABSTRACT_SKU = 'abstract_sku';
+
     /**
      * @var string
      */
     public const KEY_CONCRETE_SKU = 'concrete_sku';
+
     /**
      * @var string
      */
     public const KEY_STORE = 'store';
+
     /**
      * @var string
      */
     public const KEY_CURRENCY = 'currency';
+
     /**
      * @var string
      */
@@ -34,6 +38,7 @@ interface PriceProductScheduleDataSetInterface
      * @var string
      */
     public const KEY_PRICE_NET = 'value_net';
+
     /**
      * @var string
      */
@@ -43,6 +48,7 @@ interface PriceProductScheduleDataSetInterface
      * @var string
      */
     public const KEY_INCLUDED_FROM = 'from_included';
+
     /**
      * @var string
      */
@@ -52,22 +58,27 @@ interface PriceProductScheduleDataSetInterface
      * @var string
      */
     public const FK_CURRENCY = 'fk_currency';
+
     /**
      * @var string
      */
     public const FK_STORE = 'fk_store';
+
     /**
      * @var string
      */
     public const FK_PRICE_TYPE = 'fk_price_type';
+
     /**
      * @var string
      */
     public const FK_PRODUCT_CONCRETE = 'fk_product';
+
     /**
      * @var string
      */
     public const FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var string
      */

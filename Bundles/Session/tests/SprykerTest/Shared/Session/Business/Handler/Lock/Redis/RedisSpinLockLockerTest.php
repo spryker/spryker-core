@@ -61,7 +61,7 @@ class RedisSpinLockLockerTest extends Unit
             ->method('__call')
             ->withConsecutive(
                 [$this->equalTo('set'), $this->anything()],
-                [$this->equalTo('eval'), $this->contains($expectedGeneratedKey)]
+                [$this->equalTo('eval'), $this->contains($expectedGeneratedKey)],
             )
             ->will($this->onConsecutiveCalls(1, 1));
 

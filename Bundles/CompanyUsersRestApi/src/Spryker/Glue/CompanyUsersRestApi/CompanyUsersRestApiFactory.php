@@ -41,7 +41,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
             $this->getCompanyUserClient(),
             $this->getClient(),
             $this->createCompanyUserRestResponseBuilder(),
-            $this->getCompanyUserStorageClient()
+            $this->getCompanyUserStorageClient(),
         );
     }
 
@@ -52,7 +52,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     {
         return new CompanyUserRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCompanyUserMapper()
+            $this->createCompanyUserMapper(),
         );
     }
 
@@ -79,7 +79,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     {
         return new CompanyUserByShareDetailResourceRelationshipExpander(
             $this->createCompanyUserRestResponseBuilder(),
-            $this->createCompanyUserMapper()
+            $this->createCompanyUserMapper(),
         );
     }
 
@@ -90,7 +90,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     {
         return new CompanyUserByQuoteRequestResourceRelationshipExpander(
             $this->createCompanyUserRestResponseBuilder(),
-            $this->createCompanyUserMapper()
+            $this->createCompanyUserMapper(),
         );
     }
 
@@ -100,7 +100,7 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     public function createCompanyUserValidator(): CompanyUserValidatorInterface
     {
         return new CompanyUserValidator(
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 

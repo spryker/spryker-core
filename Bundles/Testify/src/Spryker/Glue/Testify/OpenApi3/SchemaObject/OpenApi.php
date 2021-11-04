@@ -17,11 +17,11 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 /**
  * @property-read string $openapi
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Info $info
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Server[] $servers
- * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem[] $paths
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\Server> $servers
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem> $paths
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Components $components
- * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\SecurityRequirement[] $security
- * @property-read string[] $tags
+ * @property-read array<\Spryker\Glue\Testify\OpenApi3\Collection\SecurityRequirement> $security
+ * @property-read array<string> $tags
  * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\ExternalDocumentation $externalDocs
  */
 class OpenApi extends AbstractObject

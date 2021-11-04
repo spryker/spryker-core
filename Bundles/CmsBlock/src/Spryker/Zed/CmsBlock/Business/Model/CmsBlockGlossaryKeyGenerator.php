@@ -16,10 +16,12 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
      * @var string
      */
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms.cms-block';
+
     /**
      * @var string
      */
     public const ID_CMS_BLOCK = 'idCmsBlock';
+
     /**
      * @var string
      */

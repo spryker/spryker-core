@@ -58,7 +58,7 @@ class CmsVersionMapper implements CmsVersionMapperInterface
         foreach ($cmsVersionDataTransfer->getCmsPage()->getPageAttributes() as $cmsPageAttributesTransfer) {
             $urlEntity = $this->cmsQueryContainer->queryPageWithUrlByIdCmsPageAndLocaleName(
                 $cmsVersionDataTransfer->getCmsPage()->getFkPage(),
-                $cmsPageAttributesTransfer->getLocaleName()
+                $cmsPageAttributesTransfer->getLocaleName(),
             )
                 ->findOne();
 

@@ -118,8 +118,8 @@ abstract class AbstractGlueBootstrap
     {
         (new SessionClient())->setContainer(
             new Session(
-                new MockArraySessionStorage()
-            )
+                new MockArraySessionStorage(),
+            ),
         );
     }
 

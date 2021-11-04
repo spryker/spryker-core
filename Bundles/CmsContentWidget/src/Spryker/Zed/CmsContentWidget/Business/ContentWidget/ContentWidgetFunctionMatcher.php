@@ -16,6 +16,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
      * @var string
      */
     public const TWIG_FUNCTION_WITH_PARAMETER_REGEXP = '/{{(?:\s)?(?:&nbsp;)?([a-z_-]+)\(\[?(.*?)\]?\)(?:\s)?(?:&nbsp;)?}}/i';
+
     /**
      * @var string
      */
@@ -106,7 +107,7 @@ class ContentWidgetFunctionMatcher implements ContentWidgetFunctionMatcherInterf
             $content,
             $functionMatches,
             PREG_SET_ORDER,
-            0
+            0,
         );
 
         return $functionMatches;

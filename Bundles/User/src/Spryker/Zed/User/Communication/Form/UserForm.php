@@ -36,6 +36,7 @@ class UserForm extends AbstractType
      * @var string
      */
     public const OPTION_GROUP_CHOICES = 'group_choices';
+
     /**
      * @var string
      */
@@ -45,22 +46,27 @@ class UserForm extends AbstractType
      * @var string
      */
     public const FIELD_USERNAME = 'username';
+
     /**
      * @var string
      */
     public const FIELD_GROUP = 'group';
+
     /**
      * @var string
      */
     public const FIELD_FIRST_NAME = 'first_name';
+
     /**
      * @var string
      */
     public const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @var string
      */
     public const FIELD_PASSWORD = 'password';
+
     /**
      * @var string
      */
@@ -124,7 +130,7 @@ class UserForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

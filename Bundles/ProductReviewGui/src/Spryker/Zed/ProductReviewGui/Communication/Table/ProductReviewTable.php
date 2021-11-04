@@ -198,7 +198,7 @@ class ProductReviewTable extends AbstractTable
             ]),
             'Delete',
             [],
-            DeleteProductReviewForm::class
+            DeleteProductReviewForm::class,
         );
 
         return implode(' ', $actions);
@@ -247,7 +247,7 @@ class ProductReviewTable extends AbstractTable
             StatusProductReviewForm::class,
             [
                 static::BUTTON_CLASS => 'btn-outline',
-            ]
+            ],
         );
     }
 
@@ -266,7 +266,7 @@ class ProductReviewTable extends AbstractTable
             StatusProductReviewForm::class,
             [
                 static::BUTTON_CLASS => 'btn-view',
-            ]
+            ],
         );
     }
 
@@ -289,7 +289,7 @@ class ProductReviewTable extends AbstractTable
                 </tr>
             </table>',
             $this->utilSanitizeService->escapeHtml($productReviewEntity->getSummary()),
-            $this->utilSanitizeService->escapeHtml($productReviewEntity->getDescription())
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getDescription()),
         );
     }
 
@@ -306,7 +306,7 @@ class ProductReviewTable extends AbstractTable
                 'id-customer' => $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER),
             ]),
             $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME)),
-            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME))
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME)),
         );
     }
 
@@ -322,7 +322,7 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/product-management/view', [
                 'id-product-abstract' => $productReviewEntity->getFkProductAbstract(),
             ]),
-            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME))
+            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_NAME)),
         );
     }
 

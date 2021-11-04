@@ -166,7 +166,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             $customerCollection->append(
                 $this->getFactory()
                     ->createCustomerMapper()
-                    ->mapCustomerEntityToCustomer($customer)
+                    ->mapCustomerEntityToCustomer($customer),
             );
         }
 
@@ -214,7 +214,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
         $this->hydrateCustomerListWithCustomers(
             $customerCollectionTransfer,
-            $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->toArray()
+            $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->toArray(),
         );
 
         return $customerCollectionTransfer;

@@ -33,18 +33,22 @@ class CategoryType extends AbstractType
      * @var string
      */
     public const OPTION_CMS_BLOCK_LIST = 'option-cms-block-list';
+
     /**
      * @var string
      */
     public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+
     /**
      * @var string
      */
     public const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
+
     /**
      * @var string
      */
     public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
+
     /**
      * @var string
      */
@@ -56,7 +60,7 @@ class CategoryType extends AbstractType
     protected const LABEL_CMS_BLOCKS = 'CMS Blocks:';
 
     /**
-     * @var array
+     * @var array<string>
      */
     public const SUPPORTED_CATEGORY_TEMPLATE_LIST = [
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
@@ -65,7 +69,7 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -92,7 +96,7 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -132,7 +136,7 @@ class CategoryType extends AbstractType
                         $ids = array_values($event->getData());
                         $event->setData($ids);
                         $event->getForm()->setData($ids);
-                    }
+                    },
                 );
             }
         }

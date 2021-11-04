@@ -15,6 +15,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
      * @var string
      */
     protected const KEY_ID = 'id';
+
     /**
      * @var string
      */
@@ -23,7 +24,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function formatCompanyCollectionToSuggestions(CompanyCollectionTransfer $companyCollectionTransfer): array
     {
@@ -35,7 +36,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
                 static::KEY_TEXT => sprintf(
                     '%s (ID: %d)',
                     $companyTransfer->getName(),
-                    $companyTransfer->getIdCompany()
+                    $companyTransfer->getIdCompany(),
                 ),
             ];
         }

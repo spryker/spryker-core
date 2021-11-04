@@ -73,7 +73,7 @@ class PublisherFacadeTest extends Unit
 
         $this->tester->mockFactoryMethod('createPublisherEventCollator', new MockPublishEventCollator(
             $this->getPublisherRegistryPlugins(),
-            $this->tester->getModuleConfig()
+            $this->tester->getModuleConfig(),
         ));
     }
 

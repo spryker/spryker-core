@@ -91,9 +91,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertTrue(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should exists'
+            'Product abstract relation storage record should exists',
         );
     }
 
@@ -121,9 +121,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertFalse(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should not exists'
+            'Product abstract relation storage record should not exists',
         );
     }
 
@@ -146,9 +146,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertTrue(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should exists'
+            'Product abstract relation storage record should exists',
         );
     }
 
@@ -173,9 +173,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertTrue(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should exists'
+            'Product abstract relation storage record should exists',
         );
     }
 
@@ -204,9 +204,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertFalse(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should exists'
+            'Product abstract relation storage record should exists',
         );
     }
 
@@ -231,9 +231,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertTrue(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should exists'
+            'Product abstract relation storage record should exists',
         );
     }
 
@@ -260,9 +260,9 @@ class ProductRelationStorageFacadeTest extends Unit
         $this->assertFalse(
             $this->tester->isProductAbstractRelationStorageRecordExists(
                 $productRelationTransfer->getFkProductAbstract(),
-                static::STORE_NAME
+                static::STORE_NAME,
             ),
-            'Product abstract relation storage record should not exists'
+            'Product abstract relation storage record should not exists',
         );
     }
 
@@ -287,7 +287,7 @@ class ProductRelationStorageFacadeTest extends Unit
             $productAbstractTransfer->getIdProductAbstract(),
             'test',
             'up-selling',
-            $storeRelationTransfer
+            $storeRelationTransfer,
         );
     }
 }

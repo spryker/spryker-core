@@ -39,7 +39,7 @@ class CmsPageStoreStorageListener extends AbstractPlugin implements EventBulkHan
 
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
-            SpyCmsPageStoreTableMap::COL_FK_CMS_PAGE
+            SpyCmsPageStoreTableMap::COL_FK_CMS_PAGE,
         );
 
         $this->getFacade()->publish($cmsPageIds);

@@ -16,18 +16,22 @@ class ImageSetMapper implements ImageSetMapperInterface
      * @var string
      */
     protected const FIELD_IMAGE_SMALL = 'externalUrlSmall';
+
     /**
      * @var string
      */
     protected const FIELD_IMAGE_LARGE = 'externalUrlLarge';
+
     /**
      * @var string
      */
     protected const FIELD_SORT_ORDER = 'sortOrder';
+
     /**
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
@@ -39,7 +43,7 @@ class ImageSetMapper implements ImageSetMapperInterface
     protected const IMAGE_SETS_FORM_FIELD = 'imageSets';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const FORM_VALIDATION_IMAGE_SET_MAP = [
         self::FIELD_NAME => 'name',
@@ -47,7 +51,7 @@ class ImageSetMapper implements ImageSetMapperInterface
     ];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const FORM_VALIDATION_IMAGE_MAP = [
         self::FIELD_IMAGE_SMALL => 'srcSmall',
@@ -58,7 +62,7 @@ class ImageSetMapper implements ImageSetMapperInterface
     /**
      * @param \Symfony\Component\Form\FormErrorIterator $errors
      *
-     * @return array<string[]>
+     * @return array<array<string>>
      */
     public function mapErrorsToImageSetValidationData(FormErrorIterator $errors): array
     {

@@ -23,7 +23,7 @@ class AttributeSuperForm extends AttributeAbstractForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -49,7 +49,7 @@ class AttributeSuperForm extends AttributeAbstractForm
             ->queryFindAttributeByValueOrTranslation(
                 $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
                 $idLocale,
-                $value
+                $value,
             )->findOne();
 
         $input = Select2ComboBoxType::class;

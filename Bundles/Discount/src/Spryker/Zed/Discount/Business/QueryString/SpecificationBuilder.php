@@ -18,6 +18,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      * @var string
      */
     public const OPEN_PARENTHESIS = '(';
+
     /**
      * @var string
      */
@@ -168,8 +169,8 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     throw new QueryStringException(
                         sprintf(
                             "Token '%s' could not be identified by specification builder.",
-                            $token
-                        )
+                            $token,
+                        ),
                     );
             }
 

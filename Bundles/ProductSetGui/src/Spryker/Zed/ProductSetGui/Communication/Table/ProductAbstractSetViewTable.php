@@ -28,10 +28,12 @@ class ProductAbstractSetViewTable extends AbstractTable
      * @var string
      */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var string
      */
     public const COL_IMAGE = 'image';
+
     /**
      * @var string
      */
@@ -166,7 +168,7 @@ class ProductAbstractSetViewTable extends AbstractTable
             $productAbstractEntity->getVirtualColumn(static::COL_NAME),
             $productAbstractEntity->getSku(),
             $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
-            $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity)
+            $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
         );
 
         return $content;

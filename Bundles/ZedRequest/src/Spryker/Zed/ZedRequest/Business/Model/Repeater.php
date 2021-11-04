@@ -81,7 +81,7 @@ class Repeater implements RepeaterInterface
             '%s_%s_%s',
             $httpRequest->attributes->get('module'),
             $httpRequest->attributes->get('controller'),
-            $httpRequest->attributes->get('action')
+            $httpRequest->attributes->get('action'),
         );
 
         $this->validateModuleControllerAction($moduleControllerAction);
@@ -159,8 +159,8 @@ class Repeater implements RepeaterInterface
         throw new InvalidActionPathException(
             sprintf(
                 'The path %s to the action you are trying to invoke has forbidden symbols.',
-                $moduleControllerAction
-            )
+                $moduleControllerAction,
+            ),
         );
     }
 }

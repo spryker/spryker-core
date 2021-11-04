@@ -10,29 +10,23 @@ namespace Spryker\Zed\ProductBundleStorage\Dependency\Facade;
 interface ProductBundleStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @phpstan-return array<int>
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return array
+     * @return array<int>
      */
     public function getEventTransferIds(array $eventTransfers);
 
     /**
-     * @phpstan-return array<int>
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
-     * @return array
+     * @return array<int>
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 
     /**
-     * @phpstan-param array<string> $columns
-     *
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
-     * @param array $columns
+     * @param array<string> $columns
      *
      * @return array<\Generated\Shared\Transfer\EventEntityTransfer>
      */

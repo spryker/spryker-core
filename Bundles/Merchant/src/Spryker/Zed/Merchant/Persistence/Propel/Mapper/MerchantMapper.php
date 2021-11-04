@@ -30,7 +30,7 @@ class MerchantMapper implements MerchantMapperInterface
         SpyMerchant $merchantEntity
     ): SpyMerchant {
         $merchantEntity->fromArray(
-            $merchantTransfer->modifiedToArray(false)
+            $merchantTransfer->modifiedToArray(false),
         );
 
         return $merchantEntity;
@@ -48,7 +48,7 @@ class MerchantMapper implements MerchantMapperInterface
     ): MerchantTransfer {
         return $merchantTransfer->fromArray(
             $merchantEntity->toArray(),
-            true
+            true,
         );
     }
 

@@ -37,8 +37,8 @@ class AvailableCustomerTable extends AbstractCustomerTable
             sprintf(
                 'available-customer-table?%s=%d',
                 EditController::PARAM_ID_USER,
-                $this->userTransfer->getIdUser()
-            )
+                $this->userTransfer->getIdUser(),
+            ),
         );
 
         return $config;
@@ -54,12 +54,12 @@ class AvailableCustomerTable extends AbstractCustomerTable
                 ->add(
                     SpyCustomerTableMap::COL_FK_USER,
                     $this->userTransfer->getIdUser(),
-                    Criteria::NOT_EQUAL
+                    Criteria::NOT_EQUAL,
                 )
                 ->addOr(
                     SpyCustomerTableMap::COL_FK_USER,
                     null,
-                    Criteria::ISNULL
+                    Criteria::ISNULL,
                 )
             ->leftJoinSpyUser()
             ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::COL_ID)
@@ -100,7 +100,7 @@ class AvailableCustomerTable extends AbstractCustomerTable
             '<a href="%s" onclick="return confirm(\'%s\')">%s</a>',
             $this->getEditCustomerUserConnectionsUrl($customerEntity->getSpyUser()->getIdUser()),
             static::REDIRECT_WARNING,
-            $customerEntity->getSpyUser()->getUsername()
+            $customerEntity->getSpyUser()->getUsername(),
         );
     }
 

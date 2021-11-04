@@ -71,7 +71,7 @@ class ProductListCategoryRelationWriter implements ProductListCategoryRelationWr
         $this->productListEntityManager->removeCategoryRelations($idProductList, $deleteCategoryIds);
 
         return $productListCategoryRelationTransfer->setCategoryIds(
-            $this->getRelatedCategoryIds($productListCategoryRelationTransfer)
+            $this->getRelatedCategoryIds($productListCategoryRelationTransfer),
         );
     }
 

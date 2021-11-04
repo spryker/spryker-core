@@ -22,7 +22,7 @@ class CustomerAccessPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery
      */
-    public function customerAccessQuery(): SpyUnauthenticatedCustomerAccessQuery
+    public function createCustomerAccessQuery(): SpyUnauthenticatedCustomerAccessQuery
     {
         return SpyUnauthenticatedCustomerAccessQuery::create();
     }

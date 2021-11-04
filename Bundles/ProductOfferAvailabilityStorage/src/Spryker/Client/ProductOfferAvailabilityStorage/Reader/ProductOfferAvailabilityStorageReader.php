@@ -60,7 +60,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     public function findByProductOfferReference(string $productOfferReference, string $storeName): ?ProductOfferAvailabilityStorageTransfer
     {
         $productOfferAvailabilityStorageTransferData = $this->storageClient->get(
-            $this->generateKey($productOfferReference, $storeName)
+            $this->generateKey($productOfferReference, $storeName),
         );
 
         if (!$productOfferAvailabilityStorageTransferData) {
@@ -69,7 +69,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
 
         return $this->mapToProductOfferAvailabilityStorageDataToTransfer(
             $productOfferAvailabilityStorageTransferData,
-            new ProductOfferAvailabilityStorageTransfer()
+            new ProductOfferAvailabilityStorageTransfer(),
         );
     }
 
@@ -83,7 +83,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     {
         $productOfferAvailabilityStorageKeys = $this->generateKeys($productOfferReferences, $storeName);
         $productOfferAvailabilityStorageTransferData = $this->storageClient->getMulti(
-            $productOfferAvailabilityStorageKeys
+            $productOfferAvailabilityStorageKeys,
         );
 
         $productOfferAvailabilityStorageTransfers = [];
@@ -99,7 +99,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
 
             $productOfferAvailabilityStorageTransfers[$productOfferReference] = $this->mapToProductOfferAvailabilityStorageDataToTransfer(
                 $decodedProductOfferAvailabilityStorageTransferDataItem,
-                new ProductOfferAvailabilityStorageTransfer()
+                new ProductOfferAvailabilityStorageTransfer(),
             );
         }
 
@@ -119,7 +119,7 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
         $productOfferAvailabilityStorageTransfer->fromArray($productOfferAvailabilityStorageTransferData, true);
 
         $productOfferAvailabilityStorageTransfer->setIsAvailable(
-            $this->isProductOfferAvailable($productOfferAvailabilityStorageTransfer)
+            $this->isProductOfferAvailable($productOfferAvailabilityStorageTransfer),
         );
 
         return $productOfferAvailabilityStorageTransfer;

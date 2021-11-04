@@ -24,7 +24,7 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsVersionUserUpdater(
             $this->getUserFacade(),
-            $this->getCmsQueryContainer()
+            $this->getCmsQueryContainer(),
         );
     }
 
@@ -34,7 +34,7 @@ class CmsUserConnectorBusinessFactory extends AbstractBusinessFactory
     public function createCmsVersionUserExpander()
     {
         return new CmsVersionUserExpander(
-            $this->getUserFacade()
+            $this->getUserFacade(),
         );
     }
 

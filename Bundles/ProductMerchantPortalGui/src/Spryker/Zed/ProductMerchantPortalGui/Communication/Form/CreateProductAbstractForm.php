@@ -27,10 +27,12 @@ class CreateProductAbstractForm extends AbstractType
      * @var string
      */
     protected const FIELD_NAME = 'name';
+
     /**
      * @var string
      */
     protected const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -40,10 +42,12 @@ class CreateProductAbstractForm extends AbstractType
      * @var string
      */
     protected const LABEL_SKU = 'SKU Prefix';
+
     /**
      * @var string
      */
     protected const LABEL_NAME = 'Name';
+
     /**
      * @var string
      */
@@ -53,13 +57,14 @@ class CreateProductAbstractForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_SKU = 'Enter SKU prefix';
+
     /**
      * @var string
      */
     protected const PLACEHOLDER_NAME = 'Enter name';
 
     /**
-     * @var array
+     * @var array<string, bool>
      */
     protected const CHOICES_IS_SINGLE_CONCRETE = [
         'Abstract product has 1 concrete product' => true,

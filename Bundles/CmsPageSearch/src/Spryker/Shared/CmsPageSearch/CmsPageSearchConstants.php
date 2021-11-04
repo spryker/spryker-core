@@ -17,6 +17,7 @@ class CmsPageSearchConstants
      * - Queue name as used for processing cms block messages
      *
      * @api
+     *
      * @var string
      */
     public const CMS_SYNC_SEARCH_QUEUE = 'sync.search.cms';
@@ -26,6 +27,7 @@ class CmsPageSearchConstants
      * - Queue name as used for error cms block messages
      *
      * @api
+     *
      * @var string
      */
     public const CMS_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.cms.error';
@@ -35,6 +37,7 @@ class CmsPageSearchConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     *
      * @var string
      */
     public const CMS_PAGE_RESOURCE_NAME = 'cms_page_search';

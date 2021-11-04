@@ -70,7 +70,7 @@ class CustomerAccess implements CustomerAccessInterface
             if ($this->customerAccessConfig->hasPluginToSeeContentType($contentTypeAccess->getContentType())) {
                 $permission = new PermissionTransfer();
                 $permission->setKey(
-                    $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType())
+                    $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType()),
                 );
 
                 $permissionCollectionTransfer->addPermission($permission);

@@ -23,10 +23,12 @@ class DependencyController extends AbstractController
      * @var string
      */
     public const APPLICATION_ZED = 'Zed';
+
     /**
      * @var string
      */
     public const QUERY_KEY_BUILD_TREE = 'build-tree';
+
     /**
      * @var string
      */
@@ -89,7 +91,7 @@ class DependencyController extends AbstractController
         $form = $this->getFactory()
             ->createBundlesForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(),
             )
             ->handleRequest($request);
 

@@ -30,22 +30,27 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternat
 class GlueAnnotationAnalyzerTest extends Unit
 {
     protected const CONTROLLER_SOURCE_DIRECTORY = __DIR__ . '/../Stub/Controller/';
+
     /**
      * @var string
      */
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
+
     /**
      * @var string
      */
     protected const CONTROLLER_WITH_INVALID_ANNOTATIONS_FILE_NAME = 'TestResourceWithInvalidAnnotationsController.php';
+
     /**
      * @var string
      */
     protected const CONTROLLER_WITHOUT_ANNOTATIONS = 'TestResourceWithoutAnnotationsController.php';
+
     /**
      * @var string
      */
     protected const CONTROLLER_WITH_EMPTY_ANNOTATIONS = 'TestResourceWithEmptyAnnotationsController.php';
+
     /**
      * @var string
      */
@@ -56,26 +61,32 @@ class GlueAnnotationAnalyzerTest extends Unit
      */
     protected const SUMMARY = 'Summary example';
     protected const ALTERNATIVE_RESPONSE_CLASS = RestTestAlternativeAttributesTransfer::class;
+
     /**
      * @var string
      */
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
+
     /**
      * @var string
      */
     protected const HEADER_ACCEPT_LANGUAGE_REF = 'acceptLanguage';
+
     /**
      * @var int
      */
     protected const KEY_RESPONSE_BAD_REQUEST = 400;
+
     /**
      * @var int
      */
     protected const KEY_RESPONSE_NOT_FOUND = 404;
+
     /**
      * @var string
      */
     protected const VALUE_RESPONSE_BAD_REQUEST = 'Bad Request';
+
     /**
      * @var string
      */
@@ -103,7 +114,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_FILE_NAME),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
 
@@ -133,7 +144,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_INVALID_ANNOTATIONS_FILE_NAME),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $this->expectException(InvalidAnnotationFormatException::class);
@@ -147,7 +158,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITHOUT_ANNOTATIONS),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
@@ -166,7 +177,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_EMPTY_ANNOTATIONS),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());
@@ -185,7 +196,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     {
         $glueAnnotationAnalyzer = new GlueAnnotationAnalyzer(
             $this->getGlueControllerFinder(static::CONTROLLER_SOURCE_DIRECTORY . DIRECTORY_SEPARATOR . static::CONTROLLER_WITH_NULLABLE_ID),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
         );
 
         $parameters = $glueAnnotationAnalyzer->getResourceParametersFromPlugin(new TestResourceRoutePlugin());

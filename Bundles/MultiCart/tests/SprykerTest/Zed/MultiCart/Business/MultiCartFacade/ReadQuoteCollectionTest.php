@@ -55,7 +55,7 @@ class ReadQuoteCollectionTest extends Unit
     ];
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected const CUSTOMER_DATA = [
         'customer_reference' => 'tester-de',
@@ -160,7 +160,7 @@ class ReadQuoteCollectionTest extends Unit
     {
         $quoteCollectionTransfer = (new QuoteCollectionTransfer())
             ->setQuotes(
-                new ArrayObject(static::COLLECTION_DATA)
+                new ArrayObject(static::COLLECTION_DATA),
             );
 
         return $quoteCollectionTransfer;
@@ -175,7 +175,7 @@ class ReadQuoteCollectionTest extends Unit
         $builder->setMethods(
             [
                 'getQuoteFacade',
-            ]
+            ],
         );
 
         $this->multiCartBusinessFactory = $builder->getMock();
@@ -194,7 +194,7 @@ class ReadQuoteCollectionTest extends Unit
         $builder->setMethods(
             [
                 'getQuoteFacade',
-            ]
+            ],
         );
 
         $this->multiCartBusinessFactory = $builder->getMock();

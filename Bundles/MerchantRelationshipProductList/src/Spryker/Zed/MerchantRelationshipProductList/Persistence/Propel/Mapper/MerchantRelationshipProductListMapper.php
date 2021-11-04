@@ -30,7 +30,7 @@ class MerchantRelationshipProductListMapper implements MerchantRelationshipProdu
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductList\Persistence\SpyProductList> $productListEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
@@ -41,7 +41,7 @@ class MerchantRelationshipProductListMapper implements MerchantRelationshipProdu
     ): ProductListCollectionTransfer {
         foreach ($productListEntities as $productListEntity) {
             $productListCollectionTransfer->addProductList(
-                $this->mapProductList($productListEntity, new ProductListTransfer())
+                $this->mapProductList($productListEntity, new ProductListTransfer()),
             );
         }
 

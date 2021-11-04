@@ -24,6 +24,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
      * @var string
      */
     protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var string
      */
@@ -116,7 +117,7 @@ class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
     protected function validateQuickOrderItem(QuickOrderItemTransfer $quickOrderItemTransfer): QuickOrderItemTransfer
     {
         $itemValidationTransfer = (new ItemValidationTransfer())->setItem(
-            $this->getItemTransfer($quickOrderItemTransfer)
+            $this->getItemTransfer($quickOrderItemTransfer),
         );
         $itemValidationTransfer = $this->quickOrderItemValidator->validate($itemValidationTransfer);
 

@@ -33,7 +33,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet> $categoryImageSetEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet[] $categoryImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
@@ -65,7 +65,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage> $categoryImageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage[] $categoryImageEntityCollection
      * @param \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet|null $categoryImageSetEntity
      *
      * @return array<\Generated\Shared\Transfer\CategoryImageTransfer>
@@ -97,7 +97,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
         $categoryImageSetToCategoryImageEntity = $this->getCategoryImageSetToCategoryImageEntity($categoryImageSetEntity, $categoryImageEntity);
         $categoryImageTransfer->setSortOrder($categoryImageSetToCategoryImageEntity->getSortOrder());
         $categoryImageTransfer->setIdCategoryImageSetToCategoryImage(
-            $categoryImageSetToCategoryImageEntity->getIdCategoryImageSetToCategoryImage()
+            $categoryImageSetToCategoryImageEntity->getIdCategoryImageSetToCategoryImage(),
         );
 
         return $categoryImageTransfer;
@@ -114,7 +114,7 @@ class CategoryImageMapper implements CategoryImageMapperInterface
         CategoryImageTransfer $categoryImageTransfer
     ): SpyCategoryImage {
         $categoryImageEntity->fromArray(
-            $categoryImageTransfer->modifiedToArray(false)
+            $categoryImageTransfer->modifiedToArray(false),
         );
 
         return $categoryImageEntity;

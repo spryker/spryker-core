@@ -40,7 +40,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractDependenc
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 

@@ -23,7 +23,7 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
      */
     public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration> $giftCardProductAbstractConfigurationEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration[] $giftCardProductAbstractConfigurationEntities */
         $giftCardProductAbstractConfigurationEntities = $this->getFactory()
             ->createSpyGiftCardProductAbstractConfigurationQuery()
             ->joinWithSpyGiftCardProductAbstractConfigurationLink()
@@ -49,7 +49,7 @@ class GiftCardRepository extends AbstractRepository implements GiftCardRepositor
      */
     public function getGiftCardConcreteConfigurationsForProductByConcreteSkus(array $concreteSkus): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration> $giftCardProductConfigurationEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration[] $giftCardProductConfigurationEntities */
         $giftCardProductConfigurationEntities = $this->getFactory()
             ->createSpyGiftCardProductConfigurationQuery()
             ->joinWithSpyGiftCardProductConfigurationLink()

@@ -27,14 +27,17 @@ class BundledProductForm extends AbstractType
      * @var string
      */
     public const FIELD_QUANTITY = 'quantity';
+
     /**
      * @var string
      */
     public const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+
     /**
      * @var string
      */
     public const FIELD_SKU = 'sku';
+
     /**
      * @var string
      */
@@ -42,7 +45,7 @@ class BundledProductForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

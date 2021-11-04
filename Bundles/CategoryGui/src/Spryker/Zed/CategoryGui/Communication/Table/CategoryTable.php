@@ -23,42 +23,52 @@ class CategoryTable extends AbstractTable
      * @var string
      */
     public const COL_CATEGORY_KEY = 'category_key';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_PARENT = 'parent_name';
+
     /**
      * @var string
      */
     public const COL_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     public const COL_VISIBLE = 'is_in_menu';
+
     /**
      * @var string
      */
     public const COL_SEARCHABLE = 'is_searchable';
+
     /**
      * @var string
      */
     public const COL_TEMPLATE = 'template';
+
     /**
      * @var string
      */
     public const COL_STORE_RELATION = 'store_relation';
+
     /**
      * @var string
      */
     public const COL_ACTIONS = 'actions';
+
     /**
      * @var string
      */
     public const IDENTIFIER = 'category_data_table';
+
     /**
      * @var string
      */
@@ -68,14 +78,17 @@ class CategoryTable extends AbstractTable
      * @var string
      */
     protected const COL_IS_ROOT = 'is_root';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+
     /**
      * @var string
      */
     protected const REQUEST_PARAM_ID_NODE = 'id-node';
+
     /**
      * @var string
      */
@@ -214,7 +227,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param array<string[]> $categoryStoreNamesGroupedByIdCategory
+     * @param array<array<string>> $categoryStoreNamesGroupedByIdCategory
      *
      * @return array
      */
@@ -271,7 +284,7 @@ class CategoryTable extends AbstractTable
             'Actions',
             [
                 'icon' => '',
-            ]
+            ],
         );
     }
 
@@ -287,7 +300,7 @@ class CategoryTable extends AbstractTable
             Url::generate('/product-category/assign', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
-            true
+            true,
         );
     }
 
@@ -302,7 +315,7 @@ class CategoryTable extends AbstractTable
             'Edit',
             Url::generate('/category-gui/edit', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
-            ])
+            ]),
         );
     }
 
@@ -317,7 +330,7 @@ class CategoryTable extends AbstractTable
             'Delete',
             Url::generate('/category-gui/delete', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
-            ])
+            ]),
         );
     }
 
@@ -332,7 +345,7 @@ class CategoryTable extends AbstractTable
             'Re-sort child categories',
             Url::generate('/category-gui/re-sort', [
                 static::REQUEST_PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
-            ])
+            ]),
         );
     }
 
@@ -348,7 +361,7 @@ class CategoryTable extends AbstractTable
             Url::generate('/category-gui/create', [
                 static::REQUEST_PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
             ]),
-            true
+            true,
         );
     }
 
@@ -364,7 +377,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param int $idCategory
-     * @param array<string[]> $categoryStoreNamesGroupedByIdCategory
+     * @param array<array<string>> $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */
@@ -378,7 +391,7 @@ class CategoryTable extends AbstractTable
         foreach ($categoryStoreNamesGroupedByIdCategory[$idCategory] as $storeName) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
-                $storeName
+                $storeName,
             );
         }
 

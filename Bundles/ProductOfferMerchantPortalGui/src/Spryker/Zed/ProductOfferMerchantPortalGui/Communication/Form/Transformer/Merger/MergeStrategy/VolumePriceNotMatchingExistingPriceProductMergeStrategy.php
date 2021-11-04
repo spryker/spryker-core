@@ -33,13 +33,13 @@ class VolumePriceNotMatchingExistingPriceProductMergeStrategy extends AbstractPr
         }
 
         $basePriceProductTransfer = $this->createNewBasePriceProductTransferForVolumePrice(
-            $newPriceProductTransfer
+            $newPriceProductTransfer,
         );
 
         $basePriceProductTransfer = $this->priceProductVolumeService
             ->addVolumePrice(
                 $basePriceProductTransfer,
-                $newPriceProductTransfer
+                $newPriceProductTransfer,
             );
 
         $priceProductTransfers->append($basePriceProductTransfer);

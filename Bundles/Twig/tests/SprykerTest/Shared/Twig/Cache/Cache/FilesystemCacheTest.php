@@ -30,6 +30,7 @@ class FilesystemCacheTest extends Unit
      * @var string
      */
     public const EXISTING_CACHE_KEY = 'key';
+
     /**
      * @var string
      */
@@ -39,6 +40,7 @@ class FilesystemCacheTest extends Unit
      * @var string
      */
     public const NEW_CACHE_KEY = 'new key';
+
     /**
      * @var string
      */
@@ -48,6 +50,7 @@ class FilesystemCacheTest extends Unit
      * @var string
      */
     public const NOT_EXISTING_CACHE_KEY = 'not existing key';
+
     /**
      * @var string
      */
@@ -91,14 +94,14 @@ class FilesystemCacheTest extends Unit
      */
     protected function buildTestCacheFile(): void
     {
-        file_put_contents($this->getCacheFile(), <<<TXT
+        $content = <<<TXT
 <?php return [
     'key' => 'value',
     'invalid key' => false,
 ];
 
-TXT
-        );
+TXT;
+        file_put_contents($this->getCacheFile(), $content);
     }
 
     /**
@@ -232,7 +235,7 @@ TXT
         return new FilesystemCache(
             $this->getFilesystemCacheLoader($pathToCacheFile),
             $this->getFilesystemCacheWriter($pathToCacheFile),
-            true
+            true,
         );
     }
 
@@ -246,7 +249,7 @@ TXT
         return new FilesystemCache(
             $this->getFilesystemCacheLoader($pathToCacheFile),
             $this->getFilesystemCacheWriter($pathToCacheFile),
-            false
+            false,
         );
     }
 

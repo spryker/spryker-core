@@ -80,6 +80,7 @@ class ProductPageSearchListenerTest extends Unit
      * @var int
      */
     protected const NUMBER_OF_LOCALES = 1;
+
     /**
      * @var int
      */
@@ -124,7 +125,7 @@ class ProductPageSearchListenerTest extends Unit
 
         $this->productConcreteTransfer = $this->tester->haveProduct();
         $this->productAbstractTransfer = $this->tester->getProductFacade()->findProductAbstractById(
-            $this->productConcreteTransfer->getFkProductAbstract()
+            $this->productConcreteTransfer->getFkProductAbstract(),
         );
 
         $localizedAttributes = $this->tester->generateLocalizedAttributes();
@@ -316,7 +317,7 @@ class ProductPageSearchListenerTest extends Unit
     {
         // Prepare
         $productImageSetToProductImageEntity = SpyProductImageSetToProductImageQuery::create()->findOneByFkProductImageSet(
-            $this->productImageSetTransfer->getIdProductImageSet()
+            $this->productImageSetTransfer->getIdProductImageSet(),
         );
 
         $productPageSearchQueryContainer = new ProductPageSearchQueryContainer();
@@ -739,7 +740,7 @@ class ProductPageSearchListenerTest extends Unit
                 'transformPageMapToDocumentByMapperName' => function () {
                     return [];
                 },
-            ]
+            ],
         ));
     }
 }

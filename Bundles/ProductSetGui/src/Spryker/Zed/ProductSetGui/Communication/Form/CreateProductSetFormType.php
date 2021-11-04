@@ -26,14 +26,17 @@ class CreateProductSetFormType extends AbstractType
      * @var string
      */
     public const FIELD_GENERAL_FORM = 'general_form';
+
     /**
      * @var string
      */
     public const FIELD_SEO_FORM = 'seo_form';
+
     /**
      * @var string
      */
     public const FIELD_IMAGES_FORM = 'images_form';
+
     /**
      * @var string
      */
@@ -71,7 +74,7 @@ class CreateProductSetFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

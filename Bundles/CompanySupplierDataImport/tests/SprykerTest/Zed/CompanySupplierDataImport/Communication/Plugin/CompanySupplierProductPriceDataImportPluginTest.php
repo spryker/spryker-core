@@ -31,6 +31,7 @@ class CompanySupplierProductPriceDataImportPluginTest extends Unit
      * @var string
      */
     protected const COMPANY_KEY = 'spryker';
+
     /**
      * @var string
      */

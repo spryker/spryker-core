@@ -45,7 +45,7 @@ class ProductRelationDataImportDependencyProvider extends DataImportDependencyPr
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductRelationDataImportToUtilEncodingServiceBridge(
-                $container->getLocator()->utilEncoding()->service()
+                $container->getLocator()->utilEncoding()->service(),
             );
         });
 
@@ -61,7 +61,7 @@ class ProductRelationDataImportDependencyProvider extends DataImportDependencyPr
     {
         $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationDataImportToProductRelationFacadeBridge(
-                $container->getLocator()->productRelation()->facade()
+                $container->getLocator()->productRelation()->facade(),
             );
         });
 

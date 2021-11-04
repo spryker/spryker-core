@@ -32,7 +32,7 @@ class SimultaneousAuthenticationRestRequestValidator implements SimultaneousAuth
                 (new RestErrorMessageTransfer())
                     ->setStatus(Response::HTTP_BAD_REQUEST)
                     ->setCode(AuthRestApiConfig::RESPONSE_CODE_ANONYMOUS_USER_WITH_ACCESS_TOKEN)
-                    ->setDetail(AuthRestApiConfig::RESPONSE_DETAIL_MESSAGE_ANONYMOUS_USER_WITH_ACCESS_TOKEN)
+                    ->setDetail(AuthRestApiConfig::RESPONSE_DETAIL_MESSAGE_ANONYMOUS_USER_WITH_ACCESS_TOKEN),
             );
         }
 

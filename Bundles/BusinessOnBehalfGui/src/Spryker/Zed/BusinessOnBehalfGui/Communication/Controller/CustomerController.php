@@ -22,14 +22,17 @@ class CustomerController extends AbstractController
      * @var string
      */
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Customer has been assigned to business unit.';
+
     /**
      * @var string
      */
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Customer has not been attached to business unit.';
+
     /**
      * @var string
      */
     protected const MESSAGE_COMPANY_NOT_FOUND = 'Company not found.';
+
     /**
      * @var string
      */
@@ -39,6 +42,7 @@ class CustomerController extends AbstractController
      * @var string
      */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
+
     /**
      * @var string
      */
@@ -48,6 +52,7 @@ class CustomerController extends AbstractController
      * @var string
      */
     protected const PARAM_ID_CUSTOMER = 'id-customer';
+
     /**
      * @var string
      */

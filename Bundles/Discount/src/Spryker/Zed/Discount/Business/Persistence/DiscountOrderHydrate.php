@@ -51,11 +51,11 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
                 $existingDiscountTransfer = $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()];
 
                 $calculatedDiscountTransfer->setQuantity(
-                    $calculatedDiscountTransfer->getQuantity() + $existingDiscountTransfer->getQuantity()
+                    $calculatedDiscountTransfer->getQuantity() + $existingDiscountTransfer->getQuantity(),
                 );
 
                 $calculatedDiscountTransfer->setSumAmount(
-                    $calculatedDiscountTransfer->getSumAmount() + $existingDiscountTransfer->getSumAmount()
+                    $calculatedDiscountTransfer->getSumAmount() + $existingDiscountTransfer->getSumAmount(),
                 );
             }
             $calculatedDiscountTransfer->setUnitAmount(null);
@@ -75,7 +75,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesDiscount>
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesDiscount[]
      */
     protected function getSalesOrderDiscounts($idSalesOrder)
     {

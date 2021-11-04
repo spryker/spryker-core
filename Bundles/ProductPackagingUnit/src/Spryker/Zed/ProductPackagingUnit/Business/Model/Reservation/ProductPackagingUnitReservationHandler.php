@@ -78,7 +78,7 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
         return $this->productPackagingUnitRepository->aggregateProductPackagingUnitReservation(
             $sku,
             array_keys($reservedStates->getStates()->getArrayCopy()),
-            $storeTransfer
+            $storeTransfer,
         );
     }
 }

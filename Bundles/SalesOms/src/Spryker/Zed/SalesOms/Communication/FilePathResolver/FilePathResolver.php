@@ -35,7 +35,7 @@ class FilePathResolver implements FilePathResolverInterface
         return (new FilePathResolverResponseTransfer())
             ->setIsSuccessful(false)
             ->setMessage(
-                (new MessageTransfer())->setMessage(sprintf('File "%s" does not exist or is unreadable.', $filePath))
+                (new MessageTransfer())->setMessage(sprintf('File "%s" does not exist or is unreadable.', $filePath)),
             );
     }
 }

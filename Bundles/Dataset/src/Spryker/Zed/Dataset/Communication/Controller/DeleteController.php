@@ -23,6 +23,7 @@ class DeleteController extends AbstractController
      * @var string
      */
     protected const URL_PARAM_ID_DATASET = 'id-dataset';
+
     /**
      * @var string
      */

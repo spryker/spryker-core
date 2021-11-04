@@ -52,7 +52,7 @@ class IsProductConcreteAvailableTest extends Unit
         // Assert
         $this->assertTrue(
             $isProductConcreteAvailable,
-            'Expects that product concrete will be available.'
+            'Expects that product concrete will be available.',
         );
     }
 
@@ -80,7 +80,7 @@ class IsProductConcreteAvailableTest extends Unit
         // Assert
         $this->assertFalse(
             $isProductConcreteAvailable,
-            'Expects that product concrete wont be available.'
+            'Expects that product concrete wont be available.',
         );
     }
 
@@ -108,7 +108,7 @@ class IsProductConcreteAvailableTest extends Unit
         // Assert
         $this->assertFalse(
             $isProductConcreteAvailable,
-            'Expects that product concrete wont be available when available quantity of product configuration is null.'
+            'Expects that product concrete wont be available when available quantity of product configuration is null.',
         );
     }
 
@@ -134,7 +134,7 @@ class IsProductConcreteAvailableTest extends Unit
         // Assert
         $this->assertFalse(
             $isProductConcreteAvailable,
-            'Expects that product concrete wont be available when no product configuration and no availability in product view.'
+            'Expects that product concrete wont be available when no product configuration and no availability in product view.',
         );
     }
 
@@ -160,7 +160,7 @@ class IsProductConcreteAvailableTest extends Unit
         // Assert
         $this->assertTrue(
             $isProductConcreteAvailable,
-            'Expects that product concrete will be available when no product configuration but available in product view.'
+            'Expects that product concrete will be available when no product configuration but available in product view.',
         );
     }
 }

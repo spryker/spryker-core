@@ -36,7 +36,7 @@ class ProductConcreteOwnedByMerchantConstraintValidator extends AbstractConstrai
         $merchantTransfer = $constraint->getMerchantUserFacade()->getCurrentMerchantUser()->getMerchantOrFail();
         $isProductConcreteOwnedByMerchant = $constraint->getMerchantProductFacade()->isProductConcreteOwnedByMerchant(
             $productConcreteTransfer,
-            $merchantTransfer
+            $merchantTransfer,
         );
 
         if (!$isProductConcreteOwnedByMerchant) {

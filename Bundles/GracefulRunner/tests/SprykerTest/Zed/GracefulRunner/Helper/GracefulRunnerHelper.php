@@ -106,13 +106,13 @@ class GracefulRunnerHelper extends Module
         $this->assertSame(
             $expectedNumberOfExecutedIterations,
             $this->numberOfExecutedIterations,
-            sprintf('Expected to have "%s" executed iterations but got "%s"', $expectedNumberOfExecutedIterations, $this->numberOfExecutedItems)
+            sprintf('Expected to have "%s" executed iterations but got "%s"', $expectedNumberOfExecutedIterations, $this->numberOfExecutedItems),
         );
 
         $this->assertSame(
             $expectedNumberOfExecutedItems,
             $this->numberOfExecutedItems,
-            sprintf('Expected to have "%s" executed items but got "%s"', $expectedNumberOfExecutedItems, $this->numberOfExecutedItems)
+            sprintf('Expected to have "%s" executed items but got "%s"', $expectedNumberOfExecutedItems, $this->numberOfExecutedItems),
         );
     }
 }

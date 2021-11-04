@@ -58,7 +58,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->createAvailabilityMapper()
             ->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
                 $availabilityEntity,
-                new ProductConcreteAvailabilityTransfer()
+                new ProductConcreteAvailabilityTransfer(),
             );
     }
 
@@ -89,7 +89,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         foreach ($availabilityEntities as $idProductConcrete => $availabilityEntity) {
             $productConcreteAvailabilityTransfer = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
                 $availabilityEntity,
-                new ProductConcreteAvailabilityTransfer()
+                new ProductConcreteAvailabilityTransfer(),
             );
 
             $productConcreteAvailabilityTransfers[$idProductConcrete] = $productConcreteAvailabilityTransfer;
@@ -135,7 +135,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         foreach ($availabilityEntities as $availabilityEntity) {
             $productConcreteAvailabilityTransfers[] = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
                 $availabilityEntity,
-                new ProductConcreteAvailabilityTransfer()
+                new ProductConcreteAvailabilityTransfer(),
             );
         }
 
@@ -168,7 +168,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->createAvailabilityMapper()
             ->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
                 $availabilityEntity,
-                new ProductConcreteAvailabilityTransfer()
+                new ProductConcreteAvailabilityTransfer(),
             );
     }
 
@@ -210,7 +210,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->createAvailabilityMapper()
             ->mapAvailabilityEntityToProductAbstractAvailabilityTransfer(
                 $availabilityAbstractEntityArray,
-                new ProductAbstractAvailabilityTransfer()
+                new ProductAbstractAvailabilityTransfer(),
             );
     }
 
@@ -236,7 +236,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
 
         if ($idAvailabilityAbstract === null) {
             throw new AvailabilityAbstractNotFoundException(
-                'You cannot update concrete availability without updating abstract availability first'
+                'You cannot update concrete availability without updating abstract availability first',
             );
         }
 
@@ -337,7 +337,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->createAvailabilityMapper()
             ->mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer(
                 $availabilityEntities,
-                new ProductConcreteAvailabilityCollectionTransfer()
+                new ProductConcreteAvailabilityCollectionTransfer(),
             );
     }
 

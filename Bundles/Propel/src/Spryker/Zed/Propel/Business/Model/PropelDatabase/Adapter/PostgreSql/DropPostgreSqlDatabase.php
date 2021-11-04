@@ -12,6 +12,7 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
+use Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
@@ -87,7 +88,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
             Config::get(PropelConstants::ZED_DB_PORT),
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
             $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
-            'postgres'
+            'postgres',
         );
     }
 
@@ -98,7 +99,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     {
         return sprintf(
             'sudo dropdb %s --if-exists',
-            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
+            $this->getConfigValue(PropelConstants::ZED_DB_DATABASE),
         );
     }
 
@@ -135,13 +136,22 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     /**
      * @param string $command
      *
+     * @throws \Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException
+     *
      * @return \Symfony\Component\Process\Process
      */
     protected function getProcess($command)
     {
         // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
         if (!method_exists(Process::class, 'fromShellCommandline')) {
-            //@phpstan-ignore-next-line
+            if (version_compare(PHP_VERSION, '8.0.0', '>=') === true) {
+                throw new UnsupportedVersionException('The minimum required version for symfony/process is 4.2.0 to work with PHP 8');
+            }
+
+            /**
+             * @phpstan-ignore-next-line
+             * @psalm-suppress InvalidArgument
+             */
             return new Process($command);
         }
 
@@ -161,7 +171,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         if (preg_match(static::SHELL_CHARACTERS_PATTERN, $value)) {
             throw new UnSupportedCharactersInConfigurationValueException(sprintf(
                 'Configuration value for key "%s" contains unsupported characters (\'$\',\'`\') that is forbidden by security reason.',
-                $key
+                $key,
             ));
         }
 
@@ -188,18 +198,18 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $dsn = sprintf(
             'pgsql:host=%s;port=%s;dbname=postgres',
             $this->getConfigValue(PropelConstants::ZED_DB_HOST),
-            $this->getConfigValue(PropelConstants::ZED_DB_PORT)
+            $this->getConfigValue(PropelConstants::ZED_DB_PORT),
         );
 
         return new PDO(
             $dsn,
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
-            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
+            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
         );
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getEnvironmentVariables(): array
     {

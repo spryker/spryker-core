@@ -26,6 +26,7 @@ class MimeTypeSettingsForm extends AbstractType
      * @var string
      */
     public const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
+
     /**
      * @var string
      */
@@ -33,7 +34,7 @@ class MimeTypeSettingsForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

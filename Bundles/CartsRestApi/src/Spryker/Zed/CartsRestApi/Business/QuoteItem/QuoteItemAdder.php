@@ -115,7 +115,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
 
         $quoteTransfer = $this->quoteItemMapper->mapCartItemsRequestTransferToQuoteTransfer(
             $cartItemRequestTransfer,
-            new QuoteTransfer()
+            new QuoteTransfer(),
         );
 
         $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
@@ -133,7 +133,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
 
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $cartItemRequestTransfer
+            $cartItemRequestTransfer,
         );
 
         $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
@@ -144,7 +144,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         }
 
         $quoteTransfer = $this->quoteReloader->reloadQuoteItems(
-            $quoteResponseTransfer->getQuoteTransfer()
+            $quoteResponseTransfer->getQuoteTransfer(),
         );
 
         return $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
@@ -184,7 +184,7 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         foreach ($this->cartItemMapperPlugins as $cartItemMapperPlugin) {
             $persistentCartChangeTransfer = $cartItemMapperPlugin->mapCartItemRequestTransferToPersistentCartChangeTransfer(
                 $cartItemRequestTransfer,
-                $persistentCartChangeTransfer
+                $persistentCartChangeTransfer,
             );
         }
 

@@ -32,7 +32,7 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
     public function getCldrData()
     {
         $rawFileInput = file_get_contents(
-            $this->cldrFilePath
+            $this->cldrFilePath,
         );
         if ($rawFileInput === false) {
             throw new RuntimeException('Invalid content for cldr file.');

@@ -146,8 +146,8 @@ class HttpRequestValidatorTest extends Unit
             $glueApplicationConfigMock,
             new HeadersHttpRequestValidator(
                 new GlueApplicationConfig(),
-                $resourceRouteLoaderMock
-            )
+                $resourceRouteLoaderMock,
+            ),
         );
     }
 

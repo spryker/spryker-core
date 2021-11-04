@@ -18,6 +18,7 @@ class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorP
      * @var string
      */
     protected const NAME = 'request';
+
     /**
      * @var string
      */

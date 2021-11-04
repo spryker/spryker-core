@@ -25,26 +25,32 @@ class ReturnTable extends AbstractTable
      * @var string
      */
     protected const COL_RETURN_ID = 'id_sales_return';
+
     /**
      * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
+
     /**
      * @var string
      */
     protected const COL_ORDER_REFERENCE = 'order_reference';
+
     /**
      * @var string
      */
     protected const COL_RETURNED_PRODUCTS = 'returned_products';
+
     /**
      * @var string
      */
     protected const COL_RETURN_DATE = 'created_at';
+
     /**
      * @var string
      */
     protected const COL_STATE = 'state';
+
     /**
      * @var string
      */
@@ -52,18 +58,21 @@ class ReturnTable extends AbstractTable
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_DETAIL = '/sales-return-gui/detail';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::indexAction()
+     *
      * @var string
      */
     protected const ROUTE_RETURN_SLIP = '/sales-return-gui/return-slip';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     *
      * @var string
      */
     protected const PARAM_ID_RETURN = 'id-return';
@@ -145,11 +154,11 @@ class ReturnTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection */
         $salesReturnEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
-            true
+            true,
         );
 
         if (!$salesReturnEntityCollection->count()) {
@@ -178,18 +187,18 @@ class ReturnTable extends AbstractTable
             ->endUse()
             ->withColumn(
                 sprintf('COUNT(%s)', SpySalesReturnItemTableMap::COL_ID_SALES_RETURN_ITEM),
-                static::COL_RETURNED_PRODUCTS
+                static::COL_RETURNED_PRODUCTS,
             )
             ->withColumn(
                 sprintf('GROUP_CONCAT(DISTINCT %s)', SpySalesOrderTableMap::COL_ORDER_REFERENCE),
-                static::COL_ORDER_REFERENCE
+                static::COL_ORDER_REFERENCE,
             );
 
         return $salesReturnQuery;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
      *
      * @return array
      */
@@ -242,7 +251,7 @@ class ReturnTable extends AbstractTable
                     ->joinState()
                     ->withColumn(
                         sprintf('DISTINCT %s', SpyOmsOrderItemStateTableMap::COL_NAME),
-                        static::COL_STATE
+                        static::COL_STATE,
                     )
                 ->endUse()
             ->endUse()
@@ -272,7 +281,7 @@ class ReturnTable extends AbstractTable
             Url::generate(static::ROUTE_DETAIL, [
                 static::PARAM_ID_RETURN => $salesReturnEntity->getIdSalesReturn(),
             ]),
-            'View'
+            'View',
         );
 
         $buttons[] = $this->generateViewButton(
@@ -283,7 +292,7 @@ class ReturnTable extends AbstractTable
             [
                 'icon' => '',
                 'class' => 'btn-create',
-            ]
+            ],
         );
 
         return implode(' ', $buttons);

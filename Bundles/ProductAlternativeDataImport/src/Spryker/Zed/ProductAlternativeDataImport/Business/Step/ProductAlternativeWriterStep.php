@@ -44,11 +44,11 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
     protected function saveConcreteAlternative(DataSetInterface $dataSet, SpyProductAlternativeQuery $productAlternativeQuery): void
     {
         $productAlternativeEntity = $productAlternativeQuery->filterByFkProductConcreteAlternative(
-            $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE]
+            $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE],
         )
             ->findOneOrCreate()
             ->setFkProductConcreteAlternative(
-                $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE]
+                $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE],
             );
         $productAlternativeEntity->save();
 
@@ -60,11 +60,11 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
 
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_REPLACEMENT_CONCRETE_PUBLISH,
-            $fkProductConcreteAlternative
+            $fkProductConcreteAlternative,
         );
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
-            $productAlternativeEntity->getFkProduct()
+            $productAlternativeEntity->getFkProduct(),
         );
     }
 
@@ -77,11 +77,11 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
     protected function saveAbstractAlternative(DataSetInterface $dataSet, SpyProductAlternativeQuery $productAlternativeQuery): void
     {
         $productAlternativeEntity = $productAlternativeQuery->filterByFkProductAbstractAlternative(
-            $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE]
+            $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE],
         )
             ->findOneOrCreate()
             ->setFkProductAbstractAlternative(
-                $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE]
+                $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE],
             );
         $productAlternativeEntity->save();
 
@@ -93,11 +93,11 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
 
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_REPLACEMENT_ABSTRACT_PUBLISH,
-            $fkProductAbstractAlternative
+            $fkProductAbstractAlternative,
         );
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
-            $productAlternativeEntity->getFkProduct()
+            $productAlternativeEntity->getFkProduct(),
         );
     }
 }

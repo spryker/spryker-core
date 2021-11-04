@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -53,6 +54,26 @@ use Spryker\Zed\Kernel\Container;
 class CalculationFacadeTest extends Unit
 {
     /**
+     * @var int
+     */
+    protected const ID_DISCOUNT_1 = 1;
+
+    /**
+     * @var int
+     */
+    protected const ID_DISCOUNT_2 = 2;
+
+    /**
+     * @var string
+     */
+    protected const VOUCHER_CODE = 'VOUCHER_CODE';
+
+    /**
+     * @var \SprykerTest\Zed\Calculation\CalculationBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testCalculatePriceShouldSetDefaultStorePriceValues(): void
@@ -60,7 +81,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new PriceCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -116,7 +137,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemProductOptionPriceAggregatorPlugin(),
-            ]
+            ],
         );
 
         $itemTransfer = new ItemTransfer();
@@ -146,7 +167,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new DiscountAmountAggregatorForGenericAmountPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -215,7 +236,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemDiscountAmountFullAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -245,7 +266,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemTaxAmountFullAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -274,7 +295,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ItemSubtotalAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -310,7 +331,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new PriceToPayAggregatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -336,7 +357,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new SubtotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -366,7 +387,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new ExpenseTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -396,7 +417,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new DiscountTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -430,7 +451,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new TaxTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -465,7 +486,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new RefundTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -505,7 +526,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new RefundableAmountCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -538,7 +559,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new GrandTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -570,7 +591,7 @@ class CalculationFacadeTest extends Unit
         $calculationFacade = $this->createCalculationFacade(
             [
                 new InitialGrandTotalCalculatorPlugin(),
-            ]
+            ],
         );
 
         $quoteTransfer = new QuoteTransfer();
@@ -631,9 +652,9 @@ class CalculationFacadeTest extends Unit
     {
         // Assign
         $calculationFacade = new CalculationFacade();
-        $items = (new ItemTransfer())->setCanceledAmount(100);
+        $itemTransfer = (new ItemTransfer())->setCanceledAmount(100);
         $calculableObjectTransfer = new CalculableObjectTransfer();
-        $calculableObjectTransfer->setItems(new ArrayObject([$items]));
+        $calculableObjectTransfer->setItems(new ArrayObject([$itemTransfer]));
         $expectedCancelledAmount = 0;
 
         // Act
@@ -660,5 +681,273 @@ class CalculationFacadeTest extends Unit
 
         // Assert
         $this->assertSame(APPLICATION_STORE, $calculatedOrderTransfer->getStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountAmountAggregationForGenericAmountShouldApplyDiscounts(): void
+    {
+        // Arrange
+        $cartRuleDiscountTransfer = (new DiscountTransfer())->fromArray([
+            DiscountTransfer::ID_DISCOUNT => static::ID_DISCOUNT_2,
+            DiscountTransfer::AMOUNT => 200,
+            DiscountTransfer::VOUCHER_CODE => null,
+        ]);
+
+        $voucherDiscountTransfer = (new DiscountTransfer())->fromArray([
+            DiscountTransfer::ID_DISCOUNT => static::ID_DISCOUNT_1,
+            DiscountTransfer::AMOUNT => 200,
+            DiscountTransfer::VOUCHER_CODE => static::VOUCHER_CODE,
+        ]);
+
+        $itemTransfers = [
+            $this->tester->createItemTransferWithCalculatedDiscounts(
+                [
+                    ItemTransfer::SUM_PRICE => 1000,
+                    ItemTransfer::UNIT_PRICE => 1000,
+                ],
+                [
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $cartRuleDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 100,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $cartRuleDiscountTransfer->getVoucherCode(),
+                    ],
+                ],
+            ),
+            $this->tester->createItemTransferWithCalculatedDiscounts(
+                [
+                    ItemTransfer::SUM_PRICE => 1000,
+                    ItemTransfer::UNIT_PRICE => 1000,
+                ],
+                [
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $voucherDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => $voucherDiscountTransfer->getAmount(),
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => $voucherDiscountTransfer->getAmount(),
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $voucherDiscountTransfer->getVoucherCode(),
+                    ],
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $cartRuleDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 100,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $cartRuleDiscountTransfer->getVoucherCode(),
+                    ],
+                ],
+            ),
+        ];
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransferWithItemsAndDiscounts($itemTransfers, [$cartRuleDiscountTransfer], [$voucherDiscountTransfer]);
+
+        // Act
+        $this->tester->getFacade()
+            ->calculateDiscountAmountAggregationForGenericAmount(
+                $calculableObjectTransfer,
+            );
+
+        // Assert
+        $this->assertCalculableObjectDiscountsAmounts(
+            $calculableObjectTransfer,
+            200,
+            200,
+        );
+
+        $this->assertItemCalculatedDiscounts(
+            $calculableObjectTransfer->getItems()->offsetGet(0),
+            100,
+            1,
+        );
+
+        $this->assertItemCalculatedDiscounts(
+            $calculableObjectTransfer->getItems()->offsetGet(1),
+            300,
+            2,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountAmountAggregationForGenericAmountShouldDistributeDiscountTotalWhenItemPriceIsLowerThanDiscountAmount(): void
+    {
+        // Arrange
+        $cartRuleDiscountTransfer = (new DiscountTransfer())->fromArray([
+            DiscountTransfer::ID_DISCOUNT => static::ID_DISCOUNT_2,
+            DiscountTransfer::AMOUNT => 200,
+            DiscountTransfer::VOUCHER_CODE => null,
+        ]);
+
+        $voucherDiscountTransfer = (new DiscountTransfer())->fromArray([
+            DiscountTransfer::ID_DISCOUNT => static::ID_DISCOUNT_1,
+            DiscountTransfer::AMOUNT => 950,
+            DiscountTransfer::VOUCHER_CODE => static::VOUCHER_CODE,
+        ]);
+
+        $itemTransfers = [
+            $this->tester->createItemTransferWithCalculatedDiscounts(
+                [
+                    ItemTransfer::SUM_PRICE => 1000,
+                    ItemTransfer::UNIT_PRICE => 1000,
+                ],
+                [
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $cartRuleDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 100,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $cartRuleDiscountTransfer->getVoucherCode(),
+                    ],
+                ],
+            ),
+            $this->tester->createItemTransferWithCalculatedDiscounts(
+                [
+                    ItemTransfer::SUM_PRICE => 1000,
+                    ItemTransfer::UNIT_PRICE => 1000,
+                ],
+                [
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $voucherDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 950,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 950,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $voucherDiscountTransfer->getVoucherCode(),
+                    ],
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $cartRuleDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 100,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $cartRuleDiscountTransfer->getVoucherCode(),
+                    ],
+                ],
+            ),
+        ];
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransferWithItemsAndDiscounts($itemTransfers, [$cartRuleDiscountTransfer], [$voucherDiscountTransfer]);
+
+        // Act
+        $this->tester->getFacade()
+            ->calculateDiscountAmountAggregationForGenericAmount(
+                $calculableObjectTransfer,
+            );
+
+        // Assert
+        $this->assertCalculableObjectDiscountsAmounts(
+            $calculableObjectTransfer,
+            150,
+            950,
+        );
+
+        /** @var array<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
+        $itemTransfers = $calculableObjectTransfer->getItems()->getArrayCopy();
+
+        $this->assertItemCalculatedDiscounts(
+            $itemTransfers[0],
+            100,
+            1,
+        );
+
+        $this->assertItemCalculatedDiscounts(
+            $itemTransfers[1],
+            1000,
+            2,
+        );
+
+        /** @var array<int, \Generated\Shared\Transfer\CalculatedDiscountTransfer> $calculatedDiscounts */
+        $calculatedDiscounts = $itemTransfers[1]->getCalculatedDiscounts()->getArrayCopy();
+        $this->assertSame(950, $calculatedDiscounts[0]->getSumAmount());
+        $this->assertSame(50, $calculatedDiscounts[1]->getSumAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateDiscountAmountAggregationForGenericAmountShouldRemoveDiscountTotalWhenDiscountCannotBeApplied(): void
+    {
+        // Arrange
+        $cartRuleDiscountTransfer = (new DiscountTransfer())->fromArray([
+            DiscountTransfer::ID_DISCOUNT => static::ID_DISCOUNT_2,
+            DiscountTransfer::AMOUNT => 100,
+            DiscountTransfer::VOUCHER_CODE => null,
+        ]);
+
+        $voucherDiscountTransfer = (new DiscountTransfer())->fromArray([
+            DiscountTransfer::ID_DISCOUNT => static::ID_DISCOUNT_1,
+            DiscountTransfer::AMOUNT => 1000,
+            DiscountTransfer::VOUCHER_CODE => static::VOUCHER_CODE,
+        ]);
+
+        $itemTransfers = [
+            $this->tester->createItemTransferWithCalculatedDiscounts(
+                [
+                    ItemTransfer::SUM_PRICE => 1000,
+                    ItemTransfer::UNIT_PRICE => 1000,
+                ],
+                [
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $voucherDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 1000,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 1000,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $voucherDiscountTransfer->getVoucherCode(),
+                    ],
+                    [
+                        CalculatedDiscountTransfer::ID_DISCOUNT => $cartRuleDiscountTransfer->getIdDiscount(),
+                        CalculatedDiscountTransfer::SUM_AMOUNT => 100,
+                        CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                        CalculatedDiscountTransfer::VOUCHER_CODE => $cartRuleDiscountTransfer->getVoucherCode(),
+                    ],
+                ],
+            ),
+        ];
+
+        $calculableObjectTransfer = $this->tester->createCalculableObjectTransferWithItemsAndDiscounts($itemTransfers, [$cartRuleDiscountTransfer], [$voucherDiscountTransfer]);
+
+        // Act
+        $this->tester->getFacade()
+            ->calculateDiscountAmountAggregationForGenericAmount(
+                $calculableObjectTransfer,
+            );
+
+        // Assert
+        $this->assertCalculableObjectDiscountsAmounts(
+            $calculableObjectTransfer,
+            0,
+            1000,
+        );
+        $this->assertItemCalculatedDiscounts(
+            $calculableObjectTransfer->getItems()->offsetGet(0),
+            1000,
+            1,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param int $expectedCartRuleDiscountAmount
+     * @param int $expectedVoucherCodeDiscountAmount
+     *
+     * @return void
+     */
+    protected function assertCalculableObjectDiscountsAmounts(
+        CalculableObjectTransfer $calculableObjectTransfer,
+        int $expectedCartRuleDiscountAmount,
+        int $expectedVoucherCodeDiscountAmount
+    ): void {
+        $this->assertSame($expectedCartRuleDiscountAmount, $calculableObjectTransfer->getCartRuleDiscounts()->offsetGet(0)->getAmount());
+        $this->assertSame($expectedVoucherCodeDiscountAmount, $calculableObjectTransfer->getVoucherDiscounts()->offsetGet(0)->getAmount());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $expectedSumDiscountAmountAggregation
+     * @param int $expectedCalculatedDiscountsCount
+     *
+     * @return void
+     */
+    protected function assertItemCalculatedDiscounts(
+        ItemTransfer $itemTransfer,
+        int $expectedSumDiscountAmountAggregation,
+        int $expectedCalculatedDiscountsCount
+    ): void {
+        $this->assertSame($expectedSumDiscountAmountAggregation, $itemTransfer->getSumDiscountAmountAggregation());
+        $this->assertSame($expectedCalculatedDiscountsCount, $itemTransfer->getCalculatedDiscounts()->count());
     }
 }

@@ -30,7 +30,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createCmsPageSearchDataMapper(),
             $this->getUtilEncoding(),
             $this->getStore(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
         );
     }
 

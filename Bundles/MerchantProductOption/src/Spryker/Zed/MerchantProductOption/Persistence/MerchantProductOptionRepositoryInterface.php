@@ -32,11 +32,9 @@ interface MerchantProductOptionRepositoryInterface
     ): ?MerchantProductOptionGroupTransfer;
 
     /**
-     * @phpstan-return array<int|null>
-     *
      * @param array<int> $productOptionGroupIds
      *
-     * @return array
+     * @return array<int|null>
      */
     public function getProductOptionGroupIdsWithNotApprovedMerchantGroups(array $productOptionGroupIds): array;
 }

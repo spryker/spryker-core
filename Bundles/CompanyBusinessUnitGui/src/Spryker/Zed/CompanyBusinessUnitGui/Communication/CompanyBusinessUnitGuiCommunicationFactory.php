@@ -38,13 +38,13 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function createCompanyBusinessUnitTable(): CompanyBusinessUnitTable
     {
         return new CompanyBusinessUnitTable(
-            $this->getCompanyBusinessUnitQuery()
+            $this->getCompanyBusinessUnitQuery(),
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -55,7 +55,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -71,7 +71,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new CompanyBusinessUnitFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyFacade()
+            $this->getCompanyFacade(),
         );
     }
 
@@ -90,7 +90,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     {
         return new CompanyUserBusinessUnitFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->createCompanyBusinessUnitNameGenerator()
+            $this->createCompanyBusinessUnitNameGenerator(),
         );
     }
 

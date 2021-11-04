@@ -25,6 +25,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
+
     /**
      * @var string
      */
@@ -75,7 +76,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
             return new GuiToUtilSanitizeXssServiceBridge(
-                $container->getLocator()->utilSanitizeXss()->service()
+                $container->getLocator()->utilSanitizeXss()->service(),
             );
         });
 

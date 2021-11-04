@@ -31,7 +31,7 @@ abstract class AbstractProvider implements ProviderInterface
     {
         if ($this->cache === null) {
             $this->cache = new ResolverCache(
-                $this->buildStorage()
+                $this->buildStorage(),
             );
         }
 

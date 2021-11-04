@@ -22,7 +22,7 @@ class AbstractProductImageSetsMapper implements AbstractProductImageSetsMapperIn
     ): RestProductImageSetsAttributesTransfer {
         return (new RestProductImageSetsAttributesTransfer())->fromArray(
             $productAbstractImageStorageTransfer->toArray(),
-            true
+            true,
         );
     }
 }

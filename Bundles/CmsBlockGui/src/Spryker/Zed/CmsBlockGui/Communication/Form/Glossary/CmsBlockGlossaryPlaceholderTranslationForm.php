@@ -24,10 +24,12 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
      * @var string
      */
     public const FIELD_FK_LOCALE = 'fkLocale';
+
     /**
      * @var string
      */
     public const FIELD_TRANSLATION = 'translation';
+
     /**
      * @var string
      */
@@ -35,7 +37,7 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

@@ -16,6 +16,7 @@ class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
      * @var string
      */
     public const OPTION_CATEGORY_FACADE = 'categoryFacade';
+
     /**
      * @var string
      */
@@ -25,6 +26,7 @@ class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
      * @var string
      */
     protected const PARAMETER_CATEGORY_NAME = '%categoryName%';
+
     /**
      * @var string
      */
@@ -59,7 +61,7 @@ class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
             static::ERROR_MESSAGE,
             [
                 static::PARAMETER_CATEGORY_NAME => $categoryName,
-            ]
+            ],
         );
     }
 }

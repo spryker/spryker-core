@@ -470,7 +470,7 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayProvider(): array
     {
@@ -737,7 +737,7 @@ class GeneratedTransferTest extends Unit
         $definitionBuilder = new TransferDefinitionBuilder(
             $loader,
             new TransferDefinitionMerger(),
-            new ClassDefinition(new TransferConfig())
+            new ClassDefinition(new TransferConfig()),
         );
 
         return $definitionBuilder;

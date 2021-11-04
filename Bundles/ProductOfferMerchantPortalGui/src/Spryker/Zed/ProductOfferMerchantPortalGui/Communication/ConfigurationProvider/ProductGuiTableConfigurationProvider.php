@@ -19,30 +19,37 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
      * @var string
      */
     public const COL_KEY_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_KEY_SKU = 'sku';
+
     /**
      * @var string
      */
     public const COL_KEY_IMAGE = 'image';
+
     /**
      * @var string
      */
     public const COL_KEY_STORES = 'stores';
+
     /**
      * @var string
      */
     public const COL_KEY_STATUS = 'status';
+
     /**
      * @var string
      */
     public const COL_KEY_OFFERS = 'offers';
+
     /**
      * @var string
      */
     public const COL_KEY_VALID_FROM = 'validFrom';
+
     /**
      * @var string
      */
@@ -52,6 +59,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
      * @var string
      */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+
     /**
      * @var string
      */
@@ -64,6 +72,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductListController::tableDataAction()
+     *
      * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product-list/table-data';
@@ -161,8 +170,8 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
             'Create Offer',
             sprintf(
                 '/product-offer-merchant-portal-gui/create-product-offer?product-id=${row.%s}',
-                ProductConcreteTransfer::ID_PRODUCT_CONCRETE
-            )
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE,
+            ),
         )->setRowClickAction('create-offer');
 
         return $guiTableConfigurationBuilder;

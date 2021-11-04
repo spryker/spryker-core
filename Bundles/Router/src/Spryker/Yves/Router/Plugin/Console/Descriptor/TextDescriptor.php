@@ -18,7 +18,7 @@ class TextDescriptor extends Descriptor
 {
     /**
      * @param \Symfony\Component\Routing\RouteCollection $routes
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class TextDescriptor extends Descriptor
 
     /**
      * @param \Spryker\Yves\Router\Route\Route $route
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class TextDescriptor extends Descriptor
     {
         $tableHeaders = ['Property', 'Value'];
         $tableRows = [
-            ['Route Name', isset($options['name']) ? $options['name'] : ''],
+            ['Route Name', $options['name'] ?? ''],
             ['Path', $route->getPath()],
             ['Path Regex', $route->compile()->getRegex()],
             ['Host', ($route->getHost() !== '' ? $route->getHost() : 'ANY')],

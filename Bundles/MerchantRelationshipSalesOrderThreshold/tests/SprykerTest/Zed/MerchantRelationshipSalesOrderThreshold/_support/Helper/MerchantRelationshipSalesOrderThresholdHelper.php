@@ -30,7 +30,7 @@ class MerchantRelationshipSalesOrderThresholdHelper extends Module
     {
         $this->debug(sprintf(
             'Deleting All rows of table `%s`.',
-            SpyMerchantRelationshipSalesOrderThresholdTableMap::TABLE_NAME
+            SpyMerchantRelationshipSalesOrderThresholdTableMap::TABLE_NAME,
         ));
 
         $this->getMerchantRelationshipSalesOrderThresholdQuery()

@@ -40,7 +40,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
         PriceProductScheduledListImportRequestTransfer $priceProductScheduledListImportRequest
     ): PriceProductScheduleListImportResponseTransfer {
         return $this->priceProductScheduleFacade->importPriceProductSchedules(
-            $priceProductScheduledListImportRequest
+            $priceProductScheduledListImportRequest,
         );
     }
 
@@ -89,7 +89,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     ): PriceProductScheduledListImportRequestTransfer {
         return $this->priceProductScheduleFacade->readPriceProductScheduleImportTransfersFromCsvFile(
             $uploadedFile,
-            $productScheduledListImportRequestTransfer
+            $productScheduledListImportRequestTransfer,
         );
     }
 

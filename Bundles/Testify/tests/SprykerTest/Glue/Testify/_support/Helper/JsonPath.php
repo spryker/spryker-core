@@ -61,7 +61,7 @@ class JsonPath extends Module
     {
         $this->assertNotEmpty(
             (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath),
-            "Received JSON did not match the JsonPath `$jsonPath`.\nJson Response: \n" . $this->getJsonLastConnection()->getResponseBody()
+            "Received JSON did not match the JsonPath `$jsonPath`.\nJson Response: \n" . $this->getJsonLastConnection()->getResponseBody(),
         );
     }
 
@@ -74,7 +74,7 @@ class JsonPath extends Module
     {
         $this->assertEmpty(
             (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath),
-            "Received JSON did not match the JsonPath `$jsonPath`.\nJson Response: \n" . $this->getJsonLastConnection()->getResponseBody()
+            "Received JSON did not match the JsonPath `$jsonPath`.\nJson Response: \n" . $this->getJsonLastConnection()->getResponseBody(),
         );
     }
 
@@ -88,7 +88,7 @@ class JsonPath extends Module
     {
         Assert::assertThat(
             (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath),
-            new JsonTypeConstraint($jsonType)
+            new JsonTypeConstraint($jsonType),
         );
     }
 
@@ -107,7 +107,7 @@ class JsonPath extends Module
         foreach ($foundSegments as $segment) {
             $this->assertArraySubset(
                 $subArray,
-                $segment
+                $segment,
             );
         }
     }

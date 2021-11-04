@@ -95,7 +95,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
-                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference())
+                ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference()),
         );
 
         $customerQuoteTransfers = $quoteCollectionTransfer->getQuotes();
@@ -110,7 +110,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $customerQuoteTransfer = $this->findQuoteInQuoteCollection(
             $customerQuoteTransfers,
-            $cartItemRequestTransfer->getQuoteUuid()
+            $cartItemRequestTransfer->getQuoteUuid(),
         );
         if (!$customerQuoteTransfer) {
             return $this->createCartNotFoundError();
@@ -178,7 +178,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->setIsSuccessful(false)
             ->addError(
                 (new QuoteErrorTransfer())
-                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND),
             );
     }
 

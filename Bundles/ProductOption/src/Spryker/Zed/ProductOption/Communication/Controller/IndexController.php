@@ -44,7 +44,7 @@ class IndexController extends AbstractController
         } else {
             $this->addSuccessMessage(sprintf(
                 'Option successfully %s.',
-                $isActive ? 'activated' : 'deactivated'
+                $isActive ? 'activated' : 'deactivated',
             ));
         }
 

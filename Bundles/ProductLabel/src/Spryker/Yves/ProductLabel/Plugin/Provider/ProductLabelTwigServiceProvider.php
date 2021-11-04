@@ -36,8 +36,8 @@ class ProductLabelTwigServiceProvider extends AbstractPlugin implements ServiceP
                     $twig->addExtension($twigExtension);
 
                     return $twig;
-                }
-            )
+                },
+            ),
         );
     }
 

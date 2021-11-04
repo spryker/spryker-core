@@ -59,7 +59,7 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()]
+            [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
         $eventTransfers = [
@@ -73,7 +73,7 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             1,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that will save product configuration to the storage.'
+            'Expects that will save product configuration to the storage.',
         );
     }
 
@@ -87,11 +87,11 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $secondProductConcreteTransfer = $this->tester->haveProduct();
 
         $firstProductConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [ProductConfigurationTransfer::FK_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete()]
+            [ProductConfigurationTransfer::FK_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete()],
         );
 
         $secondProductConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [ProductConfigurationTransfer::FK_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete()]
+            [ProductConfigurationTransfer::FK_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete()],
         );
 
         $eventTransfers = [
@@ -106,7 +106,7 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             2,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that will save product configuration to the storage for multiple events.'
+            'Expects that will save product configuration to the storage for multiple events.',
         );
     }
 
@@ -129,7 +129,7 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             0,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that wont save product configuration to the storage when id not specified.'
+            'Expects that wont save product configuration to the storage when id not specified.',
         );
     }
 
@@ -150,7 +150,7 @@ class WriteCollectionByProductConfigurationEventsTest extends Unit
         $this->assertSame(
             0,
             $this->tester->countProductConfigurationStorageEntities(),
-            'Expects that wont save product configuration to the storage when fake id specified.'
+            'Expects that wont save product configuration to the storage when fake id specified.',
         );
     }
 }

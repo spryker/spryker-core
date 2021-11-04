@@ -23,22 +23,27 @@ class CmsBlockSuggestController extends AbstractController
      * @var string
      */
     protected const PARAM_SEARCH_TEXT = 'q';
+
     /**
      * @var string
      */
     protected const PARAM_PAGE = 'page';
+
     /**
      * @var string
      */
     protected const PARAM_ID_CMS_SLOT = 'id-cms-slot';
+
     /**
      * @var string
      */
     protected const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
+
     /**
      * @var int
      */
     protected const DEFAULT_MAX_PER_PAGE = 10;
+
     /**
      * @var int
      */
@@ -71,7 +76,7 @@ class CmsBlockSuggestController extends AbstractController
         return $this->jsonResponse(
             $this->getFactory()
                 ->createCmsBlockSuggestionFinder()
-                ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
+                ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer),
         );
     }
 }

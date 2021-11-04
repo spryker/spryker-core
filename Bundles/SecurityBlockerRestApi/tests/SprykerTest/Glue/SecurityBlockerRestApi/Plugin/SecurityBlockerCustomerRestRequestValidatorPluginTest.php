@@ -80,7 +80,7 @@ class SecurityBlockerCustomerRestRequestValidatorPluginTest extends Unit
         // Act
         $this->securityBlockerCustomerRestRequestValidatorPlugin->validate(
             $restRequestMock->getHttpRequest(),
-            $restRequestMock
+            $restRequestMock,
         );
     }
 
@@ -107,7 +107,7 @@ class SecurityBlockerCustomerRestRequestValidatorPluginTest extends Unit
         // Act
         $this->securityBlockerCustomerRestRequestValidatorPlugin->validate(
             $restRequestMock->getHttpRequest(),
-            $restRequestMock
+            $restRequestMock,
         );
     }
 

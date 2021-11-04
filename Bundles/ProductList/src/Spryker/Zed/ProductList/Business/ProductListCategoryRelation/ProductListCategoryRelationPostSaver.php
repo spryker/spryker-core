@@ -39,7 +39,7 @@ class ProductListCategoryRelationPostSaver implements ProductListPostSaverInterf
         if ($productListCategoryRelationTransfer) {
             $productListTransfer = $this->saveProductListCategoryRelation(
                 $productListTransfer,
-                $productListTransfer->getProductListCategoryRelation()
+                $productListTransfer->getProductListCategoryRelation(),
             );
         }
 

@@ -17,10 +17,12 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+
     /**
      * @var string
      */
     public const PLUGINS_AFTER_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY = 'PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY';
+
     /**
      * @var string
      */
@@ -78,7 +80,7 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ResourceShareToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
+                $container->getLocator()->zedRequest()->client(),
             );
         });
 

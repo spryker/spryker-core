@@ -23,7 +23,7 @@ interface ClassDefinitionInterface extends DefinitionInterface
     public function getProperties(): array;
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getPropertyNameMap(): array;
 

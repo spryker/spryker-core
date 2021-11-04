@@ -127,7 +127,7 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -137,7 +137,7 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */
@@ -147,7 +147,7 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
-     * @param array $property
+     * @param array<string, mixed> $property
      *
      * @return bool
      */

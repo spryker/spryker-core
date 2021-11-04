@@ -11,8 +11,7 @@
             "snippet": "            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages());",
             "selected_text": "$quoteRequestResponseTransfer->getMessages()",
             "error_level": 3,
-            "shortcode": 92,
-            "other_references": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -24,8 +23,7 @@
             "snippet": "                ->setPage(($page->getOffset() / $page->getLimit()) + 1);",
             "selected_text": "($page->getOffset() / $page->getLimit()) + 1",
             "error_level": 4,
-            "shortcode": 12,
-            "other_references": null
+            "shortcode": 12
         }
     ],
     "deprecation": []

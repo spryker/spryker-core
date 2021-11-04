@@ -19,6 +19,7 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */

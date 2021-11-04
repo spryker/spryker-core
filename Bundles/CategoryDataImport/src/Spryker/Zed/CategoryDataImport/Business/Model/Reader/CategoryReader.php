@@ -21,14 +21,17 @@ class CategoryReader implements CategoryReaderInterface
      * @var string
      */
     public const ID_CATEGORY_NODE = 'id_category_node';
+
     /**
      * @var string
      */
     public const ID_LOCALE = 'idLocale';
+
     /**
      * @var string
      */
     public const URL = 'url';
+
     /**
      * @var string
      */
@@ -93,7 +96,7 @@ class CategoryReader implements CategoryReaderInterface
         if (!$this->categoryKeys->offsetExists($categoryKey)) {
             throw new CategoryByKeyNotFoundException(sprintf(
                 'Category by key "%s" not found. Maybe you have a typo in the category key.',
-                $categoryKey
+                $categoryKey,
             ));
         }
 
@@ -134,7 +137,7 @@ class CategoryReader implements CategoryReaderInterface
         if (!$this->categoryUrls->offsetExists($categoryKey)) {
             throw new CategoryByKeyNotFoundException(sprintf(
                 'Category url key "%s" not found. Maybe you have a typo in the category key.',
-                $categoryKey
+                $categoryKey,
             ));
         }
 
@@ -147,7 +150,7 @@ class CategoryReader implements CategoryReaderInterface
         throw new CategoryByKeyNotFoundException(sprintf(
             'Category url key "%s" and idLocale "%s" not found.',
             $categoryKey,
-            $idLocale
+            $idLocale,
         ));
     }
 

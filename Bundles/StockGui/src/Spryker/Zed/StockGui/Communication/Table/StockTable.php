@@ -20,18 +20,22 @@ class StockTable extends AbstractTable
      * @var string
      */
     public const COL_ID_STOCK = 'id_stock';
+
     /**
      * @var string
      */
     public const COL_NAME = 'name';
+
     /**
      * @var string
      */
     public const COL_IS_ACTIVE = 'is_active';
+
     /**
      * @var string
      */
     public const COL_AVAILABLE_IN_STORE = 'available_in_store';
+
     /**
      * @var string
      */
@@ -189,7 +193,7 @@ class StockTable extends AbstractTable
             Url::generate('/stock-gui/view-warehouse', [
                 'id-stock' => $idStock,
             ]),
-            'View'
+            'View',
         );
     }
 
@@ -204,7 +208,7 @@ class StockTable extends AbstractTable
             Url::generate('/stock-gui/edit-warehouse', [
                 'id-stock' => $idStock,
             ]),
-            'Edit'
+            'Edit',
         );
     }
 }

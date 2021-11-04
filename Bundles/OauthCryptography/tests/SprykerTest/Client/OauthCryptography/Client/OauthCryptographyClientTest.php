@@ -47,7 +47,7 @@ class OauthCryptographyClientTest extends Unit
         // Arrange
         $this->tester->setConfig(
             OauthCryptographyConstants::PUBLIC_KEY_PATH,
-            $this->getPathToSshKey()
+            $this->getPathToSshKey(),
         );
 
         $expectedKeys = [new CryptKey($this->getPathToSshKey())];
@@ -82,7 +82,7 @@ class OauthCryptographyClientTest extends Unit
         $oauthCryptographyClientMock->validateAuthorization(
             new ServerRequest('GET', '/'),
             [new CryptKey($this->getPathToSshKey())],
-            $this->createMock(AccessTokenRepositoryInterface::class)
+            $this->createMock(AccessTokenRepositoryInterface::class),
         );
     }
 
@@ -106,7 +106,7 @@ class OauthCryptographyClientTest extends Unit
                     ->withAttribute('oauth_client_id', '')
                     ->withAttribute('oauth_user_id', '')
                     ->withAttribute('oauth_scopes', '');
-            }
+            },
         );
 
         $bearerTokenAuthorizationValidatorMock = $this->createBearerTokenAuthorizationValidatorMock($leagueBearerTokenValidator);
@@ -117,7 +117,7 @@ class OauthCryptographyClientTest extends Unit
         $expectedRequest = $oauthCryptographyClientMock->validateAuthorization(
             $incomingRequest,
             [new CryptKey($this->getPathToSshKey())],
-            $this->createMock(AccessTokenRepositoryInterface::class)
+            $this->createMock(AccessTokenRepositoryInterface::class),
         );
 
         // Assert

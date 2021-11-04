@@ -99,7 +99,7 @@ class CatFaceTransfer extends AbstractTransfer
     protected $typedNotAssociativeArray = [];
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $transferPropertyNameMap = [
         'name' => 'name',
@@ -126,7 +126,7 @@ class CatFaceTransfer extends AbstractTransfer
     ];
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected $transferMetadata = [
         self::NAME => [
@@ -696,7 +696,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param bool $ignoreMissingProperty
      *
      * @throws \InvalidArgumentException
@@ -757,7 +757,7 @@ class CatFaceTransfer extends AbstractTransfer
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -779,7 +779,7 @@ class CatFaceTransfer extends AbstractTransfer
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
@@ -798,11 +798,11 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
@@ -820,11 +820,11 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param mixed $value
+     * @param array<string, mixed>|\ArrayObject<string, mixed> $value
      * @param bool $isRecursive
      * @param bool $camelCasedKeys
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
@@ -842,7 +842,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayRecursiveCamelCased()
     {
@@ -882,7 +882,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayRecursiveNotCamelCased()
     {
@@ -922,7 +922,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayNotRecursiveNotCamelCased()
     {
@@ -939,7 +939,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function modifiedToArrayNotRecursiveCamelCased()
     {
@@ -965,7 +965,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayNotRecursiveCamelCased()
     {
@@ -982,7 +982,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayNotRecursiveNotCamelCased()
     {
@@ -999,7 +999,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayRecursiveNotCamelCased()
     {
@@ -1016,7 +1016,7 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArrayRecursiveCamelCased()
     {

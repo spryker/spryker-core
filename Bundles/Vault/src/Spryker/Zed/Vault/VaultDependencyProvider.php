@@ -42,7 +42,7 @@ class VaultDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_ENCRYPTION, function (Container $container) {
             return new VaultToUtilEncryptionServiceBridge(
-                $container->getLocator()->utilEncryption()->service()
+                $container->getLocator()->utilEncryption()->service(),
             );
         });
 

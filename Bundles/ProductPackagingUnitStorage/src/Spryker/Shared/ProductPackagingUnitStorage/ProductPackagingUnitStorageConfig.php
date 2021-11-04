@@ -16,6 +16,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
@@ -25,6 +26,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
@@ -34,6 +36,7 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      * - Resource name, this will be used for key generating.
      *
      * @api
+     *
      * @var string
      */
     public const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_packaging_unit';

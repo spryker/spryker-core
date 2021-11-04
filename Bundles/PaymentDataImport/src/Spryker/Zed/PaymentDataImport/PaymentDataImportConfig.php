@@ -16,6 +16,7 @@ class PaymentDataImportConfig extends DataImportConfig
      * @var string
      */
     public const IMPORT_TYPE_PAYMENT_METHOD = 'payment-method';
+
     /**
      * @var string
      */
@@ -55,7 +56,7 @@ class PaymentDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
             . DIRECTORY_SEPARATOR . '..'
-            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..',
         );
 
         return $moduleRoot . DIRECTORY_SEPARATOR;

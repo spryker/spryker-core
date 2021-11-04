@@ -21,6 +21,7 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PLUGIN_COMPANY_USER_PROVIDER = 'PLUGIN_COMPANY_USER_PROVIDER';
+
     /**
      * @var string
      */
@@ -63,8 +64,8 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
         throw new MissingCompanyUserProviderPluginException(
             sprintf(
                 static::EXCEPTION_MESSAGE_MISSING_COMPANY_USER_PROVIDER_PLUGIN,
-                CompanyUserProviderPluginInterface::class
-            )
+                CompanyUserProviderPluginInterface::class,
+            ),
         );
     }
 }

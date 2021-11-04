@@ -175,10 +175,10 @@ class ProductUrlGeneratorTest extends Unit
 
         $productUrlExpected = (new ProductUrlTransfer())
         ->setAbstractSku(
-            $this->productAbstractTransfer->getSku()
+            $this->productAbstractTransfer->getSku(),
         )
         ->setUrls(
-            new ArrayObject([$expectedDEUrl, $expectedENUrl])
+            new ArrayObject([$expectedDEUrl, $expectedENUrl]),
         );
 
         $this->utilTextService

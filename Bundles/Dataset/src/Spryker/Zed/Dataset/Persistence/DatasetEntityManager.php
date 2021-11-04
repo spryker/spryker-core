@@ -131,16 +131,16 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
         foreach ($datasetRowColumnValueTransfers as $datasetRowColumnValueTransfer) {
             $datasetRowUniqueEntity = $this->findOrCreateDatasetRow(
-                $datasetRowColumnValueTransfer->getDatasetRow()
+                $datasetRowColumnValueTransfer->getDatasetRow(),
             );
             $datasetColumnUniqueEntity = $this->findOrCreateDatasetColumn(
-                $datasetRowColumnValueTransfer->getDatasetColumn()
+                $datasetRowColumnValueTransfer->getDatasetColumn(),
             );
             $datasetRowColumnValue = $this->createDatasetRowColumnValue(
                 $datasetEntity->getIdDataset(),
                 $datasetColumnUniqueEntity->getIdDatasetColumn(),
                 $datasetRowUniqueEntity->getIdDatasetRow(),
-                $datasetRowColumnValueTransfer->getValue()
+                $datasetRowColumnValueTransfer->getValue(),
             );
             $datasetEntity->addSpyDatasetRowColumnValue($datasetRowColumnValue);
         }
@@ -154,7 +154,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
     protected function findOrCreateDatasetColumn(DatasetColumnTransfer $datasetColumnTransfer): SpyDatasetColumn
     {
         $datasetColumnEntity = $this->getFactory()->createSpyDatasetColumnQuery()->filterByTitle(
-            $datasetColumnTransfer->getTitle()
+            $datasetColumnTransfer->getTitle(),
         )->findOne();
 
         if ($datasetColumnEntity === null) {
@@ -174,7 +174,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
     protected function findOrCreateDatasetRow(DatasetRowTransfer $datasetRowTransfer): SpyDatasetRow
     {
         $datasetRowEntity = $this->getFactory()->createSpyDatasetRowQuery()->filterByTitle(
-            $datasetRowTransfer->getTitle()
+            $datasetRowTransfer->getTitle(),
         )->findOne();
         if ($datasetRowEntity === null) {
             $datasetRowEntity = new SpyDatasetRow();

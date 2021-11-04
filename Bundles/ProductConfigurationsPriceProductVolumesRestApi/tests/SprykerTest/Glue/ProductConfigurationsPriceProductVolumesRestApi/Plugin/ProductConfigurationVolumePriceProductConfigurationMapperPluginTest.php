@@ -37,6 +37,7 @@ class ProductConfigurationVolumePriceProductConfigurationMapperPluginTest extend
      * @var string
      */
     protected const PRICE_TYPE_NAME = 'priceTypeName';
+
     /**
      * @var string
      */
@@ -73,7 +74,7 @@ class ProductConfigurationVolumePriceProductConfigurationMapperPluginTest extend
         // Act
         $productConfigurationInstanceTransfer = $productConfigurationVolumePriceProductConfigurationPriceMapperPlugin->map(
             [$restProductConfigurationPriceAttributesTransfer],
-            $productConfigurationInstanceTransfer
+            $productConfigurationInstanceTransfer,
         );
 
         // Assert

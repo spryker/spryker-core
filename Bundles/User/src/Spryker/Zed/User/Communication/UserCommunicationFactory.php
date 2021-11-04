@@ -45,7 +45,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UsersTable(
             $this->getQueryContainer(),
             $this->getProvidedDependency(UserDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->createUserTablePluginExecutor()
+            $this->createUserTablePluginExecutor(),
         );
     }
 
@@ -57,13 +57,13 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
         return new UserTablePluginExecutor(
             $this->getUserTableActionExpanderPlugins(),
             $this->getUserTableConfigExpanderPlugins(),
-            $this->getUserTableDataExpanderPlugins()
+            $this->getUserTableDataExpanderPlugins(),
         );
     }
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -82,7 +82,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param array $data
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

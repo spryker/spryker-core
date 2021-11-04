@@ -73,7 +73,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
 
         $indexedByIdsUniqueProductOptionTransfers = $this->indexUniqueProductOptionTransfersByIds(
             $uniqueProductOptionIds,
-            $shoppingListItemCollectionTransfer
+            $shoppingListItemCollectionTransfer,
         );
 
         $groupedProductOptionIdsByShoppingListItemIds = $this
@@ -85,8 +85,8 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
                 $this->mapShoppingListItemTransferWithProductOptions(
                     $shoppingListItemTransfer,
                     $groupedProductOptionIdsByShoppingListItemIds,
-                    $indexedByIdsUniqueProductOptionTransfers
-                )
+                    $indexedByIdsUniqueProductOptionTransfers,
+                ),
             );
         }
 
@@ -97,7 +97,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param array<int[]> $groupedProductOptionIdsByShoppingListItemIds
+     * @param array<array<int>> $groupedProductOptionIdsByShoppingListItemIds
      * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $indexedByIdsUniqueProductOptionTransfers
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -126,7 +126,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
      *
-     * @return array<int[]>
+     * @return array<array<int>>
      */
     protected function groupProductOptionIdsByShoppingListItemIds(
         ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
@@ -156,7 +156,7 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     ): array {
         $productOptionCriteriaTransfer = $this->expandProductOptionCriteriaTransferWithCurrencyParameters(
             new ProductOptionCriteriaTransfer(),
-            $shoppingListItemCollectionTransfer
+            $shoppingListItemCollectionTransfer,
         );
 
         $productOptionCriteriaTransfer

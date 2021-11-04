@@ -16,6 +16,7 @@ interface TaxConstants
      * @var string
      */
     public const DEFAULT_TAX_RATE = 'DEFAULT_TAX_RATE';
+
     /**
      * @var string
      */

@@ -23,7 +23,7 @@ class ProductImageCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductExpander()
     {
         return new ProductImageExpander(
-            $this->getProductImageFacade()
+            $this->getProductImageFacade(),
         );
     }
 

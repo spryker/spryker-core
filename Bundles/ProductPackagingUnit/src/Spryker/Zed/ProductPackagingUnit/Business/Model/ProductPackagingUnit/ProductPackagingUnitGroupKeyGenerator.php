@@ -15,6 +15,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
      * @var string
      */
     protected const AMOUNT_GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+
     /**
      * @var int
      */
@@ -37,7 +38,7 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
             $amountPerQuantity->trim()->toString(),
-            $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
+            $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit(),
         );
     }
 }

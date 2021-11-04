@@ -31,22 +31,27 @@ class MerchantSalesReturnFacadeTest extends Unit
      * @var string
      */
     protected const TEST_STATE_MACHINE = 'Test01';
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_SALES_ORDER_REFERENCE_1 = 'test-merchant-sales-order-reference-1';
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_REFERENCE_1 = 'test-merchant-reference-1';
+
     /**
      * @var string
      */
     protected const TEST_MERCHANT_REFERENCE_2 = 'test-merchant-reference-2';
+
     /**
      * @var string
      */
     protected const TEST_UUID = '3b6743a7-ad62-3779-8648-e0156e51a628';
+
     /**
      * @var string
      */
@@ -68,7 +73,7 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
-            $merchantTransfer
+            $merchantTransfer,
         );
 
         $returnTransfer = new ReturnTransfer();
@@ -87,7 +92,7 @@ class MerchantSalesReturnFacadeTest extends Unit
         // Assert
         $this->assertSame(
             $merchantOrderTransfer->getMerchantReference(),
-            $actualReturnTransfer->getMerchantReference()
+            $actualReturnTransfer->getMerchantReference(),
         );
     }
 
@@ -182,7 +187,7 @@ class MerchantSalesReturnFacadeTest extends Unit
 
         $merchantOrderTransfer = $this->tester->createMerchantOrderWithRelatedData(
             $saveOrderTransfer,
-            $merchantTransfer
+            $merchantTransfer,
         );
 
         $returnItemTransfers = [];
@@ -213,8 +218,8 @@ class MerchantSalesReturnFacadeTest extends Unit
             ->addReturnItem(
                 (new ReturnItemTransfer())
                     ->setOrderItem(
-                        (new ItemTransfer())->setUuid(static::NOT_EXISTING_ORDER_ITEM_UUID)
-                    )
+                        (new ItemTransfer())->setUuid(static::NOT_EXISTING_ORDER_ITEM_UUID),
+                    ),
             );
 
         // Act

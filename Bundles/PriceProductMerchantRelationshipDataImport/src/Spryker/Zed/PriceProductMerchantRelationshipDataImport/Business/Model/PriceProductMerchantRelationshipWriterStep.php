@@ -55,7 +55,7 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
 
         $this->addPublishEvents(
             $eventName,
-            (int)$priceProductMerchantRelationshipEntity->getPrimaryKey()
+            (int)$priceProductMerchantRelationshipEntity->getPrimaryKey(),
         );
     }
 

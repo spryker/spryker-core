@@ -55,13 +55,13 @@ class ProductPackagingUnitStorageClientTest extends Unit
         $productPackagingUnitStorageToStorageClientBridge = $this->getMockBuilder(ProductPackagingUnitStorageToStorageClientInterface::class)->getMock();
         $this->tester->setStorageMock(
             $productPackagingUnitStorageToStorageClientBridge,
-            (new ProductPackagingUnitStorageTransfer())->toArray()
+            (new ProductPackagingUnitStorageTransfer())->toArray(),
         );
 
         // Act
         $productPackagingUnitStorageTransfer = $this->getProductPackagingUnitStorageClient()
             ->findProductPackagingUnitById(
-                $boxProductConcreteTransfer->getIdProductConcrete()
+                $boxProductConcreteTransfer->getIdProductConcrete(),
             );
 
         // Assert

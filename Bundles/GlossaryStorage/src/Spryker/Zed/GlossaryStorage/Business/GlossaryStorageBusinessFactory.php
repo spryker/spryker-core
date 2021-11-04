@@ -30,7 +30,7 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createGlossaryTranslationStorageMapper()
+            $this->createGlossaryTranslationStorageMapper(),
         );
     }
 
@@ -43,7 +43,7 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createGlossaryTranslationStorageMapper()
+            $this->createGlossaryTranslationStorageMapper(),
         );
     }
 

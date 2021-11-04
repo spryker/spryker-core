@@ -104,7 +104,7 @@ class ProductSetCollector extends AbstractStoragePropelCollector
     {
         $imageSets = $this->storageProductImageReader->getProductSetImageSets(
             $productSetStorageTransfer->getIdProductSet(),
-            $this->locale->getIdLocale()
+            $this->locale->getIdLocale(),
         );
 
         $productSetStorageTransfer->setImageSets($imageSets);

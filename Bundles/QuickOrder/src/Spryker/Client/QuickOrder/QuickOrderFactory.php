@@ -36,7 +36,7 @@ class QuickOrderFactory extends AbstractFactory
     {
         return new ProductConcreteResolver(
             $this->getProductStorageClient(),
-            $this->getLocaleClient()
+            $this->getLocaleClient(),
         );
     }
 
@@ -46,7 +46,7 @@ class QuickOrderFactory extends AbstractFactory
     public function createQuickOrderItemValidator(): QuickOrderItemValidatorInterface
     {
         return new QuickOrderItemValidator(
-            $this->getQuickOrderValidationPlugins()
+            $this->getQuickOrderValidationPlugins(),
         );
     }
 
@@ -58,7 +58,7 @@ class QuickOrderFactory extends AbstractFactory
         return new QuickOrderTransferBuilder(
             $this->createProductConcreteResolver(),
             $this->createQuickOrderItemValidator(),
-            $this->createProductConcreteExpander()
+            $this->createProductConcreteExpander(),
         );
     }
 

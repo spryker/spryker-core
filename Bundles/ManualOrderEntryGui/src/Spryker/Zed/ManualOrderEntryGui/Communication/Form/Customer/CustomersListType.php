@@ -24,10 +24,12 @@ class CustomersListType extends AbstractType
      * @var string
      */
     public const TYPE_NAME = 'customers';
+
     /**
      * @var string
      */
     public const FIELD_CUSTOMER = 'idCustomer';
+
     /**
      * @var string
      */
@@ -35,7 +37,7 @@ class CustomersListType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -43,7 +45,7 @@ class CustomersListType extends AbstractType
     {
         $this->addCustomerIdField(
             $builder,
-            $options[static::OPTION_CUSTOMER_ARRAY]
+            $options[static::OPTION_CUSTOMER_ARRAY],
         );
     }
 
