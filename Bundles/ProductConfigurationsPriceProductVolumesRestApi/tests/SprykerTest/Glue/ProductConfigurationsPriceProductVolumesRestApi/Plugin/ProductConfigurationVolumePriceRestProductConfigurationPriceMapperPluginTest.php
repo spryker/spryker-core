@@ -97,6 +97,7 @@ class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTe
         $productConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin = new ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin();
 
         // Act
+        /** @var array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer $restProductConfigurationPriceAttributesTransfers> */
         $restProductConfigurationPriceAttributesTransfers = $productConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin->map(
             $productConfigurationInstanceTransfer,
             [$restProductConfigurationPriceAttributesTransfer],
@@ -104,7 +105,7 @@ class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTe
 
         // Assert
         $this->assertCount(1, $restProductConfigurationPriceAttributesTransfers);
-        /** @var \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer $restProductConfigurationPriceAttributesTransfer */
+
         $this->assertCount(2, $restProductConfigurationPriceAttributesTransfers[0]->getVolumePrices());
     }
 }

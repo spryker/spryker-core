@@ -139,7 +139,11 @@ class ResponseRelationshipTest extends Unit
         $resources = $this->createResourcesWithOverwritableRelations($restResourceBuilder);
 
         // Act
-        /** @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $included */
+        /**
+         * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $includeAbstractProduct
+         * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $includeImageSet
+         * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $includeConcreteProduct
+         */
         [$includeAbstractProduct, $includeImageSet, $includeConcreteProduct] = $responseRelationship
             ->processIncluded($resources, $restRequest);
 

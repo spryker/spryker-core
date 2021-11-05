@@ -281,7 +281,7 @@ class ProductPageSearchFacadeTest extends Unit
             ->method('publish')
             ->with($this->equalTo($productPageLoadTransfer->getProductAbstractIds()));
 
-        /** @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
+        /** @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productPageSearchBusinessFactoryMock */
         $productPageSearchBusinessFactoryMock = $this->getMockBuilder(ProductPageSearchBusinessFactory::class)
             ->setMethods(['getProductPageRefreshPlugins', 'createProductAbstractPagePublisher'])
             ->getMock();

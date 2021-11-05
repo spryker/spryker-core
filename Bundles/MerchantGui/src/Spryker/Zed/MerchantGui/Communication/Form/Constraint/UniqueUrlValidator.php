@@ -20,7 +20,7 @@ class UniqueUrlValidator extends ConstraintValidator
      *
      * @api
      *
-     * @param mixed $value The value that should be validated
+     * @param \Generated\Shared\Transfer\UrlTransfer $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -29,7 +29,6 @@ class UniqueUrlValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        /** @var \Generated\Shared\Transfer\UrlTransfer $value */
         if (!$value->getUrl()) {
             return;
         }

@@ -28,6 +28,7 @@ class ProductConfigurationGuiRepository extends AbstractRepository implements Pr
     public function findProductConfigurationAggregation(
         string $abstractProductSku
     ): ?ProductConfigurationAggregationTransfer {
+        /** @var array $productConfigurationAggregationData */
         $productConfigurationAggregationData = $this->getFactory()->getProductAbstractPropelQuery()
             ->filterBySku($abstractProductSku)
             ->useSpyProductQuery()
@@ -46,11 +47,10 @@ class ProductConfigurationGuiRepository extends AbstractRepository implements Pr
                 ProductConfigurationAggregationTransfer::PRODUCT_CONFIGURATION_COUNT,
             ])->findOne();
 
-        if (empty($productConfigurationAggregationData)) {
+        if (!$productConfigurationAggregationData) {
             return null;
         }
 
-        /** @var array $productConfigurationAggregationData */
         return (new ProductConfigurationAggregationTransfer())->fromArray($productConfigurationAggregationData);
     }
 }

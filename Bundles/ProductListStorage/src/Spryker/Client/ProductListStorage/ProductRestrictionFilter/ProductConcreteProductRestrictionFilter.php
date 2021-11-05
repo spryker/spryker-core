@@ -61,7 +61,6 @@ class ProductConcreteProductRestrictionFilter extends AbstractProductRestriction
 
             throw new NotSupportedProductListTransferTypeException(sprintf(static::ERROR_MESSAGE_WRONG_PRODUCT_LIST_TRANSFER_TYPE, $actualType, ProductConcreteProductListStorageTransfer::class));
         }
-        /** @var \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer */
         $productListStorageTransfer->requireIdProductConcrete();
 
         return $productListStorageTransfer->getIdProductConcrete();

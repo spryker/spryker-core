@@ -338,7 +338,6 @@ class CategoryFacadeTest extends Unit
 
         $secondChildNodeCollectionTransfer = $firstChildNode->getChildrenNodes();
         $this->assertCount(1, $secondChildNodeCollectionTransfer->getNodes());
-        /** @var \Generated\Shared\Transfer\NodeTransfer $firstChildNode */
         $secondChildNode = $secondChildNodeCollectionTransfer->getNodes()->offsetGet(0);
         $this->assertEquals($secondChildNode->getIdCategoryNode(), $categoryTransfer3->getCategoryNode()->getIdCategoryNode());
     }

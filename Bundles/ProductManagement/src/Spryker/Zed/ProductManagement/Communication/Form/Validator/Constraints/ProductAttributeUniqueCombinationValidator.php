@@ -28,7 +28,7 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
             return;
         }
 
-        /** @var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination $constraint */
+        /** @phpstan-var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination $constraint */
         $this->validateAttributeUniqueCombination($value, $constraint);
     }
 

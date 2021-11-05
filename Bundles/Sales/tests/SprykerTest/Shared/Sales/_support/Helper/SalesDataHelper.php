@@ -117,7 +117,7 @@ class SalesDataHelper extends Module
         $salesConfig->setStateMachineProcessName($stateMachineProcessName);
         $salesBusinessFactory->setConfig($salesConfig);
 
-        /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $salesFacade */
+        /** @phpstan-var \Spryker\Zed\Kernel\Business\AbstractFacade $salesFacade */
         $salesFacade->setFactory($salesBusinessFactory);
 
         return $salesFacade;

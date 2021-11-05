@@ -38,7 +38,7 @@ abstract class AbstractObject implements ObjectInterface
 
             foreach ($value as $subKey => $subValue) {
                 if (is_object($subValue) && method_exists($subValue, 'toArray')) {
-                    /** @var \Spryker\Shared\ZedRequest\Client\ObjectInterface $subValue */
+                    /** @phpstan-var \Spryker\Shared\ZedRequest\Client\ObjectInterface $subValue */
                     $value[$subKey] = $subValue->toArray();
                 }
             }

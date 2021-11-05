@@ -85,10 +85,10 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
 
         $reservationResponseTransfer = $this->omsFacade->getOmsReservedProductQuantity($reservationRequestTransfer);
 
-        /** @var \Spryker\DecimalObject\Decimal $reservationQuantity */
+        /** @phpstan-var \Spryker\DecimalObject\Decimal $reservationQuantity */
         $reservationQuantity = $reservationResponseTransfer->getReservationQuantity();
 
-        /** @var \Spryker\DecimalObject\Decimal $quantity */
+        /** @phpstan-var \Spryker\DecimalObject\Decimal $quantity */
         $availableQuantity = $quantity->subtract($reservationQuantity);
 
         return $availableQuantity;

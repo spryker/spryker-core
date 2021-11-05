@@ -75,7 +75,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         /** @var \Generated\Shared\Transfer\RestProductOfferPriceAttributesTransfer $price1 */
         $price1 = $restProductOfferPricesAttributesTransfer->getPrices()->offsetGet(0);
         $this->assertCount(1, $price1->getVolumePrices());
-        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice */
+        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice1 */
         $volumePrice1 = $price1->getVolumePrices()->offsetGet(0);
         $this->assertEquals(5, $volumePrice1->getQuantity());
         $this->assertEquals(666, $volumePrice1->getNetAmount());
@@ -84,7 +84,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         /** @var \Generated\Shared\Transfer\RestProductOfferPriceAttributesTransfer $price2 */
         $price2 = $restProductOfferPricesAttributesTransfer->getPrices()->offsetGet(1);
         $this->assertCount(1, $price1->getVolumePrices());
-        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice */
+        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice2 */
         $volumePrice2 = $price2->getVolumePrices()->offsetGet(0);
         $this->assertEquals(5, $volumePrice2->getQuantity());
         $this->assertEquals(666, $volumePrice2->getNetAmount());
@@ -191,7 +191,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         /** @var \Generated\Shared\Transfer\RestProductOfferPriceAttributesTransfer $price1 */
         $price1 = $restProductOfferPricesAttributesTransfer->getPrices()->offsetGet(0);
         $this->assertCount(1, $price1->getVolumePrices());
-        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice */
+        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice1 */
         $volumePrice1 = $price1->getVolumePrices()->offsetGet(0);
         $this->assertEquals(6, $volumePrice1->getQuantity());
         $this->assertEquals(456, $volumePrice1->getNetAmount());
@@ -200,7 +200,7 @@ class RestProductOfferPricesAttributesMapperPluginTest extends Unit
         /** @var \Generated\Shared\Transfer\RestProductOfferPriceAttributesTransfer $price2 */
         $price2 = $restProductOfferPricesAttributesTransfer->getPrices()->offsetGet(1);
         $this->assertCount(1, $price1->getVolumePrices());
-        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice */
+        /** @var \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer $volumePrice2 */
         $volumePrice2 = $price2->getVolumePrices()->offsetGet(0);
         $this->assertEquals(6, $volumePrice2->getQuantity());
         $this->assertEquals(678, $volumePrice2->getNetAmount());

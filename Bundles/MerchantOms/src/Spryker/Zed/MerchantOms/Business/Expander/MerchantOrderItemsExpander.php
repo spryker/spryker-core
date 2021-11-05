@@ -43,6 +43,7 @@ class MerchantOrderItemsExpander implements MerchantOrderItemsExpanderInterface
     public function expandMerchantOrderItemsWithManualEvents(
         MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
     ): MerchantOrderItemCollectionTransfer {
+        /** @var array<int> $stateMachineItemStateIds */
         $stateMachineItemStateIds = [];
         $merchantOrderItemTransfers = $merchantOrderItemCollectionTransfer->getMerchantOrderItems();
 
@@ -51,7 +52,6 @@ class MerchantOrderItemsExpander implements MerchantOrderItemsExpanderInterface
         }
 
         foreach ($merchantOrderItemTransfers as $merchantOrderItemTransfer) {
-            /** @var array<int> $stateMachineItemStateIds */
             $stateMachineItemStateIds[] = $merchantOrderItemTransfer
                 ->requireFkStateMachineItemState()
                 ->getFkStateMachineItemState();

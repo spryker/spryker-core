@@ -73,7 +73,6 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->configMock = $this->getMockBuilder(SalesQuantityConfig::class)->getMock();
 
-        /** @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacade $facade */
         $this->facade = $this->tester->getFacade();
 
         $this->facade->setFactory(
