@@ -17,7 +17,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 /**
- * @method array<\Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit> runQuery(\Propel\Runtime\ActiveQuery\ModelCriteria $query, TableConfiguration $config, bool $returnRawResults = false)
+ * @method array<\Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit> runQuery(\Propel\Runtime\ActiveQuery\ModelCriteria $query, \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config, bool $returnRawResults = false)
  */
 class CompanyBusinessUnitTable extends AbstractTable
 {

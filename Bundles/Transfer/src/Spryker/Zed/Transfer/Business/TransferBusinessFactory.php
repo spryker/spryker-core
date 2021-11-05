@@ -62,7 +62,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return Model\TransferGeneratorInterface
+     * @return \Spryker\Zed\Transfer\Business\Model\TransferGeneratorInterface
      */
     public function createEntityTransferGenerator(LoggerInterface $messenger)
     {
@@ -163,7 +163,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return Model\Generator\LoaderInterface
+     * @return \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
     protected function createEntityLoader()
     {
