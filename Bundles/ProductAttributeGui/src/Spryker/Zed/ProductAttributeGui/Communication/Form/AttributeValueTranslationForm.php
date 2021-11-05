@@ -65,7 +65,7 @@ class AttributeValueTranslationForm extends AbstractType
      */
     protected function addIdField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, HiddenType::class, [
+        $builder->add(static::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, HiddenType::class, [
             'label' => null,
         ]);
 
@@ -79,7 +79,7 @@ class AttributeValueTranslationForm extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE, TextType::class, [
+        $builder->add(static::FIELD_VALUE, TextType::class, [
             'label' => 'Value',
             'disabled' => true,
             'attr' => [
@@ -97,11 +97,11 @@ class AttributeValueTranslationForm extends AbstractType
      */
     protected function addTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATION, TextType::class, [
+        $builder->add(static::FIELD_TRANSLATION, TextType::class, [
             'label' => 'Translation',
             'constraints' => [
                 new NotBlank([
-                    'groups' => self::GROUP_VALUE_TRANSLATIONS,
+                    'groups' => static::GROUP_VALUE_TRANSLATIONS,
                 ]),
             ],
         ]);

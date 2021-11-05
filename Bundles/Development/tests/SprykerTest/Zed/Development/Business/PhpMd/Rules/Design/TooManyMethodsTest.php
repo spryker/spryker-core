@@ -55,7 +55,7 @@ class TooManyMethodsTest extends Unit
         $nodeMock = $this->getNodeMock($fullyQualifiedClassName, $nodeName);
 
         $tooManyMethodsMock = $this->getTooManyMethodsMock();
-        $tooManyMethodsMock->expects($this->once())->method('getIntProperty')->willReturn(self::THRESHOLD_LOW);
+        $tooManyMethodsMock->expects($this->once())->method('getIntProperty')->willReturn(static::THRESHOLD_LOW);
         $tooManyMethodsMock->expects($this->never())->method('addViolation');
         $tooManyMethodsMock->apply($nodeMock);
     }

@@ -262,7 +262,7 @@ class Console extends SymfonyCommand
      */
     protected function hasError()
     {
-        return $this->exitCode !== self::CODE_SUCCESS;
+        return $this->exitCode !== static::CODE_SUCCESS;
     }
 
     /**

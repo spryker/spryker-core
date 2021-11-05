@@ -39,12 +39,12 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
     public function testWriteMustWriteContentToFile(): void
     {
         $writer = new PropelSchemaWriter(new Filesystem(), $this->getFixtureDirectory());
-        $this->assertFalse(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME));
-        $writer->write(self::TEST_FILE_NAME, self::TEST_CONTENT);
-        $this->assertTrue(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME));
+        $this->assertFalse(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . static::TEST_FILE_NAME));
+        $writer->write(static::TEST_FILE_NAME, static::TEST_CONTENT);
+        $this->assertTrue(file_exists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . static::TEST_FILE_NAME));
         $this->assertSame(
-            self::TEST_CONTENT,
-            file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME),
+            static::TEST_CONTENT,
+            file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . static::TEST_FILE_NAME),
         );
     }
 }

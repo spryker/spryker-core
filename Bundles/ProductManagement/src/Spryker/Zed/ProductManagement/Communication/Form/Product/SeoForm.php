@@ -57,7 +57,7 @@ class SeoForm extends AbstractSubForm
     protected function addMetaTitleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_TITLE, TextType::class, [
+            ->add(static::FIELD_META_TITLE, TextType::class, [
                 'required' => false,
                 'label' => 'Title',
             ]);
@@ -73,7 +73,7 @@ class SeoForm extends AbstractSubForm
     protected function addMetaKeywordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_KEYWORDS, TextType::class, [
+            ->add(static::FIELD_META_KEYWORDS, TextType::class, [
                 'required' => false,
                 'label' => 'Keywords',
             ]);
@@ -89,7 +89,7 @@ class SeoForm extends AbstractSubForm
     protected function addMetaDescriptionField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_DESCRIPTION, TextType::class, [
+            ->add(static::FIELD_META_DESCRIPTION, TextType::class, [
                 'required' => false,
                 'label' => 'Description',
             ]);

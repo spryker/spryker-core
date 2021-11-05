@@ -59,13 +59,13 @@ class DiscountConfig extends AbstractBundleConfig
     public function getVoucherCodeCharacters()
     {
         return [
-            self::KEY_VOUCHER_CODE_CONSONANTS => [
+            static::KEY_VOUCHER_CODE_CONSONANTS => [
                 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z',
             ],
-            self::KEY_VOUCHER_CODE_VOWELS => [
+            static::KEY_VOUCHER_CODE_VOWELS => [
                 'a', 'e', 'u',
             ],
-            self::KEY_VOUCHER_CODE_NUMBERS => [
+            static::KEY_VOUCHER_CODE_NUMBERS => [
                 1, 2, 3, 4, 5, 6, 7, 8, 9,
             ],
         ];

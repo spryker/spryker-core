@@ -71,9 +71,9 @@ class PathExtractor implements PathExtractorInterface
     protected function formatNode(array $node)
     {
         return [
-            self::URI => $node[MenuFormatter::URI],
-            self::LABEL => $node[MenuFormatter::LABEL],
-            self::TITLE => $node[MenuFormatter::TITLE],
+            static::URI => $node[MenuFormatter::URI],
+            static::LABEL => $node[MenuFormatter::LABEL],
+            static::TITLE => $node[MenuFormatter::TITLE],
         ];
     }
 }

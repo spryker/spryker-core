@@ -137,20 +137,20 @@ class ContentStorageFacadeTest extends Unit
 
         $contentStoreExpectedData = [
             [
-                self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::DE_LOCALE,
+                static::CONTENT_STORAGE_DATA_KEY => $contentData,
+                static::CONTENT_STORAGE_LOCALE_KEY => static::DE_LOCALE,
             ],
             [
-                self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::EN_LOCALE,
+                static::CONTENT_STORAGE_DATA_KEY => $contentData,
+                static::CONTENT_STORAGE_LOCALE_KEY => static::EN_LOCALE,
             ],
             [
-                self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::FR_LOCALE,
+                static::CONTENT_STORAGE_DATA_KEY => $contentData,
+                static::CONTENT_STORAGE_LOCALE_KEY => static::FR_LOCALE,
             ],
             [
-                self::CONTENT_STORAGE_DATA_KEY => $contentData,
-                self::CONTENT_STORAGE_LOCALE_KEY => self::PL_LOCALE,
+                static::CONTENT_STORAGE_DATA_KEY => $contentData,
+                static::CONTENT_STORAGE_LOCALE_KEY => static::PL_LOCALE,
             ],
         ];
 
@@ -167,8 +167,8 @@ class ContentStorageFacadeTest extends Unit
         $persistenceFactory = new ContentStoragePersistenceFactory();
         $contentStorageDataList = $persistenceFactory->createContentStorageQuery()
             ->lastCreatedFirst()
-            ->select([self::CONTENT_STORAGE_DATA_KEY, self::CONTENT_STORAGE_LOCALE_KEY])
-            ->limit(self::EXPECTED_STORED_CONTENT_ITEMS)
+            ->select([static::CONTENT_STORAGE_DATA_KEY, static::CONTENT_STORAGE_LOCALE_KEY])
+            ->limit(static::EXPECTED_STORED_CONTENT_ITEMS)
             ->find()
             ->toArray();
 
@@ -184,9 +184,9 @@ class ContentStorageFacadeTest extends Unit
 
         $storeBuilder = new StoreBuilder([
             'availableLocaleIsoCodes' => [
-                self::DE_LOCALE_KEY => self::DE_LOCALE,
-                self::EN_LOCALE_NAME => self::EN_LOCALE,
-                self::FR_LOCALE_NAME => self::FR_LOCALE,
+                static::DE_LOCALE_KEY => static::DE_LOCALE,
+                static::EN_LOCALE_NAME => static::EN_LOCALE,
+                static::FR_LOCALE_NAME => static::FR_LOCALE,
             ],
         ]);
         $store = $storeBuilder->build();
@@ -194,9 +194,9 @@ class ContentStorageFacadeTest extends Unit
 
         $storeWithSharedPersistanceBuilder = new StoreBuilder([
             'availableLocaleIsoCodes' => [
-                self::DE_LOCALE_KEY => self::DE_LOCALE,
-                self::EN_LOCALE_NAME => self::EN_LOCALE,
-                self::PL_LOCALE_NAME => self::PL_LOCALE,
+                static::DE_LOCALE_KEY => static::DE_LOCALE,
+                static::EN_LOCALE_NAME => static::EN_LOCALE,
+                static::PL_LOCALE_NAME => static::PL_LOCALE,
             ],
         ]);
         $storeWithSharedPersistance = $storeWithSharedPersistanceBuilder->build();

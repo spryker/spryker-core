@@ -86,8 +86,8 @@ class SessionHandlerFileTest extends Unit
     {
         $this->assertFalse(is_dir($this->getSavePath()));
 
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
 
         $this->assertTrue(is_dir($this->getSavePath()));
     }
@@ -97,8 +97,8 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallOpenMustReturnTrue(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $result = $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $result = $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
 
         $this->assertTrue($result);
     }
@@ -108,7 +108,7 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallCloseMustReturnTrue(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
         $result = $sessionHandlerFile->close();
 
         $this->assertTrue($result);
@@ -119,9 +119,9 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallWriteMustReturnFalseIfNoDataPassed(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
-        $result = $sessionHandlerFile->write(self::SESSION_ID, '');
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
+        $result = $sessionHandlerFile->write(static::SESSION_ID, '');
 
         $this->assertFalse($result);
     }
@@ -131,9 +131,9 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
-        $result = $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
+        $result = $sessionHandlerFile->write(static::SESSION_ID, static::SESSION_DATA);
 
         $this->assertTrue($result);
     }
@@ -143,9 +143,9 @@ class SessionHandlerFileTest extends Unit
      */
     public function testWriteMustAllowZeroValue(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
-        $result = $sessionHandlerFile->write(self::SESSION_ID, '0');
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
+        $result = $sessionHandlerFile->write(static::SESSION_ID, '0');
 
         $this->assertTrue($result);
     }
@@ -155,13 +155,13 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallReadMustReturnContentOfSessionForGivenSessionId(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
-        $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
+        $sessionHandlerFile->write(static::SESSION_ID, static::SESSION_DATA);
 
-        $result = $sessionHandlerFile->read(self::SESSION_ID);
+        $result = $sessionHandlerFile->read(static::SESSION_ID);
 
-        $this->assertSame(self::SESSION_DATA, $result);
+        $this->assertSame(static::SESSION_DATA, $result);
     }
 
     /**
@@ -169,10 +169,10 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallDestroyMustReturnTrueIfNoFileExistsForSessionId(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
 
-        $result = $sessionHandlerFile->destroy(self::SESSION_ID);
+        $result = $sessionHandlerFile->destroy(static::SESSION_ID);
 
         $this->assertTrue($result);
     }
@@ -182,11 +182,11 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallDestroyMustReturnTrueIfFileExistsForSessionId(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
-        $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
+        $sessionHandlerFile->write(static::SESSION_ID, static::SESSION_DATA);
 
-        $result = $sessionHandlerFile->destroy(self::SESSION_ID);
+        $result = $sessionHandlerFile->destroy(static::SESSION_ID);
 
         $this->assertTrue($result);
     }
@@ -196,11 +196,11 @@ class SessionHandlerFileTest extends Unit
      */
     public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime(): void
     {
-        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createMonitoringServiceMock());
-        $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
-        $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
+        $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), static::LIFETIME, $this->createMonitoringServiceMock());
+        $sessionHandlerFile->open($this->getSavePath(), static::SESSION_NAME);
+        $sessionHandlerFile->write(static::SESSION_ID, static::SESSION_DATA);
         $this->makeFileOlderThanItIs();
-        $sessionHandlerFile->write(self::SESSION_ID_2, self::SESSION_DATA);
+        $sessionHandlerFile->write(static::SESSION_ID_2, static::SESSION_DATA);
         $this->makeFileNewerThanItIs();
 
         $finder = new Finder();
@@ -211,7 +211,7 @@ class SessionHandlerFileTest extends Unit
         $sessionHandlerFile->gc(1);
         $this->assertCount(1, $finder);
 
-        unlink($this->getSavePath() . '/session:' . self::SESSION_ID_2);
+        unlink($this->getSavePath() . '/session:' . static::SESSION_ID_2);
         rmdir($this->getSavePath());
     }
 
@@ -220,7 +220,7 @@ class SessionHandlerFileTest extends Unit
      */
     protected function makeFileOlderThanItIs(): void
     {
-        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 200);
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . static::SESSION_ID, time() - 200);
     }
 
     /**
@@ -228,7 +228,7 @@ class SessionHandlerFileTest extends Unit
      */
     protected function makeFileNewerThanItIs(): void
     {
-        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID_2, time() + 200);
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . static::SESSION_ID_2, time() + 200);
     }
 
     /**

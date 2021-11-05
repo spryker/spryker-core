@@ -58,7 +58,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function logout()
     {
-        $this->sessionClient->remove(self::SESSION_KEY);
+        $this->sessionClient->remove(static::SESSION_KEY);
         $this->invalidateCustomerTransferCache();
     }
 
@@ -67,7 +67,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function hasCustomer()
     {
-        return $this->hasCustomerTransferCache() || $this->sessionClient->has(self::SESSION_KEY);
+        return $this->hasCustomerTransferCache() || $this->sessionClient->has(static::SESSION_KEY);
     }
 
     /**
@@ -79,7 +79,7 @@ class CustomerSession implements CustomerSessionInterface
             return $this->getCustomerTransferCache();
         }
 
-        $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
+        $customerTransfer = $this->sessionClient->get(static::SESSION_KEY);
 
         if ($customerTransfer === null) {
             return null;
@@ -102,7 +102,7 @@ class CustomerSession implements CustomerSessionInterface
     public function setCustomer(CustomerTransfer $customerTransfer)
     {
         $this->sessionClient->set(
-            self::SESSION_KEY,
+            static::SESSION_KEY,
             $customerTransfer,
         );
 
@@ -137,7 +137,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function findCustomerRawData(): ?CustomerTransfer
     {
-        $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
+        $customerTransfer = $this->sessionClient->get(static::SESSION_KEY);
 
         if ($customerTransfer === null) {
             return null;

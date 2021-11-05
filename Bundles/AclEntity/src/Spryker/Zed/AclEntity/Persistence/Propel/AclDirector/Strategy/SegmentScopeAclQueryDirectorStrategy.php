@@ -283,7 +283,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
 
         $segmentQuery
             ->filterBy(
-                $segmentQuery->getTableMap()->getColumn(self::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
+                $segmentQuery->getTableMap()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
                 $segmentId,
             )
             ->filterBy(
@@ -309,7 +309,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
         );
         $segmentEntities = $segmentTableQuery
             ->filterBy(
-                $segmentTableQuery->getTableMap()->getColumn(self::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
+                $segmentTableQuery->getTableMap()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
                 $segmentIds,
                 Criteria::IN,
             )
@@ -340,7 +340,7 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
     protected function generateSegmentJoinCondition(TableMap $segmentTableMap): string
     {
         return sprintf(
-            self::SEGMENT_JOIN_CONDITION_TEMPLATE,
+            static::SEGMENT_JOIN_CONDITION_TEMPLATE,
             $segmentTableMap->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getFullyQualifiedName(),
         );
     }

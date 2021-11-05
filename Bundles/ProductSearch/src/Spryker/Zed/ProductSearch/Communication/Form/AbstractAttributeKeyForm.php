@@ -57,8 +57,8 @@ abstract class AbstractAttributeKeyForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            self::OPTION_IS_UPDATE => false,
-            self::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS => [],
+            static::OPTION_IS_UPDATE => false,
+            static::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS => [],
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
                 $groups = [Constraint::DEFAULT_GROUP];
@@ -107,7 +107,7 @@ abstract class AbstractAttributeKeyForm extends AbstractType
                         $context->addViolation('Attribute key is already used');
                     }
                 },
-                'groups' => [self::GROUP_UNIQUE_KEY],
+                'groups' => [static::GROUP_UNIQUE_KEY],
             ]),
         ];
     }

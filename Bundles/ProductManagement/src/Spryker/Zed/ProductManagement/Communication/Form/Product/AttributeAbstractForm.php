@@ -93,7 +93,7 @@ class AttributeAbstractForm extends AbstractSubForm
             ],
             'constraints' => [
                 new NotBlank([
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_VALUE],
+                    'groups' => [static::VALIDATION_GROUP_ATTRIBUTE_VALUE],
                 ]),
             ],
         ];
@@ -151,7 +151,7 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options = [])
     {
-        $attributes = $options[self::OPTION_ATTRIBUTE];
+        $attributes = $options[static::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $label = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_LABEL];
@@ -159,7 +159,7 @@ class AttributeAbstractForm extends AbstractSubForm
         $isProductSpecific = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_PRODUCT_SPECIFIC];
 
         $builder
-            ->add(self::FIELD_NAME, CheckboxType::class, [
+            ->add(static::FIELD_NAME, CheckboxType::class, [
                 'label' => $label,
                 'disabled' => $isDisabled,
                 'attr' => [
@@ -181,7 +181,7 @@ class AttributeAbstractForm extends AbstractSubForm
     protected function addValueIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_VALUE_HIDDEN_ID, HiddenType::class, []);
+            ->add(static::FIELD_VALUE_HIDDEN_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -195,7 +195,7 @@ class AttributeAbstractForm extends AbstractSubForm
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $attributes = $options[self::OPTION_ATTRIBUTE];
+        $attributes = $options[static::OPTION_ATTRIBUTE];
         $attributeData = new Collection($attributes[$name]);
 
         $inputManager = new AttributeInputManager();
@@ -244,7 +244,7 @@ class AttributeAbstractForm extends AbstractSubForm
             }
         }
 
-        $builder->add(self::FIELD_VALUE, $input, $config);
+        $builder->add(static::FIELD_VALUE, $input, $config);
 
         return $this;
     }

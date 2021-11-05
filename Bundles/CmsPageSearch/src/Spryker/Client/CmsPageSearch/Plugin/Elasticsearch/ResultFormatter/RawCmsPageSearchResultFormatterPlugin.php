@@ -26,7 +26,7 @@ class RawCmsPageSearchResultFormatterPlugin extends AbstractElasticsearchResultF
      */
     public function getName(): string
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     /**

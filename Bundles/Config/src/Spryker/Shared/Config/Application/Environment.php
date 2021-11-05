@@ -33,7 +33,7 @@ class Environment
         $store = Store::getInstance();
         $locale = current($store->getLocales());
 
-        self::initializeLocale($locale);
+        static::initializeLocale($locale);
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
     }

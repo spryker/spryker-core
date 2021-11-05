@@ -96,7 +96,7 @@ class IndexController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
+        $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
         $discountConfiguratorTransfer = $this->getFactory()
             ->createDiscountFormDataProvider()
@@ -258,8 +258,8 @@ class IndexController extends AbstractController
      */
     public function tableAction(Request $request)
     {
-        $idPool = $this->castId($request->query->get(self::URL_PARAM_ID_POOL));
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
+        $idPool = $this->castId($request->query->get(static::URL_PARAM_ID_POOL));
+        $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
         $table = $this->getGeneratedCodesTable($request, $idPool, $idDiscount);
 
         return $this->jsonResponse(
@@ -274,7 +274,7 @@ class IndexController extends AbstractController
      */
     public function toggleDiscountVisibilityAction(Request $request)
     {
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
+        $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
         $form = $this->getFactory()->createDiscountVisibilityForm()->handleRequest($request);
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
@@ -338,7 +338,7 @@ class IndexController extends AbstractController
      */
     protected function getGeneratedCodesTable(Request $request, $idPool, $idDiscount)
     {
-        $batch = $request->query->getInt(self::URL_PARAM_BATCH_PARAMETER);
+        $batch = $request->query->getInt(static::URL_PARAM_BATCH_PARAMETER);
         $tableParameters = TableParameters::getTableParameters($request);
 
         return $this->getFactory()->createDiscountVoucherCodesTable(
@@ -364,7 +364,7 @@ class IndexController extends AbstractController
         $redirectUrl = Url::generate(
             '/discount/index/edit',
             [
-                    self::URL_PARAM_ID_DISCOUNT => $idDiscount,
+                    static::URL_PARAM_ID_DISCOUNT => $idDiscount,
                 ],
         )->build() . $hash;
 

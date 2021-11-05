@@ -41,17 +41,17 @@ class TransferToMoneyConverterTest extends Unit
     public function testConvertShouldReturnMoney(): void
     {
         $isoCodeTransfer = new CurrencyTransfer();
-        $isoCodeTransfer->setCode(self::CURRENCY);
+        $isoCodeTransfer->setCode(static::CURRENCY);
 
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount(self::AMOUNT)
+        $moneyTransfer->setAmount(static::AMOUNT)
             ->setCurrency($isoCodeTransfer);
 
         $transferToMoneyConverter = new TransferToMoneyMapper();
         $money = $transferToMoneyConverter->convert($moneyTransfer);
 
         $this->assertInstanceOf(Money::class, $money);
-        $this->assertSame((string)self::AMOUNT, $money->getAmount());
-        $this->assertSame(self::CURRENCY, $money->getCurrency()->getCode());
+        $this->assertSame((string)static::AMOUNT, $money->getAmount());
+        $this->assertSame(static::CURRENCY, $money->getCurrency()->getCode());
     }
 }

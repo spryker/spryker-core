@@ -55,17 +55,17 @@ class PercentageTest extends Unit
     {
         $items = $this->getDiscountableItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $calculator = new PercentageType();
-        $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_200);
+        $discountTransfer = (new DiscountTransfer())->setAmount(static::DISCOUNT_PERCENTAGE_200);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
-        $this->assertSame(self::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
+        $this->assertSame(static::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
     }
 
     /**
@@ -75,14 +75,14 @@ class PercentageTest extends Unit
     {
         $items = $this->getDiscountableItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $calculator = new PercentageType();
-        $discountTransfer = (new DiscountTransfer())->setAmount(-1 * self::DISCOUNT_PERCENTAGE_200);
+        $discountTransfer = (new DiscountTransfer())->setAmount(-1 * static::DISCOUNT_PERCENTAGE_200);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertSame(0, $discountAmount);
@@ -95,9 +95,9 @@ class PercentageTest extends Unit
     {
         $items = $this->getDiscountableItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
@@ -114,14 +114,14 @@ class PercentageTest extends Unit
     {
         $items = $this->getDiscountableItems(
             [
-                -1 * self::ITEM_GROSS_PRICE_1000,
-                -1 * self::ITEM_GROSS_PRICE_1000,
-                -1 * self::ITEM_GROSS_PRICE_1000,
+                -1 * static::ITEM_GROSS_PRICE_1000,
+                -1 * static::ITEM_GROSS_PRICE_1000,
+                -1 * static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $calculator = new PercentageType();
-        $discountCalculatorTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
+        $discountCalculatorTransfer = (new DiscountTransfer())->setAmount(static::DISCOUNT_PERCENTAGE_10);
         $discountAmount = $calculator->calculateDiscount($items, $discountCalculatorTransfer);
 
         $this->assertSame(0, $discountAmount);
@@ -134,14 +134,14 @@ class PercentageTest extends Unit
     {
         $items = $this->getDiscountableItems(
             [
-                 self::ITEM_GROSS_PRICE_1000,
+                 static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $items[0]->setQuantity(0);
 
         $calculator = new PercentageType();
-        $discountTransfer = (new DiscountTransfer())->setAmount(self::DISCOUNT_PERCENTAGE_10);
+        $discountTransfer = (new DiscountTransfer())->setAmount(static::DISCOUNT_PERCENTAGE_10);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertNotEmpty($discountAmount);

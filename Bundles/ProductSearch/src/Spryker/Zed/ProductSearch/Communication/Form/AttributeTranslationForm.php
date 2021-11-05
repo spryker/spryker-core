@@ -61,7 +61,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeNameTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY_TRANSLATION, TextType::class, [
+        $builder->add(static::FIELD_KEY_TRANSLATION, TextType::class, [
             'label' => 'Filter name *',
             'constraints' => [
                 new NotBlank(),

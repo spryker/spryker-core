@@ -85,7 +85,7 @@ class GraphPluginTest extends Unit
         $pluginMock = $this->getMockBuilder(GraphPlugin::class)->setMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
         $pluginMock->method('getFactory')->willReturn($factoryMock);
 
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->init(self::GRAPH_NAME));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->init(static::GRAPH_NAME));
     }
 
     /**
@@ -93,7 +93,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddNode(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(self::NODE_A));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(static::NODE_A));
     }
 
     /**
@@ -101,7 +101,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddNodeWithAttributes(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(self::NODE_A, self::ATTRIBUTES));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(static::NODE_A, static::ATTRIBUTES));
     }
 
     /**
@@ -109,7 +109,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddNodeWithGroup(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(self::NODE_A, [], self::GROUP_NAME));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addNode(static::NODE_A, [], static::GROUP_NAME));
     }
 
     /**
@@ -117,7 +117,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddEdge(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addEdge(self::NODE_A, self::NODE_B));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addEdge(static::NODE_A, static::NODE_B));
     }
 
     /**
@@ -125,7 +125,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddEdgeWithAttributes(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addEdge(self::NODE_A, self::NODE_B, self::ATTRIBUTES));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addEdge(static::NODE_A, static::NODE_B, static::ATTRIBUTES));
     }
 
     /**
@@ -133,7 +133,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddCluster(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addCluster(self::CLUSTER_NAME));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addCluster(static::CLUSTER_NAME));
     }
 
     /**
@@ -141,7 +141,7 @@ class GraphPluginTest extends Unit
      */
     public function testAddClusterWithAttributes(): void
     {
-        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addCluster(self::CLUSTER_NAME, self::ATTRIBUTES));
+        $this->assertInstanceOf(GraphPlugin::class, $this->getPluginMock()->addCluster(static::CLUSTER_NAME, static::ATTRIBUTES));
     }
 
     /**
@@ -166,6 +166,6 @@ class GraphPluginTest extends Unit
         $pluginMock = $this->getMockBuilder(GraphPlugin::class)->setMethods(['getFactory'])->setConstructorArgs(['name'])->disableOriginalConstructor()->getMock();
         $pluginMock->method('getFactory')->willReturn($factoryMock);
 
-        return $pluginMock->init(self::GRAPH_NAME);
+        return $pluginMock->init(static::GRAPH_NAME);
     }
 }

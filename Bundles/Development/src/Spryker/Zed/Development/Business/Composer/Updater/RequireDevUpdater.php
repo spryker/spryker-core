@@ -45,11 +45,11 @@ class RequireDevUpdater implements UpdaterInterface
     {
         $requiresCodeSniffer = is_dir($path . 'src');
 
-        if ($requiresCodeSniffer && isset($composerJson[static::KEY_REQUIRE_DEV][self::PACKAGE_CODE_SNIFFER])) {
+        if ($requiresCodeSniffer && isset($composerJson[static::KEY_REQUIRE_DEV][static::PACKAGE_CODE_SNIFFER])) {
             return $composerJson;
         }
 
-        if ($requiresCodeSniffer && !isset($composerJson[static::KEY_REQUIRE_DEV][self::PACKAGE_CODE_SNIFFER])) {
+        if ($requiresCodeSniffer && !isset($composerJson[static::KEY_REQUIRE_DEV][static::PACKAGE_CODE_SNIFFER])) {
             $composerJson[static::KEY_REQUIRE_DEV][static::PACKAGE_CODE_SNIFFER] = '*';
         } elseif (!$requiresCodeSniffer) {
             unset($composerJson[static::KEY_REQUIRE_DEV][static::PACKAGE_CODE_SNIFFER]);

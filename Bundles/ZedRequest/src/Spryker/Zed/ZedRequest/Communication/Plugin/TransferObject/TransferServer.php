@@ -62,17 +62,17 @@ class TransferServer
      */
     public static function getInstance(?Repeater $repeater = null)
     {
-        if (self::$instance) {
-            return self::$instance;
+        if (static::$instance) {
+            return static::$instance;
         }
 
         if ($repeater === null) {
             $repeater = new Repeater();
         }
 
-        self::$instance = new static($repeater);
+        static::$instance = new static($repeater);
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**

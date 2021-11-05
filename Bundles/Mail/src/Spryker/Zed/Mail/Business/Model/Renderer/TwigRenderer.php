@@ -98,7 +98,7 @@ class TwigRenderer implements RendererInterface
     {
         foreach ($mailTransfer->requireTemplates()->getTemplates() as $templateTransfer) {
             if ($templateTransfer->getIsHtml()) {
-                $renderedContent = $this->renderer->render(self::LAYOUT_TEMPLATE_HTML, ['mail' => $mailTransfer]);
+                $renderedContent = $this->renderer->render(static::LAYOUT_TEMPLATE_HTML, ['mail' => $mailTransfer]);
                 $templateTransfer->setContent($renderedContent);
             }
         }

@@ -183,9 +183,9 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
                 ->endUse()
                 ->withColumn(SpyTaxSetTableMap::COL_NAME)
                 ->groupBy(SpyTaxSetTableMap::COL_NAME)
-                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([self::COL_MAX_TAX_RATE]);
+            ->select([static::COL_MAX_TAX_RATE]);
     }
 
     /**

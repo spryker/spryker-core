@@ -85,10 +85,10 @@ class CmsGlossaryTable extends AbstractTable
             SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => 'Placeholder',
             CmsQueryContainer::KEY => 'Glossary Key',
             CmsQueryContainer::TRANS => 'Glossary Value',
-            self::ACTIONS => self::ACTIONS,
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -129,7 +129,7 @@ class CmsGlossaryTable extends AbstractTable
                 SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
                 CmsQueryContainer::KEY => $item[CmsQueryContainer::KEY],
                 CmsQueryContainer::TRANS => $item[CmsQueryContainer::TRANS],
-                self::ACTIONS => implode(' ', $this->buildLinks($item)),
+                static::ACTIONS => implode(' ', $this->buildLinks($item)),
             ];
             $mappedPlaceholders[] = $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
         }
@@ -151,15 +151,15 @@ class CmsGlossaryTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(self::URL_CMS_GLOSSARY_EDIT, [
+            Url::generate(static::URL_CMS_GLOSSARY_EDIT, [
                 CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
-                self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
+                static::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
             ]),
             'Edit',
         );
-        $buttons[] = $this->generateRemoveButton(self::URL_CMS_GLOSSARY_DELETE, 'Delete', [
+        $buttons[] = $this->generateRemoveButton(static::URL_CMS_GLOSSARY_DELETE, 'Delete', [
             CmsTableConstants::REQUEST_ID_PAGE => $this->idPage,
-            self::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
+            static::REQUEST_ID_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
         ]);
 
         return $buttons;
@@ -195,7 +195,7 @@ class CmsGlossaryTable extends AbstractTable
                     SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $place,
                     CmsQueryContainer::KEY => null,
                     CmsQueryContainer::TRANS => null,
-                    self::ACTIONS => $this->buildPlaceholderLinks($place),
+                    static::ACTIONS => $this->buildPlaceholderLinks($place),
                 ];
             }
         }

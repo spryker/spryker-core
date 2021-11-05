@@ -194,8 +194,8 @@ class GeneralForm extends AbstractType
             'multiple' => false,
             'label' => false,
             'choices' => array_flip([
-                self::NON_EXCLUSIVE,
-                self::EXCLUSIVE,
+                static::NON_EXCLUSIVE,
+                static::EXCLUSIVE,
             ]),
             'constraints' => [
                 new NotBlank(),

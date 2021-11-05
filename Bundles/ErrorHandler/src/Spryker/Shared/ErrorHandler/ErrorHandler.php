@@ -120,7 +120,7 @@ class ErrorHandler
      */
     protected function sendExitCode()
     {
-        exit(self::EXIT_CODE_ERROR);
+        exit(static::EXIT_CODE_ERROR);
     }
 
     /**

@@ -56,7 +56,7 @@ class CalendarWeekDecisionRule implements DecisionRuleInterface
     protected function getCalendarWeek()
     {
         $currentDateTime = $this->getCurrentDateTime();
-        $calendarWeek = $currentDateTime->format(self::DATE_FORMAT);
+        $calendarWeek = $currentDateTime->format(static::DATE_FORMAT);
 
         return $calendarWeek;
     }

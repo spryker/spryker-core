@@ -93,12 +93,12 @@ class AttributeForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            self::OPTION_ATTRIBUTE_TYPE_CHOICES,
+            static::OPTION_ATTRIBUTE_TYPE_CHOICES,
             static::OPTION_VALUES_CHOICES,
         ]);
 
         $resolver->setDefaults([
-            self::OPTION_IS_UPDATE => false,
+            static::OPTION_IS_UPDATE => false,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
                 $groups = [Constraint::DEFAULT_GROUP];
@@ -145,7 +145,7 @@ class AttributeForm extends AbstractType
      */
     protected function addIdProductManagementAttribute(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, HiddenType::class);
 
         return $this;
     }
@@ -158,7 +158,7 @@ class AttributeForm extends AbstractType
      */
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_KEY, AutosuggestType::class, [
+        $builder->add(static::FIELD_KEY, AutosuggestType::class, [
             'label' => 'Attribute key',
             'url' => '/product-attribute-gui/attribute/keys',
             'constraints' => [
@@ -178,10 +178,10 @@ class AttributeForm extends AbstractType
                             $context->addViolation('Attribute key is already used');
                         }
                     },
-                    'groups' => [self::GROUP_UNIQUE_KEY],
+                    'groups' => [static::GROUP_UNIQUE_KEY],
                 ]),
             ],
-            'disabled' => $options[self::OPTION_IS_UPDATE],
+            'disabled' => $options[static::OPTION_IS_UPDATE],
         ]);
 
         return $this;
@@ -195,13 +195,13 @@ class AttributeForm extends AbstractType
      */
     protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_INPUT_TYPE, ChoiceType::class, [
+        $builder->add(static::FIELD_INPUT_TYPE, ChoiceType::class, [
             'label' => 'Input type',
-            'choices' => array_flip($options[self::OPTION_ATTRIBUTE_TYPE_CHOICES]),
+            'choices' => array_flip($options[static::OPTION_ATTRIBUTE_TYPE_CHOICES]),
             'constraints' => [
                 new NotBlank(),
             ],
-            'disabled' => $options[self::OPTION_IS_UPDATE],
+            'disabled' => $options[static::OPTION_IS_UPDATE],
         ]);
 
         return $this;
@@ -215,9 +215,9 @@ class AttributeForm extends AbstractType
      */
     protected function addIsSuperField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_IS_SUPER, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_SUPER, CheckboxType::class, [
             'label' => 'Super attribute',
-            'disabled' => $options[self::OPTION_IS_UPDATE],
+            'disabled' => $options[static::OPTION_IS_UPDATE],
         ]);
 
         return $this;
@@ -289,7 +289,7 @@ class AttributeForm extends AbstractType
      */
     protected function addAllowInputField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ALLOW_INPUT, CheckboxType::class, [
+        $builder->add(static::FIELD_ALLOW_INPUT, CheckboxType::class, [
             'label' => 'Allow input any value other than predefined ones',
         ]);
 

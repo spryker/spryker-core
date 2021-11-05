@@ -31,8 +31,8 @@ class TestAuthPlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        if (self::$count === 0) {
-            self::$count++;
+        if (static::$count === 0) {
+            static::$count++;
 
             throw new Exception('Expected exception.');
         }

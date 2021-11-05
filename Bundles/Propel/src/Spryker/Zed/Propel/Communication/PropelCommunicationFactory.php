@@ -42,7 +42,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createLogger()
     {
-        $defaultLogger = new Logger(self::LOGGER_NAME);
+        $defaultLogger = new Logger(static::LOGGER_NAME);
         $defaultLogger->pushHandler(
             $this->createStreamHandler(),
         );

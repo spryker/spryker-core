@@ -112,7 +112,7 @@ class ProductOptionGroupForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_TAX_SETS);
+        $resolver->setRequired(static::OPTION_TAX_SETS);
     }
 
     /**
@@ -122,7 +122,7 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Group name translation key',
             'required' => true,
             'attr' => [
@@ -134,7 +134,7 @@ class ProductOptionGroupForm extends AbstractType
                     UniqueGroupName::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
                 ]),
                 new Regex([
-                    'pattern' => self::ALPHA_NUMERIC_PATTERN,
+                    'pattern' => static::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
                 ]),
             ],
@@ -150,7 +150,7 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addValuesFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUES, CollectionType::class, [
+        $builder->add(static::FIELD_VALUES, CollectionType::class, [
             'entry_type' => ProductOptionValueForm::class,
             'allow_add' => true,
             'allow_delete' => true,
@@ -167,7 +167,7 @@ class ProductOptionGroupForm extends AbstractType
             ],
         ]);
 
-        $builder->get(self::FIELD_VALUES)
+        $builder->get(static::FIELD_VALUES)
             ->addModelTransformer($this->getFactory()->createArrayToArrayObjectTransformer());
 
         return $this;
@@ -180,14 +180,14 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addValueTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
+        $builder->add(static::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
             'entry_type' => ProductOptionTranslationForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
         ]);
 
-        $builder->get(self::FIELD_VALUE_TRANSLATIONS)
+        $builder->get(static::FIELD_VALUE_TRANSLATIONS)
             ->addModelTransformer($this->getFactory()->createArrayToArrayObjectTransformer());
 
         return $this;
@@ -200,14 +200,14 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addGroupNameTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GROUP_NAME_TRANSLATIONS, CollectionType::class, [
+        $builder->add(static::FIELD_GROUP_NAME_TRANSLATIONS, CollectionType::class, [
             'entry_type' => ProductOptionTranslationForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
         ]);
 
-        $builder->get(self::FIELD_GROUP_NAME_TRANSLATIONS)
+        $builder->get(static::FIELD_GROUP_NAME_TRANSLATIONS)
             ->addModelTransformer($this->getFactory()->createArrayToArrayObjectTransformer());
 
         return $this;
@@ -222,11 +222,11 @@ class ProductOptionGroupForm extends AbstractType
     protected function addTaxSetField(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(
-            self::FIELD_TAX_SET_FIELD,
+            static::FIELD_TAX_SET_FIELD,
             ChoiceType::class,
             [
                 'label' => 'Tax set',
-                'choices' => array_flip($options[self::OPTION_TAX_SETS]),
+                'choices' => array_flip($options[static::OPTION_TAX_SETS]),
             ],
         );
 
@@ -240,7 +240,7 @@ class ProductOptionGroupForm extends AbstractType
      */
     protected function addIdProductOptionGroup(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_OPTION_GROUP, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_OPTION_GROUP, HiddenType::class);
 
         return $this;
     }
@@ -253,13 +253,13 @@ class ProductOptionGroupForm extends AbstractType
     protected function addProductsToBeAssignedField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCTS_TO_BE_ASSIGNED, HiddenType::class, [
+            ->add(static::PRODUCTS_TO_BE_ASSIGNED, HiddenType::class, [
                 'attr' => [
-                    'id' => self::PRODUCTS_TO_BE_ASSIGNED,
+                    'id' => static::PRODUCTS_TO_BE_ASSIGNED,
                 ],
             ]);
 
-        $builder->get(self::PRODUCTS_TO_BE_ASSIGNED)
+        $builder->get(static::PRODUCTS_TO_BE_ASSIGNED)
             ->addModelTransformer($this->getFactory()->createStringToArrayTransformer());
 
         return $this;
@@ -273,13 +273,13 @@ class ProductOptionGroupForm extends AbstractType
     protected function addProductsToBeDeAssignedField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCTS_TO_BE_DE_ASSIGNED, HiddenType::class, [
+            ->add(static::PRODUCTS_TO_BE_DE_ASSIGNED, HiddenType::class, [
                 'attr' => [
-                    'id' => self::PRODUCTS_TO_BE_DE_ASSIGNED,
+                    'id' => static::PRODUCTS_TO_BE_DE_ASSIGNED,
                 ],
             ]);
 
-        $builder->get(self::PRODUCTS_TO_BE_DE_ASSIGNED)
+        $builder->get(static::PRODUCTS_TO_BE_DE_ASSIGNED)
             ->addModelTransformer($this->getFactory()->createStringToArrayTransformer());
 
         return $this;
@@ -293,13 +293,13 @@ class ProductOptionGroupForm extends AbstractType
     protected function addProductOptionValuesToBeRemoved(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED, HiddenType::class, [
+            ->add(static::PRODUCT_OPTION_VALUES_TO_BE_REMOVED, HiddenType::class, [
                 'attr' => [
-                    'id' => self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED,
+                    'id' => static::PRODUCT_OPTION_VALUES_TO_BE_REMOVED,
                 ],
             ]);
 
-        $builder->get(self::PRODUCT_OPTION_VALUES_TO_BE_REMOVED)
+        $builder->get(static::PRODUCT_OPTION_VALUES_TO_BE_REMOVED)
             ->addModelTransformer($this->getFactory()->createStringToArrayTransformer());
 
         return $this;

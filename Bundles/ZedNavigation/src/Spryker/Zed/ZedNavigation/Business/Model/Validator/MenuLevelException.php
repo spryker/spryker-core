@@ -22,7 +22,7 @@ class MenuLevelException extends Exception
      */
     public function __construct($maxLevelCount, $pageTitle)
     {
-        $errorMessage = sprintf(self::ERROR_MESSAGE, $maxLevelCount, $pageTitle);
+        $errorMessage = sprintf(static::ERROR_MESSAGE, $maxLevelCount, $pageTitle);
         parent::__construct($errorMessage);
     }
 }

@@ -70,7 +70,7 @@ class Config
         }
 
         if (!static::hasValue($key)) {
-            throw new Exception(sprintf('Could not find config key "%s" in "%s"', $key, self::class));
+            throw new Exception(sprintf('Could not find config key "%s" in "%s"', $key, static::class));
         }
 
         $value = static::$config[$key];

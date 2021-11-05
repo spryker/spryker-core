@@ -43,7 +43,7 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
         if (!$this->isAuthorizationApproved($quoteTransfer)) {
             $checkoutErrorTransfer = new CheckoutErrorTransfer();
             $checkoutErrorTransfer
-                ->setErrorCode(self::ERROR_CODE_PAYMENT_FAILED)
+                ->setErrorCode(static::ERROR_CODE_PAYMENT_FAILED)
                 ->setMessage('Something went wrong with your payment. Try again!');
 
             $checkoutResponseTransfer->addError($checkoutErrorTransfer);

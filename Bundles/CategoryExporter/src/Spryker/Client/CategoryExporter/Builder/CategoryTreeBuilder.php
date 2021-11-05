@@ -51,7 +51,7 @@ class CategoryTreeBuilder
      */
     public function createTreeFromCategoryNode(array $categoryNode, $locale)
     {
-        $parents = array_slice(array_reverse($categoryNode[CategoryNodeKeyInterface::PARENTS]), 0, self::SUBTREE_DEPTH);
+        $parents = array_slice(array_reverse($categoryNode[CategoryNodeKeyInterface::PARENTS]), 0, static::SUBTREE_DEPTH);
         $subtree = [];
 
         foreach ($parents as $parent) {
@@ -74,7 +74,7 @@ class CategoryTreeBuilder
             $subtree = $categoryNode;
         }
 
-        $subtree[self::SUBTREE_DEPTH_KEY] = self::SUBTREE_DEPTH;
+        $subtree[static::SUBTREE_DEPTH_KEY] = static::SUBTREE_DEPTH;
 
         return $subtree;
     }

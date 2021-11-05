@@ -37,7 +37,7 @@ class ProductCategoryFilterController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
+        $idCategory = $this->castId($request->query->get(static::PARAM_ID_CATEGORY_NODE));
         $localeTransfer = $this->getCurrentLocale();
 
         $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
@@ -137,7 +137,7 @@ class ProductCategoryFilterController extends AbstractController
      */
     public function resetAction(Request $request)
     {
-        $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
+        $idCategory = $this->castId($request->query->get(static::PARAM_ID_CATEGORY_NODE));
 
         $localeTransfer = $this->getCurrentLocale();
         $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
@@ -146,7 +146,7 @@ class ProductCategoryFilterController extends AbstractController
             ->getProductCategoryFilterFacade()
             ->deleteProductCategoryFilterByCategoryId($idCategory);
 
-        $redirectUrl = self::REDIRECT_ADDRESS . '?' . self::PARAM_ID_CATEGORY_NODE . '=' . $idCategory;
+        $redirectUrl = static::REDIRECT_ADDRESS . '?' . static::PARAM_ID_CATEGORY_NODE . '=' . $idCategory;
 
         $this->addSuccessMessage('Filters for Category "%s" were deleted successfully.', ['%s' => $category->getName()]);
 

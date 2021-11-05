@@ -88,8 +88,8 @@ class ReaderTest extends Unit
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxRate($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
-        $this->assertSame(self::DUMMY_TAX_RATE1_NAME, $result->getName());
-        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE1_PERCENTAGE), $result->getRate());
+        $this->assertSame(static::DUMMY_TAX_RATE1_NAME, $result->getName());
+        $this->assertSame(sprintf('%.2f', static::DUMMY_TAX_RATE1_PERCENTAGE), $result->getRate());
     }
 
     /**
@@ -119,7 +119,7 @@ class ReaderTest extends Unit
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxSet($persistedTaxSet->getIdTaxSet());
-        $this->assertSame(self::DUMMY_TAX_SET_NAME, $result->getName());
+        $this->assertSame(static::DUMMY_TAX_SET_NAME, $result->getName());
     }
 
     /**
@@ -138,7 +138,7 @@ class ReaderTest extends Unit
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate(): void
     {
         $this->expectException(ResourceNotFoundException::class);
-        $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
+        $this->taxFacade->getTaxSet(static::NON_EXISTENT_ID);
     }
 
     /**
@@ -147,7 +147,7 @@ class ReaderTest extends Unit
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet(): void
     {
         $this->expectException(ResourceNotFoundException::class);
-        $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
+        $this->taxFacade->getTaxRate(static::NON_EXISTENT_ID);
     }
 
     /**
@@ -156,12 +156,12 @@ class ReaderTest extends Unit
     private function loadFixtures(): SpyTaxSet
     {
         $taxRateEntity = new SpyTaxRate();
-        $taxRateEntity->setName(self::DUMMY_TAX_RATE1_NAME);
-        $taxRateEntity->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
+        $taxRateEntity->setName(static::DUMMY_TAX_RATE1_NAME);
+        $taxRateEntity->setRate(static::DUMMY_TAX_RATE1_PERCENTAGE);
         $taxRateEntity->save();
 
         $taxSetEntity = new SpyTaxSet();
-        $taxSetEntity->setName(self::DUMMY_TAX_SET_NAME);
+        $taxSetEntity->setName(static::DUMMY_TAX_SET_NAME);
         $taxSetEntity->addSpyTaxRate($taxRateEntity);
         $taxSetEntity->save();
 

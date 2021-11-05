@@ -48,11 +48,11 @@ class YvesFragmentControllerResolverTest extends Unit
     public function getController(): array
     {
         return [
-            ['index/index/index', self::class . '::indexAction'],
-            ['/index/index/index', self::class . '::indexAction'],
-            ['Index/Index/Index', self::class . '::indexAction'],
-            ['/Index/Index/Index', self::class . '::indexAction'],
-            ['foo-bar/baz-bat/zip-zap', self::class . '::zipZapAction'],
+            ['index/index/index', static::class . '::indexAction'],
+            ['/index/index/index', static::class . '::indexAction'],
+            ['Index/Index/Index', static::class . '::indexAction'],
+            ['/Index/Index/Index', static::class . '::indexAction'],
+            ['foo-bar/baz-bat/zip-zap', static::class . '::zipZapAction'],
         ];
     }
 

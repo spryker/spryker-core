@@ -19,10 +19,10 @@ class Host implements HostInterface
      */
     public function getHostname()
     {
-        if (!isset(self::$hostname)) {
-            self::$hostname = (gethostname()) ?: php_uname('n');
+        if (!isset(static::$hostname)) {
+            static::$hostname = (gethostname()) ?: php_uname('n');
         }
 
-        return self::$hostname;
+        return static::$hostname;
     }
 }

@@ -33,8 +33,8 @@ class MerchantPortalInstallDependenciesConsole extends Console
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         parent::configure();
     }

@@ -429,10 +429,10 @@ class ShoppingListTest extends Unit
         // Arrange
         /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
         $shoppingListFacade = $this->tester->getFacade();
-        $this->tester->haveShoppingListPermissionGroup(self::FAKE_PERMISSION_READ_ONLY, [
+        $this->tester->haveShoppingListPermissionGroup(static::FAKE_PERMISSION_READ_ONLY, [
             ReadShoppingListPermissionPlugin::KEY,
         ]);
-        $this->tester->haveShoppingListPermissionGroup(self::FAKE_PERMISSION_FULL_ACCESS, [
+        $this->tester->haveShoppingListPermissionGroup(static::FAKE_PERMISSION_FULL_ACCESS, [
             ReadShoppingListPermissionPlugin::KEY,
             WriteShoppingListPermissionPlugin::KEY,
         ]);
@@ -448,8 +448,8 @@ class ShoppingListTest extends Unit
 
         $shoppingListPermissionGroupNames = $this->getPermissionGroupNamesFromCollection($resultShoppingListPermissionGroupCollection);
 
-        $this->assertContains(self::FAKE_PERMISSION_READ_ONLY, $shoppingListPermissionGroupNames);
-        $this->assertContains(self::FAKE_PERMISSION_FULL_ACCESS, $shoppingListPermissionGroupNames);
+        $this->assertContains(static::FAKE_PERMISSION_READ_ONLY, $shoppingListPermissionGroupNames);
+        $this->assertContains(static::FAKE_PERMISSION_FULL_ACCESS, $shoppingListPermissionGroupNames);
     }
 
     /**

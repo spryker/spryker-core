@@ -33,7 +33,7 @@ class SanitizerTest extends Unit
      */
     public function testInstantiateWithArguments(): void
     {
-        $sanitizer = new Sanitizer([], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer([], static::SANITIZED_VALUE);
 
         $this->assertInstanceOf(SanitizerInterface::class, $sanitizer);
     }
@@ -43,7 +43,7 @@ class SanitizerTest extends Unit
      */
     public function testSanitizeValueValueShouldNotSanitizeWhenKeysNotMatching(): void
     {
-        $sanitizer = new Sanitizer(['foo'], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer(['foo'], static::SANITIZED_VALUE);
 
         $this->assertSame('bar', $sanitizer->sanitizeValue('bar', 'baz'));
     }
@@ -53,7 +53,7 @@ class SanitizerTest extends Unit
      */
     public function testSanitizeValueShouldReturnSanitizedWhenKeyMatches(): void
     {
-        $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer(['sanitize'], static::SANITIZED_VALUE);
 
         $this->assertSame(static::SANITIZED_VALUE, $sanitizer->sanitizeValue('bar', 'sanitize'));
     }
@@ -63,7 +63,7 @@ class SanitizerTest extends Unit
      */
     public function testSanitizeShouldReturnNotSanitizedWhenKeysNotMatching(): void
     {
-        $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer(['sanitize'], static::SANITIZED_VALUE);
 
         $input = ['foo' => 'bar'];
         $expected = $input;
@@ -76,7 +76,7 @@ class SanitizerTest extends Unit
      */
     public function testSanitizeShouldReturnSanitizedWhenKeyMatches(): void
     {
-        $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer(['sanitize'], static::SANITIZED_VALUE);
 
         $input = ['sanitize' => 'sanitize me'];
         $expected = ['sanitize' => static::SANITIZED_VALUE];
@@ -89,7 +89,7 @@ class SanitizerTest extends Unit
      */
     public function testSanitizeWithInnerArrayShouldReturnSanitizedWhenKeyMatches(): void
     {
-        $sanitizer = new Sanitizer(['sanitize', 'password'], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer(['sanitize', 'password'], static::SANITIZED_VALUE);
 
         $input = [
             'foo' => 'bar',
@@ -113,7 +113,7 @@ class SanitizerTest extends Unit
      */
     public function testSanitizeWithIndexedArrayShouldReturnSanitizedWhenKeyMatches(): void
     {
-        $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
+        $sanitizer = new Sanitizer(['sanitize'], static::SANITIZED_VALUE);
 
         $input = [
             'foo' => 'bar',

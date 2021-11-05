@@ -347,7 +347,7 @@ class QueryContainerTest extends Unit
 
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
         $paginationTransfer->setOffset(10);
-        $paginationTransfer->setLimit(self::LIMIT);
+        $paginationTransfer->setLimit(static::LIMIT);
         $paginationTransfer->setSortItems(new ArrayObject($sortItems));
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
@@ -379,8 +379,8 @@ class QueryContainerTest extends Unit
             ->setSortDirection(Criteria::DESC);
 
         $paginationTransfer = new PropelQueryBuilderPaginationTransfer();
-        $paginationTransfer->setPage(self::PAGE);
-        $paginationTransfer->setItemsPerPage(self::LIMIT);
+        $paginationTransfer->setPage(static::PAGE);
+        $paginationTransfer->setItemsPerPage(static::LIMIT);
         $paginationTransfer->setSortItems(new ArrayObject($sortItems));
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
@@ -401,8 +401,8 @@ class QueryContainerTest extends Unit
         $idCollection = SpyProductQuery::create()
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->orderByIdProduct(Criteria::DESC)
-            ->setOffset(self::EXPECTED_OFFSET)
-            ->setLimit(self::LIMIT)
+            ->setOffset(static::EXPECTED_OFFSET)
+            ->setLimit(static::LIMIT)
             ->find()
             ->toArray();
 

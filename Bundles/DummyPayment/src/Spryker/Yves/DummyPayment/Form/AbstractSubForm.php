@@ -45,7 +45,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     protected function addDateOfBirth(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_DATE_OF_BIRTH,
+            static::FIELD_DATE_OF_BIRTH,
             BirthdayType::class,
             [
                 'label' => 'dummyPaymentInvoice.date_of_birth',

@@ -43,8 +43,8 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
 
         $groupedSchemaFiles = $schemaGrouper->getGroupedSchemaFiles();
         $this->assertIsArray($groupedSchemaFiles);
-        $this->assertArrayHasKey(self::NAME_OF_SCHEMA_FILE_GROUP, $groupedSchemaFiles);
-        $this->assertCount(1, $groupedSchemaFiles[self::NAME_OF_SCHEMA_FILE_GROUP]);
+        $this->assertArrayHasKey(static::NAME_OF_SCHEMA_FILE_GROUP, $groupedSchemaFiles);
+        $this->assertCount(1, $groupedSchemaFiles[static::NAME_OF_SCHEMA_FILE_GROUP]);
     }
 
     /**
@@ -56,7 +56,7 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
         if (!is_dir($subDirectory)) {
             mkdir($subDirectory);
         }
-        touch($subDirectory . DIRECTORY_SEPARATOR . self::NAME_OF_SCHEMA_FILE_GROUP);
+        touch($subDirectory . DIRECTORY_SEPARATOR . static::NAME_OF_SCHEMA_FILE_GROUP);
 
         $schemaFinder = new PropelSchemaFinder(
             [$this->getFixtureDirectory(), $subDirectory],
@@ -68,7 +68,7 @@ class PropelGroupedSchemaFinderTest extends AbstractPropelSchemaTest
 
         $groupedSchemaFiles = $schemaGrouper->getGroupedSchemaFiles();
         $this->assertIsArray($groupedSchemaFiles);
-        $this->assertArrayHasKey(self::NAME_OF_SCHEMA_FILE_GROUP, $groupedSchemaFiles);
-        $this->assertCount(2, $groupedSchemaFiles[self::NAME_OF_SCHEMA_FILE_GROUP]);
+        $this->assertArrayHasKey(static::NAME_OF_SCHEMA_FILE_GROUP, $groupedSchemaFiles);
+        $this->assertCount(2, $groupedSchemaFiles[static::NAME_OF_SCHEMA_FILE_GROUP]);
     }
 }

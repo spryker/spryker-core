@@ -40,7 +40,7 @@ class AbstractSubFormTypeTest extends Unit
         $view = new FormView();
         $abstractSubFormTypeMock->buildView($view, $this->getFormMock(), []);
 
-        $this->assertSame($view->vars[AbstractSubFormType::TEMPLATE_PATH], self::TEMPLATE_PATH);
+        $this->assertSame($view->vars[AbstractSubFormType::TEMPLATE_PATH], static::TEMPLATE_PATH);
     }
 
     /**
@@ -49,7 +49,7 @@ class AbstractSubFormTypeTest extends Unit
     private function getAbstractSubFormTypeMock(): AbstractSubFormType
     {
         $abstractSubFormTypeMock = $this->getMockForAbstractClass(AbstractSubFormType::class, [], '', true, true, true, ['getTemplatePath']);
-        $abstractSubFormTypeMock->method('getTemplatePath')->willReturn(self::TEMPLATE_PATH);
+        $abstractSubFormTypeMock->method('getTemplatePath')->willReturn(static::TEMPLATE_PATH);
 
         return $abstractSubFormTypeMock;
     }

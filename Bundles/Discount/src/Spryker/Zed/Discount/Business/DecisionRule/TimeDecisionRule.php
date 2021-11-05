@@ -74,7 +74,7 @@ class TimeDecisionRule implements DecisionRuleInterface
     protected function getCurrentTime()
     {
         $currentDate = $this->getCurrentDateTime();
-        $time = $currentDate->format(self::TIME_FORMAT);
+        $time = $currentDate->format(static::TIME_FORMAT);
 
         return $time;
     }

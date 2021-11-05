@@ -55,7 +55,7 @@ class TooManyPublicMethodsTest extends Unit
         $nodeMock = $this->getNodeMock($fullyQualifiedClassName, $nodeName);
 
         $tooManyPublicMethodsMock = $this->getTooManyPublicMethodsMock();
-        $tooManyPublicMethodsMock->expects($this->once())->method('getIntProperty')->willReturn(self::THRESHOLD_LOW);
+        $tooManyPublicMethodsMock->expects($this->once())->method('getIntProperty')->willReturn(static::THRESHOLD_LOW);
         $tooManyPublicMethodsMock->expects($this->never())->method('addViolation');
         $tooManyPublicMethodsMock->apply($nodeMock);
     }

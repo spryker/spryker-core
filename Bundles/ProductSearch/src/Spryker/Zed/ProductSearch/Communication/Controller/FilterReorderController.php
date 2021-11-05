@@ -43,7 +43,7 @@ class FilterReorderController extends AbstractController
     {
         /** @var array $filterList */
         $filterList = $request->request
-            ->get(self::PARAM_FILTER_LIST);
+            ->get(static::PARAM_FILTER_LIST);
 
         if (!$filterList) {
             return $this->jsonResponse();

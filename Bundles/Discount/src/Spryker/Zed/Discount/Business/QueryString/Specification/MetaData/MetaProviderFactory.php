@@ -45,9 +45,9 @@ class MetaProviderFactory implements MetaProviderFactoryInterface
     public function createMetaProviderByType($type)
     {
         switch (strtolower($type)) {
-            case self::TYPE_DECISION_RULE:
+            case static::TYPE_DECISION_RULE:
                 return $this->createDecisionRuleMetaProvider();
-            case self::TYPE_COLLECTOR:
+            case static::TYPE_COLLECTOR:
                 return $this->createCollectorMetaProvider();
         }
 

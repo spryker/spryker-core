@@ -32,7 +32,7 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
      */
     public function cacheContains($key)
     {
-        return array_key_exists($key, self::$cache);
+        return array_key_exists($key, static::$cache);
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
      */
     public function cacheFetch($key)
     {
-        return self::$cache[$key];
+        return static::$cache[$key];
     }
 
     /**
@@ -54,6 +54,6 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
      */
     public function cacheStore($key, $value, $lifetime = 3600)
     {
-        self::$cache[$key] = $value;
+        static::$cache[$key] = $value;
     }
 }

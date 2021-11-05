@@ -79,18 +79,18 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
     ) {
         if ($abstractProductDataFeedTransfer->getUpdatedFrom()) {
             $abstractProductQuery->condition(
-                self::UPDATED_FROM_CONDITION,
+                static::UPDATED_FROM_CONDITION,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_UPDATED_AT . ' >= ?',
                 $abstractProductDataFeedTransfer->getUpdatedFrom(),
-            )->where([self::UPDATED_FROM_CONDITION]);
+            )->where([static::UPDATED_FROM_CONDITION]);
         }
 
         if ($abstractProductDataFeedTransfer->getUpdatedTo()) {
             $abstractProductQuery->condition(
-                self::UPDATED_TO_CONDITION,
+                static::UPDATED_TO_CONDITION,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_UPDATED_AT . ' <= ?',
                 $abstractProductDataFeedTransfer->getUpdatedTo(),
-            )->where([self::UPDATED_TO_CONDITION]);
+            )->where([static::UPDATED_TO_CONDITION]);
         }
 
         return $abstractProductQuery;

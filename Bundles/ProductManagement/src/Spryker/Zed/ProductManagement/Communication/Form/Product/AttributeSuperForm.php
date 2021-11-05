@@ -30,7 +30,7 @@ class AttributeSuperForm extends AttributeAbstractForm
     protected function addValueField(FormBuilderInterface $builder, array $options = [])
     {
         $name = $builder->getName();
-        $attributes = $options[self::OPTION_ATTRIBUTE];
+        $attributes = $options[static::OPTION_ATTRIBUTE];
         $attributeData = new Collection($attributes[$name]);
 
         $inputManager = new AttributeInputManager();
@@ -65,7 +65,7 @@ class AttributeSuperForm extends AttributeAbstractForm
             $input = $inputManager->getSymfonyInputType('', $value);
         }
 
-        $builder->add(self::FIELD_VALUE, $input, $config);
+        $builder->add(static::FIELD_VALUE, $input, $config);
 
         return $this;
     }

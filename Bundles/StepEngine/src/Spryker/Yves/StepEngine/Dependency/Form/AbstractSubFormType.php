@@ -34,6 +34,6 @@ abstract class AbstractSubFormType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars[self::TEMPLATE_PATH] = $this->getTemplatePath();
+        $view->vars[static::TEMPLATE_PATH] = $this->getTemplatePath();
     }
 }

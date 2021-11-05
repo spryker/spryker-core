@@ -103,7 +103,7 @@ class GlossaryFacadeTest extends Unit
         $glossaryFacade = $this->getGlossaryFacade();
 
         $formData = [
-            self::GLOSSARY_KEY => 'form.button.save',
+            static::GLOSSARY_KEY => 'form.button.save',
         ];
         foreach ($this->locales as $localeId => $localeName) {
             $formData['locales'][$localeName] = 'save ' . $localeId;
@@ -127,7 +127,7 @@ class GlossaryFacadeTest extends Unit
         $locale = $this->buildLocaleTransferObject($localesIds);
 
         $formData = [
-            self::GLOSSARY_KEY => 'form.button.save',
+            static::GLOSSARY_KEY => 'form.button.save',
         ];
         foreach ($this->locales as $localeId => $localeName) {
             $formData['locales'][$localeName] = 'save ' . $localeId;
@@ -137,7 +137,7 @@ class GlossaryFacadeTest extends Unit
 
         $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
 
-        $translatedKey = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $translatedKey = $glossaryFacade->getTranslation($formData[static::GLOSSARY_KEY], $locale);
 
         $changedLocales = [];
         foreach ($this->locales as $localeId => $localeName) {
@@ -147,7 +147,7 @@ class GlossaryFacadeTest extends Unit
         $translationTransfer->setLocales($changedLocales);
 
         $glossaryFacade->saveGlossaryKeyTranslations($translationTransfer);
-        $translatedKeyChanged = $glossaryFacade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $translatedKeyChanged = $glossaryFacade->getTranslation($formData[static::GLOSSARY_KEY], $locale);
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
     }

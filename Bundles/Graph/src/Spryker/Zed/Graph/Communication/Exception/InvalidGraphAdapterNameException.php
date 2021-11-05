@@ -18,7 +18,7 @@ class InvalidGraphAdapterNameException extends AbstractGraphAdapterException
      */
     public function __construct($message = '', $code = 0, ?Exception $previous = null)
     {
-        $message .= PHP_EOL . self::MESSAGE;
+        $message .= PHP_EOL . static::MESSAGE;
 
         parent::__construct($message, $code, $previous);
     }

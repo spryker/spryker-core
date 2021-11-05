@@ -260,7 +260,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function insertActiveTouchRecord($idItem)
     {
-        $this->touchFacade->touchActive(self::TOUCH_TRANSLATION, $idItem);
+        $this->touchFacade->touchActive(static::TOUCH_TRANSLATION, $idItem);
     }
 
     /**
@@ -329,7 +329,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     protected function insertDeletedTouchRecord($idItem)
     {
-        $this->touchFacade->touchDeleted(self::TOUCH_TRANSLATION, $idItem);
+        $this->touchFacade->touchDeleted(static::TOUCH_TRANSLATION, $idItem);
     }
 
     /**

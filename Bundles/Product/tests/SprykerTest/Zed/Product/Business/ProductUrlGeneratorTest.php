@@ -116,7 +116,7 @@ class ProductUrlGeneratorTest extends Unit
                 $this->locales['en_US'],
             ],
         )
-        ->willReturn(self::PRODUCT_NAME['de_DE'], self::PRODUCT_NAME['en_US']);
+        ->willReturn(static::PRODUCT_NAME['de_DE'], static::PRODUCT_NAME['en_US']);
     }
 
     /**
@@ -143,18 +143,18 @@ class ProductUrlGeneratorTest extends Unit
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
         ->setSku('foo')
-        ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        ->setIdProductAbstract(static::ID_PRODUCT_ABSTRACT);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-        ->setName(self::PRODUCT_NAME['de_DE'])
+        ->setName(static::PRODUCT_NAME['de_DE'])
         ->setLocale($this->locales['de_DE']);
 
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-        ->setName(self::PRODUCT_NAME['en_US'])
+        ->setName(static::PRODUCT_NAME['en_US'])
         ->setLocale($this->locales['en_US']);
 
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
@@ -184,7 +184,7 @@ class ProductUrlGeneratorTest extends Unit
         $this->utilTextService
         ->expects($this->exactly(2))
         ->method('generateSlug')
-        ->withConsecutive([self::PRODUCT_NAME['de_DE']], [self::PRODUCT_NAME['en_US']])
+        ->withConsecutive([static::PRODUCT_NAME['de_DE']], [static::PRODUCT_NAME['en_US']])
         ->willReturnOnConsecutiveCalls('product-name-dede', 'product-name-enus');
 
         $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService);

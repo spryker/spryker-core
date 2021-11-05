@@ -46,7 +46,7 @@ class AbstractManagementTest extends FacadeTestAbstract
 
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
+                static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -74,7 +74,7 @@ class AbstractManagementTest extends FacadeTestAbstract
         $this->createNewProductAbstractAndAssertNoTouchExists();
 
         $this->assertTrue(
-            $this->productFacade->hasProductAbstract(self::ABSTRACT_SKU),
+            $this->productFacade->hasProductAbstract(static::ABSTRACT_SKU),
         );
     }
 
@@ -84,7 +84,7 @@ class AbstractManagementTest extends FacadeTestAbstract
     public function testGetProductAbstractIdBySku(): void
     {
         $expectedId = $this->createNewProductAbstractAndAssertNoTouchExists();
-        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku(self::ABSTRACT_SKU);
+        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku(static::ABSTRACT_SKU);
 
         $this->assertEquals(
             $expectedId,
@@ -133,7 +133,7 @@ class AbstractManagementTest extends FacadeTestAbstract
         $this->productConcreteTransfer->setFkProductAbstract($idProductAbstract);
         $this->productConcreteManager->createProductConcrete($this->productConcreteTransfer);
 
-        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete(self::CONCRETE_SKU);
+        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete(static::CONCRETE_SKU);
 
         $this->assertSame(static::ABSTRACT_SKU, $abstractSku);
     }
@@ -267,7 +267,7 @@ class AbstractManagementTest extends FacadeTestAbstract
         $this->assertSame($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $expectedProductName = self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
+            $expectedProductName = static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
             $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }

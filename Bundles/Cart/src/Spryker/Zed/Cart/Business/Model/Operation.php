@@ -238,7 +238,7 @@ class Operation implements OperationInterface
             return $quoteResponseTransfer;
         }
 
-        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
+        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(static::ADD_ITEMS_SUCCESS));
 
         return $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)
@@ -285,7 +285,7 @@ class Operation implements OperationInterface
             return $quoteResponseTransfer;
         }
 
-        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::REMOVE_ITEMS_SUCCESS));
+        $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(static::REMOVE_ITEMS_SUCCESS));
 
         return $quoteResponseTransfer
             ->setQuoteTransfer($quoteTransfer)

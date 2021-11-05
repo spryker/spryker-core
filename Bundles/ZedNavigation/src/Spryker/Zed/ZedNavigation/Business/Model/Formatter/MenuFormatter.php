@@ -139,7 +139,7 @@ class MenuFormatter implements MenuFormatterInterface
     public function formatMenu(array $pages, $pathInfo, $includeInvisible = false)
     {
         $formattedPages = $this->formatPages($pages, $pathInfo, 1, $includeInvisible);
-        unset($formattedPages[self::CHILD_IS_ACTIVE]);
+        unset($formattedPages[static::CHILD_IS_ACTIVE]);
 
         return $formattedPages;
     }
@@ -160,28 +160,28 @@ class MenuFormatter implements MenuFormatterInterface
         foreach ($pages as $page) {
             $formattedPage = $this->formatPage($page);
 
-            if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
-                $this->menuLevelValidator->validate($currentLevel, $formattedPage[self::TITLE]);
-                $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeInvisible);
+            if (isset($page[static::PAGES]) && !empty($page[static::PAGES])) {
+                $this->menuLevelValidator->validate($currentLevel, $formattedPage[static::TITLE]);
+                $children = $this->formatPages($page[static::PAGES], $pathInfo, $currentLevel, $includeInvisible);
             }
 
-            if (isset($children[self::CHILD_IS_ACTIVE]) || $pathInfo === $formattedPage[self::URI]) {
-                $formattedPages[self::CHILD_IS_ACTIVE] = true;
-                $formattedPage[self::IS_ACTIVE] = true;
+            if (isset($children[static::CHILD_IS_ACTIVE]) || $pathInfo === $formattedPage[static::URI]) {
+                $formattedPages[static::CHILD_IS_ACTIVE] = true;
+                $formattedPage[static::IS_ACTIVE] = true;
             }
 
             if (!empty($children)) {
-                unset($children[self::CHILD_IS_ACTIVE]);
+                unset($children[static::CHILD_IS_ACTIVE]);
                 if (!empty($children)) {
-                    $formattedPage[self::CHILDREN] = $children;
+                    $formattedPage[static::CHILDREN] = $children;
                 }
                 $children = [];
             }
 
             if ($includeInvisible) {
-                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
-            } elseif (!isset($page[self::VISIBLE]) || (isset($page[self::VISIBLE]) && $page[self::VISIBLE])) {
-                $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
+                $formattedPages[$formattedPage[static::TITLE]] = $formattedPage;
+            } elseif (!isset($page[static::VISIBLE]) || (isset($page[static::VISIBLE]) && $page[static::VISIBLE])) {
+                $formattedPages[$formattedPage[static::TITLE]] = $formattedPage;
             }
         }
 
@@ -195,18 +195,18 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getUri(array $page)
     {
-        if (isset($page[self::URI]) && !empty($page[self::URI])) {
-            return $page[self::URI];
+        if (isset($page[static::URI]) && !empty($page[static::URI])) {
+            return $page[static::URI];
         }
 
         $action = $this->getPageAction($page);
         $controller = $this->getPageController($page, $action);
 
-        if (!isset($page[self::BUNDLE])) {
+        if (!isset($page[static::BUNDLE])) {
             return null;
         }
 
-        return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
+        return $this->urlBuilder->build($page[static::BUNDLE], $controller, $action);
     }
 
     /**
@@ -219,18 +219,18 @@ class MenuFormatter implements MenuFormatterInterface
         $formattedPage = [];
 
         $url = $this->getUri($page);
-        $formattedPage[self::URI] = $url;
+        $formattedPage[static::URI] = $url;
         $label = $this->getPageLabel($page);
         $title = $this->getPageTitle($page);
         $pageTitleAndLabel = $this->formatTitleAndLabel($label, $title);
         $formattedPage = array_merge($formattedPage, $pageTitleAndLabel);
 
-        if (isset($page[self::ICON])) {
-            $formattedPage[self::ICON] = $page[self::ICON];
+        if (isset($page[static::ICON])) {
+            $formattedPage[static::ICON] = $page[static::ICON];
         }
 
-        if (isset($page[self::SHORTCUT]) && strlen($page[self::SHORTCUT]) === 1) {
-            $formattedPage[self::SHORTCUT] = $page[self::SHORTCUT];
+        if (isset($page[static::SHORTCUT]) && strlen($page[static::SHORTCUT]) === 1) {
+            $formattedPage[static::SHORTCUT] = $page[static::SHORTCUT];
         }
 
         $formattedPage[static::TYPE] = $page[static::TYPE] ?? null;
@@ -253,8 +253,8 @@ class MenuFormatter implements MenuFormatterInterface
         }
 
         return [
-            self::LABEL => $label ?? $title,
-            self::TITLE => $title ?? $label,
+            static::LABEL => $label ?? $title,
+            static::TITLE => $title ?? $label,
         ];
     }
 
@@ -265,7 +265,7 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageLabel(array $page)
     {
-        return $page[self::LABEL] ?? null;
+        return $page[static::LABEL] ?? null;
     }
 
     /**
@@ -275,7 +275,7 @@ class MenuFormatter implements MenuFormatterInterface
      */
     protected function getPageTitle(array $page)
     {
-        return $page[self::TITLE] ?? null;
+        return $page[static::TITLE] ?? null;
     }
 
     /**
@@ -286,8 +286,8 @@ class MenuFormatter implements MenuFormatterInterface
     protected function getPageAction(array $page)
     {
         $pageAction = null;
-        if (isset($page[self::ACTION]) && $page[self::ACTION] !== self::INDEX) {
-            $pageAction = $page[self::ACTION];
+        if (isset($page[static::ACTION]) && $page[static::ACTION] !== static::INDEX) {
+            $pageAction = $page[static::ACTION];
         }
 
         return $pageAction;
@@ -303,12 +303,12 @@ class MenuFormatter implements MenuFormatterInterface
     {
         $pageController = null;
         if (
-            isset($page[self::CONTROLLER]) &&
+            isset($page[static::CONTROLLER]) &&
             (
-                $page[self::CONTROLLER] !== self::INDEX || $action !== null
+                $page[static::CONTROLLER] !== static::INDEX || $action !== null
             )
         ) {
-            $pageController = $page[self::CONTROLLER];
+            $pageController = $page[static::CONTROLLER];
         }
 
         return $pageController;

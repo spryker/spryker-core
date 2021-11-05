@@ -238,8 +238,8 @@ class PageDataMapper implements PageDataMapperInterface
                 ->requireValue();
 
             $result[PageIndexMap::STRING_FACET][] = [
-                self::FACET_NAME => $stringFacetMapTransfer->getName(),
-                self::FACET_VALUE => $stringFacetMapTransfer->getValue(),
+                static::FACET_NAME => $stringFacetMapTransfer->getName(),
+                static::FACET_VALUE => $stringFacetMapTransfer->getValue(),
             ];
         }
 
@@ -260,8 +260,8 @@ class PageDataMapper implements PageDataMapperInterface
                 ->requireValue();
 
             $result[PageIndexMap::INTEGER_FACET][] = [
-                self::FACET_NAME => $integerFacetMapTransfer->getName(),
-                self::FACET_VALUE => $integerFacetMapTransfer->getValue(),
+                static::FACET_NAME => $integerFacetMapTransfer->getName(),
+                static::FACET_VALUE => $integerFacetMapTransfer->getValue(),
             ];
         }
 
@@ -319,8 +319,8 @@ class PageDataMapper implements PageDataMapperInterface
             ->requireDirectParents();
 
         $result[PageIndexMap::CATEGORY] = [
-            self::ALL_PARENTS => $categoryMap->getAllParents(),
-            self::DIRECT_PARENTS => $categoryMap->getDirectParents(),
+            static::ALL_PARENTS => $categoryMap->getAllParents(),
+            static::DIRECT_PARENTS => $categoryMap->getDirectParents(),
         ];
 
         return $result;

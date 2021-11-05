@@ -72,7 +72,7 @@ class ImageSetForm extends AbstractSubForm
 
         $validationGroups = [
             Constraint::DEFAULT_GROUP,
-            self::VALIDATION_GROUP_IMAGE_COLLECTION,
+            static::VALIDATION_GROUP_IMAGE_COLLECTION,
         ];
 
         $resolver->setDefaults([
@@ -131,7 +131,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addSetIdField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_ID, HiddenType::class, []);
+            ->add(static::FIELD_SET_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -145,7 +145,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addNameField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_NAME, TextType::class, [
+            ->add(static::FIELD_SET_NAME, TextType::class, [
                 'required' => false,
                 'label' => 'Image Set Name',
             ]);
@@ -162,7 +162,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addLocaleHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_FK_LOCALE, HiddenType::class, []);
+            ->add(static::FIELD_SET_FK_LOCALE, HiddenType::class, []);
 
         return $this;
     }
@@ -176,7 +176,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addProductHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_FK_PRODUCT, HiddenType::class, []);
+            ->add(static::FIELD_SET_FK_PRODUCT, HiddenType::class, []);
 
         return $this;
     }
@@ -190,7 +190,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addProductAbstractHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SET_FK_PRODUCT_ABSTRACT, HiddenType::class, []);
+            ->add(static::FIELD_SET_FK_PRODUCT_ABSTRACT, HiddenType::class, []);
 
         return $this;
     }
@@ -204,7 +204,7 @@ class ImageSetForm extends AbstractSubForm
     protected function addImageCollectionForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::PRODUCT_IMAGES, CollectionType::class, [
+            ->add(static::PRODUCT_IMAGES, CollectionType::class, [
                 'entry_type' => ImageCollectionForm::class,
                 'label' => false,
                 'allow_add' => true,
@@ -225,7 +225,7 @@ class ImageSetForm extends AbstractSubForm
                             $context->addViolation('Please enter required image information');
                         }
                     },
-                    'groups' => [self::VALIDATION_GROUP_IMAGE_COLLECTION],
+                    'groups' => [static::VALIDATION_GROUP_IMAGE_COLLECTION],
                 ])],
             ]);
 

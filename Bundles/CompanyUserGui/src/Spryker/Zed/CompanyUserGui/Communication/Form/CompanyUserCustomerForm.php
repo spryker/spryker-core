@@ -231,7 +231,7 @@ class CompanyUserCustomerForm extends AbstractType
      */
     protected function addSendPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, CheckboxType::class, [
+        $builder->add(static::FIELD_SEND_PASSWORD_TOKEN, CheckboxType::class, [
             'label' => 'Send password token through email',
             'required' => false,
         ]);

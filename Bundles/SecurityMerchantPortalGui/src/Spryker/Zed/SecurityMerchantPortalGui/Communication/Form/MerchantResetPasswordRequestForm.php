@@ -88,7 +88,7 @@ class MerchantResetPasswordRequestForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_EMAIL, TextType::class, [
+            ->add(static::FIELD_EMAIL, TextType::class, [
                 'label' => static::LABEL_EMAIL,
                 'constraints' => [
                     new NotBlank(['message' => static::MESSAGE_VALIDATION_NOT_BLANK_ERROR]),

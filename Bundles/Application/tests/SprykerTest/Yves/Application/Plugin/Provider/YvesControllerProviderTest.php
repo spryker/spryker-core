@@ -41,7 +41,7 @@ class YvesControllerProviderTest extends Unit
     public function testWithoutSslConfigurationRequireHttpIsNotCalled(): void
     {
         $app = new Application();
-        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTP, $this->never());
+        $controllerMock = $this->getControllerMock(static::METHOD_REQUIRE_HTTP, $this->never());
         $controllerProviderMock = $this->createControllerProviderMock(null, $controllerMock);
         $controllerProviderMock->defineControllers($app);
     }
@@ -52,7 +52,7 @@ class YvesControllerProviderTest extends Unit
     public function testWithoutSslConfigurationRequireHttpsIsNotCalled(): void
     {
         $app = new Application();
-        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->never());
+        $controllerMock = $this->getControllerMock(static::METHOD_REQUIRE_HTTPS, $this->never());
         $controllerProviderMock = $this->createControllerProviderMock(null, $controllerMock);
         $controllerProviderMock->defineControllers($app);
     }
@@ -63,7 +63,7 @@ class YvesControllerProviderTest extends Unit
     public function testWhenSslEnabledFalseRequireHttpIsCalled(): void
     {
         $app = new Application();
-        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTP, $this->once());
+        $controllerMock = $this->getControllerMock(static::METHOD_REQUIRE_HTTP, $this->once());
         $controllerProviderMock = $this->createControllerProviderMock(false, $controllerMock);
         $controllerProviderMock->defineControllers($app);
     }
@@ -74,7 +74,7 @@ class YvesControllerProviderTest extends Unit
     public function testWhenSslEnabledTrueRequireHttpsIsCalled(): void
     {
         $app = new Application();
-        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->once());
+        $controllerMock = $this->getControllerMock(static::METHOD_REQUIRE_HTTPS, $this->once());
         $controllerProviderMock = $this->createControllerProviderMock(true, $controllerMock);
         $controllerProviderMock->defineControllers($app);
     }
@@ -85,7 +85,7 @@ class YvesControllerProviderTest extends Unit
     public function testWhenSslEnabledTrueRequireHttpsWithExcludedUrlIsNotCalled(): void
     {
         $app = new Application();
-        $controllerMock = $this->getControllerMock(self::METHOD_REQUIRE_HTTPS, $this->never());
+        $controllerMock = $this->getControllerMock(static::METHOD_REQUIRE_HTTPS, $this->never());
         $controllerProviderMock = $this->createControllerProviderMock(true, $controllerMock, ['foo' => '/foo']);
         $controllerProviderMock->defineControllers($app);
     }

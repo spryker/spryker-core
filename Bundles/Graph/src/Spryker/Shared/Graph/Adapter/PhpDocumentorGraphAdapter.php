@@ -57,7 +57,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
      */
     private function getType($directed)
     {
-        return $directed ? self::DIRECTED_GRAPH : self::GRAPH;
+        return $directed ? static::DIRECTED_GRAPH : static::GRAPH;
     }
 
     /**
@@ -72,7 +72,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
         $node = new Node($name);
         $this->addAttributesTo($attributes, $node);
 
-        if ($group !== self::DEFAULT_GROUP) {
+        if ($group !== static::DEFAULT_GROUP) {
             $graph = $this->getGraphByName($group);
             $graph->setNode($node);
         } else {

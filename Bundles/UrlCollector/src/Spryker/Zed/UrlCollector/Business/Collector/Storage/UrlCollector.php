@@ -158,7 +158,7 @@ class UrlCollector extends AbstractStoragePropelCollector
 
         return [
             UrlCollectorStorageTransfer::REFERENCE_KEY => $referenceKey,
-            UrlCollectorStorageTransfer::TYPE => $resourceArguments[self::RESOURCE_TYPE],
+            UrlCollectorStorageTransfer::TYPE => $resourceArguments[static::RESOURCE_TYPE],
             UrlCollectorStorageTransfer::LOCALE_URLS => $collectItemData[UrlCollectorStorageTransfer::LOCALE_URLS],
         ];
     }
@@ -197,11 +197,11 @@ class UrlCollector extends AbstractStoragePropelCollector
                 continue;
             }
 
-            $resourceType = str_replace(self::FK_RESOURCE_, '', $columnName);
+            $resourceType = str_replace(static::FK_RESOURCE_, '', $columnName);
 
             return [
-                self::RESOURCE_TYPE => $resourceType,
-                self::RESOURCE_VALUE => $value,
+                static::RESOURCE_TYPE => $resourceType,
+                static::RESOURCE_VALUE => $value,
             ];
         }
 
@@ -216,7 +216,7 @@ class UrlCollector extends AbstractStoragePropelCollector
      */
     protected function isFkResourceUrl($columnName, $value)
     {
-        return $value !== null && strpos($columnName, self::FK_RESOURCE_) === 0;
+        return $value !== null && strpos($columnName, static::FK_RESOURCE_) === 0;
     }
 
     /**
@@ -231,7 +231,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $this->getCurrentStore()->getName(),
             $localeName,
             'resource',
-            $data[self::RESOURCE_TYPE] . '.' . $data[self::RESOURCE_VALUE],
+            $data[static::RESOURCE_TYPE] . '.' . $data[static::RESOURCE_VALUE],
         ];
 
         return $this->escapeKey(implode(

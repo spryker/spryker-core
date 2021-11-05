@@ -33,7 +33,7 @@ class KeyController extends AbstractController
      */
     public function ajaxAction(Request $request)
     {
-        $term = $request->get(self::TERM);
+        $term = $request->get(static::TERM);
 
         $key = $this->getQueryContainer()
             ->queryKey($term)
@@ -70,7 +70,7 @@ class KeyController extends AbstractController
      */
     public function suggestAction(Request $request)
     {
-        $term = $request->get(self::TERM);
+        $term = $request->get(static::TERM);
 
         $keys = $this->getQueryContainer()
             ->queryByKey($term)->find();

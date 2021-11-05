@@ -106,7 +106,7 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addIdRedirectField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_URL_REDIRECT, HiddenType::class);
+        $builder->add(static::FIELD_ID_URL_REDIRECT, HiddenType::class);
 
         return $this;
     }
@@ -118,7 +118,7 @@ class CmsRedirectForm extends AbstractType
      */
     protected function addFromUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FROM_URL, TextType::class, [
+        $builder->add(static::FIELD_FROM_URL, TextType::class, [
             'label' => 'URL',
             'constraints' => $this->getUrlConstraints(),
         ]);
@@ -136,7 +136,7 @@ class CmsRedirectForm extends AbstractType
         $constraints = $this->getMandatoryConstraints();
         $constraints[] = new Callback(['callback' => [$this, 'validateUrlRedirectLoop']]);
 
-        $builder->add(self::FIELD_TO_URL, TextType::class, [
+        $builder->add(static::FIELD_TO_URL, TextType::class, [
             'label' => 'To URL',
             'constraints' => $constraints,
         ]);
@@ -152,7 +152,7 @@ class CmsRedirectForm extends AbstractType
     protected function addStatusField(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_STATUS,
+            static::FIELD_STATUS,
             ChoiceType::class,
             [
                 'label' => 'Redirect status code',
@@ -190,7 +190,7 @@ class CmsRedirectForm extends AbstractType
                     $context->addViolation('URL is already used.');
                 }
             },
-            'groups' => [self::GROUP_UNIQUE_URL_CHECK],
+            'groups' => [static::GROUP_UNIQUE_URL_CHECK],
         ]);
 
         return $urlConstraints;
@@ -203,7 +203,7 @@ class CmsRedirectForm extends AbstractType
     {
         return [
             $this->createNotBlankConstraint(),
-            $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
+            $this->createLengthConstraint(static::MAX_COUNT_CHARACTERS_REDIRECT_URL),
             new Callback([
                 'callback' => function ($url, ExecutionContextInterface $context) {
                     if ($url[0] !== '/') {

@@ -62,8 +62,8 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
         $abstractProductQuery
             ->useSpyProductImageSetQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkLocale(
-                    $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
+                    $localeTransferConditions[static::LOCALE_FILTER_VALUE],
+                    $localeTransferConditions[static::LOCALE_FILTER_CRITERIA],
                 )
                 ->useSpyProductImageSetToProductImageQuery(null, Criteria::LEFT_JOIN)
                     ->leftJoinSpyProductImage()
@@ -94,8 +94,8 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
                     ->innerJoinNode()
                     ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                         ->filterByFkLocale(
-                            $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                            $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
+                            $localeTransferConditions[static::LOCALE_FILTER_VALUE],
+                            $localeTransferConditions[static::LOCALE_FILTER_CRITERIA],
                         )
                     ->endUse()
                 ->endUse()
@@ -148,8 +148,8 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
                 ->endUse()
                 ->useSpyProductLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                     ->filterByFkLocale(
-                        $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                        $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
+                        $localeTransferConditions[static::LOCALE_FILTER_VALUE],
+                        $localeTransferConditions[static::LOCALE_FILTER_CRITERIA],
                     )
                 ->endUse()
                 ->useSpyProductImageSetQuery()
@@ -213,8 +213,8 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
         }
 
         return [
-            self::LOCALE_FILTER_VALUE => $filterValue,
-            self::LOCALE_FILTER_CRITERIA => $filterCriteria,
+            static::LOCALE_FILTER_VALUE => $filterValue,
+            static::LOCALE_FILTER_CRITERIA => $filterCriteria,
         ];
     }
 
@@ -233,8 +233,8 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
         $abstractProductQuery
             ->useSpyProductAbstractLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkLocale(
-                    $localeTransferConditions[self::LOCALE_FILTER_VALUE],
-                    $localeTransferConditions[self::LOCALE_FILTER_CRITERIA],
+                    $localeTransferConditions[static::LOCALE_FILTER_VALUE],
+                    $localeTransferConditions[static::LOCALE_FILTER_CRITERIA],
                 )
             ->endUse();
 

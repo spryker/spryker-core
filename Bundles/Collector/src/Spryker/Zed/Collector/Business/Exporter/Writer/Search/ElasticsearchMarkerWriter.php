@@ -105,7 +105,7 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
      */
     public function getName()
     {
-        return self::WRITER_NAME;
+        return static::WRITER_NAME;
     }
 
     /**

@@ -233,8 +233,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryPages()
             ->leftJoinCmsTemplate()
-            ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn(self::TEMPLATE_PATH);
+            ->withColumn(static::TEMPLATE_NAME)
+            ->withColumn(static::TEMPLATE_PATH);
     }
 
     /**
@@ -355,9 +355,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->queryPages()
             ->leftJoinCmsTemplate()
             ->innerJoinSpyUrl()
-            ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn('GROUP_CONCAT(' . SpyUrlTableMap::COL_URL . ')', self::URL)
-            ->withColumn(self::IS_ACTIVE)
+            ->withColumn(static::TEMPLATE_NAME)
+            ->withColumn('GROUP_CONCAT(' . SpyUrlTableMap::COL_URL . ')', static::URL)
+            ->withColumn(static::IS_ACTIVE)
             ->groupByIdCmsPage();
     }
 
@@ -428,7 +428,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         $query = $this->queryGlossaryKeyMappings();
         $query->filterByIdCmsGlossaryKeyMapping($idMapping)
             ->leftJoinGlossaryKey()
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY);
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::KEY);
 
         return $query;
     }
@@ -477,8 +477,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryGlossaryKeyMappingsWithKeyByPageId(int $idCmsPage, int $fkLocale): SpyCmsGlossaryKeyMappingQuery
     {
         $query = $this->queryGlossaryKeyMappings()
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::KEY)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::TRANS)
             ->filterByFkPage($idCmsPage)
             ->useGlossaryKeyQuery()
                 ->useSpyGlossaryTranslationQuery()
@@ -601,8 +601,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->queryTranslationByValue($value)
             ->innerJoinGlossaryKey()
             ->filterByIsActive(true)
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::LABEL)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::VALUE);
     }
 
     /**
@@ -622,8 +622,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->useSpyGlossaryTranslationQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkLocale($localeId)
             ->endUse()
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::LABEL)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::VALUE);
 
         return $query;
     }
@@ -641,7 +641,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         $query = $this->getGlossaryQueryContainer()
             ->queryByKey($key)
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL);
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::LABEL);
 
         return $query;
     }
@@ -663,14 +663,14 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->useCategoryQuery()
                 ->useAttributeQuery()
                     ->where('lower(' . SpyCategoryAttributeTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($categoryName) . '%')
-                    ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
+                    ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::CATEGORY_NAME)
                 ->endUse()
             ->endUse()
             ->useSpyUrlQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
-            ->withColumn(SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, self::CATEGORY_NODE_ID)
-            ->withColumn(SpyUrlTableMap::COL_URL, self::URL);
+            ->withColumn(SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, static::CATEGORY_NODE_ID)
+            ->withColumn(SpyUrlTableMap::COL_URL, static::URL);
     }
 
     /**
@@ -786,32 +786,32 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getFactory()->createCmsPageQuery()
             ->filterByIdCmsPage($idPage)
-            ->innerJoinCmsTemplate(self::ALIAS_CMS_PAGE_TEMPLATE)
-            ->useSpyCmsGlossaryKeyMappingQuery(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
-                ->useGlossaryKeyQuery(self::ALIAS_GLOSSARY_KEY, Criteria::LEFT_JOIN)
-                    ->useSpyGlossaryTranslationQuery(self::ALIAS_TRANSLATION, Criteria::LEFT_JOIN)
-                        ->useLocaleQuery(self::ALIAS_LOCALE_FOR_TRANSLATION, Criteria::LEFT_JOIN)
+            ->innerJoinCmsTemplate(static::ALIAS_CMS_PAGE_TEMPLATE)
+            ->useSpyCmsGlossaryKeyMappingQuery(static::ALIAS_CMS_GLOSSARY_KEY_MAPPING, Criteria::LEFT_JOIN)
+                ->useGlossaryKeyQuery(static::ALIAS_GLOSSARY_KEY, Criteria::LEFT_JOIN)
+                    ->useSpyGlossaryTranslationQuery(static::ALIAS_TRANSLATION, Criteria::LEFT_JOIN)
+                        ->useLocaleQuery(static::ALIAS_LOCALE_FOR_TRANSLATION, Criteria::LEFT_JOIN)
                         ->endUse()
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->useSpyCmsPageLocalizedAttributesQuery(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE, Criteria::LEFT_JOIN)
-                ->useLocaleQuery(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE, Criteria::LEFT_JOIN)
+            ->useSpyCmsPageLocalizedAttributesQuery(static::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE, Criteria::LEFT_JOIN)
+                ->useLocaleQuery(static::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE, Criteria::LEFT_JOIN)
                 ->endUse()
             ->endUse()
-            ->useSpyCmsPageStoreQuery(self::ALIAS_CMS_PAGE_STORE_RELATION, Criteria::LEFT_JOIN)
-                ->useSpyStoreQuery(self::ALIAS_STORE_FOR_STORE_RELATION, Criteria::LEFT_JOIN)
+            ->useSpyCmsPageStoreQuery(static::ALIAS_CMS_PAGE_STORE_RELATION, Criteria::LEFT_JOIN)
+                ->useSpyStoreQuery(static::ALIAS_STORE_FOR_STORE_RELATION, Criteria::LEFT_JOIN)
                 ->endUse()
             ->endUse()
-            ->with(self::ALIAS_CMS_PAGE_STORE_RELATION)
-            ->with(self::ALIAS_STORE_FOR_STORE_RELATION)
-            ->with(self::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
-            ->with(self::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
-            ->with(self::ALIAS_CMS_PAGE_TEMPLATE)
-            ->with(self::ALIAS_CMS_GLOSSARY_KEY_MAPPING)
-            ->with(self::ALIAS_GLOSSARY_KEY)
-            ->with(self::ALIAS_TRANSLATION)
-            ->with(self::ALIAS_LOCALE_FOR_TRANSLATION);
+            ->with(static::ALIAS_CMS_PAGE_STORE_RELATION)
+            ->with(static::ALIAS_STORE_FOR_STORE_RELATION)
+            ->with(static::ALIAS_CMS_PAGE_LOCALIZED_ATTRIBUTE)
+            ->with(static::ALIAS_LOCALE_FOR_LOCALIZED_ATTRIBUTE)
+            ->with(static::ALIAS_CMS_PAGE_TEMPLATE)
+            ->with(static::ALIAS_CMS_GLOSSARY_KEY_MAPPING)
+            ->with(static::ALIAS_GLOSSARY_KEY)
+            ->with(static::ALIAS_TRANSLATION)
+            ->with(static::ALIAS_LOCALE_FOR_TRANSLATION);
     }
 
     /**

@@ -78,14 +78,14 @@ class AbstractPlaceOrderStepTest extends Unit
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $checkoutResponseTransfer->setIsExternalRedirect(true);
-        $checkoutResponseTransfer->setRedirectUrl(self::EXTERNAL_REDIRECT_URL);
+        $checkoutResponseTransfer->setRedirectUrl(static::EXTERNAL_REDIRECT_URL);
 
         $checkoutClientMock = $this->getCheckoutClientMock();
         $checkoutClientMock->method('placeOrder')->willReturn($checkoutResponseTransfer);
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep($checkoutClientMock);
 
         $abstractPlaceOrderStepMock->execute($this->getRequest(), new QuoteTransfer());
-        $this->assertSame(self::EXTERNAL_REDIRECT_URL, $abstractPlaceOrderStepMock->getExternalRedirectUrl());
+        $this->assertSame(static::EXTERNAL_REDIRECT_URL, $abstractPlaceOrderStepMock->getExternalRedirectUrl());
     }
 
     /**
@@ -95,7 +95,7 @@ class AbstractPlaceOrderStepTest extends Unit
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saveOrderTransfer = new SaveOrderTransfer();
-        $saveOrderTransfer->setOrderReference(self::ORDER_REFERENCE);
+        $saveOrderTransfer->setOrderReference(static::ORDER_REFERENCE);
         $checkoutResponseTransfer->setSaveOrder($saveOrderTransfer);
 
         $checkoutClientMock = $this->getCheckoutClientMock();
@@ -104,7 +104,7 @@ class AbstractPlaceOrderStepTest extends Unit
 
         $quoteTransfer = new QuoteTransfer();
         $abstractPlaceOrderStepMock->execute($this->getRequest(), $quoteTransfer);
-        $this->assertSame(self::ORDER_REFERENCE, $quoteTransfer->getOrderReference());
+        $this->assertSame(static::ORDER_REFERENCE, $quoteTransfer->getOrderReference());
     }
 
     /**
@@ -121,7 +121,7 @@ class AbstractPlaceOrderStepTest extends Unit
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep($checkoutClientMock);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setOrderReference(self::ORDER_REFERENCE);
+        $quoteTransfer->setOrderReference(static::ORDER_REFERENCE);
         $abstractPlaceOrderStepMock->execute($this->getRequest(), $quoteTransfer);
 
         $this->assertTrue($abstractPlaceOrderStepMock->postCondition($quoteTransfer));
@@ -153,7 +153,7 @@ class AbstractPlaceOrderStepTest extends Unit
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep($checkoutClientMock);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setOrderReference(self::ORDER_REFERENCE);
+        $quoteTransfer->setOrderReference(static::ORDER_REFERENCE);
         $abstractPlaceOrderStepMock->execute($this->getRequest(), $quoteTransfer);
 
         $this->assertFalse($abstractPlaceOrderStepMock->postCondition($quoteTransfer));
@@ -173,12 +173,12 @@ class AbstractPlaceOrderStepTest extends Unit
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep($checkoutClientMock);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setOrderReference(self::ORDER_REFERENCE);
+        $quoteTransfer->setOrderReference(static::ORDER_REFERENCE);
         $abstractPlaceOrderStepMock->execute($this->getRequest(), $quoteTransfer);
 
         $this->assertFalse($abstractPlaceOrderStepMock->postCondition($quoteTransfer));
 
-        $this->assertSame(self::ESCAPE_ROUTE, $abstractPlaceOrderStepMock->getEscapeRoute());
+        $this->assertSame(static::ESCAPE_ROUTE, $abstractPlaceOrderStepMock->getEscapeRoute());
     }
 
     /**
@@ -198,12 +198,12 @@ class AbstractPlaceOrderStepTest extends Unit
         $abstractPlaceOrderStepMock = $this->getAbstractPlaceOrderStep($checkoutClientMock);
 
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->setOrderReference(self::ORDER_REFERENCE);
+        $quoteTransfer->setOrderReference(static::ORDER_REFERENCE);
         $abstractPlaceOrderStepMock->execute($this->getRequest(), $quoteTransfer);
 
         $this->assertFalse($abstractPlaceOrderStepMock->postCondition($quoteTransfer));
 
-        $this->assertSame(self::ESCAPE_ROUTE_123, $abstractPlaceOrderStepMock->getPostConditionErrorRoute());
+        $this->assertSame(static::ESCAPE_ROUTE_123, $abstractPlaceOrderStepMock->getPostConditionErrorRoute());
     }
 
     /**
@@ -214,9 +214,9 @@ class AbstractPlaceOrderStepTest extends Unit
     protected function getAbstractPlaceOrderStep(CheckoutClientInterface $checkoutClient): AbstractPlaceOrderStep
     {
         $errorCodeToEscapeRouteMatching = [
-            self::ERROR_CODE_123 => self::ESCAPE_ROUTE_123,
+            static::ERROR_CODE_123 => static::ESCAPE_ROUTE_123,
         ];
-        $abstractPlaceOrderStepMock = $this->getMockForAbstractClass(AbstractPlaceOrderStep::class, [$checkoutClient, self::STEP_ROUTE, self::ESCAPE_ROUTE, $errorCodeToEscapeRouteMatching]);
+        $abstractPlaceOrderStepMock = $this->getMockForAbstractClass(AbstractPlaceOrderStep::class, [$checkoutClient, static::STEP_ROUTE, static::ESCAPE_ROUTE, $errorCodeToEscapeRouteMatching]);
 
         return $abstractPlaceOrderStepMock;
     }

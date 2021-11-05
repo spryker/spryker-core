@@ -368,7 +368,7 @@ class Writer implements WriterInterface
     {
         $name = trim($name);
         if ($name === '') {
-            $name = self::DEFAULT_NAME;
+            $name = static::DEFAULT_NAME;
         }
 
         $wishlistEntity = $this->queryContainer

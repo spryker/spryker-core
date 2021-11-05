@@ -75,7 +75,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     public function setAttribute1(string $attribute1)
     {
         $this->attribute1 = $attribute1;
-        $this->modifiedProperties[self::ATTRIBUTE1] = true;
+        $this->modifiedProperties[static::ATTRIBUTE1] = true;
 
         return $this;
     }
@@ -96,7 +96,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     public function setAttribute2(string $attribute2)
     {
         $this->attribute2 = $attribute2;
-        $this->modifiedProperties[self::ATTRIBUTE2] = true;
+        $this->modifiedProperties[static::ATTRIBUTE2] = true;
 
         return $this;
     }

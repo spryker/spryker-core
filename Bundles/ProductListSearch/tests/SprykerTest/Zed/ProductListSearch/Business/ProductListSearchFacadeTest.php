@@ -67,8 +67,8 @@ class ProductListSearchFacadeTest extends Unit
         // Arrange
         $productData = [
             ProductPageSearchTransfer::PRODUCT_LIST_MAP => [
-                ProductListMapTransfer::WHITELISTS => [self::TEST_WHITELIST_KEY],
-                ProductListMapTransfer::BLACKLISTS => [self::TEST_BLACKLIST_KEY],
+                ProductListMapTransfer::WHITELISTS => [static::TEST_WHITELIST_KEY],
+                ProductListMapTransfer::BLACKLISTS => [static::TEST_BLACKLIST_KEY],
             ],
         ];
         $productListMapTransfer = new ProductListMapTransfer();
@@ -79,8 +79,8 @@ class ProductListSearchFacadeTest extends Unit
         // Assert
         $this->assertIsArray($productListMapTransfer->getWhitelists());
         $this->assertIsArray($productListMapTransfer->getBlacklists());
-        $this->assertEquals([self::TEST_WHITELIST_KEY], $productListMapTransfer->getWhitelists());
-        $this->assertEquals([self::TEST_BLACKLIST_KEY], $productListMapTransfer->getBlacklists());
+        $this->assertEquals([static::TEST_WHITELIST_KEY], $productListMapTransfer->getWhitelists());
+        $this->assertEquals([static::TEST_BLACKLIST_KEY], $productListMapTransfer->getBlacklists());
     }
 
     /**

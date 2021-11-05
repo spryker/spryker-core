@@ -225,7 +225,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function touchRedirectActive(RedirectTransfer $redirect)
     {
-        $this->touchFacade->touchActive(self::ITEM_TYPE_REDIRECT, $redirect->getIdUrlRedirect());
+        $this->touchFacade->touchActive(static::ITEM_TYPE_REDIRECT, $redirect->getIdUrlRedirect());
     }
 
     /**
@@ -235,7 +235,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     protected function touchDeleted(RedirectTransfer $redirectTransfer)
     {
-        $this->touchFacade->touchDeleted(self::ITEM_TYPE_REDIRECT, $redirectTransfer->getIdUrlRedirect());
+        $this->touchFacade->touchDeleted(static::ITEM_TYPE_REDIRECT, $redirectTransfer->getIdUrlRedirect());
     }
 
     /**

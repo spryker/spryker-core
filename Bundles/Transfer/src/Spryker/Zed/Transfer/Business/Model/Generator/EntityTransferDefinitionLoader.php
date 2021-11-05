@@ -65,7 +65,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             $transferDefinitionFilePath = $xmlTransferDefinition->getPathname();
             $containingBundle = $this->getContainingBundleFromPathName($transferDefinitionFilePath);
             $definition = Factory::fromFile($transferDefinitionFilePath, true)->toArray();
-            $definition[self::ENTITY_NAMESPACE] = $namespace;
+            $definition[static::ENTITY_NAMESPACE] = $namespace;
             $definition[static::ENTITY_SCHEMA_PATHNAME] = $transferDefinitionFilePath;
 
             $this->addDefinition($definition, '', $containingBundle);
@@ -83,9 +83,9 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     {
         if (isset($definition[static::KEY_TABLE][0])) {
             foreach ($definition[static::KEY_TABLE] as $table) {
-                $table[self::KEY_BUNDLE] = $module;
-                $table[self::KEY_CONTAINING_BUNDLE] = $containingModule;
-                $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
+                $table[static::KEY_BUNDLE] = $module;
+                $table[static::KEY_CONTAINING_BUNDLE] = $containingModule;
+                $table[static::ENTITY_NAMESPACE] = $definition[static::ENTITY_NAMESPACE];
 
                 $this->assertDefinitionHasColumns($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
                 $this->transferDefinitions[] = $table;
@@ -93,9 +93,9 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
         } else {
             $table = $definition[static::KEY_TABLE];
 
-            $table[self::KEY_BUNDLE] = $module;
-            $table[self::KEY_CONTAINING_BUNDLE] = $containingModule;
-            $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
+            $table[static::KEY_BUNDLE] = $module;
+            $table[static::KEY_CONTAINING_BUNDLE] = $containingModule;
+            $table[static::ENTITY_NAMESPACE] = $definition[static::ENTITY_NAMESPACE];
 
             $this->assertDefinitionHasColumns($table, $definition[static::ENTITY_SCHEMA_PATHNAME]);
             $this->transferDefinitions[] = $table;

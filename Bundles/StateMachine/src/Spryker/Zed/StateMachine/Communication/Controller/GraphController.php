@@ -58,15 +58,15 @@ class GraphController extends AbstractController
      */
     public function drawAction(Request $request)
     {
-        $processName = (string)$request->query->get(self::URL_PARAM_PROCESS) ?: null;
+        $processName = (string)$request->query->get(static::URL_PARAM_PROCESS) ?: null;
         if ($processName === null) {
-            return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
+            return $this->redirectResponse(static::URL_STATE_MACHINE_LIST);
         }
 
-        $format = (string)$request->query->get(self::URL_PARAM_FORMAT) ?: null;
-        $fontSize = $request->query->getInt(self::URL_PARAM_FONT_SIZE);
-        $highlightState = (string)$request->query->get(self::URL_PARAM_HIGHLIGHT_STATE);
-        $stateMachine = (string)$request->query->get(self::URL_PARAM_STATE_MACHINE);
+        $format = (string)$request->query->get(static::URL_PARAM_FORMAT) ?: null;
+        $fontSize = $request->query->getInt(static::URL_PARAM_FONT_SIZE);
+        $highlightState = (string)$request->query->get(static::URL_PARAM_HIGHLIGHT_STATE);
+        $stateMachine = (string)$request->query->get(static::URL_PARAM_STATE_MACHINE);
 
         $reload = false;
         $stateMachineBundleConfig = $this->getFactory()->getConfig();
@@ -84,11 +84,11 @@ class GraphController extends AbstractController
                 Url::generate(
                     '/state-machine/graph/draw',
                     [
-                        self::URL_PARAM_PROCESS => $processName,
-                        self::URL_PARAM_FORMAT => $format,
-                        self::URL_PARAM_FONT_SIZE => $fontSize,
-                        self::URL_PARAM_HIGHLIGHT_STATE => $highlightState,
-                        self::URL_PARAM_STATE_MACHINE => $stateMachine,
+                        static::URL_PARAM_PROCESS => $processName,
+                        static::URL_PARAM_FORMAT => $format,
+                        static::URL_PARAM_FONT_SIZE => $fontSize,
+                        static::URL_PARAM_HIGHLIGHT_STATE => $highlightState,
+                        static::URL_PARAM_STATE_MACHINE => $stateMachine,
                     ],
                 )->build(),
             );
@@ -118,13 +118,13 @@ class GraphController extends AbstractController
      */
     public function drawItemAction(Request $request)
     {
-        $stateMachine = $request->query->get(self::URL_PARAM_STATE_MACHINE);
-        $processName = $request->query->get(self::URL_PARAM_PROCESS);
-        $highlightState = $request->query->get(self::URL_PARAM_HIGHLIGHT_STATE);
+        $stateMachine = $request->query->get(static::URL_PARAM_STATE_MACHINE);
+        $processName = $request->query->get(static::URL_PARAM_PROCESS);
+        $highlightState = $request->query->get(static::URL_PARAM_HIGHLIGHT_STATE);
 
         $stateMachineBundleConfig = $this->getFactory()->getConfig();
-        $format = $request->query->get(self::URL_PARAM_FORMAT, $stateMachineBundleConfig->getGraphDefaultFormat());
-        $fontSize = $request->query->getInt(self::URL_PARAM_FONT_SIZE, $stateMachineBundleConfig->getGraphDefaultFontSize());
+        $format = $request->query->get(static::URL_PARAM_FORMAT, $stateMachineBundleConfig->getGraphDefaultFormat());
+        $fontSize = $request->query->getInt(static::URL_PARAM_FONT_SIZE, $stateMachineBundleConfig->getGraphDefaultFontSize());
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
         $stateMachineProcessTransfer->setStateMachineName($stateMachine);
@@ -142,9 +142,9 @@ class GraphController extends AbstractController
      */
     public function drawPreviewVersionAction(Request $request)
     {
-        $processName = $request->query->get(self::URL_PARAM_PROCESS);
+        $processName = $request->query->get(static::URL_PARAM_PROCESS);
         if ($processName === null) {
-            return $this->redirectResponse(self::URL_STATE_MACHINE_LIST);
+            return $this->redirectResponse(static::URL_STATE_MACHINE_LIST);
         }
 
         $stateMachine = $request->query->get(static::URL_PARAM_STATE_MACHINE);

@@ -43,7 +43,7 @@ class RulesetController extends AbstractController
         if (empty($idRule)) {
             $this->addErrorMessage('Missing rule id!');
 
-            return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
+            return $this->redirectResponse(sprintf(static::ROLE_UPDATE_URL, $idRole));
         }
 
         $removeStatus = $this->getFacade()->removeRule($idRule);
@@ -54,6 +54,6 @@ class RulesetController extends AbstractController
             $this->addErrorMessage('Failed to remove rule');
         }
 
-        return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
+        return $this->redirectResponse(sprintf(static::ROLE_UPDATE_URL, $idRole));
     }
 }

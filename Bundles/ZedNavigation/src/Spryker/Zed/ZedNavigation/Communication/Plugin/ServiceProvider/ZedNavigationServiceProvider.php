@@ -133,7 +133,7 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      */
     protected function removeUriSuffix($path)
     {
-        return preg_replace('/' . self::URI_SUFFIX_INDEX . '|' . self::URI_SUFFIX_SLASH . '/m', '', $path);
+        return preg_replace('/' . static::URI_SUFFIX_INDEX . '|' . static::URI_SUFFIX_SLASH . '/m', '', $path);
     }
 
     /**

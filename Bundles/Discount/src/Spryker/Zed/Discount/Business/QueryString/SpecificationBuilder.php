@@ -114,7 +114,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
             $token = $this->cleanToken($tokens[$currentTokenIndex]);
 
             switch (true) {
-                case $token === self::OPEN_PARENTHESIS:
+                case $token === static::OPEN_PARENTHESIS:
                     $parenthesisDepth++;
                     $currentTokenIndex++;
                     $childTree = $this->buildTree($tokens, $currentTokenIndex, $parenthesisDepth);
@@ -126,7 +126,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     }
 
                     break;
-                case $token === self::CLOSE_PARENTHESIS:
+                case $token === static::CLOSE_PARENTHESIS:
                     $parenthesisDepth--;
 
                     if ($compositeNode == null) {

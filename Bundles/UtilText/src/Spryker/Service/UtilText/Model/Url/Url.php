@@ -93,33 +93,36 @@ class Url
     protected $fragment;
 
     /**
+     * @var array<string, mixed>
+     */
+    protected static $defaults = [
+        self::SCHEME => null,
+        self::HOST => null,
+        self::PORT => null,
+        self::USER => null,
+        self::PASS => null,
+        self::PATH => null,
+        self::QUERY => null,
+        self::FRAGMENT => null,
+    ];
+
+    /**
      * Factory method to create a new URL from a complete URL string
      *
      * @param string $url Full URL used to create a Url object
      *
      * @throws \Spryker\Service\UtilText\Model\Url\UrlInvalidException
      *
-     * @return self
+     * @return static
      */
     public static function parse($url)
     {
-        static $defaults = [
-            self::SCHEME => null,
-            self::HOST => null,
-            self::PORT => null,
-            self::USER => null,
-            self::PASS => null,
-            self::PATH => null,
-            self::QUERY => null,
-            self::FRAGMENT => null,
-        ];
-
         $parts = parse_url($url);
         if ($parts === false) {
             throw new UrlInvalidException('Was unable to parse malformed URL: ' . $url);
         }
 
-        $parts += $defaults;
+        $parts += static::$defaults;
 
         return new static($parts);
     }
@@ -136,8 +139,8 @@ class Url
     public static function generate($url, array $query = [], array $options = [])
     {
         $parts = [
-            self::PATH => $url,
-            self::QUERY => $query,
+            static::PATH => $url,
+            static::QUERY => $query,
         ] + $options;
 
         return new static($parts);
@@ -166,8 +169,8 @@ class Url
      */
     public function fromArray(array $url = [])
     {
-        if (isset($url[self::QUERY]) && !is_array($url[self::QUERY])) {
-            $url[self::QUERY] = self::parseQuery($url[self::QUERY]);
+        if (isset($url[static::QUERY]) && !is_array($url[static::QUERY])) {
+            $url[static::QUERY] = static::parseQuery($url[static::QUERY]);
         }
 
         foreach ($url as $k => $v) {
@@ -218,14 +221,14 @@ class Url
     public function toArray()
     {
         return [
-            self::SCHEME => $this->scheme,
-            self::USER => $this->username,
-            self::PASS => $this->password,
-            self::HOST => $this->host,
-            self::PORT => $this->port,
-            self::PATH => $this->path,
-            self::QUERY => $this->query ?: [],
-            self::FRAGMENT => $this->fragment,
+            static::SCHEME => $this->scheme,
+            static::USER => $this->username,
+            static::PASS => $this->password,
+            static::HOST => $this->host,
+            static::PORT => $this->port,
+            static::PATH => $this->path,
+            static::QUERY => $this->query ?: [],
+            static::FRAGMENT => $this->fragment,
         ];
     }
 
@@ -464,12 +467,12 @@ class Url
      */
     protected function addPathComponent($url, array $parts)
     {
-        if (isset($parts[self::PATH]) && strlen($parts[self::PATH]) !== 0) {
+        if (isset($parts[static::PATH]) && strlen($parts[static::PATH]) !== 0) {
             // Always ensure that the path begins with '/' if set and something is before the path
-            if ($url && $parts[self::PATH][0] !== '/' && mb_substr($url, -1) !== '/') {
+            if ($url && $parts[static::PATH][0] !== '/' && mb_substr($url, -1) !== '/') {
                 $url .= '/';
             }
-            $url .= $parts[self::PATH];
+            $url .= $parts[static::PATH];
         } else {
             $url .= '/';
         }
@@ -485,8 +488,8 @@ class Url
      */
     protected function addQueryComponent($url, array $parts)
     {
-        if (!empty($parts[self::QUERY])) {
-            $url .= '?' . http_build_query($parts[self::QUERY]);
+        if (!empty($parts[static::QUERY])) {
+            $url .= '?' . http_build_query($parts[static::QUERY]);
         }
 
         return $url;
@@ -500,8 +503,8 @@ class Url
      */
     protected function addFragmentComponent($url, array $parts)
     {
-        if (isset($parts[self::FRAGMENT])) {
-            $url .= '#' . $parts[self::FRAGMENT];
+        if (isset($parts[static::FRAGMENT])) {
+            $url .= '#' . $parts[static::FRAGMENT];
         }
 
         return $url;

@@ -113,11 +113,11 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             'constraints' => [
                 new CmsPageUrlConstraint([
                     CmsPageUrlConstraint::OPTION_URL_FACADE => $this->getFactory()->getUrlFacade(),
-                    'groups' => [self::GROUP_CMS],
+                    'groups' => [static::GROUP_CMS],
                 ]),
                 new CategoryUrlConstraint([
                     CategoryUrlConstraint::OPTION_URL_FACADE => $this->getFactory()->getUrlFacade(),
-                    'groups' => [self::GROUP_CATEGORY],
+                    'groups' => [static::GROUP_CATEGORY],
                 ]),
             ],
         ]);
@@ -149,7 +149,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     protected function addTitleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_TITLE, TextType::class, [
+            ->add(static::FIELD_TITLE, TextType::class, [
                 'label' => 'Title',
                 'required' => true,
                 'constraints' => [
@@ -167,14 +167,14 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addCmsPageUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CMS_PAGE_URL, AutosuggestType::class, [
+        $builder->add(static::FIELD_CMS_PAGE_URL, AutosuggestType::class, [
             'label' => 'CMS page URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by CMS page name.',
             ],
             'constraints' => [
                 new NotBlank([
-                    'groups' => [self::GROUP_CMS],
+                    'groups' => [static::GROUP_CMS],
                 ]),
             ],
         ])->addModelTransformer(new CallbackTransformer(
@@ -192,14 +192,14 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addCategoryUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CATEGORY_URL, AutosuggestType::class, [
+        $builder->add(static::FIELD_CATEGORY_URL, AutosuggestType::class, [
             'label' => 'Category URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by category name.',
             ],
             'constraints' => [
                 new NotBlank([
-                    'groups' => [self::GROUP_CATEGORY],
+                    'groups' => [static::GROUP_CATEGORY],
                 ]),
             ],
         ])->addModelTransformer(new CallbackTransformer(
@@ -218,18 +218,18 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     protected function addLinkField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_LINK, TextType::class, [
+            ->add(static::FIELD_LINK, TextType::class, [
                 'label' => 'Link',
                 'attr' => [
                     'placeholder' => '/',
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [self::GROUP_LINK],
+                        'groups' => [static::GROUP_LINK],
                     ]),
                     new Regex([
                         'pattern' => '/^\/.*/i',
-                        'groups' => [self::GROUP_LINK],
+                        'groups' => [static::GROUP_LINK],
                         'message' => 'Links should start with "/".',
                     ]),
                 ],
@@ -246,17 +246,17 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     protected function addExternalUrlField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_EXTERNAL_URL, TextType::class, [
+            ->add(static::FIELD_EXTERNAL_URL, TextType::class, [
                 'label' => 'External URL',
                 'attr' => [
                     'placeholder' => 'http://',
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [self::GROUP_EXTERNAL_URL],
+                        'groups' => [static::GROUP_EXTERNAL_URL],
                     ]),
                     new Url([
-                        'groups' => [self::GROUP_EXTERNAL_URL],
+                        'groups' => [static::GROUP_EXTERNAL_URL],
                     ]),
                 ],
             ]);
@@ -272,7 +272,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     protected function addCssClassField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_CSS_CLASS, TextType::class, [
+            ->add(static::FIELD_CSS_CLASS, TextType::class, [
                 'label' => 'Custom CSS class',
             ]);
 
@@ -286,7 +286,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }

@@ -48,7 +48,7 @@ class EditController extends AddController
     public function indexAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productAbstractTransfer = $this->getFactory()
@@ -106,7 +106,7 @@ class EditController extends AddController
             }
         }
 
-        $type = $request->query->get(self::PARAM_PRODUCT_TYPE);
+        $type = $request->query->get(static::PARAM_PRODUCT_TYPE);
 
         $variantTable = $this
             ->getFactory()
@@ -142,11 +142,11 @@ class EditController extends AddController
     public function variantAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $idProduct = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT,
+            static::PARAM_ID_PRODUCT,
         ));
 
         $productTransfer = $this->getFactory()
@@ -245,10 +245,10 @@ class EditController extends AddController
     public function variantTableAction(Request $request)
     {
         $idProductAbstract = $this->castId(
-            $request->get(self::PARAM_ID_PRODUCT_ABSTRACT),
+            $request->get(static::PARAM_ID_PRODUCT_ABSTRACT),
         );
 
-        $type = $request->get(self::PARAM_PRODUCT_TYPE);
+        $type = $request->get(static::PARAM_PRODUCT_TYPE);
 
         $variantTable = $this
             ->getFactory()

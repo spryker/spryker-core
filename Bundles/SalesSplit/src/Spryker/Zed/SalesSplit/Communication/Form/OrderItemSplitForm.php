@@ -89,15 +89,15 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'constraints' => [
                 new NotBlank([
-                    'message' => self::VALIDATION_MESSAGE_QUANTITY,
+                    'message' => static::VALIDATION_MESSAGE_QUANTITY,
                 ]),
                 new Regex([
                     'pattern' => '/^\d+$/',
-                    'message' => self::VALIDATE_MESSAGE_NUMERIC,
+                    'message' => static::VALIDATE_MESSAGE_NUMERIC,
                 ]),
             ],
         ]);
@@ -112,7 +112,7 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addIdOrderItemField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_ORDER_ITEM, HiddenType::class);
+        $builder->add(static::FIELD_ID_ORDER_ITEM, HiddenType::class);
 
         return $this;
     }
@@ -124,7 +124,7 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addIdOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_ORDER, HiddenType::class);
+        $builder->add(static::FIELD_ID_ORDER, HiddenType::class);
 
         return $this;
     }

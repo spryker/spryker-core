@@ -82,7 +82,7 @@ class CreditCardSubForm extends AbstractSubForm
      */
     public function getTemplatePath()
     {
-        return DummyPaymentConfig::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
+        return DummyPaymentConfig::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
     }
 
     /**
@@ -94,7 +94,7 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $resolver->setDefaults([
             'data_class' => DummyPaymentTransfer::class,
-        ])->setRequired(self::OPTIONS_FIELD_NAME);
+        ])->setRequired(static::OPTIONS_FIELD_NAME);
     }
 
     /**
@@ -133,7 +133,7 @@ class CreditCardSubForm extends AbstractSubForm
     public function addCardType(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_CARD_TYPE,
+            static::FIELD_CARD_TYPE,
             ChoiceType::class,
             [
                 'choices' => ['Visa' => 'Visa', 'Master Card' => 'Master Card'],
@@ -159,7 +159,7 @@ class CreditCardSubForm extends AbstractSubForm
     protected function addCardNumber(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_CARD_NUMBER,
+            static::FIELD_CARD_NUMBER,
             TextType::class,
             [
                 'label' => 'dummyPaymentCreditCard.card_number',
@@ -181,7 +181,7 @@ class CreditCardSubForm extends AbstractSubForm
     protected function addNameOnCard(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_NAME_ON_CARD,
+            static::FIELD_NAME_ON_CARD,
             TextType::class,
             [
                 'label' => 'dummyPaymentCreditCard.name_on_card',
@@ -204,11 +204,11 @@ class CreditCardSubForm extends AbstractSubForm
     protected function addCardExpiresMonth(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            self::FIELD_CARD_EXPIRES_MONTH,
+            static::FIELD_CARD_EXPIRES_MONTH,
             ChoiceType::class,
             [
                 'label' => 'dummyPaymentCreditCard.card_expires',
-                'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
+                'choices' => array_flip($options[static::OPTIONS_FIELD_NAME][static::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -228,11 +228,11 @@ class CreditCardSubForm extends AbstractSubForm
     protected function addCardExpiresYear(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            self::FIELD_CARD_EXPIRES_YEAR,
+            static::FIELD_CARD_EXPIRES_YEAR,
             ChoiceType::class,
             [
                 'label' => false,
-                'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR]),
+                'choices' => array_flip($options[static::OPTIONS_FIELD_NAME][static::OPTION_CARD_EXPIRES_CHOICES_YEAR]),
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',
@@ -254,7 +254,7 @@ class CreditCardSubForm extends AbstractSubForm
     protected function addCardSecurityCode(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_CARD_SECURITY_CODE,
+            static::FIELD_CARD_SECURITY_CODE,
             TextType::class,
             [
                 'label' => 'dummyPaymentCreditCard.card_security_code',

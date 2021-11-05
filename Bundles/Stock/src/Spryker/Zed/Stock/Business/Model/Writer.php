@@ -265,7 +265,7 @@ class Writer implements WriterInterface
     protected function insertActiveTouchRecordStockType(SpyStock $stockTypeEntity)
     {
         $this->touchFacade->touchActive(
-            self::TOUCH_STOCK_TYPE,
+            static::TOUCH_STOCK_TYPE,
             $stockTypeEntity->getIdStock(),
         );
     }
@@ -278,7 +278,7 @@ class Writer implements WriterInterface
     protected function insertActiveTouchRecordStockProduct(SpyStockProduct $stockProductEntity)
     {
         $this->touchFacade->touchActive(
-            self::TOUCH_STOCK_PRODUCT,
+            static::TOUCH_STOCK_PRODUCT,
             $stockProductEntity->getIdStockProduct(),
         );
     }

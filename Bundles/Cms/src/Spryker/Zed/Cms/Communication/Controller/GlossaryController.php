@@ -66,7 +66,7 @@ class GlossaryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPage = $this->castId($request->get(CmsTableConstants::REQUEST_ID_PAGE));
-        $idForm = (int)$request->get(self::ID_FORM);
+        $idForm = (int)$request->get(static::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
         $cmsPageEntity = $this->findCmsPageById($idPage);
@@ -208,7 +208,7 @@ class GlossaryController extends AbstractController
             /** @var array<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $searchedItems */
             $searchedItems = $this->getQueryContainer()
                 ->queryTranslationWithKeyByValue($value)
-                ->limit(self::SEARCH_LIMIT)
+                ->limit(static::SEARCH_LIMIT)
                 ->find();
 
             return $searchedItems;
@@ -216,7 +216,7 @@ class GlossaryController extends AbstractController
         if ($key !== null) {
             $searchedItems = $this->getQueryContainer()
                 ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
-                ->limit(self::SEARCH_LIMIT)
+                ->limit(static::SEARCH_LIMIT)
                 ->find();
         }
 

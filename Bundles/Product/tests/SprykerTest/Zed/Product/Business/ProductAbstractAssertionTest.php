@@ -69,12 +69,12 @@ class ProductAbstractAssertionTest extends Unit
         $this->productQueryContainer
             ->expects($this->once())
             ->method('queryProductAbstractBySku')
-            ->with(self::SKU)
+            ->with(static::SKU)
             ->willReturn($query);
 
         $productAbstractAssertion = new ProductAbstractAssertion($this->productQueryContainer);
 
-        $productAbstractAssertion->assertSkuIsUnique(self::SKU);
+        $productAbstractAssertion->assertSkuIsUnique(static::SKU);
     }
 
     /**
@@ -85,7 +85,7 @@ class ProductAbstractAssertionTest extends Unit
         $this->expectException(ProductAbstractExistsException::class);
         $this->expectExceptionMessage(sprintf(
             'Product abstract with sku %s already exists',
-            self::SKU,
+            static::SKU,
         ));
 
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -99,12 +99,12 @@ class ProductAbstractAssertionTest extends Unit
         $this->productQueryContainer
             ->expects($this->once())
             ->method('queryProductAbstractBySku')
-            ->with(self::SKU)
+            ->with(static::SKU)
             ->willReturn($query);
 
         $productAbstractAssertion = new ProductAbstractAssertion($this->productQueryContainer);
 
-        $productAbstractAssertion->assertSkuIsUnique(self::SKU);
+        $productAbstractAssertion->assertSkuIsUnique(static::SKU);
     }
 
     /**
@@ -123,18 +123,18 @@ class ProductAbstractAssertionTest extends Unit
         $query
             ->expects($this->once())
             ->method('filterByIdProductAbstract')
-            ->with(self::ID_PRODUCT_ABSTRACT, Criteria::NOT_EQUAL)
+            ->with(static::ID_PRODUCT_ABSTRACT, Criteria::NOT_EQUAL)
             ->willReturn($query);
 
         $this->productQueryContainer
             ->expects($this->once())
             ->method('queryProductAbstractBySku')
-            ->with(self::SKU)
+            ->with(static::SKU)
             ->willReturn($query);
 
         $productAbstractAssertion = new ProductAbstractAssertion($this->productQueryContainer);
 
-        $productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct(self::ID_PRODUCT_ABSTRACT, self::SKU);
+        $productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct(static::ID_PRODUCT_ABSTRACT, static::SKU);
     }
 
     /**
@@ -145,7 +145,7 @@ class ProductAbstractAssertionTest extends Unit
         $this->expectException(ProductAbstractExistsException::class);
         $this->expectExceptionMessage(sprintf(
             'Product abstract with sku %s already exists',
-            self::SKU,
+            static::SKU,
         ));
 
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -159,18 +159,18 @@ class ProductAbstractAssertionTest extends Unit
         $query
             ->expects($this->once())
             ->method('filterByIdProductAbstract')
-            ->with(self::ID_PRODUCT_ABSTRACT, Criteria::NOT_EQUAL)
+            ->with(static::ID_PRODUCT_ABSTRACT, Criteria::NOT_EQUAL)
             ->willReturn($query);
 
         $this->productQueryContainer
             ->expects($this->once())
             ->method('queryProductAbstractBySku')
-            ->with(self::SKU)
+            ->with(static::SKU)
             ->willReturn($query);
 
         $productAbstractAssertion = new ProductAbstractAssertion($this->productQueryContainer);
 
-        $productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct(self::ID_PRODUCT_ABSTRACT, self::SKU);
+        $productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct(static::ID_PRODUCT_ABSTRACT, static::SKU);
     }
 
     /**
@@ -189,7 +189,7 @@ class ProductAbstractAssertionTest extends Unit
         $query
             ->expects($this->once())
             ->method('filterByIdProductAbstract')
-            ->with(self::ID_PRODUCT_ABSTRACT)
+            ->with(static::ID_PRODUCT_ABSTRACT)
             ->willReturn($query);
 
         $this->productQueryContainer
@@ -199,7 +199,7 @@ class ProductAbstractAssertionTest extends Unit
 
         $productAbstractAssertion = new ProductAbstractAssertion($this->productQueryContainer);
 
-        $productAbstractAssertion->assertProductExists(self::ID_PRODUCT_ABSTRACT);
+        $productAbstractAssertion->assertProductExists(static::ID_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -210,7 +210,7 @@ class ProductAbstractAssertionTest extends Unit
         $this->expectException(MissingProductException::class);
         $this->expectExceptionMessage(sprintf(
             'Product abstract with id "%s" does not exist.',
-            self::ID_PRODUCT_ABSTRACT,
+            static::ID_PRODUCT_ABSTRACT,
         ));
 
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -224,7 +224,7 @@ class ProductAbstractAssertionTest extends Unit
         $query
             ->expects($this->once())
             ->method('filterByIdProductAbstract')
-            ->with(self::ID_PRODUCT_ABSTRACT)
+            ->with(static::ID_PRODUCT_ABSTRACT)
             ->willReturn($query);
 
         $this->productQueryContainer
@@ -234,6 +234,6 @@ class ProductAbstractAssertionTest extends Unit
 
         $productAbstractAssertion = new ProductAbstractAssertion($this->productQueryContainer);
 
-        $productAbstractAssertion->assertProductExists(self::ID_PRODUCT_ABSTRACT);
+        $productAbstractAssertion->assertProductExists(static::ID_PRODUCT_ABSTRACT);
     }
 }

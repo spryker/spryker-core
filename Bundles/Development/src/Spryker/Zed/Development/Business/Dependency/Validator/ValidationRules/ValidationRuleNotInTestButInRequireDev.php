@@ -23,7 +23,7 @@ class ValidationRuleNotInTestButInRequireDev implements ValidationRuleInterface
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Dependency listed in composer require-dev not found in tests');
-            $validationMessageTransfer->setFixType(self::REMOVE_REQUIRE_DEV);
+            $validationMessageTransfer->setFixType(static::REMOVE_REQUIRE_DEV);
 
             $moduleDependencyTransfer->addValidationMessage($validationMessageTransfer);
         }

@@ -137,8 +137,8 @@ class Builder implements BuilderInterface
     public function createProcess(StateMachineProcessTransfer $stateMachineProcessTransfer)
     {
         $processIdentifier = $this->createProcessIdentifier($stateMachineProcessTransfer);
-        if (isset(self::$processBuffer[$processIdentifier])) {
-            return self::$processBuffer[$processIdentifier];
+        if (isset(static::$processBuffer[$processIdentifier])) {
+            return static::$processBuffer[$processIdentifier];
         }
 
         $pathToXml = $this->buildPathToXml($stateMachineProcessTransfer);
@@ -156,7 +156,7 @@ class Builder implements BuilderInterface
 
         $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
 
-        self::$processBuffer[$processIdentifier] = $mainProcess;
+        static::$processBuffer[$processIdentifier] = $mainProcess;
 
         return $mainProcess;
     }
@@ -169,7 +169,7 @@ class Builder implements BuilderInterface
     protected function mergeSubProcessFiles($pathToXml)
     {
         foreach ($this->rootElement->children() as $xmlProcess) {
-            $processFile = $this->getAttributeString($xmlProcess, self::PROCESS_FILE_ATTRIBUTE);
+            $processFile = $this->getAttributeString($xmlProcess, static::PROCESS_FILE_ATTRIBUTE);
 
             if ($processFile === null) {
                  continue;
@@ -345,16 +345,16 @@ class Builder implements BuilderInterface
      */
     protected function createEvent(SimpleXMLElement $xmlEvent)
     {
-        $eventName = $this->getAttributeString($xmlEvent, self::STATE_NAME_ATTRIBUTE);
+        $eventName = $this->getAttributeString($xmlEvent, static::STATE_NAME_ATTRIBUTE);
         if ($eventName === null) {
             return null;
         }
 
         $event = clone $this->event;
-        $event->setCommand($this->getAttributeString($xmlEvent, self::EVENT_COMMAND_ATTRIBUTE));
-        $event->setManual($this->getAttributeBoolean($xmlEvent, self::EVENT_MANUAL_ATTRIBUTE));
-        $event->setOnEnter($this->getAttributeBoolean($xmlEvent, self::EVENT_ON_ENTER_ATTRIBUTE));
-        $event->setTimeout($this->getAttributeString($xmlEvent, self::EVENT_TIMEOUT_ATTRIBUTE));
+        $event->setCommand($this->getAttributeString($xmlEvent, static::EVENT_COMMAND_ATTRIBUTE));
+        $event->setManual($this->getAttributeBoolean($xmlEvent, static::EVENT_MANUAL_ATTRIBUTE));
+        $event->setOnEnter($this->getAttributeBoolean($xmlEvent, static::EVENT_ON_ENTER_ATTRIBUTE));
+        $event->setTimeout($this->getAttributeString($xmlEvent, static::EVENT_TIMEOUT_ATTRIBUTE));
         $event->setName($eventName);
 
         return $event;
@@ -374,11 +374,11 @@ class Builder implements BuilderInterface
         /** @var \SimpleXMLElement $xmlProcess */
         foreach ($xmlProcesses as $xmlProcess) {
             $process = clone $this->process;
-            $processName = $this->getAttributeString($xmlProcess, self::STATE_NAME_ATTRIBUTE);
+            $processName = $this->getAttributeString($xmlProcess, static::STATE_NAME_ATTRIBUTE);
             $process->setName($processName);
             $processMap[$processName] = $process;
-            $process->setIsMain($this->getAttributeBoolean($xmlProcess, self::PROCESS_MAIN_FLAG_ATTRIBUTE));
-            $process->setFile($this->getAttributeString($xmlProcess, self::PROCESS_FILE_ATTRIBUTE));
+            $process->setIsMain($this->getAttributeBoolean($xmlProcess, static::PROCESS_MAIN_FLAG_ATTRIBUTE));
+            $process->setFile($this->getAttributeString($xmlProcess, static::PROCESS_FILE_ATTRIBUTE));
 
             if ($process->getIsMain()) {
                 $mainProcess = $process;
@@ -400,7 +400,7 @@ class Builder implements BuilderInterface
     protected function createSubProcesses(array $processMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
-            $processName = $this->getAttributeString($xmlProcess, self::PROCESS_NAME_ATTRIBUTE);
+            $processName = $this->getAttributeString($xmlProcess, static::PROCESS_NAME_ATTRIBUTE);
 
             $process = $processMap[$processName];
 
@@ -427,7 +427,7 @@ class Builder implements BuilderInterface
 
         $xmlProcesses = $this->rootElement->children();
         foreach ($xmlProcesses as $xmlProcess) {
-            $processName = $this->getAttributeString($xmlProcess, self::PROCESS_NAME_ATTRIBUTE);
+            $processName = $this->getAttributeString($xmlProcess, static::PROCESS_NAME_ATTRIBUTE);
             $process = $processMap[$processName];
 
             if (empty($xmlProcess->states)) {
@@ -456,8 +456,8 @@ class Builder implements BuilderInterface
     protected function createState(SimpleXMLElement $xmlState, ProcessInterface $process)
     {
         $state = clone $this->state;
-        $state->setName($this->getAttributeString($xmlState, self::STATE_NAME_ATTRIBUTE));
-        $state->setDisplay($this->getAttributeString($xmlState, self::STATE_DISPLAY_ATTRIBUTE));
+        $state->setName($this->getAttributeString($xmlState, static::STATE_NAME_ATTRIBUTE));
+        $state->setDisplay($this->getAttributeString($xmlState, static::STATE_DISPLAY_ATTRIBUTE));
         $state->setProcess($process);
         $state = $this->addFlags($xmlState, $state);
 
@@ -497,7 +497,7 @@ class Builder implements BuilderInterface
                 continue;
             }
 
-            $processName = $this->getAttributeString($xmlProcess, self::STATE_NAME_ATTRIBUTE);
+            $processName = $this->getAttributeString($xmlProcess, static::STATE_NAME_ATTRIBUTE);
             $xmlTransitions = $xmlProcess->transitions->children();
             foreach ($xmlTransitions as $xmlTransition) {
                 $transition = $this->createTransition($stateToProcessMap, $eventMap, $xmlTransition);
@@ -520,14 +520,14 @@ class Builder implements BuilderInterface
         $transition->setCondition(
             $this->getAttributeString(
                 $xmlTransition,
-                self::TRANSITION_CONDITION_ATTRIBUTE,
+                static::TRANSITION_CONDITION_ATTRIBUTE,
             ),
         );
 
         $transition->setHappyCase(
             $this->getAttributeBoolean(
                 $xmlTransition,
-                self::TRANSITION_HAPPY_PATH_ATTRIBUTE,
+                static::TRANSITION_HAPPY_PATH_ATTRIBUTE,
             ),
         );
 

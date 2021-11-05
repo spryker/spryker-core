@@ -155,11 +155,11 @@ class PriceProductFacadeTest extends Unit
             90,
             '',
             '',
-            self::USD_ISO_CODE,
+            static::USD_ISO_CODE,
         );
 
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setCurrencyIsoCode(self::USD_ISO_CODE)
+            ->setCurrencyIsoCode(static::USD_ISO_CODE)
             ->setSku($priceProductTransfer->getSkuProduct());
 
         $price = $priceProductFacade->findPriceFor($priceProductFilterTransfer);
@@ -268,8 +268,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, static::USD_ISO_CODE);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -297,7 +297,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
 
         $productConcreteTransfer->setPrices($prices);
 
@@ -322,8 +322,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::USD_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::USD_ISO_CODE);
 
         $productConcreteTransfer->setPrices($prices);
 
@@ -348,8 +348,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::USD_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::USD_ISO_CODE);
 
         $productConcreteTransfer->setPrices($prices);
 
@@ -390,8 +390,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, static::USD_ISO_CODE);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -421,7 +421,7 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
 
         $productConcreteTransfer->setPrices($prices);
 
@@ -449,8 +449,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, static::USD_ISO_CODE);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -650,8 +650,8 @@ class PriceProductFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $prices = new ArrayObject();
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, self::EUR_ISO_CODE);
-        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, self::USD_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 10, 9, static::EUR_ISO_CODE);
+        $prices[] = $this->createPriceProductTransfer($productConcreteTransfer, $priceTypeTransfer, 11, 10, static::USD_ISO_CODE);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
@@ -912,7 +912,7 @@ class PriceProductFacadeTest extends Unit
             90,
             '',
             '',
-            self::EUR_ISO_CODE,
+            static::EUR_ISO_CODE,
         );
 
         // Act
@@ -920,7 +920,7 @@ class PriceProductFacadeTest extends Unit
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+            ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($priceProductTransfer->getSkuProduct());
 
         $priceProduct = $priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
@@ -961,7 +961,7 @@ class PriceProductFacadeTest extends Unit
         $priceProductFilterTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
-                ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+                ->setCurrencyIsoCode(static::EUR_ISO_CODE)
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
         }
@@ -996,7 +996,7 @@ class PriceProductFacadeTest extends Unit
         $priceProductFilterTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
-                ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+                ->setCurrencyIsoCode(static::EUR_ISO_CODE)
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
         }
@@ -1397,7 +1397,7 @@ class PriceProductFacadeTest extends Unit
             $priceTypeTransfer,
             10,
             9,
-            self::EUR_ISO_CODE,
+            static::EUR_ISO_CODE,
         );
         $priceProductTransfer = $this->tester->havePriceProduct($priceProductTransfer->toArray());
 

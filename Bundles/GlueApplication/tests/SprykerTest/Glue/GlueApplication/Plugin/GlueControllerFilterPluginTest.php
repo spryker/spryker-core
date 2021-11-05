@@ -114,7 +114,7 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             $this->headers,
-            self::TESTS_POST_DATA,
+            static::TESTS_POST_DATA,
         );
 
         $request->attributes->add($this->attributes);
@@ -208,7 +208,7 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             [],
             $this->headers,
-            self::TESTS_POST_DATA,
+            static::TESTS_POST_DATA,
         );
 
         $request->attributes->add($this->attributes + [RequestConstantsInterface::ATTRIBUTE_ID => '1']);

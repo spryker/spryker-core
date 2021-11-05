@@ -257,7 +257,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     public function generateGlossaryKeyName(string $templateName, string $placeholder, bool $autoIncrement = true): string
     {
-        $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
+        $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
         $keyName .= str_replace([' ', '.'], '-', $placeholder);
 

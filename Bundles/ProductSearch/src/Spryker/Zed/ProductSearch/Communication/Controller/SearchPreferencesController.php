@@ -93,7 +93,7 @@ class SearchPreferencesController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
+        $idAttributeKey = $this->castId($request->query->get(static::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -145,7 +145,7 @@ class SearchPreferencesController extends AbstractController
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
-        $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
+        $idAttributeKey = $this->castId($request->query->get(static::PARAM_ID));
 
         $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
         $productSearchPreferencesTransfer->setIdProductAttributeKey($idAttributeKey);

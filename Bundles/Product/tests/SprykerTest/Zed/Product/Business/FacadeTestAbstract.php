@@ -236,18 +236,18 @@ class FacadeTestAbstract extends Unit
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
-            ->setSku(self::ABSTRACT_SKU);
+            ->setSku(static::ABSTRACT_SKU);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-            ->setName(self::PRODUCT_ABSTRACT_NAME['de_DE'])
+            ->setName(static::PRODUCT_ABSTRACT_NAME['de_DE'])
             ->setLocale($this->locales['de_DE']);
 
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-            ->setName(self::PRODUCT_ABSTRACT_NAME['en_US'])
+            ->setName(static::PRODUCT_ABSTRACT_NAME['en_US'])
             ->setLocale($this->locales['en_US']);
 
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
@@ -260,19 +260,19 @@ class FacadeTestAbstract extends Unit
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
         $this->productConcreteTransfer
-            ->setSku(self::CONCRETE_SKU)
+            ->setSku(static::CONCRETE_SKU)
             ->setIsActive(true);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-            ->setName(self::PRODUCT_CONCRETE_NAME['de_DE'])
+            ->setName(static::PRODUCT_CONCRETE_NAME['de_DE'])
             ->setLocale($this->locales['de_DE']);
 
         $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-            ->setName(self::PRODUCT_CONCRETE_NAME['en_US'])
+            ->setName(static::PRODUCT_CONCRETE_NAME['en_US'])
             ->setLocale($this->locales['en_US']);
 
         $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);

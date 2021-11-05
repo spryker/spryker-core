@@ -77,18 +77,18 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
         $normalizedDefinitions = [];
         $filter = new UnderscoreToCamelCase();
         foreach ($transferDefinitions as $transferDefinition) {
-            $transferName = $filter->filter($transferDefinition[self::KEY_NAME]) . static::KEY_ENTITY;
-            $properties = $this->normalizeAttributes($transferDefinition[self::KEY_COLUMN], $transferDefinition[self::KEY_BUNDLE]);
-            if (isset($transferDefinition[self::KEY_FOREIGN_KEY])) {
-                $properties = $this->normalizeForeignKeys($transferDefinition[self::KEY_FOREIGN_KEY], $properties, $transferDefinition[self::KEY_BUNDLE]);
+            $transferName = $filter->filter($transferDefinition[static::KEY_NAME]) . static::KEY_ENTITY;
+            $properties = $this->normalizeAttributes($transferDefinition[static::KEY_COLUMN], $transferDefinition[static::KEY_BUNDLE]);
+            if (isset($transferDefinition[static::KEY_FOREIGN_KEY])) {
+                $properties = $this->normalizeForeignKeys($transferDefinition[static::KEY_FOREIGN_KEY], $properties, $transferDefinition[static::KEY_BUNDLE]);
             }
             $normalizedDefinition = [
-                self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
-                self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
-                self::KEY_NAME => $transferName,
-                self::KEY_DEPRECATED => $transferDefinition[self::KEY_DEPRECATED] ?? null,
-                self::KEY_PROPERTY => $properties,
-                self::ENTITY_NAMESPACE => $this->findEntityNamespace($transferDefinition),
+                static::KEY_BUNDLE => $transferDefinition[static::KEY_BUNDLE],
+                static::KEY_CONTAINING_BUNDLE => $transferDefinition[static::KEY_CONTAINING_BUNDLE],
+                static::KEY_NAME => $transferName,
+                static::KEY_DEPRECATED => $transferDefinition[static::KEY_DEPRECATED] ?? null,
+                static::KEY_PROPERTY => $properties,
+                static::ENTITY_NAMESPACE => $this->findEntityNamespace($transferDefinition),
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
@@ -128,8 +128,8 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     {
         $filter = new UnderscoreToCamelCase();
         foreach ($attributes as &$attribute) {
-            $attribute[self::KEY_NAME] = lcfirst($filter->filter($attribute[self::KEY_NAME]));
-            $attribute[self::KEY_TYPE] = $this->getTransferType($attribute[self::KEY_TYPE]);
+            $attribute[static::KEY_NAME] = lcfirst($filter->filter($attribute[static::KEY_NAME]));
+            $attribute[static::KEY_TYPE] = $this->getTransferType($attribute[static::KEY_TYPE]);
         }
 
         return $attributes;
@@ -177,17 +177,17 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     {
         $filter = new UnderscoreToCamelCase();
         foreach ($foreignKeys as &$foreignKey) {
-            if (isset($foreignKey[self::KEY_PHP_NAME])) {
-                $propertyName = lcfirst($foreignKey[self::KEY_PHP_NAME]);
+            if (isset($foreignKey[static::KEY_PHP_NAME])) {
+                $propertyName = lcfirst($foreignKey[static::KEY_PHP_NAME]);
             } else {
-                $propertyName = lcfirst($filter->filter($foreignKey[self::FOREIGN_TABLE]));
+                $propertyName = lcfirst($filter->filter($foreignKey[static::FOREIGN_TABLE]));
             }
 
             $properties[] = [
-                self::KEY_NAME => $propertyName,
-                self::KEY_TYPE => $filter->filter($foreignKey[self::FOREIGN_TABLE]) . static::KEY_ENTITY,
-                self::KEY_BUNDLE => [$module],
-                self::KEY_BUNDLES => [$module],
+                static::KEY_NAME => $propertyName,
+                static::KEY_TYPE => $filter->filter($foreignKey[static::FOREIGN_TABLE]) . static::KEY_ENTITY,
+                static::KEY_BUNDLE => [$module],
+                static::KEY_BUNDLES => [$module],
             ];
         }
 
@@ -218,13 +218,13 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function scanAndAddRelation(array $normalizedDefinition, array $allDefinitions)
     {
         foreach ($allDefinitions as $definition) {
-            foreach ($definition[self::KEY_PROPERTY] as $property) {
-                if ($normalizedDefinition[self::KEY_NAME] === $property[self::KEY_TYPE]) {
-                    $propertyName = lcfirst(str_replace(self::KEY_ENTITY, '', $definition[self::KEY_NAME]));
-                    $normalizedDefinition[self::KEY_PROPERTY][] = [
-                        self::KEY_NAME => $this->pluralizer->getPluralForm($propertyName),
-                        self::KEY_TYPE => $definition[self::KEY_NAME] . '[]',
-                        self::KEY_BUNDLES => $property[self::KEY_BUNDLE],
+            foreach ($definition[static::KEY_PROPERTY] as $property) {
+                if ($normalizedDefinition[static::KEY_NAME] === $property[static::KEY_TYPE]) {
+                    $propertyName = lcfirst(str_replace(static::KEY_ENTITY, '', $definition[static::KEY_NAME]));
+                    $normalizedDefinition[static::KEY_PROPERTY][] = [
+                        static::KEY_NAME => $this->pluralizer->getPluralForm($propertyName),
+                        static::KEY_TYPE => $definition[static::KEY_NAME] . '[]',
+                        static::KEY_BUNDLES => $property[static::KEY_BUNDLE],
                     ];
                 }
             }
@@ -240,14 +240,14 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      */
     protected function findEntityNamespace(array $transferDefinition)
     {
-        if (isset($transferDefinition[self::KEY_PHP_NAME])) {
-            return $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $transferDefinition[self::KEY_PHP_NAME];
+        if (isset($transferDefinition[static::KEY_PHP_NAME])) {
+            return $transferDefinition[static::ENTITY_NAMESPACE] . '\\' . $transferDefinition[static::KEY_PHP_NAME];
         }
 
-        if (isset($transferDefinition[self::KEY_NAME])) {
-            $entityName = str_replace('_', '', ucwords($transferDefinition[self::KEY_NAME], '_'));
+        if (isset($transferDefinition[static::KEY_NAME])) {
+            $entityName = str_replace('_', '', ucwords($transferDefinition[static::KEY_NAME], '_'));
 
-            return $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $entityName;
+            return $transferDefinition[static::ENTITY_NAMESPACE] . '\\' . $entityName;
         }
 
         return null;

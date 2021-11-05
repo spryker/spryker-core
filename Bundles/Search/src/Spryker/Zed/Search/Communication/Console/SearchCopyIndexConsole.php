@@ -45,8 +45,8 @@ class SearchCopyIndexConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addArgument(static::ARGUMENT_SOURCE, InputArgument::REQUIRED, 'Name of the source index to copy.');
         $this->addArgument(static::ARGUMENT_TARGET, InputArgument::REQUIRED, 'Name of the target index to copy source index to.');

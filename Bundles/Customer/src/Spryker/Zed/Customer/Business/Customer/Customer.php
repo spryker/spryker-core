@@ -870,7 +870,7 @@ class Customer implements CustomerInterface
             return $currentPassword;
         }
 
-        return $this->getPasswordEncoder()->encodePassword($currentPassword, self::BCRYPT_SALT);
+        return $this->getPasswordEncoder()->encodePassword($currentPassword, static::BCRYPT_SALT);
     }
 
     /**

@@ -36,7 +36,7 @@ class SkuGroupKeyPluginTest extends Unit
     public function testExpandItemMustSetGroupKeyToSkuOfGivenProductWhenNoGroupKeyIsSet(): void
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku(self::SKU);
+        $itemTransfer->setSku(static::SKU);
 
         $changeTransfer = new CartChangeTransfer();
         $changeTransfer->addItem($itemTransfer);
@@ -44,7 +44,7 @@ class SkuGroupKeyPluginTest extends Unit
         $plugin = new SkuGroupKeyPlugin();
         $plugin->expandItems($changeTransfer);
 
-        $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
+        $this->assertSame(static::SKU, $changeTransfer->getItems()[0]->getGroupKey());
     }
 
     /**
@@ -53,8 +53,8 @@ class SkuGroupKeyPluginTest extends Unit
     public function testExpandItemMustNotChangeGroupKeyWhenGroupKeyIsSet(): void
     {
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku(self::SKU);
-        $itemTransfer->setGroupKey(self::SKU);
+        $itemTransfer->setSku(static::SKU);
+        $itemTransfer->setGroupKey(static::SKU);
 
         $changeTransfer = new CartChangeTransfer();
         $changeTransfer->addItem($itemTransfer);
@@ -62,6 +62,6 @@ class SkuGroupKeyPluginTest extends Unit
         $plugin = new SkuGroupKeyPlugin();
         $plugin->expandItems($changeTransfer);
 
-        $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
+        $this->assertSame(static::SKU, $changeTransfer->getItems()[0]->getGroupKey());
     }
 }

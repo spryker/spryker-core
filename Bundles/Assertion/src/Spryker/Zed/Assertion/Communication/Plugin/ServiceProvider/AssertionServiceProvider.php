@@ -28,7 +28,7 @@ class AssertionServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $app[self::ASSERTION] = function () {
+        $app[static::ASSERTION] = function () {
             return new AssertionFacade();
         };
     }

@@ -114,7 +114,7 @@ class ProductOptionGroupDataProvider
         foreach ($availableLocales as $localeTransfer) {
             $productOptionGroupNameTranslationTransfer = new ProductOptionTranslationTransfer();
             $productOptionGroupNameTranslationTransfer->setLocaleCode($localeTransfer->getLocaleName());
-            $productOptionGroupNameTranslationTransfer->setRelatedOptionHash(self::NEW_GROUP_NAME);
+            $productOptionGroupNameTranslationTransfer->setRelatedOptionHash(static::NEW_GROUP_NAME);
             $productOptionGroupTransfer->addGroupNameTranslation($productOptionGroupNameTranslationTransfer);
         }
 

@@ -21,7 +21,7 @@ class ControllerResolver extends AbstractControllerResolver
      */
     protected function getClassNamePattern()
     {
-        return self::CLASS_NAME_PATTERN;
+        return static::CLASS_NAME_PATTERN;
     }
 
     /**

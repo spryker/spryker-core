@@ -122,11 +122,11 @@ class Store
      */
     public static function getInstance()
     {
-        if (!self::$instance) {
-            self::$instance = new static();
+        if (!static::$instance) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -146,11 +146,11 @@ class Store
      */
     public static function getDefaultStore()
     {
-        if (self::$defaultStore === null) {
-            self::$defaultStore = require APPLICATION_ROOT_DIR . '/config/Shared/default_store.php';
+        if (static::$defaultStore === null) {
+            static::$defaultStore = require APPLICATION_ROOT_DIR . '/config/Shared/default_store.php';
         }
 
-        return self::$defaultStore;
+        return static::$defaultStore;
     }
 
     protected function __construct()

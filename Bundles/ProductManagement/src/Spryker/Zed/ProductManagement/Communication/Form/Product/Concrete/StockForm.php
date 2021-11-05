@@ -74,7 +74,7 @@ class StockForm extends AbstractType
      */
     protected function addStockIdHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_HIDDEN_FK_STOCK, HiddenType::class, []);
+        $builder->add(static::FIELD_HIDDEN_FK_STOCK, HiddenType::class, []);
 
         return $this;
     }
@@ -87,7 +87,7 @@ class StockForm extends AbstractType
      */
     protected function addProductStockIdHiddenField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_HIDDEN_STOCK_PRODUCT_ID, HiddenType::class, []);
+        $builder->add(static::FIELD_HIDDEN_STOCK_PRODUCT_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -100,7 +100,7 @@ class StockForm extends AbstractType
      */
     protected function addTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TYPE, TextType::class, [
+        $builder->add(static::FIELD_TYPE, TextType::class, [
             'label' => 'Type',
             'required' => true,
             'constraints' => [
@@ -122,7 +122,7 @@ class StockForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'required' => true,
             'constraints' => [
@@ -140,7 +140,7 @@ class StockForm extends AbstractType
      */
     protected function addIsNeverOutOfStockCheckbox(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_NEVER_OUT_OF_STOCK, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_NEVER_OUT_OF_STOCK, CheckboxType::class, [
             'label' => 'Never out of stock',
         ]);
 

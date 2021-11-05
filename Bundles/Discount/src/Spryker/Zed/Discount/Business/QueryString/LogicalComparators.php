@@ -25,8 +25,8 @@ class LogicalComparators
     public function getLogicalOperators()
     {
         return [
-            self::COMPARATOR_AND,
-            self::COMPARATOR_OR,
+            static::COMPARATOR_AND,
+            static::COMPARATOR_OR,
         ];
     }
 }

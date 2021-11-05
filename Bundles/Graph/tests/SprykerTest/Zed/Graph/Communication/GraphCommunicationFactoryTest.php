@@ -43,7 +43,7 @@ class GraphCommunicationFactoryTest extends Unit
         $configMock = $this->getConfigMock($factory);
         $factory->setConfig($configMock);
 
-        $factory->createGraph(self::GRAPH_NAME);
+        $factory->createGraph(static::GRAPH_NAME);
     }
 
     /**
@@ -57,7 +57,7 @@ class GraphCommunicationFactoryTest extends Unit
         $configMock = $this->getConfigMock('not a class name');
         $factory->setConfig($configMock);
 
-        $factory->createGraph(self::GRAPH_NAME);
+        $factory->createGraph(static::GRAPH_NAME);
     }
 
     /**
@@ -71,7 +71,7 @@ class GraphCommunicationFactoryTest extends Unit
         $configMock = $this->getConfigMock(get_class($factory));
         $factory->setConfig($configMock);
 
-        $factory->createGraph(self::GRAPH_NAME);
+        $factory->createGraph(static::GRAPH_NAME);
     }
 
     /**
@@ -82,7 +82,7 @@ class GraphCommunicationFactoryTest extends Unit
         $factory = new GraphCommunicationFactory();
         $factory->setConfig(new GraphConfig());
 
-        $this->assertInstanceOf(GraphInterface::class, $factory->createGraph(self::GRAPH_NAME));
+        $this->assertInstanceOf(GraphInterface::class, $factory->createGraph(static::GRAPH_NAME));
     }
 
     /**

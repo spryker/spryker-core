@@ -65,7 +65,7 @@ class TaxRateForm extends AbstractType
     protected function addName(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_NAME,
+            static::FIELD_NAME,
             TextType::class,
             [
                 'label' => 'Name',
@@ -86,11 +86,11 @@ class TaxRateForm extends AbstractType
      */
     protected function addCountry(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COUNTRY, ChoiceType::class, [
+        $builder->add(static::FIELD_COUNTRY, ChoiceType::class, [
             'expanded' => false,
             'multiple' => false,
             'label' => 'Country',
-            'choices' => array_flip($this->getFactory()->createTaxRateFormDataProvider()->getOptions()[self::FIELD_COUNTRY]),
+            'choices' => array_flip($this->getFactory()->createTaxRateFormDataProvider()->getOptions()[static::FIELD_COUNTRY]),
             'constraints' => [
                 new GreaterThan([
                     'value' => 0,
@@ -111,7 +111,7 @@ class TaxRateForm extends AbstractType
     protected function addPercentage(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_RATE,
+            static::FIELD_RATE,
             TextType::class,
             [
                 'label' => 'Percentage',
@@ -125,7 +125,7 @@ class TaxRateForm extends AbstractType
             ],
         );
 
-        $builder->get(self::FIELD_RATE)
+        $builder->get(static::FIELD_RATE)
             ->addModelTransformer($this->getFactory()->createPercentageTransformer());
 
         return $this;

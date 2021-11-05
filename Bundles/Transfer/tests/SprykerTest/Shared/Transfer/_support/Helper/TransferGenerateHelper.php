@@ -140,8 +140,8 @@ class TransferGenerateHelper extends Module
     {
         $pathForTransferSchemas = rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Spryker/Shared/Testify/';
 
-        if (isset($this->config[self::TARGET_DIRECTORY])) {
-            $pathForTransferSchemas = $this->config[self::TARGET_DIRECTORY];
+        if (isset($this->config[static::TARGET_DIRECTORY])) {
+            $pathForTransferSchemas = $this->config[static::TARGET_DIRECTORY];
         }
 
         if (!is_dir($pathForTransferSchemas)) {

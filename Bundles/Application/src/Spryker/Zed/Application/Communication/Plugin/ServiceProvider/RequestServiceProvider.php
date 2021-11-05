@@ -99,9 +99,9 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
         }
 
         $requiredParameters = [
-            self::BUNDLE,
-            self::CONTROLLER,
-            self::ACTION,
+            static::BUNDLE,
+            static::CONTROLLER,
+            static::ACTION,
         ];
 
         foreach ($requiredParameters as $parameter) {
@@ -124,19 +124,19 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $requestUriParts = explode('/', $requestUriWithoutParameters);
 
         if (count($requestUriParts) < 3) {
-            $request->attributes->set(self::ACTION, self::DEFAULT_ACTION);
+            $request->attributes->set(static::ACTION, static::DEFAULT_ACTION);
         } else {
-            $request->attributes->set(self::ACTION, $requestUriParts[2]);
+            $request->attributes->set(static::ACTION, $requestUriParts[2]);
         }
         if (count($requestUriParts) < 2) {
-            $request->attributes->set(self::CONTROLLER, self::DEFAULT_CONTROLLER);
+            $request->attributes->set(static::CONTROLLER, static::DEFAULT_CONTROLLER);
         } else {
-            $request->attributes->set(self::CONTROLLER, $requestUriParts[1]);
+            $request->attributes->set(static::CONTROLLER, $requestUriParts[1]);
         }
         if (count($requestUriParts) < 1 || empty($requestUriParts[0])) {
-            $request->attributes->set(self::BUNDLE, self::DEFAULT_BUNDLE);
+            $request->attributes->set(static::BUNDLE, static::DEFAULT_BUNDLE);
         } else {
-            $request->attributes->set(self::BUNDLE, $requestUriParts[0]);
+            $request->attributes->set(static::BUNDLE, $requestUriParts[0]);
         }
     }
 

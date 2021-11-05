@@ -106,7 +106,7 @@ class PasswordController extends AbstractController
     public function resetAction(Request $request)
     {
         /** @var string $token */
-        $token = $request->query->get(self::PARAM_TOKEN);
+        $token = $request->query->get(static::PARAM_TOKEN);
 
         if (!$this->isValidToken($token)) {
             return $this->redirectResponse(

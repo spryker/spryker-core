@@ -37,10 +37,10 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
     public function testProcessReturnViewDataWhenNoFormHandlerGiven(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepCollection->addStep($this->getStepMock(true, true, true, self::STEP_ROUTE_A));
+        $stepCollection->addStep($this->getStepMock(true, true, true, static::STEP_ROUTE_A));
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock(), $this->getStepBreadcrumbGeneratorMock());
-        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
+        $response = $stepEngine->process($this->getRequest(static::STEP_ROUTE_A));
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey(StepEngine::TEMPLATE_VARIABLE_STEP_BREADCRUMBS, $response);

@@ -97,7 +97,7 @@ class UserForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_GROUP_CHOICES);
+        $resolver->setRequired(static::OPTION_GROUP_CHOICES);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -142,9 +142,9 @@ class UserForm extends AbstractType
             ->addFirstNameField($builder)
             ->addLastNameField($builder);
 
-        $groupChoices = $options[self::OPTION_GROUP_CHOICES];
+        $groupChoices = $options[static::OPTION_GROUP_CHOICES];
         if ($groupChoices) {
-            $this->addGroupField($builder, $options[self::OPTION_GROUP_CHOICES]);
+            $this->addGroupField($builder, $options[static::OPTION_GROUP_CHOICES]);
         }
 
         $this->executeFormExpanderPlugins($builder);
@@ -170,7 +170,7 @@ class UserForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_USERNAME, TextType::class, [
+            ->add(static::FIELD_USERNAME, TextType::class, [
                 'label' => 'E-mail',
                 'constraints' => [
                     new NotBlank(),
@@ -190,7 +190,7 @@ class UserForm extends AbstractType
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_PASSWORD, RepeatedType::class, [
+            ->add(static::FIELD_PASSWORD, RepeatedType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -217,7 +217,7 @@ class UserForm extends AbstractType
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FIRST_NAME, TextType::class, [
+            ->add(static::FIELD_FIRST_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -234,7 +234,7 @@ class UserForm extends AbstractType
     protected function addLastNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_LAST_NAME, TextType::class, [
+            ->add(static::FIELD_LAST_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -252,7 +252,7 @@ class UserForm extends AbstractType
     protected function addGroupField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::FIELD_GROUP, ChoiceType::class, [
+            ->add(static::FIELD_GROUP, ChoiceType::class, [
                 'constraints' => [
                     new Choice([
                         'choices' => array_keys($choices),
@@ -282,7 +282,7 @@ class UserForm extends AbstractType
                     ]);
                 }
             },
-            'groups' => [self::GROUP_UNIQUE_USERNAME_CHECK],
+            'groups' => [static::GROUP_UNIQUE_USERNAME_CHECK],
         ]);
     }
 }

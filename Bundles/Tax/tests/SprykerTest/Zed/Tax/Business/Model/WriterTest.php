@@ -77,8 +77,8 @@ class WriterTest extends Unit
     private function createTaxRateTransfer(): TaxRateTransfer
     {
         $taxRateTransfer = new TaxRateTransfer();
-        $taxRateTransfer->setName(self::DUMMY_TAX_RATE1_NAME);
-        $taxRateTransfer->setRate(self::DUMMY_TAX_RATE1_PERCENTAGE);
+        $taxRateTransfer->setName(static::DUMMY_TAX_RATE1_NAME);
+        $taxRateTransfer->setRate(static::DUMMY_TAX_RATE1_PERCENTAGE);
 
         return $taxRateTransfer;
     }
@@ -103,8 +103,8 @@ class WriterTest extends Unit
         $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
-        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE1_PERCENTAGE), $taxRateQuery->getRate());
-        $this->assertSame(self::DUMMY_TAX_RATE1_NAME, $taxRateQuery->getName());
+        $this->assertSame(sprintf('%.2f', static::DUMMY_TAX_RATE1_PERCENTAGE), $taxRateQuery->getRate());
+        $this->assertSame(static::DUMMY_TAX_RATE1_NAME, $taxRateQuery->getName());
     }
 
     /**
@@ -154,16 +154,16 @@ class WriterTest extends Unit
 
         $taxRateTransfer = new TaxRateTransfer();
         $taxRateTransfer->setIdTaxRate($id);
-        $taxRateTransfer->setName(self::DUMMY_TAX_RATE2_NAME);
-        $taxRateTransfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
+        $taxRateTransfer->setName(static::DUMMY_TAX_RATE2_NAME);
+        $taxRateTransfer->setRate(static::DUMMY_TAX_RATE2_PERCENTAGE);
 
         $this->taxFacade->updateTaxRate($taxRateTransfer);
 
         $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
-        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE2_PERCENTAGE), $taxRateQuery->getRate());
-        $this->assertSame(self::DUMMY_TAX_RATE2_NAME, $taxRateQuery->getName());
+        $this->assertSame(sprintf('%.2f', static::DUMMY_TAX_RATE2_PERCENTAGE), $taxRateQuery->getRate());
+        $this->assertSame(static::DUMMY_TAX_RATE2_NAME, $taxRateQuery->getName());
     }
 
     /**
@@ -177,8 +177,8 @@ class WriterTest extends Unit
         $taxSetId = $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
 
         $taxRate2Transfer = new TaxRateTransfer();
-        $taxRate2Transfer->setName(self::DUMMY_TAX_RATE2_NAME);
-        $taxRate2Transfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
+        $taxRate2Transfer->setName(static::DUMMY_TAX_RATE2_NAME);
+        $taxRate2Transfer->setRate(static::DUMMY_TAX_RATE2_PERCENTAGE);
 
         $taxSetTransfer = $this->createTaxSetTransfer();
         $taxSetTransfer->setIdTaxSet($taxSetId)->setName('Foobar');
@@ -192,8 +192,8 @@ class WriterTest extends Unit
         $this->assertSame('Foobar', $taxSetQuery->getName());
         $this->assertCount(1, $taxSetQuery->getSpyTaxRates());
         $taxRateEntity = $taxSetQuery->getSpyTaxRates()[0];
-        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE2_PERCENTAGE), $taxRateEntity->getRate());
-        $this->assertSame(self::DUMMY_TAX_RATE2_NAME, $taxRateEntity->getName());
+        $this->assertSame(sprintf('%.2f', static::DUMMY_TAX_RATE2_PERCENTAGE), $taxRateEntity->getRate());
+        $this->assertSame(static::DUMMY_TAX_RATE2_NAME, $taxRateEntity->getName());
     }
 
     /**
@@ -206,8 +206,8 @@ class WriterTest extends Unit
         $taxSetId = $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
 
         $taxRate2Transfer = new TaxRateTransfer();
-        $taxRate2Transfer->setName(self::DUMMY_TAX_RATE2_NAME);
-        $taxRate2Transfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
+        $taxRate2Transfer->setName(static::DUMMY_TAX_RATE2_NAME);
+        $taxRate2Transfer->setRate(static::DUMMY_TAX_RATE2_PERCENTAGE);
 
         $this->taxFacade->addTaxRateToTaxSet($taxSetId, $taxRate2Transfer);
 
@@ -215,7 +215,7 @@ class WriterTest extends Unit
 
         $this->assertNotEmpty($taxSetQuery);
         $this->assertCount(2, $taxSetQuery->getSpyTaxRates());
-        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE2_PERCENTAGE), $taxSetQuery->getSpyTaxRates()[1]->getRate());
+        $this->assertSame(sprintf('%.2f', static::DUMMY_TAX_RATE2_PERCENTAGE), $taxSetQuery->getSpyTaxRates()[1]->getRate());
     }
 
     /**
@@ -227,8 +227,8 @@ class WriterTest extends Unit
         $rate1Id = $this->taxFacade->createTaxRate($taxRate1Transfer)->getIdTaxRate();
 
         $taxRate2Transfer = new TaxRateTransfer();
-        $taxRate2Transfer->setName(self::DUMMY_TAX_RATE2_NAME);
-        $taxRate2Transfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
+        $taxRate2Transfer->setName(static::DUMMY_TAX_RATE2_NAME);
+        $taxRate2Transfer->setRate(static::DUMMY_TAX_RATE2_PERCENTAGE);
         $rate2Id = $this->taxFacade->createTaxRate($taxRate2Transfer)->getIdTaxRate();
 
         $taxSetTransfer = $this->createTaxSetTransfer();
@@ -255,7 +255,7 @@ class WriterTest extends Unit
     public function testExceptionRaisedIfAttemptingToUpdateNonExistentTaxRate(): void
     {
         $taxRateTransfer = $this->createTaxRateTransfer();
-        $taxRateTransfer->setIdTaxRate(self::NON_EXISTENT_ID);
+        $taxRateTransfer->setIdTaxRate(static::NON_EXISTENT_ID);
 
         $this->expectException(ResourceNotFoundException::class);
         $this->taxFacade->updateTaxRate($taxRateTransfer);

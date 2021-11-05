@@ -40,7 +40,7 @@ class InvoiceSubForm extends AbstractSubForm
      */
     public function getTemplatePath()
     {
-        return DummyPaymentConfig::PROVIDER_NAME . '/' . self::PAYMENT_METHOD;
+        return DummyPaymentConfig::PROVIDER_NAME . '/' . static::PAYMENT_METHOD;
     }
 
     /**
@@ -52,7 +52,7 @@ class InvoiceSubForm extends AbstractSubForm
     {
         $resolver->setDefaults([
             'data_class' => DummyPaymentTransfer::class,
-        ])->setRequired(self::OPTIONS_FIELD_NAME);
+        ])->setRequired(static::OPTIONS_FIELD_NAME);
     }
 
     /**

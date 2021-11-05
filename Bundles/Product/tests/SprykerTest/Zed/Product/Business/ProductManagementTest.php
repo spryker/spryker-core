@@ -56,13 +56,13 @@ class ProductManagementTest extends FacadeTestAbstract
 
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
+                static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
         foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()],
+                static::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -85,7 +85,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
+                static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -258,7 +258,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertEquals($this->productAbstractTransfer->getSku(), $updatedProductEntity->getSku());
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $expectedProductName = self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
+            $expectedProductName = static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
             $this->assertEquals($expectedProductName, $localizedAttribute->getName());
         }
@@ -300,7 +300,7 @@ class ProductManagementTest extends FacadeTestAbstract
 
         $productConcreteTransferExpected = $productConcreteCollection[0];
         foreach ($productConcreteTransferExpected->getLocalizedAttributes() as $localizedAttribute) {
-            $expectedProductName = self::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()];
+            $expectedProductName = static::UPDATED_PRODUCT_CONCRETE_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
             $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }

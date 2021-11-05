@@ -198,9 +198,9 @@ class StepEngine implements StepEngineInterface
     {
         $templateVariables = [];
 
-        $templateVariables[self::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep, $quoteTransfer);
+        $templateVariables[static::TEMPLATE_VARIABLE_PREVIOUS_STEP_URL] = $this->stepCollection->getPreviousUrl($currentStep, $quoteTransfer);
         if ($this->stepBreadcrumbGenerator) {
-            $templateVariables[self::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(
+            $templateVariables[static::TEMPLATE_VARIABLE_STEP_BREADCRUMBS] = $this->stepBreadcrumbGenerator->generateStepBreadcrumbs(
                 $this->stepCollection,
                 $quoteTransfer,
                 $currentStep,

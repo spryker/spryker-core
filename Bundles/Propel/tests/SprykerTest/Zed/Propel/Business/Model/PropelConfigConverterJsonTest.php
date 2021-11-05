@@ -43,7 +43,7 @@ class PropelConfigConverterJsonTest extends Unit
     {
         $this->fixtureDirectory = $this->getFixtureDirectory();
 
-        $fileName = $this->fixtureDirectory . self::FILE_NAME;
+        $fileName = $this->fixtureDirectory . static::FILE_NAME;
 
         if (file_exists($fileName)) {
             unlink($fileName);
@@ -115,12 +115,12 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testConvertConfig(): void
     {
-        $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
+        $this->assertFalse(file_exists($this->fixtureDirectory . static::FILE_NAME));
 
         $propelConfigConverterJson = new PropelConfigConverterJson($this->getTestConfiguration());
         $propelConfigConverterJson->convertConfig();
 
-        $this->assertTrue(file_exists($this->fixtureDirectory . self::FILE_NAME));
+        $this->assertTrue(file_exists($this->fixtureDirectory . static::FILE_NAME));
     }
 
     /**
@@ -128,7 +128,7 @@ class PropelConfigConverterJsonTest extends Unit
      */
     public function testConvertConfigThrowsExceptionIfFileNotCreated(): void
     {
-        $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
+        $this->assertFalse(file_exists($this->fixtureDirectory . static::FILE_NAME));
 
         $propelConfigConverterJsonMock = $this->getPropelConfigConvertJsonMock();
 

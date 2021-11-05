@@ -65,7 +65,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
         parent::configureOptions($resolver);
 
         $resolver->setRequired([
-            self::OPTION_FILTER_TYPE_CHOICES,
+            static::OPTION_FILTER_TYPE_CHOICES,
         ]);
     }
 
@@ -91,7 +91,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addIdProductSearchAttribute(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE, HiddenType::class);
 
         return $this;
     }
@@ -104,11 +104,11 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_KEY, AutosuggestType::class, [
+        $builder->add(static::FIELD_KEY, AutosuggestType::class, [
             'label' => 'Attribute key',
             'url' => '/product-search/filter-preferences/keys',
             'constraints' => $this->createAttributeKeyFieldConstraints(),
-            'disabled' => $options[self::OPTION_IS_UPDATE],
+            'disabled' => $options[static::OPTION_IS_UPDATE],
             'attr' => [
                 'placeholder' => 'Type first three letters of an existing attribute key for suggestions.',
             ],
@@ -141,9 +141,9 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_FILTER_TYPE, ChoiceType::class, [
+        $builder->add(static::FIELD_FILTER_TYPE, ChoiceType::class, [
             'label' => 'Filter type',
-            'choices' => array_flip($options[self::OPTION_FILTER_TYPE_CHOICES]),
+            'choices' => array_flip($options[static::OPTION_FILTER_TYPE_CHOICES]),
             'constraints' => [
                 new NotBlank(),
             ],
@@ -160,9 +160,9 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addTranslationFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TRANSLATIONS, CollectionType::class, [
+        $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
             'entry_type' => AttributeTranslationForm::class,
-            'entry_options' => $options[self::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS],
+            'entry_options' => $options[static::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS],
         ]);
 
         return $this;

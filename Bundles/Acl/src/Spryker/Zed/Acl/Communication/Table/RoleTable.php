@@ -68,10 +68,10 @@ class RoleTable extends AbstractTable
         $config->setHeader([
             SpyAclRoleTableMap::COL_CREATED_AT => 'Created at',
             SpyAclRoleTableMap::COL_NAME => 'Name',
-            self::ACTION => self::ACTION,
+            static::ACTION => static::ACTION,
         ]);
 
-        $config->addRawColumn(self::ACTION);
+        $config->addRawColumn(static::ACTION);
 
         $config->setSortable([
             SpyAclRoleTableMap::COL_CREATED_AT,
@@ -100,7 +100,7 @@ class RoleTable extends AbstractTable
             $results[] = [
                 SpyAclRoleTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($rule[SpyAclRoleTableMap::COL_CREATED_AT]),
                 SpyAclRoleTableMap::COL_NAME => $rule[SpyAclRoleTableMap::COL_NAME],
-                self::ACTION => implode(' ', $this->createTableActions($rule)),
+                static::ACTION => implode(' ', $this->createTableActions($rule)),
             ];
         }
 

@@ -35,7 +35,7 @@ class QuickOrderQuoteNameExpanderPlugin extends AbstractPlugin implements Persis
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (!isset($params[self::PARAM_SUBMIT_BUTTON_CREATE_ORDER])) {
+        if (!isset($params[static::PARAM_SUBMIT_BUTTON_CREATE_ORDER])) {
             return $cartChangeTransfer;
         }
 

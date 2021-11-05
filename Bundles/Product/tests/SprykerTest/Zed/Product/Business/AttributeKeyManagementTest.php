@@ -54,7 +54,7 @@ class AttributeKeyManagementTest extends Unit
      */
     public function testHasProductAttributeKeyReturnsFalseIfKeyDoesNotExist(): void
     {
-        $result = $this->productFacade->hasProductAttributeKey(self::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+        $result = $this->productFacade->hasProductAttributeKey(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $this->assertFalse($result);
     }
@@ -64,7 +64,7 @@ class AttributeKeyManagementTest extends Unit
      */
     public function testHasProductAttributeKeyReturnsTrueIfKeyExists(): void
     {
-        $productAttributeKeyEntity = $this->createAttributeKeyEntity(self::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+        $productAttributeKeyEntity = $this->createAttributeKeyEntity(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $result = $this->productFacade->hasProductAttributeKey($productAttributeKeyEntity->getKey());
 
@@ -76,7 +76,7 @@ class AttributeKeyManagementTest extends Unit
      */
     public function testGetProductAttributeKeyReturnsNullIfKeyDoesNotExist(): void
     {
-        $productAttributeKeyTransfer = $this->productFacade->findProductAttributeKey(self::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+        $productAttributeKeyTransfer = $this->productFacade->findProductAttributeKey(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $this->assertNull($productAttributeKeyTransfer);
     }
@@ -86,7 +86,7 @@ class AttributeKeyManagementTest extends Unit
      */
     public function testGetProductAttributeKeyReturnsTransferIfKeyExist(): void
     {
-        $productAttributeKeyEntity = $this->createAttributeKeyEntity(self::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+        $productAttributeKeyEntity = $this->createAttributeKeyEntity(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $productAttributeKeyTransfer = $this->productFacade->findProductAttributeKey($productAttributeKeyEntity->getKey());
 
@@ -99,7 +99,7 @@ class AttributeKeyManagementTest extends Unit
     public function testCreateProductAttributeKey(): void
     {
         $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
-        $productAttributeKeyTransfer->setKey(self::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+        $productAttributeKeyTransfer->setKey(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $productAttributeKeyTransfer = $this->productFacade->createProductAttributeKey($productAttributeKeyTransfer);
 
@@ -111,16 +111,16 @@ class AttributeKeyManagementTest extends Unit
      */
     public function testUpdateProductAttributeKey(): void
     {
-        $productAttributeKeyEntity = $this->createAttributeKeyEntity(self::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+        $productAttributeKeyEntity = $this->createAttributeKeyEntity(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
         $productAttributeKeyTransfer
             ->setIdProductAttributeKey($productAttributeKeyEntity->getIdProductAttributeKey())
-            ->setKey(self::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
+            ->setKey(static::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
 
         $productAttributeKeyTransfer = $this->productFacade->updateProductAttributeKey($productAttributeKeyTransfer);
 
-        $this->assertSame(self::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB, $productAttributeKeyTransfer->getKey());
+        $this->assertSame(static::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB, $productAttributeKeyTransfer->getKey());
     }
 
     /**

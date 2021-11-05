@@ -25,6 +25,6 @@ class ServiceLocatorMatcher implements LocatorMatcherInterface
      */
     public function match($method)
     {
-        return (strpos($method, self::METHOD_PREFIX) === 0);
+        return (strpos($method, static::METHOD_PREFIX) === 0);
     }
 }

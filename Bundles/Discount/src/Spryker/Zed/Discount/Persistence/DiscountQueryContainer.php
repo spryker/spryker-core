@@ -114,7 +114,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->setFormatter(OnDemandFormatter::class)
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
-                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_VOUCHER_CODE)
+                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, static::ALIAS_COL_VOUCHER_CODE)
                     ->filterByCode(array_unique($voucherCodes), Criteria::IN)
                     ->orderByCode()
                 ->endUse()
@@ -184,7 +184,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
         return $this->getFactory()
             ->createDiscountVoucherQuery()
             ->joinVoucherPool()
-            ->withColumn(SpyDiscountVoucherPoolTableMap::COL_NAME, self::ALIAS_VOUCHER_POOL_NAME);
+            ->withColumn(SpyDiscountVoucherPoolTableMap::COL_NAME, static::ALIAS_VOUCHER_POOL_NAME);
     }
 
     /**
@@ -228,9 +228,9 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryVoucherCodeByIdVoucherCode($idVoucherCode)
     {
         return $this->queryDiscountVoucherPool()
-            ->withColumn(SpyDiscountTableMap::COL_ID_DISCOUNT, self::ALIAS_COL_ID_DISCOUNT)
-            ->withColumn(SpyDiscountTableMap::COL_AMOUNT, self::ALIAS_COL_AMOUNT)
-            ->withColumn(SpyDiscountTableMap::COL_DESCRIPTION, self::ALIAS_COL_DESCRIPTION)
+            ->withColumn(SpyDiscountTableMap::COL_ID_DISCOUNT, static::ALIAS_COL_ID_DISCOUNT)
+            ->withColumn(SpyDiscountTableMap::COL_AMOUNT, static::ALIAS_COL_AMOUNT)
+            ->withColumn(SpyDiscountTableMap::COL_DESCRIPTION, static::ALIAS_COL_DESCRIPTION)
             ->filterByIdDiscountVoucherPool($idVoucherCode);
     }
 

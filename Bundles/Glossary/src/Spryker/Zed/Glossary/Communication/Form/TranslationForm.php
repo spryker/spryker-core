@@ -63,7 +63,7 @@ class TranslationForm extends AbstractType
     {
         $this
             ->addGlossaryKeyField($builder)
-            ->addLocaleCollection($builder, $options[self::OPTION_LOCALES]);
+            ->addLocaleCollection($builder, $options[static::OPTION_LOCALES]);
     }
 
     /**
@@ -73,7 +73,7 @@ class TranslationForm extends AbstractType
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GLOSSARY_KEY, TextType::class, [
+        $builder->add(static::FIELD_GLOSSARY_KEY, TextType::class, [
             'label' => 'Name',
             'constraints' => $this->createGlossaryKeyConstraints(),
         ]);
@@ -89,7 +89,7 @@ class TranslationForm extends AbstractType
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $locales)
     {
-        $builder->add(self::FIELD_LOCALES, CollectionType::class, $this->buildLocaleFieldConfiguration(self::TYPE_DATA, $locales));
+        $builder->add(static::FIELD_LOCALES, CollectionType::class, $this->buildLocaleFieldConfiguration(static::TYPE_DATA, $locales));
 
         return $this;
     }
@@ -135,7 +135,7 @@ class TranslationForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_LOCALES);
+        $resolver->setRequired(static::OPTION_LOCALES);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -179,7 +179,7 @@ class TranslationForm extends AbstractType
                     $contextInterface->addViolation('Translation key already exists.');
                 }
             },
-            'groups' => [self::GROUP_UNIQUE_GLOSSARY_KEY_CHECK],
+            'groups' => [static::GROUP_UNIQUE_GLOSSARY_KEY_CHECK],
         ]);
 
         return $constraints;

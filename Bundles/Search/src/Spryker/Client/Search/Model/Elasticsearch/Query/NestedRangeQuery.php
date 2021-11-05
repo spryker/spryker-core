@@ -68,8 +68,8 @@ class NestedRangeQuery extends AbstractNestedQuery
         $nestedFieldName = $this->facetConfigTransfer->getName();
 
         return $this->bindMultipleNestedQuery($fieldName, [
-            $this->queryBuilder->createTermQuery($fieldName . self::FACET_NAME_SUFFIX, $nestedFieldName),
-            $this->queryBuilder->createRangeQuery($fieldName . self::FACET_VALUE_SUFFIX, $this->minValue, $this->maxValue),
+            $this->queryBuilder->createTermQuery($fieldName . static::FACET_NAME_SUFFIX, $nestedFieldName),
+            $this->queryBuilder->createRangeQuery($fieldName . static::FACET_VALUE_SUFFIX, $this->minValue, $this->maxValue),
         ]);
     }
 
@@ -96,8 +96,8 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function setMinMaxValuesFromArray(array $rangeValues)
     {
-        $this->minValue = $rangeValues[self::RANGE_MIN] ?? null;
-        $this->maxValue = $rangeValues[self::RANGE_MAX] ?? null;
+        $this->minValue = $rangeValues[static::RANGE_MIN] ?? null;
+        $this->maxValue = $rangeValues[static::RANGE_MAX] ?? null;
 
         $this->convertMinMaxValues();
     }
@@ -109,7 +109,7 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function setMinMaxValuesFromString($rangeValues)
     {
-        $values = explode(self::RANGE_DIVIDER, $rangeValues);
+        $values = explode(static::RANGE_DIVIDER, $rangeValues);
 
         if ($values[0] !== '') {
             $this->minValue = $values[0];

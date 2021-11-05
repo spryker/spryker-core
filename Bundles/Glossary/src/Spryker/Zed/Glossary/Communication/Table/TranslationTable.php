@@ -82,11 +82,11 @@ class TranslationTable extends AbstractTable
             SpyGlossaryKeyTableMap::COL_KEY,
         ]);
 
-        $headers[self::ACTIONS] = self::ACTIONS;
+        $headers[static::ACTIONS] = static::ACTIONS;
 
         $config->setHeader($headers);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         $config->setUrl('table');
 
@@ -140,7 +140,7 @@ class TranslationTable extends AbstractTable
     {
         $query = $this->glossaryKeyQuery
             ->leftJoinSpyGlossaryTranslation()
-            ->filterByKey(self::GENERATED_KEY_MASK, Criteria::NOT_LIKE)
+            ->filterByKey(static::GENERATED_KEY_MASK, Criteria::NOT_LIKE)
             ->groupByIdGlossaryKey();
 
         $lines = $this->runQuery($query, $config);
@@ -153,7 +153,7 @@ class TranslationTable extends AbstractTable
 
         if (!empty($result)) {
             foreach ($result as $key => $value) {
-                $result[$key][self::ACTIONS] = implode(' ', $this->buildActionUrls($value));
+                $result[$key][static::ACTIONS] = implode(' ', $this->buildActionUrls($value));
             }
         }
 
@@ -171,7 +171,7 @@ class TranslationTable extends AbstractTable
 
         $idGlossaryKey = $details[SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY];
         $urls[] = $this->generateEditButton(
-            Url::generate(self::URL_GLOSSARY_EDIT, [
+            Url::generate(static::URL_GLOSSARY_EDIT, [
                 EditController::URL_PARAMETER_GLOSSARY_KEY => $idGlossaryKey,
             ]),
             'Edit',

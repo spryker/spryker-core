@@ -268,12 +268,12 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     {
         $query
             ->joinLocale()
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::LOCALE)
             ->joinGlossaryKey()
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANSLATION)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE, self::TRANSLATION_IS_ACTIVE)
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::GLOSSARY_KEY)
-            ->withColumn(SpyGlossaryKeyTableMap::COL_IS_ACTIVE, self::GLOSSARY_KEY_IS_ACTIVE);
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::TRANSLATION)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE, static::TRANSLATION_IS_ACTIVE)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::GLOSSARY_KEY)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_IS_ACTIVE, static::GLOSSARY_KEY_IS_ACTIVE);
 
         return $query;
     }
@@ -513,8 +513,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
             ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int)$fkGlossaryKey)
             ->where(SpyLocaleTableMap::COL_LOCALE_NAME . ' IN ?', $locales)
             ->groupBy(SpyLocaleTableMap::COL_ID_LOCALE)
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::LOCALE)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::VALUE);
 
         return $query;
     }

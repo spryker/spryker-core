@@ -113,14 +113,14 @@ class DistributorTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_4000);
+        $discountTransfer->setAmount(static::DISCOUNT_AMOUNT_4000);
 
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscount($discountTransfer);
@@ -142,14 +142,14 @@ class DistributorTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_300);
+        $discountTransfer->setAmount(static::DISCOUNT_AMOUNT_300);
 
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscount($discountTransfer);
@@ -171,14 +171,14 @@ class DistributorTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_400);
+        $discountTransfer->setAmount(static::DISCOUNT_AMOUNT_400);
 
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscount($discountTransfer);
@@ -209,14 +209,14 @@ class DistributorTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_2000,
-                self::ITEM_GROSS_PRICE_4000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_2000,
+                static::ITEM_GROSS_PRICE_4000,
             ],
         );
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_700);
+        $discountTransfer->setAmount(static::DISCOUNT_AMOUNT_700);
 
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscount($discountTransfer);
@@ -247,14 +247,14 @@ class DistributorTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_2000,
-                self::ITEM_GROSS_PRICE_4000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_2000,
+                static::ITEM_GROSS_PRICE_4000,
             ],
         );
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_NEGATIVE);
+        $discountTransfer->setAmount(static::DISCOUNT_AMOUNT_NEGATIVE);
 
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscount($discountTransfer);
@@ -274,14 +274,14 @@ class DistributorTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_ZERO,
-                self::ITEM_GROSS_PRICE_ZERO,
-                self::ITEM_GROSS_PRICE_ZERO,
+                static::ITEM_GROSS_PRICE_ZERO,
+                static::ITEM_GROSS_PRICE_ZERO,
+                static::ITEM_GROSS_PRICE_ZERO,
             ],
         );
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_100);
+        $discountTransfer->setAmount(static::DISCOUNT_AMOUNT_100);
 
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
         $collectedDiscountTransfer->setDiscount($discountTransfer);

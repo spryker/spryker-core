@@ -80,7 +80,7 @@ abstract class AbstractKvProvider extends AbstractClientProvider
     public function getConfigByKvName($kvName)
     {
         switch ($kvName) {
-            case self::KV_ADAPTER_REDIS:
+            case static::KV_ADAPTER_REDIS:
                 return $this->getConnectionParameters();
         }
 

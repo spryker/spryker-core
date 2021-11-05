@@ -136,9 +136,9 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
             return $query;
         }
 
-        if ($dateFilter === self::DATE_FILTER_DAY) {
+        if ($dateFilter === static::DATE_FILTER_DAY) {
             $query->filterByLastItemStateChange(new DateTime('-1 day'), Criteria::GREATER_THAN);
-        } elseif ($dateFilter === self::DATE_FILTER_WEEK) {
+        } elseif ($dateFilter === static::DATE_FILTER_WEEK) {
             $query->filterByLastItemStateChange(
                 [
                     'min' => new DateTime('-7 day'),

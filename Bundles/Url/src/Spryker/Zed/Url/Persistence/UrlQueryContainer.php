@@ -104,8 +104,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     {
         $query = $this->getFactory()->createUrlQuery();
         $query->innerJoinSpyUrlRedirect()
-            ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, self::TO_URL)
-            ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, self::STATUS);
+            ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, static::TO_URL)
+            ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, static::STATUS);
 
         return $query;
     }
@@ -168,8 +168,8 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     {
         $query = $this->getFactory()->createUrlQuery();
         $query->leftJoinSpyUrlRedirect()
-            ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, self::TO_URL)
-            ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, self::STATUS)
+            ->withColumn(SpyUrlRedirectTableMap::COL_TO_URL, static::TO_URL)
+            ->withColumn(SpyUrlRedirectTableMap::COL_STATUS, static::STATUS)
             ->filterByIdUrl($id);
 
         return $query;

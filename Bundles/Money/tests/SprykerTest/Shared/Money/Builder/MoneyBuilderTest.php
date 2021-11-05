@@ -66,9 +66,9 @@ class MoneyBuilderTest extends Unit
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->fromInteger(self::AMOUNT_INTEGER);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+        $moneyTransfer = $moneyBuilder->fromInteger(static::AMOUNT_INTEGER);
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -78,9 +78,9 @@ class MoneyBuilderTest extends Unit
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->fromInteger(self::AMOUNT_INTEGER, self::OTHER_CURRENCY);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+        $moneyTransfer = $moneyBuilder->fromInteger(static::AMOUNT_INTEGER, static::OTHER_CURRENCY);
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -91,7 +91,7 @@ class MoneyBuilderTest extends Unit
         $this->expectException(InvalidAmountArgumentException::class);
 
         $moneyBuilder = $this->getMoneyBuilder();
-        $moneyBuilder->fromInteger(self::AMOUNT_STRING);
+        $moneyBuilder->fromInteger(static::AMOUNT_STRING);
     }
 
     /**
@@ -101,9 +101,9 @@ class MoneyBuilderTest extends Unit
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->fromFloat(self::AMOUNT_FLOAT);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+        $moneyTransfer = $moneyBuilder->fromFloat(static::AMOUNT_FLOAT);
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -113,9 +113,9 @@ class MoneyBuilderTest extends Unit
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->fromFloat(self::AMOUNT_FLOAT, self::OTHER_CURRENCY);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+        $moneyTransfer = $moneyBuilder->fromFloat(static::AMOUNT_FLOAT, static::OTHER_CURRENCY);
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -126,7 +126,7 @@ class MoneyBuilderTest extends Unit
         $this->expectException(InvalidAmountArgumentException::class);
 
         $moneyBuilder = $this->getMoneyBuilder();
-        $moneyBuilder->fromFloat(self::AMOUNT_STRING);
+        $moneyBuilder->fromFloat(static::AMOUNT_STRING);
     }
 
     /**
@@ -136,9 +136,9 @@ class MoneyBuilderTest extends Unit
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->fromString(self::AMOUNT_STRING);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
-        $this->assertSame(self::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+        $moneyTransfer = $moneyBuilder->fromString(static::AMOUNT_STRING);
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::DEFAULT_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -148,9 +148,9 @@ class MoneyBuilderTest extends Unit
     {
         $moneyBuilder = $this->getMoneyBuilder();
 
-        $moneyTransfer = $moneyBuilder->fromString(self::AMOUNT_STRING, self::OTHER_CURRENCY);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
-        $this->assertSame(self::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
+        $moneyTransfer = $moneyBuilder->fromString(static::AMOUNT_STRING, static::OTHER_CURRENCY);
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::OTHER_CURRENCY, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -161,7 +161,7 @@ class MoneyBuilderTest extends Unit
         $this->expectException(InvalidAmountArgumentException::class);
 
         $moneyBuilder = $this->getMoneyBuilder();
-        $moneyBuilder->fromString(self::AMOUNT_INTEGER);
+        $moneyBuilder->fromString(static::AMOUNT_INTEGER);
     }
 
     /**
@@ -172,7 +172,7 @@ class MoneyBuilderTest extends Unit
         $this->expectException(InvalidAmountArgumentException::class);
 
         $moneyBuilder = $this->getMoneyBuilder();
-        $moneyBuilder->fromString(self::AMOUNT_STRING . '.00');
+        $moneyBuilder->fromString(static::AMOUNT_STRING . '.00');
     }
 
     /**
@@ -208,6 +208,6 @@ class MoneyBuilderTest extends Unit
      */
     protected function getMoneyBuilder(): MoneyBuilderInterface
     {
-        return new MoneyBuilder($this->getMoneyToTransferConverterMock(), new DecimalToIntegerConverter(), self::DEFAULT_CURRENCY);
+        return new MoneyBuilder($this->getMoneyToTransferConverterMock(), new DecimalToIntegerConverter(), static::DEFAULT_CURRENCY);
     }
 }

@@ -101,7 +101,7 @@ class SessionHandlerFile implements SessionHandlerInterface
 
         $content = file_get_contents($sessionFile);
 
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return ($content === false) ? '' : $content;
     }
@@ -122,7 +122,7 @@ class SessionHandlerFile implements SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $key, $sessionData);
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result > 0;
     }
@@ -139,7 +139,7 @@ class SessionHandlerFile implements SessionHandlerInterface
         if (file_exists($file)) {
             $startTime = microtime(true);
             unlink($file);
-            $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+            $this->monitoringService->addCustomParameter(static::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
         }
 
         return true;

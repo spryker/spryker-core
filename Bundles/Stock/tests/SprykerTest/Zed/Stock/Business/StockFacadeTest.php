@@ -140,7 +140,7 @@ class StockFacadeTest extends Unit
      */
     public function testIsNeverOutOfStockShouldReturnFalse(): void
     {
-        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(self::CONCRETE_SKU);
+        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(static::CONCRETE_SKU);
 
         $this->assertFalse($isNeverOutOfStock);
     }
@@ -154,7 +154,7 @@ class StockFacadeTest extends Unit
         $this->productStockEntity1->setQuantity(null);
         $this->productStockEntity1->save();
 
-        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(self::CONCRETE_SKU);
+        $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(static::CONCRETE_SKU);
 
         $this->assertTrue($isNeverOutOfStock);
     }
@@ -170,7 +170,7 @@ class StockFacadeTest extends Unit
 
         //Act
         $isNeverOutOfStock = $this->stockFacade->isProductAbstractNeverOutOfStockForStore(
-            self::ABSTRACT_SKU,
+            static::ABSTRACT_SKU,
             $this->storeTransfer,
         );
 
@@ -189,7 +189,7 @@ class StockFacadeTest extends Unit
 
         //Act
         $isNeverOutOfStock = $this->stockFacade->isProductAbstractNeverOutOfStockForStore(
-            self::ABSTRACT_SKU,
+            static::ABSTRACT_SKU,
             $this->storeTransfer,
         );
 
@@ -202,7 +202,7 @@ class StockFacadeTest extends Unit
      */
     public function testCalculateStockForProductShouldCheckAllStocks(): void
     {
-        $productStock = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
+        $productStock = $this->stockFacade->calculateStockForProduct(static::CONCRETE_SKU);
 
         $this->assertTrue($productStock->equals('100.2'));
     }
@@ -214,7 +214,7 @@ class StockFacadeTest extends Unit
     {
         //Act
         $productAbstractStock = $this->stockFacade->calculateProductAbstractStockForStore(
-            self::ABSTRACT_SKU,
+            static::ABSTRACT_SKU,
             $this->storeTransfer,
         );
 
@@ -259,7 +259,7 @@ class StockFacadeTest extends Unit
 
         $stockProductTransfer = (new StockProductTransfer())
             ->setStockType($this->stockEntity1->getName())
-            ->setQuantity(self::STOCK_QUANTITY_1)
+            ->setQuantity(static::STOCK_QUANTITY_1)
             ->setSku('foo');
 
         $idStockProduct = $this->stockFacade->createStockProduct($stockProductTransfer);
@@ -299,7 +299,7 @@ class StockFacadeTest extends Unit
             ->setIdStockProduct($this->productStockEntity1->getIdStockProduct())
             ->setStockType($this->stockEntity1->getName())
             ->setQuantity(555)
-            ->setSku(self::CONCRETE_SKU);
+            ->setSku(static::CONCRETE_SKU);
 
         $idStockProduct = $this->stockFacade->updateStockProduct($stockProductTransfer);
 
@@ -316,12 +316,12 @@ class StockFacadeTest extends Unit
     public function testDecrementStockShouldReduceStockSize(): void
     {
         $this->stockFacade->decrementStockProduct(
-            self::CONCRETE_SKU,
+            static::CONCRETE_SKU,
             $this->stockEntity1->getName(),
             new Decimal(10),
         );
 
-        $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
+        $stockSize = $this->stockFacade->calculateStockForProduct(static::CONCRETE_SKU);
 
         $this->assertTrue($stockSize->equals('90.2'));
     }
@@ -332,12 +332,12 @@ class StockFacadeTest extends Unit
     public function testIncrementStockShouldIncreaseStockSize(): void
     {
         $this->stockFacade->incrementStockProduct(
-            self::CONCRETE_SKU,
+            static::CONCRETE_SKU,
             $this->stockEntity1->getName(),
             new Decimal(10),
         );
 
-        $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
+        $stockSize = $this->stockFacade->calculateStockForProduct(static::CONCRETE_SKU);
 
         $this->assertTrue($stockSize->equals('110.2'));
     }
@@ -348,7 +348,7 @@ class StockFacadeTest extends Unit
     public function testHasStockProductShouldReturnTrue(): void
     {
         $exists = $this->stockFacade->hasStockProduct(
-            self::CONCRETE_SKU,
+            static::CONCRETE_SKU,
             $this->stockEntity1->getName(),
         );
 
@@ -376,14 +376,14 @@ class StockFacadeTest extends Unit
         $increment = 20;
 
         $stockTransfer1 = (new StockProductTransfer())
-            ->setSku(self::CONCRETE_SKU)
-            ->setQuantity(self::STOCK_QUANTITY_1 + $increment)
+            ->setSku(static::CONCRETE_SKU)
+            ->setQuantity(static::STOCK_QUANTITY_1 + $increment)
             ->setIsNeverOutOfStock(false)
             ->setStockType($this->stockEntity1->getName());
 
         $stockTransfer2 = (new StockProductTransfer())
-            ->setSku(self::CONCRETE_SKU)
-            ->setQuantity(self::STOCK_QUANTITY_1 + $increment)
+            ->setSku(static::CONCRETE_SKU)
+            ->setQuantity(static::STOCK_QUANTITY_1 + $increment)
             ->setIsNeverOutOfStock(false)
             ->setStockType($this->stockEntity2->getName());
 
@@ -415,14 +415,14 @@ class StockFacadeTest extends Unit
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
-            ->setSku(self::CONCRETE_SKU);
+            ->setSku(static::CONCRETE_SKU);
 
         $productConcreteTransfer = $this->stockFacade->expandProductConcreteWithStocks($productConcreteTransfer);
 
         $this->assertNotEmpty($productConcreteTransfer->getStocks());
         foreach ($productConcreteTransfer->getStocks() as $stock) {
             $this->assertTrue($stock->getQuantity()->greaterThan(0));
-            $this->assertSame($stock->getSku(), self::CONCRETE_SKU);
+            $this->assertSame($stock->getSku(), static::CONCRETE_SKU);
         }
     }
 
@@ -435,7 +435,7 @@ class StockFacadeTest extends Unit
         $this->stockEntity2->setIsActive(false)->save();
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
-            ->setSku(self::CONCRETE_SKU);
+            ->setSku(static::CONCRETE_SKU);
 
         //Act
         $productConcreteTransfer = $this->stockFacade->expandProductConcreteWithStocks($productConcreteTransfer);
@@ -925,13 +925,13 @@ class StockFacadeTest extends Unit
 
         $this->productAbstractEntity = new SpyProductAbstract();
         $this->productAbstractEntity
-            ->setSku(self::ABSTRACT_SKU)
+            ->setSku(static::ABSTRACT_SKU)
             ->setAttributes('{}')
             ->save();
 
         $this->productConcreteEntity = new SpyProduct();
         $this->productConcreteEntity
-            ->setSku(self::CONCRETE_SKU)
+            ->setSku(static::CONCRETE_SKU)
             ->setAttributes('{}')
             ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->save();
@@ -946,7 +946,7 @@ class StockFacadeTest extends Unit
         $this->productStockEntity1 = new SpyStockProduct();
         $this->productStockEntity1
             ->setFkStock($this->stockEntity1->getIdStock())
-            ->setQuantity(self::STOCK_QUANTITY_1)
+            ->setQuantity(static::STOCK_QUANTITY_1)
             ->setIsNeverOutOfStock(false)
             ->setFkProduct($this->productConcreteEntity->getIdProduct())
             ->save();
@@ -960,7 +960,7 @@ class StockFacadeTest extends Unit
         $this->productStockEntity2 = new SpyStockProduct();
         $this->productStockEntity2
             ->setFkStock($this->stockEntity2->getIdStock())
-            ->setQuantity(self::STOCK_QUANTITY_2)
+            ->setQuantity(static::STOCK_QUANTITY_2)
             ->setIsNeverOutOfStock(false)
             ->setFkProduct($this->productConcreteEntity->getIdProduct())
             ->save();

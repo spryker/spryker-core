@@ -35,7 +35,7 @@ class IndexMapClassGeneratorTest extends Unit
      */
     public function tearDown(): void
     {
-        $searchMapCleaner = new IndexMapCleaner(self::TARGET_DIRECTORY);
+        $searchMapCleaner = new IndexMapCleaner(static::TARGET_DIRECTORY);
         $searchMapCleaner->cleanDirectory();
     }
 
@@ -44,7 +44,7 @@ class IndexMapClassGeneratorTest extends Unit
      */
     public function testGenerateSimpleIndexMap(): void
     {
-        $generator = new IndexMapGenerator(self::TARGET_DIRECTORY, 0777);
+        $generator = new IndexMapGenerator(static::TARGET_DIRECTORY, 0777);
 
         $indexDefinition = $this->createIndexDefinition('index1', [], [
             'simple' => [
@@ -68,8 +68,8 @@ class IndexMapClassGeneratorTest extends Unit
         $generator->generate($indexDefinition);
 
         $this->assertFileEquals(
-            self::TEST_FILES_DIRECTORY . 'SimpleIndexMap.expected.php',
-            self::TARGET_DIRECTORY . 'SimpleIndexMap.php',
+            static::TEST_FILES_DIRECTORY . 'SimpleIndexMap.expected.php',
+            static::TARGET_DIRECTORY . 'SimpleIndexMap.php',
         );
     }
 
@@ -78,7 +78,7 @@ class IndexMapClassGeneratorTest extends Unit
      */
     public function testGenerateComplexIndexMap(): void
     {
-        $generator = new IndexMapGenerator(self::TARGET_DIRECTORY, 0777);
+        $generator = new IndexMapGenerator(static::TARGET_DIRECTORY, 0777);
 
         $indexDefinition = $this->createIndexDefinition('index-1', [], [
             'complex' => [
@@ -106,8 +106,8 @@ class IndexMapClassGeneratorTest extends Unit
         $generator->generate($indexDefinition);
 
         $this->assertFileEquals(
-            self::TEST_FILES_DIRECTORY . 'ComplexIndexMap.expected.php',
-            self::TARGET_DIRECTORY . 'ComplexIndexMap.php',
+            static::TEST_FILES_DIRECTORY . 'ComplexIndexMap.expected.php',
+            static::TARGET_DIRECTORY . 'ComplexIndexMap.php',
         );
     }
 

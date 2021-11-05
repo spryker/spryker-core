@@ -224,7 +224,7 @@ class Calculator implements CalculatorInterface
         }
 
         $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
+        $messageTransfer->setValue(static::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
         $messageTransfer->setParameters([
             'display_name' => $discountTransfer->getDisplayName(),
         ]);

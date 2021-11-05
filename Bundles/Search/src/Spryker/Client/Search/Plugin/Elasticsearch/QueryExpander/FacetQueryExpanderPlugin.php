@@ -215,14 +215,14 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $filterAggregation = $this
             ->getFactory()
             ->createAggregationBuilder()
-            ->createFilterAggregation(self::AGGREGATION_FILTER_NAME)
+            ->createFilterAggregation(static::AGGREGATION_FILTER_NAME)
             ->setFilter($aggregationFilterQuery)
             ->addAggregation($facetAggregation);
 
         $globalAggregation = $this
             ->getFactory()
             ->createAggregationBuilder()
-            ->createGlobalAggregation(self::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName());
+            ->createGlobalAggregation(static::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName());
 
         $globalAggregation
             ->addAggregation($filterAggregation);

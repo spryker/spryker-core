@@ -73,11 +73,11 @@ class DependencyInjectorResolver extends AbstractClassResolver
     public function getClassPattern()
     {
         return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_FROM_BUNDLE,
+            static::CLASS_NAME_PATTERN,
+            static::KEY_NAMESPACE,
+            static::KEY_FROM_BUNDLE,
             static::KEY_CODE_BUCKET,
-            self::KEY_BUNDLE,
+            static::KEY_BUNDLE,
         );
     }
 
@@ -90,9 +90,9 @@ class DependencyInjectorResolver extends AbstractClassResolver
     protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
-            self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
-            self::KEY_FROM_BUNDLE => $this->fromBundle,
+            static::KEY_NAMESPACE => $namespace,
+            static::KEY_BUNDLE => $this->getClassInfo()->getModule(),
+            static::KEY_FROM_BUNDLE => $this->fromBundle,
             static::KEY_CODE_BUCKET => $codeBucket,
         ];
 

@@ -73,7 +73,7 @@ class CustomerForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_SALUTATION_CHOICES);
+        $resolver->setRequired(static::OPTION_SALUTATION_CHOICES);
     }
 
     /**
@@ -97,7 +97,7 @@ class CustomerForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addSalutationField($builder, $options[self::OPTION_SALUTATION_CHOICES])
+            ->addSalutationField($builder, $options[static::OPTION_SALUTATION_CHOICES])
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
             ->addEmailField($builder);
@@ -112,7 +112,7 @@ class CustomerForm extends AbstractType
     public function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::FIELD_SALUTATION, ChoiceType::class, [
+            ->add(static::FIELD_SALUTATION, ChoiceType::class, [
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
                 'choices' => array_flip($choices),
@@ -128,7 +128,7 @@ class CustomerForm extends AbstractType
      */
     public function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'constraints' => [
                 new NotBlank(),
             ],
@@ -144,7 +144,7 @@ class CustomerForm extends AbstractType
      */
     public function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'constraints' => [
                 new NotBlank(),
             ],
@@ -160,7 +160,7 @@ class CustomerForm extends AbstractType
      */
     public function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, TextType::class, [
+        $builder->add(static::FIELD_EMAIL, TextType::class, [
             'constraints' => [
                 new NotBlank(),
             ],

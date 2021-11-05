@@ -54,7 +54,7 @@ class GroupForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_ROLE_CHOICES);
+        $resolver->setRequired(static::OPTION_ROLE_CHOICES);
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
@@ -95,7 +95,7 @@ class GroupForm extends AbstractType
     {
         $this
             ->addTitleField($builder)
-            ->addRolesField($builder, $options[self::OPTION_ROLE_CHOICES]);
+            ->addRolesField($builder, $options[static::OPTION_ROLE_CHOICES]);
     }
 
     /**
@@ -105,7 +105,7 @@ class GroupForm extends AbstractType
      */
     protected function addTitleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TITLE, TextType::class, [
+        $builder->add(static::FIELD_TITLE, TextType::class, [
             'label' => 'Title',
             'constraints' => [
                 new NotBlank(),
@@ -115,7 +115,7 @@ class GroupForm extends AbstractType
                             $contextInterface->addViolation('Group name already in use');
                         }
                     },
-                    'groups' => [self::GROUP_UNIQUE_GROUP_CHECK],
+                    'groups' => [static::GROUP_UNIQUE_GROUP_CHECK],
                 ]),
             ],
         ]);
@@ -131,7 +131,7 @@ class GroupForm extends AbstractType
      */
     protected function addRolesField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_ROLES, Select2ComboBoxType::class, [
+        $builder->add(static::FIELD_ROLES, Select2ComboBoxType::class, [
             'label' => 'Assigned Roles',
             'placeholder' => false,
             'multiple' => true,

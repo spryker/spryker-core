@@ -69,7 +69,7 @@ class ClassInfo
         $this->callerClassName = $callerClass;
 
         $callerClassParts = [
-            self::KEY_BUNDLE => $callerClass,
+            static::KEY_BUNDLE => $callerClass,
         ];
 
         if ($this->isFullyQualifiedClassName($callerClass)) {

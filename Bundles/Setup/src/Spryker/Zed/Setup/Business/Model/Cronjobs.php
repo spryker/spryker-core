@@ -86,7 +86,7 @@ class Cronjobs
     public function generateCronjobs(array $roles)
     {
         if (empty($roles)) {
-            $roles = [self::DEFAULT_ROLE];
+            $roles = [static::DEFAULT_ROLE];
         }
 
         $this->checkRoles($roles);
@@ -174,7 +174,7 @@ class Cronjobs
             if (array_key_exists('role', $v) && in_array($v['role'], $this->allowedRoles)) {
                 $jobRole = $v['role'];
             } else {
-                $jobRole = self::DEFAULT_ROLE;
+                $jobRole = static::DEFAULT_ROLE;
             }
 
             // Enable jobs only for roles matching those specified via command line argument
@@ -202,7 +202,7 @@ class Cronjobs
     {
         $jobsNames = [];
 
-        $jobs = $this->getJenkinsApiResponse(self::JENKINS_API_JOBS_URL);
+        $jobs = $this->getJenkinsApiResponse(static::JENKINS_API_JOBS_URL);
         $jobs = json_decode($jobs, true);
 
         if (count($jobs['jobs']) === 0) {
@@ -464,7 +464,7 @@ class Cronjobs
             return $job['logrotate_days'];
         }
 
-        return self::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
+        return static::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
     }
 
     /**

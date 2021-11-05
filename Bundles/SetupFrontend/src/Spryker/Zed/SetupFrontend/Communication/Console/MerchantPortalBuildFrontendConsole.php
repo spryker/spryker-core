@@ -48,8 +48,8 @@ class MerchantPortalBuildFrontendConsole extends Console
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addOption(
             static::OPTION_ENVIRONMENT,

@@ -63,8 +63,8 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     public function executeResolvedPluginsBySources(array $resources): void
     {
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
-        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[self::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
-        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[self::REPOSITORY_SYNCHRONIZATION_PLUGINS]);
+        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
+        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[static::REPOSITORY_SYNCHRONIZATION_PLUGINS]);
     }
 
     /**
@@ -76,8 +76,8 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids): void
     {
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
-        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[self::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS], $ids);
-        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[self::REPOSITORY_SYNCHRONIZATION_PLUGINS], $ids);
+        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[static::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS], $ids);
+        $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[static::REPOSITORY_SYNCHRONIZATION_PLUGINS], $ids);
     }
 
     /**

@@ -79,7 +79,7 @@ class ConstraintsPlugin extends AbstractPlugin
         return [
             $this->createConstraintRequired(),
             $this->createConstraintNotBlank(),
-            $this->createConstraintLength(['max' => self::MAXIMUM_LENGTH_CONSTRAINT]),
+            $this->createConstraintLength(['max' => static::MAXIMUM_LENGTH_CONSTRAINT]),
         ];
     }
 

@@ -47,8 +47,8 @@ class QueueWorkerConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addOption(static::OPTION_STOP_WHEN_EMPTY, static::OPTION_STOP_WHEN_EMPTY_SHORT, InputOption::VALUE_NONE, 'Stops worker execution only when the queues are empty.');
 
@@ -67,7 +67,7 @@ class QueueWorkerConsole extends Console
             QueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY => $input->getOption(static::OPTION_STOP_WHEN_EMPTY),
         ];
 
-        $this->getFacade()->startWorker(self::QUEUE_RUNNER_COMMAND, $output, $options);
+        $this->getFacade()->startWorker(static::QUEUE_RUNNER_COMMAND, $output, $options);
 
         return static::CODE_SUCCESS;
     }

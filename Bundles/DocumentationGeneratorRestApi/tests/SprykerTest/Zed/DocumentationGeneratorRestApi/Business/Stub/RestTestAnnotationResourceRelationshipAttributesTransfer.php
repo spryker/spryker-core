@@ -79,7 +79,7 @@ class RestTestAnnotationResourceRelationshipAttributesTransfer extends AbstractT
     public function setAttribute5(string $attribute5)
     {
         $this->attribute5 = $attribute5;
-        $this->modifiedProperties[self::ATTRIBUTE5] = true;
+        $this->modifiedProperties[static::ATTRIBUTE5] = true;
 
         return $this;
     }
@@ -100,7 +100,7 @@ class RestTestAnnotationResourceRelationshipAttributesTransfer extends AbstractT
     public function setAttribute6(string $attribute6)
     {
         $this->attribute6 = $attribute6;
-        $this->modifiedProperties[self::ATTRIBUTE6] = true;
+        $this->modifiedProperties[static::ATTRIBUTE6] = true;
 
         return $this;
     }

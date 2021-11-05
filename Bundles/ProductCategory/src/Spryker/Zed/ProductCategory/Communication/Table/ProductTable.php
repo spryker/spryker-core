@@ -64,7 +64,7 @@ class ProductTable extends AbstractTable
         $this->locale = $locale;
         $this->idCategory = (int)$idCategory;
         $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryTable::PARAM_ID_CATEGORY, $this->idCategory);
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
     }
 
     /**
@@ -78,7 +78,7 @@ class ProductTable extends AbstractTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            self::COL_CHECKBOX => 'Selected',
+            static::COL_CHECKBOX => 'Selected',
         ]);
 
         $config->setSearchable([
@@ -91,7 +91,7 @@ class ProductTable extends AbstractTable
             SpyProductAbstractTableMap::COL_SKU,
         ]);
 
-        $config->addRawColumn(self::COL_CHECKBOX);
+        $config->addRawColumn(static::COL_CHECKBOX);
         $config->setPageLength(10);
         $config->setDefaultSortField(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, TableConfiguration::SORT_ASC);
 
@@ -129,7 +129,7 @@ class ProductTable extends AbstractTable
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $product[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
                 SpyProductAbstractTableMap::COL_SKU => $product[SpyProductAbstractTableMap::COL_SKU],
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $product['name'],
-                self::COL_CHECKBOX => $htmlCheckbox,
+                static::COL_CHECKBOX => $htmlCheckbox,
             ];
         }
         unset($queryResults);

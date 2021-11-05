@@ -66,11 +66,11 @@ class IndexController extends AbstractController
 
         $reload = false;
         if ($format === null) {
-            $format = self::DEFAULT_FORMAT;
+            $format = static::DEFAULT_FORMAT;
             $reload = true;
         }
         if ($fontSize === 0) {
-            $fontSize = self::DEFAULT_FONT_SIZE;
+            $fontSize = static::DEFAULT_FONT_SIZE;
             $reload = true;
         }
 
@@ -96,8 +96,8 @@ class IndexController extends AbstractController
     {
         $id = $this->castId($request->query->get('id'));
 
-        $format = $request->query->get('format', self::DEFAULT_FORMAT);
-        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
+        $format = $request->query->get('format', static::DEFAULT_FORMAT);
+        $fontSize = $request->query->getInt('font', static::DEFAULT_FONT_SIZE);
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();

@@ -24,7 +24,7 @@ class UpdateNavigationFormType extends NavigationFormType
     protected function addKeyField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_KEY, TextType::class, [
+            ->add(static::FIELD_KEY, TextType::class, [
                 'label' => 'Key',
                 'attr' => [
                     'readonly' => 'readonly',

@@ -32,7 +32,7 @@ class BuildSqlConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
+        $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();

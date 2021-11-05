@@ -265,7 +265,7 @@ class UrlManager implements UrlManagerInterface
      */
     public function touchUrlActive($idUrl)
     {
-        $this->touchFacade->touchActive(self::ITEM_TYPE_URL, $idUrl);
+        $this->touchFacade->touchActive(static::ITEM_TYPE_URL, $idUrl);
     }
 
     /**
@@ -275,7 +275,7 @@ class UrlManager implements UrlManagerInterface
      */
     public function touchUrlDeleted($idUrl)
     {
-        $this->touchFacade->touchDeleted(self::ITEM_TYPE_URL, $idUrl);
+        $this->touchFacade->touchDeleted(static::ITEM_TYPE_URL, $idUrl);
     }
 
     /**

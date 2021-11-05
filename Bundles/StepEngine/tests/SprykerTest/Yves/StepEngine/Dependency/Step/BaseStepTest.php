@@ -51,7 +51,7 @@ class BaseStepTest extends Unit
     public function testGetStepRoute(): void
     {
         $baseStep = $this->getBaseStepInstance();
-        $this->assertSame(self::STEP_ROUTE, $baseStep->getStepRoute());
+        $this->assertSame(static::STEP_ROUTE, $baseStep->getStepRoute());
     }
 
     /**
@@ -60,7 +60,7 @@ class BaseStepTest extends Unit
     public function testGetEscapeRoute(): void
     {
         $baseStep = $this->getBaseStepInstance();
-        $this->assertSame(self::ESCAPE_ROUTE, $baseStep->getEscapeRoute());
+        $this->assertSame(static::ESCAPE_ROUTE, $baseStep->getEscapeRoute());
     }
 
     /**
@@ -77,7 +77,7 @@ class BaseStepTest extends Unit
      */
     private function getBaseStepInstance(): BaseStep
     {
-        return new BaseStep(self::STEP_ROUTE, self::ESCAPE_ROUTE);
+        return new BaseStep(static::STEP_ROUTE, static::ESCAPE_ROUTE);
     }
 
     /**

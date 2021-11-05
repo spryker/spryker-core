@@ -74,10 +74,10 @@ class CustomerGroupTable extends AbstractTable
             static::COL_NAME => 'Name',
             static::COL_DESCRIPTION => 'Description',
             static::COL_CREATED_AT => 'Created',
-            static::ACTIONS => self::ACTIONS,
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         $config->setSortable([
             static::COL_ID_CUSTOMER_GROUP,

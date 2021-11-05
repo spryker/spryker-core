@@ -78,7 +78,7 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
         $scopes = $this->validateScopes($this->getRequestParameter(
             static::REQUEST_PARAMETER_SCOPE,
             $request,
-            implode(self::SCOPE_DELIMITER_STRING, $oldRefreshToken[static::KEY_SCOPES]),
+            implode(static::SCOPE_DELIMITER_STRING, $oldRefreshToken[static::KEY_SCOPES]),
         ));
 
         // The OAuth spec says that a refreshed access token can have the original scopes or fewer so ensure
@@ -149,7 +149,7 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
             throw OAuthServerException::invalidRefreshToken('Token has expired');
         }
 
-        if ($this->refreshTokenRepository->isRefreshTokenRevoked($refreshTokenData[self::KEY_REFRESH_TOKEN_ID]) === true) {
+        if ($this->refreshTokenRepository->isRefreshTokenRevoked($refreshTokenData[static::KEY_REFRESH_TOKEN_ID]) === true) {
             throw OAuthServerException::invalidRefreshToken('Token has been revoked');
         }
 

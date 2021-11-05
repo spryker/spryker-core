@@ -35,7 +35,7 @@ class ReorderPersistentCartChangeExpanderPlugin extends AbstractPlugin implement
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (!isset($params[self::PARAM_ORDER_REFERENCE])) {
+        if (!isset($params[static::PARAM_ORDER_REFERENCE])) {
             return $cartChangeTransfer;
         }
 
@@ -44,7 +44,7 @@ class ReorderPersistentCartChangeExpanderPlugin extends AbstractPlugin implement
             $quoteUpdateRequestAttributes = $cartChangeTransfer->getQuoteUpdateRequestAttributes();
         }
         $quoteUpdateRequestAttributes->setName(
-            sprintf($this->getFactory()->getMultiCartConfig()->getReorderQuoteName(), $params[self::PARAM_ORDER_REFERENCE]),
+            sprintf($this->getFactory()->getMultiCartConfig()->getReorderQuoteName(), $params[static::PARAM_ORDER_REFERENCE]),
         );
         $cartChangeTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
 

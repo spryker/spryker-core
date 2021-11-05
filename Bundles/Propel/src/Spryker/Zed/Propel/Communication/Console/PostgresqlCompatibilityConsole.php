@@ -36,7 +36,7 @@ class PostgresqlCompatibilityConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
+        $this->setName(static::COMMAND_NAME);
         $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Adjust core schema files too');
         $this->setDescription('Adjust Propel-XML schema files to work with PostgreSQL');
 

@@ -125,7 +125,7 @@ class ProductBundleReaderTest extends Unit
         if ($storeFacadeMock === null) {
             $storeFacadeMock = $this->createStoreFacadeMock();
             $storeTransfer = (new StoreBuilder([
-                StoreTransfer::ID_STORE => self::ID_STORE,
+                StoreTransfer::ID_STORE => static::ID_STORE,
             ]))
                 ->build();
             $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);

@@ -61,16 +61,16 @@ class GroupTable extends AbstractTable
         $this->setTableIdentifier('group-table');
         $config->setHeader([
             SpyAclGroupTableMap::COL_NAME => 'Name',
-            self::ROLES => 'Roles',
+            static::ROLES => 'Roles',
             SpyAclGroupTableMap::COL_CREATED_AT => 'Created At',
-            self::EDIT => self::EDIT,
+            static::EDIT => static::EDIT,
         ]);
 
         $config->setSearchable([
             SpyAclGroupTableMap::COL_NAME,
         ]);
 
-        $config->setRawColumns([self::EDIT, self::ROLES]);
+        $config->setRawColumns([static::EDIT, static::ROLES]);
 
         return $config;
     }
@@ -85,7 +85,7 @@ class GroupTable extends AbstractTable
         $query = $this->aclGroupQuery
             ->leftJoinSpyAclGroupsHasRoles()
             ->groupByIdAclGroup()
-            ->withColumn('COUNT(fk_acl_role)', self::ROLES);
+            ->withColumn('COUNT(fk_acl_role)', static::ROLES);
 
         $groupCollection = $this->runQuery($query, $config);
 
@@ -95,8 +95,8 @@ class GroupTable extends AbstractTable
             $groups[] = [
                 SpyAclGroupTableMap::COL_NAME => $group[SpyAclGroupTableMap::COL_NAME],
                 SpyAclGroupTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($group[SpyAclGroupTableMap::COL_CREATED_AT]),
-                self::ROLES => $this->createRoleUrl($group),
-                self::EDIT => $this->createEditUrl($group),
+                static::ROLES => $this->createRoleUrl($group),
+                static::EDIT => $this->createEditUrl($group),
             ];
         }
 
@@ -110,10 +110,10 @@ class GroupTable extends AbstractTable
      */
     protected function createRoleUrl(array $group)
     {
-        if ($group[self::ROLES] > 0) {
+        if ($group[static::ROLES] > 0) {
             return '<a href="#" class="display-roles" id="group-'
                 . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">'
-                . $group[self::ROLES] . ' Roles</a> <span class="group-spinner-container" id="group-spinner-'
+                . $group[static::ROLES] . ' Roles</a> <span class="group-spinner-container" id="group-spinner-'
                 . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '"></span>';
         } else {
             return 'No roles';
@@ -128,7 +128,7 @@ class GroupTable extends AbstractTable
     protected function createEditUrl(array $group)
     {
         return $this->generateEditButton(
-            Url::generate('/acl/group/edit', [self::EDIT_PARAMETER => $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]]),
+            Url::generate('/acl/group/edit', [static::EDIT_PARAMETER => $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]]),
             'Edit',
         );
     }

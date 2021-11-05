@@ -23,7 +23,7 @@ class IdFilterUpdate extends AbstractIdFilter
     public function filter(array $ids, string $itemType): array
     {
         $filteredIds = [];
-        $itemIdChunks = array_chunk($ids, self::CHUNK_SIZE);
+        $itemIdChunks = array_chunk($ids, static::CHUNK_SIZE);
         foreach ($itemIdChunks as $itemIdChunk) {
             $idCollection = $this->getIdCollection($itemType, $itemIdChunk);
 

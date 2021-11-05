@@ -109,13 +109,13 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addBundledProductsToBeRemoved(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::BUNDLED_PRODUCTS_TO_BE_REMOVED, HiddenType::class, [
+            ->add(static::BUNDLED_PRODUCTS_TO_BE_REMOVED, HiddenType::class, [
                 'attr' => [
-                    'id' => self::BUNDLED_PRODUCTS_TO_BE_REMOVED,
+                    'id' => static::BUNDLED_PRODUCTS_TO_BE_REMOVED,
                 ],
             ]);
 
-        $builder->get(self::BUNDLED_PRODUCTS_TO_BE_REMOVED)
+        $builder->get(static::BUNDLED_PRODUCTS_TO_BE_REMOVED)
             ->addModelTransformer(new CallbackTransformer(
                 function ($value) {
                     if ($value) {
@@ -142,7 +142,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SKU, TextType::class, [
+            ->add(static::FIELD_SKU, TextType::class, [
                 'label' => 'SKU',
                 'attr' => [
                     'readonly' => 'readonly',
@@ -262,7 +262,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addProductAbstractIdHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, []);
+            ->add(static::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, []);
 
         return $this;
     }
@@ -275,7 +275,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addProductConcreteIdHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, []);
+            ->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, []);
 
         return $this;
     }
@@ -288,7 +288,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      */
     protected function addAssignBundledProductForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FORM_ASSIGNED_BUNDLED_PRODUCTS, CollectionType::class, [
+        $builder->add(static::FORM_ASSIGNED_BUNDLED_PRODUCTS, CollectionType::class, [
             'entry_type' => BundledProductForm::class,
             'allow_add' => true,
             'allow_delete' => true,
@@ -311,7 +311,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
         }
 
         $builder
-            ->add(self::FORM_PRICE_AND_STOCK, CollectionType::class, [
+            ->add(static::FORM_PRICE_AND_STOCK, CollectionType::class, [
                 'entry_type' => StockForm::class,
                 'label' => false,
             ]);
@@ -408,7 +408,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(self::OPTION_IS_BUNDLE_ITEM);
+        $resolver->setRequired(static::OPTION_IS_BUNDLE_ITEM);
     }
 
     /**

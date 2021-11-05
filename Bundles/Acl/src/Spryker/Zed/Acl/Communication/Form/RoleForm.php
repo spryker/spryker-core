@@ -52,7 +52,7 @@ class RoleForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
@@ -69,7 +69,7 @@ class RoleForm extends AbstractType
      */
     protected function addRoleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_ROLE, HiddenType::class, [
+        $builder->add(static::FIELD_ID_ROLE, HiddenType::class, [
             'label' => 'Role name',
         ]);
 

@@ -47,8 +47,8 @@ abstract class SessionFactory
     {
         // get the credentials from the first defined couchbase host
         $credentials = $this->getCredentialsFromSavePathSegment(explode(';', $savePath)[0]);
-        $user = !empty($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
-        $password = !empty($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
+        $user = !empty($credentials) && array_key_exists(static::USER, $credentials) ? $credentials[static::USER] : null;
+        $password = !empty($credentials) && array_key_exists(static::PASSWORD, $credentials) ? $credentials[static::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
@@ -66,8 +66,8 @@ abstract class SessionFactory
     public function registerMysqlSessionHandler($savePath)
     {
         $credentials = $this->getCredentialsFromSavePathSegment(explode(';', $savePath)[0]);
-        $user = !empty($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
-        $password = !empty($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
+        $user = !empty($credentials) && array_key_exists(static::USER, $credentials) ? $credentials[static::USER] : null;
+        $password = !empty($credentials) && array_key_exists(static::PASSWORD, $credentials) ? $credentials[static::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
@@ -254,7 +254,7 @@ abstract class SessionFactory
         $storeName = Store::getInstance()->getStoreName();
         $environment = $this->getEnvironmentName();
 
-        return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
+        return $storeName . '_' . $environment . '_' . static::BUCKET_NAME_POSTFIX;
     }
 
     /**
@@ -271,11 +271,11 @@ abstract class SessionFactory
                 $parts = explode(':', $credentials);
 
                 return [
-                    self::USER => $parts[0],
-                    self::PASSWORD => $parts[1],
+                    static::USER => $parts[0],
+                    static::PASSWORD => $parts[1],
                 ];
             } else {
-                return [self::USER => $credentials];
+                return [static::USER => $credentials];
             }
         }
 

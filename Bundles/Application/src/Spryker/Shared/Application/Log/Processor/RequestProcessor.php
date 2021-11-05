@@ -86,10 +86,10 @@ class RequestProcessor
      */
     public function __invoke(array $record)
     {
-        $record[self::RECORD_EXTRA][static::EXTRA] = $this->getData($record);
+        $record[static::RECORD_EXTRA][static::EXTRA] = $this->getData($record);
 
-        if (isset($record[self::RECORD_CONTEXT][static::CONTEXT_KEY])) {
-            unset($record[self::RECORD_CONTEXT][static::CONTEXT_KEY]);
+        if (isset($record[static::RECORD_CONTEXT][static::CONTEXT_KEY])) {
+            unset($record[static::RECORD_CONTEXT][static::CONTEXT_KEY]);
         }
 
         return $record;
@@ -109,7 +109,7 @@ class RequestProcessor
             static::REQUEST_PARAMS => $this->getRequestParams(),
         ];
 
-        $request = $this->findRequest((array)$record[self::RECORD_CONTEXT]);
+        $request = $this->findRequest((array)$record[static::RECORD_CONTEXT]);
         if ($request && $request->getSession() !== null) {
             $sessionId = $request->getSession()->getId();
             $fields[static::SESSION_ID] = $sessionId;

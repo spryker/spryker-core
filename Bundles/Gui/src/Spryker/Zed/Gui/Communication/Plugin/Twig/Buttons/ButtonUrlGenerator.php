@@ -78,7 +78,7 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
     public function generate()
     {
         $html = $this->generateAnchor();
-        $html .= $this->options[self::ICON];
+        $html .= $this->options[static::ICON];
         $html .= $this->title;
         $html .= '</a>';
 
@@ -90,8 +90,8 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
      */
     protected function getId()
     {
-        if (array_key_exists(self::PARAM_ID, $this->options)) {
-            return ' id="' . $this->options[self::PARAM_ID] . '"';
+        if (array_key_exists(static::PARAM_ID, $this->options)) {
+            return ' id="' . $this->options[static::PARAM_ID] . '"';
         }
 
         return '';
@@ -112,12 +112,12 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
     {
         $class = [
             'btn',
-            $this->options[self::DEFAULT_CSS_CLASSES],
-            $this->options[self::BUTTON_CLASS],
+            $this->options[static::DEFAULT_CSS_CLASSES],
+            $this->options[static::BUTTON_CLASS],
         ];
 
-        if (array_key_exists(self::PARAM_CLASS, $this->options)) {
-            $class[] = $this->options[self::PARAM_CLASS];
+        if (array_key_exists(static::PARAM_CLASS, $this->options)) {
+            $class[] = $this->options[static::PARAM_CLASS];
         }
 
         return implode(' ', $class);

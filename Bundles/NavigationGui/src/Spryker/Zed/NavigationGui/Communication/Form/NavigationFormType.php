@@ -76,7 +76,7 @@ class NavigationFormType extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NAME, TextType::class, [
+            ->add(static::FIELD_NAME, TextType::class, [
                 'label' => 'Name',
                 'constraints' => [
                     new NotBlank(),
@@ -94,7 +94,7 @@ class NavigationFormType extends AbstractType
     protected function addKeyField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_KEY, TextType::class, [
+            ->add(static::FIELD_KEY, TextType::class, [
                 'label' => 'Key',
                 'constraints' => [
                     new NotBlank(),
@@ -115,7 +115,7 @@ class NavigationFormType extends AbstractType
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
+            ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
                 'label' => 'Active',
                 'required' => false,
             ]);

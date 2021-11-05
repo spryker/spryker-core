@@ -26,7 +26,7 @@ class MessengerConfig extends AbstractBundleConfig
      */
     public static function setMessageTray($messageTray)
     {
-        self::$messageTray = $messageTray;
+        static::$messageTray = $messageTray;
     }
 
     /**
@@ -40,6 +40,6 @@ class MessengerConfig extends AbstractBundleConfig
             return SharedMessengerConfig::IN_MEMORY_TRAY;
         }
 
-        return self::$messageTray;
+        return static::$messageTray;
     }
 }

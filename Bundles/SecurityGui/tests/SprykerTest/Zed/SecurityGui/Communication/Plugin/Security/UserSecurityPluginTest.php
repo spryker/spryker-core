@@ -137,7 +137,7 @@ class UserSecurityPluginTest extends Unit
     {
         // Arrange
         $container = $this->tester->getContainer();
-        $container->get(self::SERVICE_SESSION)->start();
+        $container->get(static::SERVICE_SESSION)->start();
 
         $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
         $this->assertNull($token);

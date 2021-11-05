@@ -31,7 +31,7 @@ class CategoryTreeController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idRootNode = $this->castId($request->query->get(self::PARAM_ID_ROOT_NODE));
+        $idRootNode = $this->castId($request->query->get(static::PARAM_ID_ROOT_NODE));
         $localeTransfer = $this->getCurrentLocale();
 
         $mainCategory = $this->getQueryContainer()

@@ -41,7 +41,7 @@ class AttributeTranslationCollectionForm extends AbstractType
      */
     protected function addTranslationsFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATIONS, CollectionType::class, [
+        $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
             'entry_type' => AttributeTranslationForm::class,
             'entry_options' => [],
         ]);

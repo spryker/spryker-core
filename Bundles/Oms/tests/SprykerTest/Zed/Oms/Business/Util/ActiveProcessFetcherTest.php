@@ -105,7 +105,7 @@ class ActiveProcessFetcherTest extends Unit
 
         return new ActiveProcessFetcher(
             new ReadOnlyArrayObject([
-                self::TEST_STATE_MACHINE_NAME,
+                static::TEST_STATE_MACHINE_NAME,
             ]),
             $builder,
         );

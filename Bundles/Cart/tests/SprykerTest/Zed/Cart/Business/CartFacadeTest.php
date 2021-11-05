@@ -109,14 +109,14 @@ class CartFacadeTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
-        $cartItem->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(3);
         $cartItem->setUnitGrossPrice(1);
 
         $quoteTransfer->addItem($cartItem);
 
         $newItem = new ItemTransfer();
-        $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(static::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItem->setUnitGrossPrice(1);
 
@@ -147,16 +147,16 @@ class CartFacadeTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
-        $cartItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
-        $cartItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $cartItem->setId(static::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $cartItem->setSku(static::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $cartItem->setQuantity(1);
         $cartItem->setUnitGrossPrice(1);
 
         $quoteTransfer->addItem($cartItem);
 
         $newItem = new ItemTransfer();
-        $newItem->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
-        $newItem->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setId(static::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $newItem->setSku(static::DUMMY_2_SKU_CONCRETE_PRODUCT);
         $newItem->setQuantity(1);
         $newItem->setUnitGrossPrice(1);
 
@@ -177,16 +177,16 @@ class CartFacadeTest extends Unit
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $itemTransfer = (new ItemTransfer())
-            ->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setId(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(1)
-            ->setUnitGrossPrice(self::DUMMY_1_PRICE);
+            ->setUnitGrossPrice(static::DUMMY_1_PRICE);
         $quoteTransfer->addItem($itemTransfer);
         $itemTransfer = (new ItemTransfer())
-            ->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
-            ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->setId(static::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->setSku(static::DUMMY_2_SKU_CONCRETE_PRODUCT)
             ->setQuantity(1)
-            ->setUnitGrossPrice(self::DUMMY_2_PRICE);
+            ->setUnitGrossPrice(static::DUMMY_2_PRICE);
         $quoteTransfer->addItem($itemTransfer);
 
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
@@ -220,10 +220,10 @@ class CartFacadeTest extends Unit
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $itemTransfer = (new ItemTransfer())
-            ->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setId(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(1)
-            ->setUnitGrossPrice(self::DUMMY_1_PRICE);
+            ->setUnitGrossPrice(static::DUMMY_1_PRICE);
         $quoteTransfer->addItem($itemTransfer);
 
         $quoteFacadeMock = $this->getQuoteFacadeMock();
@@ -254,10 +254,10 @@ class CartFacadeTest extends Unit
         // Arrange
         $quoteTransfer = new QuoteTransfer();
         $itemTransfer = (new ItemTransfer())
-            ->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setId(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(1)
-            ->setUnitGrossPrice(self::DUMMY_1_PRICE);
+            ->setUnitGrossPrice(static::DUMMY_1_PRICE);
         $quoteTransfer->addItem($itemTransfer);
 
         $quoteValidationResponseTransfer = (new QuoteValidationResponseTransfer())
@@ -503,7 +503,7 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $cartItem = (new ItemTransfer())->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(3)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
@@ -524,12 +524,12 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $cartItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $cartItem = (new ItemTransfer())->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(3)
             ->setUnitGrossPrice(1)
             ->setGroupKeyPrefix(uniqid('', true));
 
-        $newItem = (new ItemTransfer())->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+        $newItem = (new ItemTransfer())->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setQuantity(1)
             ->setUnitGrossPrice(1);
 
@@ -643,42 +643,42 @@ class CartFacadeTest extends Unit
      */
     protected function setTestData(): void
     {
-        $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
-        $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();
+        $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(static::PRICE_TYPE_DEFAULT)->findOneOrCreate();
+        $defaultPriceType->setName(static::PRICE_TYPE_DEFAULT)->save();
 
         $abstractProduct1 = SpyProductAbstractQuery::create()
-            ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
+            ->filterBySku(static::DUMMY_1_SKU_ABSTRACT_PRODUCT)
             ->findOneOrCreate();
 
-        $abstractProduct1->setSku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
+        $abstractProduct1->setSku(static::DUMMY_1_SKU_ABSTRACT_PRODUCT)
             ->setAttributes('{}')
             ->save();
 
         $concreteProduct1 = SpyProductQuery::create()
-            ->filterBySku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->filterBySku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->findOneOrCreate();
 
         $concreteProduct1
-            ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
+            ->setSku(static::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setSpyProductAbstract($abstractProduct1)
             ->setAttributes('{}')
             ->save();
 
         $abstractProduct2 = SpyProductAbstractQuery::create()
-            ->filterBySku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
+            ->filterBySku(static::DUMMY_2_SKU_ABSTRACT_PRODUCT)
             ->findOneOrCreate();
 
         $abstractProduct2
-            ->setSku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
+            ->setSku(static::DUMMY_2_SKU_ABSTRACT_PRODUCT)
             ->setAttributes('{}')
             ->save();
 
         $concreteProduct2 = SpyProductQuery::create()
-            ->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->filterBySku(static::DUMMY_2_SKU_CONCRETE_PRODUCT)
             ->findOneOrCreate();
 
         $concreteProduct2
-            ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
+            ->setSku(static::DUMMY_2_SKU_CONCRETE_PRODUCT)
             ->setSpyProductAbstract($abstractProduct2)
             ->setAttributes('{}')
             ->save();

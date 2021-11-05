@@ -77,7 +77,7 @@ class DependencyController extends AbstractController
      */
     public function outgoingGraphAction(Request $request)
     {
-        $moduleName = $request->query->getAlnum(self::QUERY_KEY_MODULE);
+        $moduleName = $request->query->getAlnum(static::QUERY_KEY_MODULE);
 
         $organizationTransfer = new OrganizationTransfer();
         $organizationTransfer->setName('Spryker');

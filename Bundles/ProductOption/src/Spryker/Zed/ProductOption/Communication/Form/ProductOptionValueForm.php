@@ -105,7 +105,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE, TextType::class, [
+        $builder->add(static::FIELD_VALUE, TextType::class, [
             'label' => 'Option name translation key',
             'required' => true,
             'attr' => [
@@ -114,7 +114,7 @@ class ProductOptionValueForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Regex([
-                    'pattern' => self::ALPHA_NUMERIC_PATTERN,
+                    'pattern' => static::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
                 ]),
             ],
@@ -130,7 +130,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SKU, TextType::class, [
+        $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'Sku',
             'required' => true,
             'constraints' => [
@@ -166,7 +166,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addIdProductOptionValue(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_OPTION_VALUE, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_OPTION_VALUE, HiddenType::class);
 
         return $this;
     }
@@ -178,7 +178,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addFormHash(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_OPTION_HASH, HiddenType::class);
+        $builder->add(static::FIELD_OPTION_HASH, HiddenType::class);
 
         return $this;
     }

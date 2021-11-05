@@ -45,7 +45,7 @@ class ConcreteGeneralForm extends GeneralForm
     protected function addIsSearchableField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IS_SEARCHABLE, CheckboxType::class, [
+            ->add(static::FIELD_IS_SEARCHABLE, CheckboxType::class, [
                 'label' => 'Searchable',
                 'required' => false,
             ]);

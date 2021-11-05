@@ -37,7 +37,7 @@ class CategoryRootNodeTable extends AbstractTable
     {
         $this->productCategoryFilterGuiQueryContainer = $productCategoryFilterGuiQueryContainer;
         $this->idLocale = $idLocale;
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
     }
 
     /**

@@ -106,8 +106,8 @@ class QueueDumpConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
         $this->addArgument(static::ARGUMENT_QUEUE, InputArgument::REQUIRED, static::DESCRIPTION);
         $this->addOption(static::OPTION_ACK, static::OPTION_ACK_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_ACK_DESCRIPTION, static::OPTION_ACK_DEFAULT);
         $this->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_LIMIT_DESCRIPTION, static::OPTION_LIMIT_DEFAULT);

@@ -62,7 +62,7 @@ class PriceProdductScheduleDeleteForm extends AbstractType
     protected function addSubmitField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SUBMIT, SubmitType::class, [
+            ->add(static::FIELD_SUBMIT, SubmitType::class, [
                 'label' => 'Yes, delete this price',
                 'attr' => [
                     'class' => 'btn btn-danger safe-submit',

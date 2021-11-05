@@ -90,11 +90,11 @@ class CountryFacadeTest extends Unit
     public function testGetIdByIso2CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
-        $country->setIso2Code(self::ISO2_CODE);
+        $country->setIso2Code(static::ISO2_CODE);
 
         $country->save();
 
-        $this->assertSame($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code(self::ISO2_CODE));
+        $this->assertSame($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code(static::ISO2_CODE));
     }
 
     /**
@@ -103,12 +103,12 @@ class CountryFacadeTest extends Unit
     public function testGetCountryByIso2CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
-        $country->setIso2Code(self::ISO2_CODE);
-        $country->setIso3Code(self::ISO3_CODE);
+        $country->setIso2Code(static::ISO2_CODE);
+        $country->setIso3Code(static::ISO3_CODE);
 
         $country->save();
 
-        $result = $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
+        $result = $this->countryFacade->getCountryByIso2Code(static::ISO2_CODE);
 
         $this->assertInstanceOf(CountryTransfer::class, $result);
         $this->assertSame($country->getIdCountry(), $result->getIdCountry());
@@ -120,12 +120,12 @@ class CountryFacadeTest extends Unit
     public function testGetCountryByIso3CodeReturnsRightValue(): void
     {
         $country = new SpyCountry();
-        $country->setIso2Code(self::ISO2_CODE);
-        $country->setIso3Code(self::ISO3_CODE);
+        $country->setIso2Code(static::ISO2_CODE);
+        $country->setIso3Code(static::ISO3_CODE);
 
         $country->save();
 
-        $result = $this->countryFacade->getCountryByIso3Code(self::ISO3_CODE);
+        $result = $this->countryFacade->getCountryByIso3Code(static::ISO3_CODE);
 
         $this->assertInstanceOf(CountryTransfer::class, $result);
         $this->assertSame($country->getIdCountry(), $result->getIdCountry());
@@ -137,7 +137,7 @@ class CountryFacadeTest extends Unit
     public function testGetCountryByIso3CodeReturnsException(): void
     {
         $this->expectException(MissingCountryException::class);
-        $this->countryFacade->getCountryByIso3Code(self::ISO3_CODE);
+        $this->countryFacade->getCountryByIso3Code(static::ISO3_CODE);
     }
 
     /**
@@ -146,7 +146,7 @@ class CountryFacadeTest extends Unit
     public function testGetCountryByIso2CodeReturnsException(): void
     {
         $this->expectException(MissingCountryException::class);
-        $this->countryFacade->getCountryByIso2Code(self::ISO2_CODE);
+        $this->countryFacade->getCountryByIso2Code(static::ISO2_CODE);
     }
 
     /**
@@ -155,7 +155,7 @@ class CountryFacadeTest extends Unit
     public function testGetCountriesByCountryIso2CodesReturnsRightValue(): void
     {
         $country = new SpyCountry();
-        $country->setIso2Code(self::ISO2_CODE);
+        $country->setIso2Code(static::ISO2_CODE);
         $country->save();
 
         $region = new SpyRegion();

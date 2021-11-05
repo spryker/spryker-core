@@ -85,12 +85,12 @@ class SearchPreferencesTable extends AbstractTable
     protected function getHeaderFields()
     {
         return [
-            self::COL_NAME => 'Attribute key',
-            self::COL_FULL_TEXT => 'Include for full text',
-            self::COL_FULL_TEXT_BOOSTED => 'Include for full text boosted',
-            self::COL_SUGGESTION_TERMS => 'Include for suggestion',
-            self::COL_COMPLETION_TERMS => 'Include for completion',
-            self::ACTIONS => 'Actions',
+            static::COL_NAME => 'Attribute key',
+            static::COL_FULL_TEXT => 'Include for full text',
+            static::COL_FULL_TEXT_BOOSTED => 'Include for full text boosted',
+            static::COL_SUGGESTION_TERMS => 'Include for suggestion',
+            static::COL_COMPLETION_TERMS => 'Include for completion',
+            static::ACTIONS => 'Actions',
         ];
     }
 
@@ -100,7 +100,7 @@ class SearchPreferencesTable extends AbstractTable
     protected function getSearchableFields()
     {
         return [
-            self::COL_NAME,
+            static::COL_NAME,
         ];
     }
 
@@ -110,11 +110,11 @@ class SearchPreferencesTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
-            self::COL_NAME,
-            self::COL_FULL_TEXT,
-            self::COL_FULL_TEXT_BOOSTED,
-            self::COL_SUGGESTION_TERMS,
-            self::COL_COMPLETION_TERMS,
+            static::COL_NAME,
+            static::COL_FULL_TEXT,
+            static::COL_FULL_TEXT_BOOSTED,
+            static::COL_SUGGESTION_TERMS,
+            static::COL_COMPLETION_TERMS,
         ];
     }
 
@@ -131,12 +131,12 @@ class SearchPreferencesTable extends AbstractTable
 
         foreach ($productAttributeKeys as $productAttributeKeyEntity) {
             $result[] = [
-                self::COL_NAME => $productAttributeKeyEntity->getKey(),
-                self::COL_FULL_TEXT => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_FULL_TEXT)),
-                self::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_FULL_TEXT_BOOSTED)),
-                self::COL_SUGGESTION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_SUGGESTION_TERMS)),
-                self::COL_COMPLETION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(self::COL_COMPLETION_TERMS)),
-                self::ACTIONS => $this->getActions($productAttributeKeyEntity),
+                static::COL_NAME => $productAttributeKeyEntity->getKey(),
+                static::COL_FULL_TEXT => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(static::COL_FULL_TEXT)),
+                static::COL_FULL_TEXT_BOOSTED => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(static::COL_FULL_TEXT_BOOSTED)),
+                static::COL_SUGGESTION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(static::COL_SUGGESTION_TERMS)),
+                static::COL_COMPLETION_TERMS => $this->boolToString($productAttributeKeyEntity->getVirtualColumn(static::COL_COMPLETION_TERMS)),
+                static::ACTIONS => $this->getActions($productAttributeKeyEntity),
             ];
         }
 

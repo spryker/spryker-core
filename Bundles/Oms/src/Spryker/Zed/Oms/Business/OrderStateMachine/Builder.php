@@ -90,7 +90,7 @@ class Builder implements BuilderInterface
      */
     public function createProcess($processName)
     {
-        if (!isset(self::$processBuffer[$processName])) {
+        if (!isset(static::$processBuffer[$processName])) {
             $this->rootElement = $this->loadXmlFromProcessName($processName);
 
             $this->mergeSubProcessFiles();
@@ -108,10 +108,10 @@ class Builder implements BuilderInterface
 
             $this->createTransitions($stateToProcessMap, $processMap, $eventMap);
 
-            self::$processBuffer[$processName] = $mainProcess;
+            static::$processBuffer[$processName] = $mainProcess;
         }
 
-        return self::$processBuffer[$processName];
+        return static::$processBuffer[$processName];
     }
 
     /**

@@ -115,7 +115,7 @@ class FilterPreferencesController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
+        $idProductSearchAttribute = $this->castId($request->query->getInt(static::PARAM_ID));
 
         $dataProvider = $this
             ->getFactory()
@@ -166,7 +166,7 @@ class FilterPreferencesController extends AbstractController
      */
     public function viewAction(Request $request)
     {
-        $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
+        $idProductSearchAttribute = $this->castId($request->query->getInt(static::PARAM_ID));
 
         $attributeTransfer = $this->getFacade()->getProductSearchAttribute($idProductSearchAttribute);
 
@@ -198,7 +198,7 @@ class FilterPreferencesController extends AbstractController
             return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
         }
 
-        $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
+        $idProductSearchAttribute = $this->castId($request->query->getInt(static::PARAM_ID));
 
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
         $productSearchAttributeTransfer->setIdProductSearchAttribute($idProductSearchAttribute);
@@ -217,7 +217,7 @@ class FilterPreferencesController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
+        $searchTerm = $request->query->get(static::PARAM_TERM);
 
         $keys = $this->getFacade()->suggestUnusedProductSearchAttributeKeys($searchTerm);
 

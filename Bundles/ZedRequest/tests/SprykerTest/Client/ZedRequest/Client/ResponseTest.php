@@ -106,9 +106,9 @@ class ResponseTest extends Unit
         $response = $this->createFullResponse($transfer);
 
         $this->assertFalse($response->isSuccess());
-        $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_ERROR)], $response->getErrorMessages());
-        $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_INFO)], $response->getInfoMessages());
-        $this->assertEquals([$this->getMessageTransfer(self::MESSAGE_SUCCESS)], $response->getSuccessMessages());
+        $this->assertEquals([$this->getMessageTransfer(static::MESSAGE_ERROR)], $response->getErrorMessages());
+        $this->assertEquals([$this->getMessageTransfer(static::MESSAGE_INFO)], $response->getInfoMessages());
+        $this->assertEquals([$this->getMessageTransfer(static::MESSAGE_SUCCESS)], $response->getSuccessMessages());
         $this->assertEquals($transfer, $response->getTransfer());
         $this->assertNotSame($transfer, $response->getTransfer());
         $this->assertNotSame($response->getTransfer(), $response->getTransfer());
@@ -140,13 +140,13 @@ class ResponseTest extends Unit
     {
         $response = new Response();
 
-        $response->addErrorMessage($this->getMessageTransfer(self::MESSAGE_ERROR));
-        $response->addInfoMessage($this->getMessageTransfer(self::MESSAGE_INFO));
+        $response->addErrorMessage($this->getMessageTransfer(static::MESSAGE_ERROR));
+        $response->addInfoMessage($this->getMessageTransfer(static::MESSAGE_INFO));
 
-        $this->assertTrue($response->hasErrorMessage(self::MESSAGE_ERROR), 'Error message could not be found in response.');
-        $this->assertFalse($response->hasErrorMessage(self::MESSAGE_INFO), 'Info message was not expected as error in response.');
+        $this->assertTrue($response->hasErrorMessage(static::MESSAGE_ERROR), 'Error message could not be found in response.');
+        $this->assertFalse($response->hasErrorMessage(static::MESSAGE_INFO), 'Info message was not expected as error in response.');
 
-        $this->assertTrue($response->hasInfoMessage(self::MESSAGE_INFO), 'Info message could not be found in response.');
-        $this->assertFalse($response->hasInfoMessage(self::MESSAGE_ERROR), 'Error message was not expected as info in response.');
+        $this->assertTrue($response->hasInfoMessage(static::MESSAGE_INFO), 'Info message could not be found in response.');
+        $this->assertFalse($response->hasInfoMessage(static::MESSAGE_ERROR), 'Error message was not expected as info in response.');
     }
 }

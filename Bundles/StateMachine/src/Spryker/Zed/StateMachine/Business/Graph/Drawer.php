@@ -220,13 +220,13 @@ class Drawer implements DrawerInterface
                 $diamondId = $this->getDiamondId();
 
                 $this->graph->addNode($diamondId, $this->attributesDiamond, $state->getProcess()->getName());
-                $this->addEdge($currentTransition, self::EDGE_UPPER_HALF, [], null, $diamondId);
+                $this->addEdge($currentTransition, static::EDGE_UPPER_HALF, [], null, $diamondId);
 
                 foreach ($transitions as $transition) {
-                    $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);
+                    $this->addEdge($transition, static::EDGE_LOWER_HALF, [], $diamondId);
                 }
             } else {
-                $this->addEdge($currentTransition, self::EDGE_FULL);
+                $this->addEdge($currentTransition, static::EDGE_FULL);
             }
         }
     }
@@ -292,7 +292,7 @@ class Drawer implements DrawerInterface
         }
 
         if ($highlighted) {
-            $attributes['fillcolor'] = self::HIGHLIGHT_COLOR;
+            $attributes['fillcolor'] = static::HIGHLIGHT_COLOR;
         }
 
         $attributes = array_merge($this->attributesState, $attributes);
@@ -332,11 +332,11 @@ class Drawer implements DrawerInterface
     {
         $label = [];
 
-        if ($type !== self::EDGE_LOWER_HALF) {
+        if ($type !== static::EDGE_LOWER_HALF) {
             $label = $this->addEdgeEventText($transition, $label);
         }
 
-        if ($type !== self::EDGE_UPPER_HALF) {
+        if ($type !== static::EDGE_UPPER_HALF) {
             $label = $this->addEdgeConditionText($transition, $label);
         }
 
@@ -442,7 +442,7 @@ class Drawer implements DrawerInterface
             $attributes['style'] = 'dashed';
         }
 
-        if ($type === self::EDGE_FULL || $type === self::EDGE_UPPER_HALF) {
+        if ($type === static::EDGE_FULL || $type === static::EDGE_UPPER_HALF) {
             if ($transition->hasEvent() && $transition->getEvent()->isOnEnter()) {
                 $attributes['arrowtail'] = 'crow';
                 $attributes['dir'] = 'both';
@@ -451,7 +451,7 @@ class Drawer implements DrawerInterface
 
         if ($transition->isHappyCase()) {
             $attributes['weight'] = '100';
-            $attributes['color'] = self::HAPPY_PATH_COLOR;
+            $attributes['color'] = static::HAPPY_PATH_COLOR;
         } elseif ($transition->hasEvent()) {
             $attributes['weight'] = '10';
         } else {
@@ -500,9 +500,9 @@ class Drawer implements DrawerInterface
         }
 
         if ($fontSize !== null) {
-            $this->attributesState[self::ATTRIBUTE_FONT_SIZE] = $fontSize;
-            $this->attributesProcess[self::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
-            $this->attributesTransition[self::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
+            $this->attributesState[static::ATTRIBUTE_FONT_SIZE] = $fontSize;
+            $this->attributesProcess[static::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
+            $this->attributesTransition[static::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
             $this->fontSizeBig = $fontSize;
             $this->fontSizeSmall = $fontSize - 2;
         }

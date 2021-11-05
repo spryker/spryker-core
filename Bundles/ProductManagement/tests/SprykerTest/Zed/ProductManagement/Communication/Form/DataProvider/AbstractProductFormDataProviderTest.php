@@ -78,10 +78,10 @@ class AbstractProductFormDataProviderTest extends Unit
     public function prepareTestData(): array
     {
         $data = [
-            self::IMAGE_URL_PREFIX . self::PIM_IMAGE_URL => self::PIM_IMAGE_URL,
-            self::SECURE_CDN_IMAGE_URL => self::SECURE_CDN_IMAGE_URL,
-            self::NON_SECURE_CDN_IMAGE_URL => self::NON_SECURE_CDN_IMAGE_URL,
-            self::CDN_IMAGE_URL => self::CDN_IMAGE_URL,
+            static::IMAGE_URL_PREFIX . static::PIM_IMAGE_URL => static::PIM_IMAGE_URL,
+            static::SECURE_CDN_IMAGE_URL => static::SECURE_CDN_IMAGE_URL,
+            static::NON_SECURE_CDN_IMAGE_URL => static::NON_SECURE_CDN_IMAGE_URL,
+            static::CDN_IMAGE_URL => static::CDN_IMAGE_URL,
         ];
 
         return $data;

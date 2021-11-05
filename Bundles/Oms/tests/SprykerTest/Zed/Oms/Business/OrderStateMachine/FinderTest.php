@@ -109,7 +109,7 @@ class FinderTest extends Unit
             $omsQueryContainerMock,
             $builder,
             [
-                self::TEST_STATE_MACHINE_NAME,
+                static::TEST_STATE_MACHINE_NAME,
             ],
         );
     }

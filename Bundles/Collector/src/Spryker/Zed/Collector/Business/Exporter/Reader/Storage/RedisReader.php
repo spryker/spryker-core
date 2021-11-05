@@ -46,6 +46,6 @@ class RedisReader implements ReaderInterface
      */
     public function getName()
     {
-        return self::READER_NAME;
+        return static::READER_NAME;
     }
 }

@@ -88,19 +88,19 @@ class ProductTouchConsole extends Console
     {
         parent::configure();
 
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addArgument(
-            self::ARGUMENT_TOUCH_ACTION,
+            static::ARGUMENT_TOUCH_ACTION,
             InputArgument::REQUIRED,
-            self::ARGUMENT_TOUCH_ACTION_DESCRIPTION,
+            static::ARGUMENT_TOUCH_ACTION_DESCRIPTION,
         );
 
         $this->addArgument(
-            self::ARGUMENT_ID_ABSTRACT_PRODUCT,
+            static::ARGUMENT_ID_ABSTRACT_PRODUCT,
             InputArgument::REQUIRED,
-            self::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION,
+            static::ARGUMENT_ID_ABSTRACT_PRODUCT_DESCRIPTION,
         );
     }
 
@@ -114,22 +114,22 @@ class ProductTouchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $idProductAbstract = (int)$input->getArgument(self::ARGUMENT_ID_ABSTRACT_PRODUCT);
-        $action = strtolower($input->getArgument(self::ARGUMENT_TOUCH_ACTION));
+        $idProductAbstract = (int)$input->getArgument(static::ARGUMENT_ID_ABSTRACT_PRODUCT);
+        $action = strtolower($input->getArgument(static::ARGUMENT_TOUCH_ACTION));
 
         switch ($action) {
-            case self::ACTION_ACTIVATE:
-            case self::ACTION_ACTIVATE_SHORT:
+            case static::ACTION_ACTIVATE:
+            case static::ACTION_ACTIVATE_SHORT:
                 $this->getFacade()->touchProductActive($idProductAbstract);
 
                 break;
-            case self::ACTION_INACTIVATE:
-            case self::ACTION_INACTIVATE_SHORT:
+            case static::ACTION_INACTIVATE:
+            case static::ACTION_INACTIVATE_SHORT:
                 $this->getFacade()->touchProductInactive($idProductAbstract);
 
                 break;
-            case self::ACTION_DELETE:
-            case self::ACTION_DELETE_SHORT:
+            case static::ACTION_DELETE:
+            case static::ACTION_DELETE_SHORT:
                 $this->getFacade()->touchProductDeleted($idProductAbstract);
 
                 break;

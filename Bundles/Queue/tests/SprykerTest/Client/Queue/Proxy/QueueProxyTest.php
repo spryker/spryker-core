@@ -52,7 +52,7 @@ class QueueProxyTest extends Unit
         $this->queueProxy = new QueueProxy(
             ['testQueueEngine' => $this->queueAdapterMock],
             [
-                self::TEST_QUEUE_NAME => [
+                static::TEST_QUEUE_NAME => [
                     QueueConfig::CONFIG_QUEUE_ADAPTER => get_class($this->queueAdapterMock),
                 ],
             ],
@@ -69,9 +69,9 @@ class QueueProxyTest extends Unit
         $this->queueAdapterMock->expects($this->once())->method('purgeQueue');
         $this->queueAdapterMock->expects($this->once())->method('deleteQueue');
 
-        $this->queueProxy->createQueue(self::TEST_QUEUE_NAME);
-        $this->queueProxy->purgeQueue(self::TEST_QUEUE_NAME);
-        $this->queueProxy->deleteQueue(self::TEST_QUEUE_NAME);
+        $this->queueProxy->createQueue(static::TEST_QUEUE_NAME);
+        $this->queueProxy->purgeQueue(static::TEST_QUEUE_NAME);
+        $this->queueProxy->deleteQueue(static::TEST_QUEUE_NAME);
     }
 
     /**
@@ -82,8 +82,8 @@ class QueueProxyTest extends Unit
         $this->queueAdapterMock->expects($this->once())->method('sendMessage');
         $this->queueAdapterMock->expects($this->once())->method('receiveMessage');
 
-        $this->queueProxy->sendMessage(self::TEST_QUEUE_NAME, new QueueSendMessageTransfer());
-        $this->queueProxy->receiveMessage(self::TEST_QUEUE_NAME);
+        $this->queueProxy->sendMessage(static::TEST_QUEUE_NAME, new QueueSendMessageTransfer());
+        $this->queueProxy->receiveMessage(static::TEST_QUEUE_NAME);
     }
 
     /**
@@ -94,8 +94,8 @@ class QueueProxyTest extends Unit
         $this->queueAdapterMock->expects($this->once())->method('sendMessages');
         $this->queueAdapterMock->expects($this->once())->method('receiveMessages');
 
-        $this->queueProxy->sendMessages(self::TEST_QUEUE_NAME, [new QueueSendMessageTransfer()]);
-        $this->queueProxy->receiveMessages(self::TEST_QUEUE_NAME);
+        $this->queueProxy->sendMessages(static::TEST_QUEUE_NAME, [new QueueSendMessageTransfer()]);
+        $this->queueProxy->receiveMessages(static::TEST_QUEUE_NAME);
     }
 
     /**
@@ -107,7 +107,7 @@ class QueueProxyTest extends Unit
         $this->queueAdapterMock->expects($this->once())->method('reject');
         $this->queueAdapterMock->expects($this->once())->method('handleError');
 
-        $queueReceiveMessageTransfer = (new QueueReceiveMessageTransfer())->setQueueName(self::TEST_QUEUE_NAME);
+        $queueReceiveMessageTransfer = (new QueueReceiveMessageTransfer())->setQueueName(static::TEST_QUEUE_NAME);
         $this->queueProxy->acknowledge($queueReceiveMessageTransfer);
         $this->queueProxy->reject($queueReceiveMessageTransfer);
         $this->queueProxy->handleError($queueReceiveMessageTransfer);

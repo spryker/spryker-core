@@ -136,7 +136,7 @@ class DiscountCreatePage
      */
     public function open()
     {
-        $this->tester->amOnPage(self::URL);
+        $this->tester->amOnPage(static::URL);
 
         return $this;
     }
@@ -175,8 +175,8 @@ class DiscountCreatePage
         $this->tab('tab-content-discount');
         !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
         !$data['amount'] ?: $i->fillField('#discount_discountCalculator_moneyValueCollection_0_gross_amount', $data['amount']);
-        $i->click(self::BTN_CALCULATION_GET);
-        !$data['applyTo'] ?: $i->fillField(self::FIELD_DISCOUNT_QUERY, $data['applyTo']);
+        $i->click(static::BTN_CALCULATION_GET);
+        !$data['applyTo'] ?: $i->fillField(static::FIELD_DISCOUNT_QUERY, $data['applyTo']);
 
         $this->tab('tab-content-conditions');
         $i->click('#btn-condition-get');
@@ -223,12 +223,12 @@ class DiscountCreatePage
     public function assertDiscountQuery(string $query): void
     {
         $i = $this->tester;
-        $i->click(self::BTN_CALCULATION_GET);
+        $i->click(static::BTN_CALCULATION_GET);
         $i->wait(2);
-        $i->dontSeeElement(self::DISCOUNT_CALCULATION_GROUP);
-        $i->seeElement(self::FIELD_DISCOUNT_QUERY);
-        $i->seeInField(self::FIELD_DISCOUNT_QUERY, $query);
-        $i->click(self::BTN_CALCULATION_GET);
-        $i->waitForElementVisible(self::DISCOUNT_CALCULATION_GROUP);
+        $i->dontSeeElement(static::DISCOUNT_CALCULATION_GROUP);
+        $i->seeElement(static::FIELD_DISCOUNT_QUERY);
+        $i->seeInField(static::FIELD_DISCOUNT_QUERY, $query);
+        $i->click(static::BTN_CALCULATION_GET);
+        $i->waitForElementVisible(static::DISCOUNT_CALCULATION_GROUP);
     }
 }
