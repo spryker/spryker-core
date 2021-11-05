@@ -1,5 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
-    excludes_analyse:
+    excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Persistence/ProductMerchantPortalGuiRepository.php'
     ignoreErrors:
