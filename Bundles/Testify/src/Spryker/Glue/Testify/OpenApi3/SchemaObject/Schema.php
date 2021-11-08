@@ -20,11 +20,11 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 
 /**
  * @property-read string $title
- * @property-read FloatPrimitive $multipleOf
- * @property-read FloatPrimitive $maximum
- * @property-read FloatPrimitive $exclusiveMaximum
- * @property-read FloatPrimitive $minimum
- * @property-read FloatPrimitive $exclusiveMinimum
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Primitive\FloatPrimitive $multipleOf
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Primitive\FloatPrimitive $maximum
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Primitive\FloatPrimitive $exclusiveMaximum
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Primitive\FloatPrimitive $minimum
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Primitive\FloatPrimitive $exclusiveMinimum
  * @property-read int $maxLength
  * @property-read int $minLength
  * @property-read string $pattern
@@ -36,13 +36,13 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
  * @property-read array<string> $required
  * @property-read array $enum
  * @property-read string $type
- * @property-read Schemas $allOf
- * @property-read Schemas $oneOf
- * @property-read Schemas $anyOf
- * @property-read Schema $not
- * @property-read Schema $items
- * @property-read Schemas $properties
- * @property-read Schema|bool $additionalProperties // TODO Can be FALSE that restrict other properties
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\Schemas $allOf
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\Schemas $oneOf
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\Schemas $anyOf
+ * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema $not
+ * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema $items
+ * @property-read \Spryker\Glue\Testify\OpenApi3\Collection\Schemas $properties
+ * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema|bool $additionalProperties // TODO Can be FALSE that restrict other properties
  * @property-read string $description
  * @property-read string $format
  * @property-read mixed $default

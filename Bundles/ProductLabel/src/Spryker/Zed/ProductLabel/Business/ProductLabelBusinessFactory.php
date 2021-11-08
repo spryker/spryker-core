@@ -163,7 +163,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     /**
      * @param \Psr\Log\LoggerInterface|null $logger
      *
-     * @return ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
+     * @return \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationUpdaterInterface
      */
     public function createProductAbstractRelationUpdater(?LoggerInterface $logger = null)
     {
