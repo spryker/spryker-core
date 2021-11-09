@@ -56,7 +56,7 @@ class MonthDecisionRule implements DecisionRuleInterface
     protected function getCurrentMonth()
     {
         $currentDate = $this->getCurrentDate();
-        $time = $currentDate->format(self::DATE_FORMAT);
+        $time = $currentDate->format(static::DATE_FORMAT);
 
         return $time;
     }

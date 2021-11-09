@@ -15,7 +15,7 @@ class ProductAttributesNotBlankValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributesNotBlank|\Symfony\Component\Validator\Constraint $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributesNotBlank $constraint
      *
      * @return void
      */
@@ -25,7 +25,6 @@ class ProductAttributesNotBlankValidator extends ConstraintValidator
             return;
         }
 
-        /** @var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributesNotBlank $constraint */
         $this->validateAttributeNotBlank($value, $constraint);
     }
 

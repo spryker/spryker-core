@@ -62,11 +62,11 @@ class ProductManagerTest extends Unit
         $changeTransfer = $this->getChangeTransfer();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setSku(self::CONCRETE_SKU);
-        $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
+        $productConcreteTransfer->setSku(static::CONCRETE_SKU);
+        $productConcreteTransfer->setAbstractSku(static::ABSTRACT_SKU);
         $productConcreteTransfer->setFkProductAbstract(1);
 
-        $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
+        $productManager = $this->getProductManager($productConcreteTransfer, static::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
@@ -81,12 +81,12 @@ class ProductManagerTest extends Unit
         $changeTransfer = $this->getChangeTransfer();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setSku(self::CONCRETE_SKU);
-        $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
+        $productConcreteTransfer->setSku(static::CONCRETE_SKU);
+        $productConcreteTransfer->setAbstractSku(static::ABSTRACT_SKU);
 
         $productConcreteTransfer->setFkProductAbstract(1);
 
-        $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
+        $productManager = $this->getProductManager($productConcreteTransfer, static::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
@@ -101,12 +101,12 @@ class ProductManagerTest extends Unit
         $changeTransfer = $this->getChangeTransfer();
 
         $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setSku(self::CONCRETE_SKU);
-        $productConcreteTransfer->setIdProductConcrete(self::ID_PRODUCT_ABSTRACT);
+        $productConcreteTransfer->setSku(static::CONCRETE_SKU);
+        $productConcreteTransfer->setIdProductConcrete(static::ID_PRODUCT_ABSTRACT);
         $productConcreteTransfer->setFkProductAbstract(1);
-        $productConcreteTransfer->setAbstractSku(self::ABSTRACT_SKU);
+        $productConcreteTransfer->setAbstractSku(static::ABSTRACT_SKU);
 
-        $productManager = $this->getProductManager($productConcreteTransfer, self::PRODUCT_NAME);
+        $productManager = $this->getProductManager($productConcreteTransfer, static::PRODUCT_NAME);
         $result = $productManager->expandItems($changeTransfer);
 
         $changedItemTransfer = $result->getItems()[0];
@@ -120,7 +120,7 @@ class ProductManagerTest extends Unit
     {
         $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku(self::CONCRETE_SKU);
+        $itemTransfer->setSku(static::CONCRETE_SKU);
         $changeTransfer->addItem($itemTransfer);
 
         return $changeTransfer;

@@ -39,7 +39,7 @@ class ConditionCollectionTest extends Unit
     public function testAddShouldReturnInstance(): void
     {
         $conditionCollection = new ConditionCollection();
-        $result = $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
+        $result = $conditionCollection->add($this->getConditionMock(), static::CONDITION_NAME);
 
         $this->assertInstanceOf(ConditionCollectionInterface::class, $result);
     }
@@ -51,9 +51,9 @@ class ConditionCollectionTest extends Unit
     {
         $conditionCollection = new ConditionCollection();
         $condition = $this->getConditionMock();
-        $conditionCollection->add($condition, self::CONDITION_NAME);
+        $conditionCollection->add($condition, static::CONDITION_NAME);
 
-        $this->assertSame($condition, $conditionCollection->get(self::CONDITION_NAME));
+        $this->assertSame($condition, $conditionCollection->get(static::CONDITION_NAME));
     }
 
     /**
@@ -63,7 +63,7 @@ class ConditionCollectionTest extends Unit
     {
         $conditionCollection = new ConditionCollection();
 
-        $this->assertFalse($conditionCollection->has(self::CONDITION_NAME));
+        $this->assertFalse($conditionCollection->has(static::CONDITION_NAME));
     }
 
     /**
@@ -73,9 +73,9 @@ class ConditionCollectionTest extends Unit
     {
         $conditionCollection = new ConditionCollection();
         $condition = $this->getConditionMock();
-        $conditionCollection->add($condition, self::CONDITION_NAME);
+        $conditionCollection->add($condition, static::CONDITION_NAME);
 
-        $this->assertTrue($conditionCollection->has(self::CONDITION_NAME));
+        $this->assertTrue($conditionCollection->has(static::CONDITION_NAME));
     }
 
     /**
@@ -87,7 +87,7 @@ class ConditionCollectionTest extends Unit
 
         $this->expectException(ConditionNotFoundException::class);
 
-        $conditionCollection->get(self::CONDITION_NAME);
+        $conditionCollection->get(static::CONDITION_NAME);
     }
 
     /**
@@ -96,16 +96,16 @@ class ConditionCollectionTest extends Unit
     public function testArrayAccess(): void
     {
         $conditionCollection = new ConditionCollection();
-        $this->assertFalse(isset($conditionCollection[self::CONDITION_NAME]));
+        $this->assertFalse(isset($conditionCollection[static::CONDITION_NAME]));
 
         $condition = $this->getConditionMock();
-        $conditionCollection[self::CONDITION_NAME] = $condition;
+        $conditionCollection[static::CONDITION_NAME] = $condition;
 
-        $this->assertTrue(isset($conditionCollection[self::CONDITION_NAME]));
-        $this->assertSame($condition, $conditionCollection[self::CONDITION_NAME]);
+        $this->assertTrue(isset($conditionCollection[static::CONDITION_NAME]));
+        $this->assertSame($condition, $conditionCollection[static::CONDITION_NAME]);
 
-        unset($conditionCollection[self::CONDITION_NAME]);
-        $this->assertFalse(isset($conditionCollection[self::CONDITION_NAME]));
+        unset($conditionCollection[static::CONDITION_NAME]);
+        $this->assertFalse(isset($conditionCollection[static::CONDITION_NAME]));
     }
 
     /**

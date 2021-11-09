@@ -221,8 +221,8 @@ class CustomerFacadeTest extends Unit
     protected function createTestCustomerTransfer(): CustomerTransfer
     {
         $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail(self::TESTER_EMAIL);
-        $customerTransfer->setPassword(self::TESTER_PASSWORD);
+        $customerTransfer->setEmail(static::TESTER_EMAIL);
+        $customerTransfer->setPassword(static::TESTER_PASSWORD);
 
         return $customerTransfer;
     }
@@ -268,7 +268,7 @@ class CustomerFacadeTest extends Unit
      */
     public function testHasEmailReturnsFalseWithoutCustomer(): void
     {
-        $this->assertFalse($this->tester->getFacade()->hasEmail(self::TESTER_EMAIL));
+        $this->assertFalse($this->tester->getFacade()->hasEmail(static::TESTER_EMAIL));
     }
 
     /**
@@ -277,7 +277,7 @@ class CustomerFacadeTest extends Unit
     public function testHasEmailReturnsTrueWithCustomer(): void
     {
         $this->createTestCustomer();
-        $this->assertTrue($this->tester->getFacade()->hasEmail(self::TESTER_EMAIL));
+        $this->assertTrue($this->tester->getFacade()->hasEmail(static::TESTER_EMAIL));
     }
 
     /**
@@ -1169,7 +1169,7 @@ class CustomerFacadeTest extends Unit
     public function testRestorePasswordNonExistent(): void
     {
         $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail(self::TESTER_NON_EXISTING_EMAIL);
+        $customerTransfer->setEmail(static::TESTER_NON_EXISTING_EMAIL);
 
         $customerResponseTransfer = $this->tester->getFacade()->sendPasswordRestoreMail($customerTransfer);
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -1182,12 +1182,12 @@ class CustomerFacadeTest extends Unit
     {
         $customerTransfer = $this->createTestCustomer();
         $customerTransfer->setPassword(null);
-        $customerTransfer->setLastName(self::TESTER_NAME);
+        $customerTransfer->setLastName(static::TESTER_NAME);
         $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
         $this->assertNotNull($customerResponse);
         $this->assertTrue($customerResponse->getIsSuccess());
         $customerTransfer = $customerResponse->getCustomerTransfer();
-        $this->assertSame(self::TESTER_NAME, $customerTransfer->getLastName());
+        $this->assertSame(static::TESTER_NAME, $customerTransfer->getLastName());
     }
 
     /**

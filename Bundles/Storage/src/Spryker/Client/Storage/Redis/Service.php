@@ -276,7 +276,7 @@ class Service implements ServiceInterface
      */
     protected function getSearchPattern($pattern = '*')
     {
-        return self::KV_PREFIX . $pattern;
+        return static::KV_PREFIX . $pattern;
     }
 
     /**
@@ -286,7 +286,7 @@ class Service implements ServiceInterface
      */
     protected function getKeyName($key)
     {
-        return self::KV_PREFIX . $key;
+        return static::KV_PREFIX . $key;
     }
 
     /**

@@ -85,11 +85,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function getService()
     {
-        if (self::$service === null) {
-            self::$service = $this->getFactory()->createCachedService();
+        if (static::$service === null) {
+            static::$service = $this->getFactory()->createCachedService();
         }
 
-        return self::$service;
+        return static::$service;
     }
 
     /**
@@ -127,9 +127,9 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     public function resetCache()
     {
-        self::$cachedKeys = null;
-        self::$bufferedValues = null;
-        self::$bufferedDecodedValues = null;
+        static::$cachedKeys = null;
+        static::$bufferedValues = null;
+        static::$bufferedDecodedValues = null;
     }
 
     /**
@@ -241,19 +241,19 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $this->loadCacheKeysAndValues();
 
-        if (!array_key_exists($key, self::$bufferedValues)) {
-            self::$cachedKeys[$key] = self::KEY_NEW;
+        if (!array_key_exists($key, static::$bufferedValues)) {
+            static::$cachedKeys[$key] = static::KEY_NEW;
 
             return $this->getService()->get($key);
         }
 
-        self::$cachedKeys[$key] = self::KEY_USED;
+        static::$cachedKeys[$key] = static::KEY_USED;
 
-        if (!array_key_exists($key, self::$bufferedDecodedValues)) {
-            self::$bufferedDecodedValues[$key] = $this->jsonDecode(self::$bufferedValues[$key]);
+        if (!array_key_exists($key, static::$bufferedDecodedValues)) {
+            static::$bufferedDecodedValues[$key] = $this->jsonDecode(static::$bufferedValues[$key]);
         }
 
-        return self::$bufferedDecodedValues[$key];
+        return static::$bufferedDecodedValues[$key];
     }
 
     /**
@@ -270,10 +270,10 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         $this->loadCacheKeysAndValues();
 
         // Get immediately available values
-        $keyValues = array_intersect_key(self::$bufferedValues, array_flip($keys));
+        $keyValues = array_intersect_key(static::$bufferedValues, array_flip($keys));
 
         foreach ($keyValues as $key => $keyValue) {
-            self::$cachedKeys[$key] = self::KEY_USED;
+            static::$cachedKeys[$key] = static::KEY_USED;
         }
 
         $allPreparedKeys = $this->prefixKeyValues(array_flip($keys));
@@ -285,7 +285,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
         if ($keys) {
             $keyValues += $this->getService()->getMulti($keys);
-            self::$cachedKeys += array_fill_keys($keys, self::KEY_NEW);
+            static::$cachedKeys += array_fill_keys($keys, static::KEY_NEW);
         }
 
         return array_merge($allPreparedKeys, $keyValues);
@@ -356,11 +356,11 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     protected function loadCacheKeysAndValues()
     {
-        if (self::$cachedKeys === null) {
+        if (static::$cachedKeys === null) {
             $this->loadKeysFromCache();
         }
 
-        if (self::$bufferedValues === null) {
+        if (static::$bufferedValues === null) {
             $this->loadAllValues();
         }
     }
@@ -370,7 +370,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     protected function loadKeysFromCache()
     {
-        self::$cachedKeys = [];
+        static::$cachedKeys = [];
         $cacheKey = $this->buildCacheKey();
 
         if (!$cacheKey) {
@@ -381,7 +381,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
         if ($cachedKeys && is_array($cachedKeys)) {
             foreach ($cachedKeys as $key) {
-                self::$cachedKeys[$key] = self::KEY_INIT;
+                static::$cachedKeys[$key] = static::KEY_INIT;
             }
         }
     }
@@ -409,16 +409,16 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     protected function loadAllValues()
     {
-        self::$bufferedValues = [];
-        self::$bufferedDecodedValues = [];
+        static::$bufferedValues = [];
+        static::$bufferedDecodedValues = [];
 
-        if (!empty(self::$cachedKeys) && is_array(self::$cachedKeys)) {
-            $values = $this->getService()->getMulti(array_keys(self::$cachedKeys));
+        if (!empty(static::$cachedKeys) && is_array(static::$cachedKeys)) {
+            $values = $this->getService()->getMulti(array_keys(static::$cachedKeys));
 
             if (!empty($values) && is_array($values)) {
                 foreach ($values as $key => $value) {
                     $keySuffix = substr($key, strlen($this->getKeyPrefix()));
-                    self::$bufferedValues[$keySuffix] = $value;
+                    static::$bufferedValues[$keySuffix] = $value;
                 }
             }
         }
@@ -484,7 +484,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $cacheKey = $this->buildCacheKey($request);
 
-        if ($cacheKey && is_array(self::$cachedKeys)) {
+        if ($cacheKey && is_array(static::$cachedKeys)) {
             $this->updateCache($storageCacheStrategyName, $cacheKey);
         }
     }
@@ -504,24 +504,24 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     {
         $cacheKey = static::generateCacheKey($request);
 
-        if ($cacheKey && is_array(self::$cachedKeys)) {
+        if ($cacheKey && is_array(static::$cachedKeys)) {
             $updateCache = false;
-            foreach (self::$cachedKeys as $key => $status) {
-                if ($status === self::KEY_INIT) {
-                    unset(self::$cachedKeys[$key]);
+            foreach (static::$cachedKeys as $key => $status) {
+                if ($status === static::KEY_INIT) {
+                    unset(static::$cachedKeys[$key]);
                 }
 
-                if ($status !== self::KEY_USED) {
+                if ($status !== static::KEY_USED) {
                     $updateCache = true;
                 }
             }
 
             if ($updateCache) {
-                $ttl = self::getFactory()
+                $ttl = static::getFactory()
                     ->getStorageClientConfig()
                     ->getStorageCacheTtl();
 
-                self::$service->set($cacheKey, json_encode(array_keys(self::$cachedKeys)), $ttl);
+                static::$service->set($cacheKey, json_encode(array_keys(static::$cachedKeys)), $ttl);
             }
         }
     }

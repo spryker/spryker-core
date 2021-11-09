@@ -40,7 +40,7 @@ class EmptyGeneratedDirectoryConsole extends Console
      */
     public function configure()
     {
-        $this->setName(self::COMMAND_NAME);
+        $this->setName(static::COMMAND_NAME);
         $this->setDescription('Empty the directory where generated files are stored');
 
         parent::configure();

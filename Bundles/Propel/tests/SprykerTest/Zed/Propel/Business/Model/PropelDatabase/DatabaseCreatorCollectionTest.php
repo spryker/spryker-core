@@ -50,7 +50,7 @@ class DatabaseCreatorCollectionTest extends Unit
         $databaseCreatorCollection = new DatabaseCreatorCollection();
         $databaseCreatorCollection->add($databaseCreatorMock);
 
-        $this->assertTrue($databaseCreatorCollection->has(self::TEST_ENGINE));
+        $this->assertTrue($databaseCreatorCollection->has(static::TEST_ENGINE));
     }
 
     /**
@@ -74,7 +74,7 @@ class DatabaseCreatorCollectionTest extends Unit
         $databaseCreatorCollection = new DatabaseCreatorCollection();
         $databaseCreatorCollection->add($databaseCreatorMock);
 
-        $this->assertSame($databaseCreatorMock, $databaseCreatorCollection->get(self::TEST_ENGINE));
+        $this->assertSame($databaseCreatorMock, $databaseCreatorCollection->get(static::TEST_ENGINE));
     }
 
     /**
@@ -83,7 +83,7 @@ class DatabaseCreatorCollectionTest extends Unit
     private function getDatabaseCreatorMock(): DatabaseCreatorInterface
     {
         $databaseCreatorMock = $this->getMockBuilder(DatabaseCreatorInterface::class)->setMethods(['getEngine', 'createIfNotExists'])->getMock();
-        $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(self::TEST_ENGINE);
+        $databaseCreatorMock->expects($this->once())->method('getEngine')->willReturn(static::TEST_ENGINE);
 
         return $databaseCreatorMock;
     }

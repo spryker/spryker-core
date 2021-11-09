@@ -364,7 +364,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function createTimePeriod(SpyDiscount $discountEntity)
     {
-        return $discountEntity->getValidFrom(static::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(self::DATE_FORMAT);
+        return $discountEntity->getValidFrom(static::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(static::DATE_FORMAT);
     }
 
     /**

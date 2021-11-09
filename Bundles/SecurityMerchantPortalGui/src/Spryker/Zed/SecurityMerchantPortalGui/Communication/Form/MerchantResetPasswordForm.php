@@ -80,7 +80,7 @@ class MerchantResetPasswordForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
+        $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new NotBlank(),
             ],

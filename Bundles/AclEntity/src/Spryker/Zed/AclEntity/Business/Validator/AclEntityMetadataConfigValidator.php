@@ -64,9 +64,8 @@ class AclEntityMetadataConfigValidator implements AclEntityMetadataConfigValidat
      */
     protected function validateMetadataCollectionKeys(AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer): void
     {
+        /** @var \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer */
         foreach ($aclEntityMetadataCollectionTransfer->getCollection() as $aclEntityMetadataCollectionKey => $aclEntityMetadataTransfer) {
-
-            /** @var \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer */
             if ($aclEntityMetadataCollectionKey !== $aclEntityMetadataTransfer->getEntityNameOrFail()) {
                 throw new AclEntityMetadataConfigInvalidKeyException($aclEntityMetadataTransfer->getEntityNameOrFail());
             }

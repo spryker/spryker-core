@@ -55,7 +55,7 @@ class GeneralForm extends AbstractSubForm
     protected function addNameField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_NAME, TextType::class, [
+            ->add(static::FIELD_NAME, TextType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
@@ -63,7 +63,7 @@ class GeneralForm extends AbstractSubForm
                     ]),
                 ],
                 'attr' => [
-                    'data-translation-key' => self::FIELD_NAME,
+                    'data-translation-key' => static::FIELD_NAME,
                 ],
             ]);
 
@@ -79,7 +79,7 @@ class GeneralForm extends AbstractSubForm
     protected function addDescriptionField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_DESCRIPTION, TextareaType::class, [
+            ->add(static::FIELD_DESCRIPTION, TextareaType::class, [
                 'required' => false,
                 'sanitize_xss' => false,
             ]);

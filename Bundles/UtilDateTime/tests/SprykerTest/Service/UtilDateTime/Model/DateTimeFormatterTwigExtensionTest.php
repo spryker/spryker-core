@@ -79,10 +79,10 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     public function testFormatDateDelegatesToDateTimeFormatter(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
-        $utilDateTimeServiceMock->expects(self::once())->method('formatDate');
+        $utilDateTimeServiceMock->expects(static::once())->method('formatDate');
 
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
-        $dateTimeFormatterTwigExtension->formatDate(self::DATE_TO_FORMAT);
+        $dateTimeFormatterTwigExtension->formatDate(static::DATE_TO_FORMAT);
     }
 
     /**
@@ -91,10 +91,10 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     public function testFormatDateTimeDelegatesToDateTimeFormatter(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
-        $utilDateTimeServiceMock->expects(self::once())->method('formatDateTime');
+        $utilDateTimeServiceMock->expects(static::once())->method('formatDateTime');
 
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
-        $dateTimeFormatterTwigExtension->formatDateTime(self::DATE_TO_FORMAT);
+        $dateTimeFormatterTwigExtension->formatDateTime(static::DATE_TO_FORMAT);
     }
 
     /**
@@ -103,10 +103,10 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     public function testFormatTimeDelegatesToDateTimeFormatter(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
-        $utilDateTimeServiceMock->expects(self::once())->method('formatTime');
+        $utilDateTimeServiceMock->expects(static::once())->method('formatTime');
 
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
-        $dateTimeFormatterTwigExtension->formatTime(self::DATE_TO_FORMAT);
+        $dateTimeFormatterTwigExtension->formatTime(static::DATE_TO_FORMAT);
     }
 
     /**

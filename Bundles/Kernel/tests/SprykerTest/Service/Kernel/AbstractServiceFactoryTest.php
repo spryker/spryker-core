@@ -63,11 +63,11 @@ class AbstractServiceFactoryTest extends Unit
     public function testGetProvidedDependency(): void
     {
         $container = new Container();
-        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
+        $container->set(static::CONTAINER_KEY, static::CONTAINER_VALUE);
         $factory = new ServiceFactory();
 
         $factory->setContainer($container);
-        $this->assertSame(self::CONTAINER_VALUE, $factory->getProvidedDependency(self::CONTAINER_KEY));
+        $this->assertSame(static::CONTAINER_VALUE, $factory->getProvidedDependency(static::CONTAINER_KEY));
     }
 
     /**
@@ -76,12 +76,12 @@ class AbstractServiceFactoryTest extends Unit
     public function testGetProvidedDependencyShouldResolveContainer(): void
     {
         $container = new Container();
-        $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
+        $container->set(static::CONTAINER_KEY, static::CONTAINER_VALUE);
 
         $factoryMock = $this->getFactoryMock(['createContainerWithProvidedDependencies']);
         $factoryMock->expects($this->once())->method('createContainerWithProvidedDependencies')->willReturn($container);
 
-        $this->assertSame(self::CONTAINER_VALUE, $factoryMock->getProvidedDependency(self::CONTAINER_KEY));
+        $this->assertSame(static::CONTAINER_VALUE, $factoryMock->getProvidedDependency(static::CONTAINER_KEY));
     }
 
     /**

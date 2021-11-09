@@ -97,7 +97,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addIdProductManagementAttributeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, HiddenType::class);
+        $builder->add(static::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, HiddenType::class);
 
         return $this;
     }
@@ -109,7 +109,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY, TextType::class, [
+        $builder->add(static::FIELD_KEY, TextType::class, [
             'label' => 'Attribute key',
             'disabled' => true,
             'attr' => [
@@ -127,7 +127,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeKeyTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY_TRANSLATION, TextType::class, [
+        $builder->add(static::FIELD_KEY_TRANSLATION, TextType::class, [
             'label' => 'Translation',
             'constraints' => [
                 new NotBlank(),
@@ -144,7 +144,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addTranslateValuesField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATE_VALUES, CheckboxType::class, [
+        $builder->add(static::FIELD_TRANSLATE_VALUES, CheckboxType::class, [
             'label' => 'Translate predefined values',
         ]);
 
@@ -158,7 +158,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addValueTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
+        $builder->add(static::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
             'label' => 'Predefined value translations',
             'entry_type' => AttributeValueTranslationForm::class,
             'allow_add' => true,

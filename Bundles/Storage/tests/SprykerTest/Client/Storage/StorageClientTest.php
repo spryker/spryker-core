@@ -75,7 +75,7 @@ class StorageClientTest extends Unit
         $this->storageClientMock->expects($this->once())
             ->method('updateCache')
             ->with(
-                $this->equalTo(self::STORAGE_CACHE_STRATEGY),
+                $this->equalTo(static::STORAGE_CACHE_STRATEGY),
                 $this->equalTo($expectedCacheKey),
             );
 

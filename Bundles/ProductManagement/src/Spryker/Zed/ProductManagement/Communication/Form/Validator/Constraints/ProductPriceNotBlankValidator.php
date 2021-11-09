@@ -27,7 +27,7 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
             return;
         }
 
-        /** @var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank $constraint */
+        /** @phpstan-var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank $constraint */
         $this->validateProductPriceNotBlank($value, $constraint);
     }
 

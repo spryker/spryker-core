@@ -257,7 +257,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleAbstractProduct(string $sku, ?array $data = null): ProductAbstractTransfer
     {
-        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? static::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productAbstractTransfer = $this->haveProductAbstract([
             'attributes' => $data,
@@ -282,7 +282,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleProduct(ProductAbstractTransfer $productAbstractTransfer, string $sku, ?array $data = null): ProductConcreteTransfer
     {
-        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? static::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($sku);
@@ -317,11 +317,11 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleAttributeMetadataWithSuperAttributeData(): array
     {
-        $this->createSampleAttributeMetadata(self::FOO_ATTRIBUTE_KEY, false);
-        $this->createSampleAttributeMetadata(self::SUPER_ATTRIBUTE_KEY, true);
+        $this->createSampleAttributeMetadata(static::FOO_ATTRIBUTE_KEY, false);
+        $this->createSampleAttributeMetadata(static::SUPER_ATTRIBUTE_KEY, true);
 
-        $data = self::DATA_PRODUCT_ATTRIBUTES_VALUES;
-        $data[self::SUPER_ATTRIBUTE_KEY] = self::SUPER_ATTRIBUTE_VALUE;
+        $data = static::DATA_PRODUCT_ATTRIBUTES_VALUES;
+        $data[static::SUPER_ATTRIBUTE_KEY] = static::SUPER_ATTRIBUTE_VALUE;
 
         return $data;
     }

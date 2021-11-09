@@ -329,11 +329,11 @@ class NewsletterFacadeTest extends Unit
     protected function setTestNewsletterTypes(): void
     {
         $typeEntity = new SpyNewsletterType();
-        $typeEntity->setName(self::TEST_TYPE1);
+        $typeEntity->setName(static::TEST_TYPE1);
         $typeEntity->save();
 
         $typeEntity = new SpyNewsletterType();
-        $typeEntity->setName(self::TEST_TYPE2);
+        $typeEntity->setName(static::TEST_TYPE2);
         $typeEntity->save();
     }
 
@@ -369,7 +369,7 @@ class NewsletterFacadeTest extends Unit
     protected function addTestType1ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request): void
     {
         $type1 = new NewsletterTypeTransfer();
-        $type1->setName(self::TEST_TYPE1);
+        $type1->setName(static::TEST_TYPE1);
 
         $request->addSubscriptionType($type1);
     }
@@ -382,7 +382,7 @@ class NewsletterFacadeTest extends Unit
     protected function addTestType2ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request): void
     {
         $type2 = new NewsletterTypeTransfer();
-        $type2->setName(self::TEST_TYPE2);
+        $type2->setName(static::TEST_TYPE2);
 
         $request->addSubscriptionType($type2);
     }

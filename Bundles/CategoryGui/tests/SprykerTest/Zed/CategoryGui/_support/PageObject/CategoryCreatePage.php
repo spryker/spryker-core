@@ -39,12 +39,12 @@ class CategoryCreatePage extends Category
     public static function getCategorySelectorsWithValues(string $categoryKey): array
     {
         return [
-            self::FORM_FIELD_CATEGORY_KEY => $categoryKey,
-            self::FORM_FIELD_CATEGORY_PARENT => 1,
-            self::FORM_FIELD_CATEGORY_TEMPLATE => 1,
+            static::FORM_FIELD_CATEGORY_KEY => $categoryKey,
+            static::FORM_FIELD_CATEGORY_PARENT => 1,
+            static::FORM_FIELD_CATEGORY_TEMPLATE => 1,
             'attributes' => [
-                'en_US' => self::getAttributesSelector($categoryKey, 'en_US', 0),
-                'de_DE' => self::getAttributesSelector($categoryKey, 'de_DE', 1),
+                'en_US' => static::getAttributesSelector($categoryKey, 'en_US', 0),
+                'de_DE' => static::getAttributesSelector($categoryKey, 'de_DE', 1),
             ],
         ];
     }
@@ -59,10 +59,10 @@ class CategoryCreatePage extends Category
     public static function getAttributesSelector(string $name, string $localeName, int $position): array
     {
         return [
-            self::getFieldSelectorCategoryName($position) => $name . ' ' . $localeName,
-            self::getFieldSelectorCategoryTitle($position) => $name . ' ' . $localeName . ' Title',
-            self::getFieldSelectorCategoryDescription($position) => $name . ' ' . $localeName . ' Description',
-            self::getFieldSelectorCategoryKeywords($position) => $name . ' ' . $localeName . ' Keywords',
+            static::getFieldSelectorCategoryName($position) => $name . ' ' . $localeName,
+            static::getFieldSelectorCategoryTitle($position) => $name . ' ' . $localeName . ' Title',
+            static::getFieldSelectorCategoryDescription($position) => $name . ' ' . $localeName . ' Description',
+            static::getFieldSelectorCategoryKeywords($position) => $name . ' ' . $localeName . ' Keywords',
         ];
     }
 
@@ -73,7 +73,7 @@ class CategoryCreatePage extends Category
      */
     public static function getFieldSelectorCategoryName(int $position): string
     {
-        return sprintf(self::FORM_FIELD_CATEGORY_NAME_PATTERN, $position);
+        return sprintf(static::FORM_FIELD_CATEGORY_NAME_PATTERN, $position);
     }
 
     /**
@@ -83,7 +83,7 @@ class CategoryCreatePage extends Category
      */
     public static function getFieldSelectorCategoryTitle(int $position): string
     {
-        return sprintf(self::FORM_FIELD_CATEGORY_TITLE_PATTERN, $position);
+        return sprintf(static::FORM_FIELD_CATEGORY_TITLE_PATTERN, $position);
     }
 
     /**
@@ -93,7 +93,7 @@ class CategoryCreatePage extends Category
      */
     public static function getFieldSelectorCategoryDescription(int $position): string
     {
-        return sprintf(self::FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN, $position);
+        return sprintf(static::FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN, $position);
     }
 
     /**
@@ -103,6 +103,6 @@ class CategoryCreatePage extends Category
      */
     public static function getFieldSelectorCategoryKeywords(int $position): string
     {
-        return sprintf(self::FORM_FIELD_CATEGORY_KEYWORDS_PATTERN, $position);
+        return sprintf(static::FORM_FIELD_CATEGORY_KEYWORDS_PATTERN, $position);
     }
 }

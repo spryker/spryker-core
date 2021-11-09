@@ -142,7 +142,7 @@ class Writer implements WriterInterface
         if ($priceProductTransfer->getIdProduct()) {
             /** @var int $idProduct */
             $idProduct = $priceProductTransfer->getIdProduct();
-            $this->insertTouchRecord(self::TOUCH_PRODUCT, $idProduct);
+            $this->insertTouchRecord(static::TOUCH_PRODUCT, $idProduct);
         }
     }
 

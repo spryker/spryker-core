@@ -141,7 +141,7 @@ class ProductDataHelper extends Module
         $productFacade = $this->getProductFacade();
 
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productAbstractTransfer */
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $abstractProductId], $productConcreteOverride)))
             ->withLocalizedAttributes($localizedAttributes)
             ->withStores($allStoresRelation)

@@ -61,7 +61,7 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData);
 
-        $this->assertSame(self::JSON_ENCODED_VALUE, $jsonEncodeValue);
+        $this->assertSame(static::JSON_ENCODED_VALUE, $jsonEncodeValue);
     }
 
     /**
@@ -109,7 +109,7 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData, Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT);
 
-        $this->assertSame(self::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
+        $this->assertSame(static::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
     }
 
     /**
@@ -117,7 +117,7 @@ JSON;
      */
     public function testDecodeJsonShouldReturnAssocArray(): void
     {
-        $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE, true);
+        $jsonDecodeValue = $this->utilEncodingService->decodeJson(static::JSON_ENCODED_VALUE, true);
 
         $this->assertEquals($this->jsonData, $jsonDecodeValue);
     }
@@ -127,7 +127,7 @@ JSON;
      */
     public function testDecodeJsonWhenAssocFlagIsOffShouldReturnStdObject(): void
     {
-        $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE);
+        $jsonDecodeValue = $this->utilEncodingService->decodeJson(static::JSON_ENCODED_VALUE);
 
         $this->assertEquals((object)$this->jsonData, $jsonDecodeValue);
     }

@@ -92,7 +92,7 @@ class RoleController extends AbstractController
                 );
 
                 return $this->redirectResponse(
-                    sprintf(self::ROLE_UPDATE_URL, $roleTransfer->getIdAclRole()),
+                    sprintf(static::ROLE_UPDATE_URL, $roleTransfer->getIdAclRole()),
                 );
             } catch (RoleNameExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
@@ -113,12 +113,12 @@ class RoleController extends AbstractController
      */
     public function updateAction(Request $request)
     {
-        $idAclRole = $this->castId($request->query->get(self::PARAM_ID_ROLE));
+        $idAclRole = $this->castId($request->query->get(static::PARAM_ID_ROLE));
 
         if (empty($idAclRole)) {
             $this->addErrorMessage('Missing role id!');
 
-            return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
+            return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
         }
 
         $dataProvider = $this->getFactory()->createAclRoleFormDataProvider();
@@ -138,7 +138,7 @@ class RoleController extends AbstractController
 
         $ruleSetForm = $this->createAndHandleRuleSetForm($request, $idAclRole);
         if ($ruleSetForm->isSubmitted() && $ruleSetForm->isValid()) {
-            return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idAclRole));
+            return $this->redirectResponse(sprintf(static::ROLE_UPDATE_URL, $idAclRole));
         }
 
         $ruleSetTable = $this->getFactory()->createRulesetTable($idAclRole);
@@ -200,7 +200,7 @@ class RoleController extends AbstractController
      */
     public function rulesetTableAction(Request $request)
     {
-        $idRole = $this->castId($request->get(self::PARAM_ID_ROLE));
+        $idRole = $this->castId($request->get(static::PARAM_ID_ROLE));
         $ruleSetTable = $this->getFactory()->createRulesetTable($idRole);
 
         return $this->jsonResponse(

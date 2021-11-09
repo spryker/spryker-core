@@ -161,8 +161,8 @@ class TransitionLog implements TransitionLogInterface
         $stateMachineTransitionLogEntity->setPath($path);
 
         $params = [];
-        if (!empty($_SERVER[self::QUERY_STRING])) {
-            $params = $this->getParamsFromQueryString($_SERVER[self::QUERY_STRING]);
+        if (!empty($_SERVER[static::QUERY_STRING])) {
+            $params = $this->getParamsFromQueryString($_SERVER[static::QUERY_STRING]);
         }
 
         $stateMachineTransitionLogEntity->setParams($params);

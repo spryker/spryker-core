@@ -105,7 +105,7 @@ class TransferDefinitionLoader implements LoaderInterface
             ->attach(new UnderscoreToCamelCase())
             ->attach(new DashToCamelCase());
 
-        return $filterChain->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
+        return $filterChain->filter(str_replace(static::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
     }
 
     /**
@@ -132,22 +132,22 @@ class TransferDefinitionLoader implements LoaderInterface
      */
     protected function addDefinition(array $definition, $module, $containingModule)
     {
-        if (isset($definition[self::KEY_TRANSFER][0])) {
-            foreach ($definition[self::KEY_TRANSFER] as $transfer) {
+        if (isset($definition[static::KEY_TRANSFER][0])) {
+            foreach ($definition[static::KEY_TRANSFER] as $transfer) {
                 $this->assertCasing($transfer, $module);
 
-                $transfer[self::KEY_BUNDLE] = $module;
-                $transfer[self::KEY_CONTAINING_BUNDLE] = $containingModule;
+                $transfer[static::KEY_BUNDLE] = $module;
+                $transfer[static::KEY_CONTAINING_BUNDLE] = $containingModule;
 
                 $transfer = $this->normalize($transfer);
                 $this->transferDefinitions[] = $transfer;
             }
         } else {
-            $transfer = $definition[self::KEY_TRANSFER];
+            $transfer = $definition[static::KEY_TRANSFER];
             $this->assertCasing($transfer, $module);
 
-            $transfer[self::KEY_BUNDLE] = $module;
-            $transfer[self::KEY_CONTAINING_BUNDLE] = $containingModule;
+            $transfer[static::KEY_BUNDLE] = $module;
+            $transfer[static::KEY_CONTAINING_BUNDLE] = $containingModule;
 
             $transfer = $this->normalize($transfer);
             $this->transferDefinitions[] = $transfer;
@@ -185,15 +185,15 @@ class TransferDefinitionLoader implements LoaderInterface
      */
     protected function getFilter()
     {
-        if (self::$filter === null) {
+        if (static::$filter === null) {
             $filter = new FilterChain();
             $filter->attach(new CamelCaseToUnderscore());
             $filter->attach(new UnderscoreToCamelCase());
 
-            self::$filter = $filter;
+            static::$filter = $filter;
         }
 
-        return self::$filter;
+        return static::$filter;
     }
 
     /**

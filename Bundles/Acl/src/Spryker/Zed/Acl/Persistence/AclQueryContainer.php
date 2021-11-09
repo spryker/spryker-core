@@ -248,11 +248,11 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
             SpyAclUserHasGroupTableMap::COL_FK_USER,
         );
 
-        $query->addJoinObject($join, self::GROUP_JOIN);
+        $query->addJoinObject($join, static::GROUP_JOIN);
 
         $condition = sprintf('%s = %s', SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
         $query->addJoinCondition(
-            self::GROUP_JOIN,
+            static::GROUP_JOIN,
             $condition,
         );
 
@@ -459,8 +459,8 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
             Criteria::LEFT_JOIN,
         );
 
-        $query->withColumn(SpyAclGroupTableMap::COL_NAME, self::GROUP_NAME);
-        $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, self::ID_ACL_GROUP);
+        $query->withColumn(SpyAclGroupTableMap::COL_NAME, static::GROUP_NAME);
+        $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, static::ID_ACL_GROUP);
 
         return $query;
     }
@@ -482,18 +482,18 @@ class AclQueryContainer extends AbstractQueryContainer implements AclQueryContai
 
         $condition = sprintf('%s = %s', SpyAclGroupsHasRolesTableMap::COL_FK_ACL_GROUP, $idGroup);
         $query->addJoinCondition(
-            self::SPY_ACL_GROUPS_HAS_ROLES,
+            static::SPY_ACL_GROUPS_HAS_ROLES,
             $condition,
         );
 
         $hasRole = sprintf('COUNT(%s)', SpyAclGroupsHasRolesTableMap::COL_FK_ACL_ROLE);
 
-        $query->withColumn(SpyAclRoleTableMap::COL_NAME, self::ROLE_NAME);
-        $query->withColumn(SpyAclRuleTableMap::COL_TYPE, self::TYPE);
-        $query->withColumn(SpyAclRuleTableMap::COL_BUNDLE, self::BUNDLE);
-        $query->withColumn(SpyAclRuleTableMap::COL_CONTROLLER, self::CONTROLLER);
-        $query->withColumn(SpyAclRuleTableMap::COL_ACTION, self::ACTION);
-        $query->withColumn($hasRole, self::HAS_ROLE);
+        $query->withColumn(SpyAclRoleTableMap::COL_NAME, static::ROLE_NAME);
+        $query->withColumn(SpyAclRuleTableMap::COL_TYPE, static::TYPE);
+        $query->withColumn(SpyAclRuleTableMap::COL_BUNDLE, static::BUNDLE);
+        $query->withColumn(SpyAclRuleTableMap::COL_CONTROLLER, static::CONTROLLER);
+        $query->withColumn(SpyAclRuleTableMap::COL_ACTION, static::ACTION);
+        $query->withColumn($hasRole, static::HAS_ROLE);
 
         return $query;
     }

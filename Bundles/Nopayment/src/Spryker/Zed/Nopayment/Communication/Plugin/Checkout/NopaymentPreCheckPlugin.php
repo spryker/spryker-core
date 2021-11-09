@@ -45,7 +45,7 @@ class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheck
         if ($quoteTransfer->getTotals()->getPriceToPay() > 0) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Nopayment is only available if the price to pay is 0');
-            $error->setErrorCode(self::ERROR_CODE_NOPAYMENT_NOT_ALLOWED);
+            $error->setErrorCode(static::ERROR_CODE_NOPAYMENT_NOT_ALLOWED);
             $checkoutResponseTransfer->addError($error);
 
             return false;

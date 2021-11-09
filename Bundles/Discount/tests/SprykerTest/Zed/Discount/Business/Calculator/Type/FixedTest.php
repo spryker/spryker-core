@@ -46,17 +46,17 @@ class FixedTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $calculator = new FixedType();
-        $discountTransfer = $this->createDiscountTransfer(self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountTransfer = $this->createDiscountTransfer(static::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
-        $this->assertSame(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
+        $this->assertSame(static::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
     }
 
     /**
@@ -66,14 +66,14 @@ class FixedTest extends Unit
     {
         $items = $this->getItems(
             [
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
-                self::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
+                static::ITEM_GROSS_PRICE_1000,
             ],
         );
 
         $calculator = new FixedType();
-        $discountTransfer = $this->createDiscountTransfer(-1 * self::DISCOUNT_AMOUNT_FIXED_100);
+        $discountTransfer = $this->createDiscountTransfer(-1 * static::DISCOUNT_AMOUNT_FIXED_100);
         $discountAmount = $calculator->calculateDiscount($items, $discountTransfer);
 
         $this->assertSame(0, $discountAmount);

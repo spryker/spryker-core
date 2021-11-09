@@ -122,7 +122,7 @@ class NavigationNodeFormType extends AbstractType
     protected function addNodeTypeField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NODE_TYPE, ChoiceType::class, [
+            ->add(static::FIELD_NODE_TYPE, ChoiceType::class, [
                 'label' => 'Type',
                 'choices' => array_flip([
                     static::NODE_TYPE_LABEL => 'Label',
@@ -150,7 +150,7 @@ class NavigationNodeFormType extends AbstractType
     protected function addNavigationNodeLocalizedAttributesForms(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
+            ->add(static::FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
                 'entry_type' => NavigationNodeLocalizedAttributesFormType::class,
             ]);
 
@@ -165,7 +165,7 @@ class NavigationNodeFormType extends AbstractType
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
+            ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
                 'label' => 'Active',
             ]);
 
@@ -285,7 +285,7 @@ class NavigationNodeFormType extends AbstractType
      */
     public function unsetLocalizedUrls(FormEvent $event, NavigationNodeTransfer $navigationNodeTransfer)
     {
-        if ($navigationNodeTransfer->getNodeType() === self::NODE_TYPE_CATEGORY || $navigationNodeTransfer->getNodeType() === self::NODE_TYPE_CMS_PAGE) {
+        if ($navigationNodeTransfer->getNodeType() === static::NODE_TYPE_CATEGORY || $navigationNodeTransfer->getNodeType() === static::NODE_TYPE_CMS_PAGE) {
             return;
         }
 

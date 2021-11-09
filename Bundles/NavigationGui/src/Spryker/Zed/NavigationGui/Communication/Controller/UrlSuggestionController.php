@@ -39,8 +39,8 @@ class UrlSuggestionController extends AbstractController
      */
     public function cmsPageAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
-        $idLocale = $this->castId($request->query->getInt(self::PARAM_ID_LOCALE));
+        $searchTerm = $request->query->get(static::PARAM_TERM);
+        $idLocale = $this->castId($request->query->getInt(static::PARAM_ID_LOCALE));
 
         $query = $this->createCmsPageUrlSuggestionQuery($searchTerm, $idLocale);
 
@@ -54,8 +54,8 @@ class UrlSuggestionController extends AbstractController
      */
     public function categoryAction(Request $request)
     {
-        $searchTerm = $request->query->get(self::PARAM_TERM);
-        $idLocale = $this->castId($request->query->getInt(self::PARAM_ID_LOCALE));
+        $searchTerm = $request->query->get(static::PARAM_TERM);
+        $idLocale = $this->castId($request->query->getInt(static::PARAM_ID_LOCALE));
 
         $query = $this->createCategoryUrlSuggestionQuery($searchTerm, $idLocale);
 

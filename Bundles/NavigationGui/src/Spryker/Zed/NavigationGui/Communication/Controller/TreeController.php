@@ -35,7 +35,7 @@ class TreeController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
+        $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
 
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($idNavigation);
@@ -61,7 +61,7 @@ class TreeController extends AbstractController
     public function updateHierarchyAction(Request $request)
     {
         /** @var array<string, mixed> $navigationTreeData */
-        $navigationTreeData = $request->request->get(self::PARAM_NAVIGATION_TREE);
+        $navigationTreeData = $request->request->get(static::PARAM_NAVIGATION_TREE);
 
         if (!$navigationTreeData) {
             return $this->jsonResponse([

@@ -65,10 +65,10 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     {
         return sprintf(
             $this->getClassNamePattern(),
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
+            static::KEY_NAMESPACE,
+            static::KEY_BUNDLE,
             static::KEY_CODE_BUCKET,
-            self::KEY_CONTROLLER,
+            static::KEY_CONTROLLER,
         );
     }
 
@@ -86,10 +86,10 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
-            self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => ucfirst($this->bundleControllerAction->getBundle()),
+            static::KEY_NAMESPACE => $namespace,
+            static::KEY_BUNDLE => ucfirst($this->bundleControllerAction->getBundle()),
             static::KEY_CODE_BUCKET => $codeBucket,
-            self::KEY_CONTROLLER => ucfirst($this->bundleControllerAction->getController()),
+            static::KEY_CONTROLLER => ucfirst($this->bundleControllerAction->getController()),
         ];
 
         $className = str_replace(

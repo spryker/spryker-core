@@ -39,7 +39,7 @@ class CommandCollectionTest extends Unit
     public function testAddShouldReturnInstance(): void
     {
         $commandCollection = new CommandCollection();
-        $result = $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);
+        $result = $commandCollection->add($this->getCommandMock(), static::COMMAND_NAME);
 
         $this->assertInstanceOf(CommandCollectionInterface::class, $result);
     }
@@ -51,7 +51,7 @@ class CommandCollectionTest extends Unit
     {
         $commandCollection = new CommandCollection();
 
-        $this->assertFalse($commandCollection->has(self::COMMAND_NAME));
+        $this->assertFalse($commandCollection->has(static::COMMAND_NAME));
     }
 
     /**
@@ -61,9 +61,9 @@ class CommandCollectionTest extends Unit
     {
         $commandCollection = new CommandCollection();
         $command = $this->getCommandMock();
-        $commandCollection->add($command, self::COMMAND_NAME);
+        $commandCollection->add($command, static::COMMAND_NAME);
 
-        $this->assertTrue($commandCollection->has(self::COMMAND_NAME));
+        $this->assertTrue($commandCollection->has(static::COMMAND_NAME));
     }
 
     /**
@@ -73,9 +73,9 @@ class CommandCollectionTest extends Unit
     {
         $commandCollection = new CommandCollection();
         $command = $this->getCommandMock();
-        $commandCollection->add($command, self::COMMAND_NAME);
+        $commandCollection->add($command, static::COMMAND_NAME);
 
-        $this->assertSame($command, $commandCollection->get(self::COMMAND_NAME));
+        $this->assertSame($command, $commandCollection->get(static::COMMAND_NAME));
     }
 
     /**
@@ -87,7 +87,7 @@ class CommandCollectionTest extends Unit
 
         $this->expectException(CommandNotFoundException::class);
 
-        $commandCollection->get(self::COMMAND_NAME);
+        $commandCollection->get(static::COMMAND_NAME);
     }
 
     /**
@@ -96,16 +96,16 @@ class CommandCollectionTest extends Unit
     public function testArrayAccess(): void
     {
         $commandCollection = new CommandCollection();
-        $this->assertFalse(isset($commandCollection[self::COMMAND_NAME]));
+        $this->assertFalse(isset($commandCollection[static::COMMAND_NAME]));
 
         $condition = $this->getCommandMock();
-        $commandCollection[self::COMMAND_NAME] = $condition;
+        $commandCollection[static::COMMAND_NAME] = $condition;
 
-        $this->assertTrue(isset($commandCollection[self::COMMAND_NAME]));
-        $this->assertSame($condition, $commandCollection[self::COMMAND_NAME]);
+        $this->assertTrue(isset($commandCollection[static::COMMAND_NAME]));
+        $this->assertSame($condition, $commandCollection[static::COMMAND_NAME]);
 
-        unset($commandCollection[self::COMMAND_NAME]);
-        $this->assertFalse(isset($commandCollection[self::COMMAND_NAME]));
+        unset($commandCollection[static::COMMAND_NAME]);
+        $this->assertFalse(isset($commandCollection[static::COMMAND_NAME]));
     }
 
     /**

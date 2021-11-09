@@ -49,7 +49,7 @@ class AddVariantController extends AbstractController
     public function indexAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productAbstractTransfer = $this->getFactory()

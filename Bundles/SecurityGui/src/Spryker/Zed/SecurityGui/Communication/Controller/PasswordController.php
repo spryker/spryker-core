@@ -60,7 +60,7 @@ class PasswordController extends AbstractController
      */
     public function resetAction(Request $request)
     {
-        $token = (string)$request->query->get(self::PARAM_TOKEN);
+        $token = (string)$request->query->get(static::PARAM_TOKEN);
         if (!$token) {
             $this->addErrorMessage('Request token is missing!');
 

@@ -62,18 +62,18 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
     ) {
         if ($availabilityDataFeedTransfer->getUpdatedFrom()) {
             $entityQuery->condition(
-                self::UPDATED_FROM_CONDITION,
+                static::UPDATED_FROM_CONDITION,
                 SpyProductAbstractTableMap::COL_UPDATED_AT . ' >= ?',
                 $availabilityDataFeedTransfer->getUpdatedFrom(),
-            )->where([self::UPDATED_FROM_CONDITION]);
+            )->where([static::UPDATED_FROM_CONDITION]);
         }
 
         if ($availabilityDataFeedTransfer->getUpdatedTo()) {
             $entityQuery->condition(
-                self::UPDATED_TO_CONDITION,
+                static::UPDATED_TO_CONDITION,
                 SpyProductAbstractTableMap::COL_UPDATED_AT . ' <= ?',
                 $availabilityDataFeedTransfer->getUpdatedTo(),
-            )->where([self::UPDATED_TO_CONDITION]);
+            )->where([static::UPDATED_TO_CONDITION]);
         }
 
         return $entityQuery;

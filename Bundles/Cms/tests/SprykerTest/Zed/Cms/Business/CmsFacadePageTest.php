@@ -131,9 +131,9 @@ class CmsFacadePageTest extends Unit
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
 
         $persistedCmsPageMetaAttributes = $persistedCmsPageTransfer->getMetaAttributes()[0];
-        $persistedCmsPageMetaAttributes->setMetaTitle(self::CMS_PAGE_NEW_TITLE);
-        $persistedCmsPageMetaAttributes->setMetaKeywords(self::CMS_PAGE_NEW_KEY_WORDS);
-        $persistedCmsPageMetaAttributes->setMetaDescription(self::CMS_PAGE_NEW_DESCRIPTION);
+        $persistedCmsPageMetaAttributes->setMetaTitle(static::CMS_PAGE_NEW_TITLE);
+        $persistedCmsPageMetaAttributes->setMetaKeywords(static::CMS_PAGE_NEW_KEY_WORDS);
+        $persistedCmsPageMetaAttributes->setMetaDescription(static::CMS_PAGE_NEW_DESCRIPTION);
 
         $persistedCmsPageAttributes = $persistedCmsPageTransfer->getPageAttributes()[0];
         $persistedCmsPageAttributes->setName('new page name');

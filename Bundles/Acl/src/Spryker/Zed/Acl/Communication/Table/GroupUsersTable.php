@@ -86,19 +86,19 @@ class GroupUsersTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl('users?' . self::PARAMETER_ID_GROUP . '=' . $this->idGroup);
+        $config->setUrl('users?' . static::PARAMETER_ID_GROUP . '=' . $this->idGroup);
 
         $this->disableSearch();
         $this->setTableIdentifier('users-in-group');
 
         $config->setHeader([
-            self::COL_FIRST_NAME => 'First Name',
-            self::COL_LAST_NAME => 'Last Name',
-            self::COL_EMAIL => 'Email',
-            self::ACTIONS => self::ACTIONS,
+            static::COL_FIRST_NAME => 'First Name',
+            static::COL_LAST_NAME => 'Last Name',
+            static::COL_EMAIL => 'Email',
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         return $config;
     }
@@ -118,11 +118,11 @@ class GroupUsersTable extends AbstractTable
         $users = [];
         foreach ($userCollection as $user) {
             $users[] = [
-                self::COL_ID_USER => $user->getIdUser(),
-                self::COL_FIRST_NAME => $user->getFirstName(),
-                self::COL_LAST_NAME => $user->getLastName(),
-                self::COL_EMAIL => $user->getUsername(),
-                self::ACTIONS => $this->getRemoveUrl($user),
+                static::COL_ID_USER => $user->getIdUser(),
+                static::COL_FIRST_NAME => $user->getFirstName(),
+                static::COL_LAST_NAME => $user->getLastName(),
+                static::COL_EMAIL => $user->getUsername(),
+                static::ACTIONS => $this->getRemoveUrl($user),
             ];
         }
 

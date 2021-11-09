@@ -44,7 +44,7 @@ class CheckoutPluginCollectionTest extends Unit
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
-        $result = $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
+        $result = $checkoutPluginCollection->add($pluginMock, static::PROVIDER, static::PLUGIN_TYPE);
 
         $this->assertInstanceOf(CheckoutPluginCollectionInterface::class, $result);
     }
@@ -56,7 +56,7 @@ class CheckoutPluginCollectionTest extends Unit
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
 
-        $this->assertFalse($checkoutPluginCollection->has(self::PROVIDER, self::PLUGIN_TYPE));
+        $this->assertFalse($checkoutPluginCollection->has(static::PROVIDER, static::PLUGIN_TYPE));
     }
 
     /**
@@ -66,9 +66,9 @@ class CheckoutPluginCollectionTest extends Unit
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
-        $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
+        $checkoutPluginCollection->add($pluginMock, static::PROVIDER, static::PLUGIN_TYPE);
 
-        $this->assertTrue($checkoutPluginCollection->has(self::PROVIDER, self::PLUGIN_TYPE));
+        $this->assertTrue($checkoutPluginCollection->has(static::PROVIDER, static::PLUGIN_TYPE));
     }
 
     /**
@@ -78,8 +78,8 @@ class CheckoutPluginCollectionTest extends Unit
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
-        $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
-        $result = $checkoutPluginCollection->get(self::PROVIDER, self::PLUGIN_TYPE);
+        $checkoutPluginCollection->add($pluginMock, static::PROVIDER, static::PLUGIN_TYPE);
+        $result = $checkoutPluginCollection->get(static::PROVIDER, static::PLUGIN_TYPE);
 
         $this->assertSame($pluginMock, $result);
     }
@@ -91,11 +91,11 @@ class CheckoutPluginCollectionTest extends Unit
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
-        $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
+        $checkoutPluginCollection->add($pluginMock, static::PROVIDER, static::PLUGIN_TYPE);
         $this->expectException(CheckoutPluginNotFoundException::class);
         $this->expectExceptionMessage('Could not find any plugin for "unknown" provider. You need to add the needed plugins within your DependencyInjector.');
 
-        $checkoutPluginCollection->get('unknown', self::PLUGIN_TYPE);
+        $checkoutPluginCollection->get('unknown', static::PLUGIN_TYPE);
     }
 
     /**
@@ -105,11 +105,11 @@ class CheckoutPluginCollectionTest extends Unit
     {
         $checkoutPluginCollection = new CheckoutPluginCollection();
         $pluginMock = $this->getPluginMock();
-        $checkoutPluginCollection->add($pluginMock, self::PROVIDER, self::PLUGIN_TYPE);
+        $checkoutPluginCollection->add($pluginMock, static::PROVIDER, static::PLUGIN_TYPE);
         $this->expectException(CheckoutPluginNotFoundException::class);
         $this->expectExceptionMessage('Could not find "unknown" plugin type for "provider" provider. You need to add the needed plugins within your DependencyInjector.');
 
-        $checkoutPluginCollection->get(self::PROVIDER, 'unknown');
+        $checkoutPluginCollection->get(static::PROVIDER, 'unknown');
     }
 
     /**

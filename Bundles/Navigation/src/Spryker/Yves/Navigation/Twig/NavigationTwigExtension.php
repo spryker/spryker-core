@@ -55,7 +55,7 @@ class NavigationTwigExtension extends TwigExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction(self::FUNCTION_NAME_NAVIGATION, [$this, 'renderNavigation'], [
+            new TwigFunction(static::FUNCTION_NAME_NAVIGATION, [$this, 'renderNavigation'], [
                 'is_safe' => ['html'],
                 'needs_environment' => true,
             ]),

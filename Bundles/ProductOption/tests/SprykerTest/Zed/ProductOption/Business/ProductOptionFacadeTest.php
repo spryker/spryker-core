@@ -1049,7 +1049,7 @@ class ProductOptionFacadeTest extends Unit
 
         $groupNameTranslationTransfer = new ProductOptionTranslationTransfer();
         $groupNameTranslationTransfer->setKey($productOptionGroupTransfer->getName());
-        $groupNameTranslationTransfer->setLocaleCode(self::DEFAULT_LOCALE_ISO_CODE);
+        $groupNameTranslationTransfer->setLocaleCode(static::DEFAULT_LOCALE_ISO_CODE);
         $groupNameTranslationTransfer->setName('Translation1');
         $productOptionGroupTransfer->addGroupNameTranslation($groupNameTranslationTransfer);
 
@@ -1057,7 +1057,7 @@ class ProductOptionFacadeTest extends Unit
             $productOptionTranslationTransfer = clone $groupNameTranslationTransfer;
             $productOptionTranslationTransfer->setKey($productOptionValueTransfer->getValue());
             $productOptionTranslationTransfer->setName('value translation');
-            $productOptionTranslationTransfer->setLocaleCode(self::DEFAULT_LOCALE_ISO_CODE);
+            $productOptionTranslationTransfer->setLocaleCode(static::DEFAULT_LOCALE_ISO_CODE);
             $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
         }
 

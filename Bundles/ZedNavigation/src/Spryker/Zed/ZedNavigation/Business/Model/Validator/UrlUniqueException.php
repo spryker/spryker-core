@@ -21,7 +21,7 @@ class UrlUniqueException extends Exception
      */
     public function __construct($url)
     {
-        $errorMessage = sprintf(self::ERROR_MESSAGE, $url);
+        $errorMessage = sprintf(static::ERROR_MESSAGE, $url);
         parent::__construct($errorMessage);
     }
 }

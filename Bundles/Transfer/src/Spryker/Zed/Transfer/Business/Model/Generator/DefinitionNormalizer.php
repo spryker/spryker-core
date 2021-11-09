@@ -54,12 +54,12 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
         $normalizedDefinitions = [];
         foreach ($transferDefinitions as $transferDefinition) {
             $normalizedDefinition = [
-                self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
-                self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
-                self::KEY_NAME => $transferDefinition[self::KEY_NAME],
-                self::KEY_DEPRECATED => $transferDefinition[self::KEY_DEPRECATED] ?? null,
-                self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY] ?? [], $transferDefinition[self::KEY_BUNDLE]),
-                self::KEY_STRICT_MODE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
+                static::KEY_BUNDLE => $transferDefinition[static::KEY_BUNDLE],
+                static::KEY_CONTAINING_BUNDLE => $transferDefinition[static::KEY_CONTAINING_BUNDLE],
+                static::KEY_NAME => $transferDefinition[static::KEY_NAME],
+                static::KEY_DEPRECATED => $transferDefinition[static::KEY_DEPRECATED] ?? null,
+                static::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[static::KEY_PROPERTY] ?? [], $transferDefinition[static::KEY_BUNDLE]),
+                static::KEY_STRICT_MODE => $transferDefinition[static::KEY_STRICT_MODE] ?? null,
             ];
 
             $normalizedDefinitions[] = $this->normalizeStrictMode($normalizedDefinition);
@@ -96,7 +96,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
     protected function addBundleToAttributes(array $attributes, $bundle)
     {
         foreach ($attributes as &$attribute) {
-            $attribute[self::KEY_BUNDLES] = [$bundle];
+            $attribute[static::KEY_BUNDLES] = [$bundle];
         }
 
         return $attributes;

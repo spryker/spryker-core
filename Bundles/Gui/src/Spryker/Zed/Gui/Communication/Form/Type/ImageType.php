@@ -48,10 +48,10 @@ class ImageType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars[self::OPTION_IMAGE_WIDTH] = $options[self::OPTION_IMAGE_WIDTH];
-        $view->vars[self::OPTION_IMAGE_HEIGHT] = $options[self::OPTION_IMAGE_HEIGHT];
-        $view->vars[self::OPTION_IMAGE_TITLE] = $options[self::OPTION_IMAGE_TITLE];
-        $view->vars[self::OPTION_IMAGE_URL] = $options[self::OPTION_IMAGE_URL];
+        $view->vars[static::OPTION_IMAGE_WIDTH] = $options[static::OPTION_IMAGE_WIDTH];
+        $view->vars[static::OPTION_IMAGE_HEIGHT] = $options[static::OPTION_IMAGE_HEIGHT];
+        $view->vars[static::OPTION_IMAGE_TITLE] = $options[static::OPTION_IMAGE_TITLE];
+        $view->vars[static::OPTION_IMAGE_URL] = $options[static::OPTION_IMAGE_URL];
     }
 
     /**
@@ -62,10 +62,10 @@ class ImageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            self::OPTION_IMAGE_WIDTH => null,
-            self::OPTION_IMAGE_HEIGHT => null,
-            self::OPTION_IMAGE_TITLE => null,
-            self::OPTION_IMAGE_URL => null,
+            static::OPTION_IMAGE_WIDTH => null,
+            static::OPTION_IMAGE_HEIGHT => null,
+            static::OPTION_IMAGE_TITLE => null,
+            static::OPTION_IMAGE_URL => null,
         ]);
     }
 

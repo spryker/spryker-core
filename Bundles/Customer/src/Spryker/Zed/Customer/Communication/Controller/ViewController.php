@@ -120,7 +120,7 @@ class ViewController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        /** @var array $customerTransfer */
+        /** @phpstan-var array $customerTransfer */
         $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
 
         $responseData = [];

@@ -26,7 +26,7 @@ class RawCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultF
      */
     public function getName()
     {
-        return self::NAME;
+        return static::NAME;
     }
 
     /**

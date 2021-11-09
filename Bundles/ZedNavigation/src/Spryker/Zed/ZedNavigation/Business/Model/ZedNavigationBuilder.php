@@ -91,8 +91,8 @@ class ZedNavigationBuilder
         $path = $this->pathExtractor->extractPathFromMenu($breadcrumb);
 
         return [
-            self::MENU => $menu,
-            self::PATH => $path,
+            static::MENU => $menu,
+            static::PATH => $path,
         ];
     }
 }

@@ -63,7 +63,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SKU, TextType::class, [
+        $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'sku',
             'required' => true,
             'attr' => [
@@ -81,7 +81,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'quantity',
             'required' => true,
             'constraints' => [
@@ -100,7 +100,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addIdProductConcreteField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, [
+        $builder->add(static::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, [
             'label' => 'quantity',
             'required' => false,
             'constraints' => [],

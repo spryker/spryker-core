@@ -30,7 +30,7 @@ class UpdateTranslationForm extends TranslationForm
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GLOSSARY_KEY, TextType::class, [
+        $builder->add(static::FIELD_GLOSSARY_KEY, TextType::class, [
             'label' => 'Name',
             'attr' => [
                 'readonly' => 'readonly',
@@ -48,7 +48,7 @@ class UpdateTranslationForm extends TranslationForm
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $locales)
     {
-        $builder->add(self::FIELD_LOCALES, CollectionType::class, $this->buildLocaleFieldConfiguration(self::TYPE_DATA_EMPTY, $locales));
+        $builder->add(static::FIELD_LOCALES, CollectionType::class, $this->buildLocaleFieldConfiguration(static::TYPE_DATA_EMPTY, $locales));
 
         return $this;
     }

@@ -1,6 +1,3 @@
 parameters:
     checkMissingIterableValueType: false
-    excludes_analyse:
-        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Communication/Plugin/AuthMailConnector/UserAuthMailExpanderPlugin.php'
-        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/User/src/Spryker/Zed/User/Communication/Form/UserUpdateForm.php'
     ignoreErrors:

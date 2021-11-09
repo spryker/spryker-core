@@ -91,7 +91,7 @@ class ProductOptionTable extends AbstractTable
         $this->utilEncodingService = $utilEncodingService;
         $this->idProductOptionGroup = $idProductOptionGroup;
 
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
         $this->localeTransfer = $localeTransfer;
         $this->tableContext = $tableContext;
     }
@@ -124,8 +124,8 @@ class ProductOptionTable extends AbstractTable
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
-        $config->addRawColumn(self::COL_CHECKBOX);
-        $config->addRawColumn(self::COL_ACTIONS);
+        $config->addRawColumn(static::COL_CHECKBOX);
+        $config->addRawColumn(static::COL_ACTIONS);
 
         return $config;
     }
@@ -162,14 +162,14 @@ class ProductOptionTable extends AbstractTable
      */
     protected function buildActionByTableContext(array $productOption)
     {
-        if ($this->tableContext === self::TABLE_CONTEXT_EDIT) {
+        if ($this->tableContext === static::TABLE_CONTEXT_EDIT) {
             return [
-                self::COL_CHECKBOX => $this->getCheckboxHtml($productOption),
+                static::COL_CHECKBOX => $this->getCheckboxHtml($productOption),
             ];
         }
 
         return [
-            self::COL_ACTIONS => $this->createViewButton($productOption['id_product_abstract']),
+            static::COL_ACTIONS => $this->createViewButton($productOption['id_product_abstract']),
         ];
     }
 
@@ -178,14 +178,14 @@ class ProductOptionTable extends AbstractTable
      */
     protected function buildHeaderActionByTableContext()
     {
-        if ($this->tableContext === self::TABLE_CONTEXT_EDIT) {
+        if ($this->tableContext === static::TABLE_CONTEXT_EDIT) {
             return [
-               self::COL_CHECKBOX => 'Selected',
+               static::COL_CHECKBOX => 'Selected',
             ];
         }
 
         return [
-            self::COL_ACTIONS => 'Actions',
+            static::COL_ACTIONS => 'Actions',
         ];
     }
 
@@ -199,7 +199,7 @@ class ProductOptionTable extends AbstractTable
         $viewProductOptionUrl = Url::generate(
             '/product-management/view',
             [
-                self::URL_PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
+                static::URL_PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
             ],
         );
 

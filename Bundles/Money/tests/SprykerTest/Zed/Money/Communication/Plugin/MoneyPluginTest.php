@@ -58,10 +58,10 @@ class MoneyPluginTest extends Unit
     public function testFromIntegerShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
     }
 
     /**
@@ -70,10 +70,10 @@ class MoneyPluginTest extends Unit
     public function testFromFloatShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromFloat(self::AMOUNT_FLOAT);
+        $moneyTransfer = $moneyPlugin->fromFloat(static::AMOUNT_FLOAT);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
     }
 
     /**
@@ -82,10 +82,10 @@ class MoneyPluginTest extends Unit
     public function testFromStringShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromString(self::AMOUNT_STRING);
+        $moneyTransfer = $moneyPlugin->fromString(static::AMOUNT_STRING);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
     }
 
     /**
@@ -94,10 +94,10 @@ class MoneyPluginTest extends Unit
     public function testGetMoneyShouldReturnMoneyTransferWithConfiguredDefaultCurrency(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
 
         $defaultCurrency = Store::getInstance()->getCurrencyIsoCode();
         $this->assertSame($defaultCurrency, $moneyTransfer->getCurrency()->getCode());
@@ -111,9 +111,9 @@ class MoneyPluginTest extends Unit
         $moneyPlugin = new MoneyPlugin();
 
         $isoCode = 'USD';
-        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER, $isoCode);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, $isoCode);
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
-        $this->assertSame(self::AMOUNT_STRING, $moneyTransfer->getAmount());
+        $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
 
         $this->assertSame($isoCode, $moneyTransfer->getCurrency()->getCode());
     }
@@ -123,10 +123,10 @@ class MoneyPluginTest extends Unit
      */
     public function testFormatWithSymbolShouldReturnFormattedStringWithCurrencySymbol(): void
     {
-        Store::getInstance()->setCurrentLocale(self::LOCALE_DE_DE);
+        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
 
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER, self::CURRENCY_EUR);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
         $this->assertSame('10,00 €', $moneyPlugin->formatWithSymbol($moneyTransfer));
     }
@@ -136,10 +136,10 @@ class MoneyPluginTest extends Unit
      */
     public function testFormatWithoutSymbolShouldReturnFormattedStringWithoutCurrencySymbol(): void
     {
-        Store::getInstance()->setCurrentLocale(self::LOCALE_DE_DE);
+        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
 
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(self::AMOUNT_INTEGER, self::CURRENCY_EUR);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
         $this->assertSame('10,00', $moneyPlugin->formatWithoutSymbol($moneyTransfer));
     }

@@ -23,7 +23,7 @@ class LocatorWithMatcherMatcher implements LocatorMatcherInterface
      */
     public function match($method): bool
     {
-        return (strpos($method, self::NAME) === 0);
+        return (strpos($method, static::NAME) === 0);
     }
 
     /**
@@ -33,6 +33,6 @@ class LocatorWithMatcherMatcher implements LocatorMatcherInterface
      */
     public function filter(string $method): string
     {
-        return substr($method, strlen(self::NAME));
+        return substr($method, strlen(static::NAME));
     }
 }

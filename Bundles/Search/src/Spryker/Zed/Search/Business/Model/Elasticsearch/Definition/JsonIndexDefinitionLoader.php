@@ -144,7 +144,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getIndexName(IndexDefinitionFileTransfer $indexDefinitionFileTransfer, string $currentStorePrefix): string
     {
-        $indexName = substr($indexDefinitionFileTransfer->getFileName(), 0, -strlen(self::FILE_EXTENSION));
+        $indexName = substr($indexDefinitionFileTransfer->getFileName(), 0, -strlen(static::FILE_EXTENSION));
 
         if (!$indexDefinitionFileTransfer->getStorePrefix()) {
             $indexName = $currentStorePrefix . $indexName;

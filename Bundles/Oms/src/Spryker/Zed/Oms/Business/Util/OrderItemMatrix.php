@@ -80,7 +80,7 @@ class OrderItemMatrix
 
         foreach ($orderItemsMatrix as $idState => $grid) {
             $result = [
-                self::COL_STATE => $statesUsed[$idState],
+                static::COL_STATE => $statesUsed[$idState],
             ];
 
             foreach ($this->processes as $idProcess => $process) {
@@ -104,7 +104,7 @@ class OrderItemMatrix
     protected function getHeaderColumns()
     {
         $headersColumns = [
-            self::COL_STATE => '',
+            static::COL_STATE => '',
         ];
         foreach ($this->processes as $id => $name) {
             $headersColumns[$name] = $name;

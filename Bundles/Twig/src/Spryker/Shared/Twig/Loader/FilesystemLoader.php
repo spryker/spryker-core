@@ -21,7 +21,7 @@ class FilesystemLoader extends TwigFilesystemLoader implements FilesystemLoaderI
         parent::__construct([], $rootPath);
 
         if ($paths) {
-            $this->setPaths($paths, $namespace ?? self::MAIN_NAMESPACE);
+            $this->setPaths($paths, $namespace ?? static::MAIN_NAMESPACE);
         }
     }
 }

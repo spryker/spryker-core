@@ -111,10 +111,10 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
         }
 
         if ($sortConfigTransfer->getIsDescending()) {
-            return self::DIRECTION_DESC;
+            return static::DIRECTION_DESC;
         }
 
-        return self::DIRECTION_ASC;
+        return static::DIRECTION_ASC;
     }
 
     /**

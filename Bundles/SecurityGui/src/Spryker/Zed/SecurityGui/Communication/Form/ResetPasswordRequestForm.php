@@ -59,7 +59,7 @@ class ResetPasswordRequestForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_EMAIL, TextType::class, [
+            ->add(static::FIELD_EMAIL, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
@@ -80,7 +80,7 @@ class ResetPasswordRequestForm extends AbstractType
     protected function addSubmitField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SUBMIT, SubmitType::class, [
+            ->add(static::FIELD_SUBMIT, SubmitType::class, [
                 'label' => 'Recover password',
                 'attr' => [
                     'class' => 'btn btn-success btn-block btn-outline',

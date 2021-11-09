@@ -88,8 +88,8 @@ class MaintenanceController extends AbstractController
     {
         $referenceKey = '';
 
-        if (is_array($value) && isset($value[self::REFERENCE_KEY])) {
-            $referenceKey = $value[self::REFERENCE_KEY];
+        if (is_array($value) && isset($value[static::REFERENCE_KEY])) {
+            $referenceKey = $value[static::REFERENCE_KEY];
         }
 
         return $referenceKey;

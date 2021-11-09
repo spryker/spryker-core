@@ -27,7 +27,7 @@ class OauthPermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return Dependency\Service\OauthPermissionToOauthServiceInterface
+     * @return \Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToOauthServiceInterface
      */
     public function getOauthService(): OauthPermissionToOauthServiceInterface
     {

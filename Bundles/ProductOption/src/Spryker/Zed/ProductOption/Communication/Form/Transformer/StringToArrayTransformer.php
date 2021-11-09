@@ -46,7 +46,7 @@ class StringToArrayTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if ($value) {
-            return implode(self::VALUE_SEPARATOR, $value);
+            return implode(static::VALUE_SEPARATOR, $value);
         }
 
         return '';
@@ -80,6 +80,6 @@ class StringToArrayTransformer implements DataTransformerInterface
             return [];
         }
 
-        return explode(self::VALUE_SEPARATOR, $value);
+        return explode(static::VALUE_SEPARATOR, $value);
     }
 }

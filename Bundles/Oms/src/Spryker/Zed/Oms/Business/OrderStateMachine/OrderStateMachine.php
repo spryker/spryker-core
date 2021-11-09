@@ -509,10 +509,10 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected function getCommandType(CommandInterface $command)
     {
         if ($command instanceof CommandByOrderInterface) {
-            return self::BY_ORDER;
+            return static::BY_ORDER;
         }
         if ($command instanceof CommandByItemInterface) {
-            return self::BY_ITEM;
+            return static::BY_ITEM;
         }
 
         throw new LogicException('Unknown type of command: ' . get_class($command));
@@ -771,7 +771,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         $this->eventCounter[$eventId][$orderGroupKey]++;
 
-        return $this->eventCounter[$eventId][$orderGroupKey] < self::MAX_EVENT_REPEATS;
+        return $this->eventCounter[$eventId][$orderGroupKey] < static::MAX_EVENT_REPEATS;
     }
 
     /**

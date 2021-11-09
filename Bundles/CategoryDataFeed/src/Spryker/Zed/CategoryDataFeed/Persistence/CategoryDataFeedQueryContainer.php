@@ -120,18 +120,18 @@ class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements C
     ) {
         if ($categoryDataFeedTransfer->getUpdatedFrom()) {
             $categoryQuery->condition(
-                self::UPDATED_FROM_CONDITION,
+                static::UPDATED_FROM_CONDITION,
                 SpyCategoryAttributeTableMap::COL_UPDATED_AT . ' >= ?',
                 $categoryDataFeedTransfer->getUpdatedFrom(),
-            )->where([self::UPDATED_FROM_CONDITION]);
+            )->where([static::UPDATED_FROM_CONDITION]);
         }
 
         if ($categoryDataFeedTransfer->getUpdatedTo()) {
             $categoryQuery->condition(
-                self::UPDATED_TO_CONDITION,
+                static::UPDATED_TO_CONDITION,
                 SpyCategoryAttributeTableMap::COL_UPDATED_AT . ' <= ?',
                 $categoryDataFeedTransfer->getUpdatedTo(),
-            )->where([self::UPDATED_TO_CONDITION]);
+            )->where([static::UPDATED_TO_CONDITION]);
         }
 
         return $categoryQuery;

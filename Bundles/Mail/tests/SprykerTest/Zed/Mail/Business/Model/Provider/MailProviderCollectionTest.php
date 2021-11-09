@@ -125,7 +125,7 @@ class MailProviderCollectionTest extends Unit
     {
         $mailProviderMock = $this->getMailProviderMock();
         $mailProviderCollection = new MailProviderCollection();
-        $mailProviderCollection->addProvider($mailProviderMock, self::MAIL_TYPE_ALL);
+        $mailProviderCollection->addProvider($mailProviderMock, static::MAIL_TYPE_ALL);
 
         return $mailProviderCollection;
     }

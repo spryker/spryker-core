@@ -45,7 +45,7 @@ class MoneyFormatterCollectionTest extends Unit
     public function testAddFormatterShouldReturnCollection(): void
     {
         $moneyFormatterCollection = new MoneyFormatterCollection();
-        $moneyFormatterCollection = $moneyFormatterCollection->addFormatter($this->getFormatterMock(), self::FORMATTER);
+        $moneyFormatterCollection = $moneyFormatterCollection->addFormatter($this->getFormatterMock(), static::FORMATTER);
         $this->assertInstanceOf(MoneyFormatterCollectionInterface::class, $moneyFormatterCollection);
     }
 
@@ -56,9 +56,9 @@ class MoneyFormatterCollectionTest extends Unit
     {
         $moneyFormatterCollection = new MoneyFormatterCollection();
         $moneyFormatterMock = $this->getFormatterMock();
-        $moneyFormatterCollection = $moneyFormatterCollection->addFormatter($moneyFormatterMock, self::FORMATTER);
+        $moneyFormatterCollection = $moneyFormatterCollection->addFormatter($moneyFormatterMock, static::FORMATTER);
 
-        $this->assertSame($moneyFormatterMock, $moneyFormatterCollection->getFormatter(self::FORMATTER));
+        $this->assertSame($moneyFormatterMock, $moneyFormatterCollection->getFormatter(static::FORMATTER));
     }
 
     /**
@@ -69,7 +69,7 @@ class MoneyFormatterCollectionTest extends Unit
         $this->expectException(FormatterNotFoundException::class);
 
         $moneyFormatterCollection = new MoneyFormatterCollection();
-        $moneyFormatterCollection->getFormatter(self::FORMATTER);
+        $moneyFormatterCollection->getFormatter(static::FORMATTER);
     }
 
     /**

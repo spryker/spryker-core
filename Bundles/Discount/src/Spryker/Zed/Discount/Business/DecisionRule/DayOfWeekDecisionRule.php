@@ -56,7 +56,7 @@ class DayOfWeekDecisionRule implements DecisionRuleInterface
     protected function getCurrentDateOfWeek()
     {
         $currentDateTime = $this->getCurrentDateTime();
-        $dayOfWeek = $currentDateTime->format(self::DATE_FORMAT);
+        $dayOfWeek = $currentDateTime->format(static::DATE_FORMAT);
 
         return $dayOfWeek;
     }

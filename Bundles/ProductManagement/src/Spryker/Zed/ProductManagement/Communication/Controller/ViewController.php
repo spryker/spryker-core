@@ -44,7 +44,7 @@ class ViewController extends AddController
     public function indexAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productAbstractTransfer = $this->getFactory()
@@ -129,11 +129,11 @@ class ViewController extends AddController
     public function variantAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $idProduct = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT,
+            static::PARAM_ID_PRODUCT,
         ));
 
         $productTransfer = $this->getFactory()
@@ -196,7 +196,7 @@ class ViewController extends AddController
     public function variantTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $variantTable = $this
@@ -216,7 +216,7 @@ class ViewController extends AddController
     public function productGroupTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_ABSTRACT,
+            static::PARAM_ID_PRODUCT_ABSTRACT,
         ));
 
         $productGroupTable = $this

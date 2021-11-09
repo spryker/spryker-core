@@ -88,10 +88,10 @@ class CustomerTable extends AbstractTable
             static::COL_FIRST_NAME => 'First Name',
             static::COL_LAST_NAME => 'Last Name',
             static::COL_GENDER => 'Gender',
-            static::ACTIONS => self::ACTIONS,
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         $config->setSortable([
             static::COL_FK_CUSTOMER,
@@ -207,6 +207,6 @@ class CustomerTable extends AbstractTable
             return 'n/a';
         }
 
-        return self::GENDER_MAP[$customerRow[static::COL_GENDER]];
+        return static::GENDER_MAP[$customerRow[static::COL_GENDER]];
     }
 }

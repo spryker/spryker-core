@@ -37,7 +37,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
         $fromDate = $value['from'] ?? null;
         if ($fromDate) {
             $date = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $fromDate);
-            $fromDate = $date ? $date->format(self::DATE_TIME_FORMAT) :
+            $fromDate = $date ? $date->format(static::DATE_TIME_FORMAT) :
                 new RuntimeException(sprintf(
                     'Wrong filter value date format. Supported format is %s',
                     static::DATE_TIME_FORMAT,
@@ -47,7 +47,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
         $toDate = $value['to'] ?? null;
         if ($toDate) {
             $date = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $toDate);
-            $toDate = $date ? $date->format(self::DATE_TIME_FORMAT) :
+            $toDate = $date ? $date->format(static::DATE_TIME_FORMAT) :
                 new RuntimeException(sprintf(
                     'Wrong filter value date format. Supported format is %s',
                     static::DATE_TIME_FORMAT,

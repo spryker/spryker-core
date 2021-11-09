@@ -114,7 +114,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
         $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_APPLICATION_PLUGINS], $this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
 
         if (!isset($this->application)) {
-            throw new ModuleConfigException(self::class, 'Application instance was not received from bootstrap file');
+            throw new ModuleConfigException(static::class, 'Application instance was not received from bootstrap file');
         }
     }
 

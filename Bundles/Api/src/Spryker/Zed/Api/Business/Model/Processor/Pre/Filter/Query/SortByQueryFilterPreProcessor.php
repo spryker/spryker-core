@@ -25,11 +25,11 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
     public function process(ApiRequestTransfer $apiRequestTransfer)
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
-        if (empty($queryStrings[self::SORT])) {
+        if (empty($queryStrings[static::SORT])) {
             return $apiRequestTransfer;
         }
 
-        $sortString = $queryStrings[self::SORT];
+        $sortString = $queryStrings[static::SORT];
         $sortCollection = explode(',', $sortString);
 
         $sort = [];

@@ -60,7 +60,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
 
         foreach ($this->productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             $localizedAttribute->setName(
-                self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
+                static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()],
             );
         }
 
@@ -324,8 +324,8 @@ class ConcreteManagementTest extends FacadeTestAbstract
             $this->locales['de_DE'],
         );
 
-        $this->assertSame(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);
-        $this->assertSame(self::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
+        $this->assertSame(static::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);
+        $this->assertSame(static::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
     }
 
     /**
@@ -368,7 +368,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEquals($this->productConcreteTransfer->getSku(), $updatedProductEntity->getSku());
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $expectedProductName = self::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
+            $expectedProductName = static::UPDATED_PRODUCT_ABSTRACT_NAME[$localizedAttribute->getLocale()->getLocaleName()];
 
             $this->assertSame($expectedProductName, $localizedAttribute->getName());
         }

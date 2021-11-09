@@ -23,7 +23,7 @@ class BulkTouchHandlerInsert extends AbstractBulkTouchHandler
     public function bulkTouch($itemType, $itemEvent, array $itemIds)
     {
         $itemIds = $this->filter->filter($itemIds, $itemType);
-        $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
+        $itemIdChunks = array_chunk($itemIds, static::BULK_UPDATE_CHUNK_SIZE);
 
         $affectedRows = 0;
         foreach ($itemIdChunks as $itemIdChunk) {

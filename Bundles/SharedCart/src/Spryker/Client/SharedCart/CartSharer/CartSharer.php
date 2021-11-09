@@ -100,7 +100,7 @@ class CartSharer implements CartSharerInterface
     {
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
         if (!$this->validateShareCartRequest($shareCartRequestTransfer, $quoteTransfer)) {
-            $this->messengerClient->addErrorMessage(self::GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST);
+            $this->messengerClient->addErrorMessage(static::GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST);
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setIsSuccessful(false);
 

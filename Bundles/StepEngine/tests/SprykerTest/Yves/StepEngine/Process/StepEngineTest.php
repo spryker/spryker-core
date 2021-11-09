@@ -37,14 +37,14 @@ class StepEngineTest extends AbstractStepEngineTest
     public function testProcessReturnRedirectResponseWithEscapeUrlOfCurrentStepWhenPreConditionNotFulfilled(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepMock = $this->getStepMock(false, false, false, '', self::ESCAPE_ROUTE);
+        $stepMock = $this->getStepMock(false, false, false, '', static::ESCAPE_ROUTE);
         $stepCollection->addStep($stepMock);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
         $response = $stepEngine->process($this->getRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame(self::ESCAPE_URL, $response->getTargetUrl());
+        $this->assertSame(static::ESCAPE_URL, $response->getTargetUrl());
     }
 
     /**
@@ -53,14 +53,14 @@ class StepEngineTest extends AbstractStepEngineTest
     public function testProcessReturnRedirectResponseWithUrlOfCurrentStepWhenStepCanNotAccessed(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepMock = $this->getStepMock(true, false, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
+        $stepMock = $this->getStepMock(true, false, false, static::STEP_ROUTE_A, static::ESCAPE_ROUTE);
         $stepCollection->addStep($stepMock);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
         $response = $stepEngine->process($this->getRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame(self::STEP_URL_A, $response->getTargetUrl());
+        $this->assertSame(static::STEP_URL_A, $response->getTargetUrl());
     }
 
     /**
@@ -69,17 +69,17 @@ class StepEngineTest extends AbstractStepEngineTest
     public function testProcessReturnRedirectResponseWithUrlOfNextStepWhenStepNeedNoInput(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepMockA = $this->getStepMock(true, true, false, self::STEP_ROUTE_A, self::ESCAPE_ROUTE);
+        $stepMockA = $this->getStepMock(true, true, false, static::STEP_ROUTE_A, static::ESCAPE_ROUTE);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(true, false, false, self::STEP_ROUTE_B, self::ESCAPE_ROUTE);
+        $stepMockB = $this->getStepMock(true, false, false, static::STEP_ROUTE_B, static::ESCAPE_ROUTE);
         $stepCollection->addStep($stepMockB);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
-        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
+        $response = $stepEngine->process($this->getRequest(static::STEP_ROUTE_A));
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame(self::STEP_URL_B, $response->getTargetUrl());
+        $this->assertSame(static::STEP_URL_B, $response->getTargetUrl());
     }
 
     /**
@@ -88,11 +88,11 @@ class StepEngineTest extends AbstractStepEngineTest
     public function testProcessReturnViewDataWhenNoFormHandlerGiven(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
+        $stepMockA = $this->getStepMock(true, true, true, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
-        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
+        $response = $stepEngine->process($this->getRequest(static::STEP_ROUTE_A));
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey('previousStepUrl', $response);
@@ -104,7 +104,7 @@ class StepEngineTest extends AbstractStepEngineTest
     public function testProcessReturnViewDataWhenFormCollectionHasNoSubmittedForm(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
+        $stepMockA = $this->getStepMock(true, true, true, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
@@ -112,16 +112,16 @@ class StepEngineTest extends AbstractStepEngineTest
         $formCollectionHandlerMock->method('hasSubmittedForm')->willReturn(false);
 
         $formMock = $this->getFormMock();
-        $formMock->method('getName')->willReturn(self::FORM_NAME);
+        $formMock->method('getName')->willReturn(static::FORM_NAME);
         $formMock->method('createView')->willReturn([]);
 
         $formCollectionHandlerMock->method('getForms')->willReturn([$formMock]);
 
-        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
+        $response = $stepEngine->process($this->getRequest(static::STEP_ROUTE_A), $formCollectionHandlerMock);
 
         $this->assertIsArray($response);
         $this->assertArrayHasKey('previousStepUrl', $response);
-        $this->assertArrayHasKey(self::FORM_NAME, $response);
+        $this->assertArrayHasKey(static::FORM_NAME, $response);
     }
 
     /**
@@ -130,10 +130,10 @@ class StepEngineTest extends AbstractStepEngineTest
     public function testProcessReturnRedirectResponseWithUrlToNextStepWhenFormValid(): void
     {
         $stepCollection = $this->getStepCollection();
-        $stepMockA = $this->getStepMock(true, true, true, self::STEP_ROUTE_A);
+        $stepMockA = $this->getStepMock(true, true, true, static::STEP_ROUTE_A);
         $stepCollection->addStep($stepMockA);
 
-        $stepMockB = $this->getStepMock(true, true, true, self::STEP_ROUTE_B);
+        $stepMockB = $this->getStepMock(true, true, true, static::STEP_ROUTE_B);
         $stepCollection->addStep($stepMockB);
 
         $stepEngine = new StepEngine($stepCollection, $this->getDataContainerMock());
@@ -151,10 +151,10 @@ class StepEngineTest extends AbstractStepEngineTest
 
         $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);
 
-        $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
+        $response = $stepEngine->process($this->getRequest(static::STEP_ROUTE_A), $formCollectionHandlerMock);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertSame(self::STEP_URL_B, $response->getTargetUrl());
+        $this->assertSame(static::STEP_URL_B, $response->getTargetUrl());
     }
 
     /**

@@ -48,8 +48,8 @@ class YvesBuildFrontendConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addOption(
             static::OPTION_ENVIRONMENT,

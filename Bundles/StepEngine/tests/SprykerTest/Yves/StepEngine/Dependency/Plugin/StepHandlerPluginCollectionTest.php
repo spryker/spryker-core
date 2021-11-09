@@ -38,7 +38,7 @@ class StepHandlerPluginCollectionTest extends Unit
 
         $this->assertInstanceOf(
             StepHandlerPluginCollection::class,
-            $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME),
+            $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), static::TEST_PLUGIN_NAME),
         );
     }
 
@@ -49,7 +49,7 @@ class StepHandlerPluginCollectionTest extends Unit
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
 
-        $this->assertFalse($stepHandlerPluginCollection->has(self::TEST_PLUGIN_NAME));
+        $this->assertFalse($stepHandlerPluginCollection->has(static::TEST_PLUGIN_NAME));
     }
 
     /**
@@ -58,9 +58,9 @@ class StepHandlerPluginCollectionTest extends Unit
     public function testHasReturnTrue(): void
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
-        $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME);
+        $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), static::TEST_PLUGIN_NAME);
 
-        $this->assertTrue($stepHandlerPluginCollection->has(self::TEST_PLUGIN_NAME));
+        $this->assertTrue($stepHandlerPluginCollection->has(static::TEST_PLUGIN_NAME));
     }
 
     /**
@@ -69,9 +69,9 @@ class StepHandlerPluginCollectionTest extends Unit
     public function testGet(): void
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
-        $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME);
+        $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), static::TEST_PLUGIN_NAME);
 
-        $this->assertInstanceOf(StepHandlerPluginInterface::class, $stepHandlerPluginCollection->get(self::TEST_PLUGIN_NAME));
+        $this->assertInstanceOf(StepHandlerPluginInterface::class, $stepHandlerPluginCollection->get(static::TEST_PLUGIN_NAME));
     }
 
     /**

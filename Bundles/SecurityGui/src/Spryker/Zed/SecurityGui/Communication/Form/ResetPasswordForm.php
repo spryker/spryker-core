@@ -53,7 +53,7 @@ class ResetPasswordForm extends AbstractType
      */
     protected function addUserNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
+        $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new NotBlank(),
                 new Length([

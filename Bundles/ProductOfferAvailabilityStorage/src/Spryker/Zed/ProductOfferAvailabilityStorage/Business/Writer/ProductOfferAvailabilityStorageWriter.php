@@ -135,12 +135,12 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
                 $productOfferAvailabilityStorageEntity = new SpyProductOfferAvailabilityStorage();
             }
 
+            /** @var \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer */
             $productOfferAvailabilityStorageTransfer = $this->mapProductConcreteAvailabilityTransferToProductOfferAvailabilityStorageTransfer(
                 $productOfferAvailabilityTransfer,
                 new ProductOfferAvailabilityStorageTransfer(),
             );
 
-            /** @var \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer */
             $productOfferAvailabilityStorageTransfer->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference());
 
             $productOfferAvailabilityStorageEntity

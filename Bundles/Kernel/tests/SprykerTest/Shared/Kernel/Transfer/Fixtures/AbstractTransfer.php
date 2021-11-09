@@ -136,7 +136,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setString(string $string)
     {
         $this->string = $string;
-        $this->modifiedProperties[self::STRING] = true;
+        $this->modifiedProperties[static::STRING] = true;
 
         return $this;
     }
@@ -154,7 +154,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireString()
     {
-        $this->assertPropertyIsSet(self::STRING);
+        $this->assertPropertyIsSet(static::STRING);
 
         return $this;
     }
@@ -167,7 +167,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setInt(int $int)
     {
         $this->int = $int;
-        $this->modifiedProperties[self::INT] = true;
+        $this->modifiedProperties[static::INT] = true;
 
         return $this;
     }
@@ -185,7 +185,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireInt()
     {
-        $this->assertPropertyIsSet(self::INT);
+        $this->assertPropertyIsSet(static::INT);
 
         return $this;
     }
@@ -198,7 +198,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setBool(bool $bool)
     {
         $this->bool = $bool;
-        $this->modifiedProperties[self::BOOL] = true;
+        $this->modifiedProperties[static::BOOL] = true;
 
         return $this;
     }
@@ -216,7 +216,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireBool()
     {
-        $this->assertPropertyIsSet(self::BOOL);
+        $this->assertPropertyIsSet(static::BOOL);
 
         return $this;
     }
@@ -229,7 +229,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setArray(array $array = [])
     {
         $this->array = $array;
-        $this->modifiedProperties[self::ARRAY_PROPERTY] = true;
+        $this->modifiedProperties[static::ARRAY_PROPERTY] = true;
 
         return $this;
     }
@@ -250,7 +250,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function addArr(array $arr)
     {
         $this->array[] = $arr;
-        $this->modifiedProperties[self::ARRAY_PROPERTY] = true;
+        $this->modifiedProperties[static::ARRAY_PROPERTY] = true;
 
         return $this;
     }
@@ -260,7 +260,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireArr()
     {
-        $this->assertCollectionPropertyIsSet(self::ARRAY_PROPERTY);
+        $this->assertCollectionPropertyIsSet(static::ARRAY_PROPERTY);
 
         return $this;
     }
@@ -273,7 +273,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setTransfer(?TransferInterface $transfer = null)
     {
         $this->transfer = $transfer;
-        $this->modifiedProperties[self::TRANSFER] = true;
+        $this->modifiedProperties[static::TRANSFER] = true;
 
         return $this;
     }
@@ -291,7 +291,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireTransfer()
     {
-        $this->assertPropertyIsSet(self::TRANSFER);
+        $this->assertPropertyIsSet(static::TRANSFER);
 
         return $this;
     }
@@ -304,7 +304,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function setTransferCollection(ArrayObject $transferCollection)
     {
         $this->transferCollection = $transferCollection;
-        $this->modifiedProperties[self::TRANSFER_COLLECTION] = true;
+        $this->modifiedProperties[static::TRANSFER_COLLECTION] = true;
 
         return $this;
     }
@@ -325,7 +325,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     public function addTransferCollection(TransferInterface $transferCollection)
     {
         $this->transferCollection[] = $transferCollection;
-        $this->modifiedProperties[self::TRANSFER_COLLECTION] = true;
+        $this->modifiedProperties[static::TRANSFER_COLLECTION] = true;
 
         return $this;
     }
@@ -335,7 +335,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireTransferCollection()
     {
-        $this->assertCollectionPropertyIsSet(self::TRANSFER_COLLECTION);
+        $this->assertCollectionPropertyIsSet(static::TRANSFER_COLLECTION);
 
         return $this;
     }

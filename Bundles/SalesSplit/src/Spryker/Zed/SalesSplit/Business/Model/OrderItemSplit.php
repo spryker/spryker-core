@@ -159,7 +159,7 @@ class OrderItemSplit implements OrderItemSplitInterface
     {
         $copyOfSalesOrderItem = $salesOrderItem->copy(false);
 
-        $copyOfSalesOrderItem->setGroupKey(self::SPLIT_MARKER . $copyOfSalesOrderItem->getGroupKey());
+        $copyOfSalesOrderItem->setGroupKey(static::SPLIT_MARKER . $copyOfSalesOrderItem->getGroupKey());
         $copyOfSalesOrderItem->setCreatedAt(new DateTime());
         $copyOfSalesOrderItem->setQuantity($quantity);
         $copyOfSalesOrderItem->setLastStateChange(new DateTime());

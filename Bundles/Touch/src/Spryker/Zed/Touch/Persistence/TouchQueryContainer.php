@@ -61,7 +61,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = $this->getFactory()->createTouchQuery();
         $query
-            ->setQueryKey(self::TOUCH_ENTRY_QUERY_KEY)
+            ->setQueryKey(static::TOUCH_ENTRY_QUERY_KEY)
             ->filterByItemType($itemType)
             ->filterByItemId($itemId);
 

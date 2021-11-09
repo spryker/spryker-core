@@ -125,7 +125,7 @@ class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverSt
     {
         $columnName = $this->getColumnPhpName($entityClass, $columnName);
 
-        return sprintf(self::COLUMN_GETTER_TEMPLATE, $columnName);
+        return sprintf(static::COLUMN_GETTER_TEMPLATE, $columnName);
     }
 
     /**

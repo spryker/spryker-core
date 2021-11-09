@@ -99,10 +99,10 @@ class UsersTable extends AbstractTable
             SpyUserTableMap::COL_LAST_NAME => 'Last Name',
             SpyUserTableMap::COL_LAST_LOGIN => 'Last Login',
             SpyUserTableMap::COL_STATUS => 'Status',
-            self::ACTION => self::ACTION,
+            static::ACTION => static::ACTION,
         ]);
 
-        $config->setRawColumns([SpyUserTableMap::COL_STATUS, self::ACTION]);
+        $config->setRawColumns([SpyUserTableMap::COL_STATUS, static::ACTION]);
 
         $config->setSortable([
             SpyUserTableMap::COL_USERNAME,
@@ -151,7 +151,7 @@ class UsersTable extends AbstractTable
                 SpyUserTableMap::COL_LAST_NAME => $item[SpyUserTableMap::COL_LAST_NAME],
                 SpyUserTableMap::COL_LAST_LOGIN => $this->getLastLoginDateTime($item),
                 SpyUserTableMap::COL_STATUS => $this->createStatusLabel($item),
-                self::ACTION => implode(' ', $this->createActionButtons($item)),
+                static::ACTION => implode(' ', $this->createActionButtons($item)),
             ], $this->executeDataExpanderPlugins($item));
         }
 
@@ -178,8 +178,8 @@ class UsersTable extends AbstractTable
         $urls = $this->generateUsersTableExpanderPluginsActionButtons($user);
 
         $urls[] = $this->generateEditButton(
-            Url::generate(self::UPDATE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            Url::generate(static::UPDATE_USER_URL, [
+                static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
             'Edit',
         );
@@ -187,7 +187,7 @@ class UsersTable extends AbstractTable
         $urls[] = $this->createStatusButton($user);
 
         $deleteUrl = Url::generate(static::CONFIRM_DELETE_USER_URL, [
-            self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
         ]);
 
         $urls[] = $this->generateRemoveButton($deleteUrl, 'Delete');

@@ -56,7 +56,7 @@ class ProductCategoryFilterForm extends AbstractType
      */
     protected function addFilterAutocompleteField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FILTER_AUTOCOMPLETE, AutosuggestType::class, [
+        $builder->add(static::FIELD_FILTER_AUTOCOMPLETE, AutosuggestType::class, [
             'label' => 'Add filter',
             'url' => '/product-category-filter-gui/filter-suggestion',
             'attr' => [
@@ -75,7 +75,7 @@ class ProductCategoryFilterForm extends AbstractType
      */
     protected function addActiveFilterHiddenField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FILTERS, HiddenType::class);
+        $builder->add(static::FIELD_FILTERS, HiddenType::class);
 
         return $this;
     }

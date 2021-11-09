@@ -81,7 +81,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $this->targetBaseDirectory = rtrim($targetDirectory, '/') . '/';
         $this->permissionMode = $permissionMode;
 
-        $loader = new FilesystemLoader(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
+        $loader = new FilesystemLoader(__DIR__ . static::TWIG_TEMPLATES_LOCATION);
         $this->twig = new Environment($loader, []);
     }
 
@@ -123,7 +123,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     protected function generateIndexMapClass($mappingName, array $mapping)
     {
-        $fileName = $mappingName . self::CLASS_NAME_SUFFIX . self::CLASS_EXTENSION;
+        $fileName = $mappingName . static::CLASS_NAME_SUFFIX . static::CLASS_EXTENSION;
         $templateData = $this->getTemplateData($mappingName, $mapping);
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
@@ -145,9 +145,9 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $properties = $this->getMappingProperties($mapping);
 
         return [
-            self::TEMPLATE_VARIABLE_CLASS_NAME => $mappingName . self::CLASS_NAME_SUFFIX,
-            self::TEMPLATE_VARIABLE_CONSTANTS => $this->getConstants($properties),
-            self::TEMPLATE_VARIABLE_METADATA => $this->getMetadata($properties),
+            static::TEMPLATE_VARIABLE_CLASS_NAME => $mappingName . static::CLASS_NAME_SUFFIX,
+            static::TEMPLATE_VARIABLE_CONSTANTS => $this->getConstants($properties),
+            static::TEMPLATE_VARIABLE_METADATA => $this->getMetadata($properties),
         ];
     }
 
@@ -200,7 +200,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     protected function getMappingProperties(array $mapping)
     {
-        return $mapping[self::PROPERTIES] ?? [];
+        return $mapping[static::PROPERTIES] ?? [];
     }
 
     /**
@@ -245,13 +245,13 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     protected function getChildMetadata($path, array $propertyData, $propertyName, array $metadata)
     {
-        if (!isset($propertyData[self::PROPERTIES])) {
+        if (!isset($propertyData[static::PROPERTIES])) {
             return $metadata;
         }
 
-        $path .= $propertyName . self::PROPERTY_PATH_SEPARATOR;
+        $path .= $propertyName . static::PROPERTY_PATH_SEPARATOR;
 
-        $childMetadata = $this->getMetadata($propertyData[self::PROPERTIES], $path);
+        $childMetadata = $this->getMetadata($propertyData[static::PROPERTIES], $path);
 
         $metadata = array_merge($metadata, $childMetadata);
 
@@ -268,13 +268,13 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     protected function getChildConstants($path, array $propertyData, $propertyName, array $constants)
     {
-        if (!isset($propertyData[self::PROPERTIES])) {
+        if (!isset($propertyData[static::PROPERTIES])) {
             return $constants;
         }
 
-        $path .= $propertyName . self::PROPERTY_PATH_SEPARATOR;
+        $path .= $propertyName . static::PROPERTY_PATH_SEPARATOR;
 
-        $childMetadata = $this->getConstants($propertyData[self::PROPERTIES], $path);
+        $childMetadata = $this->getConstants($propertyData[static::PROPERTIES], $path);
 
         $constants = array_merge($constants, $childMetadata);
 

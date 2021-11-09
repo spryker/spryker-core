@@ -167,7 +167,7 @@ class MailerTest extends Unit
     protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
-        $mailTransfer->setType(self::MAIL_TYPE_A);
+        $mailTransfer->setType(static::MAIL_TYPE_A);
 
         return $mailTransfer;
     }

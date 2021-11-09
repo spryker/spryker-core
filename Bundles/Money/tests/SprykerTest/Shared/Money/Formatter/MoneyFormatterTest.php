@@ -47,7 +47,7 @@ class MoneyFormatterTest extends Unit
     {
         $moneyFormatter = new MoneyFormatter($this->getMoneyFormatterCollectionMock());
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount(self::AMOUNT);
+        $moneyTransfer->setAmount(static::AMOUNT);
 
         $expectedFormatted = $this->format($moneyTransfer);
         $this->assertSame($expectedFormatted, $moneyFormatter->format($moneyTransfer, 'type'));

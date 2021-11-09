@@ -141,7 +141,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addProductImageIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_IMAGE, HiddenType::class, []);
+            ->add(static::FIELD_ID_PRODUCT_IMAGE, HiddenType::class, []);
 
         return $this;
     }
@@ -171,7 +171,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageSetIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_FK_IMAGE_SET_ID, HiddenType::class, []);
+            ->add(static::FIELD_FK_IMAGE_SET_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -185,7 +185,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImagePreviewField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
+            ->add(static::FIELD_IMAGE_PREVIEW, ImageType::class, [
                 'required' => false,
                 'label' => false,
                 static::OPTION_IMAGE_WIDTH => 150,
@@ -203,7 +203,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageSmallField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_SMALL, TextType::class, [
+            ->add(static::FIELD_IMAGE_SMALL, TextType::class, [
                 'required' => true,
                 'label' => 'Small Image URL',
                 'constraints' => [
@@ -227,7 +227,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageBigField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_LARGE, TextType::class, [
+            ->add(static::FIELD_IMAGE_LARGE, TextType::class, [
                 'required' => true,
                 'label' => 'Large Image URL',
                 'constraints' => [

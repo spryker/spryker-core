@@ -30,7 +30,7 @@ class UserUpdateForm extends UserForm
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setRequired(self::OPTION_STATUS_CHOICES);
+        $resolver->setRequired(static::OPTION_STATUS_CHOICES);
     }
 
     /**
@@ -55,8 +55,8 @@ class UserUpdateForm extends UserForm
     {
         parent::buildForm($builder, $options);
 
-        $builder->add(self::FIELD_STATUS, ChoiceType::class, [
-            'choices' => array_flip($options[self::OPTION_STATUS_CHOICES]),
+        $builder->add(static::FIELD_STATUS, ChoiceType::class, [
+            'choices' => array_flip($options[static::OPTION_STATUS_CHOICES]),
         ]);
     }
 
@@ -68,7 +68,7 @@ class UserUpdateForm extends UserForm
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_PASSWORD, RepeatedType::class, [
+            ->add(static::FIELD_PASSWORD, RepeatedType::class, [
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => 'Password', 'attr' => ['autocomplete' => 'off']],
                 'second_options' => ['label' => 'Repeat Password', 'attr' => ['autocomplete' => 'off']],

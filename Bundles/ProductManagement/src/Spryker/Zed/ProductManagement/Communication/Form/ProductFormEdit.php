@@ -43,7 +43,7 @@ class ProductFormEdit extends ProductFormAdd
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SKU, TextType::class, [
+            ->add(static::FIELD_SKU, TextType::class, [
                 'label' => 'SKU Prefix',
                 'required' => true,
                 'attr' => [
@@ -51,10 +51,10 @@ class ProductFormEdit extends ProductFormAdd
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
+                        'groups' => [static::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new SkuRegex([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
+                        'groups' => [static::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new Callback([
                         'callback' => function ($sku, ExecutionContextInterface $context) {
@@ -77,7 +77,7 @@ class ProductFormEdit extends ProductFormAdd
                                 );
                             }
                         },
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
+                        'groups' => [static::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                 ],
             ]);

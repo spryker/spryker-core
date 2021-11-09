@@ -92,20 +92,20 @@ class ProductCartPluginTest extends Unit
         $localeTransfer = $this->localeFacade->getLocale($localeName);
 
         $taxRateEntity = new SpyTaxRate();
-        $taxRateEntity->setRate(self::TAX_RATE_PERCENTAGE)
-            ->setName(self::TAX_RATE_NAME);
+        $taxRateEntity->setRate(static::TAX_RATE_PERCENTAGE)
+            ->setName(static::TAX_RATE_NAME);
 
         $taxSetEntity = new SpyTaxSet();
         $taxSetEntity->addSpyTaxRate($taxRateEntity)
-            ->setName(self::TAX_SET_NAME);
+            ->setName(static::TAX_SET_NAME);
 
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity->setSpyTaxSet($taxSetEntity)
             ->setAttributes('')
-            ->setSku(self::SKU_PRODUCT_ABSTRACT);
+            ->setSku(static::SKU_PRODUCT_ABSTRACT);
 
         $localizedAttributesEntity = new SpyProductLocalizedAttributes();
-        $localizedAttributesEntity->setName(self::PRODUCT_CONCRETE_NAME)
+        $localizedAttributesEntity->setName(static::PRODUCT_CONCRETE_NAME)
             ->setAttributes('')
             ->setFkLocale($localeTransfer->getIdLocale());
 
@@ -113,20 +113,20 @@ class ProductCartPluginTest extends Unit
         $productConcreteEntity->setSpyProductAbstract($productAbstractEntity)
             ->setAttributes('')
             ->addSpyProductLocalizedAttributes($localizedAttributesEntity)
-            ->setSku(self::SKU_PRODUCT_CONCRETE)
+            ->setSku(static::SKU_PRODUCT_CONCRETE)
             ->save();
 
         $changeTransfer = new CartChangeTransfer();
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku(self::SKU_PRODUCT_CONCRETE);
+        $itemTransfer->setSku(static::SKU_PRODUCT_CONCRETE);
         $changeTransfer->addItem($itemTransfer);
 
         $this->productCartConnectorFacade->expandItems($changeTransfer);
 
         $expandedItemTransfer = $changeTransfer->getItems()[0];
 
-        $this->assertSame(self::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
-        $this->assertSame(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
+        $this->assertSame(static::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
+        $this->assertSame(static::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
         $this->assertSame($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
         $this->assertSame($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
     }

@@ -134,7 +134,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
             $productListProductConcreteStorageReader,
         );
 
-        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(self::CONCRETE_PRODUCT_ID);
+        $actualResult = $productConcreteRestrictionReader->isProductConcreteRestricted(static::CONCRETE_PRODUCT_ID);
 
         $this->assertEquals($expectedResult, $actualResult);
     }

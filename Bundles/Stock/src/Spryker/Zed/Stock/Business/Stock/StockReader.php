@@ -137,7 +137,7 @@ class StockReader implements StockReaderInterface
         $stockTransfer = $this->stockRepository->findStockByName($stockType);
 
         if (!$stockTransfer) {
-            throw new InvalidArgumentException(self::ERROR_STOCK_TYPE_UNKNOWN);
+            throw new InvalidArgumentException(static::ERROR_STOCK_TYPE_UNKNOWN);
         }
 
         return $stockTransfer->getIdStock();

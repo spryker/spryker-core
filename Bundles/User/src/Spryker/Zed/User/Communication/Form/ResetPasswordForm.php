@@ -70,7 +70,7 @@ class ResetPasswordForm extends AbstractType
      */
     protected function addCurrentPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CURRENT_PASSWORD, PasswordType::class, [
+        $builder->add(static::FIELD_CURRENT_PASSWORD, PasswordType::class, [
             'label' => 'Current password',
             'constraints' => [
                 new NotBlank(),
@@ -91,7 +91,7 @@ class ResetPasswordForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
+        $builder->add(static::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new NotBlank(),
             ],

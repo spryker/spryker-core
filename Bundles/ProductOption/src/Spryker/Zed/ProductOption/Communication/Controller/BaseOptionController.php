@@ -45,8 +45,8 @@ class BaseOptionController extends AbstractController
      */
     public function productOptionTableAction(Request $request)
     {
-        $idProductOptionGroup = $this->castId($request->get(self::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-        $tableContext = $request->get(self::URL_PARAM_TABLE_CONTEXT);
+        $idProductOptionGroup = $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
+        $tableContext = $request->get(static::URL_PARAM_TABLE_CONTEXT);
 
         $productOptionsTable = $this->getFactory()->createProductOptionTable(
             $idProductOptionGroup,
@@ -65,7 +65,7 @@ class BaseOptionController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idProductOptionGroup = $this->castId($request->get(self::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
+        $idProductOptionGroup = $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
 
         $productTable = $this->getFactory()->createProductTable($idProductOptionGroup);
 

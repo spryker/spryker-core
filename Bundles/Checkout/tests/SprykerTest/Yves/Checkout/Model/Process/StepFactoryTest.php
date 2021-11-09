@@ -39,12 +39,12 @@ class StepFactoryTest extends Unit
     public function testCreatePaymentMethodSubForms(): void
     {
         $container = new Container();
-        $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = self::METHOD_HANDLER;
+        $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = static::METHOD_HANDLER;
 
         $stepFactory = new StepFactory();
         $stepFactory->setContainer($container);
 
-        $this->assertSame(self::METHOD_HANDLER, $stepFactory->createPaymentMethodHandler());
+        $this->assertSame(static::METHOD_HANDLER, $stepFactory->createPaymentMethodHandler());
     }
 
     /**

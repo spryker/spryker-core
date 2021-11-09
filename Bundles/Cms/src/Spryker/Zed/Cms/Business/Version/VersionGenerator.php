@@ -39,7 +39,7 @@ class VersionGenerator implements VersionGeneratorInterface
         $cmsVersionEntity = $this->queryContainer->queryCmsVersionByIdPage($idCmsPage)->findOne();
 
         if ($cmsVersionEntity === null) {
-            return self::DEFAULT_VERSION_NUMBER;
+            return static::DEFAULT_VERSION_NUMBER;
         }
 
         return $cmsVersionEntity->getVersion() + 1;

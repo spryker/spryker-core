@@ -280,7 +280,7 @@ class ProductFormAdd extends AbstractType
             ->addNewToDateField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
-            ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
+            ->addAttributeSuperForm($builder, $options[static::OPTION_ATTRIBUTE_SUPER])
             ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addTaxRateField($builder, $options)
@@ -300,7 +300,7 @@ class ProductFormAdd extends AbstractType
     {
         $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
-            $name = self::getGeneralFormName($localeTransfer->getLocaleName());
+            $name = static::getGeneralFormName($localeTransfer->getLocaleName());
             $this->addGeneralForm($builder, $name);
         }
 
@@ -317,7 +317,7 @@ class ProductFormAdd extends AbstractType
     {
         $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
-            $name = self::getSeoFormName($localeTransfer->getLocaleName());
+            $name = static::getSeoFormName($localeTransfer->getLocaleName());
             $this->addSeoForm($builder, $name, $options);
         }
 
@@ -334,13 +334,13 @@ class ProductFormAdd extends AbstractType
     {
         $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection();
         foreach ($localeCollection as $localeTransfer) {
-            $name = self::getAbstractAttributeFormName($localeTransfer->getLocaleName());
+            $name = static::getAbstractAttributeFormName($localeTransfer->getLocaleName());
             $localeTransfer = $this->getFactory()->createLocaleProvider()->getLocaleTransfer($localeTransfer->getLocaleName());
             $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeTransfer->getLocaleName()]);
         }
 
-        $defaultName = self::getLocalizedPrefixName(
-            self::FORM_ATTRIBUTE_ABSTRACT,
+        $defaultName = static::getLocalizedPrefixName(
+            static::FORM_ATTRIBUTE_ABSTRACT,
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
@@ -363,12 +363,12 @@ class ProductFormAdd extends AbstractType
     {
         $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection(true);
         foreach ($localeCollection as $localeTransfer) {
-            $name = self::getImagesFormName($localeTransfer->getLocaleName());
+            $name = static::getImagesFormName($localeTransfer->getLocaleName());
             $this->addImageSetForm($builder, $name);
         }
 
-        $defaultName = self::getLocalizedPrefixName(
-            self::FORM_IMAGE_SET,
+        $defaultName = static::getLocalizedPrefixName(
+            static::FORM_IMAGE_SET,
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
@@ -400,15 +400,15 @@ class ProductFormAdd extends AbstractType
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SKU, TextType::class, [
+            ->add(static::FIELD_SKU, TextType::class, [
                 'label' => 'SKU Prefix',
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
+                        'groups' => [static::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new SkuRegex([
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
+                        'groups' => [static::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                     new Callback([
                         'callback' => function ($sku, ExecutionContextInterface $context) {
@@ -431,7 +431,7 @@ class ProductFormAdd extends AbstractType
                                 );
                             }
                         },
-                        'groups' => [self::VALIDATION_GROUP_UNIQUE_SKU],
+                        'groups' => [static::VALIDATION_GROUP_UNIQUE_SKU],
                     ]),
                 ],
             ]);
@@ -495,7 +495,7 @@ class ProductFormAdd extends AbstractType
     protected function addProductAbstractIdHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, []);
+            ->add(static::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, []);
 
         return $this;
     }
@@ -520,7 +520,7 @@ class ProductFormAdd extends AbstractType
                             GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                         }
                     },
-                    'groups' => [self::VALIDATION_GROUP_GENERAL],
+                    'groups' => [static::VALIDATION_GROUP_GENERAL],
                 ])],
             ]);
 
@@ -556,7 +556,7 @@ class ProductFormAdd extends AbstractType
                             }
                         }
                     },
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT],
+                    'groups' => [static::VALIDATION_GROUP_ATTRIBUTE_ABSTRACT],
                 ])],
             ]);
 
@@ -572,7 +572,7 @@ class ProductFormAdd extends AbstractType
     protected function addAttributeSuperForm(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FORM_ATTRIBUTE_SUPER, CollectionType::class, [
+            ->add(static::FORM_ATTRIBUTE_SUPER, CollectionType::class, [
                 'entry_type' => AttributeSuperForm::class,
                 'entry_options' => [
                     AttributeSuperForm::OPTION_ATTRIBUTE => $options,
@@ -589,7 +589,7 @@ class ProductFormAdd extends AbstractType
                             }
                         }
                     },
-                    'groups' => [self::VALIDATION_GROUP_ATTRIBUTE_SUPER],
+                    'groups' => [static::VALIDATION_GROUP_ATTRIBUTE_SUPER],
                 ])],
             ]);
 
@@ -632,7 +632,7 @@ class ProductFormAdd extends AbstractType
                 'entry_type' => ProductMoneyType::class,
                 'constraints' => [
                     new ProductPriceNotBlank([
-                        'groups' => [self::VALIDATION_GROUP_PRICE_SOURCE],
+                        'groups' => [static::VALIDATION_GROUP_PRICE_SOURCE],
                     ]),
                 ],
             ],
@@ -649,7 +649,7 @@ class ProductFormAdd extends AbstractType
      */
     protected function addTaxRateField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TAX_RATE, Select2ComboBoxType::class, [
+        $builder->add(static::FIELD_TAX_RATE, Select2ComboBoxType::class, [
             'label' => 'Tax Set',
             'required' => true,
             'choices' => array_flip($options[static::OPTION_TAX_RATES]),
@@ -718,7 +718,7 @@ class ProductFormAdd extends AbstractType
      */
     public static function getGeneralFormName($localeCode)
     {
-        return self::getLocalizedPrefixName(self::FORM_GENERAL, $localeCode);
+        return static::getLocalizedPrefixName(static::FORM_GENERAL, $localeCode);
     }
 
     /**
@@ -728,7 +728,7 @@ class ProductFormAdd extends AbstractType
      */
     public static function getSeoFormName($localeCode)
     {
-        return self::getLocalizedPrefixName(self::FORM_SEO, $localeCode);
+        return static::getLocalizedPrefixName(static::FORM_SEO, $localeCode);
     }
 
     /**
@@ -738,7 +738,7 @@ class ProductFormAdd extends AbstractType
      */
     public static function getAbstractAttributeFormName($localeCode)
     {
-        return self::getLocalizedPrefixName(self::FORM_ATTRIBUTE_ABSTRACT, $localeCode);
+        return static::getLocalizedPrefixName(static::FORM_ATTRIBUTE_ABSTRACT, $localeCode);
     }
 
     /**
@@ -748,7 +748,7 @@ class ProductFormAdd extends AbstractType
      */
     public static function getImagesFormName($localeCode)
     {
-        return self::getLocalizedPrefixName(self::FORM_IMAGE_SET, $localeCode);
+        return static::getLocalizedPrefixName(static::FORM_IMAGE_SET, $localeCode);
     }
 
     /**

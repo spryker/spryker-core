@@ -65,8 +65,8 @@ class VoucherController extends AbstractController
      */
     public function deleteDiscountVouchersAction(Request $request)
     {
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
-        $idPool = $this->castId($request->query->get(self::URL_PARAM_ID_POOL));
+        $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
+        $idPool = $this->castId($request->query->get(static::URL_PARAM_ID_POOL));
 
         $affectedRows = $this->getQueryContainer()
             ->queryVouchersByIdVoucherPool($idPool)
@@ -104,7 +104,7 @@ class VoucherController extends AbstractController
             );
         }
 
-        $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
+        $idVoucher = $this->castId($request->query->get(static::URL_PARAM_ID_VOUCHER));
 
         $voucherEntity = $this->getQueryContainer()
             ->queryVoucherByIdVoucher($idVoucher);
@@ -129,7 +129,7 @@ class VoucherController extends AbstractController
      */
     public function exportAction(Request $request)
     {
-        $idPool = $this->castId($request->query->get(self::URL_PARAM_ID_POOL));
+        $idPool = $this->castId($request->query->get(static::URL_PARAM_ID_POOL));
 
         return $this->generateCsvFromVouchers($idPool);
     }
@@ -160,7 +160,7 @@ class VoucherController extends AbstractController
 
         $streamedResponse->setStatusCode(Response::HTTP_OK);
         $streamedResponse->headers->set('Content-Type', 'text/csv; charset=utf-8');
-        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="' . self::CSV_FILENAME . '"');
+        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename="' . static::CSV_FILENAME . '"');
 
         return $streamedResponse->send();
     }
@@ -175,7 +175,7 @@ class VoucherController extends AbstractController
         $redirectUrl = Url::generate(
             '/discount/index/edit',
             [
-                self::URL_PARAM_ID_DISCOUNT => $idDiscount,
+                static::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ],
             [
                 Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,

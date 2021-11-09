@@ -69,7 +69,7 @@ class RateTable extends AbstractTable
             SpyTaxRateTableMap::COL_CREATED_AT => 'Created at',
             SpyCountryTableMap::COL_NAME => 'Country',
             SpyTaxRateTableMap::COL_RATE => 'Percentage',
-            self::TABLE_COL_ACTIONS => 'Actions',
+            static::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -87,7 +87,7 @@ class RateTable extends AbstractTable
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
-        $config->addRawColumn(self::TABLE_COL_ACTIONS);
+        $config->addRawColumn(static::TABLE_COL_ACTIONS);
 
         return $config;
     }
@@ -113,7 +113,7 @@ class RateTable extends AbstractTable
                 SpyTaxRateTableMap::COL_NAME => $taxRateEntity->getName(),
                 SpyCountryTableMap::COL_NAME => $this->getCountryName($taxRateEntity),
                 SpyTaxRateTableMap::COL_RATE => $taxRateEntity->getRate(),
-                self::TABLE_COL_ACTIONS => $this->getActionButtons($taxRateEntity),
+                static::TABLE_COL_ACTIONS => $this->getActionButtons($taxRateEntity),
             ];
         }
 
@@ -145,7 +145,7 @@ class RateTable extends AbstractTable
         $editTaxRateUrl = Url::generate(
             '/tax/rate/edit',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
+                static::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ],
         );
 
@@ -162,7 +162,7 @@ class RateTable extends AbstractTable
         $viewTaxRateUrl = Url::generate(
             '/tax/rate/view',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
+                static::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ],
         );
 
@@ -179,7 +179,7 @@ class RateTable extends AbstractTable
         $deleteTaxRateUrl = Url::generate(
             '/tax/delete-rate',
             [
-                self::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
+                static::URL_PARAM_ID_TAX_RATE => $taxRateEntity->getIdTaxRate(),
             ],
         );
 
@@ -193,7 +193,7 @@ class RateTable extends AbstractTable
      */
     protected function getCountryName(SpyTaxRate $taxRateEntity)
     {
-        $countryName = self::COUNTRY_NOT_AVAILABLE;
+        $countryName = static::COUNTRY_NOT_AVAILABLE;
 
         /** @var \Orm\Zed\Country\Persistence\SpyCountry|null $countryEntity */
         $countryEntity = $taxRateEntity->getCountry();

@@ -268,8 +268,8 @@ class GuiTableFacadeTest extends Unit
         $this->setDateResponseColumnValueFormatterPluginMockDependency();
         $guiTableDataResponseTransfer = $this->getGuiTableDataResponseTransfer();
         $guiTableConfigurationTransfer = (new GuiTableConfigurationTransfer())
-            ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(self::TEST_COLUMN_ID_1)->setType(static::TEST_TYPE_DATE))
-            ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(self::TEST_COLUMN_ID_2)->setType('column_type1'));
+            ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(static::TEST_COLUMN_ID_1)->setType(static::TEST_TYPE_DATE))
+            ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(static::TEST_COLUMN_ID_2)->setType('column_type1'));
 
         // Act
         $formattedGuiTableDataResponse = $this->tester->getFacade()->formatGuiTableDataResponse(
@@ -279,8 +279,8 @@ class GuiTableFacadeTest extends Unit
 
         // Assert
         $this->assertIsArray($formattedGuiTableDataResponse);
-        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][0][self::TEST_COLUMN_ID_1]);
-        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][1][self::TEST_COLUMN_ID_1]);
+        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][0][static::TEST_COLUMN_ID_1]);
+        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][1][static::TEST_COLUMN_ID_1]);
     }
 
     /**

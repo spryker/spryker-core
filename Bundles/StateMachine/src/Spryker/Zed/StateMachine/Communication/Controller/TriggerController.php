@@ -80,15 +80,15 @@ class TriggerController extends AbstractController
             E_USER_DEPRECATED,
         );
 
-        $stateMachineName = $request->query->get(self::URL_PARAM_STATE_MACHINE_NAME);
-        $processName = $request->query->get(self::URL_PARAM_PROCESS_NAME);
+        $stateMachineName = $request->query->get(static::URL_PARAM_STATE_MACHINE_NAME);
+        $processName = $request->query->get(static::URL_PARAM_PROCESS_NAME);
 
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($processName, $stateMachineName);
 
-        $identifier = $this->castId($request->query->get(self::URL_PARAM_IDENTIFIER));
+        $identifier = $this->castId($request->query->get(static::URL_PARAM_IDENTIFIER));
         $this->getFacade()->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
 
-        $redirect = $request->query->get(self::URL_PARAM_REDIRECT, self::DEFAULT_REDIRECT_URL);
+        $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
         return $this->redirectResponse(htmlentities($redirect));
     }
@@ -133,15 +133,15 @@ class TriggerController extends AbstractController
             E_USER_DEPRECATED,
         );
 
-        $identifier = $this->castId($request->query->get(self::URL_PARAM_IDENTIFIER));
-        $idState = $this->castId($request->query->get(self::URL_PARAM_ID_STATE));
+        $identifier = $this->castId($request->query->get(static::URL_PARAM_IDENTIFIER));
+        $idState = $this->castId($request->query->get(static::URL_PARAM_ID_STATE));
 
         $stateMachineItemTransfer = $this->createStateMachineItemTransfer($identifier, $idState);
 
-        $eventName = $request->query->get(self::URL_PARAM_EVENT);
+        $eventName = $request->query->get(static::URL_PARAM_EVENT);
         $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
 
-        $redirect = $request->query->get(self::URL_PARAM_REDIRECT, self::DEFAULT_REDIRECT_URL);
+        $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
         return $this->redirectResponse(htmlentities($redirect));
     }

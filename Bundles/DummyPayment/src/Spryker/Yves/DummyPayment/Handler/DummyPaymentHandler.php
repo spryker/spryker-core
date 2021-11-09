@@ -51,8 +51,8 @@ class DummyPaymentHandler
     protected function setPaymentProviderAndMethod(QuoteTransfer $quoteTransfer, $paymentSelection)
     {
         $quoteTransfer->getPayment()
-            ->setPaymentProvider(self::PAYMENT_PROVIDER)
-            ->setPaymentMethod(self::$paymentMethods[$paymentSelection]);
+            ->setPaymentProvider(static::PAYMENT_PROVIDER)
+            ->setPaymentMethod(static::$paymentMethods[$paymentSelection]);
     }
 
     /**

@@ -28,7 +28,7 @@ class UpdateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
+        $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
         $navigationFormDataProvider = $this->getFactory()->createNavigationFormDataProvider();
 
         $navigationFormData = $navigationFormDataProvider->getData($idNavigation);

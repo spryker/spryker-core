@@ -46,8 +46,8 @@ class CurrencyBuilderTest extends Unit
     {
         $currencyBuilder = $this->getCurrencyBuilder();
 
-        $currencyTransfer = $currencyBuilder->fromIsoCode(self::DEFAULT_CURRENCY);
-        $this->assertSame(self::DEFAULT_CURRENCY, $currencyTransfer->getCode());
+        $currencyTransfer = $currencyBuilder->fromIsoCode(static::DEFAULT_CURRENCY);
+        $this->assertSame(static::DEFAULT_CURRENCY, $currencyTransfer->getCode());
     }
 
     /**

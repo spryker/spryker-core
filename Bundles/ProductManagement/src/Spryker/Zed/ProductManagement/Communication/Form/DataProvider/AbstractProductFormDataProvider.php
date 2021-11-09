@@ -574,16 +574,16 @@ class AbstractProductFormDataProvider
             $valueDisabled = true;
 
             $values[$type] = [
-                self::FORM_FIELD_ID => $id,
-                self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
-                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_SUPER => $isSuper,
-                self::FORM_FIELD_INPUT_TYPE => $inputType,
-                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
+                static::FORM_FIELD_ID => $id,
+                static::FORM_FIELD_VALUE => $value,
+                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                static::FORM_FIELD_SUPER => $isSuper,
+                static::FORM_FIELD_INPUT_TYPE => $inputType,
+                static::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                static::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                static::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -612,7 +612,7 @@ class AbstractProductFormDataProvider
             $isProductSpecificAttribute = true;
             $id = null;
             $isSuper = false;
-            $inputType = self::DEFAULT_INPUT_TYPE;
+            $inputType = static::DEFAULT_INPUT_TYPE;
             $allowInput = false;
             $value = $productAttributeValues[$type] ?? null;
             $shouldBeTextArea = mb_strlen($value) > 255;
@@ -620,20 +620,20 @@ class AbstractProductFormDataProvider
             $valueDisabled = true;
 
             if ($shouldBeTextArea) {
-                $inputType = self::TEXT_AREA_INPUT_TYPE;
+                $inputType = static::TEXT_AREA_INPUT_TYPE;
             }
 
             $values[$type] = [
-                self::FORM_FIELD_ID => $id,
-                self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
-                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_SUPER => $isSuper,
-                self::FORM_FIELD_INPUT_TYPE => $inputType,
-                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
+                static::FORM_FIELD_ID => $id,
+                static::FORM_FIELD_VALUE => $value,
+                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                static::FORM_FIELD_SUPER => $isSuper,
+                static::FORM_FIELD_INPUT_TYPE => $inputType,
+                static::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                static::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                static::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -700,7 +700,7 @@ class AbstractProductFormDataProvider
 
             $isProductSpecificAttribute = true;
             $id = null;
-            $inputType = self::DEFAULT_INPUT_TYPE;
+            $inputType = static::DEFAULT_INPUT_TYPE;
             $allowInput = false;
             $value = $productAttributeValues[$type] ?? '';
             $shouldBeTextArea = mb_strlen($value) > 255;
@@ -716,23 +716,23 @@ class AbstractProductFormDataProvider
             }
 
             if ($shouldBeTextArea) {
-                $inputType = self::TEXT_AREA_INPUT_TYPE;
+                $inputType = static::TEXT_AREA_INPUT_TYPE;
             }
 
             $checkboxDisabled = false;
             $valueDisabled = true;
 
             $values[$type] = [
-                self::FORM_FIELD_ID => $id,
-                self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => (bool)$value,
-                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_SUPER => $isSuper,
-                self::FORM_FIELD_INPUT_TYPE => $inputType,
-                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
+                static::FORM_FIELD_ID => $id,
+                static::FORM_FIELD_VALUE => $value,
+                static::FORM_FIELD_NAME => (bool)$value,
+                static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                static::FORM_FIELD_SUPER => $isSuper,
+                static::FORM_FIELD_INPUT_TYPE => $inputType,
+                static::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                static::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                static::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -747,16 +747,16 @@ class AbstractProductFormDataProvider
             $valueDisabled = true;
 
             $values[$type] = [
-                self::FORM_FIELD_ID => $id,
-                self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => $value !== null,
-                self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
-                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
-                self::FORM_FIELD_SUPER => $attributeTransfer->getIsSuper(),
-                self::FORM_FIELD_INPUT_TYPE => $attributeTransfer->getInputType(),
-                self::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
-                self::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
-                self::FORM_FIELD_ALLOW_INPUT => $allowInput,
+                static::FORM_FIELD_ID => $id,
+                static::FORM_FIELD_VALUE => $value,
+                static::FORM_FIELD_NAME => $value !== null,
+                static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
+                static::FORM_FIELD_SUPER => $attributeTransfer->getIsSuper(),
+                static::FORM_FIELD_INPUT_TYPE => $attributeTransfer->getInputType(),
+                static::FORM_FIELD_VALUE_DISABLED => $valueDisabled,
+                static::FORM_FIELD_NAME_DISABLED => $checkboxDisabled,
+                static::FORM_FIELD_ALLOW_INPUT => $allowInput,
             ];
         }
 
@@ -776,16 +776,16 @@ class AbstractProductFormDataProvider
             $value = array_key_exists($key, $productAttributeValues) ? $productAttributeValues[$key] : null;
 
             $values[$key] = [
-                self::FORM_FIELD_ID => null,
-                self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
-                self::FORM_FIELD_PRODUCT_SPECIFIC => true,
-                self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
-                self::FORM_FIELD_SUPER => false,
-                self::FORM_FIELD_INPUT_TYPE => 'text',
-                self::FORM_FIELD_VALUE_DISABLED => true,
-                self::FORM_FIELD_NAME_DISABLED => true,
-                self::FORM_FIELD_ALLOW_INPUT => false,
+                static::FORM_FIELD_ID => null,
+                static::FORM_FIELD_VALUE => $value,
+                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_PRODUCT_SPECIFIC => true,
+                static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
+                static::FORM_FIELD_SUPER => false,
+                static::FORM_FIELD_INPUT_TYPE => 'text',
+                static::FORM_FIELD_VALUE_DISABLED => true,
+                static::FORM_FIELD_NAME_DISABLED => true,
+                static::FORM_FIELD_ALLOW_INPUT => false,
             ];
         }
 

@@ -194,21 +194,21 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setHostname($this->utilNetworkService->getHostName());
 
         $path = 'N/A';
-        if (PHP_SAPI === self::SAPI_CLI || PHP_SAPI === self::SAPI_PHPDBG) {
+        if (PHP_SAPI === static::SAPI_CLI || PHP_SAPI === static::SAPI_PHPDBG) {
             $path = PHP_SAPI;
-            if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
-                $path = implode(' ', $_SERVER[self::ARGV]);
+            if (isset($_SERVER[static::ARGV]) && is_array($_SERVER[static::ARGV])) {
+                $path = implode(' ', $_SERVER[static::ARGV]);
             }
         } else {
-            if (isset($_SERVER[self::DOCUMENT_URI])) {
-                $path = $_SERVER[self::DOCUMENT_URI];
+            if (isset($_SERVER[static::DOCUMENT_URI])) {
+                $path = $_SERVER[static::DOCUMENT_URI];
             }
         }
         $logEntity->setPath($path);
 
         $params = [];
-        if (!empty($_SERVER[self::QUERY_STRING])) {
-            $params = $this->getParamsFromQueryString($_SERVER[self::QUERY_STRING]);
+        if (!empty($_SERVER[static::QUERY_STRING])) {
+            $params = $this->getParamsFromQueryString($_SERVER[static::QUERY_STRING]);
         }
 
         $logEntity->setParams($params);

@@ -57,14 +57,14 @@ class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTe
     {
         $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock());
         $moneyTransfer = new MoneyTransfer();
-        $moneyTransfer->setAmount(self::AMOUNT);
+        $moneyTransfer->setAmount(static::AMOUNT);
 
         $isoCodeTransfer = new CurrencyTransfer();
-        $isoCodeTransfer->setCode(self::CURRENCY);
+        $isoCodeTransfer->setCode(static::CURRENCY);
         $moneyTransfer->setCurrency($isoCodeTransfer);
 
         $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName(self::LOCALE);
+        $localeTransfer->setLocaleName(static::LOCALE);
         $moneyTransfer->setLocale($localeTransfer);
 
         $formatted = $intlMoneyFormatter->format($moneyTransfer);

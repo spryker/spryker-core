@@ -53,7 +53,7 @@ class FilterPreferencesTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         return $config;
     }
@@ -64,10 +64,10 @@ class FilterPreferencesTable extends AbstractTable
     protected function getHeaderFields()
     {
         return [
-            self::COL_POSITION => 'Filter position',
-            self::COL_NAME => 'Attribute key',
-            self::COL_FILTER_TYPE => 'Filter type',
-            self::ACTIONS => 'Actions',
+            static::COL_POSITION => 'Filter position',
+            static::COL_NAME => 'Attribute key',
+            static::COL_FILTER_TYPE => 'Filter type',
+            static::ACTIONS => 'Actions',
         ];
     }
 
@@ -77,8 +77,8 @@ class FilterPreferencesTable extends AbstractTable
     protected function getSearchableFields()
     {
         return [
-            self::COL_NAME => SpyProductAttributeKeyTableMap::COL_KEY,
-            self::COL_FILTER_TYPE,
+            static::COL_NAME => SpyProductAttributeKeyTableMap::COL_KEY,
+            static::COL_FILTER_TYPE,
         ];
     }
 
@@ -88,9 +88,9 @@ class FilterPreferencesTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
-            self::COL_POSITION,
-            self::COL_NAME,
-            self::COL_FILTER_TYPE,
+            static::COL_POSITION,
+            static::COL_NAME,
+            static::COL_FILTER_TYPE,
         ];
     }
 
@@ -107,10 +107,10 @@ class FilterPreferencesTable extends AbstractTable
 
         foreach ($productSearchAttributes as $productSearchAttributeEntity) {
             $result[] = [
-                self::COL_POSITION => $productSearchAttributeEntity->getPosition(),
-                self::COL_NAME => $productSearchAttributeEntity->getSpyProductAttributeKey()->getKey(),
-                self::COL_FILTER_TYPE => $productSearchAttributeEntity->getFilterType(),
-                self::ACTIONS => $this->getActions($productSearchAttributeEntity->getIdProductSearchAttribute()),
+                static::COL_POSITION => $productSearchAttributeEntity->getPosition(),
+                static::COL_NAME => $productSearchAttributeEntity->getSpyProductAttributeKey()->getKey(),
+                static::COL_FILTER_TYPE => $productSearchAttributeEntity->getFilterType(),
+                static::ACTIONS => $this->getActions($productSearchAttributeEntity->getIdProductSearchAttribute()),
             ];
         }
 
@@ -127,7 +127,7 @@ class FilterPreferencesTable extends AbstractTable
         $query = $this
             ->productSearchQueryContainer
             ->queryFilterPreferencesTable()
-            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, self::COL_NAME);
+            ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, static::COL_NAME);
 
         $productAttributeKey = $this->runQuery($query, $config, true);
 

@@ -77,9 +77,9 @@ class VariantController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $sku = trim($request->get(self::PARAM_SKU, ''));
-        $attributeValuesJson = trim($request->get(self::PARAM_ATTRIBUTE_VALUES, ''));
-        $localizedAttributeValuesJsonArray = $request->get(self::PARAM_LOCALIZED_ATTRIBUTE_VALUES, []);
+        $sku = trim($request->get(static::PARAM_SKU, ''));
+        $attributeValuesJson = trim($request->get(static::PARAM_ATTRIBUTE_VALUES, ''));
+        $localizedAttributeValuesJsonArray = $request->get(static::PARAM_LOCALIZED_ATTRIBUTE_VALUES, []);
 
         $localizedAttributes = [];
         $jsonUtil = new Json();
@@ -113,8 +113,8 @@ class VariantController extends AbstractController
      */
     public function activateProductVariantAction(Request $request)
     {
-        $idProductConcrete = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_CONCRETE));
-        $idProductAbstract = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_ABSTRACT));
+        $idProductConcrete = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT));
 
         $this->getFactory()
             ->getProductFacade()
@@ -133,8 +133,8 @@ class VariantController extends AbstractController
      */
     public function deactivateProductVariantAction(Request $request)
     {
-        $idProductConcrete = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_CONCRETE));
-        $idProductAbstract = $this->castId($request->query->get(self::PARAM_ID_PRODUCT_ABSTRACT));
+        $idProductConcrete = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId($request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT));
 
         $this->getFactory()
             ->getProductFacade()

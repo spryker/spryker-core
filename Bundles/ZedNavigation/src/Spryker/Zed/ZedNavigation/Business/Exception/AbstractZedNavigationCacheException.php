@@ -25,7 +25,7 @@ abstract class AbstractZedNavigationCacheException extends Exception
      */
     public function __construct($message = '', $code = 0, ?Exception $previous = null)
     {
-        $message .= PHP_EOL . PHP_EOL . self::MESSAGE;
+        $message .= PHP_EOL . PHP_EOL . static::MESSAGE;
 
         parent::__construct($message, $code, $previous);
     }

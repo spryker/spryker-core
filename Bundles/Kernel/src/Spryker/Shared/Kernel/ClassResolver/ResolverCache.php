@@ -43,15 +43,15 @@ class ResolverCache implements ResolverCacheInterface
      */
     protected function getUnresolvableCollection()
     {
-        if (self::$unresolvableCollection === null) {
+        if (static::$unresolvableCollection === null) {
             $callback = function () {
                 return $this->getData();
             };
 
-            self::$unresolvableCollection = new Lazy($callback);
+            static::$unresolvableCollection = new Lazy($callback);
         }
 
-        return self::$unresolvableCollection;
+        return static::$unresolvableCollection;
     }
 
     /**
@@ -113,7 +113,7 @@ class ResolverCache implements ResolverCacheInterface
      */
     protected function isModified()
     {
-        return self::$modified;
+        return static::$modified;
     }
 
     /**
@@ -121,6 +121,6 @@ class ResolverCache implements ResolverCacheInterface
      */
     protected function markAsModified()
     {
-        self::$modified = true;
+        static::$modified = true;
     }
 }

@@ -75,7 +75,7 @@ class InvoiceSubForm extends AbstractType
     protected function addDateOfBirth(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_DATE_OF_BIRTH,
+            static::FIELD_DATE_OF_BIRTH,
             BirthdayType::class,
             [
                 'label' => 'Birth date dd.MM.yyyy',

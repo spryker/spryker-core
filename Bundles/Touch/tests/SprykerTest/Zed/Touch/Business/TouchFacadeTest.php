@@ -98,9 +98,9 @@ class TouchFacadeTest extends Unit
 
         $this->touchFacade = $this->createTouchFacade();
 
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_2);
-        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, static::ITEM_ID_1);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, static::ITEM_ID_2);
+        $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, static::ITEM_ID_3);
     }
 
     /**
@@ -109,17 +109,17 @@ class TouchFacadeTest extends Unit
     public function bulkTouchMethodsDataProvider(): array
     {
         return [
-            ['bulkTouchActive', [self::ITEM_ID_1], 1],
-            ['bulkTouchActive', [self::ITEM_ID_1, self::ITEM_ID_2], 1],
-            ['bulkTouchActive', [self::ITEM_ID_1, self::ITEM_ID_FOR_INSERT], 1],
+            ['bulkTouchActive', [static::ITEM_ID_1], 1],
+            ['bulkTouchActive', [static::ITEM_ID_1, static::ITEM_ID_2], 1],
+            ['bulkTouchActive', [static::ITEM_ID_1, static::ITEM_ID_FOR_INSERT], 1],
 
-            ['bulkTouchInactive', [self::ITEM_ID_2], 1, self::ITEM_EVENT_INACTIVE],
-            ['bulkTouchInactive', [self::ITEM_ID_2, self::ITEM_ID_3], 1, self::ITEM_EVENT_INACTIVE],
-            ['bulkTouchInactive', [self::ITEM_ID_2, self::ITEM_ID_FOR_INSERT], 1],
+            ['bulkTouchInactive', [static::ITEM_ID_2], 1, static::ITEM_EVENT_INACTIVE],
+            ['bulkTouchInactive', [static::ITEM_ID_2, static::ITEM_ID_3], 1, static::ITEM_EVENT_INACTIVE],
+            ['bulkTouchInactive', [static::ITEM_ID_2, static::ITEM_ID_FOR_INSERT], 1],
 
-            ['bulkTouchDeleted', [self::ITEM_ID_3], 1, self::ITEM_EVENT_DELETED],
-            ['bulkTouchDeleted', [self::ITEM_ID_3, self::ITEM_ID_1], 1, self::ITEM_EVENT_DELETED],
-            ['bulkTouchDeleted', [self::ITEM_ID_3, self::ITEM_ID_FOR_INSERT], 1],
+            ['bulkTouchDeleted', [static::ITEM_ID_3], 1, static::ITEM_EVENT_DELETED],
+            ['bulkTouchDeleted', [static::ITEM_ID_3, static::ITEM_ID_1], 1, static::ITEM_EVENT_DELETED],
+            ['bulkTouchDeleted', [static::ITEM_ID_3, static::ITEM_ID_FOR_INSERT], 1],
         ];
     }
 
@@ -135,7 +135,7 @@ class TouchFacadeTest extends Unit
      */
     public function testBulkTouchSetMethods(string $method, array $itemIds, int $expectedAffectedRows, string $expectedItemEvent): void
     {
-        $affectedRows = $this->touchFacade->$method(self::ITEM_TYPE, $itemIds);
+        $affectedRows = $this->touchFacade->$method(static::ITEM_TYPE, $itemIds);
 
         $this->assertSame($expectedAffectedRows, $affectedRows);
 
@@ -150,17 +150,17 @@ class TouchFacadeTest extends Unit
     public function bulkTouchSetMethodsDataProvider(): array
     {
         return [
-            ['bulkTouchSetActive', [self::ITEM_ID_1], 1, self::ITEM_EVENT_ACTIVE],
-            ['bulkTouchSetActive', [self::ITEM_ID_1, self::ITEM_ID_2], 2, self::ITEM_EVENT_ACTIVE],
-            ['bulkTouchSetActive', [self::ITEM_ID_1, self::ITEM_ID_FOR_INSERT], 2, self::ITEM_EVENT_ACTIVE],
+            ['bulkTouchSetActive', [static::ITEM_ID_1], 1, static::ITEM_EVENT_ACTIVE],
+            ['bulkTouchSetActive', [static::ITEM_ID_1, static::ITEM_ID_2], 2, static::ITEM_EVENT_ACTIVE],
+            ['bulkTouchSetActive', [static::ITEM_ID_1, static::ITEM_ID_FOR_INSERT], 2, static::ITEM_EVENT_ACTIVE],
 
-            ['bulkTouchSetInactive', [self::ITEM_ID_2], 1, self::ITEM_EVENT_INACTIVE],
-            ['bulkTouchSetInactive', [self::ITEM_ID_2, self::ITEM_ID_3], 2, self::ITEM_EVENT_INACTIVE],
-            ['bulkTouchSetInactive', [self::ITEM_ID_2, self::ITEM_ID_FOR_INSERT], 2, self::ITEM_EVENT_INACTIVE],
+            ['bulkTouchSetInactive', [static::ITEM_ID_2], 1, static::ITEM_EVENT_INACTIVE],
+            ['bulkTouchSetInactive', [static::ITEM_ID_2, static::ITEM_ID_3], 2, static::ITEM_EVENT_INACTIVE],
+            ['bulkTouchSetInactive', [static::ITEM_ID_2, static::ITEM_ID_FOR_INSERT], 2, static::ITEM_EVENT_INACTIVE],
 
-            ['bulkTouchSetDeleted', [self::ITEM_ID_3], 1, self::ITEM_EVENT_DELETED],
-            ['bulkTouchSetDeleted', [self::ITEM_ID_3, self::ITEM_ID_1], 2, self::ITEM_EVENT_DELETED],
-            ['bulkTouchSetDeleted', [self::ITEM_ID_3, self::ITEM_ID_FOR_INSERT], 2, self::ITEM_EVENT_DELETED],
+            ['bulkTouchSetDeleted', [static::ITEM_ID_3], 1, static::ITEM_EVENT_DELETED],
+            ['bulkTouchSetDeleted', [static::ITEM_ID_3, static::ITEM_ID_1], 2, static::ITEM_EVENT_DELETED],
+            ['bulkTouchSetDeleted', [static::ITEM_ID_3, static::ITEM_ID_FOR_INSERT], 2, static::ITEM_EVENT_DELETED],
         ];
     }
 
@@ -197,7 +197,7 @@ class TouchFacadeTest extends Unit
     {
         $touchQuery = new SpyTouchQuery();
 
-        $touchQuery->filterByItemType(self::ITEM_TYPE)
+        $touchQuery->filterByItemType(static::ITEM_TYPE)
             ->filterByItemId($itemId)
             ->filterByItemEvent($itemEvent);
 

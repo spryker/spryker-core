@@ -89,7 +89,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
             static::COLUMN_NAME,
         ]);
 
-        $config->addRawColumn(self::COLUMN_ACTION);
+        $config->addRawColumn(static::COLUMN_ACTION);
         $config->setUrl($this->getTableUrl($config));
 
         return $config;

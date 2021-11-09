@@ -140,7 +140,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
                 ->filterByIdProductAbstract($productAbstractIds, Criteria::IN)
-                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, self::COL_ID_ABSTRACT_PRODUCT)
+                ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_ABSTRACT_PRODUCT)
                 ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->endUse()
             ->useSpyTaxSetTaxQuery()
@@ -151,9 +151,9 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
                     ->_or()
                     ->filterByName(TaxConstants::TAX_EXEMPT_PLACEHOLDER)
                 ->endUse()
-                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([self::COL_MAX_TAX_RATE]);
+            ->select([static::COL_MAX_TAX_RATE]);
     }
 
     /**

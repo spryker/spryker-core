@@ -30,7 +30,7 @@ class ContainerGlobals
             return static::$onlyFor[$dependencyProviderClassName];
         }
 
-        return self::$containerGlobals;
+        return static::$containerGlobals;
     }
 
     /**

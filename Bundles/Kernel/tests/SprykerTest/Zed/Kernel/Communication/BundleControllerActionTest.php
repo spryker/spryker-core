@@ -45,7 +45,7 @@ class BundleControllerActionTest extends Unit
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
-        $this->assertSame(self::BUNDLE, $bundleControllerAction->getBundle());
+        $this->assertSame(static::BUNDLE, $bundleControllerAction->getBundle());
     }
 
     /**
@@ -55,7 +55,7 @@ class BundleControllerActionTest extends Unit
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
-        $this->assertSame(self::CONTROLLER, $bundleControllerAction->getController());
+        $this->assertSame(static::CONTROLLER, $bundleControllerAction->getController());
     }
 
     /**
@@ -65,7 +65,7 @@ class BundleControllerActionTest extends Unit
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
-        $this->assertSame(self::ACTION, $bundleControllerAction->getAction());
+        $this->assertSame(static::ACTION, $bundleControllerAction->getAction());
     }
 
     /**
@@ -91,7 +91,7 @@ class BundleControllerActionTest extends Unit
         $request = new Request(
             [],
             [],
-            ['module' => self::BUNDLE, 'controller' => self::CONTROLLER, 'action' => self::ACTION],
+            ['module' => static::BUNDLE, 'controller' => static::CONTROLLER, 'action' => static::ACTION],
         );
 
         return $request;

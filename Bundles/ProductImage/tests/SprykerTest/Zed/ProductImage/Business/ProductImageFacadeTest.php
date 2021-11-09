@@ -195,13 +195,13 @@ class ProductImageFacadeTest extends Unit
     {
         $this->productAbstractEntity = new SpyProductAbstract();
         $this->productAbstractEntity
-            ->setSku(self::ABSTRACT_SKU)
+            ->setSku(static::ABSTRACT_SKU)
             ->setAttributes('{}')
             ->save();
 
         $this->productConcreteEntity = new SpyProduct();
         $this->productConcreteEntity
-            ->setSku(self::CONCRETE_SKU)
+            ->setSku(static::CONCRETE_SKU)
             ->setAttributes('{}')
             ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->save();
@@ -227,30 +227,30 @@ class ProductImageFacadeTest extends Unit
     {
         $this->image = new SpyProductImage();
         $this->image
-            ->setExternalUrlLarge(self::URL_LARGE)
-            ->setExternalUrlSmall(self::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE)
+            ->setExternalUrlSmall(static::URL_SMALL)
             ->save();
 
         $this->imageSetAbstract = new SpyProductImageSet();
         $this->imageSetAbstract
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->setFkProduct(null)
             ->setFkLocale(null)
             ->save();
         $this->imageSetDE = new SpyProductImageSet();
         $this->imageSetDE
-            ->setName(self::SET_NAME_DE)
+            ->setName(static::SET_NAME_DE)
             ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->setFkProduct(null)
-            ->setFkLocale(self::ID_LOCALE_DE)
+            ->setFkLocale(static::ID_LOCALE_DE)
             ->save();
         $this->imageSetEN = new SpyProductImageSet();
         $this->imageSetEN
-            ->setName(self::SET_NAME_EN)
+            ->setName(static::SET_NAME_EN)
             ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->setFkProduct(null)
-            ->setFkLocale(self::ID_LOCALE_EN)
+            ->setFkLocale(static::ID_LOCALE_EN)
             ->save();
         $this->imageSetSortedAbstract = new SpyProductImageSet();
         $this->imageSetSortedAbstract
@@ -288,7 +288,7 @@ class ProductImageFacadeTest extends Unit
 
         $this->imageSetConcrete = new SpyProductImageSet();
         $this->imageSetConcrete
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setFkProductAbstract(null)
             ->setFkProduct($this->productConcreteEntity->getIdProduct())
             ->setFkLocale(null)
@@ -308,8 +308,8 @@ class ProductImageFacadeTest extends Unit
     public function testPersistProductImageShouldCreateImage(): void
     {
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageTransfer = $this->productImageFacade->saveProductImage($productImageTransfer);
 
@@ -322,7 +322,7 @@ class ProductImageFacadeTest extends Unit
     public function testPersistProductImageSetShouldCreateImageSet(): void
     {
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract());
 
         $productImageSetTransfer = $this->productImageFacade->saveProductImageSet($productImageSetTransfer);
@@ -336,11 +336,11 @@ class ProductImageFacadeTest extends Unit
     public function testPersistProductImageSetShouldPersistImageSetAndProductImages(): void
     {
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->addProductImage($productImageTransfer);
 
@@ -542,11 +542,11 @@ class ProductImageFacadeTest extends Unit
         $productAbstractTransfer = $this->createProductAbstractTransfer();
 
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->addProductImage($productImageTransfer);
 
@@ -568,12 +568,12 @@ class ProductImageFacadeTest extends Unit
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setIdProductImage($this->image->getIdProductImage())
-            ->setExternalUrlSmall(self::URL_SMALL . 'foo')
-            ->setExternalUrlLarge(self::URL_LARGE . 'foo');
+            ->setExternalUrlSmall(static::URL_SMALL . 'foo')
+            ->setExternalUrlLarge(static::URL_LARGE . 'foo');
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
             ->setIdProductImageSet($this->imageSetAbstract->getIdProductImageSet())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->addProductImage($productImageTransfer);
 
@@ -615,11 +615,11 @@ class ProductImageFacadeTest extends Unit
         $productConcreteTransfer = $this->createProductConcreteTransfer();
 
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProduct($this->productConcreteEntity->getIdProduct())
             ->addProductImage($productImageTransfer);
 
@@ -641,12 +641,12 @@ class ProductImageFacadeTest extends Unit
 
         $productImageTransfer = (new ProductImageTransfer())
             ->setIdProductImage($this->image->getIdProductImage())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
             ->setIdProductImageSet($this->imageSetConcrete->getIdProductImageSet())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProduct($this->productConcreteEntity->getIdProduct())
             ->addProductImage($productImageTransfer);
 
@@ -691,11 +691,11 @@ class ProductImageFacadeTest extends Unit
         ));
 
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProduct($this->productConcreteEntity->getIdProduct())
             ->addProductImage($productImageTransfer);
 
@@ -725,11 +725,11 @@ class ProductImageFacadeTest extends Unit
         ));
 
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->addProductImage($productImageTransfer);
 
@@ -757,11 +757,11 @@ class ProductImageFacadeTest extends Unit
         $productImageSetTransfers = new ArrayObject();
 
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProduct($this->productConcreteEntity->getIdProduct())
             ->addProductImage($productImageTransfer);
 
@@ -787,11 +787,11 @@ class ProductImageFacadeTest extends Unit
         $productImageSetTransfers = new ArrayObject();
 
         $productImageTransfer = (new ProductImageTransfer())
-            ->setExternalUrlSmall(self::URL_SMALL)
-            ->setExternalUrlLarge(self::URL_LARGE);
+            ->setExternalUrlSmall(static::URL_SMALL)
+            ->setExternalUrlLarge(static::URL_LARGE);
 
         $productImageSetTransfer = (new ProductImageSetTransfer())
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setIdProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->addProductImage($productImageTransfer);
 
@@ -817,7 +817,7 @@ class ProductImageFacadeTest extends Unit
 
         $imageSet = new SpyProductImageSet();
         $imageSet
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setFkProduct(null)
             ->setFkLocale(null)
@@ -1075,7 +1075,7 @@ class ProductImageFacadeTest extends Unit
     {
         $imageSetEntity = new SpyProductImageSet();
         $imageSetEntity
-            ->setName(self::SET_NAME)
+            ->setName(static::SET_NAME)
             ->setFkProductAbstract($this->productAbstractEntity->getIdProductAbstract())
             ->setFkProduct(null)
             ->setFkLocale(null)

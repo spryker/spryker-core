@@ -39,10 +39,10 @@ class SalesListPage
      */
     public function grabOrderIdsFromGrid(): array
     {
-        $this->tester->amOnPage(self::URL);
+        $this->tester->amOnPage(static::URL);
         $this->tester->wait(2);
 
-        return $this->tester->grabMultiple(self::SELECTOR_ID_SALES_ORDER_ROWS);
+        return $this->tester->grabMultiple(static::SELECTOR_ID_SALES_ORDER_ROWS);
     }
 
     /**

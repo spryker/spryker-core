@@ -78,6 +78,7 @@ class ProductAttributeFacadeTest extends Test
      */
     public function testTranslateProductManagementAttributeKeyInGlossary(): void
     {
+        /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productManagementBusinessFactoryMock */
         $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
             ->setMethods(['createAttributeTranslator'])
             ->getMock();
@@ -85,7 +86,6 @@ class ProductAttributeFacadeTest extends Test
         $productManagementBusinessFactoryMock->method('createAttributeTranslator')
             ->willReturn($this->getAttributeTranslatorMock());
 
-        /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory $productManagementBusinessFactoryMock */
         $this->productAttributeFacade->setFactory($productManagementBusinessFactoryMock);
 
         $productAttributeKeyEntity = $this->tester->createProductManagementAttributeEntity();
@@ -111,6 +111,7 @@ class ProductAttributeFacadeTest extends Test
      */
     public function testTranslateProductManagementAttributeValues(): void
     {
+        /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productManagementBusinessFactoryMock */
         $productManagementBusinessFactoryMock = $this->getMockBuilder(ProductAttributeBusinessFactory::class)
             ->setMethods(['createAttributeTranslator'])
             ->getMock();
@@ -118,7 +119,6 @@ class ProductAttributeFacadeTest extends Test
         $productManagementBusinessFactoryMock->method('createAttributeTranslator')
             ->willReturn($this->getAttributeTranslatorMock());
 
-        /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory $productManagementBusinessFactoryMock */
         $this->productAttributeFacade->setFactory($productManagementBusinessFactoryMock);
 
         $productAttributeKeyEntity = $this->tester->createProductManagementAttributeEntity(['a', 'b', 'c']);

@@ -68,7 +68,7 @@ class OrderStateMachineTest extends Unit
             $this->getTransitionLogMock(),
             $this->getTimeoutMock(),
             new ReadOnlyArrayObject(),
-            [self::CONDITION_NAME => $this->getConditionMock()],
+            [static::CONDITION_NAME => $this->getConditionMock()],
             [],
             $this->getReservationMock(),
             new OmsConfig(),
@@ -79,7 +79,7 @@ class OrderStateMachineTest extends Unit
         $conditions = $reflectionProperty->getValue($orderStateMachine);
 
         $this->assertInstanceOf(ConditionCollectionInterface::class, $conditions);
-        $this->assertInstanceOf(ConditionInterface::class, $conditions->get(self::CONDITION_NAME));
+        $this->assertInstanceOf(ConditionInterface::class, $conditions->get(static::CONDITION_NAME));
     }
 
     /**
@@ -88,7 +88,7 @@ class OrderStateMachineTest extends Unit
     public function testInstantiationWithConditionCollection(): void
     {
         $conditionCollection = new ConditionCollection();
-        $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
+        $conditionCollection->add($this->getConditionMock(), static::CONDITION_NAME);
 
         $orderStateMachine = new OrderStateMachine(
             $this->getQueryContainerMock(),
@@ -107,7 +107,7 @@ class OrderStateMachineTest extends Unit
         $conditions = $reflectionProperty->getValue($orderStateMachine);
 
         $this->assertInstanceOf(ConditionCollectionInterface::class, $conditions);
-        $this->assertInstanceOf(ConditionInterface::class, $conditions->get(self::CONDITION_NAME));
+        $this->assertInstanceOf(ConditionInterface::class, $conditions->get(static::CONDITION_NAME));
     }
 
     /**
@@ -122,7 +122,7 @@ class OrderStateMachineTest extends Unit
             $this->getTimeoutMock(),
             new ReadOnlyArrayObject(),
             [],
-            [self::COMMAND_NAME => $this->getCommandMock()],
+            [static::COMMAND_NAME => $this->getCommandMock()],
             $this->getReservationMock(),
             new OmsConfig(),
         );
@@ -132,7 +132,7 @@ class OrderStateMachineTest extends Unit
         $commands = $reflectionProperty->getValue($orderStateMachine);
 
         $this->assertInstanceOf(CommandCollectionInterface::class, $commands);
-        $this->assertInstanceOf(CommandInterface::class, $commands->get(self::COMMAND_NAME));
+        $this->assertInstanceOf(CommandInterface::class, $commands->get(static::COMMAND_NAME));
     }
 
     /**
@@ -141,7 +141,7 @@ class OrderStateMachineTest extends Unit
     public function testInstantiationWithCommandCollection(): void
     {
         $commandCollection = new CommandCollection();
-        $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);
+        $commandCollection->add($this->getCommandMock(), static::COMMAND_NAME);
 
         $orderStateMachine = new OrderStateMachine(
             $this->getQueryContainerMock(),
@@ -160,7 +160,7 @@ class OrderStateMachineTest extends Unit
         $commands = $reflectionProperty->getValue($orderStateMachine);
 
         $this->assertInstanceOf(CommandCollectionInterface::class, $commands);
-        $this->assertInstanceOf(CommandInterface::class, $commands->get(self::COMMAND_NAME));
+        $this->assertInstanceOf(CommandInterface::class, $commands->get(static::COMMAND_NAME));
     }
 
     /**

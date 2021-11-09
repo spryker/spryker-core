@@ -113,7 +113,7 @@ class JenkinsController extends AbstractController
         if (array_key_exists('logrotate_days', $job) && is_int($job['logrotate_days'])) {
             return $job['logrotate_days'];
         } else {
-            return self::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
+            return static::DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION;
         }
     }
 

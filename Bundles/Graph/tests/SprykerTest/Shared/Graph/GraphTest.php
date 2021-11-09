@@ -57,7 +57,7 @@ class GraphTest extends Unit
      */
     public function testCreateInstance(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME));
+        $this->assertInstanceOf(Graph::class, $this->getGraph(static::GRAPH_NAME));
     }
 
     /**
@@ -65,7 +65,7 @@ class GraphTest extends Unit
      */
     public function testCreateInstanceWithAttributes(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME, self::ATTRIBUTES));
+        $this->assertInstanceOf(Graph::class, $this->getGraph(static::GRAPH_NAME, static::ATTRIBUTES));
     }
 
     /**
@@ -73,7 +73,7 @@ class GraphTest extends Unit
      */
     public function testCreateInstanceUnDirectedGraph(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME, [], false));
+        $this->assertInstanceOf(Graph::class, $this->getGraph(static::GRAPH_NAME, [], false));
     }
 
     /**
@@ -81,7 +81,7 @@ class GraphTest extends Unit
      */
     public function testCreateInstanceTolerantGraph(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph(self::GRAPH_NAME, [], true, false));
+        $this->assertInstanceOf(Graph::class, $this->getGraph(static::GRAPH_NAME, [], true, false));
     }
 
     /**
@@ -89,7 +89,7 @@ class GraphTest extends Unit
      */
     public function testAddNode(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(self::NODE_A));
+        $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(static::NODE_A));
     }
 
     /**
@@ -97,7 +97,7 @@ class GraphTest extends Unit
      */
     public function testAddNodeWithAttributes(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(self::NODE_A, self::ATTRIBUTES));
+        $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(static::NODE_A, static::ATTRIBUTES));
     }
 
     /**
@@ -105,7 +105,7 @@ class GraphTest extends Unit
      */
     public function testAddNodeWithGroup(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(self::NODE_A, [], self::GROUP_NAME));
+        $this->assertInstanceOf(Graph::class, $this->getGraph()->addNode(static::NODE_A, [], static::GROUP_NAME));
     }
 
     /**
@@ -115,7 +115,7 @@ class GraphTest extends Unit
     {
         $adapter = $this->getGraphWithNodes();
 
-        $this->assertInstanceOf(Graph::class, $adapter->addEdge(self::NODE_A, self::NODE_B));
+        $this->assertInstanceOf(Graph::class, $adapter->addEdge(static::NODE_A, static::NODE_B));
     }
 
     /**
@@ -125,7 +125,7 @@ class GraphTest extends Unit
     {
         $adapter = $this->getGraphWithNodes();
 
-        $this->assertInstanceOf(Graph::class, $adapter->addEdge(self::NODE_A, self::NODE_B, self::ATTRIBUTES));
+        $this->assertInstanceOf(Graph::class, $adapter->addEdge(static::NODE_A, static::NODE_B, static::ATTRIBUTES));
     }
 
     /**
@@ -133,7 +133,7 @@ class GraphTest extends Unit
      */
     public function testAddCluster(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph()->addCluster(self::CLUSTER_NAME));
+        $this->assertInstanceOf(Graph::class, $this->getGraph()->addCluster(static::CLUSTER_NAME));
     }
 
     /**
@@ -141,7 +141,7 @@ class GraphTest extends Unit
      */
     public function testAddClusterWithAttributes(): void
     {
-        $this->assertInstanceOf(Graph::class, $this->getGraph()->addCluster(self::CLUSTER_NAME, self::ATTRIBUTES));
+        $this->assertInstanceOf(Graph::class, $this->getGraph()->addCluster(static::CLUSTER_NAME, static::ATTRIBUTES));
     }
 
     /**
@@ -192,8 +192,8 @@ class GraphTest extends Unit
     private function getGraphWithNodes(): Graph
     {
         $adapter = $this->getGraph();
-        $adapter->addNode(self::NODE_A);
-        $adapter->addNode(self::NODE_B);
+        $adapter->addNode(static::NODE_A);
+        $adapter->addNode(static::NODE_B);
 
         return $adapter;
     }

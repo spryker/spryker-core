@@ -36,7 +36,7 @@ class FormFactoryTest extends Unit
     public function testCreatePaymentMethodSubForms(): void
     {
         $container = new Container();
-        $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = self::SUB_FORMS;
+        $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = static::SUB_FORMS;
 
         $formFactory = new FormFactory();
         $formFactory->setContainer($container);

@@ -54,10 +54,10 @@ class CmsRedirectTable extends AbstractTable
             SpyUrlTableMap::COL_URL => 'From Url',
             CmsQueryContainer::TO_URL => 'To Url',
             SpyUrlRedirectTableMap::COL_STATUS => 'Status',
-            self::ACTIONS => self::ACTIONS,
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         $config->setSortable([
             SpyUrlTableMap::COL_ID_URL,
@@ -90,7 +90,7 @@ class CmsRedirectTable extends AbstractTable
                 SpyUrlTableMap::COL_URL => $urlEntity->getUrl(),
                 CmsQueryContainer::TO_URL => $urlEntity->getSpyUrlRedirect()->getToUrl(),
                 SpyUrlRedirectTableMap::COL_STATUS => $urlEntity->getSpyUrlRedirect()->getStatus(),
-                self::ACTIONS => $this->buildLinks($urlEntity),
+                static::ACTIONS => $this->buildLinks($urlEntity),
             ];
         }
 

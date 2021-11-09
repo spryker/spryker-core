@@ -140,7 +140,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $statement = $this->connection->prepare($query);
         $statement->execute([$key, $store, $this->getEnvironmentName()]);
         $result = $statement->fetch();
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $result ? json_decode($result['value'], true) : '';
     }
@@ -171,7 +171,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $statement = $this->connection->prepare($query);
         $result = $statement->execute([$key, $data, $storeName, $this->getEnvironmentName(), $expires, $timestamp]);
 
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result;
     }
@@ -190,7 +190,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $query = sprintf('DELETE FROM session WHERE `key` = "%s"', $key);
 
         $this->connection->exec($query);
-        $this->monitoringService->addCustomParameter(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+        $this->monitoringService->addCustomParameter(static::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return true;
     }

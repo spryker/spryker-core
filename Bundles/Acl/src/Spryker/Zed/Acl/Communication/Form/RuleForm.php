@@ -62,7 +62,7 @@ class RuleForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_TYPE);
+        $resolver->setRequired(static::OPTION_TYPE);
     }
 
     /**
@@ -89,7 +89,7 @@ class RuleForm extends AbstractType
             ->addBundleField($builder)
             ->addControllerField($builder)
             ->addActionField($builder)
-            ->addPermissionField($builder, $options[self::OPTION_TYPE])
+            ->addPermissionField($builder, $options[static::OPTION_TYPE])
             ->addRoleFkField($builder);
     }
 
@@ -100,7 +100,7 @@ class RuleForm extends AbstractType
      */
     protected function addBundleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_BUNDLE, TextType::class, [
+        $builder->add(static::FIELD_BUNDLE, TextType::class, [
             'label' => 'Bundle',
             'constraints' => [
                 new NotBlank(),
@@ -118,7 +118,7 @@ class RuleForm extends AbstractType
      */
     protected function addControllerField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CONTROLLER, TextType::class, [
+        $builder->add(static::FIELD_CONTROLLER, TextType::class, [
             'label' => 'Controller',
             'constraints' => [
                 new NotBlank(),
@@ -136,7 +136,7 @@ class RuleForm extends AbstractType
      */
     protected function addActionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ACTION, TextType::class, [
+        $builder->add(static::FIELD_ACTION, TextType::class, [
             'label' => 'Action',
             'constraints' => [
                 new NotBlank(),
@@ -155,7 +155,7 @@ class RuleForm extends AbstractType
      */
     protected function addPermissionField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_TYPE, ChoiceType::class, [
+        $builder->add(static::FIELD_TYPE, ChoiceType::class, [
             'label' => 'Permission',
             'choices' => $choices,
         ]);
@@ -170,7 +170,7 @@ class RuleForm extends AbstractType
      */
     protected function addRoleFkField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_ACL_ROLE, HiddenType::class, []);
+        $builder->add(static::FIELD_FK_ACL_ROLE, HiddenType::class, []);
 
         return $this;
     }

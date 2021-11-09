@@ -34,13 +34,13 @@ class PathFinder implements PathFinderInterface
      */
     public function getCurrentExecutionPath()
     {
-        if (PHP_SAPI !== self::SAPI_CLI && PHP_SAPI !== self::SAPI_PHPDBG) {
-            return $_SERVER[self::DOCUMENT_URI];
+        if (PHP_SAPI !== static::SAPI_CLI && PHP_SAPI !== static::SAPI_PHPDBG) {
+            return $_SERVER[static::DOCUMENT_URI];
         }
 
-        $path = self::SAPI_CLI;
-        if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
-            $path = implode(' ', $_SERVER[self::ARGV]);
+        $path = static::SAPI_CLI;
+        if (isset($_SERVER[static::ARGV]) && is_array($_SERVER[static::ARGV])) {
+            $path = implode(' ', $_SERVER[static::ARGV]);
         }
 
         return $path;

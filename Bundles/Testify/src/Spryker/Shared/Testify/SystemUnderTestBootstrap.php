@@ -73,11 +73,11 @@ class SystemUnderTestBootstrap
      */
     public static function getInstance()
     {
-        if (!self::$instance) {
-            self::$instance = new self();
+        if (!static::$instance) {
+            static::$instance = new self();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -96,7 +96,7 @@ class SystemUnderTestBootstrap
         putenv('SESSION_IS_TEST=true');
 
         defined('APPLICATION') || define('APPLICATION', strtoupper($application));
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', static::TEST_ENVIRONMENT);
 
         $path = realpath(__DIR__ . '/../../../../../../../../..');
 
@@ -107,10 +107,10 @@ class SystemUnderTestBootstrap
         $errorHandlerEnvironment = new ErrorHandlerEnvironment();
         $errorHandlerEnvironment->initialize();
 
-        if ($application === self::APPLICATION_ZED) {
+        if ($application === static::APPLICATION_ZED) {
             return $this->bootstrapZed();
         }
-        if ($application === self::APPLICATION_YVES) {
+        if ($application === static::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
 

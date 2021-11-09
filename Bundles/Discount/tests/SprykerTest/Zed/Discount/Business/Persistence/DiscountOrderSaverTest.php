@@ -75,8 +75,8 @@ class DiscountOrderSaverTest extends Unit
         $quoteTransfer->setStore($this->getCurrentStore());
 
         $discountTransfer = new CalculatedDiscountTransfer();
-        $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
-        $discountTransfer->setSumAmount(self::DISCOUNT_AMOUNT);
+        $discountTransfer->setDisplayName(static::DISCOUNT_DISPLAY_NAME);
+        $discountTransfer->setSumAmount(static::DISCOUNT_AMOUNT);
 
         $orderItemTransfer = new ItemTransfer();
         $orderItemTransfer->addCalculatedDiscount($discountTransfer);
@@ -84,7 +84,7 @@ class DiscountOrderSaverTest extends Unit
         $quoteTransfer->addItem($orderItemTransfer);
 
         $saverOrderTransfer = new SaveOrderTransfer();
-        $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
 
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
@@ -104,7 +104,7 @@ class DiscountOrderSaverTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setSumAmount(self::DISCOUNT_AMOUNT);
+        $calculatedDiscountTransfer->setSumAmount(static::DISCOUNT_AMOUNT);
 
         $orderItemTransfer = new ItemTransfer();
         $orderItemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
@@ -112,7 +112,7 @@ class DiscountOrderSaverTest extends Unit
         $quoteTransfer->addItem($orderItemTransfer);
 
         $saverOrderTransfer = new SaveOrderTransfer();
-        $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
 
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
@@ -133,8 +133,8 @@ class DiscountOrderSaverTest extends Unit
             ->will($this->returnCallback([$this, 'getDiscountVoucherEntityByCode']));
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setVoucherCode(self::USED_CODE_1);
-        $calculatedDiscountTransfer->setSumAmount(self::DISCOUNT_AMOUNT);
+        $calculatedDiscountTransfer->setVoucherCode(static::USED_CODE_1);
+        $calculatedDiscountTransfer->setSumAmount(static::DISCOUNT_AMOUNT);
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -143,7 +143,7 @@ class DiscountOrderSaverTest extends Unit
         $quoteTransfer->addItem($orderItemTransfer);
 
         $saverOrderTransfer = new SaveOrderTransfer();
-        $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
 
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
@@ -164,8 +164,8 @@ class DiscountOrderSaverTest extends Unit
             ->will($this->returnValue(false));
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->setVoucherCode(self::USED_CODE_1);
-        $calculatedDiscountTransfer->setSumAmount(self::DISCOUNT_AMOUNT);
+        $calculatedDiscountTransfer->setVoucherCode(static::USED_CODE_1);
+        $calculatedDiscountTransfer->setSumAmount(static::DISCOUNT_AMOUNT);
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -174,7 +174,7 @@ class DiscountOrderSaverTest extends Unit
         $quoteTransfer->addItem($orderItemTransfer);
 
         $saverOrderTransfer = new SaveOrderTransfer();
-        $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
+        $saverOrderTransfer->setIdSalesOrder(static::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
 
         $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);

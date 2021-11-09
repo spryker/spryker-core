@@ -64,7 +64,7 @@ class TaxSetForm extends AbstractType
     protected function addName(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_NAME,
+            static::FIELD_NAME,
             TextType::class,
             [
                 'label' => 'Name',
@@ -86,11 +86,11 @@ class TaxSetForm extends AbstractType
      */
     protected function addTaxRates(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TAX_RATES, ChoiceType::class, [
+        $builder->add(static::FIELD_TAX_RATES, ChoiceType::class, [
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
+            'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[static::FIELD_TAX_RATES],
             'choice_label' => 'name',
             'choice_value' => 'idTaxRate',
             'constraints' => [
@@ -105,7 +105,7 @@ class TaxSetForm extends AbstractType
         ]);
 
         $builder
-            ->get(self::FIELD_TAX_RATES)
+            ->get(static::FIELD_TAX_RATES)
             ->addModelTransformer($this->createModelTransformer());
 
         return $this;

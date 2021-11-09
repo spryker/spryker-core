@@ -240,8 +240,8 @@ class PropelConfig extends AbstractBundleConfig
     {
         $dbEngine = $this->getCurrentDatabaseEngine();
         $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES, [
-            self::DB_ENGINE_MYSQL => 'MySql',
-            self::DB_ENGINE_PGSQL => 'PostgreSql',
+            static::DB_ENGINE_MYSQL => 'MySql',
+            static::DB_ENGINE_PGSQL => 'PostgreSql',
         ]);
 
         if (!array_key_exists($dbEngine, $supportedEngines)) {

@@ -36,7 +36,7 @@ class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin i
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (!empty($params[self::PARAM_SEPARATE_PRODUCT])) {
+        if (!empty($params[static::PARAM_SEPARATE_PRODUCT])) {
             $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteById($cartChangeTransfer->getIdQuote());
             if ($quoteTransfer) {
                 $this->addSeparatorToItems($cartChangeTransfer, $quoteTransfer);

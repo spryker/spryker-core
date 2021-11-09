@@ -77,7 +77,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Value',
             'required' => true,
             'constraints' => [
@@ -95,7 +95,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addLocalCode(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LOCALE_CODE, HiddenType::class);
+        $builder->add(static::FIELD_LOCALE_CODE, HiddenType::class);
 
         return $this;
     }
@@ -107,7 +107,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addKey(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY, HiddenType::class);
+        $builder->add(static::FIELD_KEY, HiddenType::class);
 
         return $this;
     }
@@ -119,7 +119,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addRelatedProductOptionValueHash(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_RELATED_OPTION_HASH, HiddenType::class);
+        $builder->add(static::FIELD_RELATED_OPTION_HASH, HiddenType::class);
 
         return $this;
     }

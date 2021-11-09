@@ -132,13 +132,13 @@ class PaymentPluginExecutorTest extends Unit
     ): CheckoutPluginCollectionInterface {
         $pluginCollection = new CheckoutPluginCollection();
         if ($preCheckPluginMock !== null) {
-            $pluginCollection->add($preCheckPluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
+            $pluginCollection->add($preCheckPluginMock, static::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
         }
         if ($orderSavePluginMock !== null) {
-            $pluginCollection->add($orderSavePluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
+            $pluginCollection->add($orderSavePluginMock, static::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
         }
         if ($postCheckPluginMock !== null) {
-            $pluginCollection->add($postCheckPluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
+            $pluginCollection->add($postCheckPluginMock, static::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_POST_SAVE_PLUGINS);
         }
 
         return $pluginCollection;
@@ -183,7 +183,7 @@ class PaymentPluginExecutorTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
         $paymentTransfer = new PaymentTransfer();
-        $paymentTransfer->setPaymentProvider(self::TEST_PROVIDER);
+        $paymentTransfer->setPaymentProvider(static::TEST_PROVIDER);
         $quoteTransfer->setPayment($paymentTransfer);
 
         return $quoteTransfer;

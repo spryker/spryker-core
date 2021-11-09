@@ -51,7 +51,6 @@ class OfferEntityManager extends AbstractEntityManager implements OfferEntityMan
             ->createOfferMapper()
             ->mapOfferToOfferEntity($offerTransfer);
 
-        /** @var \Generated\Shared\Transfer\SpyOfferEntityTransfer $offerEntityTransfer */
         $this->save($offerEntityTransfer);
 
         return $offerTransfer;

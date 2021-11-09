@@ -43,8 +43,8 @@ class SharedConfigResolver extends AbstractClassResolver
     protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
-            self::KEY_NAMESPACE => $namespace,
-            self::KEY_BUNDLE => $this->getClassInfo()->getModule(),
+            static::KEY_NAMESPACE => $namespace,
+            static::KEY_BUNDLE => $this->getClassInfo()->getModule(),
             static::KEY_CODE_BUCKET => $codeBucket,
         ];
 

@@ -29,7 +29,7 @@ class DatabaseDropTablesConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
+        $this->setName(static::COMMAND_NAME);
         $this->setDescription('Dropping all database tables, without dropping the database.');
 
         parent::configure();

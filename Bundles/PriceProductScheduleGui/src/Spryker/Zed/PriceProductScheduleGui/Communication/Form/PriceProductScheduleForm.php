@@ -135,7 +135,7 @@ class PriceProductScheduleForm extends AbstractType
     protected function addSubmitField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SUBMIT, SubmitType::class, [
+            ->add(static::FIELD_SUBMIT, SubmitType::class, [
                 'label' => 'Save',
                 'attr' => [
                     'class' => 'btn btn-info',

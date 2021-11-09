@@ -311,9 +311,9 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function createGuzzleRequest($pathInfo)
     {
         $headers = [
-            self::HEADER_USER_AGENT => 'Yves 2.0',
-            self::HEADER_HOST_YVES => 1,
-            self::HEADER_INTERNAL_REQUEST => 1,
+            static::HEADER_USER_AGENT => 'Yves 2.0',
+            static::HEADER_HOST_YVES => 1,
+            static::HEADER_INTERNAL_REQUEST => 1,
         ];
 
         foreach ($this->getHeaders() as $header => $value) {

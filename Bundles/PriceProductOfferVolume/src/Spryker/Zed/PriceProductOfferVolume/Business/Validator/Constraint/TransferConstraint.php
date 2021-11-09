@@ -51,7 +51,7 @@ class TransferConstraint extends Composite
         parent::initializeNestedConstraints();
 
         if (!is_array($this->fields)) {
-            throw new ConstraintDefinitionException(sprintf('The option "%s" is expected to be an array in constraint "%s".', static::FIELDS, self::class));
+            throw new ConstraintDefinitionException(sprintf('The option "%s" is expected to be an array in constraint "%s".', static::FIELDS, static::class));
         }
     }
 

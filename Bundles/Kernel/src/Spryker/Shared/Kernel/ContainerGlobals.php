@@ -48,7 +48,7 @@ class ContainerGlobals implements ArrayAccess
      */
     public function getContainerGlobals()
     {
-        return self::$containerGlobals;
+        return static::$containerGlobals;
     }
 
     /**
@@ -59,7 +59,7 @@ class ContainerGlobals implements ArrayAccess
      */
     public function offsetSet($id, $value)
     {
-        self::$containerGlobals[$id] = $value;
+        static::$containerGlobals[$id] = $value;
     }
 
     /**
@@ -71,13 +71,13 @@ class ContainerGlobals implements ArrayAccess
      */
     public function offsetGet($id)
     {
-        if (!array_key_exists($id, self::$containerGlobals)) {
+        if (!array_key_exists($id, static::$containerGlobals)) {
             throw new InvalidArgumentException(sprintf('Identifier "%s" is not defined.', $id));
         }
 
-        $isFactory = is_object(self::$containerGlobals[$id]) && method_exists(self::$containerGlobals[$id], '__invoke');
+        $isFactory = is_object(static::$containerGlobals[$id]) && method_exists(static::$containerGlobals[$id], '__invoke');
 
-        return $isFactory ? self::$containerGlobals[$id]($this) : self::$containerGlobals[$id];
+        return $isFactory ? static::$containerGlobals[$id]($this) : static::$containerGlobals[$id];
     }
 
     /**
@@ -87,7 +87,7 @@ class ContainerGlobals implements ArrayAccess
      */
     public function offsetExists($id)
     {
-        return array_key_exists($id, self::$containerGlobals);
+        return array_key_exists($id, static::$containerGlobals);
     }
 
     /**
@@ -97,7 +97,7 @@ class ContainerGlobals implements ArrayAccess
      */
     public function offsetUnset($id)
     {
-        unset(self::$containerGlobals[$id]);
+        unset(static::$containerGlobals[$id]);
     }
 
     /**
@@ -151,11 +151,11 @@ class ContainerGlobals implements ArrayAccess
      */
     public function raw($id)
     {
-        if (!array_key_exists($id, self::$containerGlobals)) {
+        if (!array_key_exists($id, static::$containerGlobals)) {
             throw new InvalidArgumentException(sprintf('Identifier "%s" is not defined.', $id));
         }
 
-        return self::$containerGlobals[$id];
+        return static::$containerGlobals[$id];
     }
 
     /**
@@ -168,11 +168,11 @@ class ContainerGlobals implements ArrayAccess
      */
     public function extend($id, $callable)
     {
-        if (!array_key_exists($id, self::$containerGlobals)) {
+        if (!array_key_exists($id, static::$containerGlobals)) {
             throw new InvalidArgumentException(sprintf('Identifier "%s" is not defined.', $id));
         }
 
-        if (!is_object(self::$containerGlobals[$id]) || !method_exists(self::$containerGlobals[$id], '__invoke')) {
+        if (!is_object(static::$containerGlobals[$id]) || !method_exists(static::$containerGlobals[$id], '__invoke')) {
             throw new InvalidArgumentException(sprintf('Identifier "%s" does not contain an object definition.', $id));
         }
 
@@ -180,9 +180,9 @@ class ContainerGlobals implements ArrayAccess
             throw new InvalidArgumentException('Extension service definition is not a Closure or invokable object.');
         }
 
-        $factory = self::$containerGlobals[$id];
+        $factory = static::$containerGlobals[$id];
 
-        return self::$containerGlobals[$id] = function ($c) use ($callable, $factory) {
+        return static::$containerGlobals[$id] = function ($c) use ($callable, $factory) {
             return $callable($factory($c), $c);
         };
     }
@@ -192,6 +192,6 @@ class ContainerGlobals implements ArrayAccess
      */
     public function keys()
     {
-        return array_keys(self::$containerGlobals);
+        return array_keys(static::$containerGlobals);
     }
 }

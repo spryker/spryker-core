@@ -95,7 +95,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES => 'Max nr. of uses',
             SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created At',
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => 'Batch Value',
-            self::HEADER_COL_ACTIONS => self::HEADER_COL_ACTIONS,
+            static::HEADER_COL_ACTIONS => static::HEADER_COL_ACTIONS,
         ]);
 
         $config->setSortable([
@@ -116,7 +116,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
         ]);
 
-        $config->addRawColumn(self::HEADER_COL_ACTIONS);
+        $config->addRawColumn(static::HEADER_COL_ACTIONS);
 
         return $config;
     }
@@ -148,7 +148,7 @@ class DiscountVoucherCodesTable extends AbstractTable
                 SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES => (int)$discountVoucherEntity->getMaxNumberOfUses(),
                 SpyDiscountVoucherTableMap::COL_CREATED_AT => $discountVoucherEntity->getCreatedAt('Y-m-d'),
                 SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $discountVoucherEntity->getVoucherBatch(),
-                self::HEADER_COL_ACTIONS => $this->buildLinks($discountVoucherEntity),
+                static::HEADER_COL_ACTIONS => $this->buildLinks($discountVoucherEntity),
             ];
         }
 

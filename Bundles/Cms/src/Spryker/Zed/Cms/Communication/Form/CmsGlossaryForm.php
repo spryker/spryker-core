@@ -141,7 +141,7 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addFkPageField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_PAGE, HiddenType::class);
+        $builder->add(static::FIELD_FK_PAGE, HiddenType::class);
 
         return $this;
     }
@@ -153,7 +153,7 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addPlaceholderField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PLACEHOLDER, TextType::class, [
+        $builder->add(static::FIELD_PLACEHOLDER, TextType::class, [
             'label' => 'Placeholder',
             'constraints' => $this->getPlaceholderConstants(),
             'disabled' => 'disabled',
@@ -169,7 +169,7 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GLOSSARY_KEY, TextType::class);
+        $builder->add(static::FIELD_GLOSSARY_KEY, TextType::class);
 
         return $this;
     }
@@ -181,7 +181,7 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addIdCmsGlossaryKeyMappingField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_KEY_MAPPING, HiddenType::class);
+        $builder->add(static::FIELD_ID_KEY_MAPPING, HiddenType::class);
 
         return $this;
     }
@@ -193,7 +193,7 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addTemplateNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TEMPLATE_NAME, HiddenType::class);
+        $builder->add(static::FIELD_TEMPLATE_NAME, HiddenType::class);
 
         return $this;
     }
@@ -205,13 +205,13 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addSearchOptionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SEARCH_OPTION, ChoiceType::class, [
+        $builder->add(static::FIELD_SEARCH_OPTION, ChoiceType::class, [
             'label' => 'Search Type',
             'choices' => [
-                self::TYPE_AUTO_GLOSSARY,
-                self::TYPE_GLOSSARY_NEW,
-                self::TYPE_GLOSSARY_FIND,
-                self::TYPE_FULLTEXT_SEARCH,
+                static::TYPE_AUTO_GLOSSARY,
+                static::TYPE_GLOSSARY_NEW,
+                static::TYPE_GLOSSARY_FIND,
+                static::TYPE_FULLTEXT_SEARCH,
             ],
         ]);
 
@@ -225,7 +225,7 @@ class CmsGlossaryForm extends AbstractType
      */
     public function addLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }
@@ -237,7 +237,7 @@ class CmsGlossaryForm extends AbstractType
      */
     protected function addTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATION, TextareaType::class, [
+        $builder->add(static::FIELD_TRANSLATION, TextareaType::class, [
             'label' => 'Content',
             'constraints' => [
                 new NotBlank(),
@@ -267,7 +267,7 @@ class CmsGlossaryForm extends AbstractType
                     $context->addViolation('Placeholder has already mapped');
                 }
             },
-            'groups' => [self::GROUP_PLACEHOLDER_CHECK],
+            'groups' => [static::GROUP_PLACEHOLDER_CHECK],
         ]);
 
         return $placeholderConstraints;

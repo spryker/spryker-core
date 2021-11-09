@@ -23,7 +23,7 @@ class BulkTouchHandlerUpdate extends AbstractBulkTouchHandler
     {
         $updated = 0;
         $itemIds = $this->filter->filter($itemIds, $itemType);
-        $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
+        $itemIdChunks = array_chunk($itemIds, static::BULK_UPDATE_CHUNK_SIZE);
         $enumValueOfItemEvent = $this->getItemEventValueFor($itemEvent);
 
         foreach ($itemIdChunks as $itemIdChunk) {

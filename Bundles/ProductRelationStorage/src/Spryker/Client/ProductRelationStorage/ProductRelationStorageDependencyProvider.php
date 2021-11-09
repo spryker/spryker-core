@@ -88,7 +88,7 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      */
     public function addProductStorageClient(Container $container): Container
     {
-        $container->set(self::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductRelationStorageToProductStorageClientAdapter($container->getLocator()->productStorage()->client());
         });
 
@@ -102,7 +102,7 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addRelatedProductExpanderPlugins(Container $container): Container
     {
-        $container->set(self::PLUGIN_RELATED_PRODUCT_EXPANDERS, function () {
+        $container->set(static::PLUGIN_RELATED_PRODUCT_EXPANDERS, function () {
             return $this->getRelatedProductExpanderPlugins();
         });
 

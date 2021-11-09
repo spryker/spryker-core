@@ -36,7 +36,7 @@ class CategoryQueryContainerTest extends Unit
     public function testQueryClosureTableParentEntriesMustReturnExecutableQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
-        $query = $categoryQueryContainer->queryClosureTableParentEntries(self::ID_CATEGORY_NODE);
+        $query = $categoryQueryContainer->queryClosureTableParentEntries(static::ID_CATEGORY_NODE);
 
         $query->findOne();
         $this->assertInstanceOf(SpyCategoryClosureTableQuery::class, $query);

@@ -101,7 +101,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAttributeTableCriteriaTransfer $criteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductAttributeTableCriteriaTransfer $criteriaTransfer
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException
      *
@@ -110,7 +110,6 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer
     {
         $attributes = [];
-        /** @var \Generated\Shared\Transfer\ProductAttributeTableCriteriaTransfer $criteriaTransfer */
         $idProductConcrete = $criteriaTransfer->getIdProductOrFail();
         $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
 

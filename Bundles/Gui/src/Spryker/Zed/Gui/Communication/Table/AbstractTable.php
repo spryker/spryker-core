@@ -429,7 +429,7 @@ abstract class AbstractTable
      */
     public function disableSearch()
     {
-        $this->tableClass .= self::TABLE_CLASS_NO_SEARCH_SUFFIX;
+        $this->tableClass .= static::TABLE_CLASS_NO_SEARCH_SUFFIX;
     }
 
     /**
@@ -740,8 +740,8 @@ abstract class AbstractTable
     protected function getDefaultSorting(TableConfiguration $config)
     {
         $sort = [
-            self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
-            self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
+            static::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),
+            static::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),
         ];
 
         $defaultSortField = $config->getDefaultSortField();
@@ -759,8 +759,8 @@ abstract class AbstractTable
         }
 
         $sort = [
-            self::SORT_BY_COLUMN => $index,
-            self::SORT_BY_DIRECTION => $direction,
+            static::SORT_BY_COLUMN => $index,
+            static::SORT_BY_DIRECTION => $direction,
         ];
 
         return $sort;
@@ -779,8 +779,8 @@ abstract class AbstractTable
                 continue;
             }
             $sorting[] = [
-                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, '0'),
-                self::SORT_BY_DIRECTION => $this->getParameter($sortingRules, self::SORT_BY_DIRECTION, 'asc'),
+                static::SORT_BY_COLUMN => $this->getParameter($sortingRules, static::SORT_BY_COLUMN, '0'),
+                static::SORT_BY_DIRECTION => $this->getParameter($sortingRules, static::SORT_BY_DIRECTION, 'asc'),
             ];
         }
 
@@ -927,8 +927,8 @@ abstract class AbstractTable
     {
         $columns = $this->getColumnsList($query, $config);
 
-        if (isset($order[0]) && isset($order[0][self::SORT_BY_COLUMN]) && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
-            $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
+        if (isset($order[0]) && isset($order[0][static::SORT_BY_COLUMN]) && isset($columns[$order[0][static::SORT_BY_COLUMN]])) {
+            $selectedColumn = $columns[$order[0][static::SORT_BY_COLUMN]];
 
             if (in_array($selectedColumn, $config->getSortable(), true)) {
                 return $selectedColumn;
@@ -971,7 +971,7 @@ abstract class AbstractTable
         $orderColumn = $this->getOrderByColumn($query, $config, $order);
 
         $this->total = $this->countTotal($query);
-        $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
+        $query->orderBy($orderColumn, $order[0][static::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
         $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
 
@@ -1283,8 +1283,8 @@ abstract class AbstractTable
         $parameters = $this->getButtonParameters($buttonOptions);
         $icon = '';
 
-        if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
-            $icon = '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
+        if (array_key_exists(static::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[static::BUTTON_ICON] !== null) {
+            $icon = '<i class="fa ' . $buttonOptions[static::BUTTON_ICON] . '"></i> ';
         }
 
         return $this->getTwig()->render('button.twig', [
@@ -1408,8 +1408,8 @@ abstract class AbstractTable
         $parameters = $this->getButtonParameters($buttonOptions);
 
         $icon = '';
-        if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
-            $icon .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
+        if (array_key_exists(static::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[static::BUTTON_ICON] !== null) {
+            $icon .= '<i class="fa ' . $buttonOptions[static::BUTTON_ICON] . '"></i> ';
         }
 
         return $this->generateButtonDropdownHtml($buttons, $title, $icon, $class, $parameters);
@@ -1470,15 +1470,15 @@ abstract class AbstractTable
     {
         $class = '';
 
-        if (isset($defaultOptions[self::BUTTON_CLASS])) {
-            $class .= ' ' . $defaultOptions[self::BUTTON_CLASS];
+        if (isset($defaultOptions[static::BUTTON_CLASS])) {
+            $class .= ' ' . $defaultOptions[static::BUTTON_CLASS];
         }
-        if (isset($options[self::BUTTON_CLASS])) {
-            $class .= ' ' . $options[self::BUTTON_CLASS];
+        if (isset($options[static::BUTTON_CLASS])) {
+            $class .= ' ' . $options[static::BUTTON_CLASS];
         }
 
         if (empty($class)) {
-            return self::BUTTON_DEFAULT_CLASS;
+            return static::BUTTON_DEFAULT_CLASS;
         }
 
         return $class;
@@ -1493,7 +1493,7 @@ abstract class AbstractTable
     {
         $parameters = '';
         foreach ($buttonOptions as $argument => $value) {
-            if (in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON])) {
+            if (in_array($argument, [static::BUTTON_CLASS, static::BUTTON_HREF, static::BUTTON_ICON])) {
                 continue;
             }
             $parameters .= sprintf(' %s=\'%s\'', $argument, $value);
@@ -1533,16 +1533,16 @@ abstract class AbstractTable
                 sprintf(
                     '(%s >= %s AND %s <= %s)',
                     $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
+                    Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'),
+                    Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 23:59:59'),
                 ),
             );
 
             return;
         }
 
-        $value = $this->filterSearchValue($search[self::PARAMETER_VALUE]);
+        $value = $this->filterSearchValue($search[static::PARAMETER_VALUE]);
         if ($value === 'null') {
             return;
         }
@@ -1564,7 +1564,7 @@ abstract class AbstractTable
     {
         foreach ($this->dataTablesTransfer->getColumns() as $column) {
             $search = $column->getSearch();
-            if (empty($search[self::PARAMETER_VALUE])) {
+            if (empty($search[static::PARAMETER_VALUE])) {
                 continue;
             }
 

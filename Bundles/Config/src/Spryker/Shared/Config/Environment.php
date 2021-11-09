@@ -52,11 +52,11 @@ class Environment
      */
     public static function getInstance()
     {
-        if (!self::$instance) {
-            self::$instance = new self();
+        if (!static::$instance) {
+            static::$instance = new self();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -64,7 +64,7 @@ class Environment
      */
     public static function isProduction()
     {
-        return (self::$environment === self::PRODUCTION);
+        return (static::$environment === static::PRODUCTION);
     }
 
     /**
@@ -72,7 +72,7 @@ class Environment
      */
     public static function isNotProduction()
     {
-        return (self::$environment !== self::PRODUCTION);
+        return (static::$environment !== static::PRODUCTION);
     }
 
     /**
@@ -80,7 +80,7 @@ class Environment
      */
     public static function isStaging()
     {
-        return (self::$environment === self::STAGING);
+        return (static::$environment === static::STAGING);
     }
 
     /**
@@ -88,7 +88,7 @@ class Environment
      */
     public static function isNotStaging()
     {
-        return (self::$environment !== self::STAGING);
+        return (static::$environment !== static::STAGING);
     }
 
     /**
@@ -96,7 +96,7 @@ class Environment
      */
     public static function isDevelopment()
     {
-        return (self::$environment === self::DEVELOPMENT);
+        return (static::$environment === static::DEVELOPMENT);
     }
 
     /**
@@ -104,7 +104,7 @@ class Environment
      */
     public static function isNotDevelopment()
     {
-        return (self::$environment !== self::DEVELOPMENT);
+        return (static::$environment !== static::DEVELOPMENT);
     }
 
     /**
@@ -112,7 +112,7 @@ class Environment
      */
     public static function isTesting()
     {
-        return (self::$environment === self::TESTING);
+        return (static::$environment === static::TESTING);
     }
 
     /**
@@ -120,7 +120,7 @@ class Environment
      */
     public static function isNotTesting()
     {
-        return (self::$environment !== self::TESTING);
+        return (static::$environment !== static::TESTING);
     }
 
     /**
@@ -128,7 +128,7 @@ class Environment
      */
     public static function getEnvironment()
     {
-        return self::$environment;
+        return static::$environment;
     }
 
     /**
@@ -138,6 +138,6 @@ class Environment
      */
     public static function setEnvironment($environment)
     {
-        self::$environment = $environment;
+        static::$environment = $environment;
     }
 }

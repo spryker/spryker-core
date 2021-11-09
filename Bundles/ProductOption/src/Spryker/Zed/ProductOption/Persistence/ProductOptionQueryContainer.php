@@ -454,7 +454,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($allIdOptionValueUsages, Criteria::IN)
-            ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, self::COL_ID_PRODUCT_OPTION_VALUE)
+            ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, static::COL_ID_PRODUCT_OPTION_VALUE)
             ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
             ->useSpyProductOptionGroupQuery()
                 ->useSpyTaxSetQuery()
@@ -470,9 +470,9 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->withColumn(SpyTaxSetTableMap::COL_NAME)
                     ->groupBy(SpyTaxSetTableMap::COL_NAME)
                 ->endUse()
-                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', self::COL_MAX_TAX_RATE)
+                ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
-            ->select([self::COL_MAX_TAX_RATE]);
+            ->select([static::COL_MAX_TAX_RATE]);
     }
 
     /**

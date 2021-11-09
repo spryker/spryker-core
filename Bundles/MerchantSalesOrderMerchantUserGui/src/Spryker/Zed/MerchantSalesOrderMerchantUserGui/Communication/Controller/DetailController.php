@@ -243,7 +243,7 @@ class DetailController extends AbstractController
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
 
-        /** @var array $merchantOrderTransfer */
+        /** @phpstan-var array $merchantOrderTransfer */
         $subRequest->request->set('merchantOrderTransfer', $merchantOrderTransfer);
 
         $responseData = [];

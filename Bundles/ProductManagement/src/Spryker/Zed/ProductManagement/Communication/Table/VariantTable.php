@@ -117,7 +117,7 @@ class VariantTable extends AbstractProductTable
             $idProductAbstract,
             $type,
         );
-        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
         $this->type = $type;
     }
 

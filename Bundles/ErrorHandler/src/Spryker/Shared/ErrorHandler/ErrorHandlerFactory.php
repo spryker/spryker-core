@@ -106,7 +106,7 @@ class ErrorHandlerFactory
      */
     protected function isGlueApplication()
     {
-        return $this->application === self::APPLICATION_GLUE;
+        return $this->application === static::APPLICATION_GLUE;
     }
 
     /**
@@ -114,7 +114,7 @@ class ErrorHandlerFactory
      */
     protected function isCliCall()
     {
-        return (PHP_SAPI === static::SAPI_CLI || PHP_SAPI === self::SAPI_PHPDBG);
+        return (PHP_SAPI === static::SAPI_CLI || PHP_SAPI === static::SAPI_PHPDBG);
     }
 
     /**

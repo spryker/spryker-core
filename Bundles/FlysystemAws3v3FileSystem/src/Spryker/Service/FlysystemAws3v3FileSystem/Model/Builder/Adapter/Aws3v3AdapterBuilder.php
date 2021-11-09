@@ -80,12 +80,12 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
     protected function buildS3Client()
     {
         $this->client = new S3Client([
-            self::CREDENTIALS => [
-                self::KEY => $this->adapterConfig->getKey(),
-                self::SECRET => $this->adapterConfig->getSecret(),
+            static::CREDENTIALS => [
+                static::KEY => $this->adapterConfig->getKey(),
+                static::SECRET => $this->adapterConfig->getSecret(),
             ],
-            self::REGION => $this->adapterConfig->getRegion(),
-            self::VERSION => $this->adapterConfig->getVersion(),
+            static::REGION => $this->adapterConfig->getRegion(),
+            static::VERSION => $this->adapterConfig->getVersion(),
         ]);
 
         return $this;

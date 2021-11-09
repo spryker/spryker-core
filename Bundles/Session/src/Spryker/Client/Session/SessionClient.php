@@ -29,7 +29,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      */
     public function setContainer(SessionInterface $container)
     {
-        self::$container = $container;
+        static::$container = $container;
     }
 
     /**
@@ -37,7 +37,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      */
     protected function getContainer()
     {
-        return self::$container;
+        return static::$container;
     }
 
     /**

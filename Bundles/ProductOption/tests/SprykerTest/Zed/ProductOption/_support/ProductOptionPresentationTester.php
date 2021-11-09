@@ -111,7 +111,7 @@ class ProductOptionPresentationTester extends Actor
      */
     public function expandSecondTranslationBlock(): void
     {
-        $this->click(self::LANGUAGE_SWITCH_XPATH);
+        $this->click(static::LANGUAGE_SWITCH_XPATH);
     }
 
     /**

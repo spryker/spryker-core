@@ -31,8 +31,8 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::COMMAND_DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }

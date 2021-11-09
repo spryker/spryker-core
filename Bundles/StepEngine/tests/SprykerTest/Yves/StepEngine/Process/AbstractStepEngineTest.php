@@ -98,7 +98,7 @@ abstract class AbstractStepEngineTest extends Unit
      */
     protected function getStepCollection(): StepCollection
     {
-        return new StepCollection($this->getUrlGeneratorMock(), self::ERROR_ROUTE);
+        return new StepCollection($this->getUrlGeneratorMock(), static::ERROR_ROUTE);
     }
 
     /**
@@ -120,11 +120,11 @@ abstract class AbstractStepEngineTest extends Unit
     public function urlGeneratorCallBack(string $input): string
     {
         $map = [
-            self::ERROR_ROUTE => self::ERROR_URL,
-            self::ESCAPE_ROUTE => self::ESCAPE_URL,
-            self::STEP_ROUTE_A => self::STEP_URL_A,
-            self::STEP_ROUTE_B => self::STEP_URL_B,
-            self::STEP_ROUTE_C => self::STEP_URL_C,
+            static::ERROR_ROUTE => static::ERROR_URL,
+            static::ESCAPE_ROUTE => static::ESCAPE_URL,
+            static::STEP_ROUTE_A => static::STEP_URL_A,
+            static::STEP_ROUTE_B => static::STEP_URL_B,
+            static::STEP_ROUTE_C => static::STEP_URL_C,
         ];
 
         return $map[$input];
@@ -176,7 +176,7 @@ abstract class AbstractStepEngineTest extends Unit
     protected function getStepWithExternalRedirectUrl(): StepWithExternalRedirectInterface
     {
         $stepMock = $this->getMockBuilder(StepWithExternalRedirectInterface::class)->getMock();
-        $stepMock->method('getExternalRedirectUrl')->willReturn(self::EXTERNAL_URL);
+        $stepMock->method('getExternalRedirectUrl')->willReturn(static::EXTERNAL_URL);
 
         return $stepMock;
     }

@@ -2,7 +2,7 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
-    excludes_analyse:
+    excludePaths:
             - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductPageSearch/src/Spryker/Zed/ProductPageSearch/Persistence/ProductPageSearchQueryContainer.php'
     ignoreErrors:
         - '#Cannot access offset .+ on .+SpyCategoryNode.#'

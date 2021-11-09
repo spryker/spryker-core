@@ -407,7 +407,7 @@ class MerchantSalesOrderFacadeTest extends Unit
     {
         //Arrange
         $merchantOrderItemTransfer = (new MerchantOrderItemTransfer())
-            ->setIdMerchantOrderItem(self::TEST_NON_EXISTENT_MERCHANT_ORDER_ITEM_ID);
+            ->setIdMerchantOrderItem(static::TEST_NON_EXISTENT_MERCHANT_ORDER_ITEM_ID);
 
         //Act
         $merchantOrderItemTransferResponseTransfer = $this->tester->getFacade()->updateMerchantOrderItem($merchantOrderItemTransfer);

@@ -54,15 +54,15 @@ class SearchTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $headers = [
-            self::COL_ID => 'Id',
-            self::COL_INDEX => 'Index',
-            self::COL_TYPE => 'Type',
-            self::COL_SCORE => 'Score',
+            static::COL_ID => 'Id',
+            static::COL_INDEX => 'Index',
+            static::COL_TYPE => 'Type',
+            static::COL_SCORE => 'Score',
         ];
 
         $config->setHeader($headers);
         $config->setRawColumns([
-            self::COL_ID,
+            static::COL_ID,
         ]);
         $config->setDefaultSortColumnIndex(3);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -92,10 +92,10 @@ class SearchTable extends AbstractTable
 
         foreach ($results as $result) {
             $tableData[] = [
-                self::COL_ID => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
-                self::COL_INDEX => $result->getIndex(),
-                self::COL_TYPE => $result->getType(),
-                self::COL_SCORE => $result->getScore(),
+                static::COL_ID => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                static::COL_INDEX => $result->getIndex(),
+                static::COL_TYPE => $result->getType(),
+                static::COL_SCORE => $result->getScore(),
             ];
         }
 

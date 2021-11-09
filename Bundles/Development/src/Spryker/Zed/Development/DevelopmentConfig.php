@@ -604,7 +604,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getArchitectureSnifferCommand()
     {
-        return $this->getPhpMdCommand() . ' ' . self::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
+        return $this->getPhpMdCommand() . ' ' . static::BUNDLE_PLACEHOLDER . ' xml ' . $this->getArchitectureSnifferRuleset();
     }
 
     /**

@@ -61,7 +61,7 @@ class SetTable extends AbstractTable
             SpyTaxSetTableMap::COL_ID_TAX_SET => 'Tax set ID',
             SpyTaxSetTableMap::COL_NAME => 'Name',
             SpyTaxSetTableMap::COL_CREATED_AT => 'Created at',
-            self::TABLE_COL_ACTIONS => 'Actions',
+            static::TABLE_COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSearchable([
@@ -77,7 +77,7 @@ class SetTable extends AbstractTable
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
-        $config->addRawColumn(self::TABLE_COL_ACTIONS);
+        $config->addRawColumn(static::TABLE_COL_ACTIONS);
 
         return $config;
     }
@@ -99,7 +99,7 @@ class SetTable extends AbstractTable
                 SpyTaxSetTableMap::COL_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
                 SpyTaxSetTableMap::COL_NAME => $taxSetEntity->getName(),
                 SpyTaxSetTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($taxSetEntity->getCreatedAt()),
-                self::TABLE_COL_ACTIONS => $this->getActionButtons($taxSetEntity),
+                static::TABLE_COL_ACTIONS => $this->getActionButtons($taxSetEntity),
             ];
         }
 
@@ -131,7 +131,7 @@ class SetTable extends AbstractTable
         $editTaxSetUrl = Url::generate(
             '/tax/set/edit',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet(),
+                static::URL_PARAM_ID_TAX_SET => $taxRateEntity->getIdTaxSet(),
             ],
         );
 
@@ -148,7 +148,7 @@ class SetTable extends AbstractTable
         $viewTaxSetUrl = Url::generate(
             '/tax/set/view',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
+                static::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ],
         );
 
@@ -165,7 +165,7 @@ class SetTable extends AbstractTable
         $deleteTaxSetUrl = Url::generate(
             '/tax/delete-set',
             [
-                self::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
+                static::URL_PARAM_ID_TAX_SET => $taxSetEntity->getIdTaxSet(),
             ],
         );
 

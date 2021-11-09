@@ -46,8 +46,8 @@ class QueueTaskConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
         $this->addOption(static::OPTION_NO_ACK, static::OPTION_NO_ACK_SHORT, InputOption::VALUE_NONE, 'Disable the acknowledgment to keep the message in queue');
         $this->addArgument('queue', InputArgument::REQUIRED, 'Name of the queue for receiving the messages');
 

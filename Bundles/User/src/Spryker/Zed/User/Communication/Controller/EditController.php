@@ -190,7 +190,7 @@ class EditController extends AbstractController
 
             $this->addSuccessMessage(static::MESSAGE_USER_UPDATE_SUCCESS);
 
-            return $this->redirectResponse(self::USER_LISTING_URL);
+            return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
         return $this->viewResponse([

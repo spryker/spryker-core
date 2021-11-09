@@ -54,6 +54,6 @@ class OrderItemSplitController extends AbstractController
             }
         }
 
-        return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $formData[OrderItemSplitForm::FIELD_ID_ORDER]));
+        return $this->redirectResponse(sprintf(static::SALES_ORDER_DETAIL_URL, $formData[OrderItemSplitForm::FIELD_ID_ORDER]));
     }
 }

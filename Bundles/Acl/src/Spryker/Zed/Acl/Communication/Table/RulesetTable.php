@@ -66,7 +66,7 @@ class RulesetTable extends AbstractTable
             SpyAclRuleTableMap::COL_CONTROLLER => 'Controller',
             SpyAclRuleTableMap::COL_ACTION => 'Action',
             SpyAclRuleTableMap::COL_TYPE => 'Permission',
-            self::ACTIONS => 'Actions',
+            static::ACTIONS => 'Actions',
         ]);
 
         $config->setSortable([
@@ -82,7 +82,7 @@ class RulesetTable extends AbstractTable
             SpyAclRuleTableMap::COL_ACTION,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
 
         $config->setUrl(sprintf('ruleset-table?id-role=%d', $this->idRole));
 
@@ -106,7 +106,7 @@ class RulesetTable extends AbstractTable
                 SpyAclRuleTableMap::COL_CONTROLLER => $ruleset[SpyAclRuleTableMap::COL_CONTROLLER],
                 SpyAclRuleTableMap::COL_ACTION => $ruleset[SpyAclRuleTableMap::COL_ACTION],
                 SpyAclRuleTableMap::COL_TYPE => $ruleset[SpyAclRuleTableMap::COL_TYPE],
-                self::ACTIONS => implode(' ', $this->createTableActions($ruleset)),
+                static::ACTIONS => implode(' ', $this->createTableActions($ruleset)),
             ];
         }
 
@@ -121,9 +121,9 @@ class RulesetTable extends AbstractTable
     public function createTableActions(array $ruleset)
     {
         $buttons = [];
-        $buttons[] = $this->generateRemoveButton(self::REMOVE_ACL_RULESET_URL, 'Delete', [
-            self::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
-            self::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
+        $buttons[] = $this->generateRemoveButton(static::REMOVE_ACL_RULESET_URL, 'Delete', [
+            static::PARAM_ID_RULE => $ruleset[SpyAclRuleTableMap::COL_ID_ACL_RULE],
+            static::PARAM_ID_ROLE => $ruleset[SpyAclRuleTableMap::COL_FK_ACL_ROLE],
         ]);
 
         return $buttons;

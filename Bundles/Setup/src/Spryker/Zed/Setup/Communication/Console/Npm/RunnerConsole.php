@@ -86,7 +86,7 @@ class RunnerConsole extends Console
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
+        $this->setName(static::COMMAND_NAME);
         $this->setDescription('This command will execute \'npm run\' with the specified task');
         $help = <<<EOM
 This command will execute 'npm run' with a specified task.
@@ -97,29 +97,29 @@ EOM;
         $this->setHelp($help);
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_ALL,
-            self::OPTION_TASK_BUILD_ALL_SHORT,
+            static::OPTION_TASK_BUILD_ALL,
+            static::OPTION_TASK_BUILD_ALL_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build all core and project resources',
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_CORE,
-            self::OPTION_TASK_BUILD_CORE_SHORT,
+            static::OPTION_TASK_BUILD_CORE,
+            static::OPTION_TASK_BUILD_CORE_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the core resources of Zed',
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_ZED,
-            self::OPTION_TASK_BUILD_ZED_SHORT,
+            static::OPTION_TASK_BUILD_ZED,
+            static::OPTION_TASK_BUILD_ZED_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the project resources of Zed',
         );
 
         $this->addOption(
-            self::OPTION_TASK_BUILD_YVES,
-            self::OPTION_TASK_BUILD_YVES_SHORT,
+            static::OPTION_TASK_BUILD_YVES,
+            static::OPTION_TASK_BUILD_YVES_SHORT,
             InputOption::VALUE_NONE,
             'execute \'npm run\' to build the project resources of Yves',
         );
@@ -145,7 +145,7 @@ EOM;
     protected function getCommand()
     {
         $task = $this->getNpmTask();
-        $command = sprintf(self::NPM_COMMAND_TPL, $this->commands[$task]);
+        $command = sprintf(static::NPM_COMMAND_TPL, $this->commands[$task]);
 
         return $command;
     }
@@ -173,10 +173,10 @@ EOM;
     protected function getNpmTask()
     {
         $tasks = [
-            self::OPTION_TASK_BUILD_ALL,
-            self::OPTION_TASK_BUILD_CORE,
-            self::OPTION_TASK_BUILD_ZED,
-            self::OPTION_TASK_BUILD_YVES,
+            static::OPTION_TASK_BUILD_ALL,
+            static::OPTION_TASK_BUILD_CORE,
+            static::OPTION_TASK_BUILD_ZED,
+            static::OPTION_TASK_BUILD_YVES,
         ];
 
         foreach ($tasks as $task) {
@@ -187,6 +187,6 @@ EOM;
             }
         }
 
-        return self::OPTION_TASK_BUILD_ALL;
+        return static::OPTION_TASK_BUILD_ALL;
     }
 }

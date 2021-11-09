@@ -48,11 +48,11 @@ class AbstractFactoryTest extends Unit
      */
     public function testGetProvidedDependency(): void
     {
-        $container = new Container([self::TEST_KEY => self::TEST_VALUE]);
+        $container = new Container([static::TEST_KEY => static::TEST_VALUE]);
 
         $factory = new ConcreteFactory();
         $factory->setContainer($container);
-        $this->assertSame(self::TEST_VALUE, $factory->getProvidedDependency(self::TEST_KEY));
+        $this->assertSame(static::TEST_VALUE, $factory->getProvidedDependency(static::TEST_KEY));
     }
 
     /**
@@ -62,7 +62,7 @@ class AbstractFactoryTest extends Unit
     {
         $factoryMock = $this->getFactoryMock();
 
-        $this->assertSame(self::TEST_VALUE, $factoryMock->getProvidedDependency(self::TEST_KEY));
+        $this->assertSame(static::TEST_VALUE, $factoryMock->getProvidedDependency(static::TEST_KEY));
     }
 
     /**
@@ -71,7 +71,7 @@ class AbstractFactoryTest extends Unit
     protected function getFactoryMock(): ConcreteFactory
     {
         $dependencyResolverMock = $this->getMockForAbstractClass(AbstractBundleDependencyProvider::class);
-        $container = new Container([self::TEST_KEY => self::TEST_VALUE]);
+        $container = new Container([static::TEST_KEY => static::TEST_VALUE]);
 
         $factoryMock = $this->getMockForAbstractClass(ConcreteFactory::class, [], '', true, true, true, ['resolveDependencyProvider', 'createContainer']);
         $factoryMock->expects($this->once())->method('resolveDependencyProvider')->willReturn($dependencyResolverMock);
@@ -88,7 +88,7 @@ class AbstractFactoryTest extends Unit
         $factory = new ConcreteFactory();
         $this->expectException(ContainerKeyNotFoundException::class);
 
-        $factory->getProvidedDependency(self::TEST_KEY);
+        $factory->getProvidedDependency(static::TEST_KEY);
     }
 
     /**
@@ -101,6 +101,6 @@ class AbstractFactoryTest extends Unit
         $factory->setContainer($container);
         $this->expectException(ContainerKeyNotFoundException::class);
 
-        $factory->getProvidedDependency(self::TEST_KEY);
+        $factory->getProvidedDependency(static::TEST_KEY);
     }
 }

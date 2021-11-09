@@ -37,7 +37,7 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     public function addSuccessMessage(MessageTransfer $message)
     {
-        self::getFlashMessagesTransfer()->addSuccessMessage(
+        static::getFlashMessagesTransfer()->addSuccessMessage(
             $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters(),
@@ -52,7 +52,7 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     public function addInfoMessage(MessageTransfer $message)
     {
-        self::getFlashMessagesTransfer()->addInfoMessage(
+        static::getFlashMessagesTransfer()->addInfoMessage(
             $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters(),
@@ -67,7 +67,7 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     public function addErrorMessage(MessageTransfer $message)
     {
-        self::getFlashMessagesTransfer()->addErrorMessage(
+        static::getFlashMessagesTransfer()->addErrorMessage(
             $this->messageTranslator->translate(
                 $message->getValue(),
                 $message->getParameters(),
@@ -80,7 +80,7 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     public function getMessages()
     {
-        return self::$messages ?: static::getFlashMessagesTransfer();
+        return static::$messages ?: static::getFlashMessagesTransfer();
     }
 
     /**
@@ -88,10 +88,10 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     protected static function getFlashMessagesTransfer()
     {
-        if (self::$messages === null) {
-            self::$messages = new FlashMessagesTransfer();
+        if (static::$messages === null) {
+            static::$messages = new FlashMessagesTransfer();
         }
 
-        return self::$messages;
+        return static::$messages;
     }
 }

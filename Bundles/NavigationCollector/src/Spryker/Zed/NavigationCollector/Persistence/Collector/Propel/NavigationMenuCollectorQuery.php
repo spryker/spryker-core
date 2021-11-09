@@ -35,7 +35,7 @@ class NavigationMenuCollectorQuery extends AbstractPropelCollectorQuery
             Criteria::INNER_JOIN,
         );
 
-        $this->touchQuery->withColumn(SpyNavigationTableMap::COL_ID_NAVIGATION, self::FIELD_ID_NAVIGATION);
-        $this->touchQuery->withColumn(SpyNavigationTableMap::COL_KEY, self::FIELD_NAVIGATION_KEY);
+        $this->touchQuery->withColumn(SpyNavigationTableMap::COL_ID_NAVIGATION, static::FIELD_ID_NAVIGATION);
+        $this->touchQuery->withColumn(SpyNavigationTableMap::COL_KEY, static::FIELD_NAVIGATION_KEY);
     }
 }
