@@ -179,7 +179,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
 
         $priceProductScheduleConcatenatedSubQuery = $this->setConditionsForPriceProductScheduleQuery(
             $priceProductScheduleConcatenatedSubQuery,
-            $storeTransfer
+            $storeTransfer,
         );
 
         $priceProductScheduleFilteredByMinResultSubQuery = $this->factory->createPriceProductScheduleQuery()
@@ -189,7 +189,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
 
         return $this->setConditionsForPriceProductScheduleQuery(
             $priceProductScheduleFilteredByMinResultSubQuery,
-            $storeTransfer
+            $storeTransfer,
         )->groupBy(static::COL_PRODUCT_ID);
     }
 
@@ -243,7 +243,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
                     SpyPriceProductScheduleTableMap::COL_NET_PRICE,
                     SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
                     SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
-                )
+                ),
             );
     }
 
