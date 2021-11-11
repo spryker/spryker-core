@@ -46,7 +46,6 @@ Field,Field
 "Max number of uses (0 = Infinite usage)","Max number of uses (0 = Infinite usage)"
 N/A,n/a
 Name,Name
-"Name (A unique name that will be displayed to your customers)","Name (A unique name that will be displayed to your customers)"
 Name:,Name:
 No,No
 "No additional random characters","No additional random characters"
@@ -62,7 +61,9 @@ Overview,Overview
 Save,Save
 "Store relation:","Store relation:"
 "Successfully deleted ""%d"" vouchers.","Successfully deleted ""%d"" vouchers."
+"Summary explaining promotion. Displayed with eligible products where applicable.","Summary explaining promotion. Displayed with eligible products where applicable."
 Type:,Type:
+"Unique, short, and descriptive. Displayed in cart calculation.","Unique, short, and descriptive. Displayed in cart calculation."
 Used,Used
 "Valid from:","Valid from (included):"
 "Valid until:","Valid to (excluded):"

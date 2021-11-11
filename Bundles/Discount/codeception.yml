@@ -2,6 +2,7 @@ namespace: Discount
 include:
     - tests/SprykerTest/Shared/Discount
     - tests/SprykerTest/Zed/Discount
+    - tests/SprykerTest/Service/Discount
 paths:
     tests: tests
     log: tests/_output

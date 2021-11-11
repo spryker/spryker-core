@@ -2,27 +2,42 @@
 
 <h3>{{ 'Fill in the general discount information' | trans }}</h3>
 <hr />
-{{ form_row(discountForm.discountGeneral.store_relation) }}
 
-{{ form_row(discountForm.discountGeneral.discount_type) }}
+<div class="form-container">
+    {{ form_row(discountForm.discountGeneral.store_relation) }}
+    {{ form_row(discountForm.discountGeneral.discount_type) }}
 
-{{ form_row(discountForm.discountGeneral.display_name) }}
-
-{{ form_row(discountForm.discountGeneral.description) }}
-
-{{ form_row(discountForm.discountGeneral.is_exclusive) }}
-
-{{ form_label(discountForm.discountGeneral.valid_from) }}
-<div class="row">
-    <div class="col-xs-12">
-        {{ form_widget(discountForm.discountGeneral.valid_from) }}
+    <div class="form-group {% if discountForm.discountGeneral.display_name.vars.errors|length %}has-error{% endif %}">
+        {{ form_label(discountForm.discountGeneral.display_name) }}
+        {{ form_widget(discountForm.discountGeneral.display_name) }}
+        <div class="form-note">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {{ 'Unique, short, and descriptive. Displayed in cart calculation.' | trans }}
+        </div>
+        {{ form_errors(discountForm.discountGeneral.display_name) }}
     </div>
-</div>
 
-{{ form_label(discountForm.discountGeneral.valid_to) }}
-<div class="row">
-    <div class="col-xs-12">
-        {{ form_widget(discountForm.discountGeneral.valid_to) }}
+    <div class="form-group {% if discountForm.discountGeneral.description.vars.errors|length %}has-error{% endif %}">
+        {{ form_label(discountForm.discountGeneral.description) }}
+        {{ form_widget(discountForm.discountGeneral.description) }}
+        <div class="form-note">
+            <span class="glyphicon glyphicon-info-sign"></span>
+            {{ 'Summary explaining promotion. Displayed with eligible products where applicable.' | trans }}
+        </div>
+        {{ form_errors(discountForm.discountGeneral.description) }}
+    </div>
+
+    {{ form_row(discountForm.discountGeneral.is_exclusive) }}
+
+    <div class="form-date-container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-6">
+                {{ form_row(discountForm.discountGeneral.valid_from) }}
+            </div>
+            <div class="col-xs-12 col-lg-6">
+                {{ form_row(discountForm.discountGeneral.valid_to) }}
+            </div>
+        </div>
     </div>
 </div>
 

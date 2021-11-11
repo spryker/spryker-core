@@ -256,4 +256,13 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="DiscountCalculationRequest">
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItem"/>
+        <property name="discount" type="Discount"/>
+    </transfer>
+
+    <transfer name="DiscountCalculationResponse">
+        <property name="amount" type="int"/>
+    </transfer>
+
 </transfers>

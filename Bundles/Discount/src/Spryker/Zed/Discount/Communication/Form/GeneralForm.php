@@ -152,7 +152,7 @@ class GeneralForm extends AbstractType
     protected function addDisplayNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_DISPLAY_NAME, TextType::class, [
-            'label' => 'Name (A unique name that will be displayed to your customers)',
+            'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
                 new UniqueDiscountName([
