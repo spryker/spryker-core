@@ -1912,7 +1912,7 @@ div.dt-button-info {
 }
 .has-error .form-control,
 .has-error .form-control:focus {
-    border-color: #ed5565;
+    border-color: #f2392e;
 }
 .has-success .control-label {
     color: #1ab394;
@@ -1921,7 +1921,10 @@ div.dt-button-info {
     color: #f8ac59;
 }
 .has-error .control-label {
-    color: #ed5565;
+    color: #121212;
+}
+.has-error .help-block {
+    color: #f2392e;
 }
 .input-group-addon {
     background-color: #fff;

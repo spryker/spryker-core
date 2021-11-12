@@ -46,7 +46,6 @@ Field,Feld
 "Max number of uses (0 = Infinite usage)","Maximale Anzahl der Verwendungen (0 = unendlich viele Verwendungen)"
 N/A,k.A.
 Name,Name
-"Name (A unique name that will be displayed to your customers)","Name (eine eindeutige Bezeichnung, die Ihren Kunden angezeigt wird)"
 Name:,Name:
 No,Nein
 "No additional random characters","Keine weiteren zufälligen Zeichen"
@@ -62,7 +61,9 @@ Overview,Übersicht
 Save,Speichern
 "Store relation:",Store-Beziehung:
 "Successfully deleted ""%d"" vouchers.","Gutscheine ""%d"" erfolgreich gelöscht."
+"Summary explaining promotion. Displayed with eligible products where applicable.","Zusammenfassung der Werbeaktion. Wird ggf. bei entsprechenden Produkten angezeigt."
 Type:,Typ:
+"Unique, short, and descriptive. Displayed in cart calculation.","Einzigartig, kurz und beschreibend. Wird im Warenkorb angezeigt."
 Used,Verwendet
 "Valid from:","Gültig ab (inklusive):"
 "Valid until:","Gültig bis (exklusive):"
