@@ -60,7 +60,9 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
     {
         $builder->add(ProductAbstractTransfer::ID_TAX_SET, ChoiceType::class, [
             'label' => static::LABEL_ID_TAX_SET,
-            'placeholder' => static::PLACEHOLDER_ID_TAX_SET,
+            'attr' => [
+                'placeholder' => static::PLACEHOLDER_ID_TAX_SET,
+            ],
             'required' => false,
             'choices' => $this->getFactory()->createTaxProductAbstractFormDataProvider()->getTaxChoices(),
             'empty_data' => '',

@@ -4,8 +4,9 @@
 @create-single-concrete-product-card-margin-bottom: 20px;
 @create-single-concrete-product-actions-margin: 0 -5px;
 @create-single-concrete-product-action-padding: 0 5px;
-@create-single-concrete-product-header-padding: 17px 0 0 30px;
-@create-single-concrete-product-header-height: 80px;
+@create-single-concrete-product-header-padding: 17px 30px;
+@create-single-concrete-product-header-title-line-height: 2;
+@create-single-concrete-product-header-sub-title-letter-spacing-base: 0.11px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -25,7 +26,6 @@
     overflow-y: auto;
 
     &__header {
-        min-height: @create-single-concrete-product-header-height;
         padding: @create-single-concrete-product-header-padding;
         background-color: @white;
 
@@ -35,8 +35,17 @@
     }
 
     &__title {
-        font-size: @heading-5-font-size;
+        color: @gray-darker;
+        font-size: @font-size-base;
+        font-weight: @font-weight-medium;
+        letter-spacing: @letter-spacing-base;
+        line-height: @create-single-concrete-product-header-title-line-height;
+    }
+
+    &__sub-title {
         font-weight: @font-weight-semi-bold;
+        letter-spacing: @create-single-concrete-product-header-sub-title-letter-spacing-base;
+        margin: 0;
     }
 
     &__content {

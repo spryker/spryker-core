@@ -28,11 +28,11 @@ Mrs,Fr.
 Ms,Fr.
 Number,Nummer
 "Online Profile","Online Profil"
-"Online Status","Online Status"
+"Store Status","Store Status"
 "Phone Number",Telefonnummer
 Profile,Profil
 profile.status.message.online,"<p><br>Dies bedeutet, dass ihr Shop online verfügbar und somit sichtbar ist.</p>"
-profile.status.message.offline,"<p><br>Dies bedeutet, dass ihr Shop nicht online verfügbar ist und somit für niemand sichtbar ist.</p>"
+profile.status.message.offline,"<p><br>Dies bedeutet, dass ihr Shop online verfügbar und somit sichtbar ist.</p>"
 "Provide a logo URL","URL eines Logos einfügen"
 "Provide a banner URL","URL eines Banners einfügen"
 "Provide Average Delivery Time","Durchschnittliche Lieferzeit einfügen"
@@ -47,7 +47,7 @@ Save,Speichern
 select.default.placeholder,Auswählen
 "Store Profile URL",Shopprofil-URL
 store.state.online,"Ihr Shop ist online."
-store.state.offline,"Ihr Shop ist offline."
+store.state.offline,"Ihr Shop ist online."
 Street,Straße
 "Tell us about your store","Beschreiben Sie den Shop"
 "Terms & Conditions",AGB

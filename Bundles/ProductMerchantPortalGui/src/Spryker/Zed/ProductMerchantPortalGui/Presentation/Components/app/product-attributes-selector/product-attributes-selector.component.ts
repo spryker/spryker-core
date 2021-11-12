@@ -10,9 +10,11 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
+import { ToJson } from '@spryker/utils';
+import { ButtonSize, ButtonVariant } from '@spryker/button';
 import { AttributeOptions, ProductAttribute } from '../../services/types';
 import { IconDeleteModule } from '../../icons';
-import { ToJson } from '@spryker/utils';
+import { IconPlusModule } from '@spryker/icon/icons';
 
 @Component({
     selector: 'mp-product-attributes-selector',
@@ -29,8 +31,11 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 
     deleteIcon = IconDeleteModule.icon;
+    addIcon = IconPlusModule.icon;
     superAttributeOptions: AttributeOptions[] = [];
     attributeOptions: AttributeOptions[][] = [];
+    addProductAttributesButtonVariant = ButtonVariant.Outline;
+    addProductAttributesButtonSize = ButtonSize.Small;
     private attributesObject: Record<string, ProductAttribute> = {};
 
     constructor(private cdr: ChangeDetectorRef) {}

@@ -3,9 +3,11 @@
 @create-multi-concrete-product-padding: 30px;
 @create-multi-concrete-product-actions-margin: 0 -5px;
 @create-multi-concrete-product-action-padding: 0 5px;
-@create-multi-concrete-product-card-padding: 20px;
 @create-multi-concrete-product-content-border-radius: 10px;
 @create-multi-concrete-product-preview-title-margin: 30px 0 15px;
+@create-multi-concrete-product-header-padding: 17px 30px;
+@create-multi-concrete-product-header-title-line-height: 2;
+@create-multi-concrete-product-header-sub-title-letter-spacing-base: 0.11px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -26,7 +28,7 @@
 
     &__header {
         background-color: @white;
-        padding: @create-multi-concrete-product-padding;
+        padding: @create-multi-concrete-product-header-padding;
 
         .@{headline-prefix-cls} {
             padding-bottom: 0;
@@ -34,8 +36,17 @@
     }
 
     &__title {
-        font-size: @heading-3-font-size;
+        color: @gray-darker;
+        font-size: @font-size-base;
+        font-weight: @font-weight-medium;
+        letter-spacing: @letter-spacing-base;
+        line-height: @create-multi-concrete-product-header-title-line-height;
+    }
+
+    &__sub-title {
         font-weight: @font-weight-semi-bold;
+        letter-spacing: @create-multi-concrete-product-header-sub-title-letter-spacing-base;
+        margin: 0;
     }
 
     &__actions-row {

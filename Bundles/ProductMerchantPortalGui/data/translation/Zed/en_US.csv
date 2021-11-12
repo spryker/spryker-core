@@ -71,11 +71,12 @@ Quantity,Quantity
 English,English
 German,German
 "The rest of the locales will be defined once the product has been created.","The rest of the locales will be defined once the product has been created."
-"Create an Abstract Product with 1 Concrete Product","Create an Abstract Product with 1 Concrete Product"
+"Create an Abstract Product","Create an Abstract Product"
+"with 1 Concrete Product","with 1 Concrete Product"
 "Autogenerate SKU","Autogenerate SKU"
 "Same as Abstract Product","Same as Abstract Product"
 "Concrete Products’ Preview","Concrete Products’ Preview"
-"Create an Abstract Product with multiple Concrete Products","Create an Abstract Product with multiple Concrete Products"
+"with multiple Concrete Products","with multiple Concrete Products"
 "Super Attribute","Super Attribute"
 Values,Values
 "No concretes created yet","No concretes created yet"

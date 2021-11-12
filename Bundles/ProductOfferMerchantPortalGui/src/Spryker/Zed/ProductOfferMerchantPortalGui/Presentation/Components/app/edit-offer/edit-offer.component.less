@@ -29,6 +29,7 @@
 @edit-offer-stock-reserved-margin-bottom: 17px;
 @edit-offer-stock-margin: 0 -17px;
 @edit-offer-stock-row-padding: 0 17px;
+@edit-offer-table-padding-inside-card: 3px 5px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -85,6 +86,15 @@
     &__card {
         display: block;
         padding-bottom: @edit-offer-card-padding-bottom;
+
+        .@{table-prefix-cls},
+        .@{table-filters-feature-prefix-cls} {
+            background: @gray-lighter;
+        }
+
+        .@{table-prefix-cls} {
+            padding: @edit-offer-table-padding-inside-card;
+        }
     }
 
     &__product {

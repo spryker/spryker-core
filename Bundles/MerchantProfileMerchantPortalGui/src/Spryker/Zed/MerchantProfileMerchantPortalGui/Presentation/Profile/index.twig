@@ -42,7 +42,7 @@
         <web-mp-profile cloak>
             <span title>{{ 'Profile' | trans }}</span>
 
-            {{ form_row(form.save, {attr: {class: 'mp-profile__submit', 'action': true}}) }}
+            {{ form_row(form.save, {attr: {class: 'mp-profile__submit', 'action': true, 'size': 'lg'}}) }}
 
             <web-spy-tabs>
                 <web-spy-tab spy-title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
@@ -165,18 +165,18 @@
                         </div>
 
                         <div class="spy-col spy-col-gutter-md spy-col-4">
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Online Status' | trans }}">
+                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Store Status' | trans }}">
                                 <div class="mp-profile__status">
                                     {% set isProfileMerchantActiveChecked = onlineProfileMerchantProfileFields.is_active.vars.checked %}
-                                    <div>
-                                        <h3 class="{{ isProfileMerchantActiveChecked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
+                                    <div class="mp-profile__status-toggle">
+                                        {{ form_row(onlineProfileMerchantProfileFields.is_active, {
+                                            label: false, row_attr: { 'no-spaces': 'true' },
+                                        }) }}
+                                        <h3 class="mp-profile__status-title mp-profile__status-title--{{ isProfileMerchantActiveChecked ? 'online' : 'offline' }}">
                                             {{ isProfileMerchantActiveChecked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
                                         </h3>
                                     </div>
-                                    {{ form_row(onlineProfileMerchantProfileFields.is_active, {
-                                        row_attr: {'no-spaces': 'true', },
-                                        toggle: true,
-                                    }) }}
+
                                     <div>
                                         {{ isProfileMerchantActiveChecked ?
                                             'profile.status.message.online' | trans | raw :

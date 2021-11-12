@@ -86,6 +86,21 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
     /**
      * @var string
      */
+    protected const TITLE_EDITABLE_BUTTON = 'Add';
+
+    /**
+     * @var string
+     */
+    protected const VARIANT_EDITABLE_BUTTON = 'outline';
+
+    /**
+     * @var string
+     */
+    protected const SIZE_EDITABLE_BUTTON = 'sm';
+
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
 
     /**
@@ -256,7 +271,15 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::ATTRIBUTES);
 
-        $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $attributesInitialData, [GuiTableEditableButtonTransfer::TITLE => 'Add']);
+        $guiTableConfigurationBuilder->enableAddingNewRows(
+            $formInputName,
+            $attributesInitialData,
+            [
+                GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
+                GuiTableEditableButtonTransfer::VARIANT => static::VARIANT_EDITABLE_BUTTON,
+                GuiTableEditableButtonTransfer::SIZE => static::SIZE_EDITABLE_BUTTON,
+            ],
+        );
 
         return $guiTableConfigurationBuilder;
     }

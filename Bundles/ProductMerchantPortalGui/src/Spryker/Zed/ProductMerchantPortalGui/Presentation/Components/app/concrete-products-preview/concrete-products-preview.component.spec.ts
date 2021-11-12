@@ -322,21 +322,17 @@ describe('ConcreteProductsPreviewComponent', () => {
             expect(skuInput).toBeTruthy();
         }));
 
-        it('should render <spy-button> with <spy-input> components to the `.mp-concrete-products-preview__table-row-name` element', fakeAsync(() => {
+        it('should render <spy-button-icon> component to the `.mp-concrete-products-preview__table-row-name` element', fakeAsync(() => {
             component.attributes = mockAttributes;
             fixture.detectChanges();
             tick();
             fixture.detectChanges();
 
             const removeButton = fixture.debugElement.query(
-                By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-button'),
-            );
-            const removeButtonIcon = fixture.debugElement.query(
-                By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-button spy-icon'),
+                By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-button-icon'),
             );
 
             expect(removeButton).toBeTruthy();
-            expect(removeButtonIcon).toBeTruthy();
         }));
     });
 

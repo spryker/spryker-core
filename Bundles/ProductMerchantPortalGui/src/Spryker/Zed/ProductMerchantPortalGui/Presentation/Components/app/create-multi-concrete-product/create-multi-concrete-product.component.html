@@ -1,8 +1,11 @@
 <div class="mp-create-multi-concrete-product__header">
-    <spy-headline>
-        <h3 class="mp-create-multi-concrete-product__title">
+    <spy-headline [level]="titleLevel">
+        <div class="mp-create-multi-concrete-product__title">
             <ng-content select="[title]"></ng-content>
-        </h3>
+        </div>
+        <h5 class="mp-create-multi-concrete-product__sub-title">
+            <ng-content select="[sub-title]"></ng-content>
+        </h5>
         <ng-content actions select="[action]"></ng-content>
     </spy-headline>
 </div>

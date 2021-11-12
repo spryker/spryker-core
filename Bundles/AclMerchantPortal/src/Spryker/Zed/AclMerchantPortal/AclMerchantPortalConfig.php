@@ -239,7 +239,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             ->setEntity(SpyUrlRedirect::class)
             ->setScope(AclEntityConstants::SCOPE_GLOBAL)
             ->setPermissionMask(
-                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_DELETE,
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_DELETE | AclEntityConstants::OPERATION_MASK_UPDATE,
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())

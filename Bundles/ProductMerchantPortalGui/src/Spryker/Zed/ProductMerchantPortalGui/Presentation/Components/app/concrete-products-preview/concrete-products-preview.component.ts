@@ -10,6 +10,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { ToJson } from '@spryker/utils';
+import { ButtonSize } from '@spryker/button';
 import { IconDeleteModule, IconNoDataModule } from '../../icons';
 import {
     ConcreteProductPreview,
@@ -48,6 +49,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     isAutoGenerateNameCheckbox = true;
     deleteIcon = IconDeleteModule.icon;
     noDataIcon = IconNoDataModule.icon;
+    deleteIconSize = ButtonSize.Medium;
 
     private attributeValues: ConcreteProductPreviewSuperAttribute[][] = [];
     private generatedAttributeValues: ConcreteProductPreviewSuperAttribute[][] = [];

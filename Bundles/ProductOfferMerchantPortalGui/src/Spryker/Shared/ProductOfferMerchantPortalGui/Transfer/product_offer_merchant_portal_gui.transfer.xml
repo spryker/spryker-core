@@ -372,6 +372,8 @@
 
     <transfer name="GuiTableEditableButton">
         <property name="title" type="string"/>
+        <property name="variant" type="string"/>
+        <property name="size" type="string"/>
     </transfer>
 
     <transfer name="Merchant">

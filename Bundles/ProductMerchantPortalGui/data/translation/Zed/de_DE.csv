@@ -71,11 +71,12 @@ Quantity,Menge
 English,Englisch
 German,Deutsche
 "The rest of the locales will be defined once the product has been created.","Andere Locales werden definiert, sobald das Produkt erstellt wurde."
-"Create an Abstract Product with 1 Concrete Product","Ein abstraktes Produkt mit der einzigen Variante erstellen"
+"Create an Abstract Product","Ein abstraktes Produkt"
+"with 1 Concrete Product","mit der einzigen Variante erstellen"
 "Autogenerate SKU","SKU automatisch generieren"
 "Same as Abstract Product","Vom abstrakten Produkt übernehmen"
 "Concrete Products’ Preview","Vorschau der Varianten"
-"Create an Abstract Product with multiple Concrete Products","Ein abstraktes Produkt mit mehreren Varianten erstellen"
+"with multiple Concrete Products","mit mehreren Varianten erstellen"
 "Super Attribute",Superattribut
 Values,Values
 "No concretes created yet","Es wurden noch keine Varianten erstellt"

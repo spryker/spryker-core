@@ -1,6 +1,8 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @manage-order-grid-default-padding: 7px;
+@manage-order-grid-inner-padding: 20px;
+@manage-order-grid-inner-margin: 0 0 20px;
 @manage-order-default-spacing-top: 20px;
 @manage-order-padding: 30px;
 @manage-order-information-padding: @manage-order-padding @manage-order-padding 20px;
@@ -32,6 +34,12 @@
         flex-wrap: wrap;
         margin: -@manage-order-grid-default-padding;
         justify-content: space-between;
+
+        &--inner {
+            background: @gray-lighter;
+            padding: @manage-order-grid-inner-padding;
+            margin: @manage-order-grid-inner-margin;
+        }
     }
 
     &-form-overlay {

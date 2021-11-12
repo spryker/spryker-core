@@ -11,7 +11,11 @@
         <web-mp-create-single-concrete-product>
             {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                 {% block title %}
-                    <span title>{{ 'Create an Abstract Product with 1 Concrete Product' | trans }}</span>
+                    <span title>{{ 'Create an Abstract Product' | trans }}</span>
+                {% endblock %}
+
+                {% block subTitle %}
+                    <span sub-title>{{ 'with 1 Concrete Product' | trans }}</span>
                 {% endblock %}
 
                 {% block actions %}

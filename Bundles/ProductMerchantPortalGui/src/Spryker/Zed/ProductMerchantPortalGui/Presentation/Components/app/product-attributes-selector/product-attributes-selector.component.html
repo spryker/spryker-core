@@ -46,7 +46,12 @@
         </div>
 
         <div *ngIf="selectedAttributes.length < attributes.length" class="mp-product-attributes-selector__button-add">
-            <spy-button (click)="create()">
+            <spy-button
+                (click)="create()"
+                [variant]="addProductAttributesButtonVariant"
+                [size]="addProductAttributesButtonSize"
+            >
+                <spy-icon [name]="addIcon" icon></spy-icon>
                 <ng-content select="[btn-attr-add-name]"></ng-content>
             </spy-button>
         </div>

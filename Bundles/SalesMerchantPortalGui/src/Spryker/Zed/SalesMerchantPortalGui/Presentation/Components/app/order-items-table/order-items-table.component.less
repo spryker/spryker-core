@@ -1,0 +1,22 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@order-items-table-padding: 5px;
+@order-items-filter-padding: 20px;
+
+.mp-order-items-table {
+    .@{table-prefix-cls},
+    .@{table-filters-feature-prefix-cls} {
+        padding: @order-items-table-padding;
+        background-color: @gray-lighter;
+        border-radius: 0;
+    }
+
+    .@{table-filters-feature-prefix-cls} {
+        padding: @order-items-filter-padding;
+    }
+
+    .@{table-prefix-cls} {
+        border-radius: 0;
+        background: @gray-lighter;
+    }
+}

@@ -1,4 +1,8 @@
-<spy-button class="mp-image-sets__button mp-image-sets__button--add-set" (click)="addImageSet()">
+<spy-button
+    class="mp-image-sets__button mp-image-sets__button--add-set"
+    (click)="addImageSet()"
+    [variant]="addImageSetButtonVariant"
+>
     <spy-icon [name]="addButtonIcon" icon></spy-icon>
     {{ titles.addImageSet }}
 </spy-button>
@@ -28,7 +32,7 @@
         <div class="mp-image-sets__button-remove-set-container spy-col spy-col-gutter-sm">
             <spy-button
                 class="mp-image-sets__button mp-image-sets__button--remove-set"
-                variant="critical"
+                [variant]="deleteImageSetButtonVariant"
                 (click)="removeImageSet(imageSetIndex)"
             >
                 <spy-icon [name]="removeButtonIcon" icon></spy-icon>
@@ -129,6 +133,7 @@
     <spy-button
         class="mp-image-sets__button mp-image-sets__button--add-images"
         (click)="addImageSetData(imageSetIndex)"
+        [variant]="addImageButtonVariant"
     >
         <spy-icon [name]="addButtonIcon" icon></spy-icon>
         {{ titles.addImage }}

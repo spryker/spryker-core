@@ -66,6 +66,16 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     /**
      * @var string
      */
+    protected const VARIANT_EDITABLE_BUTTON = 'outline';
+
+    /**
+     * @var string
+     */
+    protected const SIZE_EDITABLE_BUTTON = 'sm';
+
+    /**
+     * @var string
+     */
     protected const INPUT_TYPE_NUMBER = 'number';
 
     /**
@@ -133,9 +143,15 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     ): GuiTableConfigurationBuilderInterface {
         $formInputName = sprintf('%s[%s]', static::BLOCK_PREFIX, static::FIELD_PRODUCT_OFFER_PRICES);
 
-        $guiTableConfigurationBuilder->enableAddingNewRows($formInputName, $initialData, [
-            GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
-        ]);
+        $guiTableConfigurationBuilder->enableAddingNewRows(
+            $formInputName,
+            $initialData,
+            [
+                GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
+                GuiTableEditableButtonTransfer::VARIANT => static::VARIANT_EDITABLE_BUTTON,
+                GuiTableEditableButtonTransfer::SIZE => static::SIZE_EDITABLE_BUTTON,
+            ],
+        );
         $guiTableConfigurationBuilder = $this->addEditableColumns($guiTableConfigurationBuilder, $priceTypeTransfers);
 
         return $guiTableConfigurationBuilder;

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { Level } from '@spryker/headline';
 
 @Component({
     selector: 'mp-create-single-concrete-product',
@@ -8,4 +9,6 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     encapsulation: ViewEncapsulation.None,
     host: { class: 'mp-create-single-concrete-product' },
 })
-export class CreateSingleConcreteProductComponent {}
+export class CreateSingleConcreteProductComponent {
+    titleLevel = Level.H5;
+}

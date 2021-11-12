@@ -36,6 +36,16 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
     protected const TITLE_EDITABLE_BUTTON = 'Add';
 
     /**
+     * @var string
+     */
+    protected const VARIANT_EDITABLE_BUTTON = 'outline';
+
+    /**
+     * @var string
+     */
+    protected const SIZE_EDITABLE_BUTTON = 'sm';
+
+    /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::BLOCK_PREFIX
      *
      * @var string
@@ -134,9 +144,15 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
             ->addRowActionHttp(static::ID_ROW_ACTION_URL_DELETE_PRICE, static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)
             ->enableInlineDataEditing($savePricesUrl, 'POST')
-            ->enableAddingNewRows($formInputName, $initialData, [
-                GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
-            ]);
+            ->enableAddingNewRows(
+                $formInputName,
+                $initialData,
+                [
+                    GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,
+                    GuiTableEditableButtonTransfer::VARIANT => static::VARIANT_EDITABLE_BUTTON,
+                    GuiTableEditableButtonTransfer::SIZE => static::SIZE_EDITABLE_BUTTON,
+                ],
+            );
 
         return $guiTableConfigurationBuilder->createConfiguration();
     }

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { ToJson } from '@spryker/utils';
 import { ImageSets, ImageSetNames, ImageSetTitles, ImageSetError, ImageDataError, ImageData } from './types';
 import { IconPlusModule } from '@spryker/icon/icons';
+import { ButtonVariant } from '@spryker/button';
 import { IconDeleteModule } from '../../icons';
 import { EmptyImageSet, EmptyImageSetData } from './empty-image-set';
 
@@ -23,6 +24,9 @@ export class ImageSetsComponent {
 
     addButtonIcon = IconPlusModule.icon;
     removeButtonIcon = IconDeleteModule.icon;
+    addImageSetButtonVariant = ButtonVariant.Outline;
+    addImageButtonVariant = ButtonVariant.Outline;
+    deleteImageSetButtonVariant = ButtonVariant.CriticalOutline;
 
     addImageSet(): void {
         this.imageSets = [new EmptyImageSet(), ...this.imageSets];

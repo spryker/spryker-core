@@ -32,6 +32,21 @@ class ProductLocalizedAttributesForm extends AbstractType
     /**
      * @var string
      */
+    protected const LABEL_META_TITLE = 'Title';
+
+    /**
+     * @var string
+     */
+    protected const LABEL_META_KEYWORDS = 'Keywords';
+
+    /**
+     * @var string
+     */
+    protected const LABEL_META_DESCRIPTION = 'Description';
+
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_NAME = 'Provide a name';
 
     /**
@@ -166,6 +181,7 @@ class ProductLocalizedAttributesForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_META_TITLE,
             ],
+            'label' => static::LABEL_META_TITLE,
             'required' => false,
         ]);
 
@@ -185,6 +201,7 @@ class ProductLocalizedAttributesForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_META_KEYWORDS,
             ],
+            'label' => static::LABEL_META_KEYWORDS,
             'required' => false,
         ]);
 
@@ -204,6 +221,7 @@ class ProductLocalizedAttributesForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_META_DESCRIPTION,
             ],
+            'label' => static::LABEL_META_DESCRIPTION,
             'required' => false,
         ]);
 

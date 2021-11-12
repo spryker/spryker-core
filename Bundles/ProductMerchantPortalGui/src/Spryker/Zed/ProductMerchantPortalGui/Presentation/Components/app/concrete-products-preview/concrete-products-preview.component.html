@@ -78,14 +78,13 @@
                             >
                             </spy-input>
                         </spy-form-item>
-                        <spy-button
-                            variant="link"
-                            class="mp-concrete-products-preview__table-row-button"
+                        <spy-button-icon
+                            [size]="deleteIconSize"
+                            [iconName]="deleteIcon"
                             (click)="delete(i)"
+                            class="mp-concrete-products-preview__table-row-button"
                         >
-                            <spy-icon [name]="deleteIcon" class="mp-concrete-products-preview__table-row-delete-icon">
-                            </spy-icon>
-                        </spy-button>
+                        </spy-button-icon>
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>

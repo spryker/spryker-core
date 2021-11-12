@@ -113,6 +113,9 @@
     <transfer name="GuiTableEditableButton">
         <property name="title" type="string"/>
         <property name="icon" type="string"/>
+        <property name="variant" type="string"/>
+        <property name="size" type="string"/>
+        <property name="shape" type="string"/>
     </transfer>
 
     <transfer name="GuiTableEditableUrl">

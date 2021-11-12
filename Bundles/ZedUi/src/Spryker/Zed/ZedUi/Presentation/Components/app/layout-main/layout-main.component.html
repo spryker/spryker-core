@@ -1,7 +1,7 @@
 <spy-layout>
     <div class="mp-layout-main-cnt">
         <div class="mp-layout-main-cnt__sidebar">
-            <spy-sidebar (collapsedChange)="updateCollapseHandler($event)">
+            <spy-sidebar [collapsed]="isCollapsed" (collapsedChange)="updateCollapseHandler($event)">
                 <div class="mp-layout-main-cnt__logo">
                     <div class="mp-layout-main-cnt__logo-inner">
                         <ng-content select="[logo]"></ng-content>

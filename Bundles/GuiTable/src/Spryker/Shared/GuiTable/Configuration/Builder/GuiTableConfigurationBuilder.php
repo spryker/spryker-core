@@ -1155,10 +1155,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function createEditableAddButton(?array $addButton): GuiTableEditableButtonTransfer
     {
-        $title = $addButton[GuiTableEditableButtonTransfer::TITLE] ?? 'Create';
-        $icon = $addButton[GuiTableEditableButtonTransfer::ICON] ?? null;
+        $editableButtonOptions = $this->resolveEditableButtonOptions($addButton, [
+            GuiTableEditableButtonTransfer::TITLE => 'Create',
+        ]);
 
-        return $this->createEditableButton($title, $icon);
+        return $this->createEditableButton($editableButtonOptions);
     }
 
     /**
@@ -1168,10 +1169,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function createEditableSaveButton(?array $saveButton): GuiTableEditableButtonTransfer
     {
-        $title = $saveButton[GuiTableEditableButtonTransfer::TITLE] ?? 'Save';
-        $icon = $saveButton[GuiTableEditableButtonTransfer::ICON] ?? null;
+        $editableButtonOptions = $this->resolveEditableButtonOptions($saveButton, [
+            GuiTableEditableButtonTransfer::TITLE => 'Save',
+        ]);
 
-        return $this->createEditableButton($title, $icon);
+        return $this->createEditableButton($editableButtonOptions);
     }
 
     /**
@@ -1181,23 +1183,49 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function createEditableCancelButton(?array $cancelButton): GuiTableEditableButtonTransfer
     {
-        $title = $cancelButton[GuiTableEditableButtonTransfer::TITLE] ?? 'Cancel';
-        $icon = $cancelButton[GuiTableEditableButtonTransfer::ICON] ?? null;
+        $editableButtonOptions = $this->resolveEditableButtonOptions($cancelButton, [
+            GuiTableEditableButtonTransfer::TITLE => 'Cancel',
+        ]);
 
-        return $this->createEditableButton($title, $icon);
+        return $this->createEditableButton($editableButtonOptions);
     }
 
     /**
-     * @param string|null $title
-     * @param string|null $icon
+     * @param array|null $editableButtonOptions
+     * @param array $defaultOverwriteOptions
+     *
+     * @return array<string, ?string>
+     */
+    protected function resolveEditableButtonOptions(?array $editableButtonOptions, array $defaultOverwriteOptions): array
+    {
+        $editableButtonOptions = $editableButtonOptions ?? [];
+        $defaultOverwriteOptions = $defaultOverwriteOptions ?? [];
+
+        $defaultOptions = [
+            GuiTableEditableButtonTransfer::TITLE => null,
+            GuiTableEditableButtonTransfer::ICON => null,
+            GuiTableEditableButtonTransfer::VARIANT => null,
+            GuiTableEditableButtonTransfer::SIZE => null,
+            GuiTableEditableButtonTransfer::SHAPE => null,
+        ];
+
+        return array_merge($defaultOptions, $defaultOverwriteOptions, $editableButtonOptions);
+    }
+
+    /**
+     * @param array<string, ?string> $editableButtonOptions
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
-    protected function createEditableButton(?string $title, ?string $icon): GuiTableEditableButtonTransfer
-    {
+    protected function createEditableButton(
+        array $editableButtonOptions
+    ): GuiTableEditableButtonTransfer {
         return (new GuiTableEditableButtonTransfer())
-            ->setTitle($title)
-            ->setIcon($icon);
+            ->setTitle($editableButtonOptions[GuiTableEditableButtonTransfer::TITLE])
+            ->setIcon($editableButtonOptions[GuiTableEditableButtonTransfer::ICON])
+            ->setVariant($editableButtonOptions[GuiTableEditableButtonTransfer::VARIANT])
+            ->setSize($editableButtonOptions[GuiTableEditableButtonTransfer::SIZE])
+            ->setShape($editableButtonOptions[GuiTableEditableButtonTransfer::SHAPE]);
     }
 
     /**

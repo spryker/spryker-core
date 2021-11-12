@@ -176,15 +176,13 @@
                     {% block price %}
                         <web-spy-card cloak spy-title="{{ 'Price' | trans }}" class="{{ mainClass }}__card">
                             {% block priceInner %}
-                                <web-spy-card>
-                                    {% block priceTable %}
-                                        <web-mp-offer-prices-table
-                                            cloak
-                                            table-id="web-mp-offers-list"
-                                            config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
-                                        </web-mp-offer-prices-table>
-                                    {% endblock %}
-                                </web-spy-card>
+                                {% block priceTable %}
+                                    <web-mp-offer-prices-table
+                                        cloak
+                                        table-id="web-mp-offers-list"
+                                        config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
+                                    </web-mp-offer-prices-table>
+                                {% endblock %}
                             {% endblock %}
                         </web-spy-card>
 

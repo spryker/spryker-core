@@ -28,14 +28,14 @@ interface ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return $this
      */
     public function addInfoNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     );
 
@@ -46,14 +46,14 @@ interface ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return $this
      */
     public function addSuccessNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     );
 
@@ -64,14 +64,14 @@ interface ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return $this
      */
     public function addWarningNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     );
 
@@ -82,14 +82,14 @@ interface ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return $this
      */
     public function addErrorNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     );
 

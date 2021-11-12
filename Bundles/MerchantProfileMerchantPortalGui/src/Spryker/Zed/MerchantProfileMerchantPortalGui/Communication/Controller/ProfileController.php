@@ -22,6 +22,11 @@ class ProfileController extends AbstractController
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'The Profile has been changed successfully.';
 
     /**
+     * @var string
+     */
+    protected const MESSAGE_MERCHANT_UPDATE_ERROR = 'The Profile form has errors.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<mixed>
@@ -38,7 +43,7 @@ class ProfileController extends AbstractController
         $merchantProfileForm = $this->getFactory()->createMerchantProfileForm($merchantTransfer);
         $merchantProfileForm->handleRequest($request);
 
-        if ($merchantProfileForm->isSubmitted() && $merchantProfileForm->isValid()) {
+        if ($merchantProfileForm->isSubmitted()) {
             $this->updateMerchant($merchantProfileForm);
         }
 
@@ -57,6 +62,12 @@ class ProfileController extends AbstractController
      */
     protected function updateMerchant(FormInterface $merchantForm): void
     {
+        if (!$merchantForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_UPDATE_ERROR);
+
+            return;
+        }
+
         $merchantTransfer = $merchantForm->getData();
 
         $merchantResponseTransfer = $this->getFactory()

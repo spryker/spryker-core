@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { TableConfig } from '@spryker/table';
-import { ToJson } from '@spryker/utils';
 
 @Component({
     selector: 'mp-offer-prices-table',
@@ -8,6 +7,9 @@ import { ToJson } from '@spryker/utils';
     styleUrls: ['./offer-prices-table.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'mp-offer-prices-table',
+    },
 })
 export class OfferPricesTableComponent {
     @Input() config: TableConfig;

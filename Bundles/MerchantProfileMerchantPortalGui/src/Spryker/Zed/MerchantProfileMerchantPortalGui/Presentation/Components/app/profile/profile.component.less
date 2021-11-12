@@ -3,6 +3,9 @@
 @profile-card-margin-bottom: 20px;
 @profile-card-label-margin-bottom: 9px;
 @profile-collapsible-margin-bottom: 18px;
+@profile-status-checkbox-status-title-padding-left: 10px;
+@profile-status-checkbox-toggle-padding-top: 10px;
+@profile-status-checkbox-toggle-padding-bottom: 15px;
 
 .mp-profile {
     font-family: @font-family;
@@ -25,8 +28,14 @@
     &__status {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
+
+        &-toggle {
+            display: flex;
+            align-items: center;
+            padding-top: @profile-status-checkbox-toggle-padding-top;
+            padding-bottom: @profile-status-checkbox-toggle-padding-bottom;
+        }
 
         br {
             display: none;
@@ -38,13 +47,13 @@
     }
 
     &__status-title {
-        margin: 0;
+        padding-left: @profile-status-checkbox-status-title-padding-left;
 
-        &-online {
+        &--online {
             color: @green;
         }
 
-        &-offline {
+        &--offline {
             color: @gray-darker;
         }
     }

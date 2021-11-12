@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { ToJson } from '@spryker/utils';
 import { ConcreteProductPreview, ConcreteProductPreviewErrors, ProductAttribute } from '../../services/types';
+import { Level } from '@spryker/headline';
 
 @Component({
     selector: 'mp-create-multi-concrete-product',
@@ -17,4 +18,5 @@ export class CreateMultiConcreteProductComponent {
     @Input() @ToJson() generatedProductErrors?: ConcreteProductPreviewErrors[];
     @Input() productsName = '';
     @Input() attributesName = '';
+    titleLevel = Level.H5;
 }

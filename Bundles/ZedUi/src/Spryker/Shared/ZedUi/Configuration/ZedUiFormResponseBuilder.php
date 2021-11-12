@@ -104,20 +104,20 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
      */
     public function addInfoNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     ): ZedUiFormResponseBuilderInterface {
         return $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_INFO,
-            $closable,
+            $closeable,
             $description,
         );
     }
@@ -128,20 +128,20 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
      */
     public function addSuccessNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     ): ZedUiFormResponseBuilderInterface {
         return $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_SUCCESS,
-            $closable,
+            $closeable,
             $description,
         );
     }
@@ -152,20 +152,20 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
      */
     public function addWarningNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     ): ZedUiFormResponseBuilderInterface {
         return $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_WARNING,
-            $closable,
+            $closeable,
             $description,
         );
     }
@@ -176,20 +176,20 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @api
      *
      * @param string $title
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
      */
     public function addErrorNotification(
         string $title,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     ): ZedUiFormResponseBuilderInterface {
         return $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_ERROR,
-            $closable,
+            $closeable,
             $description,
         );
     }
@@ -300,7 +300,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     /**
      * @param string $title
      * @param string $type
-     * @param bool $closable
+     * @param bool $closeable
      * @param string|null $description
      *
      * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
@@ -308,13 +308,13 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     protected function addActionNotification(
         string $title,
         string $type,
-        bool $closable = true,
+        bool $closeable = true,
         ?string $description = null
     ): ZedUiFormResponseBuilderInterface {
         $this->notifications[] = [
             'title' => $title,
             'type' => $type,
-            'closable' => $closable,
+            'closeable' => $closeable,
             'description' => $description,
         ];
 

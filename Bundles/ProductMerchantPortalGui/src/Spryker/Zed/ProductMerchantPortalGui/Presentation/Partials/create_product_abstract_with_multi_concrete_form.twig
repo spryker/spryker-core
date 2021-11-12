@@ -30,7 +30,11 @@
             >
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}
-                        <span title>{{ 'Create an Abstract Product with multiple Concrete Products' | trans }}</span>
+                        <span title>{{ 'Create an Abstract Product' | trans }}</span>
+                    {% endblock %}
+
+                    {% block subtTitle %}
+                        <span sub-title>{{ 'with multiple Concrete Products' | trans }}</span>
                     {% endblock %}
 
                     {% block actions %}
@@ -48,7 +52,6 @@
                         <span selector-col-attr-name>{{ 'Super Attribute' | trans }} *</span>
                         <span selector-col-attr-values-name>{{ 'Values' | trans }} *</span>
                         <span selector-btn-attr-add-name>
-                            <web-spy-icon name="plus"></web-spy-icon>
                             {{ 'Add' | trans }}
                         </span>
                     {% endblock %}
