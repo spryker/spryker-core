@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Discount\Persistence\DiscountRepository;
+use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 
 /**
  * @method void wantToTest($text)
@@ -140,5 +142,13 @@ class DiscountBusinessTester extends Actor
         ]);
 
         return $discountTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface
+     */
+    public function createDiscountRepository(): DiscountRepositoryInterface
+    {
+        return new DiscountRepository();
     }
 }

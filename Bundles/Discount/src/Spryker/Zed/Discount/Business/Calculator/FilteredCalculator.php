@@ -13,6 +13,7 @@ use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
+use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 
 class FilteredCalculator extends Calculator implements CalculatorInterface
@@ -29,6 +30,7 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
      * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface> $calculatorPlugins
      * @param array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface> $collectedDiscountGroupingPlugins
      * @param \Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface $collectedDiscountsItemFilter
+     * @param \Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface $collectedDiscountSorter
      * @param \Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface $discountableItemFilter
      */
     public function __construct(
@@ -38,9 +40,18 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
         array $calculatorPlugins,
         array $collectedDiscountGroupingPlugins,
         CollectedDiscountItemFilterInterface $collectedDiscountsItemFilter,
+        CollectedDiscountSorterInterface $collectedDiscountSorter,
         DiscountableItemFilterInterface $discountableItemFilter
     ) {
-        parent::__construct($collectorBuilder, $messengerFacade, $distributor, $calculatorPlugins, $collectedDiscountGroupingPlugins, $collectedDiscountsItemFilter);
+        parent::__construct(
+            $collectorBuilder,
+            $messengerFacade,
+            $distributor,
+            $calculatorPlugins,
+            $collectedDiscountGroupingPlugins,
+            $collectedDiscountsItemFilter,
+            $collectedDiscountSorter,
+        );
         $this->discountableItemFilter = $discountableItemFilter;
     }
 

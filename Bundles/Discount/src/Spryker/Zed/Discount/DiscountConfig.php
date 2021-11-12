@@ -42,6 +42,16 @@ class DiscountConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/discount/index/list';
 
     /**
+     * @var int
+     */
+    protected const PRIORITY_MIN_VALUE = 1;
+
+    /**
+     * @var int
+     */
+    protected const PRIORITY_MAX_VALUE = 9999;
+
+    /**
      * @api
      *
      * @return int
@@ -105,5 +115,31 @@ class DiscountConfig extends AbstractBundleConfig
     public function getDefaultRedirectUrl(): string
     {
         return static::REDIRECT_URL_DEFAULT;
+    }
+
+    /**
+     * Specification:
+     * - Defines the minimum numeric value for priority (the highest possible priority).
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getPriorityMinValue(): int
+    {
+        return static::PRIORITY_MIN_VALUE;
+    }
+
+    /**
+     * Specification:
+     * - Defines the maximum numeric value for priority (the lowest possible priority).
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getPriorityMaxValue(): int
+    {
+        return static::PRIORITY_MAX_VALUE;
     }
 }

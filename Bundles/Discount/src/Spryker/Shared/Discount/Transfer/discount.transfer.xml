@@ -20,6 +20,7 @@
         <property name="currency" type="Currency"/>
         <property name="priceMode" type="string"/>
         <property name="discountType" type="string"/>
+        <property name="priority" type="int"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -32,6 +33,7 @@
         <property name="unitGrossAmount" type="int" deprecated="use unitAmount"/>
         <property name="sumGrossAmount" type="int" deprecated="use sumAmount"/>
         <property name="quantity" type="int"/>
+        <property name="priority" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -126,6 +128,7 @@
         <property name="isExclusive" type="bool"/>
         <property name="isActive" type="bool"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="priority" type="int"/>
     </transfer>
 
     <transfer name="StoreRelation">

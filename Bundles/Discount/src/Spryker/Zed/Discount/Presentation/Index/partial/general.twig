@@ -27,6 +27,18 @@
         {{ form_errors(discountForm.discountGeneral.description) }}
     </div>
 
+    {% if discountForm.discountGeneral.priority is defined %}
+        <div class="form-group {% if discountForm.discountGeneral.priority.vars.errors|length %}has-error{% endif %}">
+            {{ form_label(discountForm.discountGeneral.priority) }}
+            {{ form_widget(discountForm.discountGeneral.priority) }}
+            <div class="form-note">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                {{ discountForm.discountGeneral.priority.vars.help }}
+            </div>
+            {{ form_errors(discountForm.discountGeneral.priority) }}
+        </div>
+    {% endif %}
+
     {{ form_row(discountForm.discountGeneral.is_exclusive) }}
 
     <div class="form-date-container">

@@ -32,6 +32,8 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
+use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorter;
+use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
@@ -39,6 +41,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Messenger\Business\MessengerFacade;
 use SprykerTest\Zed\Discount\Communication\Fixtures\VoucherCollectedDiscountGroupingStrategyPlugin;
@@ -195,6 +198,7 @@ class CalculatorTest extends Unit
             $calculatorPlugins,
             [],
             $this->createCollectedDiscountItemFilter(),
+            $this->createCollectedDiscountSorter(),
         );
     }
 
@@ -293,7 +297,9 @@ class CalculatorTest extends Unit
      */
     protected function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
-        return new DiscountableItemTransformer();
+        return new DiscountableItemTransformer(
+            $this->tester->createDiscountRepository(),
+        );
     }
 
     /**
@@ -622,6 +628,7 @@ class CalculatorTest extends Unit
             $calculatorPlugins,
             $this->getCollectedDiscountGroupingPlugins(),
             $this->createCollectedDiscountItemFilter(),
+            $this->createCollectedDiscountSorter(),
         );
     }
 
@@ -712,5 +719,24 @@ class CalculatorTest extends Unit
     protected function createCollectedDiscountItemFilter(): CollectedDiscountItemFilterInterface
     {
         return new CollectedDiscountItemFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface
+     */
+    protected function createCollectedDiscountSorter(): CollectedDiscountSorterInterface
+    {
+        return new CollectedDiscountSorter(
+            $this->tester->createDiscountRepository(),
+            $this->createDiscountConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\DiscountConfig
+     */
+    protected function createDiscountConfig(): DiscountConfig
+    {
+        return new DiscountConfig();
     }
 }

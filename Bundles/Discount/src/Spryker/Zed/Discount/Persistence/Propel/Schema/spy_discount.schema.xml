@@ -18,6 +18,7 @@
         <column name="decision_rule_query_string" type="LONGVARCHAR" required="false"/>
         <column name="collector_query_string" type="LONGVARCHAR" required="false"/>
         <column name="minimum_item_amount" type="INTEGER" required="true" default="1"/>
+        <column name="priority" type="INTEGER" required="false" default="9999"/>
 
         <behavior name="timestampable"/>
 

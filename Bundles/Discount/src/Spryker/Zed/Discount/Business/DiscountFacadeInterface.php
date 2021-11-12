@@ -26,11 +26,17 @@ interface DiscountFacadeInterface
 {
     /**
      * Specification:
+     * - Requires `CollectedDiscountTransfer.discount` to be set.
      * - Finds all discounts with voucher within the provided Store.
      * - Finds all discounts matching decision rules.
      * - Collects discountable items for each discount type.
+     * - Sorts discounts by priority ASC if `spy_discount.priority` field is present at the DB, otherwise - sorts by discount amount DESC.
+     * - Discounts with the same priority are sorted by discount amount DESC.
+     * - If a discount does not have numeric priority set, maximum possible number will be assigned from module config (lowest priority).
      * - Applies discount to exclusive if exists.
      * - Distributes discount amount throw all discountable items.
+     * - Calculates iteration price based on sum of unit prices of already applied discounts with lower priority, if `spy_discount.priority` field is present at the DB.
+     * - Uses `DiscountableItemTransfer.unitPrice` otherwise.
      * - Adds discount totals to quote discount properties.
      * - Filters out discounts that cannot be applied.
      *
@@ -415,6 +421,8 @@ interface DiscountFacadeInterface
      * Specification:
      * - Loops over each DiscountableItemTransfer and calculate each item price amount share from current discount total, for single item.
      * - Calculates floating point error and store it for later item, add it to next item.
+     * - Calculates iteration price based on sum of unit prices of already applied discounts with lower priority, if `spy_discount.priority` field is present at the DB.
+     * - Uses `DiscountableItemTransfer.unitPrice` otherwise.
      * - Stores item price share amount into DiscountableItemTransfer::originalItemCalculatedDiscounts array object reference. Points to original item.
      *
      * @api

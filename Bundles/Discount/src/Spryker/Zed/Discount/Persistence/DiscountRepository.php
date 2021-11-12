@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -31,5 +32,15 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
             ->select(SpyDiscountVoucherTableMap::COL_CODE)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    public function hasPriorityField(): bool
+    {
+        return property_exists(SpyDiscount::class, 'priority');
     }
 }

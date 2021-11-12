@@ -15,4 +15,11 @@ interface DiscountRepositoryInterface
      * @return array<string>
      */
     public function findVoucherCodesExceedingUsageLimit(array $codes): array;
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    public function hasPriorityField(): bool;
 }

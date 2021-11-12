@@ -13,6 +13,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Traversable;
@@ -77,6 +78,11 @@ class DiscountsTable extends AbstractTable
     public const BUTTON_DEACTIVATE = 'Deactivate';
 
     /**
+     * @var string
+     */
+    protected const TABLE_COL_PRIORITY = 'priority';
+
+    /**
      * @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     protected $discountQuery;
@@ -92,15 +98,26 @@ class DiscountsTable extends AbstractTable
     protected $calculatorPlugins = [];
 
     /**
+     * @var \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface
+     */
+    protected $discountRepository;
+
+    /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountQuery $discountQuery
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
      */
-    public function __construct(SpyDiscountQuery $discountQuery, DiscountQueryContainerInterface $discountQueryContainer, array $calculatorPlugins)
-    {
+    public function __construct(
+        SpyDiscountQuery $discountQuery,
+        DiscountQueryContainerInterface $discountQueryContainer,
+        array $calculatorPlugins,
+        DiscountRepositoryInterface $discountRepository
+    ) {
         $this->discountQuery = $discountQuery;
         $this->discountQueryContainer = $discountQueryContainer;
         $this->calculatorPlugins = $calculatorPlugins;
+        $this->discountRepository = $discountRepository;
     }
 
     /**
@@ -116,7 +133,6 @@ class DiscountsTable extends AbstractTable
         $config->setHeader([
             SpyDiscountTableMap::COL_ID_DISCOUNT => 'Discount ID',
             SpyDiscountTableMap::COL_DISPLAY_NAME => 'Name',
-            SpyDiscountTableMap::COL_AMOUNT => 'Amount',
             static::TABLE_COL_TYPE => static::TABLE_COL_TYPE,
             static::TYPE_COL_PERIOD => static::TABLE_COL_PERIOD,
             SpyDiscountTableMap::COL_IS_ACTIVE => 'Status',
@@ -133,7 +149,6 @@ class DiscountsTable extends AbstractTable
         $config->setSortable([
             SpyDiscountTableMap::COL_ID_DISCOUNT,
             SpyDiscountTableMap::COL_DISPLAY_NAME,
-            SpyDiscountTableMap::COL_AMOUNT,
             SpyDiscountTableMap::COL_IS_ACTIVE,
             SpyDiscountTableMap::COL_IS_EXCLUSIVE,
         ]);
@@ -144,9 +159,12 @@ class DiscountsTable extends AbstractTable
         );
 
         $config->addRawColumn(static::TABLE_COL_ACTIONS);
-        $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
         $config->addRawColumn(static::TABLE_COL_STORE);
         $config->addRawColumn(SpyDiscountTableMap::COL_IS_ACTIVE);
+
+        if ($this->discountRepository->hasPriorityField()) {
+            $config = $this->expandTableConfigurationWithPriorityColumn($config);
+        }
 
         return $config;
     }
@@ -163,11 +181,12 @@ class DiscountsTable extends AbstractTable
         /** @var array<\Orm\Zed\Discount\Persistence\SpyDiscount> $discountEntities */
         $discountEntities = $this->runQuery($this->discountQuery, $config, true);
 
+        $hasPriorityField = $this->discountRepository->hasPriorityField();
+
         foreach ($discountEntities as $discountEntity) {
-            $result[] = [
+            $rowData = [
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $discountEntity->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $discountEntity->getDisplayName(),
-                SpyDiscountTableMap::COL_AMOUNT => $this->getFormattedAmount($discountEntity),
                 static::TABLE_COL_TYPE => $this->getDiscountType($discountEntity),
                 static::TYPE_COL_PERIOD => $this->createTimePeriod($discountEntity),
                 SpyDiscountTableMap::COL_IS_ACTIVE => $this->getStatus($discountEntity),
@@ -175,6 +194,12 @@ class DiscountsTable extends AbstractTable
                 static::TABLE_COL_ACTIONS => $this->getActionButtons($discountEntity),
                 static::TABLE_COL_STORE => $this->getStoreNames($discountEntity->getIdDiscount()),
             ];
+
+            if ($hasPriorityField) {
+                $rowData[static::TABLE_COL_PRIORITY] = $discountEntity->getPriority();
+            }
+
+            $result[] = $rowData;
         }
 
         return $result;
@@ -368,52 +393,44 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return string
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function getFormattedAmount(SpyDiscount $discountEntity)
+    protected function expandTableConfigurationWithPriorityColumn(TableConfiguration $config): TableConfiguration
     {
-        $calculatorPlugin = $this->calculatorPlugins[$discountEntity->getCalculatorPlugin()];
+        $headers = $config->getHeader();
+        $headers = $this->insertHeaderAfterColumn(
+            $headers,
+            SpyDiscountTableMap::COL_IS_ACTIVE,
+            [static::TABLE_COL_PRIORITY => 'Priority'],
+        );
+        $config->setHeader($headers);
 
-        if (count($discountEntity->getDiscountAmounts()) === 0) {
-            return $calculatorPlugin->getFormattedAmount($discountEntity->getAmount());
-        }
+        $searchable = $config->getSearchable();
+        $searchable[] = static::TABLE_COL_PRIORITY;
+        $config->setSearchable($searchable);
 
-        $rowTemplate = '<tr><td>GROSS</td><td>NET</td></tr>';
-        $row = '';
-        foreach ($discountEntity->getDiscountAmounts() as $discountAmountEntity) {
-            $netAmount = '-';
-            $grossAmount = '-';
-            $currencyCode = $discountAmountEntity->getCurrency()->getCode();
-            if ($discountAmountEntity->getNetAmount()) {
-                $netAmount = $calculatorPlugin->getFormattedAmount(
-                    $discountAmountEntity->getNetAmount(),
-                    $currencyCode,
-                );
-            }
+        $sortable = $config->getSortable();
+        $sortable[] = static::TABLE_COL_PRIORITY;
+        $config->setSortable($sortable);
 
-            if ($discountAmountEntity->getGrossAmount()) {
-                $grossAmount = $calculatorPlugin->getFormattedAmount(
-                    $discountAmountEntity->getGrossAmount(),
-                    $currencyCode,
-                );
-            }
+        return $config;
+    }
 
-            $template = str_replace('GROSS', $grossAmount, $rowTemplate);
-            $row .= str_replace('NET', $netAmount, $template);
-        }
+    /**
+     * @param array<string, mixed> $headers
+     * @param string $afterColumnKey
+     * @param array<string, mixed> $insertData
+     *
+     * @return array<string, mixed>
+     */
+    protected function insertHeaderAfterColumn(array $headers, string $afterColumnKey, array $insertData): array
+    {
+        $keys = array_keys($headers);
+        $index = array_search($afterColumnKey, $keys, true);
+        $pos = $index === false ? count($headers) : $index + 1;
 
-        $table = '
-           <table width="80%" cellspacing="2">
-           <tr>
-                <td>Gross</td>
-                <td>Net</td>
-           </tr>
-           ' . $row . '
-           </table>
-        ';
-
-        return $table;
+        return array_merge(array_slice($headers, 0, $pos), $insertData, array_slice($headers, $pos));
     }
 }

@@ -16,6 +16,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Sequentially;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -72,6 +75,26 @@ class GeneralForm extends AbstractType
     public const EXCLUSIVE = 'Exclusive';
 
     /**
+     * @var string
+     */
+    protected const FIELD_PRIORITY = 'priority';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_PRIORITY_LABEL = 'Priority';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_PRIORITY_ERROR_MESSAGE = 'Invalid entry. Please enter an integer %min%-%max%';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_PRIORITY_HELP_MESSAGE = 'Enter an integer %min%-%max%. Discounts are calculated in sequential order, starting from %min%. The default value is %max%.';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string> $options
      *
@@ -87,6 +110,10 @@ class GeneralForm extends AbstractType
             ->addExclusive($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder);
+
+        if ($this->getRepository()->hasPriorityField()) {
+            $this->addPriorityField($builder);
+        }
     }
 
     /**
@@ -238,6 +265,56 @@ class GeneralForm extends AbstractType
             'required' => true,
             'attr' => [
                 'class' => 'datepicker safe-datetime',
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPriorityField(FormBuilderInterface $builder)
+    {
+        $minValue = $this->getConfig()->getPriorityMinValue();
+        $maxValue = $this->getConfig()->getPriorityMaxValue();
+
+        $translatorFacade = $this->getFactory()->getTranslatorFacade();
+
+        $priorityRangeErrorMessage = $translatorFacade->trans(static::FIELD_PRIORITY_ERROR_MESSAGE, [
+            '%min%' => $minValue,
+            '%max%' => $maxValue,
+        ]);
+
+        $builder->add(static::FIELD_PRIORITY, TextType::class, [
+            'label' => static::FIELD_PRIORITY_LABEL,
+            'required' => false,
+            'help' => $translatorFacade->trans(static::FIELD_PRIORITY_HELP_MESSAGE, [
+                '%min%' => $minValue,
+                '%max%' => $maxValue,
+            ]),
+            'attr' => [
+                'min' => $minValue,
+                'max' => $maxValue,
+            ],
+            'empty_data' => $maxValue,
+            'constraints' => [
+                new Sequentially([
+                    'constraints' => [
+                        new Range([
+                            'min' => $minValue,
+                            'max' => $maxValue,
+                            'notInRangeMessage' => $priorityRangeErrorMessage,
+                            'invalidMessage' => $priorityRangeErrorMessage,
+                        ]),
+                        new Regex([
+                            'pattern' => '/^\d+$/',
+                            'message' => $priorityRangeErrorMessage,
+                        ]),
+                    ],
+                ]),
             ],
         ]);
 

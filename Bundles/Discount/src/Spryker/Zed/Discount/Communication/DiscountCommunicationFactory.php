@@ -23,6 +23,7 @@ use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBu
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
@@ -95,7 +96,12 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $discountQuery = $this->getQueryContainer()->queryDiscount();
 
-        return new DiscountsTable($discountQuery, $this->getQueryContainer(), $this->getCalculatorPlugins());
+        return new DiscountsTable(
+            $discountQuery,
+            $this->getQueryContainer(),
+            $this->getCalculatorPlugins(),
+            $this->getRepository(),
+        );
     }
 
     /**
@@ -262,5 +268,13 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): DiscountToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_TRANSLATOR);
     }
 }

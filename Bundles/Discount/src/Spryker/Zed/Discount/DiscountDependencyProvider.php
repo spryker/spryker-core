@@ -28,6 +28,7 @@ use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeBridge;
 use Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -57,6 +58,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @var string
@@ -185,6 +191,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountViewBlockProviderPlugins($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -611,5 +618,21 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class,
             ),
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new DiscountToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade(),
+            );
+        });
+
+        return $container;
     }
 }

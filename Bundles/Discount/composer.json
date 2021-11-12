@@ -19,6 +19,8 @@
         "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/store": "^1.1.0",
         "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.25.0",
+        "spryker/translator": "^1.1.0",
         "spryker/util-text": "^1.1.0"
     },
     "require-dev": {

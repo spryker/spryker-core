@@ -64,6 +64,8 @@ use Spryker\Zed\Discount\Business\QueryString\Validator;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
 use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
 use Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator;
+use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorter;
+use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -536,6 +538,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getCalculatorPlugins(),
             $this->getCollectedDiscountGroupingPlugins(),
             $this->createCollectedDiscountItemFilter(),
+            $this->createCollectedDiscountSorter(),
             $this->createDiscountableItemFilter(),
         );
 
@@ -691,7 +694,9 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
     {
-        return new DiscountableItemTransformer();
+        return new DiscountableItemTransformer(
+            $this->getRepository(),
+        );
     }
 
     /**
@@ -710,5 +715,16 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createCollectedDiscountItemFilter(): CollectedDiscountItemFilterInterface
     {
         return new CollectedDiscountItemFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface
+     */
+    public function createCollectedDiscountSorter(): CollectedDiscountSorterInterface
+    {
+        return new CollectedDiscountSorter(
+            $this->getRepository(),
+            $this->getConfig(),
+        );
     }
 }
