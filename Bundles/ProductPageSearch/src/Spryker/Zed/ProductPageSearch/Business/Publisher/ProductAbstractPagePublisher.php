@@ -122,7 +122,14 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     public function publish(array $productAbstractIds)
     {
-        $this->publishEntities($productAbstractIds, [], false);
+        $productAbstractIdsChunks = array_chunk(
+            $productAbstractIds,
+            $this->productPageSearchConfig->getProductAbstractPagePublishChunkSize(),
+        );
+
+        foreach ($productAbstractIdsChunks as $productAbstractIdsChunk) {
+            $this->publishEntities($productAbstractIdsChunk, [], false);
+        }
     }
 
     /**

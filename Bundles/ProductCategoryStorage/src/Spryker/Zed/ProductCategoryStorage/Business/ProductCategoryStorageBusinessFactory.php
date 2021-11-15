@@ -54,6 +54,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->createProductAbstractReader(),
             $this->createProductCategoryStorageReader(),
+            $this->getConfig(),
         );
     }
 

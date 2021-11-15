@@ -15,6 +15,7 @@ use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageRea
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface;
+use Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig;
 
 class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterface
 {
@@ -44,24 +45,32 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $productCategoryStorageReader;
 
     /**
+     * @var \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig
+     */
+    protected $productCategoryStorageConfig;
+
+    /**
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductAbstractReaderInterface $productAbstractReader
      * @param \Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReaderInterface $productCategoryStorageReader
+     * @param \Spryker\Zed\ProductCategoryStorage\ProductCategoryStorageConfig $productCategoryStorageConfig
      */
     public function __construct(
         ProductCategoryStorageRepositoryInterface $productCategoryStorageRepository,
         ProductCategoryStorageEntityManagerInterface $productCategoryStorageEntityManager,
         ProductCategoryStorageToStoreFacadeInterface $storeFacade,
         ProductAbstractReaderInterface $productAbstractReader,
-        ProductCategoryStorageReaderInterface $productCategoryStorageReader
+        ProductCategoryStorageReaderInterface $productCategoryStorageReader,
+        ProductCategoryStorageConfig $productCategoryStorageConfig
     ) {
         $this->productCategoryStorageRepository = $productCategoryStorageRepository;
         $this->productCategoryStorageEntityManager = $productCategoryStorageEntityManager;
         $this->storeFacade = $storeFacade;
         $this->productAbstractReader = $productAbstractReader;
         $this->productCategoryStorageReader = $productCategoryStorageReader;
+        $this->productCategoryStorageConfig = $productCategoryStorageConfig;
     }
 
     /**
@@ -71,14 +80,12 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      */
     public function writeCollection(array $productAbstractIds): void
     {
-        $productCategoryTransfers = $this->findProductCategories($productAbstractIds);
-        $productAbstractLocalizedAttributesTransfers = $this->productCategoryStorageRepository
-            ->getProductAbstractLocalizedAttributes($productAbstractIds);
+        $writeCollectionBatchSize = $this->productCategoryStorageConfig->getWriteCollectionBatchSize();
+        $productAbstractIdsBatchCollection = array_chunk($productAbstractIds, $writeCollectionBatchSize);
 
-        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageRepository
-            ->getMappedProductAbstractCategoryStorages($productAbstractIds);
-
-        $this->storeData($productAbstractLocalizedAttributesTransfers, $productAbstractCategoryStorageTransfers, $productCategoryTransfers);
+        foreach ($productAbstractIdsBatchCollection as $productAbstractIdsBatch) {
+            $this->writeCollectionByBatch($productAbstractIdsBatch);
+        }
     }
 
     /**
@@ -285,5 +292,22 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         }
 
         return $localeNameMapByStoreName;
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return void
+     */
+    protected function writeCollectionByBatch(array $productAbstractIds): void
+    {
+        $productCategoryTransfers = $this->findProductCategories($productAbstractIds);
+        $productAbstractLocalizedAttributesTransfers = $this->productCategoryStorageRepository
+            ->getProductAbstractLocalizedAttributes($productAbstractIds);
+
+        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageRepository
+            ->getMappedProductAbstractCategoryStorages($productAbstractIds);
+
+        $this->storeData($productAbstractLocalizedAttributesTransfers, $productAbstractCategoryStorageTransfers, $productCategoryTransfers);
     }
 }
