@@ -2,63 +2,16 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 290,
-            "line_to": 290,
+            "line_from": 518,
+            "line_to": 518,
             "type": "UndefinedFunction",
             "message": "Function Spryker\\Zed\\Gui\\Communication\\Table\\twig_escape_filter does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "                $value = twig_escape_filter(new Environment(new FilesystemLoader()), $value);",
             "selected_text": "twig_escape_filter(new Environment(new FilesystemLoader()), $value)",
             "error_level": -1,
-            "shortcode": 21
-        },
-        {
-            "severity": "error",
-            "line_from": 483,
-            "line_to": 483,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, mixed>|null' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getOrderParameter is incorrect, got 'array<array-key, mixed>|null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
-            "snippet": "     * @return array|null",
-            "selected_text": "array|null",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 491,
-            "line_to": 491,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'null|string' does not match the declared return type 'array<array-key, mixed>|null' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getOrderParameter",
-            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
-            "snippet": "        return $this->request->query->get('order');",
-            "selected_text": "$this->request->query->get('order')",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 594,
-            "line_to": 594,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getSearchParameter is incorrect, got 'array<array-key, mixed>|null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
-            "snippet": "     * @return array",
-            "selected_text": "array",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 602,
-            "line_to": 602,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'null|string' does not match the declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getSearchParameter",
-            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
-            "snippet": "        return $this->request->query->get('search');",
-            "selected_text": "$this->request->query->get('search')",
-            "error_level": 6,
-            "shortcode": 128
+            "shortcode": 21,
+            "other_references": null
         }
     ],
     "warning": [
@@ -72,187 +25,333 @@
             "snippet": "            $resolver->setDefault('data_class', get_class($this->getDataClass()));",
             "selected_text": "$this->getDataClass()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 58,
+            "line_to": 58,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for Spryker\\Zed\\Gui\\Communication\\Form\\AbstractForm::getRequest is not nullable, but 'Symfony\\Component\\HttpFoundation\\Request|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/AbstractForm.php",
             "snippet": "     * @return \\Symfony\\Component\\HttpFoundation\\Request",
             "selected_text": "\\Symfony\\Component\\HttpFoundation\\Request",
             "error_level": 5,
-            "shortcode": 144
+            "shortcode": 144,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 65,
+            "line_to": 65,
             "type": "PossiblyNullPropertyAssignmentValue",
             "message": "$this->request with non-nullable declared type 'Symfony\\Component\\HttpFoundation\\Request' cannot be assigned nullable type 'Symfony\\Component\\HttpFoundation\\Request|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/AbstractForm.php",
             "snippet": "            $this->request = $requestStack->getCurrentRequest();",
             "selected_text": "$requestStack->getCurrentRequest()",
             "error_level": 3,
-            "shortcode": 148
+            "shortcode": 148,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 68,
+            "line_to": 68,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'Symfony\\Component\\HttpFoundation\\Request' for Spryker\\Zed\\Gui\\Communication\\Form\\AbstractForm::getRequest is not nullable, but the function returns 'Symfony\\Component\\HttpFoundation\\Request|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/AbstractForm.php",
             "snippet": "        return $this->request;",
             "selected_text": "$this->request",
             "error_level": 5,
-            "shortcode": 139
+            "shortcode": 139,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
+            "line_from": 32,
+            "line_to": 32,
             "type": "MissingParamType",
             "message": "Parameter $options has no provided type",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/Constraint/IntegerMoneyConstraint.php",
             "snippet": "    public function __construct($options = null)",
             "selected_text": "$options",
             "error_level": 2,
-            "shortcode": 154
+            "shortcode": 154,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 262,
-            "line_to": 262,
+            "line_from": 32,
+            "line_to": 32,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, mixed>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Zed\\Gui\\Communication\\Form\\EventListener\\SanitizeXssListener::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/EventListener/SanitizeXssListener.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 194,
+            "line_to": 194,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Validator\\Constraints\\Type::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/ConstraintsPlugin.php",
+            "snippet": "        return new Type($options);",
+            "selected_text": "$options",
+            "error_level": 3,
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 250,
+            "line_to": 250,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Validator\\Constraints\\Regex::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/ConstraintsPlugin.php",
+            "snippet": "        return new Regex($options);",
+            "selected_text": "$options",
+            "error_level": 3,
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 572,
+            "line_to": 572,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Validator\\Constraints\\CardScheme::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/ConstraintsPlugin.php",
+            "snippet": "        return new CardScheme($options);",
+            "selected_text": "$options",
+            "error_level": 3,
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 670,
+            "line_to": 670,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Validator\\Constraints\\Expression::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/ConstraintsPlugin.php",
+            "snippet": "        return new Expression($options);",
+            "selected_text": "$options",
+            "error_level": 3,
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 3 of htmlspecialchars expects null|string, mixed|non-falsy-string|true provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/Twig/UrlTwigPlugin.php",
+            "snippet": "                    return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);",
+            "selected_text": "$charset",
+            "error_level": 4,
+            "shortcode": 12,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 490,
+            "line_to": 490,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of array_intersect_key cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "                $row = array_intersect_key($row, $headers);",
             "selected_text": "$headers",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 264,
-            "line_to": 264,
+            "line_from": 492,
+            "line_to": 492,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::reOrderByHeaders cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "                $row = $this->reOrderByHeaders($headers, $row);",
             "selected_text": "$headers",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 602,
-            "line_to": 602,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getSearchParameter is not nullable, but the function returns 'null|string'",
+            "line_from": 595,
+            "line_to": 595,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getTableIdentifier is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
-            "snippet": "        return $this->request->query->get('search');",
-            "selected_text": "$this->request->query->get('search')",
+            "snippet": "     * @return string",
+            "selected_text": "string",
             "error_level": 5,
-            "shortcode": 139
+            "shortcode": 144,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 798,
-            "line_to": 798,
+            "line_from": 603,
+            "line_to": 603,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::getTableIdentifier is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
+            "snippet": "        return $this->tableIdentifier;",
+            "selected_text": "$this->tableIdentifier",
+            "error_level": 5,
+            "shortcode": 139,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 979,
+            "line_to": 979,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $searchTerm of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
+            "snippet": "        $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';",
+            "selected_text": "$searchTerm[static::PARAMETER_VALUE]",
+            "error_level": 3,
+            "shortcode": 79,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 981,
+            "line_to": 981,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of mb_strlen cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
+            "snippet": "        if (mb_strlen($searchValue) > 0) {",
+            "selected_text": "$searchValue",
+            "error_level": 3,
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 988,
+            "line_to": 988,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of mb_strtolower cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
+            "snippet": "            $conditionParameter = $connection->quote('%' . mb_strtolower($searchValue) . '%');",
+            "selected_text": "$searchValue",
+            "error_level": 3,
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 1020,
+            "line_to": 1020,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable $data",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "        return $data->toArray(null, false, TableMap::TYPE_COLNAME);",
             "selected_text": "toArray",
             "error_level": 3,
-            "shortcode": 113
+            "shortcode": 113,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 1289,
-            "line_to": 1289,
+            "line_from": 1511,
+            "line_to": 1511,
             "type": "RedundantCondition",
-            "message": "Found a redundant condition when evaluating $options and trying to reconcile type 'array<array-key, mixed>' to array",
+            "message": "Type array<array-key, mixed> for $options is always array",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "        if (is_array($options)) {",
             "selected_text": "is_array($options)",
             "error_level": 4,
-            "shortcode": 122
+            "shortcode": 122,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 1306,
-            "line_to": 1306,
+            "line_from": 1528,
+            "line_to": 1528,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $searchColumns using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "        if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {",
             "selected_text": "$searchColumns",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 125,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 1310,
-            "line_to": 1310,
+            "line_from": 1532,
+            "line_to": 1532,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $searchColumns using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "                    $searchColumns[$column->getData()],",
             "selected_text": "$searchColumns",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 125,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 1312,
-            "line_to": 1312,
+            "line_from": 1534,
+            "line_to": 1534,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $searchColumns using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "                    $searchColumns[$column->getData()],",
             "selected_text": "$searchColumns",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 125,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 1327,
-            "line_to": 1327,
+            "line_from": 1549,
+            "line_to": 1549,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $searchColumns using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "            $searchColumns[$column->getData()],",
             "selected_text": "$searchColumns",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 125,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 316,
-            "line_to": 316,
+            "line_from": 323,
+            "line_to": 323,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::getDefaultSortField is not nullable, but 'array<array-key, mixed>|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/TableConfiguration.php",
             "snippet": "     * @return array",
             "selected_text": "array",
             "error_level": 5,
-            "shortcode": 144
+            "shortcode": 144,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 320,
-            "line_to": 320,
+            "line_from": 327,
+            "line_to": 327,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::getDefaultSortField is not nullable, but the function returns 'array<array-key, mixed>|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/TableConfiguration.php",
             "snippet": "        return $this->defaultSortField;",
             "selected_text": "$this->defaultSortField",
             "error_level": 5,
-            "shortcode": 139
+            "shortcode": 139,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -264,7 +363,8 @@
             "snippet": "        if ($tabsViewTransfer->getActiveTabName() === null && $tabsViewTransfer->getTabs()->count()) {",
             "selected_text": "count",
             "error_level": 3,
-            "shortcode": 113
+            "shortcode": 113,
+            "other_references": null
         }
     ],
     "deprecation": [
@@ -278,43 +378,47 @@
             "snippet": "abstract class AbstractForm extends SharedAbstractForm",
             "selected_text": "SharedAbstractForm",
             "error_level": 2,
-            "shortcode": 98
+            "shortcode": 98,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
+            "line_from": 31,
+            "line_to": 31,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/AbstractForm.php",
             "snippet": "     * @var \\Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin",
             "selected_text": "\\Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin",
             "error_level": 2,
-            "shortcode": 98
+            "shortcode": 98,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 36,
+            "line_to": 36,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/AbstractForm.php",
             "snippet": "     * @return \\Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin",
             "selected_text": "\\Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin",
             "error_level": 2,
-            "shortcode": 98
+            "shortcode": 98,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 41,
+            "line_to": 41,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Gui\\Communication\\Plugin\\ConstraintsPlugin is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Form/AbstractForm.php",
             "snippet": "            $this->constraintsPlugin = new ConstraintsPlugin();",
             "selected_text": "new ConstraintsPlugin()",
             "error_level": 2,
-            "shortcode": 98
+            "shortcode": 98,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -326,7 +430,8 @@
             "snippet": "        $app['form.type.extensions'] = $app->share(function () {",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -338,7 +443,8 @@
             "snippet": "        $app['form.type.extensions'] = $app->share(function () {",
             "selected_text": "share",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -350,7 +456,8 @@
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -362,79 +469,112 @@
             "snippet": "        $app['twig'] = $app->share(",
             "selected_text": "share",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 104,
+            "line_to": 104,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/ServiceProvider/GuiTwigExtensionServiceProvider.php",
             "snippet": "        $app['form.type.extensions'] = $app->share(function () {",
             "selected_text": "$app",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 104,
+            "line_to": 104,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Plugin/ServiceProvider/GuiTwigExtensionServiceProvider.php",
             "snippet": "        $app['form.type.extensions'] = $app->share(function () {",
             "selected_text": "share",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 518,
-            "line_to": 518,
+            "line_from": 746,
+            "line_to": 746,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::getDefaultSortColumnIndex has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "            self::SORT_BY_COLUMN => $config->getDefaultSortColumnIndex(),",
             "selected_text": "getDefaultSortColumnIndex",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 519,
-            "line_to": 519,
+            "line_from": 747,
+            "line_to": 747,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::getDefaultSortDirection has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php",
             "snippet": "            self::SORT_BY_DIRECTION => $config->getDefaultSortDirection(),",
             "selected_text": "getDefaultSortDirection",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 332,
-            "line_to": 332,
+            "line_from": 339,
+            "line_to": 339,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::$defaultSortColumnIndex is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/TableConfiguration.php",
             "snippet": "        $this->defaultSortColumnIndex = $columnIndex;",
             "selected_text": "$this->defaultSortColumnIndex",
             "error_level": 2,
-            "shortcode": 99
+            "shortcode": 99,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 354,
-            "line_to": 354,
+            "line_from": 349,
+            "line_to": 349,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::$defaultSortColumnIndex is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/TableConfiguration.php",
+            "snippet": "        return $this->defaultSortColumnIndex;",
+            "selected_text": "$this->defaultSortColumnIndex",
+            "error_level": 2,
+            "shortcode": 99,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 361,
+            "line_to": 361,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::$defaultSortDirection is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/TableConfiguration.php",
             "snippet": "        $this->defaultSortDirection = $direction;",
             "selected_text": "$this->defaultSortDirection",
             "error_level": 2,
-            "shortcode": 99
+            "shortcode": 99,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 371,
+            "line_to": 371,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::$defaultSortDirection is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/TableConfiguration.php",
+            "snippet": "        return $this->defaultSortDirection;",
+            "selected_text": "$this->defaultSortDirection",
+            "error_level": 2,
+            "shortcode": 99,
+            "other_references": null
         }
     ]
 }

@@ -132,6 +132,13 @@ abstract class AbstractTable
     protected const DATE_TIME_FORMAT_FOR_CSV_FILENAME = 'Y-m-d-h-i-s';
 
     /**
+     * @uses \Spryker\Zed\Propel\PropelConfig::DB_ENGINE_PGSQL
+     *
+     * @var string
+     */
+    protected const DRIVER_NAME_PGSQL = 'pgsql';
+
+    /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
@@ -964,14 +971,14 @@ abstract class AbstractTable
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
+        $this->total = $this->filtered = $this->countTotal($query);
         $limit = $this->getLimit();
         $offset = $this->getOffset();
         $order = $this->getOrders($config);
-
         $orderColumn = $this->getOrderByColumn($query, $config, $order);
 
-        $this->total = $this->countTotal($query);
         $query->orderBy($orderColumn, $order[0][static::SORT_BY_DIRECTION]);
+
         $searchTerm = $this->getSearchTerm();
         $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
 
@@ -979,20 +986,17 @@ abstract class AbstractTable
             $query->setIdentifierQuoting(true);
 
             $conditions = [];
+            $connection = Propel::getConnection();
+            $driverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $filter = $driverName === static::DRIVER_NAME_PGSQL ? '::TEXT' : '';
+            $conditionParameter = $connection->quote('%' . mb_strtolower($searchValue) . '%');
 
             foreach ($config->getSearchable() as $value) {
-                $filter = '';
-                $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
-                if ($driverName === 'pgsql') {
-                    $filter = '::TEXT';
-                }
-
-                $conditionParameter = '%' . mb_strtolower($searchValue) . '%';
                 $condition = sprintf(
                     'LOWER(%s%s) LIKE %s',
                     $value,
                     $filter,
-                    Propel::getConnection()->quote($conditionParameter),
+                    $conditionParameter,
                 );
 
                 $conditions[] = $condition;
@@ -1001,8 +1005,6 @@ abstract class AbstractTable
             $query = $this->applyConditions($query, $config, $conditions);
 
             $this->filtered = $query->count();
-        } else {
-            $this->filtered = $this->total;
         }
 
         if ($this->dataTablesTransfer !== null) {
@@ -1011,10 +1013,9 @@ abstract class AbstractTable
             $this->addFilteringConditions($query, $searchColumns);
         }
 
-        $query->offset($offset)
-            ->limit($limit);
-
-        $data = $query->find();
+        $data = $query->offset($offset)
+            ->limit($limit)
+            ->find();
 
         if ($returnRawResults === true) {
             return $data;
