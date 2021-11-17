@@ -57,13 +57,6 @@
     },
     {
         "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
-        "rule": "AllMethodsPublicInFacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
         "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
         "rule": "FacadeNoLogicRule",
         "ruleset": "Spryker Zed",
@@ -78,22 +71,8 @@
     },
     {
         "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Kernel\\Business\\AbstractFacade::resolveFactory()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
-        "rule": "AllMethodsPublicInFacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
         "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::resolveFactory() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\Business\\AbstractBusinessFactory\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
         "rule": "FacadeReturnValueRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
-        "rule": "AllMethodsPublicInFacadeRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },

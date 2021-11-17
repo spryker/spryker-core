@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Dependency/Facade/ProductCustomerPermissionCollectorToCollectorFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'runCollector' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/ProductCustomerPermissionCollector/src/Spryker/Zed/ProductCustomerPermissionCollector/Dependency/Facade/ProductCustomerPermissionCollectorToStoreFacadeInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'getCurrentStoreName' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",

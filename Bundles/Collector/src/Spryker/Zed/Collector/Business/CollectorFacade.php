@@ -151,7 +151,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $dataReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
@@ -163,7 +163,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     public function runCollector(
         DatabaseCollectorInterface $collector,
         SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
         ReaderInterface $dataReader,
         WriterInterface $dataWriter,
@@ -175,7 +175,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
             ->runCollector(
                 $collector,
                 $baseQuery,
-                $locale,
+                $localeTransfer,
                 $result,
                 $dataReader,
                 $dataWriter,

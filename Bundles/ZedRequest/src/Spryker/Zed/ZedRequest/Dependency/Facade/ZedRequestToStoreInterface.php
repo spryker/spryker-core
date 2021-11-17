@@ -10,16 +10,16 @@ namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 interface ZedRequestToStoreInterface
 {
     /**
-     * @param string $isoCode
+     * @param string $currencyIsoCode
      *
      * @return void
      */
-    public function setCurrencyIsoCode($isoCode);
+    public function setCurrencyIsoCode($currencyIsoCode);
 
     /**
-     * @param string $localeCode
+     * @param string $currentLocale
      *
      * @return void
      */
-    public function setCurrentLocale($localeCode);
+    public function setCurrentLocale($currentLocale);
 }

@@ -10,11 +10,11 @@ namespace Spryker\Zed\UserLocale\Dependency\Facade;
 interface UserLocaleToStoreInterface
 {
     /**
-     * @param string $localeCode
+     * @param string $currentLocale
      *
      * @return void
      */
-    public function setCurrentLocale($localeCode);
+    public function setCurrentLocale($currentLocale);
 
     /**
      * @return string

@@ -23,13 +23,13 @@ class UserLocaleToStoreBridge implements UserLocaleToStoreInterface
     }
 
     /**
-     * @param string $localeCode
+     * @param string $currentLocale
      *
      * @return void
      */
-    public function setCurrentLocale($localeCode)
+    public function setCurrentLocale($currentLocale)
     {
-        $this->store->setCurrentLocale($localeCode);
+        $this->store->setCurrentLocale($currentLocale);
     }
 
     /**

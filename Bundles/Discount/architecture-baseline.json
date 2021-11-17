@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Service/Discount/Calculator/Calculator.php",
+        "description": "\n      Access: Method Spryker\\Service\\Discount\\Calculator\\Calculator::getDiscountCalculatorPlugin() accesses Spryker\\Zed\\Discount\\Dependency\\Plugin\\DiscountCalculatorPluginInterface which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Service/Discount/DiscountServiceFactory.php",
+        "description": "\n      Access: Method Spryker\\Service\\Discount\\DiscountServiceFactory::getZedCalculatorPlugins() accesses Spryker\\Zed\\Kernel\\ClassResolver\\Business\\BusinessFactoryResolver which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'trans' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

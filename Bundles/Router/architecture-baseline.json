@@ -15,6 +15,55 @@
     },
     {
         "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getBackofficeChainRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\ChainRouter\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getMerchantPortalChainRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\ChainRouter\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getBackofficeRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\RouterInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getMerchantPortalRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\RouterInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getBackendGatewayChainRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\ChainRouter\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getBackendGatewayRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\RouterInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getBackendApiChainRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\ChainRouter\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
         "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Router\\Business\\RouterFacade::getZedFallbackRouter() is using an invalid return type \"\\Spryker\\Zed\\Router\\Business\\Router\\RouterInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",

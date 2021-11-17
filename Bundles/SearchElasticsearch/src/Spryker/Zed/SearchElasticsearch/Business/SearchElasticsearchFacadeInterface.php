@@ -129,11 +129,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchContextTransfer
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
      *
      * @return int
      */
-    public function getDocumentsTotalCount(ElasticsearchSearchContextTransfer $elasticsearchContextTransfer): int;
+    public function getDocumentsTotalCount(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): int;
 
     /**
      * Specification:
@@ -143,11 +143,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchContextTransfer
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
      *
      * @return array
      */
-    public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchContextTransfer): array;
+    public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array;
 
     /**
      * Specification:

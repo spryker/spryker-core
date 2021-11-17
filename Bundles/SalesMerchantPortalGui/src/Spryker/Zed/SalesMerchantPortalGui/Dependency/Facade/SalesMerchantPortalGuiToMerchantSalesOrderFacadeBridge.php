@@ -29,23 +29,23 @@ class SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge implements SalesMer
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    public function getMerchantOrderCollection(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): MerchantOrderCollectionTransfer
+    public function getMerchantOrderCollection(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): MerchantOrderCollectionTransfer
     {
-        return $this->merchantSalesOrderFacade->getMerchantOrderCollection($merchantCriteriaTransfer);
+        return $this->merchantSalesOrderFacade->getMerchantOrderCollection($merchantOrderCriteriaTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
     {
-        return $this->merchantSalesOrderFacade->findMerchantOrder($merchantCriteriaTransfer);
+        return $this->merchantSalesOrderFacade->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 
     /**

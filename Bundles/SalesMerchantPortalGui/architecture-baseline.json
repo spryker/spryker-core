@@ -7,20 +7,6 @@
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Dependency/Facade/SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'getMerchantOrderCollection' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Dependency/Facade/SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'findMerchantOrder' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Dependency/Facade/SalesMerchantPortalGuiToTranslatorFacadeInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'trans' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",

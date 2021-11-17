@@ -23,22 +23,22 @@ class ZedRequestToStoreBridge implements ZedRequestToStoreInterface
     }
 
     /**
-     * @param string $isoCode
+     * @param string $currencyIsoCode
      *
      * @return void
      */
-    public function setCurrencyIsoCode($isoCode)
+    public function setCurrencyIsoCode($currencyIsoCode)
     {
-        $this->store->setCurrencyIsoCode($isoCode);
+        $this->store->setCurrencyIsoCode($currencyIsoCode);
     }
 
     /**
-     * @param string $localeCode
+     * @param string $currentLocale
      *
      * @return void
      */
-    public function setCurrentLocale($localeCode)
+    public function setCurrentLocale($currentLocale)
     {
-        $this->store->setCurrentLocale($localeCode);
+        $this->store->setCurrentLocale($currentLocale);
     }
 }

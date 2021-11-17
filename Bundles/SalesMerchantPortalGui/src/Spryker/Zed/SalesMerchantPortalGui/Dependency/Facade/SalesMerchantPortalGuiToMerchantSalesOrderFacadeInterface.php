@@ -16,18 +16,18 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 interface SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
-    public function getMerchantOrderCollection(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): MerchantOrderCollectionTransfer;
+    public function getMerchantOrderCollection(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): MerchantOrderCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer;
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
