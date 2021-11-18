@@ -30,14 +30,19 @@ class CodeStyleSniffer
     protected const OPTION_IGNORE = 'ignore';
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const APPLICATION_NAMESPACES = ['Orm'];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
+
+    /**
+     * @var array<string>
+     */
+    protected const EXTENSIONS = ['php'];
 
     /**
      * @var string
@@ -264,6 +269,8 @@ class CodeStyleSniffer
         if ($optionIgnore) {
             $processConfig .= ' --ignore=' . $optionIgnore;
         }
+
+        $processConfig .= ' --extensions=' . implode(',', static::EXTENSIONS);
 
         $optionVerbose = $codeStyleSnifferConfiguration->isVerbose();
         $optionFix = $codeStyleSnifferConfiguration->isFixing();
