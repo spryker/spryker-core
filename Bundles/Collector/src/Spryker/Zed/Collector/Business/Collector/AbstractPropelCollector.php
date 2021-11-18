@@ -67,19 +67,19 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
-        $this->locale = $locale;
+        $this->locale = $localeTransfer;
 
         $this->queryBuilder->setTouchQuery($touchQuery);
 
         $this->queryBuilder
             ->setStoreTransfer($this->getCurrentStore())
-            ->setLocale($locale)
+            ->setLocale($localeTransfer)
             ->prepare();
     }
 }

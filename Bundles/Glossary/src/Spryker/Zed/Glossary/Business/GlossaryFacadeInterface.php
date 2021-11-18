@@ -97,7 +97,7 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
@@ -107,7 +107,7 @@ interface GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
 
     /**
      * Specification:
@@ -134,7 +134,7 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
@@ -144,7 +144,7 @@ interface GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
 
     /**
      * Specification:
@@ -153,11 +153,11 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -166,13 +166,13 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
@@ -181,7 +181,7 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
@@ -189,7 +189,7 @@ interface GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true);
+    public function updateTranslation($keyName, $localeTransfer, $value, $isActive = true);
 
     /**
      * Specification:
@@ -198,7 +198,7 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
@@ -206,7 +206,7 @@ interface GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
 
     /**
      * Specification:
@@ -259,11 +259,11 @@ interface GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleTransfer $locale);
+    public function deleteTranslation($keyName, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:

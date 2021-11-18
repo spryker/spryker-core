@@ -68,12 +68,12 @@ class UrlCollector extends AbstractStoragePropelCollector
 
     /**
      * @param array $collectedSet
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      *
      * @return array
      */
-    protected function collectData(array $collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
+    protected function collectData(array $collectedSet, LocaleTransfer $localeTransfer, TouchUpdaterSet $touchUpdaterSet)
     {
         $localeUrls = $this->findLocaleUrls($collectedSet);
 
@@ -83,7 +83,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $collectedSet[$key] = $url;
         }
 
-        return parent::collectData($collectedSet, $locale, $touchUpdaterSet);
+        return parent::collectData($collectedSet, $localeTransfer, $touchUpdaterSet);
     }
 
     /**
@@ -269,7 +269,7 @@ class UrlCollector extends AbstractStoragePropelCollector
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
@@ -280,7 +280,7 @@ class UrlCollector extends AbstractStoragePropelCollector
         BatchResultInterface $batchResult,
         ReaderInterface $storeReader,
         WriterInterface $storeWriter,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         OutputInterface $output
     ) {
         if ($batchCollection->count() === 0) {
@@ -292,7 +292,7 @@ class UrlCollector extends AbstractStoragePropelCollector
 
         foreach ($batchCollection as $batch) {
             $progressBar->advance(count($batch));
-            $this->processUrlKeys($batch, $storeReader, $storeWriter, $locale->getLocaleName());
+            $this->processUrlKeys($batch, $storeReader, $storeWriter, $localeTransfer->getLocaleName());
         }
 
         $progressBar->finish();
@@ -303,7 +303,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             $batchResult,
             $storeReader,
             $storeWriter,
-            $locale,
+            $localeTransfer,
             $output,
         );
     }

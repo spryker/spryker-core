@@ -32,17 +32,17 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      * @api
      *
      * @param array $productIds
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $locale)
+    public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $localeTransfer)
     {
         $query = $this->getFactory()->createProductQuery();
         $query
             ->filterByIdProduct($productIds, Criteria::IN)
             ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale($locale->getIdLocale())
+                ->filterByFkLocale($localeTransfer->getIdLocale())
             ->endUse()
             ->addSelectColumn(SpyProductTableMap::COL_SKU)
             ->addSelectColumn(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
@@ -50,7 +50,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
         $query
             ->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractLocalizedAttributesQuery()
-                        ->filterByFkLocale($locale->getIdLocale())
+                        ->filterByFkLocale($localeTransfer->getIdLocale())
                 ->endUse()
             ->endUse()
             ->addAsColumn(

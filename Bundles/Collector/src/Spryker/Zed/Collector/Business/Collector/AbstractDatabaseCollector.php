@@ -34,13 +34,13 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    public function collectDataFromDatabase(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    public function collectDataFromDatabase(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
-        $this->prepareCollectorScope($touchQuery, $locale);
+        $this->prepareCollectorScope($touchQuery, $localeTransfer);
         $batchCollection = $this->generateBatchIterator();
 
         return $batchCollection;
@@ -52,7 +52,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
@@ -63,7 +63,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         BatchResultInterface $batchResult,
         ReaderInterface $storeReader,
         WriterInterface $storeWriter,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         OutputInterface $output
     ) {
         if ($batchCollection->count() === 0) {
@@ -77,7 +77,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             $this->processBatchForExport(
                 $batch,
                 $progressBar,
-                $locale,
+                $localeTransfer,
                 $touchUpdater,
                 $batchResult,
                 $storeWriter,
@@ -90,7 +90,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     /**
      * @param array $batch
      * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
@@ -100,7 +100,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     protected function processBatchForExport(
         array $batch,
         ProgressBar $progressBar,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         TouchUpdaterInterface $touchUpdater,
         BatchResultInterface $batchResult,
         WriterInterface $storeWriter
@@ -110,13 +110,13 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
 
-        $exportSubBatch = $this->collectData($batch, $locale, $touchUpdaterSet);
-        $exportedItemCount = $this->exportBatch($exportSubBatch, $locale, $touchUpdaterSet, $storeWriter, $touchUpdater);
+        $exportSubBatch = $this->collectData($batch, $localeTransfer, $touchUpdaterSet);
+        $exportedItemCount = $this->exportBatch($exportSubBatch, $localeTransfer, $touchUpdaterSet, $storeWriter, $touchUpdater);
 
         $deletedItemCount = 0;
         if ($this->hasUnprocessedItem($batchItemCount, $exportedItemCount)) {
-            $expiredSubBatch = $this->collectExpiredData($batch, $locale);
-            $deletedItemCount = $this->deleteBatch($expiredSubBatch, $locale, $storeWriter, $touchUpdater);
+            $expiredSubBatch = $this->collectExpiredData($batch, $localeTransfer);
+            $deletedItemCount = $this->deleteBatch($expiredSubBatch, $localeTransfer, $storeWriter, $touchUpdater);
         }
 
         $batchResult->increaseProcessedCount($exportedItemCount + $deletedItemCount);
@@ -135,7 +135,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
     /**
      * @param array $batch
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
@@ -144,7 +144,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
      */
     protected function exportBatch(
         $batch,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         TouchUpdaterSet $touchUpdaterSet,
         WriterInterface $storeWriter,
         TouchUpdaterInterface $touchUpdater
@@ -156,7 +156,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
         $touchUpdater->bulkUpdate(
             $touchUpdaterSet,
-            $locale->getIdLocale(),
+            $localeTransfer->getIdLocale(),
             $this->getCurrentStore()->getIdStore(),
             $this->touchQueryContainer->getConnection(),
         );
@@ -167,13 +167,13 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
     /**
      * @param array $batch Keys are expired touch keys.
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return int
      */
-    protected function deleteBatch(array $batch, LocaleTransfer $locale, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
+    protected function deleteBatch(array $batch, LocaleTransfer $localeTransfer, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
     {
         $batchSize = count($batch);
         if ($batchSize === 0) {
@@ -182,7 +182,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
         $touchKeys = array_keys($batch);
 
-        $touchUpdater->deleteTouchKeyEntities($touchKeys, $locale->getIdLocale());
+        $touchUpdater->deleteTouchKeyEntities($touchKeys, $localeTransfer->getIdLocale());
         $storeWriter->delete(array_flip($touchKeys));
 
         return $batchSize;

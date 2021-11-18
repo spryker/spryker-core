@@ -24,21 +24,21 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
         if ($this->isStorageTableJoinWithLocaleEnabled()) {
-            $this->joinStorageTableWithLocale($touchQuery, $locale);
+            $this->joinStorageTableWithLocale($touchQuery, $localeTransfer);
         } else {
             $this->joinStorageTable($touchQuery);
         }
 
         $touchQuery->withColumn(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, CollectorConfig::COLLECTOR_STORAGE_KEY);
 
-        parent::prepareCollectorScope($touchQuery, $locale);
+        parent::prepareCollectorScope($touchQuery, $localeTransfer);
     }
 
     /**

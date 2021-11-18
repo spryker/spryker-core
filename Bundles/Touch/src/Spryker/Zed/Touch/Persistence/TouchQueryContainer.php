@@ -99,12 +99,12 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @api
      *
      * @param string $itemType
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \DateTime $lastTouchedAt
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, DateTime $lastTouchedAt)
+    public function createBasicExportableQuery($itemType, LocaleTransfer $localeTransfer, DateTime $lastTouchedAt)
     {
         $query = $this->getFactory()->createTouchQuery();
         $query

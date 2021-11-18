@@ -89,14 +89,14 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
      */
-    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
+    public function getProductsByCategory($idCategory, LocaleTransfer $localeTransfer)
     {
         return $this->productCategoryQueryContainer
-            ->queryProductsByCategoryId($idCategory, $locale)
+            ->queryProductsByCategoryId($idCategory, $localeTransfer)
             ->orderByFkProductAbstract()
             ->find();
     }

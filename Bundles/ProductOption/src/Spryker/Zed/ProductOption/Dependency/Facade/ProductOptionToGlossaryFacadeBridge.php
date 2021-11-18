@@ -38,39 +38,39 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
-        return $this->glossaryFacade->hasTranslation($keyName, $locale);
+        return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-        return $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $value, $isActive);
+        return $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-        return $this->glossaryFacade->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
+        return $this->glossaryFacade->updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
@@ -95,13 +95,13 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer)
     {
-        return $this->glossaryFacade->getTranslation($keyName, $locale);
+        return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
 
     /**

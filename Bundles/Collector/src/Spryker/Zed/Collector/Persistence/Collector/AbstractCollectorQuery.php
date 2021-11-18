@@ -41,13 +41,13 @@ abstract class AbstractCollectorQuery
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return $this
      */
-    public function setLocale(LocaleTransfer $locale)
+    public function setLocale(LocaleTransfer $localeTransfer)
     {
-        $this->locale = $locale;
+        $this->locale = $localeTransfer;
 
         return $this;
     }

@@ -14,20 +14,20 @@ interface MarkerInterface
 {
     /**
      * @param string $exportType
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \DateTime
      */
-    public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale);
+    public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $localeTransfer);
 
     /**
      * @param string $exportType
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \DateTime $timestamp
      *
      * @return void
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, DateTime $timestamp);
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $localeTransfer, DateTime $timestamp);
 
     /**
      * @param array $keys

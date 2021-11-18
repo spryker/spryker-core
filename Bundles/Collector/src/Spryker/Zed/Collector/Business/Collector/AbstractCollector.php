@@ -72,11 +72,11 @@ abstract class AbstractCollector
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    abstract protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale);
+    abstract protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer);
 
     /**
      * @param array $collectItemData
@@ -141,12 +141,12 @@ abstract class AbstractCollector
 
     /**
      * @param array $collectedSet
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      *
      * @return array
      */
-    protected function collectData(array $collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
+    protected function collectData(array $collectedSet, LocaleTransfer $localeTransfer, TouchUpdaterSet $touchUpdaterSet)
     {
         $setToExport = [];
 
@@ -157,7 +157,7 @@ abstract class AbstractCollector
 
             $touchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
-                $locale->getLocaleName(),
+                $localeTransfer->getLocaleName(),
                 $collectedItemData,
             );
             $setToExport[$touchKey] = $this->processCollectedItem($touchKey, $collectedItemData, $touchUpdaterSet);
@@ -168,11 +168,11 @@ abstract class AbstractCollector
 
     /**
      * @param array $collectedSet
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array<string>
      */
-    protected function collectExpiredData(array $collectedSet, LocaleTransfer $locale)
+    protected function collectExpiredData(array $collectedSet, LocaleTransfer $localeTransfer)
     {
         $expiredData = [];
 
@@ -183,7 +183,7 @@ abstract class AbstractCollector
 
             $touchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
-                $locale->getLocaleName(),
+                $localeTransfer->getLocaleName(),
                 $collectedItemData,
             );
             $expiredData[$touchKey] = $collectedItemData;

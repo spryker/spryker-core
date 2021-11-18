@@ -379,11 +379,11 @@ interface UrlFacadeInterface
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
@@ -394,11 +394,11 @@ interface UrlFacadeInterface
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
@@ -485,7 +485,7 @@ interface UrlFacadeInterface
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
      *
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -493,7 +493,7 @@ interface UrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
+    public function createRedirectUrl($url, LocaleTransfer $localeTransfer, $idUrlRedirect);
 
     /**
      * Specification:
@@ -501,15 +501,15 @@ interface UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
+     * @deprecated Use {@link createUrlRedirect()} or {@link updateUrlRedirect()} instead.
      *
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $localeTransfer, $idUrlRedirect);
 
     /**
      * Specification:
@@ -517,13 +517,13 @@ interface UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
+     * @deprecated Use {@link createUrlRedirect()} or {@link updateUrlRedirect()} instead.
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function saveRedirect(RedirectTransfer $redirect);
+    public function saveRedirect(RedirectTransfer $redirectTransfer);
 
     /**
      * Specification:
@@ -531,13 +531,13 @@ interface UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::activateUrlRedirect() instead.
+     * @deprecated Use {@link activateUrlRedirect()} instead.
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return void
      */
-    public function touchRedirectActive(RedirectTransfer $redirect);
+    public function touchRedirectActive(RedirectTransfer $redirectTransfer);
 
     /**
      * Specification:
@@ -545,7 +545,7 @@ interface UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
+     * @deprecated Use {@link createUrl()} or {@link updateUrl()} instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -559,13 +559,13 @@ interface UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
+     * @deprecated Use {@link createUrlRedirect()} or {@link updateUrlRedirect()} instead.
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function saveRedirectAndTouch(RedirectTransfer $redirect);
+    public function saveRedirectAndTouch(RedirectTransfer $redirectTransfer);
 
     /**
      * Specification:

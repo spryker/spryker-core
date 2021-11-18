@@ -50,7 +50,7 @@ interface CollectorPluginInterface
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $dataWriter
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
@@ -60,7 +60,7 @@ interface CollectorPluginInterface
      */
     public function postRun(
         SpyTouchQuery $baseQuery,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         BatchResultInterface $result,
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,

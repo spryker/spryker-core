@@ -47,16 +47,16 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @deprecated Use UrlCreator::createUrl() instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer|string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $resourceType
      * @param int|null $idResource
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function legacyCreateUrl($url, LocaleTransfer $locale, $resourceType = null, $idResource = null)
+    protected function legacyCreateUrl($url, LocaleTransfer $localeTransfer, $resourceType = null, $idResource = null)
     {
         $urlManager = $this->getFactory()->createUrlManager();
-        $pageUrl = $urlManager->createUrl($url, $locale, $resourceType, $idResource);
+        $pageUrl = $urlManager->createUrl($url, $localeTransfer, $resourceType, $idResource);
 
         return $urlManager->convertUrlEntityToTransfer($pageUrl);
     }
@@ -488,15 +488,15 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
+    public function hasResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
     {
         $urlManager = $this->getFactory()->createUrlManager();
 
-        return $urlManager->hasResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
+        return $urlManager->hasResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $localeTransfer->getIdLocale());
     }
 
     /**
@@ -507,15 +507,15 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @deprecated Will be removed with next major release. Category bundle handles logic internally.
      *
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
+    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $localeTransfer)
     {
         $urlManager = $this->getFactory()->createUrlManager();
 
-        return $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
+        return $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $localeTransfer->getIdLocale());
     }
 
     /**
@@ -616,16 +616,16 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      * @deprecated Use UrlFacade::createUrlRedirect() instead.
      *
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $localeTransfer, $idUrlRedirect)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
 
-        return $redirectManager->createRedirectUrl($url, $locale, $idUrlRedirect);
+        return $redirectManager->createRedirectUrl($url, $localeTransfer, $idUrlRedirect);
     }
 
     /**
@@ -633,19 +633,19 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
+     * @deprecated Use {@link createUrlRedirect()} or {@link updateUrlRedirect()} instead.
      *
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $localeTransfer, $idUrlRedirect)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
 
-        return $redirectManager->saveRedirectUrlAndTouch($url, $locale, $idUrlRedirect);
+        return $redirectManager->saveRedirectUrlAndTouch($url, $localeTransfer, $idUrlRedirect);
     }
 
     /**
@@ -653,17 +653,17 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
+     * @deprecated Use {@link createUrlRedirect()} or {@link updateUrlRedirect()} instead.
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function saveRedirect(RedirectTransfer $redirect)
+    public function saveRedirect(RedirectTransfer $redirectTransfer)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
 
-        return $redirectManager->saveRedirect($redirect);
+        return $redirectManager->saveRedirect($redirectTransfer);
     }
 
     /**
@@ -671,17 +671,17 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::activateUrlRedirect() instead.
+     * @deprecated Use {@link activateUrlRedirect()} instead.
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return void
      */
-    public function touchRedirectActive(RedirectTransfer $redirect)
+    public function touchRedirectActive(RedirectTransfer $redirectTransfer)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
 
-        $redirectManager->touchRedirectActive($redirect);
+        $redirectManager->touchRedirectActive($redirectTransfer);
     }
 
     /**
@@ -689,7 +689,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrl() or UrlFacade::updateUrl() instead.
+     * @deprecated Use {@link createUrl()} or {@link updateUrl()} instead.
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -707,17 +707,17 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
      *
      * @api
      *
-     * @deprecated Use UrlFacade::createUrlRedirect() or UrlFacade::updateUrlRedirect() instead.
+     * @deprecated Use {@link createUrlRedirect()} or {@link updateUrlRedirect()} instead.
      *
-     * @param \Generated\Shared\Transfer\RedirectTransfer $redirect
+     * @param \Generated\Shared\Transfer\RedirectTransfer $redirectTransfer
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
-    public function saveRedirectAndTouch(RedirectTransfer $redirect)
+    public function saveRedirectAndTouch(RedirectTransfer $redirectTransfer)
     {
         $redirectManager = $this->getFactory()->createRedirectManager();
 
-        return $redirectManager->saveRedirectAndTouch($redirect);
+        return $redirectManager->saveRedirectAndTouch($redirectTransfer);
     }
 
     /**

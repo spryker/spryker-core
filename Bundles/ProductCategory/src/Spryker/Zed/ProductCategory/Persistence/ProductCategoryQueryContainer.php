@@ -103,11 +103,11 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @api
      *
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale)
+    public function queryProductsByCategoryId($idCategory, LocaleTransfer $localeTransfer)
     {
         return $this->queryProductCategoryMappings()
             ->innerJoinSpyProductAbstract()
@@ -123,7 +123,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             )
             ->addAnd(
                 SpyLocaleTableMap::COL_ID_LOCALE,
-                $locale->getIdLocale(),
+                $localeTransfer->getIdLocale(),
                 Criteria::EQUAL,
             )
             ->addAnd(
@@ -197,11 +197,11 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @api
      *
      * @param string|null $term
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale)
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer)
     {
         $query = $this->getFactory()->createProductAbstractQuery();
 
@@ -217,7 +217,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         )
         ->addAnd(
             SpyLocaleTableMap::COL_ID_LOCALE,
-            $locale->getIdLocale(),
+            $localeTransfer->getIdLocale(),
             Criteria::EQUAL,
         )
         ->addAnd(

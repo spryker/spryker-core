@@ -49,25 +49,25 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idCategory
      *
      * @return \Spryker\Zed\ProductCategory\Communication\Table\ProductCategoryTable
      */
-    public function createProductCategoryTable(LocaleTransfer $locale, $idCategory)
+    public function createProductCategoryTable(LocaleTransfer $localeTransfer, $idCategory)
     {
-        return new ProductCategoryTable($this->getQueryContainer(), $this->getUtilEncodingService(), $locale, $idCategory);
+        return new ProductCategoryTable($this->getQueryContainer(), $this->getUtilEncodingService(), $localeTransfer, $idCategory);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idCategory
      *
      * @return \Spryker\Zed\ProductCategory\Communication\Table\ProductTable
      */
-    public function createProductTable(LocaleTransfer $locale, $idCategory)
+    public function createProductTable(LocaleTransfer $localeTransfer, $idCategory)
     {
-        return new ProductTable($this->getQueryContainer(), $this->getUtilEncodingService(), $locale, $idCategory);
+        return new ProductTable($this->getQueryContainer(), $this->getUtilEncodingService(), $localeTransfer, $idCategory);
     }
 
     /**

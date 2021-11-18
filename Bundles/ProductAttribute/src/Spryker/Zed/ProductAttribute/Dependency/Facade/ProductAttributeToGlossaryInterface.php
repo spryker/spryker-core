@@ -13,17 +13,17 @@ interface ProductAttributeToGlossaryInterface
 {
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
@@ -31,7 +31,7 @@ interface ProductAttributeToGlossaryInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, $locale, $value, $isActive = true);
+    public function updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive = true);
 
     /**
      * @param string $keyName
@@ -43,21 +43,21 @@ interface ProductAttributeToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
 
     /**
-     * @param array<string> $keyNames
+     * @param array<string> $glossaryKeys
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
-    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $keyNames, array $localeTransfers): array;
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
 
     /**
      * @param string $keyName

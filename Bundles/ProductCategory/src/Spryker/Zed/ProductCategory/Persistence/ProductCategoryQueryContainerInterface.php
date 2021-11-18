@@ -66,11 +66,11 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idCategory
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
+    public function queryProductsByCategoryId($idCategory, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:
@@ -93,11 +93,11 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param string|null $term
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $locale);
+    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:

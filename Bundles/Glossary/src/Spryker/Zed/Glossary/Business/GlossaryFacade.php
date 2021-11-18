@@ -121,17 +121,17 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->createTranslation($keyName, $locale, $value, $isActive);
+        return $translationManager->createTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
@@ -158,17 +158,21 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
+     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->createAndTouchTranslation($keyName, $locale, $value, $isActive);
+        return $translationManager->createAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
@@ -177,15 +181,15 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->hasTranslation($keyName, $locale);
+        return $translationManager->hasTranslation($keyName, $localeTransfer);
     }
 
     /**
@@ -194,15 +198,15 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->getTranslationByKeyName($keyName, $locale);
+        return $translationManager->getTranslationByKeyName($keyName, $localeTransfer);
     }
 
     /**
@@ -211,17 +215,17 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true)
+    public function updateTranslation($keyName, $localeTransfer, $value, $isActive = true)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->updateTranslation($keyName, $locale, $value, $isActive);
+        return $translationManager->updateTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
@@ -230,17 +234,19 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->updateAndTouchTranslation($keyName, $locale, $value, $isActive);
+        return $translationManager->updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
@@ -297,15 +303,15 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      * @api
      *
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleTransfer $locale)
+    public function deleteTranslation($keyName, LocaleTransfer $localeTransfer)
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 
-        return $translationManager->deleteTranslation($keyName, $locale);
+        return $translationManager->deleteTranslation($keyName, $localeTransfer);
     }
 
     /**

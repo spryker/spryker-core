@@ -50,28 +50,28 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-        return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
+        return $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-        return $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $value, $isActive);
+        return $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
 
     /**

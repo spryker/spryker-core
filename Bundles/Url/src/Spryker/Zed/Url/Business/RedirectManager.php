@@ -240,29 +240,29 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect)
+    public function createRedirectUrl($url, LocaleTransfer $localeTransfer, $idUrlRedirect)
     {
         $this->checkRedirectExists($idUrlRedirect);
-        $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idUrlRedirect);
+        $urlEntity = $this->urlManager->createUrl($url, $localeTransfer, 'redirect', $idUrlRedirect);
 
         return $this->urlManager->convertUrlEntityToTransfer($urlEntity);
     }
 
     /**
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect)
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $localeTransfer, $idUrlRedirect)
     {
-        $urlTransfer = $this->createRedirectUrl($url, $locale, $idUrlRedirect);
+        $urlTransfer = $this->createRedirectUrl($url, $localeTransfer, $idUrlRedirect);
         $this->urlManager->touchUrlActive($urlTransfer->getIdUrl());
 
         return $urlTransfer;

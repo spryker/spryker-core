@@ -14,19 +14,19 @@ interface MerchantRelationshipSalesOrderThresholdToGlossaryFacadeInterface
 {
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
 
     /**
      * @param string $keyName

@@ -36,12 +36,12 @@ interface CollectorFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return array<\Spryker\Zed\Collector\Business\Model\BatchResultInterface>
      */
-    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output);
+    public function exportStorageByLocale(LocaleTransfer $localeTransfer, OutputInterface $output);
 
     /**
      * Specification:
@@ -61,12 +61,12 @@ interface CollectorFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return array<\Spryker\Zed\Collector\Business\Model\BatchResultInterface>
      */
-    public function exportSearchByLocale(LocaleTransfer $locale, OutputInterface $output);
+    public function exportSearchByLocale(LocaleTransfer $localeTransfer, OutputInterface $output);
 
     /**
      * Specification:

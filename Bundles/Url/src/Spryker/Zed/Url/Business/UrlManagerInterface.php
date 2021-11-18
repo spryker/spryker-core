@@ -18,7 +18,7 @@ interface UrlManagerInterface
 {
     /**
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $resourceType
      * @param int $idResource
      *
@@ -28,7 +28,7 @@ interface UrlManagerInterface
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource);
+    public function createUrl($url, LocaleTransfer $localeTransfer, $resourceType, $idResource);
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer

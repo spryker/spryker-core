@@ -76,7 +76,7 @@ interface RedirectManagerInterface
 
     /**
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @throws \Spryker\Zed\Url\Business\Exception\UrlExistsException
@@ -84,14 +84,14 @@ interface RedirectManagerInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createRedirectUrl($url, LocaleTransfer $locale, $idUrlRedirect);
+    public function createRedirectUrl($url, LocaleTransfer $localeTransfer, $idUrlRedirect);
 
     /**
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idUrlRedirect
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idUrlRedirect);
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $localeTransfer, $idUrlRedirect);
 }

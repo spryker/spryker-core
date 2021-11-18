@@ -14,12 +14,12 @@ interface ExporterInterface
 {
     /**
      * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
-    public function exportByType($type, LocaleTransfer $locale, OutputInterface $output);
+    public function exportByType($type, LocaleTransfer $localeTransfer, OutputInterface $output);
 
     /**
      * @return array<\Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface>

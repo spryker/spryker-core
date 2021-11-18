@@ -70,19 +70,19 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $resourceType
      * @param int $idResource
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource)
+    public function createUrl($url, LocaleTransfer $localeTransfer, $resourceType, $idResource)
     {
         $this->checkUrlDoesNotExist($url);
 
-        $fkLocale = $locale->getIdLocale();
+        $fkLocale = $localeTransfer->getIdLocale();
         if ($fkLocale === null) {
-            $fkLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
+            $fkLocale = $this->localeFacade->getLocale($localeTransfer->getLocaleName())->getIdLocale();
         }
 
         $urlEntity = new SpyUrl();

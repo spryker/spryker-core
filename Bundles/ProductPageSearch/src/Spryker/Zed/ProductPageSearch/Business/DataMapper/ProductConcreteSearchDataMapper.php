@@ -65,11 +65,11 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
      * @api
      *
      * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function buildPageMap(array $data, LocaleTransfer $locale): PageMapTransfer
+    protected function buildPageMap(array $data, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data[ProductConcretePageSearchTransfer::STORE])
@@ -92,7 +92,7 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
             ->addCompletionTerms($pageMapTransfer, $data[ProductConcretePageSearchTransfer::SKU])
             ->addStringSort($pageMapTransfer, ProductConcretePageSearchTransfer::NAME, $data[ProductConcretePageSearchTransfer::NAME]);
 
-        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $data, $locale);
+        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $data, $localeTransfer);
 
         return $pageMapTransfer;
     }

@@ -67,12 +67,12 @@ class CollectorExporter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return array
      */
-    public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
+    public function exportStorageByLocale(LocaleTransfer $localeTransfer, OutputInterface $output)
     {
         if (!$this->collectorConfig->isCollectorEnabled()) {
             return [];
@@ -83,7 +83,7 @@ class CollectorExporter
         $availableTypes = $this->getAvailableCollectorTypes($types);
 
         $output->write(PHP_EOL);
-        $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $locale->getLocaleName()));
+        $output->writeln(sprintf('<fg=yellow>Locale:</fg=yellow> <fg=white>%s</fg=white>', $localeTransfer->getLocaleName()));
         $output->writeln('<fg=yellow>-------------</fg=yellow>');
 
         foreach ($availableTypes as $type) {
@@ -93,7 +93,7 @@ class CollectorExporter
                 continue;
             }
 
-            $result = $this->exporter->exportByType($type, $locale, $output);
+            $result = $this->exporter->exportByType($type, $localeTransfer, $output);
 
             $this->handleResult($result);
 

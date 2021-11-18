@@ -56,15 +56,15 @@ class ExportMarker implements MarkerInterface
 
     /**
      * @param string $exportType
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \DateTime
      */
-    public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
+    public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $localeTransfer)
     {
         /** @var string|null $lastTimeStamp */
         $lastTimeStamp = $this->reader
-            ->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()), $exportType);
+            ->read($this->keyBuilder->generateKey($exportType, $localeTransfer->getLocaleName()), $exportType);
 
         if (!$lastTimeStamp) {
             $lastTimeStamp = '2000-01-01 00:00:00';
@@ -75,14 +75,14 @@ class ExportMarker implements MarkerInterface
 
     /**
      * @param string $exportType
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \DateTime $timestamp
      *
      * @return void
      */
-    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, DateTime $timestamp)
+    public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $localeTransfer, DateTime $timestamp)
     {
-        $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
+        $timestampKey = $this->keyBuilder->generateKey($exportType, $localeTransfer->getLocaleName());
         $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')]);
     }
 

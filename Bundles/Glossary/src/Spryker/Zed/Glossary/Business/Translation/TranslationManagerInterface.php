@@ -15,17 +15,17 @@ interface TranslationManagerInterface
 {
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive);
+    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive);
 
     /**
      * @param string $keyName
@@ -42,45 +42,45 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      * @throws \Exception
      * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
-     */
-    public function updateTranslation($keyName, LocaleTransfer $locale, $value, $isActive);
-
-    /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     * @param string $value
-     * @param bool $isActive
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function updateTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
 
     /**
      * @param \Generated\Shared\Transfer\TranslationTransfer $translationTransfer
@@ -116,11 +116,11 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleTransfer $locale);
+    public function deleteTranslation($keyName, LocaleTransfer $localeTransfer);
 
     /**
      * @param array $idKeys
@@ -148,13 +148,13 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslationByKeyName($keyName, LocaleTransfer $locale);
+    public function getTranslationByKeyName($keyName, LocaleTransfer $localeTransfer);
 
     /**
      * @param int $idKey

@@ -19,11 +19,11 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param array $productIds
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $locale);
+    public function queryExportableProductsByLocale(array $productIds, LocaleTransfer $localeTransfer);
 
     /**
      * Specification:

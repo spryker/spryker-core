@@ -142,19 +142,19 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idGlossaryKey
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    protected function createTranslationTransfer(LocaleTransfer $locale, $idGlossaryKey, $value, $isActive = true)
+    protected function createTranslationTransfer(LocaleTransfer $localeTransfer, $idGlossaryKey, $value, $isActive = true)
     {
         $translationTransfer = new TranslationTransfer();
         $translationTransfer->setValue($value);
         $translationTransfer->setFkGlossaryKey($idGlossaryKey);
-        $translationTransfer->setFkLocale($locale->getIdLocale());
+        $translationTransfer->setFkLocale($localeTransfer->getIdLocale());
         $translationTransfer->setIsActive($isActive);
 
         return $translationTransfer;
@@ -176,20 +176,20 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
+    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive)
     {
         $idKey = $this->keyManager->getKey($keyName)
             ->getPrimaryKey();
-        $idLocale = $locale->getIdLocale();
+        $idLocale = $localeTransfer->getIdLocale();
 
         if ($idLocale === null) {
-            $idLocale = $this->localeFacade->getLocale($locale->getLocaleName())
+            $idLocale = $this->localeFacade->getLocale($localeTransfer->getLocaleName())
                 ->getIdLocale();
         }
 
@@ -278,30 +278,30 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
+    public function updateTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive)
     {
-        $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
+        $translation = $this->getUpdatedTranslationEntity($keyName, $localeTransfer, $value, $isActive);
 
         return $this->doUpdateTranslation($translation);
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation
      */
-    protected function getUpdatedTranslationEntity($keyName, $locale, $value, $isActive)
+    protected function getUpdatedTranslationEntity($keyName, $localeTransfer, $value, $isActive)
     {
-        $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
+        $translation = $this->getTranslationEntityByNames($keyName, $localeTransfer->getLocaleName());
 
         $translation->setValue($value);
         $translation->setIsActive($isActive);
@@ -311,13 +311,13 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslationByKeyName($keyName, LocaleTransfer $locale)
+    public function getTranslationByKeyName($keyName, LocaleTransfer $localeTransfer)
     {
-        $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
+        $translation = $this->getTranslationEntityByNames($keyName, $localeTransfer->getLocaleName());
 
         return $this->convertEntityToTranslationTransfer($translation);
     }
@@ -334,17 +334,17 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleTransfer $locale)
+    public function deleteTranslation($keyName, LocaleTransfer $localeTransfer)
     {
-        if (!$this->hasTranslation($keyName, $locale)) {
+        if (!$this->hasTranslation($keyName, $localeTransfer)) {
             return true;
         }
 
-        $translation = $this->getTranslationEntityByNames($keyName, $locale->getLocaleName());
+        $translation = $this->getTranslationEntityByNames($keyName, $localeTransfer->getLocaleName());
 
         $translation->setIsActive(false);
 
@@ -543,30 +543,30 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($keyName, $locale, $value, $isActive): TranslationTransfer {
-            return $this->executeCreateAndTouchTranslationTransaction($keyName, $locale, $value, $isActive);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($keyName, $localeTransfer, $value, $isActive): TranslationTransfer {
+            return $this->executeCreateAndTouchTranslationTransaction($keyName, $localeTransfer, $value, $isActive);
         });
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $value
      * @param bool $isActive
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
     {
-        $translation = $this->getUpdatedTranslationEntity($keyName, $locale, $value, $isActive);
+        $translation = $this->getUpdatedTranslationEntity($keyName, $localeTransfer, $value, $isActive);
 
         return $this->doUpdateAndTouchTranslation($translation);
     }

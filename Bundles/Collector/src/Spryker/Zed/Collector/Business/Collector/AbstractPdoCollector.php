@@ -90,13 +90,13 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
 
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
-        $this->locale = $locale;
+        $this->locale = $localeTransfer;
 
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
 
@@ -106,7 +106,7 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         $this->queryBuilder
             ->setStoreTransfer($this->getCurrentStore())
             ->setCriteriaBuilder($this->criteriaBuilder)
-            ->setLocale($locale)
+            ->setLocale($localeTransfer)
             ->prepare();
 
         $this->ensureCollectorColumnsAreSelected();

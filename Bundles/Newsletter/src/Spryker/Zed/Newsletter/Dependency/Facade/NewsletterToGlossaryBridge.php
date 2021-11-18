@@ -26,23 +26,23 @@ class NewsletterToGlossaryBridge implements NewsletterToGlossaryInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
-        return $this->glossaryFacade->hasTranslation($keyName, $locale);
+        return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer)
     {
-        return $this->glossaryFacade->getTranslation($keyName, $locale);
+        return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
 }

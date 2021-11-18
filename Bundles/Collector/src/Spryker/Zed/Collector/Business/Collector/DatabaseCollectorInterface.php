@@ -20,13 +20,13 @@ interface DatabaseCollectorInterface
 {
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     public function collectDataFromDatabase(
         SpyTouchQuery $touchQuery,
-        LocaleTransfer $locale
+        LocaleTransfer $localeTransfer
     );
 
     /**
@@ -35,7 +35,7 @@ interface DatabaseCollectorInterface
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
@@ -46,7 +46,7 @@ interface DatabaseCollectorInterface
         BatchResultInterface $batchResult,
         ReaderInterface $storeReader,
         WriterInterface $storeWriter,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         OutputInterface $output
     );
 

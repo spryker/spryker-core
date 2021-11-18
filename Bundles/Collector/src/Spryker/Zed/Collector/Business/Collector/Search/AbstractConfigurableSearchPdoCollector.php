@@ -30,7 +30,7 @@ abstract class AbstractConfigurableSearchPdoCollector extends AbstractSearchPdoC
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
@@ -41,13 +41,13 @@ abstract class AbstractConfigurableSearchPdoCollector extends AbstractSearchPdoC
         BatchResultInterface $batchResult,
         ReaderInterface $storeReader,
         WriterInterface $storeWriter,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         OutputInterface $output
     ) {
         $storeReader = $this->configureReader($storeReader);
         $storeWriter = $this->configureWriter($storeWriter);
 
-        parent::exportDataToStore($batchCollection, $touchUpdater, $batchResult, $storeReader, $storeWriter, $locale, $output);
+        parent::exportDataToStore($batchCollection, $touchUpdater, $batchResult, $storeReader, $storeWriter, $localeTransfer, $output);
     }
 
     /**

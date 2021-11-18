@@ -19,20 +19,20 @@ abstract class AbstractSearchPropelCollector extends AbstractPropelCollector
 {
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
+    protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
         $touchQuery->addJoin(
             [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchSearchTableMap::COL_FK_LOCALE, SpyTouchSearchTableMap::COL_FK_STORE],
-            [SpyTouchSearchTableMap::COL_FK_TOUCH, $locale->getIdLocale(), $this->getCurrentStore()->getIdStore()],
+            [SpyTouchSearchTableMap::COL_FK_TOUCH, $localeTransfer->getIdLocale(), $this->getCurrentStore()->getIdStore()],
             Criteria::LEFT_JOIN,
         );
 
         $touchQuery->withColumn(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, CollectorConfig::COLLECTOR_SEARCH_KEY);
 
-        parent::prepareCollectorScope($touchQuery, $locale);
+        parent::prepareCollectorScope($touchQuery, $localeTransfer);
     }
 }

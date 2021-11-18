@@ -50,18 +50,18 @@ class ProductTable extends AbstractTable
     /**
      * @param \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param \Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface $utilEncodingService
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idCategory
      */
     public function __construct(
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToUtilEncodingInterface $utilEncodingService,
-        LocaleTransfer $locale,
+        LocaleTransfer $localeTransfer,
         $idCategory
     ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->utilEncodingService = $utilEncodingService;
-        $this->locale = $locale;
+        $this->locale = $localeTransfer;
         $this->idCategory = (int)$idCategory;
         $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryTable::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);

@@ -111,15 +111,15 @@ abstract class AbstractExporter implements ExporterInterface
 
     /**
      * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
      */
-    public function exportByType($type, LocaleTransfer $locale, OutputInterface $output)
+    public function exportByType($type, LocaleTransfer $localeTransfer, OutputInterface $output)
     {
         $result = clone $this->batchResultPrototype;
-        $result->setProcessedLocale($locale);
+        $result->setProcessedLocale($localeTransfer);
 
         if (!$this->isCollectorRegistered($type)) {
             $this->resetResult($result);
@@ -127,10 +127,10 @@ abstract class AbstractExporter implements ExporterInterface
             return $result;
         }
 
-        $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
+        $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $localeTransfer);
         $startTime = new DateTime();
 
-        $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
+        $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $localeTransfer, $lastRunDatetime);
         $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID);
         $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
@@ -138,7 +138,7 @@ abstract class AbstractExporter implements ExporterInterface
         $collectorPlugin = $this->collectorPlugins[$type];
         $collectorPlugin->run(
             $baseQuery,
-            $locale,
+            $localeTransfer,
             $result,
             $this->reader,
             $this->writer,

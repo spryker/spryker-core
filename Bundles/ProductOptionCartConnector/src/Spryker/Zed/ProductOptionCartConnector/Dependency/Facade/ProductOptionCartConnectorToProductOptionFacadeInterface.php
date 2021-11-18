@@ -12,11 +12,11 @@ interface ProductOptionCartConnectorToProductOptionFacadeInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface::getProductOptionValueById()} instead.
      *
-     * @param int $idProductOptionValueUsage
+     * @param int $idProductOptionValue
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValue($idProductOptionValueUsage);
+    public function getProductOptionValue($idProductOptionValue);
 
     /**
      * @param int $idProductOptionValue

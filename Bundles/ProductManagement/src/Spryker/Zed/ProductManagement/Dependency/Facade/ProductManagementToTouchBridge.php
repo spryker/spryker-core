@@ -24,23 +24,23 @@ class ProductManagementToTouchBridge implements ProductManagementToTouchInterfac
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId)
+    public function touchActive($itemType, $idItem)
     {
-        return $this->touchFacade->touchActive($itemType, $itemId);
+        return $this->touchFacade->touchActive($itemType, $idItem);
     }
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId)
+    public function touchDeleted($itemType, $idItem)
     {
-        return $this->touchFacade->touchDeleted($itemType, $itemId);
+        return $this->touchFacade->touchDeleted($itemType, $idItem);
     }
 }

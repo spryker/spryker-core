@@ -11,17 +11,17 @@ interface ProductManagementToTouchInterface
 {
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId);
+    public function touchActive($itemType, $idItem);
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId);
+    public function touchDeleted($itemType, $idItem);
 }

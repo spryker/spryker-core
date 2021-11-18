@@ -25,13 +25,13 @@ class ProductOptionCartConnectorToProductOptionFacadeBridge implements ProductOp
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge::getProductOptionValueById()} instead.
      *
-     * @param int $idProductOptionValueUsage
+     * @param int $idProductOptionValue
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValue($idProductOptionValueUsage)
+    public function getProductOptionValue($idProductOptionValue)
     {
-        return $this->productOptionFacade->getProductOptionValueById($idProductOptionValueUsage);
+        return $this->productOptionFacade->getProductOptionValueById($idProductOptionValue);
     }
 
     /**

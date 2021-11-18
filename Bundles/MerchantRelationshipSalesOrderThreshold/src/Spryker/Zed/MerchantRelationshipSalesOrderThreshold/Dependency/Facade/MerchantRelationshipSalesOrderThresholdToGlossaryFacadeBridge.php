@@ -28,24 +28,24 @@ class MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge implements M
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null): bool
     {
-        return $this->glossaryFacade->hasTranslation($keyName, $locale);
+        return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer): TranslationTransfer
     {
-        return $this->glossaryFacade->getTranslation($keyName, $locale);
+        return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
 
     /**

@@ -14,17 +14,17 @@ interface AvailabilityNotificationToGlossaryFacadeInterface
 {
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool;
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool;
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation(string $keyName, LocaleTransfer $locale): TranslationTransfer;
+    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
 }
