@@ -30,7 +30,7 @@ class XmlXsdSchemaValidatorTest extends Unit
     {
         // Arrange
         $xmlValidator = new XmlXsdSchemaValidator();
-        $schemaFilePath = codecept_data_dir('XmlValidator/transfer-01.xsd');
+        $schemaFilePath = codecept_data_dir('XmlValidator/transfer-test.xsd');
         $transferDefinitionFilePath = codecept_data_dir('XmlValidator/error.transfer.xml');
 
         // Act
@@ -50,7 +50,7 @@ class XmlXsdSchemaValidatorTest extends Unit
     {
         // Arrange
         $xmlValidator = new XmlXsdSchemaValidator();
-        $schemaFilePath = codecept_data_dir('XmlValidator/transfer-01.xsd');
+        $schemaFilePath = codecept_data_dir('XmlValidator/transfer-test.xsd');
         $transferDefinitionFilePath = codecept_data_dir('XmlValidator/exception.transfer.xml');
 
         // Act
@@ -73,7 +73,7 @@ class XmlXsdSchemaValidatorTest extends Unit
     {
         // Arrange
         $xmlValidator = new XmlXsdSchemaValidator();
-        $schemaFilePath = codecept_data_dir('XmlValidator/transfer-01.xsd');
+        $schemaFilePath = codecept_data_dir('XmlValidator/transfer-test.xsd');
         $transferDefinitionFilePath = codecept_data_dir('XmlValidator/error.transfer.xml');
 
         // Act
