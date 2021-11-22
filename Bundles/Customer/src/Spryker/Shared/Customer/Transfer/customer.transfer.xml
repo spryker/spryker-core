@@ -61,7 +61,7 @@
         <property name="newPassword" type="string"/>
         <property name="billingAddress" type="Address[]" singular="billingAddress"/>
         <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
-        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="addresses" type="Addresses"/>
         <property name="defaultBillingAddress" type="string"/>
         <property name="defaultShippingAddress" type="string"/>
         <property name="createdAt" type="string"/>

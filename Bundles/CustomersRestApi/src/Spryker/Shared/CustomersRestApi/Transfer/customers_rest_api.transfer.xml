@@ -148,7 +148,7 @@
     <transfer name="Customer">
         <property name="customerReference" type="string"/>
         <property name="idCustomer" type="int"/>
-        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="addresses" type="Addresses"/>
         <property name="defaultShippingAddress" type="string"/>
         <property name="defaultBillingAddress" type="string"/>
         <property name="isDirty" type="bool"/>

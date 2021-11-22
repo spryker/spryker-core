@@ -112,7 +112,7 @@
     </transfer>
 
     <transfer name="PriceProductScheduleCsvValidationResult">
-        <property name="error" type="string" singular="error"/>
+        <property name="error" type="string"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
 
