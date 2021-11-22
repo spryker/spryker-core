@@ -2,9 +2,9 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCheckoutData">
-        <property name="addresses" type="Addresses" singular="address"/>
-        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
-        <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
+        <property name="addresses" type="Addresses"/>
+        <property name="shipmentMethods" type="ShipmentMethods"/>
+        <property name="paymentProviders" type="PaymentProviderCollection"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
         <property name="quote" type="Quote"/>
     </transfer>
@@ -196,7 +196,7 @@
         <property name="customerReference" type="string"/>
         <property name="defaultBillingAddress" type="string"/>
         <property name="defaultShippingAddress" type="string"/>
-        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="addresses" type="Addresses"/>
     </transfer>
 
     <transfer name="CustomerResponse">

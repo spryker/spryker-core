@@ -131,7 +131,7 @@
     </transfer>
 
     <transfer name="RestCheckoutData">
-        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="shipmentMethods" type="ShipmentMethods"/>
         <property name="quote" type="Quote"/>
         <property name="availableShipmentMethods" type="ShipmentMethodsCollection"/>
     </transfer>

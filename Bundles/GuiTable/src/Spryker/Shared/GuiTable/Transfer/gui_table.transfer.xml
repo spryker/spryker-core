@@ -169,7 +169,7 @@
         <property name="url" type="string"/>
         <property name="method" type="string"/>
         <property name="component" type="string"/>
-        <property name="options" type="GuiTableRowActionOptions" singular="option"/>
+        <property name="options" type="GuiTableRowActionOptions"/>
     </transfer>
 
     <transfer name="GuiTableRowActionOptions">
@@ -193,7 +193,7 @@
         <property name="method" type="string"/>
         <property name="url" type="string"/>
         <property name="component" type="string"/>
-        <property name="options" type="GuiTableBatchActionOptions" singular="option"/>
+        <property name="options" type="GuiTableBatchActionOptions"/>
     </transfer>
 
     <transfer name="GuiTableBatchActionOptions">

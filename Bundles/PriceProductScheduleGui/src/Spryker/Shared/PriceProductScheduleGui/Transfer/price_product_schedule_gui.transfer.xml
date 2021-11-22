@@ -45,7 +45,7 @@
 
     <transfer name="PriceProductScheduleCsvValidationResult">
         <property name="isSuccess" type="bool"/>
-        <property name="error" type="string" singular="error"/>
+        <property name="error" type="string"/>
     </transfer>
 
     <transfer name="PriceProductScheduledListImportRequest">

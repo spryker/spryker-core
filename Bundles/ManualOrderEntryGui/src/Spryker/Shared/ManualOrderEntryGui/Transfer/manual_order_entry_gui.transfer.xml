@@ -76,7 +76,7 @@
         <property name="idCustomer" type="int"/>
         <property name="defaultShippingAddress" type="string"/>
         <property name="defaultBillingAddress" type="string"/>
-        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="addresses" type="Addresses"/>
     </transfer>
 
     <transfer name="SaveOrder">
