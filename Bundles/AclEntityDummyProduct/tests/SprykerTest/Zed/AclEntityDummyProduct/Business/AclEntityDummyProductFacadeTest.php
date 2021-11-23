@@ -86,16 +86,17 @@ class AclEntityDummyProductFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollection);
-        $this->assertSame(2, count($aclEntityMetadataCollection->getCollection()));
+        $this->assertSame(4, count($aclEntityMetadataCollection->getCollection()));
         $this->assertArrayHasKey(SpyProductImage::class, $aclEntityMetadataCollection->getCollection());
         $this->assertEquals(
-            SpyProductImageSet::class,
+            SpyProductImageSetToProductImage::class,
             $aclEntityMetadataCollection->getCollection()[SpyProductImage::class]->getParent()->getEntityName(),
         );
         $this->assertEquals(
-            SpyProductImageSetToProductImage::class,
-            $aclEntityMetadataCollection->getCollection()[SpyProductImage::class]->getParent()->getConnection()->getPivotEntityName(),
+            SpyProductImageSet::class,
+            $aclEntityMetadataCollection->getCollection()[SpyProductImageSetToProductImage::class]->getParent()->getEntityName(),
         );
+
         $this->assertArrayHasKey(
             SpyProductLocalizedAttributes::class,
             $aclEntityMetadataCollection->getCollection(),

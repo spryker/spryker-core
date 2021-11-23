@@ -139,29 +139,13 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
         AclEntityMetadataTransfer $aclEntityMetadataTransfer,
         AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
     ): bool {
-        $entityAclEntityRuleCollectionTransfer = $this->aclEntityRuleCollectionTransferSorter->sortByScopePriority(
-            $this->aclEntityRuleCollectionTransferFilter->filterByEntityClassAndPermissionMask(
-                $aclEntityRuleCollectionTransfer,
-                $aclEntityMetadataTransfer->getEntityNameOrFail(),
-                AclEntityConstants::OPERATION_MASK_READ,
-            ),
+        $readableGlobalScopeParentAclEntityMetadata = $this->findReadableParentMetadataByScope(
+            $aclEntityMetadataTransfer,
+            $aclEntityRuleCollectionTransfer,
+            AclEntityConstants::SCOPE_GLOBAL,
         );
-        foreach ($entityAclEntityRuleCollectionTransfer->getAclEntityRules() as $aclEntityRuleTransfer) {
-            if ($aclEntityRuleTransfer->getScopeOrFail() === AclEntityConstants::SCOPE_GLOBAL) {
-                return true;
-            }
-            if ($aclEntityRuleTransfer->getScopeOrFail() !== AclEntityConstants::SCOPE_INHERITED) {
-                continue;
-            }
-            $parentAclEntityMetadataTransfer = $this->aclEntityMetadataReader
-                ->getAclEntityMetadataTransferForEntityClass(
-                    $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
-                );
 
-            return $this->hasReadableGlobalScopeParent($parentAclEntityMetadataTransfer, $aclEntityRuleCollectionTransfer);
-        }
-
-        return false;
+        return $readableGlobalScopeParentAclEntityMetadata !== null;
     }
 
     /**
@@ -174,6 +158,34 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
         AclEntityMetadataTransfer $aclEntityMetadataTransfer,
         AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
     ): ?AclEntityMetadataTransfer {
+        return $this->findReadableParentMetadataByScope(
+            $aclEntityMetadataTransfer,
+            $aclEntityRuleCollectionTransfer,
+            AclEntityConstants::SCOPE_SEGMENT,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
+     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
+     * @param string $scope
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataTransfer|null
+     */
+    protected function findReadableParentMetadataByScope(
+        AclEntityMetadataTransfer $aclEntityMetadataTransfer,
+        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
+        string $scope
+    ): ?AclEntityMetadataTransfer {
+        if ($aclEntityMetadataTransfer->getIsSubEntity()) {
+            return $this->findReadableParentMetadataByScope(
+                $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
+                    $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
+                ),
+                $aclEntityRuleCollectionTransfer,
+                $scope,
+            );
+        }
         $entityAclEntityRuleCollectionTransfer = $this->aclEntityRuleCollectionTransferSorter->sortByScopePriority(
             $this->aclEntityRuleCollectionTransferFilter->filterByEntityClassAndPermissionMask(
                 $aclEntityRuleCollectionTransfer,
@@ -182,7 +194,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
             ),
         );
         foreach ($entityAclEntityRuleCollectionTransfer->getAclEntityRules() as $aclEntityRuleTransfer) {
-            if ($aclEntityRuleTransfer->getScopeOrFail() === AclEntityConstants::SCOPE_SEGMENT) {
+            if ($aclEntityRuleTransfer->getScopeOrFail() === $scope) {
                 return $aclEntityMetadataTransfer;
             }
             if ($aclEntityRuleTransfer->getScopeOrFail() !== AclEntityConstants::SCOPE_INHERITED) {
@@ -192,7 +204,11 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
                 $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
 
-            return $this->findReadableSegmentScopeParentMetadata($parentAclEntityMetadata, $aclEntityRuleCollectionTransfer);
+            return $this->findReadableParentMetadataByScope(
+                $parentAclEntityMetadata,
+                $aclEntityRuleCollectionTransfer,
+                $scope,
+            );
         }
 
         return null;
@@ -270,7 +286,10 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
             $query->getModelName(),
         );
 
-        $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransfer($aclEntityMetadataTransfer);
+        $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransferAndPermissionMask(
+            $aclEntityMetadataTransfer,
+            AclEntityConstants::OPERATION_MASK_UPDATE,
+        );
 
         return $this->queryMerger->mergeQueries(
             $query,
@@ -379,11 +398,17 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
      */
     public function isReadableQuery(ModelCriteria $query): bool
     {
-        $rootAclEntityMetadataTransfer = $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass(
+        $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             $query->getModelName(),
         );
+        $rootAclEntityMetadataTransfer = $aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()
+            ? $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass($query->getModelName())
+            : $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntityClass($query->getModelName());
 
-        $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransfer($rootAclEntityMetadataTransfer);
+        $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransferAndPermissionMask(
+            $rootAclEntityMetadataTransfer,
+            AclEntityConstants::OPERATION_MASK_READ,
+        );
 
         return $strategy->isReadableQuery(PropelQuery::from($rootAclEntityMetadataTransfer->getEntityNameOrFail()));
     }
@@ -397,27 +422,36 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
      */
     public function isDeletableQuery(ModelCriteria $query): bool
     {
-        $rootAclEntityMetadataTransfer = $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass(
+        $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             $query->getModelName(),
         );
+        $rootAclEntityMetadataTransfer = $aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()
+            ? $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass($query->getModelName())
+            : $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntityClass($query->getModelName());
 
-        $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransfer($rootAclEntityMetadataTransfer);
+        $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransferAndPermissionMask(
+            $rootAclEntityMetadataTransfer,
+            AclEntityConstants::OPERATION_MASK_DELETE,
+        );
 
         return $strategy->isDeletableQuery(PropelQuery::from($rootAclEntityMetadataTransfer->getEntityNameOrFail()));
     }
 
     /**
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
+     * @param int $permissionMask
      *
      * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\AclQueryDirectorStrategyInterface
      */
-    protected function getAclQueryDirectorStrategyByAclEntityMetadataTransfer(
-        AclEntityMetadataTransfer $aclEntityMetadataTransfer
+    protected function getAclQueryDirectorStrategyByAclEntityMetadataTransferAndPermissionMask(
+        AclEntityMetadataTransfer $aclEntityMetadataTransfer,
+        int $permissionMask
     ): AclQueryDirectorStrategyInterface {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRuleCollectionTransferSorter->sortByScopePriority(
-            $this->aclEntityRuleCollectionTransferFilter->filterByEntityClass(
+            $this->aclEntityRuleCollectionTransferFilter->filterByEntityClassAndPermissionMask(
                 $this->aclEntityRuleCollectionTransfer,
                 $aclEntityMetadataTransfer->getEntityNameOrFail(),
+                $permissionMask,
             ),
         );
 
@@ -428,7 +462,10 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
                         $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
                     );
 
-                return $this->getAclQueryDirectorStrategyByAclEntityMetadataTransfer($parentAclEntityMetadataTransfer);
+                return $this->getAclQueryDirectorStrategyByAclEntityMetadataTransferAndPermissionMask(
+                    $parentAclEntityMetadataTransfer,
+                    $permissionMask,
+                );
             }
 
             return call_user_func(

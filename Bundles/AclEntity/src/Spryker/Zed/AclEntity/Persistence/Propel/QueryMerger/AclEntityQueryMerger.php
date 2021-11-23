@@ -7,12 +7,51 @@
 
 namespace Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Service\AclEntity\AclEntityServiceInterface;
 use Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException;
+use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
 
 class AclEntityQueryMerger implements AclEntityQueryMergerInterface
 {
+    /**
+     * @var string
+     */
+    protected const JOIN_CONDITION_TEMPLATE = '%s.%s %s %s.%s';
+
+    /**
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface
+     */
+    protected $joinComparator;
+
+    /**
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface
+     */
+    protected $queryAliasGenerator;
+
+    /**
+     * @var \Spryker\Service\AclEntity\AclEntityServiceInterface
+     */
+    protected $aclEntityService;
+
+    /**
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface $joinComparator
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface $queryAliasGenerator
+     * @param \Spryker\Service\AclEntity\AclEntityServiceInterface $aclEntityService
+     */
+    public function __construct(
+        JoinComparatorInterface $joinComparator,
+        AclEntityAliasGeneratorInterface $queryAliasGenerator,
+        AclEntityServiceInterface $aclEntityService
+    ) {
+        $this->joinComparator = $joinComparator;
+        $this->queryAliasGenerator = $queryAliasGenerator;
+        $this->aclEntityService = $aclEntityService;
+    }
+
     /**
      * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $dstQuery
      * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $srcQuery
@@ -32,6 +71,12 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
             if (!$srcJoin->getRightTableName() || !$srcJoin->getRightTableAliasOrName()) {
                 throw new QueryMergerJoinMalfunctionException();
             }
+            if ($this->isSegmentTableJoin($srcJoin) && in_array($srcJoin->getLeftTableName(), $dstQuery->getAliases())) {
+                /** @var string $leftTableAlias */
+                $leftTableAlias = array_search($srcJoin->getLeftTableName(), $dstQuery->getAliases());
+                $srcJoin->setLeftTableAlias($leftTableAlias);
+                $srcJoin = $this->rebuildJoinCondition($srcJoin);
+            }
 
             $rightTableName = (string)$srcJoin->getRightTableName();
             if ($dstQuery->getTableMap()->getName() === $rightTableName) {
@@ -45,14 +90,17 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
                 continue;
             }
 
-            if ($this->areEqualJoins($foundJoin, $srcJoin)) {
+            if ($this->joinComparator->areEqual($foundJoin, $srcJoin)) {
                 continue;
             }
 
-            $newAlias = $this->createUniqueAliasBasedOnExisting($dstQuery, (string)$srcJoin->getRightTableAliasOrName());
-            $srcJoin->setRightTableAlias($newAlias);
-            $dstQuery->addAlias($newAlias, $rightTableName);
-            $dstQuery->addJoinObject($srcJoin, $newAlias);
+            $aclEntityTableAlias = $this->queryAliasGenerator->generateTableAlias(
+                $dstQuery,
+                (string)$srcJoin->getRightTableAliasOrName(),
+            );
+            $srcJoin->setRightTableAlias($aclEntityTableAlias);
+            $dstQuery->addAlias($aclEntityTableAlias, $rightTableName);
+            $dstQuery->addJoinObject($srcJoin, $aclEntityTableAlias);
         }
 
         $dstQuery->putAll($srcQuery->getMap());
@@ -78,33 +126,36 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\Join $join1
-     * @param \Propel\Runtime\ActiveQuery\Join $join2
+     * @param \Propel\Runtime\ActiveQuery\Join $join
+     *
+     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException
      *
      * @return bool
      */
-    protected function areEqualJoins(Join $join1, Join $join2): bool
+    protected function isSegmentTableJoin(Join $join): bool
     {
-        return $join1->getLeftColumns() === $join2->getLeftColumns()
-            && $join1->getRightColumns() === $join2->getRightColumns()
-            && $join1->getJoinType() === $join2->getJoinType();
+        $leftTableName = $join->getLeftTableName();
+        $rightTableName = $join->getRightTableName();
+        if (!$leftTableName || !$rightTableName) {
+            throw new QueryMergerJoinMalfunctionException();
+        }
+
+        return $this->aclEntityService->generateSegmentConnectorTableName($leftTableName) === $rightTableName;
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $dstQuery
+     * @param \Propel\Runtime\ActiveQuery\Join $join
      *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $dstQuery
-     * @param string $aliasToExtend
-     *
-     * @return string
+     * @return \Propel\Runtime\ActiveQuery\Join
      */
-    protected function createUniqueAliasBasedOnExisting(ModelCriteria $dstQuery, string $aliasToExtend): string
+    protected function rebuildJoinCondition(Join $join): Join
     {
-        $index = 1;
-        while (in_array($aliasToExtend . $index, $dstQuery->getAliases())) {
-            $index++;
+        $clauses = $join->getJoinCondition()->getClauses();
+        $join->buildJoinCondition(new Criteria());
+        foreach ($clauses as $clause) {
+            $join->getJoinCondition()->addAnd($clause);
         }
 
-        return $aliasToExtend . $index;
+        return $join;
     }
 }

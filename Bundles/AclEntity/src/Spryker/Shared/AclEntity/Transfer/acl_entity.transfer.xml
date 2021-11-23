@@ -73,7 +73,7 @@
     </transfer>
 
     <transfer name="AclEntityParentConnectionMetadata">
-        <property name="pivotEntityName" type="string"/>
+        <property name="pivotEntityName" type="string" deprecated="Will be removed with next major"/>
         <property name="referencedColumn" type="string"/>
         <property name="reference" type="string"/>
     </transfer>

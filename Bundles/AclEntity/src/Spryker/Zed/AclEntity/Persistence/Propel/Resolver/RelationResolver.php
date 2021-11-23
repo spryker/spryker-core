@@ -14,7 +14,6 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Map\RelationMap;
-use Propel\Runtime\Propel;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 
@@ -129,9 +128,7 @@ class RelationResolver implements RelationResolverInterface
             $query->getModelName(),
         );
         while ($aclEntityMetadataTransfer->getEntityNameOrFail() !== $parentAclEntityMetadataTransfer->getEntityNameOrFail()) {
-            if (!$this->hasJoinOrAlias($query, $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())) {
-                $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
-            }
+            $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
             $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
                 $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
@@ -155,9 +152,7 @@ class RelationResolver implements RelationResolverInterface
         AclEntityMetadataTransfer $aclEntityMetadataTransfer
     ): ModelCriteria {
         while ($aclEntityMetadataTransfer->getIsSubEntity()) {
-            if (!$this->hasJoinOrAlias($query, $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())) {
-                $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
-            }
+            $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
 
             $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
                 $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
@@ -182,9 +177,7 @@ class RelationResolver implements RelationResolverInterface
         AclEntityMetadataTransfer $aclEntityMetadataTransfer
     ): ModelCriteria {
         while ($aclEntityMetadataTransfer->getParent()) {
-            if (!$this->hasJoinOrAlias($query, $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())) {
-                $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
-            }
+            $query = $this->joinRelation($query, $aclEntityMetadataTransfer);
             $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
                 $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
             );
@@ -249,35 +242,32 @@ class RelationResolver implements RelationResolverInterface
             return $strategy;
         }
 
-        return $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityName()
-            ? call_user_func($this->strategyContainer[RelationResolverInterface::STRATEGY_PIVOT_TABLE])
-            : call_user_func($this->strategyContainer[RelationResolverInterface::STRATEGY_REFERENCE_COLUMN]);
+        if ($this->isPivotTableConnectionStrategy($aclEntityMetadataTransfer)) {
+            return $this->getPivotTableConnectionStrategy();
+        }
+
+        return call_user_func($this->strategyContainer[RelationResolverInterface::STRATEGY_REFERENCE_COLUMN]);
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
+     * @deprecated Will be removed without replacement.
      *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param string $joinClass
+     * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
      * @return bool
      */
-    protected function hasJoinOrAlias(ModelCriteria $query, string $joinClass): bool
+    protected function isPivotTableConnectionStrategy(AclEntityMetadataTransfer $aclEntityMetadataTransfer): bool
     {
-        $joinClass = basename(str_replace('\\', '/', $joinClass));
-        if ($query->hasJoin($joinClass) || $query->getModelShortName() === $joinClass) {
-            return true;
-        }
+        return !empty($aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityName());
+    }
 
-        foreach ($query->getJoins() as $join) {
-            /** @var string $rightTableName */
-            $rightTableName = $join->getRightTableName();
-            $tableClass = Propel::getServiceContainer()->getDatabaseMap()->getTable($rightTableName)->getPhpName();
-            if ($tableClass === $joinClass) {
-                return true;
-            }
-        }
-
-        return false;
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy
+     */
+    protected function getPivotTableConnectionStrategy(): AbstractRelationResolverStrategy
+    {
+        return call_user_func($this->strategyContainer[RelationResolverInterface::STRATEGY_PIVOT_TABLE]);
     }
 }

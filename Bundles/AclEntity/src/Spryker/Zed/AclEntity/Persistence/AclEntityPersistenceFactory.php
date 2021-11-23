@@ -31,6 +31,10 @@ use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDir
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Builder\ConnectorTableBuilder;
 use Spryker\Zed\AclEntity\Persistence\Propel\Builder\ConnectorTableBuilderInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparator;
+use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
+use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntityRuleMapper;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntitySegmentMapper;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMerger;
@@ -41,6 +45,8 @@ use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationR
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\ForeignKeyRelationResolverStrategy;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\PivotTableRelationResolverStrategy;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\ReferenceColumnRelationResolverStrategy;
+use Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProvider;
+use Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReader;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 use Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSorterInterface;
@@ -67,8 +73,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
             $this->createAclDirectorStrategyResolver($aclEntityMetadataCollectionTransfer),
             $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer),
             $this->createRelationResolver($aclEntityMetadataCollectionTransfer),
-            $this->getUserFacade(),
-            $this->getAclFacade(),
+            $this->getAclRoleProvider(),
             $this->createAclEntityQueryMerger(),
         );
     }
@@ -78,7 +83,27 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createAclEntityQueryMerger(): AclEntityQueryMergerInterface
     {
-        return new AclEntityQueryMerger();
+        return new AclEntityQueryMerger(
+            $this->createJoinComparator(),
+            $this->createQueryAliasGenerator(),
+            $this->getAclEntityService(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface
+     */
+    public function createQueryAliasGenerator(): AclEntityAliasGeneratorInterface
+    {
+        return new AclEntityAliasGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface
+     */
+    public function createJoinComparator(): JoinComparatorInterface
+    {
+        return new JoinComparator();
     }
 
     /**
@@ -191,6 +216,10 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
             function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) {
                 return $this->createSegmentScopeAclQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
             };
+        $strategyContainer[AclEntityConstants::SCOPE_GLOBAL] =
+            function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) {
+                return $this->createGlobalScopeQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
+            };
         $strategyContainer[AclEntityConstants::SCOPE_DEFAULT] =
             function () use ($aclEntityMetadataCollectionTransfer) {
                 return $this->createDefaultScopeAclQueryDirectorStrategy($aclEntityMetadataCollectionTransfer);
@@ -261,7 +290,10 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createForeignKeyRelationResolverStrategy(): AbstractRelationResolverStrategy
     {
-        return new ForeignKeyRelationResolverStrategy();
+        return new ForeignKeyRelationResolverStrategy(
+            $this->createJoinComparator(),
+            $this->createQueryAliasGenerator(),
+        );
     }
 
     /**
@@ -269,15 +301,23 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createReferenceColumnRelationResolverStrategy(): AbstractRelationResolverStrategy
     {
-        return new ReferenceColumnRelationResolverStrategy();
+        return new ReferenceColumnRelationResolverStrategy(
+            $this->createJoinComparator(),
+            $this->createQueryAliasGenerator(),
+        );
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy
      */
     public function createPivotTableRelationResolverStrategy(): AbstractRelationResolverStrategy
     {
-        return new PivotTableRelationResolverStrategy();
+        return new PivotTableRelationResolverStrategy(
+            $this->createJoinComparator(),
+            $this->createQueryAliasGenerator(),
+        );
     }
 
     /**
@@ -313,6 +353,14 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     public function createConnectorTableBuilder(Table $baseTable, Database $database): ConnectorTableBuilderInterface
     {
         return new ConnectorTableBuilder($baseTable, $database, $this->getAclEntityService());
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface
+     */
+    public function getAclRoleProvider(): AclRoleProviderInterface
+    {
+        return AclRoleProvider::getInstance($this->getUserFacade(), $this->getAclFacade());
     }
 
     /**

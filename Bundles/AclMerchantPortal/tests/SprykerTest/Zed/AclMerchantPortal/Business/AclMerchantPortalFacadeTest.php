@@ -8,60 +8,10 @@
 namespace SprykerTest\Zed\AclMerchantPortal\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
-use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
-use Orm\Zed\Category\Persistence\SpyCategoryStore;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
-use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
-use Orm\Zed\Merchant\Persistence\SpyMerchant;
-use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
-use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory;
-use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
-use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
-use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
-use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
-use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
-use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
-use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
-use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
-use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
-use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
-use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
-use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
-use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
-use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Orm\Zed\ProductImage\Persistence\SpyProductImage;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
-use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
-use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity;
-use Orm\Zed\Refund\Persistence\SpyRefund;
-use Orm\Zed\Sales\Persistence\SpySalesExpense;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
-use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
-use Orm\Zed\Stock\Persistence\SpyStock;
-use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Orm\Zed\Stock\Persistence\SpyStockStore;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
 use Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalAclEntityMetadataConfigExpanderPlugin;
 
@@ -181,7 +131,10 @@ class AclMerchantPortalFacadeTest extends Unit
     {
         // Arrange
         $this->tester->clearAllAclMerchantData();
-        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE, MerchantTransfer::NAME => static::MERCHANT_NAME]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE,
+            MerchantTransfer::NAME => static::MERCHANT_NAME,
+        ]);
 
         // Act
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchantAclData($merchantTransfer);
@@ -235,74 +188,182 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertSame(103, count($aclEntityMetadataCollectionTransfer->getCollection()));
-        $this->assertArrayHasKey(SpyMerchantSalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStateMachineItemState::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantSalesOrderItem::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpySalesOrderItem::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpySalesOrder::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantSalesOrder::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyAvailability::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyAvailabilityAbstract::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductImageSetToProductImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductImageSet::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductLocalizedAttributes::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductAbstractLocalizedAttributes::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductCategory::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProduct::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStockProduct::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductAbstract::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantProductAbstract::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyUser::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantUser::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchant::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantProfileAddress::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantProfile::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantCategory::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferValidity::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryClosureTable::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryNode::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStockStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductAbstractStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImageSetToCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImageSet::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductManagementAttributeValue::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductManagementAttribute::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductDefault::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyTaxRate::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyGlossaryTranslation::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyRefund::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpySalesExpense::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpySalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCustomer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyOmsProductReservationChangeVersion::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderTotals::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderItem::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrderItem::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrder::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrder::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyAvailability::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProduct::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductAbstract::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantProductAbstract::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyStockProduct::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductCategory::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductLocalizedAttributes::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductImageSetToProductImage::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantProfileAddress::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantProfile::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantStock::class]->getParent());
-        $this->assertEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyStateMachineItemState::class]->getParent());
-        $this->assertEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductImage::class]->getParent());
+        $this->assertAclEntityMetadataConfigEntityWithoutParents($aclEntityMetadataCollectionTransfer);
+        $this->assertAclEntityMetadataConfigHasEntities($aclEntityMetadataCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     *
+     * @return void
+     */
+    protected function assertAclEntityMetadataConfigEntityWithoutParents(AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer): void
+    {
+        $collection = $aclEntityMetadataCollectionTransfer->getCollection();
+        $entityWithoutParents = [
+            'Orm\Zed\Category\Persistence\SpyCategory',
+            'Orm\Zed\Category\Persistence\SpyCategoryTemplate',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlock',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate',
+            'Orm\Zed\Comment\Persistence\SpyCommentThread',
+            'Orm\Zed\Country\Persistence\SpyCountry',
+            'Orm\Zed\Currency\Persistence\SpyCurrency',
+            'Orm\Zed\EventBehavior\Persistence\SpyEventBehaviorEntityChange',
+            'Orm\Zed\Glossary\Persistence\SpyGlossaryKey',
+            'Orm\Zed\Locale\Persistence\SpyLocale',
+            'Orm\Zed\Merchant\Persistence\SpyMerchant',
+            'Orm\Zed\Oms\Persistence\SpyOmsOrderItemState',
+            'Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory',
+            'Orm\Zed\Oms\Persistence\SpyOmsOrderProcess',
+            'Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion',
+            'Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock',
+            'Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType',
+            'Orm\Zed\PriceProduct\Persistence\SpyPriceProduct',
+            'Orm\Zed\PriceProduct\Persistence\SpyPriceType',
+            'Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation',
+            'Orm\Zed\ProductImage\Persistence\SpyProductImage',
+            'Orm\Zed\ProductImage\Persistence\SpyProductImageSet',
+            'Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup',
+            'Orm\Zed\ProductOption\Persistence\SpyProductOptionValue',
+            'Orm\Zed\Product\Persistence\SpyProductAttributeKey',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentCarrier',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentMethod',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineLock',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog',
+            'Orm\Zed\Store\Persistence\SpyStore',
+            'Orm\Zed\Tax\Persistence\SpyTaxSet',
+            'Orm\Zed\Url\Persistence\SpyUrl',
+            'Orm\Zed\Url\Persistence\SpyUrlRedirect',
+            'Orm\Zed\UserPasswordReset\Persistence\SpyResetPassword',
+        ];
+
+        foreach ($entityWithoutParents as $entityWithoutParent) {
+            $this->assertEmpty($collection[$entityWithoutParent]->getParent());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     *
+     * @return void
+     */
+    protected function assertAclEntityMetadataConfigHasEntities(AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer): void
+    {
+        $collection = $aclEntityMetadataCollectionTransfer->getCollection();
+        $entities = [
+            'Orm\Zed\Product\Persistence\SpyProduct',
+            'Orm\Zed\Store\Persistence\SpyStore',
+            'Orm\Zed\ProductImage\Persistence\SpyProductImage',
+            'Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes',
+            'Orm\Zed\CategoryImage\Persistence\SpyCategoryImage',
+            'Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage',
+            'Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet',
+            'Orm\Zed\Category\Persistence\SpyCategoryAttribute',
+            'Orm\Zed\Category\Persistence\SpyCategoryClosureTable',
+            'Orm\Zed\Category\Persistence\SpyCategoryNode',
+            'Orm\Zed\Category\Persistence\SpyCategoryStore',
+            'Orm\Zed\Category\Persistence\SpyCategory',
+            'Orm\Zed\Category\Persistence\SpyCategoryTemplate',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlock',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate',
+            'Orm\Zed\Comment\Persistence\SpyCommentThread',
+            'Orm\Zed\Tax\Persistence\SpyTaxRate',
+            'Orm\Zed\Country\Persistence\SpyCountry',
+            'Orm\Zed\Currency\Persistence\SpyCurrency',
+            'Orm\Zed\EventBehavior\Persistence\SpyEventBehaviorEntityChange',
+            'Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation',
+            'Orm\Zed\Glossary\Persistence\SpyGlossaryKey',
+            'Orm\Zed\Locale\Persistence\SpyLocale',
+            'Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory',
+            'Orm\Zed\Availability\Persistence\SpyAvailability',
+            'Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract',
+            'Orm\Zed\ProductCategory\Persistence\SpyProductCategory',
+            'Orm\Zed\Oms\Persistence\SpyOmsProductReservation',
+            'Orm\Zed\ProductSearch\Persistence\SpyProductSearch',
+            'Orm\Zed\ProductValidity\Persistence\SpyProductValidity',
+            'Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes',
+            'Orm\Zed\Product\Persistence\SpyProductAbstractStore',
+            'Orm\Zed\Product\Persistence\SpyProductAbstract',
+            'Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract',
+            'Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress',
+            'Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile',
+            'Orm\Zed\Oms\Persistence\SpyOmsTransitionLog',
+            'Orm\Zed\Sales\Persistence\SpySalesDiscount',
+            'Orm\Zed\Customer\Persistence\SpyCustomer',
+            'Orm\Zed\Payment\Persistence\SpySalesPayment',
+            'Orm\Zed\Refund\Persistence\SpyRefund',
+            'Orm\Zed\SalesInvoice\Persistence\SpySalesOrderInvoice',
+            'Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThreshold',
+            'Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdTaxSet',
+            'Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdType',
+            'Orm\Zed\Sales\Persistence\SpySalesExpense',
+            'Orm\Zed\Sales\Persistence\SpySalesOrderComment',
+            'Orm\Zed\Sales\Persistence\SpySalesOrderTotals',
+            'Orm\Zed\Sales\Persistence\SpySalesShipment',
+            'Orm\Zed\Sales\Persistence\SpySalesOrder',
+            'Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard',
+            'Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata',
+            'Orm\Zed\Sales\Persistence\SpySalesOrderItemOption',
+            'Orm\Zed\Sales\Persistence\SpySalesOrderItem',
+            'Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem',
+            'Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals',
+            'Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder',
+            'Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock',
+            'Orm\Zed\Stock\Persistence\SpyStockProduct',
+            'Orm\Zed\Stock\Persistence\SpyStockStore',
+            'Orm\Zed\Stock\Persistence\SpyStock',
+            'Orm\Zed\MerchantStock\Persistence\SpyMerchantStock',
+            'Orm\Zed\User\Persistence\SpyUser',
+            'Orm\Zed\MerchantUser\Persistence\SpyMerchantUser',
+            'Orm\Zed\Merchant\Persistence\SpyMerchantStore',
+            'Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation',
+            'Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer',
+            'Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity',
+            'Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore',
+            'Orm\Zed\ProductOffer\Persistence\SpyProductOffer',
+            'Orm\Zed\Merchant\Persistence\SpyMerchant',
+            'Orm\Zed\Oms\Persistence\SpyOmsOrderItemState',
+            'Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory',
+            'Orm\Zed\Oms\Persistence\SpyOmsOrderProcess',
+            'Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion',
+            'Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock',
+            'Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType',
+            'Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault',
+            'Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore',
+            'Orm\Zed\PriceProduct\Persistence\SpyPriceProduct',
+            'Orm\Zed\PriceProduct\Persistence\SpyPriceType',
+            'Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation',
+            'Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage',
+            'Orm\Zed\ProductImage\Persistence\SpyProductImageSet',
+            'Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup',
+            'Orm\Zed\ProductOption\Persistence\SpyProductOptionValue',
+            'Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue',
+            'Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute',
+            'Orm\Zed\Product\Persistence\SpyProductAttributeKey',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentCarrier',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentMethod',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice',
+            'Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistory',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineLock',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess',
+            'Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog',
+            'Orm\Zed\Tax\Persistence\SpyTaxSet',
+            'Orm\Zed\Url\Persistence\SpyUrl',
+            'Orm\Zed\Url\Persistence\SpyUrlRedirect',
+            'Orm\Zed\UserPasswordReset\Persistence\SpyResetPassword',
+        ];
+
+        foreach ($entities as $entity) {
+            $this->assertArrayHasKey($entity, $collection);
+        }
     }
 }

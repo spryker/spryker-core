@@ -16,52 +16,7 @@ interface AclEntityMetadataConfigExpanderInterface
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function expandAclEntityMetadataConfigWithMerchantOrderComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantProductComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithProductOfferComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantReadGlobalEntities(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithAllowList(
+    public function expandAclEntityMetadataConfig(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer;
 }

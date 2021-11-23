@@ -9,7 +9,6 @@ namespace Spryker\Zed\AclEntityDummyProduct\Business\Expander;
 
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
-use Generated\Shared\Transfer\AclEntityParentConnectionMetadataTransfer;
 use Generated\Shared\Transfer\AclEntityParentMetadataTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -35,8 +34,7 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProduct::class)
                 ->setParent(
-                    (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductAbstract::class),
+                    (new AclEntityParentMetadataTransfer())->setEntityName(SpyProductAbstract::class),
                 ),
         );
 
@@ -64,25 +62,29 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProductImage::class)
                 ->setParent(
-                    (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProductImageSet::class)
-                        ->setConnection(
-                            (new AclEntityParentConnectionMetadataTransfer())
-                                ->setPivotEntityName(SpyProductImageSetToProductImage::class)
-                                ->setReference('fk_product_image')
-                                ->setReferencedColumn('fk_product_image_set'),
-                        ),
+                    (new AclEntityParentMetadataTransfer())->setEntityName(SpyProductImageSetToProductImage::class),
                 )
                 ->setIsSubEntity(true),
         );
-
+        $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollectionOrFail()->addAclEntityMetadata(
+            SpyProductImageSetToProductImage::class,
+            (new AclEntityMetadataTransfer())
+                ->setEntityName(SpyProductImageSetToProductImage::class)
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())->setEntityName(SpyProductImageSet::class),
+                )
+                ->setIsSubEntity(true),
+        );
+        $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollectionOrFail()->addAclEntityMetadata(
+            SpyProductImageSet::class,
+            (new AclEntityMetadataTransfer())->setEntityName(SpyProductImageSet::class),
+        );
         $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollectionOrFail()->addAclEntityMetadata(
             SpyProductLocalizedAttributes::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyProductLocalizedAttributes::class)
                 ->setParent(
-                    (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpyProduct::class),
+                    (new AclEntityParentMetadataTransfer())->setEntityName(SpyProduct::class),
                 )
                 ->setIsSubEntity(true),
         );

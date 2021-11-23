@@ -11,7 +11,10 @@ use Codeception\Test\Unit;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
+use Spryker\Service\AclEntity\AclEntityService;
 use Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException;
+use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparator;
+use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMerger;
 
 /**
@@ -45,15 +48,20 @@ class AclEntityQueryMergerTest extends Unit
     {
         parent::_before();
 
-        $this->merger = new AclEntityQueryMerger();
+        $this->merger = new AclEntityQueryMerger(
+            new JoinComparator(),
+            new AclEntityAliasGenerator(),
+            new AclEntityService(),
+        );
 
         $this->modelCriteriaSrcMock = $this->createMock(ModelCriteria::class);
         $joinSrc1Mock = $this->getMockBuilder(Join::class)
-            ->onlyMethods(['getRightTableName', 'getRightColumn', 'getLeftColumn', 'getJoinType'])
+            ->onlyMethods(['getLeftTableName', 'getRightTableName', 'getRightColumn', 'getLeftColumn', 'getJoinType'])
             ->getMock();
+        $joinSrc1Mock->method('getLeftTableName')->willReturn('Table2');
         $joinSrc1Mock->method('getRightTableName')->willReturn('Table1');
         $joinSrc1Mock->method('getRightColumn')->willReturn('table1.rightColumn');
-        $joinSrc1Mock->method('getLeftColumn')->willReturn('leftColumn');
+        $joinSrc1Mock->method('getLeftColumn')->willReturn('table2.leftColumn');
         $joinSrc1Mock->method('getJoinType')->willReturn(Join::INNER_JOIN);
 
         $joinSrc2Mock = $this->getMockBuilder(Join::class)
@@ -94,6 +102,7 @@ class AclEntityQueryMergerTest extends Unit
         // Arrange
         $modelCriteriaDst = $this->createMock(ModelCriteria::class);
         $joinDstMock = $this->createMock(Join::class);
+        $joinDstMock->method('getLeftTableName')->willReturn('Table2');
         $joinDstMock->method('getRightTableName')->willReturn('Table3');
         $joinDstMock->method('getRightTableAliasOrName')->willReturn('Table3');
         $joinDstMock->method('getRightColumn')->willReturn('table3.rightColumn');
@@ -121,9 +130,10 @@ class AclEntityQueryMergerTest extends Unit
         $modelCriteriaDstMock = $this->createMock(ModelCriteria::class);
         $joinDstMock = $this->getMockBuilder(Join::class)
             ->onlyMethods(
-                ['getRightTableName', 'getRightTableAliasOrName', 'getRightColumn', 'getLeftColumn', 'getJoinType'],
+                ['getLeftTableName', 'getRightTableName', 'getRightTableAliasOrName', 'getRightColumn', 'getLeftColumn', 'getJoinType'],
             )
             ->getMock();
+        $joinDstMock->method('getLeftTableName')->willReturn('Table2');
         $joinDstMock->method('getRightTableName')->willReturn('Table1');
         $joinDstMock->method('getRightTableAliasOrName')->willReturn('Table1');
         $joinDstMock->method('getRightColumn')->willReturn('table1.rightColumn');
@@ -149,13 +159,14 @@ class AclEntityQueryMergerTest extends Unit
         $joinAliasDst = 'joinAliasDst';
         $modelCriteriaDst = $this->createMock(ModelCriteria::class);
         $joinDstMock = $this->createMock(Join::class);
+        $joinDstMock->method('getLeftTableName')->willReturn('Table2');
         $joinDstMock->method('getRightTableName')->willReturn('Table1');
         $joinDstMock->method('getRightColumn')->willReturn('table1.rightColumn');
         $joinDstMock->method('getLeftColumn')->willReturn('leftColumn');
         $joinDstMock->method('getJoinType')->willReturn('LEFT JOIN');
         $joinDstMock->method('getRightTableAliasOrName')->willReturn($joinAliasDst);
         $this->modelCriteriaSrcMock->method('getAliases')->willReturn(['RightTableAliasOrName']);
-        $newJoinAliasDst = $joinAliasDst . '1';
+        $newJoinAliasDst = $joinAliasDst . '_acl';
 
         // Assert
         $joinDstMock->expects($this->once())->method('setRightTableAlias')->with($newJoinAliasDst);

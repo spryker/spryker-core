@@ -9,7 +9,6 @@ namespace Spryker\Zed\AclEntity\Persistence\Propel\AclDirector;
 
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
 use Generated\Shared\Transfer\AclEntityRuleCollectionTransfer;
-use Generated\Shared\Transfer\RolesTransfer;
 use InvalidArgumentException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\PropelQuery;
@@ -17,14 +16,13 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Shared\AclEntity\AclEntityConstants;
-use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface;
-use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridgeInterface;
 use Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface;
 use Spryker\Zed\AclEntity\Persistence\Exception\FunctionalityNotSupportedException;
 use Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 
 class AclQueryDirector implements AclQueryDirectorInterface
@@ -55,14 +53,9 @@ class AclQueryDirector implements AclQueryDirectorInterface
     protected $relationResolver;
 
     /**
-     * @var \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridgeInterface
+     * @var \Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface
      */
-    protected $userFacade;
-
-    /**
-     * @var \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface
-     */
-    protected $aclFacade;
+    protected $aclRoleProvider;
 
     /**
      * @var \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface
@@ -74,8 +67,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface $aclDirectorStrategyResolver
      * @param \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface $aclEntityMetadataReader
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface $relationResolver
-     * @param \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridgeInterface $userFacade
-     * @param \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface $aclFacade
+     * @param \Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface $aclRoleProvider
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface $queryMerger
      */
     public function __construct(
@@ -83,8 +75,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         AclDirectorStrategyResolverInterface $aclDirectorStrategyResolver,
         AclEntityMetadataReaderInterface $aclEntityMetadataReader,
         RelationResolverInterface $relationResolver,
-        AclEntityToUserFacadeBridgeInterface $userFacade,
-        AclEntityToAclFacadeBridgeInterface $aclFacade,
+        AclRoleProviderInterface $aclRoleProvider,
         AclEntityQueryMergerInterface $queryMerger
     ) {
         $this->recursionCache = new ObjectCollection();
@@ -92,8 +83,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $this->aclDirectorStrategyResolver = $aclDirectorStrategyResolver;
         $this->aclEntityMetadataReader = $aclEntityMetadataReader;
         $this->relationResolver = $relationResolver;
-        $this->userFacade = $userFacade;
-        $this->aclFacade = $aclFacade;
+        $this->aclRoleProvider = $aclRoleProvider;
         $this->queryMerger = $queryMerger;
     }
 
@@ -109,7 +99,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function applyAclRuleOnSelectQuery(ModelCriteria $query): ModelCriteria
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer(),
+            $this->aclRoleProvider->getCurrentUserAclRoles(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             $query->getModelName(),
@@ -134,7 +124,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function applyAclRuleOnUpdateQuery(ModelCriteria $query): ModelCriteria
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer(),
+            $this->aclRoleProvider->getCurrentUserAclRoles(),
         );
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
             $query,
@@ -176,7 +166,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         }
 
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer(),
+            $this->aclRoleProvider->getCurrentUserAclRoles(),
         );
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
             $query,
@@ -195,7 +185,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function inspectCreate(ActiveRecordInterface $entity): void
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer(),
+            $this->aclRoleProvider->getCurrentUserAclRoles(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             get_class($entity),
@@ -220,7 +210,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function inspectUpdate(ActiveRecordInterface $entity): void
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer(),
+            $this->aclRoleProvider->getCurrentUserAclRoles(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             get_class($entity),
@@ -245,7 +235,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     public function inspectDelete(ActiveRecordInterface $entity): void
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->getRolesTransfer(),
+            $this->aclRoleProvider->getCurrentUserAclRoles(),
         );
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             get_class($entity),
@@ -590,18 +580,6 @@ class AclQueryDirector implements AclQueryDirectorInterface
         }
 
         return $query->setWith($with);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RolesTransfer
-     */
-    protected function getRolesTransfer(): RolesTransfer
-    {
-        if ($this->userFacade->hasCurrentUser()) {
-            return $this->aclFacade->getUserRoles($this->userFacade->getCurrentUser()->getIdUserOrFail());
-        }
-
-        return new RolesTransfer();
     }
 
     /**

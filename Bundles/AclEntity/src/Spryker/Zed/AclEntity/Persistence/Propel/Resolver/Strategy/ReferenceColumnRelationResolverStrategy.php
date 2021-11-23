@@ -9,9 +9,9 @@ namespace Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy;
 
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
 use InvalidArgumentException;
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\ModelJoin;
-use Propel\Runtime\ActiveQuery\PropelQuery;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
@@ -77,17 +77,13 @@ class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverSt
     /**
      * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\Join
      */
-    public function joinRelation(
-        ModelCriteria $query,
-        AclEntityMetadataTransfer $aclEntityMetadataTransfer
-    ): ModelCriteria {
+    protected function generateAclEntityJoin(ModelCriteria $query, AclEntityMetadataTransfer $aclEntityMetadataTransfer): Join
+    {
         $tableMap = $this->getTableMapByEntityClass($aclEntityMetadataTransfer->getEntityNameOrFail());
         $referencedTableMap = $this->getTableMapByEntityClass(
             $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
@@ -104,15 +100,9 @@ class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverSt
                 $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferencedColumnOrFail(),
             ),
         );
-        $joinTableMap = PropelQuery::from($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail())
-            ->getTableMap();
-        $join->setTableMap($joinTableMap);
-        $query->addJoinObject(
-            $join,
-            $this->convertFullToShortClassName($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail()),
-        );
+        $join->setTableMap($referencedTableMap);
 
-        return $query;
+        return $this->updateJoinAliases($query, $join);
     }
 
     /**

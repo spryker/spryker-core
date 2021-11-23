@@ -58,21 +58,8 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
     public function expandAclEntityMetadataConfig(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer {
-        $aclEntityMetadataConfigExpander = $this->getFactory()->createAclEntityMetadataConfigExpander();
-
-        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
-            ->expandAclEntityMetadataConfigWithMerchantOrderComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
-            ->expandAclEntityMetadataConfigWithMerchantProductComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
-            ->expandAclEntityMetadataConfigWithMerchantComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
-            ->expandAclEntityMetadataConfigWithProductOfferComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
-            ->expandAclEntityMetadataConfigWithMerchantReadGlobalEntities($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
-            ->expandAclEntityMetadataConfigWithAllowList($aclEntityMetadataConfigTransfer);
-
-        return $aclEntityMetadataConfigTransfer;
+        return $this->getFactory()
+            ->createAclEntityMetadataConfigExpander()
+            ->expandAclEntityMetadataConfig($aclEntityMetadataConfigTransfer);
     }
 }

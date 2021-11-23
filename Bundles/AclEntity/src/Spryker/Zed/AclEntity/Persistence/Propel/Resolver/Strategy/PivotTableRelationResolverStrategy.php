@@ -8,11 +8,16 @@
 namespace Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy;
 
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\PropelQuery;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\ObjectCollection;
 
+/**
+ * @deprecated Use the combination of {@link Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\ForeignKeyRelationResolverStrategy}
+ * or {@link Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\ReferenceColumnRelationResolverStrategy} instead.
+ */
 class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrategy
 {
     /**
@@ -47,6 +52,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         ActiveRecordInterface $entity,
         AclEntityMetadataTransfer $aclEntityMetadataTransfer
     ): ObjectCollection {
+        trigger_error($this->getDeprecationMessage(), E_USER_DEPRECATED);
         if ($entity->isNew()) {
             $relations = new ObjectCollection();
             $parentEntity = $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail();
@@ -62,9 +68,9 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         $referenceColumn = $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferenceOrFail();
 
         return $targetEntityQuery
-            ->join($this->convertFullToShortClassName($pivotEntity))
+            ->join($this->getShortClassName($pivotEntity))
             ->addJoinCondition(
-                $this->convertFullToShortClassName($pivotEntity),
+                $this->getShortClassName($pivotEntity),
                 $pivotTableMap->getColumn($referenceColumn)->getFullyQualifiedName() . '=?',
                 $entity->getPrimaryKey(),
             )
@@ -85,6 +91,8 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         ModelCriteria $query,
         AclEntityMetadataTransfer $aclEntityMetadataTransfer
     ): ModelCriteria {
+        trigger_error($this->getDeprecationMessage(), E_USER_DEPRECATED);
+
         $query = $this->addJoinToPivotTable($query, $aclEntityMetadataTransfer);
 
         return $this->addJoinToTargetTable($query, $aclEntityMetadataTransfer);
@@ -119,7 +127,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
     ): ModelCriteria {
         $relation = sprintf(
             static::RELATION_TEMPLATE,
-            $this->convertFullToShortClassName($aclEntityMetadataTransfer->getEntityNameOrFail()),
+            $this->getShortClassName($aclEntityMetadataTransfer->getEntityNameOrFail()),
             $this->getPivotTableRelationName($aclEntityMetadataTransfer),
         );
 
@@ -169,7 +177,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
      */
     protected function getPivotTableJoiner(AclEntityMetadataTransfer $aclEntityMetadataTransfer): string
     {
-        $pivotEntityClass = $this->convertFullToShortClassName(
+        $pivotEntityClass = $this->getShortClassName(
             $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail(),
         );
 
@@ -183,7 +191,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
      */
     protected function getReferenceTableJoiner(AclEntityMetadataTransfer $aclEntityMetadataTransfer): string
     {
-        $referenceEntityClass = $this->convertFullToShortClassName(
+        $referenceEntityClass = $this->getShortClassName(
             $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
         );
 
@@ -201,7 +209,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
             ->getParentOrFail()
             ->getConnectionOrFail()
             ->getPivotEntityNameOrFail();
-        $relationName = $this->convertFullToShortClassName($pivotTableEntity);
+        $relationName = $this->getShortClassName($pivotTableEntity);
 
         $tableMap = PropelQuery::from($aclEntityMetadataTransfer->getEntityNameOrFail())->getTableMap();
         if ($tableMap->hasRelation($relationName)) {
@@ -227,7 +235,7 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         $targetTableEntity = $aclEntityMetadataTransfer
             ->getParentOrFail()
             ->getEntityNameOrFail();
-        $relationName = $this->convertFullToShortClassName($targetTableEntity);
+        $relationName = $this->getShortClassName($targetTableEntity);
 
         $pivotQuery = PropelQuery::from(
             $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail(),
@@ -243,5 +251,40 @@ class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrateg
         }
 
         return $relationName;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDeprecationMessage(): string
+    {
+        return sprintf(
+            '[Spryker/AclEntity] %s is deprecated. Please configure your AclEntityMetadata by %s.',
+            static::class,
+            sprintf('%s, %s', ForeignKeyRelationResolverStrategy::class, ReferenceColumnRelationResolverStrategy::class),
+        );
+    }
+
+    /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\Join
+     */
+    protected function generateAclEntityJoin(
+        ModelCriteria $query,
+        AclEntityMetadataTransfer $aclEntityMetadataTransfer
+    ): Join {
+        $query = $this->addJoinToPivotTable($query, $aclEntityMetadataTransfer);
+        $query = $this->addJoinToTargetTable($query, $aclEntityMetadataTransfer);
+
+        return $this->getQueryJoinByTableName(
+            $query,
+            $this->getTableMapByEntityClass(
+                $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
+            )->getName(),
+        );
     }
 }

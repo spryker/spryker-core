@@ -12,5 +12,10 @@ class QueryMergerJoinMalfunctionException extends AclEntityException
     /**
      * @var string
      */
-    public const MESSAGE_TEMPLATE = 'No table configuration found in a join object';
+    protected const MESSAGE_TEMPLATE = 'No table configuration found in a join object';
+
+    public function __construct()
+    {
+        parent::__construct(static::MESSAGE_TEMPLATE);
+    }
 }
