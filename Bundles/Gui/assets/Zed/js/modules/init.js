@@ -26,6 +26,7 @@ var dataTablesSearchDelay = function () {
 
                 clearTimeout(timeOutId);
                 timeOutId = setTimeout(function () {
+                    dataTableApi.settings()[0].jqXHR.abort();
                     dataTableApi.search(self.value).draw();
                 }, 1000);
                 return;
