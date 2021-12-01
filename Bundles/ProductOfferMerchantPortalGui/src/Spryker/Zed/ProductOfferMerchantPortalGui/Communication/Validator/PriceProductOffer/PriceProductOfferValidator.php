@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
-use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
@@ -97,13 +97,13 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     }
 
     /**
-     * @param \Symfony\Component\Validator\ConstraintViolation $constraintViolation
+     * @param \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationErrorTransfer
      */
     protected function mapConstraintViolationToValidationErrorTransfer(
-        ConstraintViolation $constraintViolation,
+        ConstraintViolationInterface $constraintViolation,
         ValidationErrorTransfer $validationErrorTransfer
     ): ValidationErrorTransfer {
         return $validationErrorTransfer

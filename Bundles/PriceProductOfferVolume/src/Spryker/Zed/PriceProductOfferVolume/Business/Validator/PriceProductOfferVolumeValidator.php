@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Service\PriceProductOfferVolume\PriceProductOfferVolumeServiceInterface;
 use Spryker\Shared\PriceProductOfferVolume\PriceProductOfferVolumeConfig;
 use Spryker\Zed\PriceProductOfferVolume\Dependency\External\PriceProductOfferVolumeToValidationAdapterInterface;
-use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidatorInterface
@@ -201,13 +201,13 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
     }
 
     /**
-     * @param \Symfony\Component\Validator\ConstraintViolation $constraintViolation
+     * @param \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationErrorTransfer
      */
     protected function mapConstraintViolationToValidationErrorTransfer(
-        ConstraintViolation $constraintViolation,
+        ConstraintViolationInterface $constraintViolation,
         ValidationErrorTransfer $validationErrorTransfer
     ): ValidationErrorTransfer {
         return $validationErrorTransfer

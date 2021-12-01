@@ -55,7 +55,9 @@ class PhpstanConfigFileFinder implements PhpstanConfigFileFinderInterface
             return null;
         }
 
-        return iterator_to_array($this->finder, false)[0];
+        $finderAsArray = iterator_to_array($this->finder, false);
+
+        return reset($finderAsArray);
     }
 
     /**

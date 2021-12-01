@@ -32,7 +32,7 @@ class CustomerNoteGuiCest
     public function testIndexAction(CustomerNoteGuiCommunicationTester $i): void
     {
         $i->sendAjaxPostRequest(CustomerNotePage::URL, [
-            'customerTransfer' => $this->getCustomer($i),
+            'customer-id' => $this->getCustomer($i)->getIdCustomerOrFail(),
         ]);
         $i->canSeeResponseCodeIs(200);
     }

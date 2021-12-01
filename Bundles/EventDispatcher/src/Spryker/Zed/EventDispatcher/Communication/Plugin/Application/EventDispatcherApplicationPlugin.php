@@ -99,6 +99,8 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
         $existingListeners = $existingEventDispatcher->getListeners();
 
         foreach ($existingListeners as $eventName => $eventListeners) {
+            $eventListeners = is_callable($eventListeners) ? [$eventListeners] : $eventListeners;
+
             foreach ($eventListeners as $listener) {
                 $eventDispatcher->addListener(
                     $eventName,

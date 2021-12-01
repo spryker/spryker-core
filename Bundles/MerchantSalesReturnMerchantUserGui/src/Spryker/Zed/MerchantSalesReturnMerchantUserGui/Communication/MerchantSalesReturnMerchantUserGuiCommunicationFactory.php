@@ -103,7 +103,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     /**
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface|mixed[]
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createEventTriggerForm(array $options = []): FormInterface
     {
@@ -113,7 +113,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     /**
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface|mixed[]
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createEventItemTriggerForm(array $options = []): FormInterface
     {
@@ -123,7 +123,7 @@ class MerchantSalesReturnMerchantUserGuiCommunicationFactory extends AbstractCom
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Symfony\Component\Form\FormInterface|mixed[]
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createReturnCreateForm(OrderTransfer $orderTransfer): FormInterface
     {

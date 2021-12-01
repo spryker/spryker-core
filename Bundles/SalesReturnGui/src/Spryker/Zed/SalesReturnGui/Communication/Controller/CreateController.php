@@ -110,7 +110,7 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface|mixed[] $returnCreateForm
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>

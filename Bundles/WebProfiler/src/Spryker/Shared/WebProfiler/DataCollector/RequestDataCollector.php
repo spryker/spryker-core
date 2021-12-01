@@ -15,14 +15,6 @@ use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector as SymfonyRe
 class RequestDataCollector extends SymfonyRequestDataCollector
 {
     /**
-     * @return array|bool
-     */
-    public function getRedirect()
-    {
-        return $this->data['redirect'] ?? false;
-    }
-
-    /**
      * @return string
      */
     public function getMethod(): string

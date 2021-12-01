@@ -923,8 +923,13 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO, $container->protect(function ($params) {
             return static function () use ($params) {
                 $users = [];
+
+                /** @var string $name */
                 foreach ($params as $name => $user) {
-                    $users[$name] = ['roles' => (array)$user[0], 'password' => $user[1]];
+                    /** @var array<int, string> $roles */
+                    $roles = (array)$user[0];
+
+                    $users[$name] = ['roles' => $roles, 'password' => (string)$user[1]];
                 }
 
                 return new InMemoryUserProvider($users);

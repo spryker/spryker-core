@@ -24,6 +24,11 @@ class IndexController extends AbstractController
     /**
      * @var string
      */
+    protected const CUSTOMER_ID_PARAM = 'customer-id';
+
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Comment successfully added';
 
     /**
@@ -38,9 +43,14 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer */
         $customerTransfer = $request->request->get(static::CUSTOMER_PARAM);
-        $idCustomer = (int)$customerTransfer->getIdCustomer();
+
+        $idCustomer = $customerTransfer !== null
+            ? $customerTransfer->getIdCustomer()
+            : $request->request->get(static::CUSTOMER_ID_PARAM);
+
+        $idCustomer = $this->castId($idCustomer);
 
         $formDataProvider = $this->getFactory()->createNoteFormDataProvider();
         $form = $this->getFactory()->getNoteForm(

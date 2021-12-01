@@ -14,7 +14,7 @@ use Symfony\Component\Form\FormInterface;
 interface CreateReturnFormHandlerInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormInterface|mixed[] $returnCreateForm
+     * @param \Symfony\Component\Form\FormInterface $returnCreateForm
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer

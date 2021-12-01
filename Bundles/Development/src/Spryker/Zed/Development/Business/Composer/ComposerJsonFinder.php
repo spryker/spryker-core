@@ -48,7 +48,9 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
             return null;
         }
 
-        return iterator_to_array($currentFinderInstance, false)[0];
+        $finderAsArray = iterator_to_array($currentFinderInstance, false);
+
+        return reset($finderAsArray);
     }
 
     /**
