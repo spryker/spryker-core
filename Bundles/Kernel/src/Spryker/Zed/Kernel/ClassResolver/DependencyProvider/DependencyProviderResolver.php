@@ -25,12 +25,12 @@ class DependencyProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Zed\Kernel\AbstractBundleDependencyProvider|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new DependencyProviderNotFoundException($this->getClassInfo());
         }
 
-        throw new DependencyProviderNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

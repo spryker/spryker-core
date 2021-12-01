@@ -25,12 +25,13 @@ class BusinessFactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|null $resolved */
         $resolved = parent::doResolve($callerClass);
 
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new BusinessFactoryNotFoundException($this->getClassInfo());
         }
 
-        throw new BusinessFactoryNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

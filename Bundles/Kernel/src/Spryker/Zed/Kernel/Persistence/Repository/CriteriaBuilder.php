@@ -28,15 +28,15 @@ class CriteriaBuilder implements CriteriaBuilderInterface
         }
 
         if ($filterTransfer->getLimit()) {
-            $criteria->setLimit($filterTransfer->getLimit());
+            $criteria->setLimit((int)$filterTransfer->getLimit());
         }
 
         if ($filterTransfer->getOffset()) {
-            $criteria->setOffset($filterTransfer->getOffset());
+            $criteria->setOffset((int)$filterTransfer->getOffset());
         }
 
         if ($filterTransfer->getOrderBy()) {
-            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection() ?? Criteria::ASC);
+            $criteria->orderBy((string)$filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection() ?? Criteria::ASC);
         }
 
         return $criteria;

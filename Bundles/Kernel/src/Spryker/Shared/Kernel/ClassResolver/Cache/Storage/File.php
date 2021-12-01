@@ -85,6 +85,7 @@ class File implements StorageInterface
             $this->assertForwardCompatibility($defaultPath, $this->cacheFilePath);
         }
 
+        /** @phpstan-var string */
         return $this->cacheFilePath;
     }
 

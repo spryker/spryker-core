@@ -57,7 +57,10 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     private function filter($value)
     {
-        return lcfirst($this->getFilter()->filter($value));
+        /** @var string $value */
+        $value = $this->getFilter()->filter($value);
+
+        return lcfirst($value);
     }
 
     /**

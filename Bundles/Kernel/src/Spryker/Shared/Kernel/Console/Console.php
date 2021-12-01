@@ -193,8 +193,11 @@ class Console extends SymfonyCommand
      */
     protected function getQuestionHelper(): HelperInterface
     {
+        /** @var \Symfony\Component\Console\Helper\HelperSet $helperSet */
+        $helperSet = $this->getHelperSet();
+
         /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
-        $questionHelper = $this->getHelperSet()->get('question');
+        $questionHelper = $helperSet->get('question');
 
         return $questionHelper;
     }

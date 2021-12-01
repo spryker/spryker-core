@@ -19,7 +19,7 @@ class View implements ViewInterface, WidgetContainerInterface
     use WidgetContainerAwareTrait;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $template;
 

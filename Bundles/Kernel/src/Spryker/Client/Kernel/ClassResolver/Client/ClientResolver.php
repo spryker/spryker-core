@@ -25,12 +25,12 @@ class ClientResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Client\Kernel\AbstractClient|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new ClientNotFoundException($this->getClassInfo());
         }
 
-        throw new ClientNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

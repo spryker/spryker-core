@@ -221,8 +221,8 @@ class Store
         $this->allStores = $stores;
 
         $this->setCurrencyIsoCode($this->getDefaultCurrencyCode());
-        $this->setCurrentLocale(current($this->locales));
-        $this->setCurrentCountry(current($this->countries));
+        $this->setCurrentLocale((string)current($this->locales));
+        $this->setCurrentCountry((string)current($this->countries));
     }
 
     /**
@@ -242,12 +242,18 @@ class Store
     /**
      * @param string $locale string The locale, e.g. 'de_DE'
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string The language, e.g. 'de'
      */
     protected function getLanguageFromLocale($locale)
     {
-        //TODO use strstr here
-        return substr($locale, 0, strpos($locale, '_'));
+        $position = strpos($locale, '_');
+        if ($position === false) {
+            throw new InvalidArgumentException(sprintf('Invalid format for locale `%s`, expected `xx_YY`.', $locale));
+        }
+
+        return substr($locale, 0, $position);
     }
 
     /**

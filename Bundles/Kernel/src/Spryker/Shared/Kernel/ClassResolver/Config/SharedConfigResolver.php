@@ -25,13 +25,13 @@ class SharedConfigResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Shared\Kernel\AbstractSharedConfig|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new SharedConfigNotFoundException($this->getClassInfo());
         }
 
-        throw new SharedConfigNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 
     /**

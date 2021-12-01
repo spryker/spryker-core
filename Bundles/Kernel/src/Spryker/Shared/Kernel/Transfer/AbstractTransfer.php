@@ -378,6 +378,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     {
         $jsonUtil = new Json();
 
+        /** @phpstan-var string */
         return $jsonUtil->encode($this->modifiedToArray());
     }
 

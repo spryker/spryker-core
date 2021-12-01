@@ -28,13 +28,13 @@ class SharedFactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Shared\Kernel\AbstractSharedFactory|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new SharedFactoryNotFoundException($this->getClassInfo());
         }
 
-        throw new SharedFactoryNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 
     /**

@@ -387,6 +387,7 @@ class Console extends SymfonyCommand
     {
         $answer = 'z';
         while ($answer && !in_array(strtolower($answer[0]), ['y', 'n', 'a'])) {
+            /** @var string $answer */
             $answer = $this->ask($question);
         }
 
@@ -436,8 +437,11 @@ class Console extends SymfonyCommand
      */
     protected function getQuestionHelper(): HelperInterface
     {
+        /** @var \Symfony\Component\Console\Helper\HelperSet $helperSet */
+        $helperSet = $this->getHelperSet();
+
         /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
-        $questionHelper = $this->getHelperSet()->get('question');
+        $questionHelper = $helperSet->get('question');
 
         return $questionHelper;
     }

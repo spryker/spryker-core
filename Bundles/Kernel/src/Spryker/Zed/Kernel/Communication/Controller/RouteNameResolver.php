@@ -31,9 +31,9 @@ class RouteNameResolver implements RouteNameResolverInterface
      */
     public function resolve()
     {
-        $bundle = $this->dashToCamelCase($this->request->attributes->get('module'));
-        $controller = $this->dashToCamelCase($this->request->attributes->get('controller'));
-        $action = lcfirst($this->dashToCamelCase($this->request->attributes->get('action')));
+        $bundle = $this->dashToCamelCase((string)$this->request->attributes->get('module'));
+        $controller = $this->dashToCamelCase((string)$this->request->attributes->get('controller'));
+        $action = lcfirst($this->dashToCamelCase((string)$this->request->attributes->get('action')));
 
         return $bundle . '/' . $controller . '/' . $action;
     }
@@ -41,12 +41,13 @@ class RouteNameResolver implements RouteNameResolverInterface
     /**
      * @param string $dashedWord
      *
-     * @return array|string
+     * @return string
      */
     private function dashToCamelCase($dashedWord)
     {
         $filter = new DashToCamelCase();
 
+        /** @phpstan-var string */
         return $filter->filter($dashedWord);
     }
 }

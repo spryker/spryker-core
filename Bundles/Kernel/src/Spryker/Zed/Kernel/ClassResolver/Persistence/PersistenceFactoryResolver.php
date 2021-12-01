@@ -25,12 +25,13 @@ class PersistenceFactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory|null $resolved */
         $resolved = parent::doResolve($callerClass);
 
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new PersistenceFactoryNotFoundException($this->getClassInfo());
         }
 
-        throw new PersistenceFactoryNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

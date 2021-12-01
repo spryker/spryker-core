@@ -37,11 +37,11 @@ class FactoryResolver extends AbstractClassResolver
     {
         $resolved = parent::doResolve($callerClass);
 
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new FactoryNotFoundException($this->getClassInfo());
         }
 
-        throw new FactoryNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 
     /**

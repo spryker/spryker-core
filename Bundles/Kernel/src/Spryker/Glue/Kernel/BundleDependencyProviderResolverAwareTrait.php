@@ -63,6 +63,7 @@ trait BundleDependencyProviderResolverAwareTrait
 
         $this->provideExternalDependencies($dependencyProvider, $container);
 
+        /** @var \Spryker\Glue\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface $container */
         $container = $this->overwriteForTesting($container);
 
         return $container;

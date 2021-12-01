@@ -25,12 +25,12 @@ class ServiceResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Service\Kernel\AbstractService|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new ServiceNotFoundException($this->getClassInfo());
         }
 
-        throw new ServiceNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

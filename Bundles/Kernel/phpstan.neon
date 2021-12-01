@@ -16,3 +16,5 @@ parameters:
         - '#Method .+Abstract.+::resolveBundleConfig\(\) should return .+AbstractBundleConfig but returns Spryker\\Shared\\Kernel\\AbstractBundleConfig#'
         - '#Unreachable statement - code above always terminates.#'
         - '#Anonymous function should return object but returns object.#'
+        - '#Parameter \#1 \$\w+ of function .+ expects callable\(\): mixed, array\(.+\) given.#'
+        - '#Parameter \#1 \$value of method .+AbstractTransfer::addValuesToCollection\(\) expects array<string, mixed>\|ArrayObject<string, mixed>, Countable given.#'

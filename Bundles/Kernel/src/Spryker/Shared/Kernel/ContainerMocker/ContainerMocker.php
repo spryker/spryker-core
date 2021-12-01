@@ -35,6 +35,7 @@ trait ContainerMocker
             $container->set($key, $containerMock);
         }
 
+        /** @phpstan-var \Spryker\Shared\Kernel\ContainerInterface */
         return $container;
     }
 

@@ -25,12 +25,12 @@ class ResourceResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Glue\Kernel\AbstractRestResource|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new RestResourceNotFoundException($this->getClassInfo());
         }
 
-        throw new RestResourceNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

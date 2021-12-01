@@ -25,13 +25,13 @@ class RepositoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository|null $resolved */
         $resolved = $this->doResolve($callerClass);
-
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new RepositoryNotFoundException($this->getClassInfo());
         }
 
-        throw new RepositoryNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 
     /**

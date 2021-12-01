@@ -25,12 +25,13 @@ class CommunicationFactoryResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
+        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|null $resolved */
         $resolved = parent::doResolve($callerClass);
 
-        if ($resolved !== null) {
-            return $resolved;
+        if ($resolved === null) {
+            throw new CommunicationFactoryNotFoundException($this->getClassInfo());
         }
 
-        throw new CommunicationFactoryNotFoundException($this->getClassInfo());
+        return $resolved;
     }
 }

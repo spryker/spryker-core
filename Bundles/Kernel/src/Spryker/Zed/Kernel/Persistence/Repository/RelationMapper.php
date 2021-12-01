@@ -39,6 +39,7 @@ class RelationMapper implements RelationMapperInterface
             throw new UnsupportedRelationException('Only one to many relations supported');
         }
 
+        /** @var \Propel\Runtime\Map\RelationMap $symRelationMap */
         $symRelationMap = $relationMap->getSymmetricalRelation();
 
         $foreignPhpIdName = $this->getForeignPhpIdGetterName($symRelationMap);
@@ -61,6 +62,7 @@ class RelationMapper implements RelationMapperInterface
      */
     protected function getForeignPhpIdGetterName(RelationMap $symRelationMap)
     {
+        /** @var \Propel\Runtime\Map\ColumnMap $foreignColumnMap */
         $foreignColumnMap = current($symRelationMap->getForeignColumns());
 
         return 'get' . $foreignColumnMap->getPhpName();
@@ -73,6 +75,7 @@ class RelationMapper implements RelationMapperInterface
      */
     protected function getLocalPhpIdGetterName(RelationMap $symRelationMap)
     {
+        /** @var \Propel\Runtime\Map\ColumnMap $localColumnMap */
         $localColumnMap = current($symRelationMap->getLocalColumns());
 
         return 'get' . $localColumnMap->getPhpName();
@@ -112,6 +115,7 @@ class RelationMapper implements RelationMapperInterface
             $query->mergeWith($criteria);
         }
 
+        /** @var string $foreignKey */
         $foreignKey = key($symRelationMap->getColumnMappings());
 
         return $query

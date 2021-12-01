@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
+use RuntimeException;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderPhp;
@@ -178,6 +179,7 @@ abstract class AbstractClassResolver
      */
     public function getClassInfo()
     {
+        /** @phpstan-var \Spryker\Shared\Kernel\ClassResolver\ClassInfo */
         return $this->classInfo;
     }
 
@@ -598,10 +600,19 @@ abstract class AbstractClassResolver
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return string
      */
     protected function getCacheKey(): string
     {
-        return $this->classInfo->getCacheKey(static::RESOLVABLE_TYPE);
+        if ($this->classInfo === null) {
+            throw new RuntimeException('Must set $classInfo first using setCallerClass() before accessing it.');
+        }
+
+        /** @var string $key */
+        $key = static::RESOLVABLE_TYPE;
+
+        return $this->classInfo->getCacheKey($key);
     }
 }
