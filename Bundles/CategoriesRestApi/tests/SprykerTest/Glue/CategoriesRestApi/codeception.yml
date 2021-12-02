@@ -1,0 +1,20 @@
+namespace: SprykerTest\Glue\CategoriesRestApi
+
+paths:
+    tests: .
+    data: _data
+    support: _support
+    log: _output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Glue:
+        path: Plugin
+        class_name: CategoriesRestApiPluginTester
+        modules:
+            enabled:
+                - \SprykerTest\Glue\Testify\Helper\FactoryHelper

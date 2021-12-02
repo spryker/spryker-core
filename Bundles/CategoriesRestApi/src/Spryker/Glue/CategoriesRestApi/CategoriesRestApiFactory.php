@@ -15,6 +15,8 @@ use Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlResolverAttributesMap
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlResolverAttributesMapperInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReader;
 use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\UrlResolver\CategoryNodeUrlResolver;
+use Spryker\Glue\CategoriesRestApi\Processor\UrlResolver\CategoryNodeUrlResolverInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -65,5 +67,17 @@ class CategoriesRestApiFactory extends AbstractFactory
     public function createRestUrlResolverAttributesMapper(): RestUrlResolverAttributesMapperInterface
     {
         return new RestUrlResolverAttributesMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\UrlResolver\CategoryNodeUrlResolverInterface
+     */
+    public function createCategoryNodeUrlResolver(): CategoryNodeUrlResolverInterface
+    {
+        return new CategoryNodeUrlResolver(
+            $this->getCategoryStorageClient(),
+            $this->getStoreClient(),
+            $this->createRestUrlResolverAttributesMapper(),
+        );
     }
 }

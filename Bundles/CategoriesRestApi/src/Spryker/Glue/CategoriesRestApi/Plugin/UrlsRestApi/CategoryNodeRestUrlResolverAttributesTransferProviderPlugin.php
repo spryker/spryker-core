@@ -34,7 +34,12 @@ class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends Abstra
 
     /**
      * {@inheritDoc}
-     * - Maps data for RestUrlResolverAttributesTransfer from the UrlStorageTransfer.
+     * - Requires `UrlStorageTransfer.fkResourceCategorynode` to be set.
+     * - Extracts locale from the `UrlStorageTransfer.localeName`.
+     * - If the locale name is empty, extracts name from `UrlStorageTransfer.localeUrls` by locale id.
+     * - Looks up the category in the key-value storage by id given in the `UrlStorageTransfer` if locale was provided.
+     * - Returns null if locale was not resolved.
+     * - Maps data for `RestUrlResolverAttributesTransfer` from the `UrlStorageTransfer`.
      *
      * @api
      *
@@ -45,7 +50,7 @@ class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends Abstra
     public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
         return $this->getFactory()
-            ->createRestUrlResolverAttributesMapper()
-            ->mapUrlStorageTransferToRestUrlResolverAttributesTransfer($urlStorageTransfer, new RestUrlResolverAttributesTransfer());
+            ->createCategoryNodeUrlResolver()
+            ->resolveCategoryNodeUrl($urlStorageTransfer);
     }
 }
