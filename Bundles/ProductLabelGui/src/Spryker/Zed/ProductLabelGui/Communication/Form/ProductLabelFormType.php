@@ -25,6 +25,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface getRepository()
  */
 class ProductLabelFormType extends AbstractType
 {

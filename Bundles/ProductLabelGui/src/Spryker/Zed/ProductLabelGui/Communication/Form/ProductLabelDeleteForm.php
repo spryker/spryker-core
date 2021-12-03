@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\ProductLabelGui\Communication\ProductLabelGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface getRepository()
  */
 class ProductLabelDeleteForm extends AbstractType
 {

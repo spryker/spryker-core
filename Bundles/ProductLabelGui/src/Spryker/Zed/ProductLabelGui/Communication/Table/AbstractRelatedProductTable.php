@@ -11,8 +11,10 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface;
 
 abstract class AbstractRelatedProductTable extends AbstractTable
 {
@@ -41,31 +43,47 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected $moneyFacade;
 
     /**
-     * @var int|null
-     */
-    protected $idProductLabel;
-
-    /**
      * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
     /**
+     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface
+     */
+    protected $productLabelGuiRepository;
+
+    /**
+     * @var int|null
+     */
+    protected $idProductLabel;
+
+    /**
      * @param \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface $moneyFacade
-     * @param int|null $idProductLabel
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface $productLabelGuiRepository
+     * @param int|null $idProductLabel
      */
     public function __construct(
         RelatedProductTableQueryBuilderInterface $tableQueryBuilder,
         ProductLabelGuiToMoneyInterface $moneyFacade,
-        $idProductLabel,
-        ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade
+        ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade,
+        ProductLabelGuiToLocaleInterface $localeFacade,
+        ProductLabelGuiRepositoryInterface $productLabelGuiRepository,
+        ?int $idProductLabel = null
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
         $this->moneyFacade = $moneyFacade;
-        $this->idProductLabel = $idProductLabel;
         $this->priceProductFacade = $priceProductFacade;
+        $this->localeFacade = $localeFacade;
+        $this->productLabelGuiRepository = $productLabelGuiRepository;
+        $this->idProductLabel = $idProductLabel;
     }
 
     /**
@@ -77,12 +95,21 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     {
         $query = $this->getQuery();
 
-        /** @var array<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($query, $config, true);
+
+        $productAbstractIds = $productAbstractEntities->getPrimaryKeys();
+
+        $categoryNames = $this->productLabelGuiRepository->getCategoryNamesGroupedByIdProductAbstract(
+            $productAbstractIds,
+            $this->localeFacade->getCurrentLocale()->getIdLocale(),
+        );
+
+        $additionalRelationsCount = $this->getAdditionalRelationsCount($productAbstractIds);
 
         $rows = [];
         foreach ($productAbstractEntities as $productAbstractEntity) {
-            $rows[] = $this->getRow($productAbstractEntity);
+            $rows[] = $this->prepareRowData($productAbstractEntity, $categoryNames, $additionalRelationsCount);
         }
 
         return $rows;
@@ -94,6 +121,8 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     abstract protected function getQuery();
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelGui\Communication\Table\AbstractRelatedProductTable::prepareRowData()} instead.
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return array
@@ -110,6 +139,38 @@ abstract class AbstractRelatedProductTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param array<int, array> $categoryNames
+     * @param array<int, int> $additionalRelationsCount
+     *
+     * @return array
+     */
+    protected function prepareRowData(SpyProductAbstract $productAbstractEntity, array $categoryNames, array $additionalRelationsCount = []): array
+    {
+        return [
+            static::COL_PRODUCT_ABSTRACT_NAME => $this->getNameColumn($productAbstractEntity),
+            static::COL_PRODUCT_ABSTRACT_CATEGORIES => $this->getCategoryNameColumn($categoryNames, $productAbstractEntity->getIdProductAbstract()),
+            static::COL_PRODUCT_ABSTRACT_PRICE => $this->getPriceColumn($productAbstractEntity),
+            static::COL_PRODUCT_ABSTRACT_STATUS => $this->getStatusColumn($productAbstractEntity),
+        ];
+    }
+
+    /**
+     * @param array<int, array> $categoryNames
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getCategoryNameColumn(array $categoryNames, int $idProductAbstract): string
+    {
+        if (!isset($categoryNames[$idProductAbstract])) {
+            return '';
+        }
+
+        return implode(', ', $categoryNames[$idProductAbstract]);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
      */
@@ -118,22 +179,6 @@ abstract class AbstractRelatedProductTable extends AbstractTable
         return $productAbstractEntity->getVirtualColumn(
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_NAME,
         );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    protected function getCategoriesColumn(SpyProductAbstract $productAbstractEntity)
-    {
-        $categoriesCsv = $productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV,
-        );
-        $categories = explode(',', $categoriesCsv);
-        $categories = array_unique($categories);
-
-        return implode(', ', $categories);
     }
 
     /**
@@ -155,6 +200,24 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getCategoriesColumn(SpyProductAbstract $productAbstractEntity)
+    {
+        $categoriesCsv = $productAbstractEntity->getVirtualColumn(
+            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV,
+        );
+        $categories = explode(',', $categoriesCsv);
+        $categories = array_unique($categories);
+
+        return implode(', ', $categories);
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
@@ -171,5 +234,15 @@ abstract class AbstractRelatedProductTable extends AbstractTable
         $statusCssClass = $isActive ? 'label-info' : 'label-danger';
 
         return $this->generateLabel($statusName, $statusCssClass);
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, int>
+     */
+    protected function getAdditionalRelationsCount(array $productAbstractIds): array
+    {
+        return [];
     }
 }

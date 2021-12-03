@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -37,11 +36,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
      * @var string
      */
     public const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
-
-    /**
-     * @var string
-     */
-    public const RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT = 'abstract_product_relation_count';
 
     /**
      * @var string
@@ -122,7 +116,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
 
     /**
      * @param int|null $idProductLabel
-     *
+
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function build($idProductLabel = null)
@@ -131,10 +125,8 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         $this->addProductName($query, $localeTransfer);
-        $this->addProductCategories($query, $localeTransfer);
         $this->addConcreteProductStates($query);
         $this->addRelation($query, $idProductLabel);
-        $this->addRelationCount($query);
 
         return $query;
     }
@@ -154,31 +146,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     static::RESULT_FIELD_PRODUCT_ABSTRACT_NAME,
                 )
                 ->filterByFkLocale($localeTransfer->getIdLocale())
-            ->endUse();
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
-     */
-    protected function addProductCategories(SpyProductAbstractQuery $query, LocaleTransfer $localeTransfer)
-    {
-        $query
-            ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
-                    ->useAttributeQuery(null, Criteria::LEFT_JOIN)
-                        ->withColumn(
-                            sprintf('GROUP_CONCAT(%s)', SpyCategoryAttributeTableMap::COL_NAME),
-                            static::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV,
-                        )
-                        ->filterByFkLocale($localeTransfer->getIdLocale())
-                        ->_or()
-                        ->filterByFkLocale(null)
-                    ->endUse()
-                ->endUse()
-                ->groupByFkProductAbstract()
             ->endUse();
     }
 
@@ -222,39 +189,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                 SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,
                 $idProductLabel ?: 'NULL',
             ),
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
-     *
-     * @return void
-     */
-    protected function addRelationCount(SpyProductAbstractQuery $query)
-    {
-        $subQuery = $this
-            ->productLabelGuiQueryContainer
-            ->queryProductAbstractRelations()
-            ->where(sprintf(
-                '%s = %s',
-                SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-            ))
-            ->groupByFkProductAbstract()
-            ->addSelfSelectColumns()
-            ->clearSelectColumns()
-            ->withColumn(
-                sprintf('COUNT(%s)', SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT),
-                static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
-            )
-            ->select([
-                static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT => static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
-            ]);
-
-        $params = [];
-        $query->withColumn(
-            sprintf('(%s)', $subQuery->createSelectSql($params)),
-            static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
         );
     }
 }

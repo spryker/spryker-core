@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
@@ -24,8 +26,16 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
      * @var string
      */
     public const TABLE_IDENTIFIER = 'related-products-table';
+
+    /**
+     * @var string
+     */
     public const COL_PRODUCT_ABSTRACT_SKU = SpyProductAbstractTableMap::COL_SKU;
-    public const COL_PRODUCT_ABSTRACT_RELATION_COUNT = RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT;
+
+    /**
+     * @var string
+     */
+    public const COL_PRODUCT_ABSTRACT_RELATION_COUNT = 'abstract_product_relation_count';
 
     /**
      * @var string
@@ -130,12 +140,14 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    protected function getQuery()
+    protected function getQuery(): SpyProductAbstractQuery
     {
         return $this->tableQueryBuilder->buildAssignedProductQuery($this->idProductLabel);
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable::prepareRowData()} instead.
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return array
@@ -153,16 +165,34 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param array<int, array> $categoryNames
+     * @param array<int, int> $additionalRelationsCount
+     *
+     * @return array
+     */
+    protected function prepareRowData(SpyProductAbstract $productAbstractEntity, array $categoryNames, array $additionalRelationsCount = []): array
+    {
+        $row = parent::prepareRowData($productAbstractEntity, $categoryNames);
+
+        $row[static::COL_PRODUCT_ABSTRACT_SKU] = $productAbstractEntity->getSku();
+        $row[static::COL_PRODUCT_ABSTRACT_RELATION_COUNT] = $this->getAdditionalRelationCountColumnValue($additionalRelationsCount, $productAbstractEntity->getIdProductAbstract());
+        $row[static::COL_ACTIONS] = $this->getActionsColumn($productAbstractEntity);
+
+        return $row;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable::getAdditionalRelationCountColumnValue()} instead.
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return int
      */
     protected function getAdditionalRelationCountColumn(SpyProductAbstract $productAbstractEntity)
     {
-        $relationCount = (int)$productAbstractEntity->getVirtualColumn(
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT,
-        );
-
-        return ($relationCount - 1);
+        return SpyProductLabelProductAbstractQuery::create()
+                ->filterByFkProductAbstract($productAbstractEntity->getIdProductAbstract())
+                ->count() - 1;
     }
 
     /**
@@ -195,5 +225,27 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
             ),
             'View',
         );
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, int>
+     */
+    protected function getAdditionalRelationsCount(array $productAbstractIds): array
+    {
+        return $this->productLabelGuiRepository
+            ->getAdditionalRelationsCountIndexedByIdProductAbstract($productAbstractIds);
+    }
+
+    /**
+     * @param array<int, int> $additionalRelationsCount
+     * @param int $idProductAbstract
+     *
+     * @return int
+     */
+    protected function getAdditionalRelationCountColumnValue(array $additionalRelationsCount, int $idProductAbstract): int
+    {
+        return $additionalRelationsCount[$idProductAbstract] ?? 0;
     }
 }

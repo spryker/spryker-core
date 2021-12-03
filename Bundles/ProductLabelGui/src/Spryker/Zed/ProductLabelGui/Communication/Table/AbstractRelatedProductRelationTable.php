@@ -110,6 +110,8 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelGui\Communication\Table\AbstractRelatedProductRelationTable::prepareRowData()} instead.
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return array
@@ -126,6 +128,26 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     }
 
     /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param array<int, array> $categoryNames
+     * @param array<int, int> $additionalRelationsCount
+     *
+     * @return array
+     */
+    protected function prepareRowData(SpyProductAbstract $productAbstractEntity, array $categoryNames, array $additionalRelationsCount = []): array
+    {
+        $row = parent::prepareRowData($productAbstractEntity, $categoryNames);
+
+        $row[static::COL_SELECT_CHECKBOX] = $this->getSelectCheckboxColumn($productAbstractEntity);
+        $row[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT] = $productAbstractEntity->getIdProductAbstract();
+        $row[SpyProductAbstractTableMap::COL_SKU] = $productAbstractEntity->getSku();
+
+        return $row;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
      *
      * @return array

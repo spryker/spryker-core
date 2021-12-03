@@ -31,6 +31,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
  * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface getRepository()
  */
 class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -155,8 +156,10 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new AvailableProductTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
-            $idProductLabel,
             $this->getPriceProductFacade(),
+            $this->getLocaleFacade(),
+            $this->getRepository(),
+            $idProductLabel,
         );
     }
 
@@ -170,8 +173,10 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new AssignedProductTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
-            $idProductLabel,
             $this->getPriceProductFacade(),
+            $this->getLocaleFacade(),
+            $this->getRepository(),
+            $idProductLabel,
         );
     }
 
@@ -185,8 +190,10 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new RelatedProductOverviewTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
-            $idProductLabel,
             $this->getPriceProductFacade(),
+            $this->getLocaleFacade(),
+            $this->getRepository(),
+            $idProductLabel,
         );
     }
 

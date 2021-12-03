@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelGui;
 
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
@@ -53,6 +54,11 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
+     * @var string
+     */
+    public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -65,6 +71,18 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductQueryContainer($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addProductCategoryPropelQuery($container);
 
         return $container;
     }
@@ -184,5 +202,21 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class,
             ),
         );
+    }
+
+    /**
+     * @module ProductCategory
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_CATEGORY, $container->factory(function (): SpyProductCategoryQuery {
+            return SpyProductCategoryQuery::create();
+        }));
+
+        return $container;
     }
 }
