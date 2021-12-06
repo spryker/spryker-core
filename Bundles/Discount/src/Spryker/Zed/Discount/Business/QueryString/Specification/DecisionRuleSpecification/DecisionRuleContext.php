@@ -10,12 +10,12 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSp
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface;
 
 class DecisionRuleContext implements DecisionRuleSpecificationInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
+     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface
      */
     protected $rulePlugin;
 
@@ -25,7 +25,7 @@ class DecisionRuleContext implements DecisionRuleSpecificationInterface
     protected $clauseTransfer;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface $rulePlugin
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface $rulePlugin
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      */
     public function __construct(DecisionRulePluginInterface $rulePlugin, ClauseTransfer $clauseTransfer)

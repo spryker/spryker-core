@@ -10,4 +10,13 @@
     <transfer name="DiscountableItemTransformer">
     </transfer>
 
+    <transfer name="Clause">
+    </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
 </transfers>

@@ -11,12 +11,12 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
-use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 
 class MetaDataProvider implements MetaDataProviderInterface
 {
     /**
-     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
+     * @var array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface>
      */
     protected $specificationPlugins = [];
 
@@ -43,7 +43,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $availableFieldsMapBuffer;
 
     /**
-     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface> $specificationPlugins
+     * @param array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface> $specificationPlugins
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators $logicalComparators
      */
@@ -166,7 +166,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface $specificationPlugin
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface $specificationPlugin
      *
      * @return array
      */

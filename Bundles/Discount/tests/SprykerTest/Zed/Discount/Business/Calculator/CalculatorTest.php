@@ -250,7 +250,7 @@ class CalculatorTest extends Unit
     }
 
     /**
-     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface>
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface>
      */
     protected function createDecisionRulePlugins(): array
     {
@@ -270,7 +270,7 @@ class CalculatorTest extends Unit
     }
 
     /**
-     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface>
      */
     protected function createCollectorPlugins(): array
     {

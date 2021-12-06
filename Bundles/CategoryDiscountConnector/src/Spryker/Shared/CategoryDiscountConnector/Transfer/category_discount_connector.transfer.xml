@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CategoryNodeCriteria">
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idProductAbstract" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+    </transfer>
+
+    <transfer name="ProductCategory">
+        <property name="category" type="Category"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Clause">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ProductCategoryCollection">
+        <property name="productCategories" type="ProductCategory[]" singular="productCategory"/>
+    </transfer>
+
+    <transfer name="ProductCategoryConditions">
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
+        <property name="localeIds" type="int[]" singular="idLocale"/>
+    </transfer>
+
+    <transfer name="ProductCategoryCriteria">
+        <property name="productCategoryConditions" type="ProductCategoryConditions"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="DiscountableItem">
+        <property name="unitPrice" type="int"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
+        <property name="originalItem" type="Item"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="categoryNode" type="Node"/>
+        <property name="categoryKey" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+    </transfer>
+
+</transfers>

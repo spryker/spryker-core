@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductCategory\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -168,5 +170,19 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
         return $this->getFactory()
             ->createProductCategoryReader()
             ->getLocalizedProductAbstractNamesByCategory($categoryTransfer, $localeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer
+    {
+        return $this->getRepository()->getProductCategoryCollection($productCategoryCriteriaTransfer);
     }
 }

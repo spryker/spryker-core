@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
 
 interface ProductCategoryRepositoryInterface
 {
@@ -25,4 +27,11 @@ interface ProductCategoryRepositoryInterface
      * @return array<int>
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer;
 }

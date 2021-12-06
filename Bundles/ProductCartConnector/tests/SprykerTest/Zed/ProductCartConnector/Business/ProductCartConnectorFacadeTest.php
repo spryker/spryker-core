@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
@@ -32,22 +31,7 @@ class ProductCartConnectorFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
-
-    /**
-     * @var int
-     */
-    protected const PRODUCT_ABSTRACT_ID = 777;
-
-    /**
-     * @var string
-     */
     protected const PRODUCT_URL_EN = '/en/product-1';
-
-    /**
-     * @var string
-     */
-    protected const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
 
     /**
      * @var \SprykerTest\Zed\ProductCartConnector\ProductCartConnectorBusinessTester
@@ -57,37 +41,25 @@ class ProductCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
     public function testExpandItemTransfersWithUrlsForCartWithItem(): void
     {
         // Arrange
         $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
 
-        $productAbstractTransfer = $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::PRODUCT_ABSTRACT_ID,
-            ProductAbstractTransfer::SKU => static::SKU_PRODUCT_ABSTRACT,
-        ]);
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
 
         $this->tester->haveProduct([
-            ProductConcreteTransfer::SKU => static::SKU_PRODUCT_CONCRETE,
             ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
         ]);
 
         $productUrl = $this->tester->haveUrl([
             UrlTransfer::FK_LOCALE => $this->tester->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale(),
-            UrlTransfer::FK_RESOURCE_PRODUCT_ABSTRACT => static::PRODUCT_ABSTRACT_ID,
+            UrlTransfer::FK_RESOURCE_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
             UrlTransfer::URL => static::PRODUCT_URL_EN,
         ]);
 
         $cartChangeTransfer = (new CartChangeTransfer())
-            ->addItem((new ItemTransfer())->setIdProductAbstract(static::PRODUCT_ABSTRACT_ID));
+            ->addItem((new ItemTransfer())->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract()));
 
         // Act
         $this->tester->getFacade()->expandItemTransfersWithUrls($cartChangeTransfer);

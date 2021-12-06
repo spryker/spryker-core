@@ -48,6 +48,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
     Persistence:
         path: Persistence
         class_name: ProductCategoryPersistenceTester

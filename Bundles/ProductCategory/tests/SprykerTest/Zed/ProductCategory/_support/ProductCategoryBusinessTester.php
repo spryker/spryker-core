@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

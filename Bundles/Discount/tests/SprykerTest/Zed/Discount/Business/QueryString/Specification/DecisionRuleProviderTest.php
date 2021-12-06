@@ -100,7 +100,7 @@ class DecisionRuleProviderTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleProvider
      */
@@ -114,7 +114,7 @@ class DecisionRuleProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface
      */
     protected function createDecisionRulePluginMock(): DecisionRulePluginInterface
     {

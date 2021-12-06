@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
-interface DiscountRuleWithValueOptionsPluginInterface
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface as ExtensionDiscountRuleWithValueOptionsPluginInterface;
+
+/**
+ * @deprecated Use {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface} instead.
+ */
+interface DiscountRuleWithValueOptionsPluginInterface extends ExtensionDiscountRuleWithValueOptionsPluginInterface
 {
-    /**
-     * Specification:
-     * - Returns a list of key-value pairs of the available select options.
-     *
-     * @api
-     *
-     * @return array<string>
-     */
-    public function getQueryStringValueOptions();
 }

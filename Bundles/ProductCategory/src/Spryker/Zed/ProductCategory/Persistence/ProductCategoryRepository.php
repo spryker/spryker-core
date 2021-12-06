@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
@@ -87,5 +89,68 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             ->endUse()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @module Category
+     * @module Locale
+     *
+     * @param \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer
+    {
+        $productCategoryQuery = $this->getFactory()
+            ->createProductCategoryQuery()
+            ->joinWithSpyCategory()
+            ->useSpyCategoryQuery()
+                ->joinWithAttribute()
+                ->useAttributeQuery()
+                    ->joinWithLocale()
+                ->endUse()
+            ->endUse()
+            ->groupByIdProductCategory();
+
+        $productCategoryQuery = $this->applyProductCategoryFilters($productCategoryQuery, $productCategoryCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createproductCategoryMapper()
+            ->mapProductCategoryEntitiesToProductCategoryCollectionTransfer(
+                $productCategoryQuery->find(),
+                new ProductCategoryCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery
+     * @param \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    protected function applyProductCategoryFilters(
+        SpyProductCategoryQuery $productCategoryQuery,
+        ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
+    ): SpyProductCategoryQuery {
+        $productCategoryConditionsTransfer = $productCategoryCriteriaTransfer->getProductCategoryConditions();
+
+        if (!$productCategoryConditionsTransfer) {
+            return $productCategoryQuery;
+        }
+
+        if ($productCategoryConditionsTransfer->getProductAbstractIds()) {
+            $productCategoryQuery->filterByFkProductAbstract_In($productCategoryConditionsTransfer->getProductAbstractIds());
+        }
+
+        if ($productCategoryConditionsTransfer->getLocaleIds()) {
+            $productCategoryQuery
+                ->useSpyCategoryQuery()
+                    ->useAttributeQuery()
+                        ->filterByFkLocale_In($productCategoryConditionsTransfer->getLocaleIds())
+                    ->endUse()
+                ->endUse();
+        }
+
+        return $productCategoryQuery;
     }
 }

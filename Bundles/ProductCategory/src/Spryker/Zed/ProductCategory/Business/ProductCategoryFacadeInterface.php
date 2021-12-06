@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductCategory\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
+use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
 
 interface ProductCategoryFacadeInterface
 {
@@ -143,4 +145,16 @@ interface ProductCategoryFacadeInterface
      * @return array<string>
      */
     public function getLocalizedProductAbstractNamesByCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves product categories by criteria from Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer;
 }

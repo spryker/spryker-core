@@ -212,6 +212,8 @@ interface CategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacadeInterface::getCategoryCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
@@ -310,4 +312,29 @@ interface CategoryFacadeInterface
      * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves categories from persistence by criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryCollection(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves ascendant category keys from persistence by criteria.
+     * - Returns assoc array [id category node => list of ascendant category keys].
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return array<int, array<string>>
+     */
+    public function getAscendantCategoryKeysGroupedByIdCategoryNode(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): array;
 }

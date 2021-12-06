@@ -933,4 +933,50 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         return $categoryClosureTableQuery;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return array<int, array<string, string>>
+     */
+    public function getAscendantCategoryKeys(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): array
+    {
+        $categoryNodeQuery = $this->getFactory()
+            ->createCategoryNodeQuery()
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, static::KEY_ID_CATEGORY_NODE)
+            ->endUse()
+            ->joinWithCategory()
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::KEY_CATEGORY_KEY)
+            ->select([
+                static::KEY_ID_CATEGORY_NODE,
+                static::KEY_CATEGORY_KEY,
+            ]);
+
+        $categoryNodeQuery = $this->applyAscendantCategoryKeyFilters($categoryNodeQuery, $categoryNodeCriteriaTransfer);
+
+        return $categoryNodeQuery->find()->toArray();
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    protected function applyAscendantCategoryKeyFilters(
+        SpyCategoryNodeQuery $categoryNodeQuery,
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): SpyCategoryNodeQuery {
+        if ($categoryNodeCriteriaTransfer->getCategoryNodeIds()) {
+            $categoryNodeQuery
+                ->useClosureTableQuery()
+                    ->filterByFkCategoryNodeDescendant_In($categoryNodeCriteriaTransfer->getCategoryNodeIds())
+                ->endUse();
+        }
+
+        return $categoryNodeQuery;
+    }
 }

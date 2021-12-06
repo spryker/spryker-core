@@ -178,4 +178,11 @@ interface CategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\NodeTransfer|null
      */
     public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return array<int, array<string, string>>
+     */
+    public function getAscendantCategoryKeys(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): array;
 }

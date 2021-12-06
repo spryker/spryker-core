@@ -7,43 +7,11 @@
 
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface as ExtensionDiscountableItemCollectorPluginInterface;
 
-interface CollectorPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface} instead.
+ */
+interface CollectorPluginInterface extends ExtensionDiscountableItemCollectorPluginInterface
 {
-    /**
-     * Specification:
-     * - Collects items to which discount have to be applied, ClauseTransfer holds query string parameters,
-     * - Uses Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
-     * - Returns array of discountable items with reference to original CalculatedDiscountTransfer, which is modified by reference by distributor.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
-     */
-    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
-
-    /**
-     * Specification:
-     * - Name of field as used in query string
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getFieldName();
-
-    /**
-     * Specification:
-     * - Data types used by this field. (string, integer, list)
-     *
-     * @api
-     *
-     * @return array<string>
-     */
-    public function acceptedDataTypes();
 }

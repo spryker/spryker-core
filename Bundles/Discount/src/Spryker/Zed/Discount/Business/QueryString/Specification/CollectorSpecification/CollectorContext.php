@@ -9,12 +9,12 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpeci
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface;
 
 class CollectorContext implements CollectorSpecificationInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface
+     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface
      */
     protected $collectorPlugin;
 
@@ -24,10 +24,10 @@ class CollectorContext implements CollectorSpecificationInterface
     protected $clauseTransfer;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface $collectorPlugin
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface $collectorPlugin
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      */
-    public function __construct(CollectorPluginInterface $collectorPlugin, ClauseTransfer $clauseTransfer)
+    public function __construct(DiscountableItemCollectorPluginInterface $collectorPlugin, ClauseTransfer $clauseTransfer)
     {
         $this->collectorPlugin = $collectorPlugin;
         $this->clauseTransfer = $clauseTransfer;

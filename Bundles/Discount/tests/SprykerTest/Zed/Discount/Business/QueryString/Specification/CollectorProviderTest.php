@@ -100,7 +100,7 @@ class CollectorProviderTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface|null $collectorPluginMock
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface|null $collectorPluginMock
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */
@@ -114,7 +114,7 @@ class CollectorProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface
      */
     protected function createCollectorPluginMock(): CollectorPluginInterface
     {

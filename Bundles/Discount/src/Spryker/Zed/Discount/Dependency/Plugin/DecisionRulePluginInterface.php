@@ -7,49 +7,11 @@
 
 namespace Spryker\Zed\Discount\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ClauseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface as ExtensionDecisionRulePluginInterface;
 
-interface DecisionRulePluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface} instead.
+ */
+interface DecisionRulePluginInterface extends ExtensionDecisionRulePluginInterface
 {
-    /**
-     * Specification:
-     * - Makes decision on given Quote or Item transfer.
-     * - Uses Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
-     * - Returns false when not matching.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
-     */
-    public function isSatisfiedBy(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        ClauseTransfer $clauseTransfer
-    );
-
-    /**
-     * Specification:
-     * - Name of field as used in query string
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getFieldName();
-
-    /**
-     * Specification:
-     * - Data types used by this field. (string, integer, list)
-     *
-     * @api
-     *
-     * @return array<string>
-     */
-    public function acceptedDataTypes();
 }

@@ -59,6 +59,7 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
 
             if (!empty($valueOptions[$ruleField])) {
                 $fieldTransformed['input'] = 'select';
+                $fieldTransformed['plugin'] = 'select2';
                 $fieldTransformed['values'] = $valueOptions[$ruleField];
             }
 

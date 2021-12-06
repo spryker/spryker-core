@@ -165,7 +165,7 @@ class MetaDataProviderTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface|null $decisionRulePluginMock
      * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators|null $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators|null $logicalComparatorsMock
      *
@@ -198,7 +198,7 @@ class MetaDataProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface
      */
     protected function createDecisionRulePluginMock(): DecisionRulePluginInterface
     {

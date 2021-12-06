@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Reader;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface;
@@ -17,6 +18,20 @@ use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryReader implements CategoryReaderInterface
 {
+    /**
+     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_ID_CATEGORY_NODE
+     *
+     * @var string
+     */
+    protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
+
+    /**
+     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_CATEGORY_KEY
+     *
+     * @var string
+     */
+    protected const KEY_CATEGORY_KEY = 'category_key';
+
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
@@ -106,6 +121,35 @@ class CategoryReader implements CategoryReaderInterface
         $this->categoryHydrator->hydrateCategoryCollection($categoryCollectionTransfer, $localeTransfer);
 
         return $categoryCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return array<int, array<string>>
+     */
+    public function getAscendantCategoryKeysGroupedByIdCategoryNode(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): array
+    {
+        $ascendantCategoryKeys = $this->categoryRepository
+            ->getAscendantCategoryKeys($categoryNodeCriteriaTransfer);
+
+        return $this->groupAscendantCategoryKeysByIdCategoryNode($ascendantCategoryKeys);
+    }
+
+    /**
+     * @param array<int, array<string>> $ascendantCategoryKeys
+     *
+     * @return array<int, array<string>>
+     */
+    protected function groupAscendantCategoryKeysByIdCategoryNode(array $ascendantCategoryKeys): array
+    {
+        $groupedCategoryKeys = [];
+
+        foreach ($ascendantCategoryKeys as $ascendantCategoryKey) {
+            $groupedCategoryKeys[(int)$ascendantCategoryKey[static::KEY_ID_CATEGORY_NODE]][] = $ascendantCategoryKey[static::KEY_CATEGORY_KEY];
+        }
+
+        return $groupedCategoryKeys;
     }
 
     /**

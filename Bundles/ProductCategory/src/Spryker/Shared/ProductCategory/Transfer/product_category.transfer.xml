@@ -6,6 +6,20 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="fkCategory" type="int"/>
         <property name="productOrder" type="int"/>
+        <property name="category" type="Category"/>
+    </transfer>
+
+    <transfer name="ProductCategoryCollection">
+        <property name="productCategories" type="ProductCategory[]" singular="productCategory"/>
+    </transfer>
+
+    <transfer name="ProductCategoryCriteria">
+        <property name="productCategoryConditions" type="ProductCategoryConditions"/>
+    </transfer>
+
+    <transfer name="ProductCategoryConditions">
+        <property name="localeIds" type="int[]" singular="idLocale"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">

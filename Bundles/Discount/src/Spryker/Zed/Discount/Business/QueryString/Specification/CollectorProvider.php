@@ -17,12 +17,12 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 class CollectorProvider implements SpecificationProviderInterface
 {
     /**
-     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
+     * @var array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface>
      */
     protected $collectorPlugins = [];
 
     /**
-     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface> $collectorPlugins
+     * @param array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface> $collectorPlugins
      */
     public function __construct(array $collectorPlugins)
     {
