@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
@@ -23,6 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface getEntityManager()
  */
 class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
@@ -411,6 +413,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\DiscountFacade::createDiscount()} instead.
+     *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
      * @return int
@@ -426,6 +430,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\DiscountFacade::updateDiscountWithValidation()} instead.
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
@@ -776,5 +782,33 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         return $this->getFactory()
             ->createVoucherCartCodeOperationMessageFinder()
             ->findOperationResponseMessage($quoteTransfer, $cartCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
+     */
+    public function createDiscount(DiscountConfiguratorTransfer $discountConfigurator): DiscountConfiguratorResponseTransfer
+    {
+        return $this->getFactory()->createDiscountCreateAggregator()->createDiscount($discountConfigurator);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
+     */
+    public function updateDiscountWithValidation(DiscountConfiguratorTransfer $discountConfigurator): DiscountConfiguratorResponseTransfer
+    {
+        return $this->getFactory()->createDiscountUpdateAggregator()->updateDiscountWithValidation($discountConfigurator);
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
@@ -319,6 +320,8 @@ interface DiscountFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\DiscountFacadeInterface::createDiscount()} instead.
+     *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
      * @return int
@@ -332,6 +335,8 @@ interface DiscountFacadeInterface
      * - Return bool if discount entity was persisted
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\DiscountFacadeInterface::updateDiscountWithValidation()} instead.
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
      *
@@ -630,4 +635,52 @@ interface DiscountFacadeInterface
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
     public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
+
+    /**
+     * Specification:
+     * - Requires `DiscountConfigurator.discountGeneral`, `DiscountConfigurator.discountCalculator`, `DiscountConfigurator.discountCondition`,
+     *   `DiscountConfigurator.discountGeneral.validFrom`, `DiscountConfigurator.discountGeneral.validTo`, `DiscountConfigurator.discountGeneral.displayName`,
+     *   `DiscountConfigurator.discountGeneral.discountType`, `DiscountConfigurator.discountCalculator.calculatorPlugin` to be set.
+     * - Validates `DiscountConfigurator.discountGeneral.validFrom` and `DiscountConfigurator.discountGeneral.validTo` are valid dates.
+     * - Validates that `DiscountConfigurator.discountGeneral.validFrom` date is before `DiscountConfigurator.discountGeneral.validTo`.
+     * - Hydrates discount entity from `DiscountConfiguratorTransfer` and persists it.
+     * - Creates discount store relationships.
+     * - If discount type is voucher, creates voucher pool without voucherCodes.
+     * - If discount calculator type is `PLUGIN_CALCULATOR_FIXED`, creates discount amounts.
+     * - Executes {@link \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface} plugins stack.
+     * - Returns "DiscountConfiguratorResponseTransfer.isSuccessful=true" on successful validation and entity persistence.
+     * - Returns "isSuccessful=false" with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
+     */
+    public function createDiscount(DiscountConfiguratorTransfer $discountConfigurator): DiscountConfiguratorResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `DiscountConfigurator.discountGeneral`, `DiscountConfigurator.discountCalculator`, `DiscountConfigurator.discountCondition`,
+     *   `DiscountConfigurator.discountGeneral.idDiscount`, `DiscountConfigurator.discountGeneral.validFrom`, `DiscountConfigurator.discountGeneral.validTo`,
+     *   `DiscountConfigurator.discountGeneral.displayName`, `DiscountConfigurator.discountGeneral.discountType`,
+     *   `DiscountConfigurator.discountCalculator.calculatorPlugin` to be set.
+     * - Validates `DiscountConfigurator.discountGeneral.validFrom` and `DiscountConfigurator.discountGeneral.validTo` are valid dates.
+     * - Validates that `DiscountConfigurator.discountGeneral.validFrom` date is before `DiscountConfigurator.discountGeneral.validTo`.
+     * - Validates discount with id `DiscountConfigurator.discountGeneral.idDiscount` exists.
+     * - Hydrates discount entity from `DiscountConfiguratorTransfer` and persists it.
+     * - Updates discount store relationships.
+     * - If discount type is voucher, creates/updates voucher pool without voucherCodes.
+     * - If discount calculator type is `PLUGIN_CALCULATOR_FIXED`, updates discount amounts.
+     * - Executes {@link \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface} plugins stack.
+     * - Returns "DiscountConfiguratorResponseTransfer.isSuccessful=true" on successful validation and entity persistence.
+     * - Returns "DiscountConfiguratorResponseTransfer.isSuccessful=false" with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfigurator
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorResponseTransfer
+     */
+    public function updateDiscountWithValidation(DiscountConfiguratorTransfer $discountConfigurator): DiscountConfiguratorResponseTransfer;
 }

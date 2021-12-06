@@ -7,6 +7,7 @@
 
 var SqlFactory = require('./libs/sql-factory');
 
+require('jquery-datetimepicker');
 require('../../sass/main.scss');
 
 function setDiscountAmountSymbol() {
@@ -57,23 +58,61 @@ $(document).ready(function () {
     setDiscountAmountSymbol.apply($('#discount_discountCalculator_calculator_plugin'));
     $('#discount_discountCalculator_calculator_plugin').on('change', setDiscountAmountSymbol);
 
-    $('#discount_discountGeneral_valid_from').datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        numberOfMonths: 3,
-        defaultData: 0,
-        onClose: function (selectedDate) {
-            $('#discount_discountGeneral_valid_to').datepicker('option', 'minDate', selectedDate);
+    var $inputFrom = $('#discount_discountGeneral_valid_from');
+    var $inputTo = $('#discount_discountGeneral_valid_to');
+    var defaultDateFormat = 'd.m.Y H:i';
+    var inputFromFormat = $inputFrom.data('format') ?? defaultDateFormat;
+    var inputToFormat = $inputTo.data('format') ?? defaultDateFormat;
+
+    $inputFrom.datetimepicker({
+        format: inputFromFormat,
+        defaultTime: '00:00',
+        todayButton: false,
+        onShow: function () {
+            if (!$inputTo.val()) {
+                return;
+            }
+
+            this.setOptions({
+                maxDate: $inputTo.datetimepicker('getValue'),
+            });
+        },
+        onClose: function () {
+            if (!$inputTo.val()) {
+                return;
+            }
+
+            var startDate = $inputFrom.datetimepicker('getValue');
+            var endDate = $inputTo.datetimepicker('getValue');
+            if (startDate > endDate) {
+                $inputTo.datetimepicker({ value: startDate });
+            }
         },
     });
 
-    $('#discount_discountGeneral_valid_to').datepicker({
-        defaultData: 0,
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        numberOfMonths: 3,
-        onClose: function (selectedDate) {
-            $('#discount_discountGeneral_valid_from').datepicker('option', 'maxDate', selectedDate);
+    $inputTo.datetimepicker({
+        format: inputFromFormat,
+        defaultTime: '00:00',
+        todayButton: false,
+        onShow: function () {
+            if (!$inputFrom.val()) {
+                return;
+            }
+
+            this.setOptions({
+                minDate: $inputFrom.datetimepicker('getValue'),
+            });
+        },
+        onClose: function () {
+            if (!$inputFrom.val()) {
+                return;
+            }
+
+            var startDate = $inputFrom.datetimepicker('getValue');
+            var endDate = $inputTo.datetimepicker('getValue');
+            if (startDate > endDate) {
+                $inputFrom.datetimepicker({ value: endDate });
+            }
         },
     });
 

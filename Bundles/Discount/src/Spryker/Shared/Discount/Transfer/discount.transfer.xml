@@ -21,6 +21,8 @@
         <property name="priceMode" type="string"/>
         <property name="discountType" type="string"/>
         <property name="priority" type="int"/>
+        <property name="minimumItemAmount" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -118,6 +120,12 @@
         <property name="discountVoucher" type="DiscountVoucher"/>
     </transfer>
 
+    <transfer name="DiscountConfiguratorResponse">
+        <property name="discountConfigurator" type="DiscountConfigurator"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
     <transfer name="DiscountGeneral">
         <property name="idDiscount" type="int"/>
         <property name="discountType" type="string"/>
@@ -189,6 +197,11 @@
         <property name="grossAmount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="currencySymbol" type="string"/>
+    </transfer>
+
+    <transfer name="DiscountAmountCriteria">
+        <property name="idDiscount" type="int"/>
+        <property name="discountAmountIds" type="int[]" singular="idDiscountAmount"/>
     </transfer>
 
     <transfer name="Message">

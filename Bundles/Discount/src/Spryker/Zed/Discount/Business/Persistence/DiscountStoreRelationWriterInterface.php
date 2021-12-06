@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 interface DiscountStoreRelationWriterInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\Creator\DiscountStoreCreatorInterface::createDiscountStoreRelationships()}
+     *             or {@link \Spryker\Zed\Discount\Business\Updater\DiscountStoreUpdaterInterface::updateDiscountStoreRelationships()} instead.
+     *
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return void

@@ -24,6 +24,16 @@ use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
+use Spryker\Zed\Discount\Business\Creator\DiscountAmountCreator;
+use Spryker\Zed\Discount\Business\Creator\DiscountAmountCreatorInterface;
+use Spryker\Zed\Discount\Business\Creator\DiscountCreateAggregator;
+use Spryker\Zed\Discount\Business\Creator\DiscountCreateAggregatorInterface;
+use Spryker\Zed\Discount\Business\Creator\DiscountCreator;
+use Spryker\Zed\Discount\Business\Creator\DiscountCreatorInterface;
+use Spryker\Zed\Discount\Business\Creator\DiscountStoreCreator;
+use Spryker\Zed\Discount\Business\Creator\DiscountStoreCreatorInterface;
+use Spryker\Zed\Discount\Business\Creator\DiscountVoucherPoolCreator;
+use Spryker\Zed\Discount\Business\Creator\DiscountVoucherPoolCreatorInterface;
 use Spryker\Zed\Discount\Business\DecisionRule\CalendarWeekDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\CurrencyDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\DayOfWeekDecisionRule;
@@ -43,6 +53,8 @@ use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilter;
 use Spryker\Zed\Discount\Business\Filter\CollectedDiscountItemFilterInterface;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
+use Spryker\Zed\Discount\Business\Mapper\DiscountMapper;
+use Spryker\Zed\Discount\Business\Mapper\DiscountMapperInterface;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
@@ -66,9 +78,27 @@ use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterfa
 use Spryker\Zed\Discount\Business\QuoteDiscountValidator\QuoteDiscountMaxUsageValidator;
 use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorter;
 use Spryker\Zed\Discount\Business\Sorter\CollectedDiscountSorterInterface;
+use Spryker\Zed\Discount\Business\Updater\DiscountAmountUpdater;
+use Spryker\Zed\Discount\Business\Updater\DiscountAmountUpdaterInterface;
+use Spryker\Zed\Discount\Business\Updater\DiscountStoreUpdater;
+use Spryker\Zed\Discount\Business\Updater\DiscountStoreUpdaterInterface;
+use Spryker\Zed\Discount\Business\Updater\DiscountUpdateAggregator;
+use Spryker\Zed\Discount\Business\Updater\DiscountUpdateAggregatorInterface;
+use Spryker\Zed\Discount\Business\Updater\DiscountUpdater;
+use Spryker\Zed\Discount\Business\Updater\DiscountUpdaterInterface;
+use Spryker\Zed\Discount\Business\Updater\DiscountVoucherPoolUpdater;
+use Spryker\Zed\Discount\Business\Updater\DiscountVoucherPoolUpdaterInterface;
+use Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorConstraintProviderInterface;
+use Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorPeriodConstraintProvider;
+use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorDiscountExistsValidator;
+use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorPeriodValidator;
+use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorComposite;
+use Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
+use Spryker\Zed\Discount\Dependency\External\DiscountToValidationAdapterInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -76,6 +106,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface getEntityManager()
  */
 class DiscountBusinessFactory extends AbstractBusinessFactory
 {
@@ -726,5 +757,194 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Creator\DiscountCreateAggregatorInterface
+     */
+    public function createDiscountCreateAggregator(): DiscountCreateAggregatorInterface
+    {
+        return new DiscountCreateAggregator(
+            $this->createDiscountCreateDiscountConfiguratorValidatorComposite(),
+            $this->createDiscountCreator(),
+            $this->createDiscountAmountCreator(),
+            $this->createDiscountStoreCreator(),
+            $this->getDiscountPostCreatePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Creator\DiscountCreatorInterface
+     */
+    public function createDiscountCreator(): DiscountCreatorInterface
+    {
+        return new DiscountCreator(
+            $this->createDiscountMapper(),
+            $this->getEntityManager(),
+            $this->createDiscountVoucherPoolCreator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Creator\DiscountAmountCreatorInterface
+     */
+    public function createDiscountAmountCreator(): DiscountAmountCreatorInterface
+    {
+        return new DiscountAmountCreator(
+            $this->getEntityManager(),
+            $this->createDiscountMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Creator\DiscountStoreCreatorInterface
+     */
+    public function createDiscountStoreCreator(): DiscountStoreCreatorInterface
+    {
+        return new DiscountStoreCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Creator\DiscountVoucherPoolCreatorInterface
+     */
+    public function createDiscountVoucherPoolCreator(): DiscountVoucherPoolCreatorInterface
+    {
+        return new DiscountVoucherPoolCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\DiscountUpdateAggregatorInterface
+     */
+    public function createDiscountUpdateAggregator(): DiscountUpdateAggregatorInterface
+    {
+        return new DiscountUpdateAggregator(
+            $this->createDiscountUpdateDiscountConfiguratorValidatorComposite(),
+            $this->createDiscountUpdater(),
+            $this->createDiscountAmountUpdater(),
+            $this->createDiscountStoreUpdater(),
+            $this->getDiscountPostUpdatePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\DiscountUpdaterInterface
+     */
+    public function createDiscountUpdater(): DiscountUpdaterInterface
+    {
+        return new DiscountUpdater(
+            $this->createDiscountMapper(),
+            $this->getEntityManager(),
+            $this->createDiscountVoucherPoolUpdater(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\DiscountVoucherPoolUpdaterInterface
+     */
+    public function createDiscountVoucherPoolUpdater(): DiscountVoucherPoolUpdaterInterface
+    {
+        return new DiscountVoucherPoolUpdater(
+            $this->getRepository(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\DiscountAmountUpdaterInterface
+     */
+    public function createDiscountAmountUpdater(): DiscountAmountUpdaterInterface
+    {
+        return new DiscountAmountUpdater(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createDiscountMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Updater\DiscountStoreUpdaterInterface
+     */
+    public function createDiscountStoreUpdater(): DiscountStoreUpdaterInterface
+    {
+        return new DiscountStoreUpdater(
+            $this->getRepository(),
+            $this->getEntityManager(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Mapper\DiscountMapperInterface
+     */
+    public function createDiscountMapper(): DiscountMapperInterface
+    {
+        return new DiscountMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorInterface
+     */
+    public function createDiscountCreateDiscountConfiguratorValidatorComposite(): DiscountConfiguratorValidatorInterface
+    {
+        return new DiscountConfiguratorValidatorComposite([
+            $this->createDiscountConfiguratorPeriodValidator(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorInterface
+     */
+    public function createDiscountUpdateDiscountConfiguratorValidatorComposite(): DiscountConfiguratorValidatorInterface
+    {
+        return new DiscountConfiguratorValidatorComposite([
+            $this->createDiscountConfiguratorDiscountExistsValidator(),
+            $this->createDiscountConfiguratorPeriodValidator(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorInterface
+     */
+    public function createDiscountConfiguratorPeriodValidator(): DiscountConfiguratorValidatorInterface
+    {
+        return new DiscountConfiguratorPeriodValidator(
+            $this->getValidationAdapter()->createValidator(),
+            $this->createDiscountConfiguratorPeriodConstraintProvider(),
+            $this->getTranslatorFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Validator\DiscountConfiguratorValidatorInterface
+     */
+    public function createDiscountConfiguratorDiscountExistsValidator(): DiscountConfiguratorValidatorInterface
+    {
+        return new DiscountConfiguratorDiscountExistsValidator(
+            $this->getRepository(),
+            $this->getTranslatorFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Validator\ConstraintProvider\DiscountConfiguratorConstraintProviderInterface
+     */
+    public function createDiscountConfiguratorPeriodConstraintProvider(): DiscountConfiguratorConstraintProviderInterface
+    {
+        return new DiscountConfiguratorPeriodConstraintProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\External\DiscountToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): DiscountToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): DiscountToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_TRANSLATOR);
     }
 }

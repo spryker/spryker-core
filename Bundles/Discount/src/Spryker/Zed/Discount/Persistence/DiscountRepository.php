@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -42,5 +43,74 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
     public function hasPriorityField(): bool
     {
         return property_exists(SpyDiscount::class, 'priority');
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return array<\Generated\Shared\Transfer\MoneyValueTransfer>
+     */
+    public function getDiscountAmountCollectionForDiscount(int $idDiscount): array
+    {
+        $discountAmountEntities = $this->getFactory()
+            ->createDiscountAmountQuery()
+            ->filterByFkDiscount($idDiscount)
+            ->find();
+
+        if ($discountAmountEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createDiscountMapper()
+            ->mapDiscountAmountEntitiesToMoneyValueTransfers($discountAmountEntities, []);
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getDiscountStoreRelations(int $idDiscount): StoreRelationTransfer
+    {
+        $discountStoreEntities = $this->getFactory()
+            ->createDiscountStoreQuery()
+            ->joinWithSpyStore()
+            ->filterByFkDiscount($idDiscount)
+            ->find();
+
+        return $this->getFactory()
+            ->createDiscountMapper()
+            ->mapDiscountStoreEntitiesToStoreRelationTransfer(
+                $discountStoreEntities,
+                (new StoreRelationTransfer())->setIdEntity($idDiscount),
+            );
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return bool
+     */
+    public function discountExists(int $idDiscount): bool
+    {
+        return $this->getFactory()
+            ->createDiscountQuery()
+            ->filterByIdDiscount($idDiscount)
+            ->exists();
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return bool
+     */
+    public function discountVoucherPoolExists(int $idDiscount): bool
+    {
+        return $this->getFactory()
+            ->createDiscountQuery()
+            ->filterByIdDiscount($idDiscount)
+            ->filterByFkDiscountVoucherPool(null, Criteria::ISNOTNULL)
+            ->exists();
     }
 }

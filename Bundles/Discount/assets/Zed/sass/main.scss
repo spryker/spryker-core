@@ -3,6 +3,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+@import '~jquery-datetimepicker/build/jquery.datetimepicker.min.css';
 @import './query-builder.scss';
 
 .load-cart-rules {
@@ -104,5 +105,17 @@ table.dataTable.gui-table-data {
                 margin-right: 5px;
             }
         }
+    }
+}
+
+.datetime-container {
+    position: relative;
+
+    &__icon {
+        position: absolute;
+        right: 13px;
+        top: 39px;
+        font-size: 18px;
+        pointer-events: none;
     }
 }

@@ -70,6 +70,8 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\Creator\DiscountCreateAggregator::createDiscount()} instead.
+     *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return int
@@ -116,6 +118,8 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Discount\Business\Updater\DiscountUpdateAggregator::updateDiscountWithValidation()} instead.
+     *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\PersistenceException

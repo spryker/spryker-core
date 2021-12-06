@@ -33,6 +33,11 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class DiscountConfiguratorHydrateTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const FORMAT_DATE_TIME = 'Y-m-d H:i:s';
+
+    /**
      * @uses DiscountQueryContainerInterface::queryDiscountWithStoresByFkDiscount()
      *
      * @return void
@@ -85,12 +90,12 @@ class DiscountConfiguratorHydrateTest extends Unit
         );
 
         $this->assertEquals(
-            $discountEntity->getValidFrom(),
+            $discountEntity->getValidFrom(static::FORMAT_DATE_TIME),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getValidFrom(),
         );
 
         $this->assertEquals(
-            $discountEntity->getValidTo(),
+            $discountEntity->getValidTo(static::FORMAT_DATE_TIME),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getValidTo(),
         );
 

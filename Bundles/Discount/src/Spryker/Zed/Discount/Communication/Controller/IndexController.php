@@ -68,8 +68,12 @@ class IndexController extends AbstractController
         $discountForm->handleRequest($request);
 
         if ($discountForm->isSubmitted() && $discountForm->isValid()) {
-            $idDiscount = $this->getFacade()
-                ->saveDiscount($discountForm->getData());
+            $discountConfiguratorResponseTransfer = $this->getFacade()
+                ->createDiscount($discountForm->getData());
+            $idDiscount = $discountConfiguratorResponseTransfer->getDiscountConfiguratorOrFail()
+                ->getDiscountGeneralOrFail()
+                ->getIdDiscountOrFail();
+
             $discountType = $discountForm->getData()->getDiscountGeneral()->getDiscountType();
 
             $this->addSuccessMessage('Discount successfully created, but not activated.');
@@ -405,8 +409,8 @@ class IndexController extends AbstractController
 
         if ($discountForm->isSubmitted()) {
             if ($discountForm->isValid()) {
-                $isUpdated = $this->getFacade()->updateDiscount($discountForm->getData());
-                if ($isUpdated === true) {
+                $discountConfiguratorResponseTransfer = $this->getFacade()->updateDiscountWithValidation($discountForm->getData());
+                if ($discountConfiguratorResponseTransfer->getIsSuccessfulOrFail()) {
                     $this->addSuccessMessage('Discount successfully updated.');
                 }
 

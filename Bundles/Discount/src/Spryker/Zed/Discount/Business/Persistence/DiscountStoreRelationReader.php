@@ -34,6 +34,8 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface::getDiscountStoreRelations()} instead.
+     *
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

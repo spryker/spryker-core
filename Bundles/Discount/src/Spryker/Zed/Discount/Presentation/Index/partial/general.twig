@@ -44,14 +44,20 @@
     <div class="form-date-container">
         <div class="row">
             <div class="col-xs-12 col-lg-6">
-                {{ form_row(discountForm.discountGeneral.valid_from) }}
+                <div class="datetime-container">
+                    {{ form_row(discountForm.discountGeneral.valid_from) }}
+                    <i class="far fa-calendar datetime-container__icon"></i>
+                </div>
             </div>
             <div class="col-xs-12 col-lg-6">
-                {{ form_row(discountForm.discountGeneral.valid_to) }}
+                <div class="datetime-container">
+                    {{ form_row(discountForm.discountGeneral.valid_to) }}
+                    <i class="far fa-calendar datetime-container__icon"></i>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
-{{ form_macro.render_plugin_types(discountForm.discountGeneral) }}
+    {% import "@Discount/Index/partial/_plugin_types_macro.twig" as form_macro %}
+    {{ form_macro.render_plugin_types(discountForm.discountGeneral) }}
+</div>

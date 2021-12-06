@@ -10,6 +10,8 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 interface DiscountStoreRelationReaderInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface::getDiscountStoreRelations()} instead.
+     *
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

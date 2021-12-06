@@ -8,13 +8,24 @@
 namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\DiscountCalculatorTransfer;
+use Generated\Shared\Transfer\DiscountConditionTransfer;
+use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery;
+use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountRepository;
 use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 
@@ -29,6 +40,7 @@ use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade(?string $moduleName = NULL)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -83,6 +95,51 @@ class DiscountBusinessTester extends Actor
                 ItemTransfer::QUANTITY => static::DEFAULT_ITEM_QUANTITY,
             ],
         ])->addVoucherDiscount((new DiscountTransfer())->setVoucherCode(static::VOUCHER_CODE));
+    }
+
+    /**
+     * @param array<int> $relatedStoreIds
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    public function createDiscountConfiguratorTransfer(array $relatedStoreIds = []): DiscountConfiguratorTransfer
+    {
+        return (new DiscountConfiguratorBuilder())->withDiscountGeneral([
+            DiscountGeneralTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_CART_RULE,
+            DiscountGeneralTransfer::IS_ACTIVE => true,
+            DiscountGeneralTransfer::IS_EXCLUSIVE => true,
+            DiscountGeneralTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores($relatedStoreIds),
+        ])->withDiscountCondition([
+            DiscountConditionTransfer::MINIMUM_ITEM_AMOUNT => 1,
+            DiscountConditionTransfer::DECISION_RULE_QUERY_STRING => 'sku = "123"',
+        ])->withDiscountCalculator([
+            DiscountCalculatorTransfer::AMOUNT => 10,
+            DiscountCalculatorTransfer::COLLECTOR_STRATEGY_TYPE => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING,
+            DiscountCalculatorTransfer::CALCULATOR_PLUGIN => DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED,
+            DiscountCalculatorTransfer::COLLECTOR_QUERY_STRING => 'sku = "123"',
+        ])->build();
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount|null
+     */
+    public function findDiscountEntityById(int $idDiscount): ?SpyDiscount
+    {
+        return $this->getDiscountQuery()->findOneByIdDiscount($idDiscount);
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return array<\Orm\Zed\Discount\Persistence\SpyDiscountStore>
+     */
+    public function getDiscountStoreEntityCollectionByIdDiscount(int $idDiscount): array
+    {
+        return $this->getDiscountStoreQuery()
+            ->findByFkDiscount($idDiscount)
+            ->getData();
     }
 
     /**
@@ -150,5 +207,21 @@ class DiscountBusinessTester extends Actor
     public function createDiscountRepository(): DiscountRepositoryInterface
     {
         return new DiscountRepository();
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    protected function getDiscountQuery(): SpyDiscountQuery
+    {
+        return SpyDiscountQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    protected function getDiscountStoreQuery(): SpyDiscountStoreQuery
+    {
+        return SpyDiscountStoreQuery::create();
     }
 }

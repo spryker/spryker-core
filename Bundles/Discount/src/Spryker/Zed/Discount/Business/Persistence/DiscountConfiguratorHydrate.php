@@ -19,6 +19,11 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterface
 {
     /**
+     * @var string
+     */
+    protected const FORMAT_DATE_TIME = 'Y-m-d H:i:s';
+
+    /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
     protected $discountQueryContainer;
@@ -98,8 +103,8 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountGeneralTransfer = new DiscountGeneralTransfer();
         $discountGeneralTransfer->fromArray($discountEntity->toArray(), true);
 
-        $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
-        $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
+        $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom(static::FORMAT_DATE_TIME));
+        $discountGeneralTransfer->setValidTo($discountEntity->getValidTo(static::FORMAT_DATE_TIME));
         $discountGeneralTransfer->setStoreRelation(
             $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity),
         );

@@ -11,7 +11,7 @@
         <property name="amount" dataBuilderRule="=1"/>
         <property name="isActive" dataBuilderRule="=true"/>
         <property name="validFrom" dataBuilderRule="=2016-01-01"/>
-        <property name="validTo" dataBuilderRule="dateTimeInInterval('+1 days', '+10 years')->format('Y-m-d')"/>
+        <property name="validTo" dataBuilderRule="dateTimeInInterval('+1 day', '+10 years')->format('Y-m-d H:i:s')"/>
         <property name="calculatorPlugin" dataBuilderRule="=PLUGIN_CALCULATOR_FIXED"/>
         <property name="discountType" dataBuilderRule="=cart_rule"/>
     </transfer>
@@ -29,8 +29,8 @@
         <property name="discountType" dataBuilderRule="=cart_rule"/>
         <property name="displayName" dataBuilderRule="unique()->sentence"/>
         <property name="description" dataBuilderRule="sentence(10)"/>
-        <property name="validFrom" dataBuilderRule="=2016-01-01"/>
-        <property name="validTo" dataBuilderRule="time('Y-m-d', '+10 years')"/>
+        <property name="validFrom" dataBuilderRule="=2016-01-01 00:00:00"/>
+        <property name="validTo" dataBuilderRule="=2099-01-01 00:00:00"/>
         <property name="isExclusive" dataBuilderRule="="/>
         <property name="isActive" dataBuilderRule="=true"/>
     </transfer>

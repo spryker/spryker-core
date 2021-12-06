@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
-use DateTime;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -70,12 +69,7 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
      */
     protected function createDiscountGeneralTransferDefaults()
     {
-        $discountGeneralTransfer = new DiscountGeneralTransfer();
-        $discountGeneralTransfer->setIsExclusive(false);
-        $discountGeneralTransfer->setValidFrom(new DateTime());
-        $discountGeneralTransfer->setValidTo(new DateTime());
-
-        return $discountGeneralTransfer;
+        return (new DiscountGeneralTransfer())->setIsExclusive(false);
     }
 
     /**

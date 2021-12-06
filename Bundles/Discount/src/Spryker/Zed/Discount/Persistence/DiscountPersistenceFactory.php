@@ -12,12 +12,14 @@ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use Spryker\Zed\Discount\Persistence\Propel\Mapper\DiscountMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface getEntityManager()
  */
 class DiscountPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -59,5 +61,13 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     public function createDiscountStoreQuery()
     {
         return SpyDiscountStoreQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Persistence\Propel\Mapper\DiscountMapper
+     */
+    public function createDiscountMapper(): DiscountMapper
+    {
+        return new DiscountMapper();
     }
 }

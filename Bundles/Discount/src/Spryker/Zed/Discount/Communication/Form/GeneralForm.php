@@ -11,10 +11,12 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -93,6 +95,11 @@ class GeneralForm extends AbstractType
      * @var string
      */
     protected const FIELD_PRIORITY_HELP_MESSAGE = 'Enter an integer %min%-%max%. Discounts are calculated in sequential order, starting from %min%. The default value is %max%.';
+
+    /**
+     * @var string
+     */
+    protected const FORMAT_DATE_TIME = 'dd.MM.yyyy HH:mm';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -242,11 +249,19 @@ class GeneralForm extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_FROM, DateType::class, [
+        $builder->add(static::FIELD_VALID_FROM, DateTimeType::class, [
             'widget' => 'single_text',
+            'label' => 'Valid From (Time in UTC)',
+            'html5' => false,
+            'format' => static::FORMAT_DATE_TIME,
+            'input' => 'string',
             'required' => true,
             'attr' => [
-                'class' => 'datepicker safe-datetime',
+                'class' => 'datetimepicker safe-datetime',
+            ],
+            'constraints' => [
+                new NotBlank(),
+                new DateTime(),
             ],
         ]);
 
@@ -260,11 +275,22 @@ class GeneralForm extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_TO, DateType::class, [
+        $builder->add(static::FIELD_VALID_TO, DateTimeType::class, [
             'widget' => 'single_text',
+            'label' => 'Valid To (Time in UTC)',
+            'html5' => false,
+            'format' => static::FORMAT_DATE_TIME,
+            'input' => 'string',
             'required' => true,
             'attr' => [
-                'class' => 'datepicker safe-datetime',
+                'class' => 'datetimepicker safe-datetime',
+            ],
+            'constraints' => [
+                new NotBlank(),
+                new DateTime(),
+                new GreaterThan([
+                    'propertyPath' => sprintf('parent.all[%s].data', static::FIELD_VALID_FROM),
+                ]),
             ],
         ]);
 

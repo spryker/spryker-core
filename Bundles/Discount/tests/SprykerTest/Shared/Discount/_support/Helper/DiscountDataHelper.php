@@ -68,13 +68,16 @@ class DiscountDataHelper extends Module
         $discountConditionTransfer->setMinimumItemAmount(1);
 
         $this->debugSection('Discount', $discountConfigurator->toArray());
-        $discountId = $discountFacade->saveDiscount($discountConfigurator);
-        $this->debugSection('Discount Id', $discountId);
+        $discountConfiguratorResponseTransfer = $discountFacade->createDiscount($discountConfigurator);
+        $idDiscount = $discountConfiguratorResponseTransfer->getDiscountConfiguratorOrFail()
+            ->getDiscountGeneralOrFail()
+            ->getIdDiscountOrFail();
+        $this->debugSection('Discount Id', $idDiscount);
 
         $cleanupModule = $this->getDataCleanupHelper();
-        $cleanupModule->_addCleanup(function () use ($discountId): void {
-            $this->debug('Deleting Discount: ' . $discountId);
-            $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($discountId)->delete();
+        $cleanupModule->_addCleanup(function () use ($idDiscount): void {
+            $this->debug('Deleting Discount: ' . $idDiscount);
+            $this->getDiscountQuery()->queryDiscount()->findByIdDiscount($idDiscount)->delete();
         });
 
         return $discountConfigurator->getDiscountGeneral();

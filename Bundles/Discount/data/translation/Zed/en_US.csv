@@ -62,10 +62,14 @@ Save,Save
 "Store relation:","Store relation:"
 "Successfully deleted ""%d"" vouchers.","Successfully deleted ""%d"" vouchers."
 "Summary explaining promotion. Displayed with eligible products where applicable.","Summary explaining promotion. Displayed with eligible products where applicable."
+"The discount cannot end before the starting date.","The discount cannot end before the starting date."
+"This value is not a valid datetime.","This value is not a valid datetime."
 Type:,Type:
 "Unique, short, and descriptive. Displayed in cart calculation.","Unique, short, and descriptive. Displayed in cart calculation."
 Used,Used
 "Valid from:","Valid from (included):"
+"Valid From (Time in UTC)","Valid From (Time in UTC)"
+"Valid To (Time in UTC)","Valid To (Time in UTC)"
 "Valid until:","Valid to (excluded):"
 Value,Value
 Voucher,Voucher

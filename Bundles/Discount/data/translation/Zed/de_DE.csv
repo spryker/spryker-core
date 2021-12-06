@@ -62,10 +62,14 @@ Save,Speichern
 "Store relation:",Store-Beziehung:
 "Successfully deleted ""%d"" vouchers.","Gutscheine ""%d"" erfolgreich gelöscht."
 "Summary explaining promotion. Displayed with eligible products where applicable.","Zusammenfassung der Werbeaktion. Wird ggf. bei entsprechenden Produkten angezeigt."
+"The discount cannot end before the starting date.","Der Rabatt kann nicht vor dem Startdatum enden"
+"This value is not a valid datetime.","Dieser Wert entspricht keiner gültigen Datums- und Zeitangabe."
 Type:,Typ:
 "Unique, short, and descriptive. Displayed in cart calculation.","Einzigartig, kurz und beschreibend. Wird im Warenkorb angezeigt."
 Used,Verwendet
 "Valid from:","Gültig ab (inklusive):"
+"Valid From (Time in UTC)","Gültig von (Zeit in UTC)"
+"Valid To (Time in UTC)","Gültig bis (Zeit in UTC)"
 "Valid until:","Gültig bis (exklusive):"
 Value,Wert
 Voucher,Gutschein

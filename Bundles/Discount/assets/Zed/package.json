@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "dependencies": {
         "@spryker/jquery-query-builder": "~2.5.2-spryker.1",
-        "@spryker/sql-parser-mistic": "~1.2.3"
+        "@spryker/sql-parser-mistic": "~1.2.3",
+        "jquery-datetimepicker": "~2.5.21"
     }
 }

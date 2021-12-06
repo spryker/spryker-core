@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
+use Generated\Shared\Transfer\StoreRelationTransfer;
+
 interface DiscountRepositoryInterface
 {
     /**
@@ -22,4 +24,32 @@ interface DiscountRepositoryInterface
      * @return bool
      */
     public function hasPriorityField(): bool;
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return array<\Generated\Shared\Transfer\MoneyValueTransfer>
+     */
+    public function getDiscountAmountCollectionForDiscount(int $idDiscount): array;
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getDiscountStoreRelations(int $idDiscount): StoreRelationTransfer;
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return bool
+     */
+    public function discountExists(int $idDiscount): bool;
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return bool
+     */
+    public function discountVoucherPoolExists(int $idDiscount): bool;
 }

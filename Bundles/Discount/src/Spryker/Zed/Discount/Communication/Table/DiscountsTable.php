@@ -65,7 +65,7 @@ class DiscountsTable extends AbstractTable
     /**
      * @var string
      */
-    public const DATE_FORMAT = 'Y-m-d';
+    public const DATE_FORMAT = 'Y-m-d H:i';
 
     /**
      * @var string
@@ -389,7 +389,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function createTimePeriod(SpyDiscount $discountEntity)
     {
-        return $discountEntity->getValidFrom(static::DATE_FORMAT) . ' - ' . $discountEntity->getValidTo(static::DATE_FORMAT);
+        return $discountEntity->getValidFrom(static::DATE_FORMAT) . ' UTC - ' . $discountEntity->getValidTo(static::DATE_FORMAT) . ' UTC';
     }
 
     /**

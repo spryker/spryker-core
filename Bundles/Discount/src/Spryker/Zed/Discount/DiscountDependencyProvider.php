@@ -24,6 +24,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
+use Spryker\Zed\Discount\Dependency\External\DiscountToSymfonyValidationAdapter;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
@@ -63,6 +64,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
+    /**
+     * @var string
+     */
+    public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**
      * @var string
@@ -171,6 +177,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addDiscountableItemExpanderStrategyPlugins($container);
+        $container = $this->addValidationAdapter($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -292,6 +300,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new DiscountToMessengerBridge($container->getLocator()->messenger()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::ADAPTER_VALIDATION, function () {
+            return new DiscountToSymfonyValidationAdapter();
         });
 
         return $container;

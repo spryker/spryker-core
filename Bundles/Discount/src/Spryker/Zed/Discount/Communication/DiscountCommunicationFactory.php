@@ -35,6 +35,7 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface getEntityManager()
  */
 class DiscountCommunicationFactory extends AbstractCommunicationFactory
 {

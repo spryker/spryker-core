@@ -153,10 +153,10 @@ class DiscountCreatePage
         $i->amZed();
         $i->amLoggedInUser();
 
-        $validTo = (new DateTime())->setDate(date('Y') + 1, 1, 1)->format('Y-m-d');
+        $validTo = (new DateTime())->setDate(date('Y') + 1, 1, 1)->format('d.m.Y H:i');
         $dynamicData = [
             'name' => $this->discountData[$discountName]['name'] . ' ' . random_int(1, PHP_INT_MAX),
-            'validFrom' => '2016-01-01',
+            'validFrom' => '01.01.2016 00:00',
             'validTo' => $validTo,
             'dayNumber' => date('N'),
             'applyWhen' => 'day-of-week = \'' . date('N') . '\'',
