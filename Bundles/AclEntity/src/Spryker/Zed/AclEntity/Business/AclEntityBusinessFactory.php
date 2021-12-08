@@ -11,6 +11,8 @@ use Spryker\Service\AclEntity\AclEntityServiceInterface;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
 use Spryker\Zed\AclEntity\Business\Expander\AclRolesExpander;
 use Spryker\Zed\AclEntity\Business\Expander\AclRolesExpanderInterface;
+use Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilter;
+use Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface;
 use Spryker\Zed\AclEntity\Business\Reader\AclEntityMetadataConfigReader;
 use Spryker\Zed\AclEntity\Business\Reader\AclEntityMetadataConfigReaderInterface;
 use Spryker\Zed\AclEntity\Business\Reader\AclEntityReader;
@@ -75,6 +77,7 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
         return new AclEntityMetadataConfigReader(
             $this->getAclEntityMetadataCollectionExpanderPlugins(),
             $this->createAclEntityMetadataConfigValidator(),
+            $this->createAclEntityMetadataConfigFilter(),
         );
     }
 
@@ -142,6 +145,14 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function createAclEntityMetadataConfigValidator(): AclEntityMetadataConfigValidatorInterface
     {
         return new AclEntityMetadataConfigValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface
+     */
+    public function createAclEntityMetadataConfigFilter(): AclEntityMetadataConfigFilterInterface
+    {
+        return new AclEntityMetadataConfigFilter();
     }
 
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Zed\AclEntity\Business\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AclEntityMetadataConfigEntityNotFoundException extends Exception
 {
     /**

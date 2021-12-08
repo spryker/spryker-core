@@ -22,7 +22,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\AclEntity\AclEntityConstants;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
-use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigEntityNotFoundException;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigInvalidKeyException;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigParentEntityNotFoundException;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityRuleReferencedEntityNotFoundException;
@@ -32,7 +31,6 @@ use Spryker\Zed\AclEntity\Business\Exception\ReferencedSegmentConnectorEntityNot
 use Spryker\Zed\AclEntity\Business\Exception\SegmentConnectorEntityNotFoundException;
 use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigExpanderPluginMock;
 use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock;
-use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithWrongEntityExpanderPluginMock;
 use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithWrongParentEntityExpanderPluginMock;
 
 /**
@@ -331,15 +329,15 @@ class AclEntityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAclEntityMetadataConfigThrowsAclEntityMetadataConfigEntityNotFoundException(): void
+    public function testGetAclEntityMetadataConfigThrowsAclEntityMetadataConfigInvalidKeyException(): void
     {
         // Arrange
         $aclEntityFacade = $this->tester->getFacade();
         $this->tester->setDependency(AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER, [
-            new AclEntityMetadataConfigWithWrongEntityExpanderPluginMock(),
+            new AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock(),
         ]);
 
-        $this->expectException(AclEntityMetadataConfigEntityNotFoundException::class);
+        $this->expectException(AclEntityMetadataConfigInvalidKeyException::class);
 
         // Act
         $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
@@ -357,23 +355,6 @@ class AclEntityFacadeTest extends Unit
         ]);
 
         $this->expectException(AclEntityMetadataConfigParentEntityNotFoundException::class);
-
-        // Act
-        $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAclEntityMetadataConfigThrowsAclEntityMetadataConfigInvalidKeyException(): void
-    {
-        // Arrange
-        $aclEntityFacade = $this->tester->getFacade();
-        $this->tester->setDependency(AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER, [
-            new AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock(),
-        ]);
-
-        $this->expectException(AclEntityMetadataConfigInvalidKeyException::class);
 
         // Act
         $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();

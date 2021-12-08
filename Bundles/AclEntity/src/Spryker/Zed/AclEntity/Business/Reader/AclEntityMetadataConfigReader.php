@@ -9,6 +9,7 @@ namespace Spryker\Zed\AclEntity\Business\Reader;
 
 use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface;
 use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface;
 
 class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInterface
@@ -24,15 +25,23 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
     protected $aclEntityMetadataConfigValidator;
 
     /**
+     * @var \Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface
+     */
+    protected $aclEntityMetadataConfigFilter;
+
+    /**
      * @param array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface> $aclEntityMetadataCollectionExpandPlugins
      * @param \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator
+     * @param \Spryker\Zed\AclEntity\Business\Filter\AclEntityMetadataConfigFilterInterface $aclEntityMetadataConfigFilter
      */
     public function __construct(
         array $aclEntityMetadataCollectionExpandPlugins,
-        AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator
+        AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator,
+        AclEntityMetadataConfigFilterInterface $aclEntityMetadataConfigFilter
     ) {
         $this->aclEntityMetadataCollectionExpandPlugins = $aclEntityMetadataCollectionExpandPlugins;
         $this->aclEntityMetadataConfigValidator = $aclEntityMetadataConfigValidator;
+        $this->aclEntityMetadataConfigFilter = $aclEntityMetadataConfigFilter;
     }
 
     /**
@@ -50,6 +59,9 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
             );
         }
         if ($runValidation) {
+            $aclEntityMetadataConfigTransfer = $this->aclEntityMetadataConfigFilter->filter(
+                $aclEntityMetadataConfigTransfer,
+            );
             $this->aclEntityMetadataConfigValidator->validate($aclEntityMetadataConfigTransfer);
         }
 

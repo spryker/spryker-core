@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
+use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface;
 
 class AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock implements AclEntityMetadataConfigExpanderPluginInterface
@@ -26,7 +27,7 @@ class AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock implements AclEnti
         return $aclEntityMetadataConfigTransfer->setAclEntityMetadataCollection(
             (new AclEntityMetadataCollectionTransfer())
                 ->addAclEntityMetadata(
-                    'test',
+                    SpyUser::class,
                     (new AclEntityMetadataTransfer())
                         ->setEntityName(SpyMerchant::class),
                 ),

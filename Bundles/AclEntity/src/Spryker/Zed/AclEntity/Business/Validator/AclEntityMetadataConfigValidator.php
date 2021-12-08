@@ -10,7 +10,6 @@ namespace Spryker\Zed\AclEntity\Business\Validator;
 use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
-use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigEntityNotFoundException;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigInvalidKeyException;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigParentEntityNotFoundException;
 use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigParentRequiredException;
@@ -39,7 +38,6 @@ class AclEntityMetadataConfigValidator implements AclEntityMetadataConfigValidat
     /**
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @throws \Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigEntityNotFoundException
      * @throws \Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigParentRequiredException
      * @throws \Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigParentEntityNotFoundException
      *
@@ -47,10 +45,6 @@ class AclEntityMetadataConfigValidator implements AclEntityMetadataConfigValidat
      */
     protected function validateEntities(AclEntityMetadataTransfer $aclEntityMetadataTransfer): void
     {
-        if (!class_exists($aclEntityMetadataTransfer->getEntityNameOrFail())) {
-            throw new AclEntityMetadataConfigEntityNotFoundException($aclEntityMetadataTransfer->getEntityNameOrFail());
-        }
-
         if ($aclEntityMetadataTransfer->getIsSubEntity() && !$aclEntityMetadataTransfer->getParent()) {
             throw new AclEntityMetadataConfigParentRequiredException($aclEntityMetadataTransfer->getEntityNameOrFail());
         }
