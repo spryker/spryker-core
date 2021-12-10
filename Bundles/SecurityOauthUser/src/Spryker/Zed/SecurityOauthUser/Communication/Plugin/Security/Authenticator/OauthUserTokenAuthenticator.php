@@ -35,7 +35,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
      *
      * @return \Symfony\Component\Security\Guard\Token\GuardTokenInterface
      */
-    public function createAuthenticatedToken(UserInterface $user, string $providerKey)
+    public function createAuthenticatedToken(UserInterface $user, $providerKey)
     {
         return $this->getFactory()->createPostAuthenticationGuardToken($user, $providerKey);
     }
@@ -122,7 +122,7 @@ class OauthUserTokenAuthenticator extends AbstractPlugin implements Authenticato
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return $this->getFactory()
             ->createOauthUserAuthenticationSuccessHandler()

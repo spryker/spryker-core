@@ -45,7 +45,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername($username)
     {
         if (!$this->isLoadingApplicable()) {
             throw new UnsupportedUserException();
@@ -97,7 +97,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
      *
      * @return bool
      */
-    public function supportsClass(string $class)
+    public function supportsClass($class)
     {
         return is_a($class, SecurityOauthUser::class, true);
     }

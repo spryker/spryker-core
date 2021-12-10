@@ -13,3 +13,4 @@ parameters:
         - '#Parameter \#3 \$limit of function preg_split expects int, null given.#'
         - '#Method .+CalculatorFormDataProvider::getCalculatorPlugins\(\) should return array<.+DiscountCalculatorPluginInterface> but returns array<\(int\|string\)>.#'
         - '#Method .+CalculatorFormDataProvider::getCalculatorPlugins\(\) should return array<.+DiscountCalculatorPluginInterface> but returns array<int\|string, string>.#'
+        - '#PHPDoc tag @throws with type UnexpectedTypeException is not subtype of Throwable#'

@@ -89,8 +89,11 @@ class FilterPreferencesCest
         $i->amOnPage(FilterPreferencesPage::URL_LIST);
 
         $i->click(FilterPreferencesPage::SELECTOR_SYNC_FILTERS);
+        $i->wait(5);
 
-        $i->wait(1);
+        $i->selectOption(FilterPreferencesPage::SELECTOR_TABLE_LENGTH, '100');
+        $i->wait(5);
+
         $i->canSeeCurrentUrlEquals(FilterPreferencesPage::URL_LIST);
         $i->canSee('Filter preferences synchronization was successful.');
     }

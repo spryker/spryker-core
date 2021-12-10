@@ -1,4 +1,7 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+      - '#Parameter \#1 \$id of method .+PriceProductOfferToTranslatorFacadeInterface::trans\(\) expects string, object|string given.#'
+

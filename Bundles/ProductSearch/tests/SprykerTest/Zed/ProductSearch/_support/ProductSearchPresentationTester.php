@@ -140,6 +140,8 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
+        $this->waitForText('Attribute to search was successfully updated.');
+
         $this->seeInPageSource('Attribute to search was successfully updated.');
     }
 
@@ -156,7 +158,8 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->seeInPageSource('Attribute to search was successfully deactivated.');
+        $this->waitForText('Attribute to search was successfully deactivated.', 20);
+        $this->canSee('Attribute to search was successfully deactivated.');
     }
 
     /**
@@ -168,8 +171,7 @@ class ProductSearchPresentationTester extends Actor
     {
         $this->amOnPage(SearchPreferencesPage::URL_LIST);
         $this->fillField(SearchPreferencesPage::SELECTOR_TABLE_SEARCH, $attributeKey);
-        $this->wait(3);
-
-        $this->canSee($attributeKey, SearchPreferencesPage::SELECTOR_TABLE_FIRST_CELL);
+        $this->waitForElement(SearchPreferencesPage::SELECTOR_TABLE_FIRST_CELL, 20);
+        $this->canSeeElement(SearchPreferencesPage::SELECTOR_TABLE_FIRST_CELL);
     }
 }

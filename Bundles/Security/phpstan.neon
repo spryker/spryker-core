@@ -16,3 +16,6 @@ parameters:
         - '#Instantiated class Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener not found.#'
         - '#Parameter \#1 \$subscriber of method Symfony\\Component\\EventDispatcher\\EventDispatcherInterface::addSubscriber\(\) expects Symfony\\Component\\EventDispatcher\\EventSubscriberInterface, Symfony\\Component\\Security\\Http\\EventListener\\RememberMeLogoutListener given.#'
         - '#Parameter \#2 \$hasherFactory of class .+UserPasswordValidator constructor expects .+PasswordHasherFactoryInterface, .+EncoderFactoryInterface given#'
+        - '#Class .+LogoutEvent not found.#'
+        - '#Call to method .+ on an unknown class .+LogoutEvent.#'
+        - '#Parameter \$event of method .+onLogout\(\) has invalid typehint type .+LogoutEvent.#'

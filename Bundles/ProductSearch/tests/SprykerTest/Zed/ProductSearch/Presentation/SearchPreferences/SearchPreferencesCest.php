@@ -41,7 +41,7 @@ class SearchPreferencesCest
      */
     public function addAndEditAndDeactivateAttributeToSearch(ProductSearchPresentationTester $i): void
     {
-        $attributeKey = 'foooooo';
+        $attributeKey = 'foooooo_' . rand(100, 999);
         $i->addAttributeToSearch($attributeKey);
         $i->updateAttributeToSearch($attributeKey);
         $i->deactivateAttributeToSearch($attributeKey);
@@ -54,7 +54,7 @@ class SearchPreferencesCest
      */
     public function synchronizeFilterPreferences(ProductSearchPresentationTester $i): void
     {
-        $attributeKey = 'foooooo';
+        $attributeKey = 'foooooo_' . rand(100, 999);
         $i->addAttributeToSearch($attributeKey);
 
         $i->amOnPage(SearchPreferencesPage::URL_LIST);

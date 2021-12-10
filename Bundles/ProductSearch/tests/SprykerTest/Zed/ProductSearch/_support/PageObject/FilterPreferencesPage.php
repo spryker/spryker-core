@@ -83,4 +83,9 @@ class FilterPreferencesPage
      * @var string
      */
     public const SELECTOR_BUTTON_DELETE = '//form[@name="delete_filter_preferences_form"]/button';
+
+    /**
+     * @var string
+     */
+    public const SELECTOR_TABLE_LENGTH = '.dataTables_length select';
 }

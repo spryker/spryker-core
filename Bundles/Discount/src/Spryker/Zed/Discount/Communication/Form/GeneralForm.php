@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Discount\Communication\Form\Constraint\Sequentially;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,7 +21,6 @@ use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Sequentially;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -314,6 +314,21 @@ class GeneralForm extends AbstractType
             '%max%' => $maxValue,
         ]);
 
+        $constraints = [
+            'constraints' => [
+                new Range([
+                    'min' => $minValue,
+                    'max' => $maxValue,
+                    'notInRangeMessage' => $priorityRangeErrorMessage,
+                    'invalidMessage' => $priorityRangeErrorMessage,
+                ]),
+                new Regex([
+                    'pattern' => '/^\d+$/',
+                    'message' => $priorityRangeErrorMessage,
+                ]),
+            ],
+        ];
+
         $builder->add(static::FIELD_PRIORITY, TextType::class, [
             'label' => static::FIELD_PRIORITY_LABEL,
             'required' => false,
@@ -327,20 +342,7 @@ class GeneralForm extends AbstractType
             ],
             'empty_data' => $maxValue,
             'constraints' => [
-                new Sequentially([
-                    'constraints' => [
-                        new Range([
-                            'min' => $minValue,
-                            'max' => $maxValue,
-                            'notInRangeMessage' => $priorityRangeErrorMessage,
-                            'invalidMessage' => $priorityRangeErrorMessage,
-                        ]),
-                        new Regex([
-                            'pattern' => '/^\d+$/',
-                            'message' => $priorityRangeErrorMessage,
-                        ]),
-                    ],
-                ]),
+                new Sequentially($constraints),
             ],
         ]);
 

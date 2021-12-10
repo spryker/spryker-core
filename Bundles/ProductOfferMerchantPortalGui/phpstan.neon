@@ -1,4 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Method .+ should return .+Query but returns .+Criteria#'
+        - '#Parameter \#1 \$message of method .+ValidationErrorTransfer::setMessage\(\) expects string|null, object|string given.#'
