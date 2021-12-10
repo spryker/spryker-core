@@ -44,6 +44,20 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     protected const ACL_ROLE_PRODUCT_VIEWER_REFERENCE = 'product-viewer-for-offer-creation';
 
     /**
+     * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
+     *
+     * @var string
+     */
+    protected const ROOT_GROUP = 'root_group';
+
+    /**
+     * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::ROLE_BACK_OFFICE_USER
+     *
+     * @var string
+     */
+    protected const AUTH_ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
+
+    /**
      * Specification:
      * - Defines set of AclRules to assigned for merchant-specific AclRole.
      *
@@ -377,5 +391,35 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             ->setType(static::RULE_TYPE_ALLOW);
 
         return $ruleTransfers;
+    }
+
+    /**
+     * Specification:
+     * - Defines set of Authentication Roles to provide Merchant User login to backoffice.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getRolesWithBackofficeAccess(): array
+    {
+        return [
+            static::AUTH_ROLE_BACK_OFFICE_USER,
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Defines set of Acl Group references of Merchant Used to provide login to backoffice.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getBackofficeAllowedAclGroupReferences(): array
+    {
+        return [
+            static::ROOT_GROUP,
+        ];
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 
 interface AclMerchantPortalFacadeInterface
 {
@@ -62,4 +63,18 @@ interface AclMerchantPortalFacadeInterface
     public function expandAclEntityMetadataConfig(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if the filtered role is not configured as Backoffice login authentication role.
+     * - Returns false if the user has ACL group with Backoffice access, true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function checkUserRoleFilterCondition(UserTransfer $userTransfer, string $role): bool;
 }

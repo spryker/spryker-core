@@ -21,7 +21,6 @@ use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToMessengerFacadeInterf
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToSecurityFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeInterface;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserPasswordResetFacadeInterface;
-use Spryker\Zed\SecurityGui\SecurityGuiConfig;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
@@ -61,20 +60,18 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserProvider(): UserProvider
     {
-        return new UserProvider();
+        return new UserProvider($this->getUserRoleFilterPlugins());
     }
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param array<string> $roles
      *
      * @return \Spryker\Zed\SecurityGui\Communication\Security\UserInterface
      */
-    public function createSecurityUser(UserTransfer $userTransfer): UserInterface
+    public function createSecurityUser(UserTransfer $userTransfer, array $roles): UserInterface
     {
-        return new User(
-            $userTransfer,
-            [SecurityGuiConfig::ROLE_BACK_OFFICE_USER],
-        );
+        return new User($userTransfer, $roles);
     }
 
     /**
@@ -131,5 +128,13 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getAuthenticationLinkPlugins(): array
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_AUTHENTICATION_LINK);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface>
+     */
+    public function getUserRoleFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_USER_ROLE_FILTER);
     }
 }

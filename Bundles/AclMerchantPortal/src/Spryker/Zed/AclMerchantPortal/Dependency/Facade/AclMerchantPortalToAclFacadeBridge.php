@@ -79,4 +79,14 @@ class AclMerchantPortalToAclFacadeBridge implements AclMerchantPortalToAclFacade
     {
         return $this->aclFacade->addUserToGroup($idUser, $idGroup);
     }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\GroupsTransfer
+     */
+    public function getUserGroups($idUser)
+    {
+        return $this->aclFacade->getUserGroups($idUser);
+    }
 }

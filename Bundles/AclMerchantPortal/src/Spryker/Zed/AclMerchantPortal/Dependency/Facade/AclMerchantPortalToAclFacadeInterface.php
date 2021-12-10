@@ -51,4 +51,11 @@ interface AclMerchantPortalToAclFacadeInterface
      * @return int
      */
     public function addUserToGroup($idUser, $idGroup);
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\GroupsTransfer
+     */
+    public function getUserGroups($idUser);
 }

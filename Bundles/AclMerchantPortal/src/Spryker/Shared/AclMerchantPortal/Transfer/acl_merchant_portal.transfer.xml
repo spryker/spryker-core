@@ -116,4 +116,8 @@
         <property name="user" type="User"/>
     </transfer>
 
+    <transfer name="Groups">
+        <property name="groups" type="Group[]" singular="group"/>
+    </transfer>
+
 </transfers>

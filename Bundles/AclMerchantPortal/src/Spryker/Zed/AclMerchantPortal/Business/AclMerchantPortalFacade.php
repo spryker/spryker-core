@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -61,5 +62,22 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
         return $this->getFactory()
             ->createAclEntityMetadataConfigExpander()
             ->expandAclEntityMetadataConfig($aclEntityMetadataConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function checkUserRoleFilterCondition(UserTransfer $userTransfer, string $role): bool
+    {
+        return $this->getFactory()
+            ->createUserRoleFilterConditionChecker()
+            ->checkUserRoleFilterCondition($userTransfer, $role);
     }
 }

@@ -20,6 +20,13 @@ class MerchantUserConfig extends AbstractBundleConfig
     public const USER_CREATION_DEFAULT_STATUS = 'blocked';
 
     /**
+     * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::ROLE_BACK_OFFICE_USER
+     *
+     * @var string
+     */
+    protected const AUTH_ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
+
+    /**
      * @api
      *
      * @return string
@@ -50,5 +57,15 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function getMerchantPortalBaseUrl(): string
     {
         return $this->get(MerchantUserConstants::BASE_URL_MP);
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getBackofficeUserAuthRoles(): array
+    {
+        return [static::AUTH_ROLE_BACK_OFFICE_USER];
     }
 }

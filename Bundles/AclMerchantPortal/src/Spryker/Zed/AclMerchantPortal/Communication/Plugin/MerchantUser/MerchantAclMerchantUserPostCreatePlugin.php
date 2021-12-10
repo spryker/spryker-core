@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePl
 /**
  * @method \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface getFacade()
  * @method \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig getConfig()
+ * @method \Spryker\Zed\AclMerchantPortal\Communication\AclMerchantPortalCommunicationFactory getFactory()
  */
 class MerchantAclMerchantUserPostCreatePlugin extends AbstractPlugin implements MerchantUserPostCreatePluginInterface
 {

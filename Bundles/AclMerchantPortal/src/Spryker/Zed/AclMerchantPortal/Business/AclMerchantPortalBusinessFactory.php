@@ -8,6 +8,8 @@
 namespace Spryker\Zed\AclMerchantPortal\Business;
 
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider;
+use Spryker\Zed\AclMerchantPortal\Business\ConditionChecker\MerchantUser\UserRoleFilterConditionChecker;
+use Spryker\Zed\AclMerchantPortal\Business\ConditionChecker\MerchantUser\UserRoleFilterConditionCheckerInterface;
 use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntity\AclEntityMetadataConfigExpander;
 use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntity\AclEntityMetadataConfigExpanderInterface;
 use Spryker\Zed\AclMerchantPortal\Business\Generator\AclMerchantPortalGenerator;
@@ -52,6 +54,17 @@ class AclMerchantPortalBusinessFactory extends AbstractBusinessFactory
     public function createAclEntityMetadataConfigExpander(): AclEntityMetadataConfigExpanderInterface
     {
         return new AclEntityMetadataConfigExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\AclMerchantPortal\Business\ConditionChecker\MerchantUser\UserRoleFilterConditionCheckerInterface
+     */
+    public function createUserRoleFilterConditionChecker(): UserRoleFilterConditionCheckerInterface
+    {
+        return new UserRoleFilterConditionChecker(
+            $this->getConfig(),
+            $this->getAclFacade(),
+        );
     }
 
     /**

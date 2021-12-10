@@ -20,6 +20,8 @@ use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReader;
 use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdaterInterface;
+use Spryker\Zed\MerchantUser\Business\UserRoleFilter\BackofficeMerchantUserRoleFilter;
+use Spryker\Zed\MerchantUser\Business\UserRoleFilter\BackofficeMerchantUserRoleFilterInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
@@ -95,6 +97,18 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantUser\Business\UserRoleFilter\BackofficeMerchantUserRoleFilterInterface
+     */
+    public function createBackofficeMerchantUserRoleFilter(): BackofficeMerchantUserRoleFilterInterface
+    {
+        return new BackofficeMerchantUserRoleFilter(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getMerchantUserRoleFilterPreConditionPlugins(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface
      */
     public function createMerchantUserAuthenticator(): MerchantUserAuthenticatorInterface
@@ -140,5 +154,13 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getMerchantUserPostCreatePlugins(): array
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::PLUGINS_MERCHANT_USER_POST_CREATE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserRoleFilterPreConditionPluginInterface>
+     */
+    public function getMerchantUserRoleFilterPreConditionPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::PLUGINS_MERCHANT_USER_ROLE_FILTER_PRE_CONDITION);
     }
 }

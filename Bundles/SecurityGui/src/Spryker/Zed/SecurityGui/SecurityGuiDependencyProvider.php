@@ -45,6 +45,11 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_AUTHENTICATION_LINK = 'PLUGINS_AUTHENTICATION_LINK';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_USER_ROLE_FILTER = 'PLUGINS_USER_ROLE_FILTER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -58,6 +63,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessengerFacade($container);
         $container = $this->addSecurityFacade($container);
         $container = $this->addAuthenticationLinkPlugins($container);
+        $container = $this->addUserRoleFilterPlugins($container);
 
         return $container;
     }
@@ -155,9 +161,31 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserRoleFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_ROLE_FILTER, function () {
+            return $this->getUserRoleFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface>
      */
     protected function getAuthenticationLinkPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface>
+     */
+    protected function getUserRoleFilterPlugins(): array
     {
         return [];
     }

@@ -19,6 +19,7 @@ use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
 use Spryker\Zed\MerchantUser\MerchantUserDependencyProvider;
+use Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserRoleFilterPreConditionPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -527,6 +528,92 @@ class MerchantUserFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->isValidPassword($password, $hash);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUserRolesWithMetPreconditions(): void
+    {
+        // Arrange
+        $preConditionPlugin = $this->getMockBuilder(MerchantUserRoleFilterPreConditionPluginInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['checkCondition'])
+            ->getMock();
+        $preConditionPlugin->expects($this->once())->method('checkCondition')
+            ->willReturn(true);
+
+        $this->tester->setDependency(MerchantUserDependencyProvider::PLUGINS_MERCHANT_USER_ROLE_FILTER_PRE_CONDITION, function () use ($preConditionPlugin) {
+            return [
+                $preConditionPlugin,
+            ];
+        });
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        // Act
+        $roles = $this->tester->getFacade()->filterUserRoles(
+            $userTransfer,
+            ['ROLE_BACK_OFFICE_USER'],
+        );
+
+        // Assert
+        $this->assertSame($roles, []);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUserRolesWithUnmetPrecondition(): void
+    {
+        // Arrange
+        $preConditionPlugin = $this->getMockBuilder(MerchantUserRoleFilterPreConditionPluginInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['checkCondition'])
+            ->getMock();
+        $preConditionPlugin->expects($this->once())->method('checkCondition')
+            ->willReturn(false);
+
+        $this->tester->setDependency(MerchantUserDependencyProvider::PLUGINS_MERCHANT_USER_ROLE_FILTER_PRE_CONDITION, function () use ($preConditionPlugin) {
+            return [
+                $preConditionPlugin,
+            ];
+        });
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        // Act
+        $roles = $this->tester->getFacade()->filterUserRoles(
+            $userTransfer,
+            ['ROLE_BACK_OFFICE_USER'],
+        );
+
+        // Assert
+        $this->assertSame($roles, ['ROLE_BACK_OFFICE_USER']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterUserRolesWithNoPreconditionPlugins(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        // Act
+        $roles = $this->tester->getFacade()->filterUserRoles(
+            $userTransfer,
+            ['ROLE_BACK_OFFICE_USER'],
+        );
+
+        // Assert
+        $this->assertSame($roles, []);
     }
 
     /**

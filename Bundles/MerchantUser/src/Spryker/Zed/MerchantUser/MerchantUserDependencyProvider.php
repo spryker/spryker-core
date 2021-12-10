@@ -45,6 +45,11 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_MERCHANT_USER_POST_CREATE = 'PLUGINS_MERCHANT_USER_POST_CREATE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_ROLE_FILTER_PRE_CONDITION = 'PLUGINS_MERCHANT_USER_ROLE_FILTER_PRE_CONDITION';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -58,6 +63,7 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantFacade($container);
         $container = $this->addUserPasswordResetFacade($container);
         $container = $this->addMerchantUserPostCreatePlugins($container);
+        $container = $this->addMerchantUserRoleFilterPreConditionPlugins($container);
 
         return $container;
     }
@@ -144,6 +150,28 @@ class MerchantUserDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface>
      */
     protected function getMerchantUserPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserRoleFilterPreConditionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_ROLE_FILTER_PRE_CONDITION, function (Container $container) {
+            return $this->getMerchantUserRoleFilterPreConditionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserRoleFilterPreConditionPluginInterface>
+     */
+    protected function getMerchantUserRoleFilterPreConditionPlugins(): array
     {
         return [];
     }

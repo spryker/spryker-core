@@ -227,4 +227,19 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     {
         return $this->getFactory()->getUserFacade()->isValidPassword($password, $hash);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param array<string> $roles
+     *
+     * @return array<string>
+     */
+    public function filterUserRoles(UserTransfer $userTransfer, array $roles): array
+    {
+        return $this->getFactory()->createBackofficeMerchantUserRoleFilter()->filterUserRoles($userTransfer, $roles);
+    }
 }

@@ -4,4 +4,7 @@
     <transfer name="OauthAuthenticationLink">
     </transfer>
 
+    <transfer name="User">
+    </transfer>
+
 </transfers>

@@ -28,6 +28,11 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_ACL = 'FACADE_ACL';
 
     /**
+     * @var string
+     */
+    public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -37,6 +42,20 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addAclEntityFacade($container);
+        $container = $this->addAclFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addAclFacade($container);
 
         return $container;

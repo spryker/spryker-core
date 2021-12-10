@@ -114,4 +114,14 @@ class SecurityGuiConfig extends AbstractBundleConfig
     {
         return static::MAX_LENGTH_USER_PASSWORD;
     }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getDefaultBackofficeAuthenticationRoles(): array
+    {
+        return [static::ROLE_BACK_OFFICE_USER];
+    }
 }

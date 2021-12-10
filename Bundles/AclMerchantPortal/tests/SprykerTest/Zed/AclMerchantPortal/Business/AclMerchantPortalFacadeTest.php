@@ -193,6 +193,60 @@ class AclMerchantPortalFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCheckUserRoleFilterConditionForRootGroupAndProperRole(): void
+    {
+        //Arrange
+        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'root_group']);
+        $userTransfer = $this->tester->haveUser();
+        $aclFacade = $this->tester->getLocator()->acl()->facade();
+
+        // Act
+        $aclFacade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+        $boolCondition = $this->tester->getFacade()->checkUserRoleFilterCondition($userTransfer, 'ROLE_BACK_OFFICE_USER');
+
+        // Assert
+        $this->assertFalse($boolCondition);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckUserRoleFilterConditionForRootGroupAndWrongRole(): void
+    {
+        //Arrange
+        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'root_group']);
+        $userTransfer = $this->tester->haveUser();
+        $aclFacade = $this->tester->getLocator()->acl()->facade();
+
+        // Act
+        $aclFacade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+        $boolCondition = $this->tester->getFacade()->checkUserRoleFilterCondition($userTransfer, 'WRONG_ROLE');
+
+        // Assert
+        $this->assertTrue($boolCondition);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckUserRoleFilterConditionForNotRootGroupAndProperRole(): void
+    {
+        //Arrange
+        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'not_root_groop']);
+        $userTransfer = $this->tester->haveUser();
+        $aclFacade = $this->tester->getLocator()->acl()->facade();
+
+        // Act
+        $aclFacade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
+        $boolCondition = $this->tester->getFacade()->checkUserRoleFilterCondition($userTransfer, 'ROLE_BACK_OFFICE_USER');
+
+        // Assert
+        $this->assertTrue($boolCondition);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
      *
      * @return void

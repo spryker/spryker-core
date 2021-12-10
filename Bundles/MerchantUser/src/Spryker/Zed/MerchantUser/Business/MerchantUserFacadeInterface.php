@@ -196,4 +196,18 @@ interface MerchantUserFacadeInterface
      * @return bool
      */
     public function isValidPassword($password, $hash): bool;
+
+    /**
+     * Specification:
+     * - Filters array of Symfony security authentication roles for Merchant users.
+     * - Executes `MerchantUserRoleFilterPreConditionPluginInterface` plugins to check if a role should be filtered out.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     * @param array<string> $roles
+     *
+     * @return array<string>
+     */
+    public function filterUserRoles(UserTransfer $userTransfer, array $roles): array;
 }

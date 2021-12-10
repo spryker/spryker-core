@@ -22,6 +22,19 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class UserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
+     * @var array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface>
+     */
+    protected $userRoleFilterPlugins;
+
+    /**
+     * @param array $userRoleFilterPlugins
+     */
+    public function __construct(array $userRoleFilterPlugins)
+    {
+        $this->userRoleFilterPlugins = $userRoleFilterPlugins;
+    }
+
+    /**
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -37,7 +50,10 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
         }
 
         return $this->getFactory()
-            ->createSecurityUser($userTransfer);
+            ->createSecurityUser(
+                $userTransfer,
+                $this->getUserAuthenticationRoles($userTransfer),
+            );
     }
 
     /**
@@ -59,7 +75,11 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
             throw new UsernameNotFoundException();
         }
 
-        return $this->getFactory()->createSecurityUser($userTransfer);
+        return $this->getFactory()
+            ->createSecurityUser(
+                $userTransfer,
+                $this->getUserAuthenticationRoles($userTransfer),
+            );
     }
 
     /**
@@ -96,5 +116,21 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
     protected function findUserTransfer(UserInterface $user): ?UserTransfer
     {
         return $this->findUserByUsername($user->getUsername());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return array<string>
+     */
+    protected function getUserAuthenticationRoles(UserTransfer $userTransfer): array
+    {
+        $roles = $this->getConfig()->getDefaultBackofficeAuthenticationRoles();
+
+        foreach ($this->userRoleFilterPlugins as $roleFilterPlugin) {
+            $roles = $roleFilterPlugin->filter($userTransfer, $roles);
+        }
+
+        return $roles;
     }
 }
