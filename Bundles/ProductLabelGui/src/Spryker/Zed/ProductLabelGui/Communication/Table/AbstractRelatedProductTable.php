@@ -33,6 +33,11 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     public const COL_SELECT_CHECKBOX = 'select-checkbox';
 
     /**
+     * @var array<string>
+     */
+    protected const DB_BOOLEAN_TRUE_VALUES = ['1', 'true'];
+
+    /**
      * @var \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface
      */
     protected $tableQueryBuilder;
@@ -228,7 +233,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV,
         );
         $states = explode(',', $statesCsv);
-        $isActive = in_array('1', $states, true);
+        $isActive = (bool)array_intersect(static::DB_BOOLEAN_TRUE_VALUES, $states);
 
         $statusName = $isActive ? 'Active' : 'Inactive';
         $statusCssClass = $isActive ? 'label-info' : 'label-danger';
