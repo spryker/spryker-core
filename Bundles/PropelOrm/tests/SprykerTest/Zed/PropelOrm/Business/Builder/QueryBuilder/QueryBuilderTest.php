@@ -10,11 +10,7 @@ namespace SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder;
 use Codeception\Test\Unit;
 use Propel\Generator\Builder\Om\ObjectBuilder;
 use Propel\Generator\Builder\Om\TableMapBuilder;
-use Propel\Generator\Model\Column;
-use Propel\Generator\Model\Database;
 use Propel\Generator\Model\PropelTypes;
-use Propel\Generator\Model\Table;
-use Propel\Generator\Platform\DefaultPlatform;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
@@ -32,6 +28,21 @@ use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
  */
 class QueryBuilderTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const COLUMN_NAME = 'test_column';
+
+    /**
+     * @var string
+     */
+    protected const TABLE_NAME = 'foo';
+
+    /**
+     * @var string
+     */
+    protected const TABLE_NAMESPACE = 'SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder';
+
     /**
      * @var \SprykerTest\Zed\PropelOrm\PropelOrmBusinessTester
      */
@@ -54,12 +65,17 @@ class QueryBuilderTest extends Unit
      */
     protected function _before(): void
     {
-        $table = new Table('Foo');
-        $column = new Column('testColumn', PropelTypes::INTEGER);
-        $table->addColumn($column);
-        $table->setNamespace('SprykerTest\Zed\PropelOrm\Business\Builder\QueryBuilder');
-        $table->setDatabase(new Database('TestDB', new DefaultPlatform()));
-
+        $colunms = [
+            [
+                'name' => static::COLUMN_NAME,
+                'type' => PropelTypes::INTEGER,
+            ],
+        ];
+        $table = $this->tester->createTable(
+            static::TABLE_NAME,
+            $colunms,
+            static::TABLE_NAMESPACE,
+        );
         $this->tester->writePropelFiles($this->getFilesToGenerate(), $table);
     }
 
@@ -70,5 +86,24 @@ class QueryBuilderTest extends Unit
     {
         $testQuery = new FooQuery();
         $testQuery->filterByTestColumn([1, 2, 3], Criteria::NOT_IN);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindShouldNotThrowExceptionWhenSelectAndClearMethodsWereExecuted(): void
+    {
+        // Arrange
+        $foo = new Foo();
+        $foo->setTestColumn(1);
+        $foo->save();
+
+        $fooQuery = new FooQuery();
+        $fooQuery->select(static::COLUMN_NAME)->find();
+
+        $fooQuery->clear();
+
+        // Act
+        $fooQuery->find();
     }
 }

@@ -464,6 +464,7 @@ SCRIPT;
     {
         parent::clear();
 
+        \$this->isSelfSelected = false;
         \$this->forUpdate(false);
 
         return \$this;
