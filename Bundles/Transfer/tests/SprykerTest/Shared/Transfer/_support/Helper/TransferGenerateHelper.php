@@ -62,10 +62,16 @@ class TransferGenerateHelper extends Module
 
         $this->copySchemasFromDefinedSchemaDirectories();
 
-        $transferFacade->deleteGeneratedTransferObjects();
+        $transferFacade->deleteGeneratedDataTransferObjects();
+        $transferFacade->deleteGeneratedDataBuilderObjects();
+        $transferFacade->deleteGeneratedEntityTransferObjects();
 
         $this->debug('Generating Transfer Objects...');
         $transferFacade->generateTransferObjects(new NullLogger());
+
+        $this->debug('Generating Entity Transfer Objects...');
+        $this->debug('Note: Those are only generated while required schema files are available through usage of PropelHelper.');
+        $transferFacade->generateEntityTransferObjects(new NullLogger());
 
         $this->debug('Generating DataBuilders...');
         $transferFacade->generateDataBuilders(new NullLogger());

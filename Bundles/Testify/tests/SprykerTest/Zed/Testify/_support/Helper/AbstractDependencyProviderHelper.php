@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Testify\Helper;
 
-use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -19,6 +18,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
 use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
 
@@ -28,19 +28,12 @@ abstract class AbstractDependencyProviderHelper extends Module
     use ContainerMocker;
     use ContainerHelperTrait;
     use StaticVariablesHelper;
+    use ClassResolverTrait;
 
     /**
      * @var string
      */
-    protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Zed\%2$s\%2$sDependencyProvider';
-
-    /**
-     * @var array
-     */
-    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
-        'SprykerShopTest',
-        'SprykerSdkTest',
-    ];
+    protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sDependencyProvider';
 
     /**
      * @var \Spryker\Zed\Kernel\AbstractBundleDependencyProvider|null
@@ -88,6 +81,8 @@ abstract class AbstractDependencyProviderHelper extends Module
     /**
      * @param string|null $moduleName
      *
+     * @throws \Exception
+     *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function getModuleContainer(?string $moduleName = null): Container
@@ -98,7 +93,12 @@ abstract class AbstractDependencyProviderHelper extends Module
         }
 
         $moduleName = $this->getModuleName($moduleName);
-        $dependencyProvider = $this->createDependencyProvider($moduleName);
+        $dependencyProvider = $this->resolveClass(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, $moduleName);
+
+        if (!$dependencyProvider) {
+            throw new Exception(sprintf('You tried to create an unknown dependecy provider %s', $moduleName));
+        }
+
         $container = $this->provide($dependencyProvider, $container);
 
         /** @var \Spryker\Zed\Kernel\Container $container */
@@ -127,9 +127,9 @@ abstract class AbstractDependencyProviderHelper extends Module
     public function mockDependencyProviderMethod(string $methodName, $return, ?string $moduleName = null): AbstractBundleDependencyProvider
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getDependencyProviderClassName($moduleName);
+        $className = $this->resolveClassName(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, $moduleName);
 
-        if (!method_exists($className, $methodName)) {
+        if (!$className || !method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
         }
 
@@ -140,38 +140,6 @@ abstract class AbstractDependencyProviderHelper extends Module
         $this->dependencyProviderStub = $dependencyProvider;
 
         return $this->dependencyProviderStub;
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return \Spryker\Zed\Kernel\AbstractBundleDependencyProvider
-     */
-    protected function createDependencyProvider(string $moduleName): AbstractBundleDependencyProvider
-    {
-        $dependencyProviderClassName = $this->getDependencyProviderClassName($moduleName);
-
-        return new $dependencyProviderClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getDependencyProviderClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-        $namespacePrefix = $namespaceParts[0];
-
-        $classNameCandidate = sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
-
-        if (in_array($namespacePrefix, static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
-            return $classNameCandidate;
-        }
-
-        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, rtrim($namespacePrefix, 'Test'), $moduleName);
     }
 
     /**

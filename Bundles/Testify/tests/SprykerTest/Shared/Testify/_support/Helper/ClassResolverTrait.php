@@ -14,11 +14,14 @@ trait ClassResolverTrait
     use LocatorHelperTrait;
 
     /**
-     * @var array<string>
+     * @var array<array-key, string>
      */
     protected $coreNamespaces = [
         'Spryker',
         'SprykerShop',
+        'SprykerSdk',
+        'SprykerMiddleware',
+        'SprykerEco',
     ];
 
     /**
@@ -67,7 +70,6 @@ trait ClassResolverTrait
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
-
         $classNameCandidates = [];
         $classNameCandidates[] = sprintf($classNamePattern, $this->trimTestNamespacePostfix($namespaceParts[0]), $namespaceParts[1], $moduleName);
 
