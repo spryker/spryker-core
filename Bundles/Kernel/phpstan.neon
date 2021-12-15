@@ -16,5 +16,9 @@ parameters:
         - '#Method .+Abstract.+::resolveBundleConfig\(\) should return .+AbstractBundleConfig but returns Spryker\\Shared\\Kernel\\AbstractBundleConfig#'
         - '#Unreachable statement - code above always terminates.#'
         - '#Anonymous function should return object but returns object.#'
-        - '#Parameter \#1 \$\w+ of function .+ expects callable\(\): mixed, array\(.+\) given.#'
+        - '#Unsafe access to private property .+::\$instance through static::.#'
+        - '#Parameter \#1 \$\w+ of function .+ expects callable\(\): mixed, array\{.+\} given.#'
         - '#Parameter \#1 \$value of method .+AbstractTransfer::addValuesToCollection\(\) expects array<string, mixed>\|ArrayObject<string, mixed>, Countable given.#'
+        - { message: '#Call to an undefined method Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::.+.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/EntityManager/TransferToEntityMapper.php' }
+        - { message: '#Call to an undefined method Spryker\\Shared\\Kernel\\ContainerInterface::set\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ContainerMocker/ContainerMocker.php' }
+        - { message: '#Array \(array.+\) does not accept object.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/BundleProxy.php' }

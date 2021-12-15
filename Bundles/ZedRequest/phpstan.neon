@@ -7,3 +7,4 @@ parameters:
     ignoreErrors:
         - '#Unsafe usage of new static\(\)#'
         - { message: '#Unreachable statement - code above always terminates#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php' }
+        - '#Dead catch \- GuzzleHttp\\Exception\\RequestException is never thrown in the try block.#'

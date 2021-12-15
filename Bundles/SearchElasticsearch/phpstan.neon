@@ -37,4 +37,5 @@ parameters:
         - "#Strict comparison using === between '' and 'docker.dev' will always evaluate to false.#"
         - '#Result of \|\| is always false.#'
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed, mixed\): bool\)\|null, ''strlen'' given.#'
+        - '#Method Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\Mapping.+::buildMapping\(\) has invalid return type Elastica.+Mapping#'
     reportUnmatchedIgnoredErrors: false

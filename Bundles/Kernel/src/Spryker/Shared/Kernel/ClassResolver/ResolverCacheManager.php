@@ -66,6 +66,7 @@ class ResolverCacheManager implements ResolverCacheFactoryInterface
         if ($this->cacheProvider === null) {
             $className = Config::get(KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER, File::class);
 
+            /** @var \Spryker\Shared\Kernel\ClassResolver\Cache\ProviderInterface $cacheProvider */
             $cacheProvider = new $className();
 
             $this->assertProviderInterface($cacheProvider);

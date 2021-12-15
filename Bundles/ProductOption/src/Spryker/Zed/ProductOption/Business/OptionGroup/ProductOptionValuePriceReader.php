@@ -42,17 +42,17 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     protected $priceFacade;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $netPriceModeIdentifierBuffer;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $grossPriceModeIdentifierBuffer;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer
+     * @var \Generated\Shared\Transfer\StoreTransfer|null
      */
     protected static $currentStoreTransferBuffer;
 
@@ -293,7 +293,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrentStore()
     {
-        if (!isset(static::$currentStoreTransferBuffer)) {
+        if (static::$currentStoreTransferBuffer === null) {
             static::$currentStoreTransferBuffer = $this->storeFacade->getCurrentStore();
         }
 
@@ -319,7 +319,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getNetPriceModeIdentifier()
     {
-        if (!isset(static::$netPriceModeIdentifierBuffer)) {
+        if (static::$netPriceModeIdentifierBuffer === null) {
             static::$netPriceModeIdentifierBuffer = $this->priceFacade->getNetPriceModeIdentifier();
         }
 
@@ -331,7 +331,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getGrossPriceModeIdentifier()
     {
-        if (!isset(static::$grossPriceModeIdentifierBuffer)) {
+        if (static::$grossPriceModeIdentifierBuffer === null) {
             static::$grossPriceModeIdentifierBuffer = $this->priceFacade->getGrossPriceModeIdentifier();
         }
 

@@ -65,6 +65,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     public function mapTransferCollection($transferClassName, ActiveRecordInterface $parentEntity)
     {
+        /** @var \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $transfer */
         $transfer = new $transferClassName();
         $transfer->fromArray($parentEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
 
@@ -107,6 +108,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     protected function mapEntity(array $transferArray, $entityNamespace)
     {
+        /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity */
         $entity = new $entityNamespace();
         $entity->fromArray($transferArray);
 

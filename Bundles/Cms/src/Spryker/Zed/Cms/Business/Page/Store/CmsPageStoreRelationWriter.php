@@ -42,7 +42,7 @@ class CmsPageStoreRelationWriter implements CmsPageStoreRelationWriterInterface
         $storeRelationTransfer->requireIdEntity();
 
         $currentIdStores = $this->getIdStoresByIdCmsPage($storeRelationTransfer->getIdEntity());
-        $requestedIdStores = $storeRelationTransfer->getIdStores() ?? [];
+        $requestedIdStores = $storeRelationTransfer->getIdStores();
 
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);

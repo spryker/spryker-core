@@ -92,6 +92,7 @@ class AclEntityEntityManager extends AbstractEntityManager implements AclEntityE
      */
     protected function createAclEntitySegmentRelations(AclEntitySegmentRequestTransfer $aclEntitySegmentRequestTransfer): void
     {
+        /** @phpstan-var class-string<\Orm\Zed\AclEntity\Persistence\Base\SpyAclEntityRule> $entityName */
         $entityName = $aclEntitySegmentRequestTransfer->getEntity();
 
         foreach ($aclEntitySegmentRequestTransfer->getEntityIds() as $key => $entityIds) {

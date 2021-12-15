@@ -70,7 +70,7 @@ class PaginationQueryMapper implements PaginationQueryMapperInterface
         ModelCriteria $query,
         PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     ) {
-        if ($propelQueryBuilderPaginationTransfer->getOffset() || $propelQueryBuilderPaginationTransfer->getOffset()) {
+        if ($propelQueryBuilderPaginationTransfer->getOffset()) {
             $query->setOffset($propelQueryBuilderPaginationTransfer->getOffset());
 
             return $query;

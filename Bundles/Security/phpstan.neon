@@ -18,4 +18,4 @@ parameters:
         - '#Parameter \#2 \$hasherFactory of class .+UserPasswordValidator constructor expects .+PasswordHasherFactoryInterface, .+EncoderFactoryInterface given#'
         - '#Class .+LogoutEvent not found.#'
         - '#Call to method .+ on an unknown class .+LogoutEvent.#'
-        - '#Parameter \$event of method .+onLogout\(\) has invalid typehint type .+LogoutEvent.#'
+        - '#Parameter \$event of method .+onLogout\(\) has invalid type .+LogoutEvent.#'

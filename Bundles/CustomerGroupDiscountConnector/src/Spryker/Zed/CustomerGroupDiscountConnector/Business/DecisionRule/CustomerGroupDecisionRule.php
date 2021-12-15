@@ -59,7 +59,7 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
             ->getCustomerGroupCollectionByIdCustomer($customerTransfer->getIdCustomer());
 
         $customerGroups = $customerGroupCollectionTransfer->getGroups();
-        if (empty($customerGroups)) {
+        if (!$customerGroups || count($customerGroups) === 0) {
             return false;
         }
 

@@ -67,17 +67,15 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
             ->find();
 
         $result = [];
-        if (!empty($addresses)) {
-            foreach ($addresses as $address) {
-                $result[$address->getIdCustomerAddress()] = sprintf(
-                    '%s %s (%s, %s %s)',
-                    $address->getFirstName(),
-                    $address->getLastName(),
-                    $address->getAddress1(),
-                    $address->getZipCode(),
-                    $address->getCity(),
-                );
-            }
+        foreach ($addresses as $address) {
+            $result[$address->getIdCustomerAddress()] = sprintf(
+                '%s %s (%s, %s %s)',
+                $address->getFirstName(),
+                $address->getLastName(),
+                $address->getAddress1(),
+                $address->getZipCode(),
+                $address->getCity(),
+            );
         }
 
         return $result;

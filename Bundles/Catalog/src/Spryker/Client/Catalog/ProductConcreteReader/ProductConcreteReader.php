@@ -69,7 +69,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {
         $this->mapFilters($productConcreteCriteriaFilterTransfer);
-        $this->expandQuery($productConcreteCriteriaFilterTransfer->getRequestParams() ?? []);
+        $this->expandQuery($productConcreteCriteriaFilterTransfer->getRequestParams());
 
         return $this->searchClient->search($this->productConcretePageSearchQueryPlugin, $this->productConcretePageSearchResultFormatterPlugins);
     }
@@ -114,7 +114,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             return;
         }
 
-        $requestParams = $productConcreteCriteriaFilterTransfer->getRequestParams() ?? [];
+        $requestParams = $productConcreteCriteriaFilterTransfer->getRequestParams();
         $requestParams[$this->config->getItemsPerPageParameterName()] = $productConcreteCriteriaFilterTransfer->getLimit();
 
         $productConcreteCriteriaFilterTransfer->setRequestParams($requestParams);

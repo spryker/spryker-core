@@ -29,7 +29,7 @@ class Json implements JsonInterface
             $options = static::DEFAULT_OPTIONS;
         }
 
-        if ($depth === null) {
+        if ($depth === null || $depth === 0) {
             $depth = static::DEFAULT_DEPTH;
         }
 
@@ -52,7 +52,7 @@ class Json implements JsonInterface
             $options = static::DEFAULT_OPTIONS;
         }
 
-        if ($depth === null) {
+        if ($depth === null || $depth === 0) {
             $depth = static::DEFAULT_DEPTH;
         }
 

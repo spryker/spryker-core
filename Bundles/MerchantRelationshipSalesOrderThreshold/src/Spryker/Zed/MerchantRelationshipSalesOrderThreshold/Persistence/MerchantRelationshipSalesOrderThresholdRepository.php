@@ -47,7 +47,7 @@ class MerchantRelationshipSalesOrderThresholdRepository extends AbstractReposito
             ->joinWithSalesOrderThresholdType()
             ->find();
 
-        if (empty($merchantRelationshipSalesOrderThresholdEntities)) {
+        if (count($merchantRelationshipSalesOrderThresholdEntities) === 0) {
             return [];
         }
 

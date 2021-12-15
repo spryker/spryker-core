@@ -1,5 +1,3 @@
 parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
-    ignoreErrors:
-        - '#Parameter \#2 \$\w+ of function array\_filter expects .*callable\(mixed, mixed\): .+, ''glob'' given#'

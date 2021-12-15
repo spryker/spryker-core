@@ -227,7 +227,7 @@ class Sellable implements SellableInterface
         ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): SellableItemResponseTransfer {
         $sellableItemResponseTransfer = new SellableItemResponseTransfer();
-        $availableQuantity = $sellableItemRequestTransfer->getQuantityOrFail() ?? new Decimal(0);
+        $availableQuantity = $sellableItemRequestTransfer->getQuantityOrFail();
         $sellableItemResponseTransfer->setSku($sellableItemRequestTransfer->getSku());
         $sellableItemResponseTransfer->setAvailableQuantity(0);
 

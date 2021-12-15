@@ -1,4 +1,8 @@
 parameters:
     checkMissingIterableValueType: false
+    ignoreErrors:
+    -
+        message: '#Parameter \#2 \$levels of function dirname expects int\<1, max\>, int given.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/DataExport/src/Spryker/Zed/DataExport/DataExportConfig.php'
 includes:
     - phpstan-baseline.neon

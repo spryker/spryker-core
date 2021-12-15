@@ -158,9 +158,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @phpstan-return array<class-string<array<\Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface>>>
-     *
-     * @return array<string>
+     * @return array<string, mixed>
      */
     public function getStrategyGroupToDataProviderMap(): array
     {

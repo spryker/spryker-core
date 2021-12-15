@@ -18,4 +18,6 @@ parameters:
         - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactory.php' }
         - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Mapping\\MappingFactoryInterface::createMapping\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Mapping/MappingFactoryInterface.php' }
         - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Exporter\\Writer\\Search\\ElasticsearchMarkerWriter::getMapping\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php' }
+        - '#Method .+\(\) has invalid return type Elastica\\Type\\Mapping.#'
+        - '#Method .+TypeAwareIndexAdapter::getType\(\) has invalid return type Elastica\\Type.#'
     reportUnmatchedIgnoredErrors: false

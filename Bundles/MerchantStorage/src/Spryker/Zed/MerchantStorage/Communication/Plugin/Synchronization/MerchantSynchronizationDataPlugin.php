@@ -140,6 +140,6 @@ class MerchantSynchronizationDataPlugin extends AbstractPlugin implements Synchr
                 ->fromArray($merchantStorageEntity->toArray(), true);
         }
 
-        return $synchronizationDataTransfers ?? [];
+        return $synchronizationDataTransfers;
     }
 }

@@ -105,6 +105,7 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
             return null;
         }
 
+        /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $restResourceAttributesTransfer */
         $restResourceAttributesTransfer = new $className();
         if ($restResourceAttributesTransfer instanceof AbstractTransfer) {
             $restResourceAttributesTransfer->fromArray($data[RestResourceInterface::RESOURCE_ATTRIBUTES], true);

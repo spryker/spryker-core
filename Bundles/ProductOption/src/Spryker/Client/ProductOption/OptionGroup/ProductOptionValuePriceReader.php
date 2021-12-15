@@ -27,12 +27,12 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     protected $currencyClient;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $currentCurrencyCodeBuffer;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $currentPriceModeBuffer;
 
@@ -102,7 +102,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrentCurrencyCode()
     {
-        if (!isset(static::$currentCurrencyCodeBuffer)) {
+        if (static::$currentCurrencyCodeBuffer === null) {
             static::$currentCurrencyCodeBuffer = $this->currencyClient->getCurrent()->getCode();
         }
 
@@ -114,7 +114,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
      */
     protected function getCurrentPriceMode()
     {
-        if (!isset(static::$currentPriceModeBuffer)) {
+        if (static::$currentPriceModeBuffer === null) {
             static::$currentPriceModeBuffer = $this->priceClient->getCurrentPriceMode();
         }
 

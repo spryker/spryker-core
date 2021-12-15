@@ -103,7 +103,7 @@ class ReturnReader implements ReturnReaderInterface
         if ($restRequest->getPage()) {
             $filterTransfer
                 ->setOffset($restRequest->getPage()->getOffset())
-                ->setLimit($restRequest->getPage()->getLimit() ?? 0);
+                ->setLimit($restRequest->getPage()->getLimit());
         }
 
         return (new ReturnFilterTransfer())

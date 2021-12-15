@@ -154,6 +154,7 @@ class ErrorHandlerFactory
      */
     protected function createWebErrorRenderer($errorRenderer)
     {
+        /** @phpstan-var class-string<\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface> $errorRenderer */
         return new $errorRenderer($this->application);
     }
 }

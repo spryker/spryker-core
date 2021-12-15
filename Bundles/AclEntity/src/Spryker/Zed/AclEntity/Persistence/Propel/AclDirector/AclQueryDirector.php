@@ -296,6 +296,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
             ->getRootAclEntityMetadataTransferForEntitySubClass($aclEntityMetadataTransfer->getEntityNameOrFail());
         $rootEntityClass = $rootEntityAclEntityMetadataTransfer->getEntityNameOrFail();
 
+        /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $rootEntity */
         $rootEntity = new $rootEntityClass();
         $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
             $rootEntity,

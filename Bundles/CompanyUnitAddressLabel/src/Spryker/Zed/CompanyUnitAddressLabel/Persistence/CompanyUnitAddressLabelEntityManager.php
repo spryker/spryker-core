@@ -24,7 +24,7 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
         $labelCollection = $companyUnitAddressTransfer->getLabelCollection();
-        if (empty($labelCollection) || empty($labelCollection->getLabels())) {
+        if (!$labelCollection || count($labelCollection->getLabels()) === 0) {
             return;
         }
 

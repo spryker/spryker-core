@@ -42,6 +42,7 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
         $adapterName = $this->getConfig()->getGraphAdapterName();
         $this->validateAdapterName($adapterName);
 
+        /** @var \Spryker\Shared\Graph\GraphAdapterInterface $adapter */
         $adapter = new $adapterName();
         $this->validateAdapterClass($adapter);
 

@@ -114,7 +114,7 @@ class TranslationTable extends AbstractTable
 
         $result = [];
 
-        if (!empty($locales)) {
+        if (count($locales) !== 0) {
             $localeName = $this->buildAlias(SpyLocaleTableMap::COL_LOCALE_NAME);
             $valueName = SpyGlossaryTranslationTableMap::COL_VALUE;
 

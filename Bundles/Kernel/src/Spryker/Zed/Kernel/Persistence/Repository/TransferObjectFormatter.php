@@ -113,6 +113,7 @@ class TransferObjectFormatter extends ArrayFormatter
     {
         $entityTransferName = '\Generated\Shared\Transfer\\' . $entityName . 'EntityTransfer';
 
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $entityTransfer */
         $entityTransfer = new $entityTransferName();
         $entityTransfer->fromArray($rowArray, true);
 

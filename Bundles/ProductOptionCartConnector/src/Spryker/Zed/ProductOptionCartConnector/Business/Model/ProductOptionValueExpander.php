@@ -26,7 +26,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
     protected $priceFacade;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected static $grossPriceModeIdentifierBuffer;
 
@@ -106,7 +106,7 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
      */
     protected function getGrossPriceModeIdentifier()
     {
-        if (!isset(static::$grossPriceModeIdentifierBuffer)) {
+        if (static::$grossPriceModeIdentifierBuffer === null) {
             static::$grossPriceModeIdentifierBuffer = $this->priceFacade->getGrossPriceModeIdentifier();
         }
 

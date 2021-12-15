@@ -25,12 +25,12 @@ class Event implements EventInterface
     protected $onEnter;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $command;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $timeout;
 
@@ -85,7 +85,7 @@ class Event implements EventInterface
      */
     public function hasCommand()
     {
-        return isset($this->command);
+        return $this->command !== null;
     }
 
     /**
@@ -183,7 +183,7 @@ class Event implements EventInterface
      */
     public function hasTimeout()
     {
-        return isset($this->timeout);
+        return $this->timeout !== null;
     }
 
     /**

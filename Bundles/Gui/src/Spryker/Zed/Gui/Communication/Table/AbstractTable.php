@@ -264,7 +264,6 @@ abstract class AbstractTable
         return function () use ($csvHeaders) {
             /** @var resource $csvHandle */
             $csvHandle = fopen('php://output', 'w+');
-
             $translatedHeaders = $this->translateCsvHeaders($csvHeaders);
 
             fputcsv($csvHandle, $translatedHeaders);

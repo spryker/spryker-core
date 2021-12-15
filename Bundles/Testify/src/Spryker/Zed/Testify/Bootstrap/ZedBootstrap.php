@@ -133,6 +133,7 @@ class ZedBootstrap
         $serviceProviders = $this->getServiceProvider();
         foreach ($serviceProviders as $serviceProvider) {
             if (!($serviceProvider instanceof ServiceProviderInterface)) {
+                /** @var \Silex\ServiceProviderInterface $serviceProvider */
                 $serviceProvider = new $serviceProvider();
             }
             $application->register($serviceProvider);
@@ -151,6 +152,7 @@ class ZedBootstrap
         $applicationPlugins = $this->getApplicationPlugins();
         foreach ($applicationPlugins as $applicationPlugin) {
             if (!($applicationPlugin instanceof ApplicationPluginInterface)) {
+                /** @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface $applicationPlugin */
                 $applicationPlugin = new $applicationPlugin();
             }
             $application->registerApplicationPlugin($applicationPlugin);

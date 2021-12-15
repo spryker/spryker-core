@@ -3,3 +3,4 @@ parameters:
     ignoreErrors:
         - '#Static call to instance method .+StorageClient::getFactory\(\).#'
         - '#Unsafe usage of new static\(\)#'
+        - { message: '#If condition is always true.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/Cache/StorageCacheIncrementalStrategy.php' }

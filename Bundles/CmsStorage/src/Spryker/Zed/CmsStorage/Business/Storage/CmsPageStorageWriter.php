@@ -167,7 +167,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         string $localeName,
         ?string $storeName = null
     ): void {
-        if (empty($cmsPageEntity->getSpyCmsVersions())) {
+        if (count($cmsPageEntity->getSpyCmsVersions()) === 0) {
             return;
         }
 

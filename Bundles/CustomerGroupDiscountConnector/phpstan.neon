@@ -1,0 +1,6 @@
+parameters:
+    checkMissingIterableValueType: false
+    ignoreErrors:
+    -
+        message: '#Negated boolean expression is always false.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Business/DecisionRule/CustomerGroupDecisionRule.php'

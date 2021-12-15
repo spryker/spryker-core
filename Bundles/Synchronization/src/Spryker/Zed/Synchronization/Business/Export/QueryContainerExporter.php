@@ -55,7 +55,7 @@ class QueryContainerExporter implements ExporterInterface
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin
-     * @param int $chunkSize
+     * @param int|null $chunkSize
      */
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,

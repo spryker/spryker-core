@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader;
 
-use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToTaxFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface;
 
@@ -38,7 +37,7 @@ class TaxRateReader implements TaxRateReaderInterface
      */
     public function getSalesOrderThresholdTaxRate(): float
     {
-        $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code() ?? SalesOrderThresholdConfig::DEFAULT_TAX_RATE_ISO2CODE;
+        $countryIso2Code = $this->taxFacade->getDefaultTaxCountryIso2Code();
         $taxRate = $this->repository->findMaxTaxRateByCountryIso2Code($countryIso2Code);
         if ($taxRate !== null) {
             return $taxRate;

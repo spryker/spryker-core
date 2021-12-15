@@ -179,12 +179,6 @@ class PriceVolumeCollectionDataProvider
             }
         }
 
-        if (empty($priceProductTransfers)) {
-            throw new PriceProductNotFoundException(
-                sprintf(static::MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR, $idProductConcrete),
-            );
-        }
-
         return reset($priceProductTransfers);
     }
 

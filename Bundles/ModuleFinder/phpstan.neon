@@ -1,5 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects .+, .+glob.+ given#'
         - '#Parameter \#1 \$closure of method .+Finder::sort\(\) expects Closure, callable\(\): mixed given.#'

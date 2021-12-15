@@ -1199,7 +1199,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected function resolveEditableButtonOptions(?array $editableButtonOptions, array $defaultOverwriteOptions): array
     {
         $editableButtonOptions = $editableButtonOptions ?? [];
-        $defaultOverwriteOptions = $defaultOverwriteOptions ?? [];
 
         $defaultOptions = [
             GuiTableEditableButtonTransfer::TITLE => null,

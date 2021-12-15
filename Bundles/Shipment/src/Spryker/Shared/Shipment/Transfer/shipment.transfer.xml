@@ -180,7 +180,7 @@
     <transfer name="ShipmentGroupResponse">
         <property name="shipmentGroup" type="ShipmentGroup"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message" singular="message"/>
+        <property name="messages" type="Message"/>
     </transfer>
 
     <transfer name="CalculableObject">

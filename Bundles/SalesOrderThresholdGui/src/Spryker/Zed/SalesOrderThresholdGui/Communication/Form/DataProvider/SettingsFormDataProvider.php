@@ -61,9 +61,6 @@ class SettingsFormDataProvider
     protected function createTaxSetsList(): array
     {
         $taxSetCollection = $this->taxFacade->getTaxSets();
-        if (empty($taxSetCollection)) {
-            return [];
-        }
 
         $taxSetList = [];
         foreach ($taxSetCollection->getTaxSets() as $taxSetTransfer) {

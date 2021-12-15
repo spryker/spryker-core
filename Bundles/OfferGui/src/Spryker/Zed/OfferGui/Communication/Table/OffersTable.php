@@ -104,32 +104,24 @@ class OffersTable extends AbstractTable
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\OfferGui\OfferGuiConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface $sanitizeService
      * @param \Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Spryker\Zed\OfferGui\OfferGuiConfig $config
      */
     public function __construct(
         OffersTableQueryBuilderInterface $queryBuilder,
         OfferGuiToMoneyFacadeInterface $moneyFacade,
         OfferGuiToCustomerFacadeInterface $customerFacade,
         OfferGuiToUtilSanitizeServiceInterface $sanitizeService,
-        OfferGuiToUtilDateTimeServiceInterface $utilDateTimeService,
-        OfferGuiConfig $config
+        OfferGuiToUtilDateTimeServiceInterface $utilDateTimeService
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
-        $this->config = $config;
     }
 
     /**

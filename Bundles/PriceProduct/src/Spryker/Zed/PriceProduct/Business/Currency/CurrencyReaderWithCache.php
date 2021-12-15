@@ -23,7 +23,7 @@ class CurrencyReaderWithCache implements CurrencyReaderInterface
     protected static $currencyCache = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer
+     * @var \Generated\Shared\Transfer\CurrencyTransfer|null
      */
     protected static $defaultCurrency;
 
@@ -40,7 +40,7 @@ class CurrencyReaderWithCache implements CurrencyReaderInterface
      */
     public function getDefaultCurrencyTransfer(): CurrencyTransfer
     {
-        if (!isset(static::$defaultCurrency)) {
+        if (static::$defaultCurrency === null) {
             static::$defaultCurrency = $this->currencyFacade->getDefaultCurrencyForCurrentStore();
         }
 

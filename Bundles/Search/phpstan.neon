@@ -18,6 +18,7 @@ parameters:
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, ''strlen'' given.#'
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed, mixed\): bool\)\|null, ''strlen'' given.#'
+        - '#Method .+::createMappingByName\(\) has invalid return type Elastica\\Type\\Mapping.#'
         - { message: '#Call to an undefined method .+QueryInterface::.+\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php' }

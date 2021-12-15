@@ -247,7 +247,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
             $nodeTransfer->setValidFrom($navigationTreeNodeTransfer->getNavigationNode()->getValidFrom());
             $nodeTransfer->setValidTo($navigationTreeNodeTransfer->getNavigationNode()->getValidTo());
 
-            if (!empty($navigationTreeNodeTransfer->getChildren())) {
+            if (count($navigationTreeNodeTransfer->getChildren()) !== 0) {
                 $nodeTransfer->setChildren($this->mapToNavigationNodeStorageTransfer($navigationTreeNodeTransfer->getChildren()));
             }
 

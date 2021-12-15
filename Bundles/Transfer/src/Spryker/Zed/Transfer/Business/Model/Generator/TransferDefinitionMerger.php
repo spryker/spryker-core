@@ -257,8 +257,8 @@ class TransferDefinitionMerger implements MergerInterface
      */
     protected function validateNonMergeableAttribute(string $attributeName, array $existingDefinition, array $definitionToMerge): bool
     {
-        $existingAttributeValue = isset($existingDefinition[$attributeName]) ?? false;
-        $newAttributeValue = isset($definitionToMerge[$attributeName]) ?? false;
+        $existingAttributeValue = isset($existingDefinition[$attributeName]);
+        $newAttributeValue = isset($definitionToMerge[$attributeName]);
 
         if ($existingAttributeValue !== $newAttributeValue) {
             return false;

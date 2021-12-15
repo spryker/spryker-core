@@ -37,6 +37,7 @@ class WidgetFactory implements WidgetFactoryInterface
         $this->assertClassIsWidgetPlugin($widgetClassName);
         $this->assertInitializeExists($widgetClassName);
 
+        /** @var \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface $widget */
         $widget = new $widgetClassName();
         call_user_func_array([$widget, 'initialize'], $arguments);
 

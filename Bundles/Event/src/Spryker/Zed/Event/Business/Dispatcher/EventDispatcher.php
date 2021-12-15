@@ -69,7 +69,7 @@ class EventDispatcher implements EventDispatcherInterface
     {
         $eventListeners = $this->extractEventListeners($eventName);
 
-        if (empty($eventListeners)) {
+        if (count($eventListeners) === 0) {
             return;
         }
 
@@ -99,7 +99,7 @@ class EventDispatcher implements EventDispatcherInterface
     {
         $eventListeners = $this->extractEventListeners($eventName);
 
-        if (empty($eventListeners)) {
+        if (count($eventListeners) === 0) {
             return;
         }
 
@@ -202,7 +202,10 @@ class EventDispatcher implements EventDispatcherInterface
     protected function findEventListenerContext(string $listenerName): EventListenerContextInterface
     {
         if ($this->isFullyQualifiedName($listenerName)) {
-            return new $listenerName();
+            /** @var \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $listener */
+            $listener = new $listenerName();
+
+            return $listener;
         }
 
         $foundListeners = $this->findListenersByShortName($listenerName);

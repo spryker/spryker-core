@@ -10,12 +10,12 @@ namespace Spryker\Zed\Oms\Business\Process;
 class Transition implements TransitionInterface
 {
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\EventInterface
+     * @var \Spryker\Zed\Oms\Business\Process\EventInterface|null
      */
     protected $event;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $condition;
 
@@ -75,7 +75,7 @@ class Transition implements TransitionInterface
      */
     public function hasCondition()
     {
-        return isset($this->condition);
+        return $this->condition !== null;
     }
 
     /**
@@ -101,7 +101,7 @@ class Transition implements TransitionInterface
      */
     public function hasEvent()
     {
-        return isset($this->event);
+        return $this->event !== null;
     }
 
     /**

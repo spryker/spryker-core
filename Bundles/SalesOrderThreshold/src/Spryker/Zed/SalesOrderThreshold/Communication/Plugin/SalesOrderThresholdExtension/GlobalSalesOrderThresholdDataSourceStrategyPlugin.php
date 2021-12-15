@@ -30,7 +30,7 @@ class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin i
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
-        if (empty($quoteTransfer->getItems())) {
+        if (count($quoteTransfer->getItems()) === 0) {
             return [];
         }
 

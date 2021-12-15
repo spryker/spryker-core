@@ -341,7 +341,10 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventTransfer($transferClass)
     {
-        return new $transferClass();
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer */
+        $transfer = new $transferClass();
+
+        return $transfer;
     }
 
     /**
@@ -351,7 +354,10 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function createEventListener($listenerClass)
     {
-        return new $listenerClass();
+        /** @var \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface|\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface $listener */
+        $listener = new $listenerClass();
+
+        return $listener;
     }
 
     /**

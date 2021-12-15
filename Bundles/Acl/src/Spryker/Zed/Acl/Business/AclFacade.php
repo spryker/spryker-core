@@ -53,9 +53,7 @@ class AclFacade extends AbstractFacade implements AclFacadeInterface
             ->createGroupModel()
             ->addGroup($groupName);
 
-        if (!empty($rolesTransfer)) {
-            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
-        }
+        $this->addRolesToGroup($groupTransfer, $rolesTransfer);
 
         return $groupTransfer;
     }

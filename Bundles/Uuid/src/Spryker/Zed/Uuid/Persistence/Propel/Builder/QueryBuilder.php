@@ -40,8 +40,10 @@ class QueryBuilder implements QueryBuilderInterface
         if (!class_exists($className)) {
             throw new Exception("Query '{$className}' not found.");
         }
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $class */
+        $class = new $className();
 
-        return new $className();
+        return $class;
     }
 
     /**

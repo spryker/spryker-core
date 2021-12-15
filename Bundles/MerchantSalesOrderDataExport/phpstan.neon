@@ -1,2 +1,3 @@
 parameters:
     ignoreErrors:
+        - { message: '#Parameter \#2 \$levels of function dirname expects int\<1, max\>, int given.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/MerchantSalesOrderDataExport/src/Spryker/Zed/MerchantSalesOrderDataExport/MerchantSalesOrderDataExportConfig.php' }

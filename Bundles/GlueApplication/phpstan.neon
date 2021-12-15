@@ -7,3 +7,4 @@ parameters:
     ignoreErrors:
         - '#Strict comparison using === between int<1, max> and 0 will always evaluate to false.#'
         - '#Method .+ResponsePagination::calculateTotalPages\(\) should return int but returns float.#'
+        - '#Cannot use array destructuring on callable.#'

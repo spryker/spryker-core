@@ -10,7 +10,7 @@ namespace Spryker\Service\UtilNetwork\Model;
 class Host implements HostInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected static $hostname;
 
@@ -19,7 +19,7 @@ class Host implements HostInterface
      */
     public function getHostname()
     {
-        if (!isset(static::$hostname)) {
+        if (static::$hostname === null) {
             static::$hostname = (gethostname()) ?: php_uname('n');
         }
 

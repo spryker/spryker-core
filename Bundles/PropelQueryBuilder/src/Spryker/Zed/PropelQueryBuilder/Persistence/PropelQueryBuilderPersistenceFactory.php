@@ -102,8 +102,10 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
         if (!$jsonMapperClassName) {
             throw new Exception('Unsupported JsonMapper type for current database engine');
         }
+        /** @var \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\JsonMapper\JsonMapperInterface $jsonMapper */
+        $jsonMapper = new $jsonMapperClassName();
 
-        return new $jsonMapperClassName();
+        return $jsonMapper;
     }
 
     /**

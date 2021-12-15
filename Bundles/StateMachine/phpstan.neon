@@ -3,3 +3,4 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#If condition is always true.#'
+        - '#SimpleXMLElement.+does not accept string.#'

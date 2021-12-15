@@ -103,7 +103,7 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             $stateMachineItemTransfers,
         );
 
-        return $transitionCount ?? 0;
+        return $transitionCount;
     }
 
     /**

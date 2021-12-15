@@ -151,7 +151,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 
     /**
-     * @var array<string, array<string, string>>
+     * @var array<string, array<string, mixed>>
      */
     protected const ERROR_IDENTIFIER_TO_REST_ERROR_MAPPING = [
         SharedCheckoutRestApiConfig::ERROR_IDENTIFIER_UNABLE_TO_DELETE_CART => [

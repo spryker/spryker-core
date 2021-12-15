@@ -373,10 +373,6 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
             return null;
         }
 
-        if (empty($hasValue)) {
-            return null;
-        }
-
         return $values;
     }
 

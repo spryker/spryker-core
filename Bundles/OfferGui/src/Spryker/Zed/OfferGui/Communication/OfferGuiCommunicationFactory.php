@@ -48,7 +48,6 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCustomerFacade(),
             $this->getUtilSanitize(),
             $this->getUtilDateTimeService(),
-            $this->getConfig(),
         );
     }
 

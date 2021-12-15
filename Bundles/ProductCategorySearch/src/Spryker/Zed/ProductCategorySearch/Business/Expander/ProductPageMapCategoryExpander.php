@@ -217,7 +217,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
         $currentCategoryParentNodeIds = $sortedCategories[$idCategoryNode][static::KEY_ALL_NODE_PARENTS];
 
         foreach ($sortedCategories as $idSortedCategoryNode => $sortedCategory) {
-            if ($idSortedCategoryNode === $idCategoryNode || !$this->hasCategoryParentNodes($sortedCategories, $idCategoryNode)) {
+            if ($idSortedCategoryNode === $idCategoryNode) {
                 continue;
             }
 

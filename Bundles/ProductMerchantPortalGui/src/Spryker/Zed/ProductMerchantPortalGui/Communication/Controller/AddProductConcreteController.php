@@ -339,11 +339,7 @@ class AddProductConcreteController extends AbstractController
     {
         $errors = [];
 
-        if (!$addProductConcreteForm->isSubmitted()) {
-            return $errors;
-        }
-
-        if ($addProductConcreteForm->isSubmitted() && $addProductConcreteForm->isValid()) {
+        if (!$addProductConcreteForm->isSubmitted() || $addProductConcreteForm->isValid()) {
             return $errors;
         }
 

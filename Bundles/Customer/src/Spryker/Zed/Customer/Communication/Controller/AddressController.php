@@ -65,9 +65,7 @@ class AddressController extends AbstractController
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress);
 
-        if (!empty($addressDetails)) {
-            $idCustomer = $addressDetails->getFkCustomer();
-        }
+        $idCustomer = $addressDetails->getFkCustomer();
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $addressForm = $this
