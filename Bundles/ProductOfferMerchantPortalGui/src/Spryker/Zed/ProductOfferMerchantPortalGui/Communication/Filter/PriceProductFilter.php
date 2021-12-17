@@ -52,7 +52,7 @@ class PriceProductFilter implements PriceProductFilterInterface
         MoneyValueTransfer $moneyValueTransfer,
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
     ): bool {
-        if (empty($priceProductOfferCriteriaTransfer->getCurrencyIds())) {
+        if (!$priceProductOfferCriteriaTransfer->getCurrencyIds()) {
             return true;
         }
 
@@ -72,7 +72,7 @@ class PriceProductFilter implements PriceProductFilterInterface
         MoneyValueTransfer $moneyValueTransfer,
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
     ): bool {
-        if (empty($priceProductOfferCriteriaTransfer->getStoreIds())) {
+        if (!$priceProductOfferCriteriaTransfer->getStoreIds()) {
             return true;
         }
 
@@ -92,7 +92,7 @@ class PriceProductFilter implements PriceProductFilterInterface
         PriceProductTransfer $priceProductTransfer,
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
     ): bool {
-        if (empty($priceProductOfferCriteriaTransfer->getPriceTypeIds())) {
+        if (!$priceProductOfferCriteriaTransfer->getPriceTypeIds()) {
             return true;
         }
 
@@ -112,7 +112,7 @@ class PriceProductFilter implements PriceProductFilterInterface
         PriceProductTransfer $priceProductTransfer,
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
     ): bool {
-        if (empty($priceProductOfferCriteriaTransfer->getVolumeQuantities())) {
+        if (!$priceProductOfferCriteriaTransfer->getVolumeQuantities()) {
             return true;
         }
 
@@ -132,7 +132,7 @@ class PriceProductFilter implements PriceProductFilterInterface
         PriceProductTransfer $priceProductTransfer,
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
     ): bool {
-        if (empty($priceProductOfferCriteriaTransfer->getPriceProductOfferIds())) {
+        if (!$priceProductOfferCriteriaTransfer->getPriceProductOfferIds()) {
             return true;
         }
 

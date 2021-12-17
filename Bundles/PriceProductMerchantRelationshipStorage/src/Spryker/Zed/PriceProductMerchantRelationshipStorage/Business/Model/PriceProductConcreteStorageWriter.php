@@ -98,7 +98,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
             );
 
             // Skip if no prices, the price entity will be deleted at the end
-            if (empty($priceProductMerchantRelationshipStorageTransfer->getPrices())) {
+            if (!$priceProductMerchantRelationshipStorageTransfer->getPrices()) {
                 continue;
             }
 

@@ -97,7 +97,7 @@ class ContentProductSetDataImportHelper extends Module
      */
     protected function createUtilEncodingService(): UtilEncodingServiceInterface
     {
-        if (empty($this->utilEncodingService)) {
+        if (!$this->utilEncodingService) {
             $this->utilEncodingService = new UtilEncodingService();
         }
 

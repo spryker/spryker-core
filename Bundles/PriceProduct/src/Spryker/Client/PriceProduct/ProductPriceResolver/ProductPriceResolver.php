@@ -343,7 +343,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      */
     protected function getPriceDataByPriceType(MoneyValueTransfer $moneyValueTransfer, array $priceDataByPriceType): array
     {
-        if (empty($moneyValueTransfer->getPriceDataByPriceType())) {
+        if (!$moneyValueTransfer->getPriceDataByPriceType()) {
             return $priceDataByPriceType;
         }
 

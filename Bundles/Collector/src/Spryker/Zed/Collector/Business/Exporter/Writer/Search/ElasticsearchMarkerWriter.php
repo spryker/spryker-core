@@ -78,7 +78,7 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
      */
     public function __destruct()
     {
-        if (!empty($this->metaData)) {
+        if ($this->metaData) {
             $mapping = $this->getMapping();
             $mapping->setMeta($this->metaData)->send();
         }

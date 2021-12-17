@@ -54,7 +54,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
      */
     public function isValid(): bool
     {
-        return empty($this->errors);
+        return !$this->errors;
     }
 
     /**

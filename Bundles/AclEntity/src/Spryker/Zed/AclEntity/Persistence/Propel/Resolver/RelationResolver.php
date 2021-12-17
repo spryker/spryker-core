@@ -258,7 +258,7 @@ class RelationResolver implements RelationResolverInterface
      */
     protected function isPivotTableConnectionStrategy(AclEntityMetadataTransfer $aclEntityMetadataTransfer): bool
     {
-        return !empty($aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityName());
+        return (bool)$aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityName();
     }
 
     /**

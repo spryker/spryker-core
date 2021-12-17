@@ -44,7 +44,7 @@ class AddLocalesStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        if (empty($this->locales)) {
+        if (!$this->locales) {
             $localeEntityCollection = SpyLocaleQuery::create()
                 ->filterByLocaleName($this->getLocales(), Criteria::IN)
                 ->find();

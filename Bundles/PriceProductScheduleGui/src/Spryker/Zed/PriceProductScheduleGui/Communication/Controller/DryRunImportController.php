@@ -241,7 +241,7 @@ class DryRunImportController extends AbstractController
             'importForm' => $priceProductScheduleImportForm->createView(),
             'priceProductScheduleList' => $priceProductScheduleList,
             'errorTable' => $errorTableData,
-            'renderSuccessTable' => empty($successTable->getData()) !== true,
+            'renderSuccessTable' => (bool)$successTable->getData(),
             'successTableView' => $successTable->render(),
         ]);
     }

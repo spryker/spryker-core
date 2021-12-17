@@ -404,7 +404,7 @@ class Builder implements BuilderInterface
 
             $process = $processMap[$processName];
 
-            if (!empty($xmlProcess->subprocesses)) {
+            if ($xmlProcess->subprocesses) {
                 $xmlSubProcesses = $xmlProcess->subprocesses->children();
 
                 foreach ($xmlSubProcesses as $xmlSubProcess) {
@@ -430,7 +430,7 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, static::PROCESS_NAME_ATTRIBUTE);
             $process = $processMap[$processName];
 
-            if (empty($xmlProcess->states)) {
+            if (!$xmlProcess->states) {
                 continue;
             }
 
@@ -493,7 +493,7 @@ class Builder implements BuilderInterface
     {
         /** @var \SimpleXMLElement $xmlProcess */
         foreach ($this->rootElement as $xmlProcess) {
-            if (empty($xmlProcess->transitions)) {
+            if (!$xmlProcess->transitions) {
                 continue;
             }
 

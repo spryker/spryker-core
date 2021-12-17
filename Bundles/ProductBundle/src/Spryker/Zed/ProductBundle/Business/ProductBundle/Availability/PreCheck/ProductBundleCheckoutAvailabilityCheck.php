@@ -116,7 +116,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getUniqueBundleItems(QuoteTransfer $quoteTransfer)
     {

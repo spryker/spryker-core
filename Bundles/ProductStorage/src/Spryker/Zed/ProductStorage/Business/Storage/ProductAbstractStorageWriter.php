@@ -427,7 +427,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function getSuperAttributeKeys(array $attributes)
     {
-        if (empty($this->superAttributeKeyBuffer)) {
+        if (!$this->superAttributeKeyBuffer) {
             $this->loadSuperAttributes();
         }
 

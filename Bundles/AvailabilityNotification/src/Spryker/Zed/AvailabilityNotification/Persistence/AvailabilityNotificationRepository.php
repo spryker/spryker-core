@@ -99,16 +99,16 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
     ): AvailabilityNotificationSubscriptionCollectionTransfer {
         $querySubscription = $this->querySubscription();
-        if (!empty($availabilityNotificationCriteriaTransfer->getCustomerReferences())) {
+        if ($availabilityNotificationCriteriaTransfer->getCustomerReferences()) {
             $querySubscription->filterByCustomerReference_In($availabilityNotificationCriteriaTransfer->getCustomerReferences());
         }
-        if (!empty($availabilityNotificationCriteriaTransfer->getStoreNames())) {
+        if ($availabilityNotificationCriteriaTransfer->getStoreNames()) {
             $querySubscription
                 ->innerJoinSpyStore()
                 ->useSpyStoreQuery()
                 ->filterByName_In($availabilityNotificationCriteriaTransfer->getStoreNames());
         }
-        if (!empty($availabilityNotificationCriteriaTransfer->getSkus())) {
+        if ($availabilityNotificationCriteriaTransfer->getSkus()) {
             $querySubscription->filterBySku_In($availabilityNotificationCriteriaTransfer->getSkus());
         }
 

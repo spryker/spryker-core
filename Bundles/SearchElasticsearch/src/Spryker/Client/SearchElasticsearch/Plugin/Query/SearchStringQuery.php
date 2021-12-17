@@ -67,7 +67,7 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
     {
         $baseQuery = new Query();
 
-        if (!empty($this->searchString)) {
+        if ($this->searchString) {
             $query = $this->createStringQuery($this->searchString);
         } else {
             $query = new MatchAll();

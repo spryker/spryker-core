@@ -215,7 +215,7 @@ class EditController extends AbstractController
     protected function saveMerchantRelationshipSalesOrderThreshold(
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): void {
-        if (empty($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold())) {
+        if (!$merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold()) {
             if ($merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()) {
                 $this->getFactory()
                     ->getMerchantRelationshipSalesOrderThresholdFacade()

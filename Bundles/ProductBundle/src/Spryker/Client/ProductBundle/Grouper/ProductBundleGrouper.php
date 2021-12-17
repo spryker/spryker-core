@@ -146,7 +146,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     /**
      * @param array<string, mixed> $options
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function sortOptions(array $options)
     {
@@ -183,17 +183,19 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $bundleItems
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
-     * @return array
+     * @return array<string, int>
      */
     protected function getGroupedBundleQuantity(ArrayObject $bundleItems, ArrayObject $items)
     {
         $groupedBundleQuantity = [];
         foreach ($bundleItems as $bundleItemTransfer) {
             $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
+            /** @var int $quantity */
+            $quantity = $bundleItemTransfer->getQuantity();
             if (!isset($groupedBundleQuantity[$bundleGroupKey])) {
-                $groupedBundleQuantity[$bundleGroupKey] = $bundleItemTransfer->getQuantity();
+                $groupedBundleQuantity[$bundleGroupKey] = $quantity;
             } else {
-                $groupedBundleQuantity[$bundleGroupKey] += $bundleItemTransfer->getQuantity();
+                $groupedBundleQuantity[$bundleGroupKey] += $quantity;
             }
         }
 
@@ -233,11 +235,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
+     * @param array<string, array<string, array<string, \Generated\Shared\Transfer\ItemTransfer>>> $bundleItems
      * @param \Generated\Shared\Transfer\ItemTransfer $bundledItemTransfer
      * @param string $bundleGroupKey
      *
-     * @return array
+     * @return array<string, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function groupBundledItems(array $bundleItems, ItemTransfer $bundledItemTransfer, $bundleGroupKey)
     {
@@ -268,10 +270,10 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItems
+     * @param array<string, array<string, array<string, \Generated\Shared\Transfer\ItemTransfer>>> $bundleItems
      * @param string $bundleGroupKey
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getAlreadyBundledItems(array $bundleItems, $bundleGroupKey)
     {

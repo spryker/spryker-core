@@ -105,7 +105,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     #[\ReturnTypeWillChange]
     public function valid()
     {
-        return !empty($this->batchData);
+        return $this->batchData !== [];
     }
 
     /**

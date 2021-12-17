@@ -363,7 +363,7 @@ class CreateProductAbstractController extends AbstractController
         $errors = [];
         /** @var \Generated\Shared\Transfer\RowValidationTransfer $rowValidationTransfer */
         foreach ($tableValidationResponseTransfer->getRowValidations() as $index => $rowValidationTransfer) {
-            $errors[$index] = !empty($rowValidationTransfer->getErrors()) ? $rowValidationTransfer->toArray() : [];
+            $errors[$index] = $rowValidationTransfer->getErrors() ? $rowValidationTransfer->toArray() : [];
         }
 
         return $errors;

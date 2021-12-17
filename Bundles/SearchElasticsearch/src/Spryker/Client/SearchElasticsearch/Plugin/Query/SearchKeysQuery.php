@@ -77,7 +77,7 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
     {
         $baseQuery = new Query();
 
-        if (!empty($this->searchString)) {
+        if ($this->searchString) {
             $query = $this->createFullTextSearchQuery($this->searchString);
         } else {
             $query = new MatchAll();

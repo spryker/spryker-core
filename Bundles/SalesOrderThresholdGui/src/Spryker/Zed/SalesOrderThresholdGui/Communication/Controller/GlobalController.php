@@ -161,7 +161,7 @@ class GlobalController extends AbstractController
      */
     protected function saveSalesOrderThreshold(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): void
     {
-        if (empty($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold())) {
+        if (!$salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getThreshold()) {
             if ($salesOrderThresholdTransfer->getIdSalesOrderThreshold()) {
                 $this->getFactory()
                     ->getSalesOrderThresholdFacade()

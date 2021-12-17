@@ -114,7 +114,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
      */
     protected function getCurrentCurrencyCode(): string
     {
-        if (!isset(static::$currentCurrencyCodeBuffer)) {
+        if (static::$currentCurrencyCodeBuffer === null) {
             static::$currentCurrencyCodeBuffer = $this->currencyClient->getCurrent()->getCode();
         }
 
@@ -126,7 +126,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
      */
     protected function getCurrentPriceMode(): string
     {
-        if (!isset(static::$currentPriceModeBuffer)) {
+        if (static::$currentPriceModeBuffer === null) {
             static::$currentPriceModeBuffer = $this->priceClient->getCurrentPriceMode();
         }
 

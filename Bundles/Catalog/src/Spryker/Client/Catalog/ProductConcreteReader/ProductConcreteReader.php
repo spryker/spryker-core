@@ -96,7 +96,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             return;
         }
 
-        if (empty($productConcreteCriteriaFilterTransfer->getSearchString())) {
+        if (!$productConcreteCriteriaFilterTransfer->getSearchString()) {
             return;
         }
 

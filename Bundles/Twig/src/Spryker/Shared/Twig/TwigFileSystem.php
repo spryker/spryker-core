@@ -57,7 +57,7 @@ class TwigFileSystem extends FilesystemLoader
 
         $path = rtrim($path, '/\\');
 
-        if (empty($this->paths)) {
+        if (!$this->paths) {
             $this->paths[] = $path;
         } else {
             array_unshift($this->paths, $path);

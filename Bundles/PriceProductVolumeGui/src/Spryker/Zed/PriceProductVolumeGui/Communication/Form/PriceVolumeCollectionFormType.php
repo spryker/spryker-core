@@ -190,7 +190,7 @@ class PriceVolumeCollectionFormType extends AbstractType
         $savedPriceProductVolumeItemTransfers = [];
 
         return function (PriceProductVolumeItemTransfer $priceProductVolumeItemTransfer, ExecutionContextInterface $context) use (&$savedPriceProductVolumeItemTransfers) {
-            if (empty(array_filter($priceProductVolumeItemTransfer->toArray()))) {
+            if (!array_filter($priceProductVolumeItemTransfer->toArray())) {
                 return;
             }
 

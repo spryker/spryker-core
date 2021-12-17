@@ -62,7 +62,7 @@ class MetaDataProvider implements MetaDataProviderInterface
      */
     public function getAvailableFields()
     {
-        if (!isset($this->availableFieldsBuffer)) {
+        if ($this->availableFieldsBuffer === null) {
             $this->loadAvailableFieldsBuffers();
         }
 
@@ -76,7 +76,7 @@ class MetaDataProvider implements MetaDataProviderInterface
      */
     public function isFieldAvailable($field)
     {
-        if (!isset($this->availableFieldsMapBuffer)) {
+        if ($this->availableFieldsMapBuffer === null) {
             $this->loadAvailableFieldsBuffers();
         }
 

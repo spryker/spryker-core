@@ -530,7 +530,7 @@ class Customer implements CustomerInterface
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        if (!empty($customerTransfer->getNewPassword())) {
+        if ($customerTransfer->getNewPassword()) {
             $customerResponseTransfer = $this->updatePassword(clone $customerTransfer);
 
             if ($customerResponseTransfer->getIsSuccess() === false) {

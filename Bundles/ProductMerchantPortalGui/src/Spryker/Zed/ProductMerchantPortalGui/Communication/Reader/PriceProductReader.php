@@ -128,7 +128,7 @@ class PriceProductReader implements PriceProductReaderInterface
         MoneyValueTransfer $moneyValueTransfer,
         PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
     ): bool {
-        if (empty($priceProductTableCriteriaTransfer->getFilterInCurrencies())) {
+        if (!$priceProductTableCriteriaTransfer->getFilterInCurrencies()) {
             return true;
         }
 
@@ -148,7 +148,7 @@ class PriceProductReader implements PriceProductReaderInterface
         MoneyValueTransfer $moneyValueTransfer,
         PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
     ): bool {
-        if (empty($priceProductTableCriteriaTransfer->getFilterInStores())) {
+        if (!$priceProductTableCriteriaTransfer->getFilterInStores()) {
             return true;
         }
 

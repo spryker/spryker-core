@@ -153,7 +153,7 @@ class EditController extends AbstractController
      */
     protected function isValidAddressTransfer(AddressTransfer $addressTransfer)
     {
-        return (empty($addressTransfer->getIdCustomerAddress()) === false && $addressTransfer->getFkCustomer() !== null);
+        return (!$addressTransfer->getIdCustomerAddress() === false && $addressTransfer->getFkCustomer() !== null);
     }
 
     /**

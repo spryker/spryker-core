@@ -46,7 +46,7 @@ class ZedRequestInMemoryLogger implements ZedRequestLoggerInterface
     public function log(string $url, array $payload, array $result): void
     {
         static::$logs[] = [
-            'destination' => !empty($this->host) ? $this->host . $url : $url,
+            'destination' => $this->host ? ($this->host . $url) : $url,
             'payload' => $this->utilEncodingService->encodeJson($payload, JSON_PRETTY_PRINT) ?? '',
             'result' => $this->utilEncodingService->encodeJson($result, JSON_PRETTY_PRINT) ?? '',
         ];

@@ -109,7 +109,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return true;
         }
 
-        $isProductInWhitelist = empty(array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
+        $isProductInWhitelist = !array_intersect($productListProductConcreteStorageTransfer->getIdWhitelists(), $customerWhitelistIds);
 
         return $isProductInWhitelist;
     }
@@ -124,7 +124,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         ?ProductConcreteProductListStorageTransfer $productListProductConcreteStorageTransfer,
         array $customerBlacklistIds
     ): bool {
-        if (empty($customerBlacklistIds)) {
+        if (!$customerBlacklistIds) {
             return false;
         }
 
@@ -132,8 +132,6 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return false;
         }
 
-        $isProductInBlacklist = !empty(array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
-
-        return $isProductInBlacklist;
+        return (bool)array_intersect($productListProductConcreteStorageTransfer->getIdBlacklists(), $customerBlacklistIds);
     }
 }

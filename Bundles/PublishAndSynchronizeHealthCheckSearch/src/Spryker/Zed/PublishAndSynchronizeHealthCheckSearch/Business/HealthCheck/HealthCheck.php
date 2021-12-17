@@ -59,7 +59,7 @@ class HealthCheck implements HealthCheckInterface
 
         $searchDocumentTransfer = $this->searchClient->readDocument($searchDocumentTransfer);
 
-        if (empty($searchDocumentTransfer->getData())) {
+        if (!$searchDocumentTransfer->getData()) {
             return $this->failedResponse($healthCheckServiceResponseTransfer, 'Could not find the expected data for the key "%s" in the search.');
         }
 

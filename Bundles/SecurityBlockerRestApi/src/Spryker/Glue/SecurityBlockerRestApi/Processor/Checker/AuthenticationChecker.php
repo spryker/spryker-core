@@ -34,7 +34,7 @@ class AuthenticationChecker implements AuthenticationCheckerInterface
      */
     public function isFailedAuthenticationResponse(RestResponseInterface $restResponse, string $expectedCode): bool
     {
-        if (empty($restResponse->getErrors())) {
+        if (!$restResponse->getErrors()) {
             return false;
         }
 

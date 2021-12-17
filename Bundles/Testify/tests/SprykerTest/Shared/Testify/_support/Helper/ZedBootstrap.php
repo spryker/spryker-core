@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Shared\Testify\Helper;
 
-use Codeception\Exception\ModuleConfigException;
 use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\TestInterface;
@@ -42,7 +41,7 @@ class ZedBootstrap extends Framework implements DependsOnModule
     protected $bundleConfig;
 
     /**
-     * @var array
+     * @var array<string, array>
      */
     protected $config = [
         self::CONFIG_KEY_SERVICE_PROVIDER => [],
@@ -50,12 +49,12 @@ class ZedBootstrap extends Framework implements DependsOnModule
     ];
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function _depends(): array
     {
         return [
-            BundleConfig::class => 'You need to enable \SprykerTest\Shared\Testify\Helper\BundleConfig in order to mock bundle configurations',
+            BundleConfig::class => sprintf('You need to enable `%s` in order to mock bundle configurations', BundleConfig::class),
         ];
     }
 
@@ -95,8 +94,6 @@ class ZedBootstrap extends Framework implements DependsOnModule
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleConfigException
-     *
      * @return void
      */
     protected function loadApplication(): void
@@ -112,10 +109,6 @@ class ZedBootstrap extends Framework implements DependsOnModule
         Request::setFactory($requestFactory);
 
         $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_APPLICATION_PLUGINS], $this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
-
-        if (!isset($this->application)) {
-            throw new ModuleConfigException(static::class, 'Application instance was not received from bootstrap file');
-        }
     }
 
     /**

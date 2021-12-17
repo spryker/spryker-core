@@ -209,6 +209,6 @@ class Event implements EventInterface
      */
     public function hasTimeoutProcessor(): bool
     {
-        return isset($this->timeoutProcessor);
+        return $this->timeoutProcessor !== null;
     }
 }

@@ -46,6 +46,6 @@ class ProductPackagingUnitItemQuantityValidator implements ProductPackagingUnitI
      */
     protected function isPackagingUnit(ItemTransfer $itemTransfer): bool
     {
-        return !empty($itemTransfer->getAmountSalesUnit());
+        return (bool)$itemTransfer->getAmountSalesUnit();
     }
 }

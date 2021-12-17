@@ -59,7 +59,7 @@ class Config
      */
     public static function get($key, $default = null)
     {
-        if (empty(static::$config)) {
+        if (!static::$config) {
             static::init();
         }
 

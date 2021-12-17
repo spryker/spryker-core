@@ -365,7 +365,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      */
     protected function getSuperAttributeKeys(array $attributes)
     {
-        if (empty($this->superAttributeKeyBuffer)) {
+        if (!$this->superAttributeKeyBuffer) {
             $this->loadSuperAttributes();
         }
 
@@ -381,7 +381,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             ->queryProductAttributeKey()
             ->find();
 
-        if (empty($superAttributes->getData())) {
+        if (!$superAttributes->getData()) {
             $this->superAttributeKeyBuffer[] = null;
 
             return;

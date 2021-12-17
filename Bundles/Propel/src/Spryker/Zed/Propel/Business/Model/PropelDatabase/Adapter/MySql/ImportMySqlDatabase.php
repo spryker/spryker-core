@@ -71,7 +71,7 @@ class ImportMySqlDatabase implements ImportDatabaseInterface
         return sprintf(
             'mysql -u%s%s %s < %s',
             Config::get(PropelConstants::ZED_DB_USERNAME),
-            (empty(Config::get(PropelConstants::ZED_DB_PASSWORD))) ? '' : ' -p' . Config::get(PropelConstants::ZED_DB_PASSWORD),
+            (!Config::get(PropelConstants::ZED_DB_PASSWORD)) ? '' : ' -p' . Config::get(PropelConstants::ZED_DB_PASSWORD),
             Config::get(PropelConstants::ZED_DB_DATABASE),
             $backupPath,
         );

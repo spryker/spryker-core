@@ -289,7 +289,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     protected function isFilterValueEmptyArray($filterValue): bool
     {
-        if (is_array($filterValue) && empty(array_filter($filterValue, 'strlen'))) {
+        if (is_array($filterValue) && !array_filter($filterValue, 'strlen')) {
             return true;
         }
 

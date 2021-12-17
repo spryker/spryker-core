@@ -200,7 +200,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $storePrices = [];
         foreach ($this->stores as $store) {
             $productAbstractOptionStorageTransfers = $this->getProductOptionGroupStorageTransfers($productOptions, $store->getIdStore());
-            if (!empty($productAbstractOptionStorageTransfers->getArrayCopy())) {
+            if ($productAbstractOptionStorageTransfers->getArrayCopy()) {
                 $storePrices[$store->getName()] = $productAbstractOptionStorageTransfers;
             }
         }

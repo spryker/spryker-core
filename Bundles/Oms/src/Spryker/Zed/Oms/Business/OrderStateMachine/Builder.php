@@ -324,7 +324,7 @@ class Builder implements BuilderInterface
 
             $process = $processMap[$processName];
 
-            if (!empty($xmlProcess->subprocesses)) {
+            if ($xmlProcess->subprocesses) {
                 $xmlSubProcesses = $xmlProcess->subprocesses->children();
 
                 foreach ($xmlSubProcesses as $xmlSubProcess) {
@@ -350,7 +350,7 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $process = $processMap[$processName];
 
-            if (!empty($xmlProcess->states)) {
+            if ($xmlProcess->states) {
                 $xmlStates = $xmlProcess->states->children();
                 /** @var \SimpleXMLElement $xmlState */
                 foreach ($xmlStates as $xmlState) {
@@ -390,7 +390,7 @@ class Builder implements BuilderInterface
     protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
-            if (!empty($xmlProcess->transitions)) {
+            if ($xmlProcess->transitions) {
                 $xmlTransitions = $xmlProcess->transitions->children();
 
                 $processName = $this->getAttributeString($xmlProcess, 'name');

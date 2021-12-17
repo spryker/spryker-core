@@ -174,7 +174,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected function addFulltextSearchToQuery(Query $baseQuery): Query
     {
-        if (!empty($this->searchString)) {
+        if ($this->searchString) {
             $matchQuery = $this->createFulltextSearchQuery($this->searchString);
         } else {
             $matchQuery = new MatchAll();

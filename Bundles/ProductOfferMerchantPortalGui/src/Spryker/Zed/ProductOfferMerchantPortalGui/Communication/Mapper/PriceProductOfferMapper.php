@@ -377,7 +377,7 @@ class PriceProductOfferMapper
         $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
         $volumeQuantityColumnId = $this->columnIdCreator->createVolumeQuantityColumnId();
         $isSameVolumeQuantity = (
-            empty($priceProductTransfer->getVolumeQuantity())
+            !$priceProductTransfer->getVolumeQuantity()
             || (int)$initialDataRow[$volumeQuantityColumnId] === $priceProductTransfer->getVolumeQuantityOrFail()
         );
 

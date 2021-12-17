@@ -59,7 +59,7 @@ class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterfac
                 $salesOrderItemEntityTransfer->getIdSalesOrderItem(),
             );
 
-            if (!$itemTransfer || empty($salesOrderItemEntityTransfer->getAmountMeasurementUnitName())) {
+            if (!$itemTransfer || !$salesOrderItemEntityTransfer->getAmountMeasurementUnitName()) {
                 continue;
             }
 

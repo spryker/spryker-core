@@ -291,10 +291,11 @@ abstract class AbstractRelationResolverStrategy
      */
     protected function getJoinTableNames(Join $join): array
     {
+        /** @phpstan-var array<string> */
         return array_filter(
             [$join->getLeftTableName(), $join->getRightTableName()],
             function (?string $tableName) {
-                return !empty($tableName);
+                return (bool)$tableName;
             },
         );
     }

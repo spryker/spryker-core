@@ -126,7 +126,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
     ): GuiTableConfigurationTransfer {
         $guiTablePaginationConfigurationTransfer = $guiTableConfigurationTransfer->getPagination() ?? new GuiTablePaginationConfigurationTransfer();
 
-        if (empty($guiTablePaginationConfigurationTransfer->getSizes())) {
+        if (!$guiTablePaginationConfigurationTransfer->getSizes()) {
             $guiTablePaginationConfigurationTransfer->setSizes($this->guiTableConfig->getDefaultAvailablePageSizes());
         }
 

@@ -263,7 +263,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     protected function setPriceDataChecksum(MoneyValueTransfer $moneyValueTransfer, SpyPriceProductStore $priceProductStoreEntity): SpyPriceProductStore
     {
-        if (!empty($moneyValueTransfer->getPriceData())) {
+        if ($moneyValueTransfer->getPriceData()) {
             $priceProductStoreEntity->setPriceDataChecksum($this->generatePriceDataChecksumByPriceData($moneyValueTransfer->getPriceData()));
         }
 

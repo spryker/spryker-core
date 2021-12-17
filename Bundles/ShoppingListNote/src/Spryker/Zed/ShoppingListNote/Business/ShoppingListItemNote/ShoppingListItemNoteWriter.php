@@ -74,7 +74,7 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
      */
     protected function saveShoppingListItemNoteTransfer(ShoppingListItemNoteTransfer $shoppingListItemNoteTransfer): ?ShoppingListItemNoteTransfer
     {
-        if (empty($shoppingListItemNoteTransfer->getNote())) {
+        if (!$shoppingListItemNoteTransfer->getNote()) {
             $this->deleteShoppingListItemNoteTransfer($shoppingListItemNoteTransfer);
 
             return null;

@@ -133,7 +133,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected function addFulltextSearchToQuery(Query $baseQuery)
     {
-        if (!empty($this->searchString)) {
+        if ($this->searchString) {
             $matchQuery = $this->createFulltextSearchQuery($this->searchString);
         } else {
             $matchQuery = new MatchAll();

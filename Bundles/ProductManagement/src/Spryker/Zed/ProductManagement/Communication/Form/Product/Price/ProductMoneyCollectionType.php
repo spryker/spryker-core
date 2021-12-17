@@ -206,7 +206,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         $priceTypeName = $priceProductTransfer->getPriceType()->getName();
 
-        if (!empty($priceData) && isset($priceData->volume_prices)) {
+        if ($priceData && isset($priceData->volume_prices)) {
             $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
                 static::PRICE_PRODUCT_VOLUME_EDIT_URL,
                 sprintf('Edit Volume Price: %s', $priceTypeName),

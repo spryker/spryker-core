@@ -204,7 +204,7 @@ class QueueProxy implements QueueProxyInterface
             return $this->queueConfiguration[$queueName];
         }
 
-        if (!empty($this->queueDefaultConfiguration)) {
+        if ($this->queueDefaultConfiguration) {
             return $this->queueDefaultConfiguration;
         }
 

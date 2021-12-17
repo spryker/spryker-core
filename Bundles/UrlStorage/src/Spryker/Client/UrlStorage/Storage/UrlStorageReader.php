@@ -228,7 +228,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
 
         foreach ($this->urlStorageResourceMapperPlugins as $urlStorageResourceMapperPlugin) {
             $pluginUrlStorageResourceMapTransfer = $urlStorageResourceMapperPlugin->map($spyUrlTransfer, $options);
-            if (!empty($pluginUrlStorageResourceMapTransfer->getResourceKey())) {
+            if ($pluginUrlStorageResourceMapTransfer->getResourceKey()) {
                 return $pluginUrlStorageResourceMapTransfer;
             }
         }
