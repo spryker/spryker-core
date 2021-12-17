@@ -661,4 +661,28 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createComposerNameFinder()->findComposerNameByModuleName($moduleName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function generateGlueBackendIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createGlueBackendIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueBackendIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::GLUE_BACKEND);
+    }
 }

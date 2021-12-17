@@ -119,6 +119,40 @@ class IdeAutoCompletionWriterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testWriterCreatesGlueAutoCompletionFiles(): void
+    {
+        $tester = $this->createFunctionalTester();
+
+        $tester->execute(function (): void {
+            $this
+                ->getDevelopmentBusinessFactory()
+                ->createGlueIdeAutoCompletionWriter()
+                ->writeCompletionFiles();
+        });
+
+        $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/Glue/Ide/');
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriterCreatesGlueBackendAutoCompletionFiles(): void
+    {
+        $tester = $this->createFunctionalTester();
+
+        $tester->execute(function (): void {
+            $this
+                ->getDevelopmentBusinessFactory()
+                ->createGlueBackendIdeAutoCompletionWriter()
+                ->writeCompletionFiles();
+        });
+
+        $tester->canSeeFileFound('AutoCompletion.php', IdeAutoCompletion::TEST_TARGET_DIRECTORY . 'Generated/GlueBackend/Ide/');
+    }
+
+    /**
      * @return \SprykerTest\Zed\Development\DevelopmentBusinessTester
      */
     protected function createFunctionalTester(): DevelopmentBusinessTester

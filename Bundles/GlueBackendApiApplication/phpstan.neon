@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - "#Strict comparison using === between '' and 'GLUE_BACKEND' will always evaluate to false.#"

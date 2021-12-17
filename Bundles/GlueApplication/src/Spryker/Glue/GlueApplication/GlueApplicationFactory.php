@@ -8,6 +8,10 @@
 namespace Spryker\Glue\GlueApplication;
 
 use Negotiation\LanguageNegotiator;
+use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationBootstrapResolver;
+use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationBootstrapResolverInterface;
+use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
+use Spryker\Glue\GlueApplication\ApiApplication\GlueStorefrontFallbackApiApplication;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
@@ -73,10 +77,10 @@ use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Decoder\JsonDecoder;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Application\Application as ApplicationApplication;
 use Spryker\Shared\Application\ApplicationInterface;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
 
@@ -542,14 +546,6 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Application\ApplicationInterface
-     */
-    public function createApplication(): ApplicationInterface
-    {
-        return new ApplicationApplication($this->createServiceContainer(), $this->getApplicationPlugins());
-    }
-
-    /**
      * @return \Spryker\Service\Container\ContainerInterface
      */
     public function createServiceContainer(): ContainerInterface
@@ -571,5 +567,51 @@ class GlueApplicationFactory extends AbstractFactory
     public function getRouterParameterExpanderPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_ROUTER_PARAMETER_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueContextExpanderPluginInterface>
+     */
+    public function getGlueContextExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_API_CONTEXT_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface>
+     */
+    public function getBootstrapPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_GLUE_APPLICATION_BOOTSTRAP);
+    }
+
+    /**
+     * @param array<string> $glueApplicationBootstrapPluginClassNames
+     *
+     * @return \Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationBootstrapResolverInterface
+     */
+    public function createApiApplicationBootstrapResolver(array $glueApplicationBootstrapPluginClassNames = []): ApiApplicationBootstrapResolverInterface
+    {
+        return new ApiApplicationBootstrapResolver($glueApplicationBootstrapPluginClassNames, $this->getBootstrapPlugins());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin
+     *
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createApiApplicationProxy(GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin): ApplicationInterface
+    {
+        return new ApiApplicationProxy(
+            $glueApplicationBootstrapPlugin,
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createGlueStorefrontFallbackApiApplication(): ApplicationInterface
+    {
+        return new GlueStorefrontFallbackApiApplication($this->createServiceContainer(), $this->getApplicationPlugins());
     }
 }

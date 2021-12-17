@@ -52,5 +52,10 @@ final class IdeAutoCompletionOptionConstants
     /**
      * @var string
      */
+    public const GLUE_BACKEND = 'GlueBackend';
+
+    /**
+     * @var string
+     */
     public const SERVICE = 'Service';
 }

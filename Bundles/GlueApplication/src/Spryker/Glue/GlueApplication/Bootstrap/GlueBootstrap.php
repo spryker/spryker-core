@@ -7,14 +7,12 @@
 
 namespace Spryker\Glue\GlueApplication\Bootstrap;
 
-use Spryker\Client\Session\SessionClient;
-use Spryker\Glue\GlueApplication\Session\Storage\MockArraySessionStorage;
+use Generated\Shared\Transfer\GlueApiContextTransfer;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Kernel\FactoryResolverAwareTrait;
 use Spryker\Shared\Application\ApplicationInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
@@ -25,27 +23,18 @@ class GlueBootstrap
     use FactoryResolverAwareTrait;
 
     /**
+     * @param array<string> $glueApplicationBootstrapPluginClassNames
+     *
      * @return \Spryker\Shared\Application\ApplicationInterface
      */
-    public function boot(): ApplicationInterface
+    public function boot(array $glueApplicationBootstrapPluginClassNames = []): ApplicationInterface
     {
-        $this->setUpSession();
+        $apiApplicationContext = $this->createApiApplicationContext();
 
-        return $this->getFactory()
-            ->createApplication()
-            ->boot();
-    }
+        $glueApplicationBootstrapPlugin = $this->getFactory()->createApiApplicationBootstrapResolver($glueApplicationBootstrapPluginClassNames)
+            ->resolveApiApplicationBootstrap($apiApplicationContext);
 
-    /**
-     * @return void
-     */
-    protected function setUpSession(): void
-    {
-        (new SessionClient())->setContainer(
-            new Session(
-                new MockArraySessionStorage(),
-            ),
-        );
+        return $this->getFactory()->createApiApplicationProxy($glueApplicationBootstrapPlugin)->boot();
     }
 
     /**
@@ -58,8 +47,22 @@ class GlueBootstrap
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ): Container {
-        $container = $dependencyProvider->provideDependencies($container);
+        return $dependencyProvider->provideDependencies($container);
+    }
 
-        return $container;
+    /**
+     * @return \Generated\Shared\Transfer\GlueApiContextTransfer
+     */
+    protected function createApiApplicationContext(): GlueApiContextTransfer
+    {
+        $apiApplicationContext = new GlueApiContextTransfer();
+
+        $contextExpanderPlugins = $this->getFactory()->getGlueContextExpanderPlugins();
+
+        foreach ($contextExpanderPlugins as $contextExpanderPlugin) {
+            $apiApplicationContext = $contextExpanderPlugin->expand($apiApplicationContext);
+        }
+
+        return $apiApplicationContext;
     }
 }

@@ -47,6 +47,7 @@ class RemoveIdeAutoCompletionConsole extends Console
             RemoveClientIdeAutoCompletionConsole::COMMAND_NAME,
             RemoveServiceIdeAutoCompletionConsole::COMMAND_NAME,
             RemoveGlueIdeAutoCompletionConsole::COMMAND_NAME,
+            RemoveGlueBackendIdeAutoCompletionConsole::COMMAND_NAME,
         ];
 
         foreach ($dependingCommands as $commandName) {

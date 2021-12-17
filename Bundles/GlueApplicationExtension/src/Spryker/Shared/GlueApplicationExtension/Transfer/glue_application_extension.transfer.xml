@@ -13,4 +13,6 @@
     <transfer name="RestErrorMessage">
     </transfer>
 
+    <transfer name="GlueApiContext">
+    </transfer>
 </transfers>

@@ -1,0 +1,4 @@
+parameters:
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - "#Strict comparison using === between '' and 'GLUE_STOREFRONT' will always evaluate to false.#"

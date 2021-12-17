@@ -155,6 +155,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemover;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinder;
@@ -1685,13 +1686,35 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createGlueBackendIdeAutoCompletionBundleBuilder(): BundleBuilderInterface
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->createGlueBackendAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getGlueBackendIdeAutoCompletionOptions(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
-    public function createGlueIdeAutoCompletionWriter()
+    public function createGlueIdeAutoCompletionWriter(): IdeAutoCompletionWriterInterface
     {
         return $this->createIdeAutoCompletionWriter(
             $this->createGlueIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getGlueIdeAutoCompletionOptions(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
+    public function createGlueBackendIdeAutoCompletionWriter(): IdeAutoCompletionWriterInterface
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createGlueBackendIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getGlueBackendIdeAutoCompletionOptions(),
         );
     }
 
@@ -1774,12 +1797,25 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
-    protected function createGlueAutoCompletionMethodBuilderStack()
+    protected function createGlueAutoCompletionMethodBuilderStack(): array
     {
         return [
             $this->createIdeAutoCompletionResourceMethodBuild(),
             $this->createIdeAutoCompletionClientMethodBuilder(),
             $this->createIdeAutoCompletionServiceMethodBuilder(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
+     */
+    protected function createGlueBackendAutoCompletionMethodBuilderStack(): array
+    {
+        return [
+            $this->createIdeAutoCompletionResourceMethodBuild(),
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
+            $this->createIdeAutoCompletionFacadeMethodBuilder(),
         ];
     }
 

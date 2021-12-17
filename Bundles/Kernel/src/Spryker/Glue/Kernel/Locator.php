@@ -15,9 +15,28 @@ use Spryker\Shared\Kernel\BundleProxy;
 class Locator extends AbstractLocatorLocator
 {
     /**
+     * @var static
+     */
+    private static $instance;
+
+    /**
+     * @internal
+     *
+     * @return self
+     */
+    public static function getInstance(): self
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+
+        return static::$instance;
+    }
+
+    /**
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
-    protected function getBundleProxy()
+    protected function getBundleProxy(): BundleProxy
     {
         $bundleProxy = new BundleProxy();
         if ($this->locator === null) {

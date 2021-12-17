@@ -574,4 +574,24 @@ interface DevelopmentFacadeInterface
      * @return string|null
      */
     public function findComposerNameByModuleName(string $moduleName): ?string;
+
+    /**
+     * Specification:
+     * - Add Glue Backend IDE autocompletion files, including autocompletion for Facades
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function generateGlueBackendIdeAutoCompletion(): void;
+
+    /**
+     * Specification:
+     * - Removes Glue IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueBackendIdeAutoCompletion(): void;
 }

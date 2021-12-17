@@ -543,6 +543,19 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return array<string, mixed>
      */
+    public function getGlueBackendIdeAutoCompletionOptions(): array
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'GlueBackend';
+
+        return $options;
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
     public function getServiceIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();

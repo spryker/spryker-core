@@ -53,6 +53,7 @@ class GenerateIdeAutoCompletionConsole extends Console
             GenerateClientIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateServiceIdeAutoCompletionConsole::COMMAND_NAME,
             GenerateGlueIdeAutoCompletionConsole::COMMAND_NAME,
+            GenerateGlueBackendIdeAutoCompletionConsole::COMMAND_NAME,
         ];
 
         foreach ($dependingCommands as $commandName) {

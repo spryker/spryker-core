@@ -7,12 +7,14 @@
         "php": ">=7.4"
     },
     "require-dev": {
+        "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/glue-application": "*",
         "spryker/kernel": "*",
         "spryker/symfony": "*"
     },
     "suggest": {
+        "spryker/application": "If you want to use Application plugins you need to install spryker/application.",
         "spryker/glue-application": "If you want to use plugins with glue application.",
         "spryker/symfony": "If you want to plugins with symfony components.",
         "spryker/kernel": "If you want to use kernel functionality with certain plugins"
