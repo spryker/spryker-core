@@ -129,4 +129,22 @@ class DataSet implements DataSetInterface
     {
         return $this->dataSet->getArrayCopy();
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array
+    {
+        return $this->dataSet->__serialize();
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->dataSet->__unserialize($data);
+    }
 }

@@ -43,7 +43,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $sanitizedSku = $skuGenerator->generateProductAbstractSku($productAbstractTransfer);
 
-        if ($this->tester->isPhp8() && !$this->tester->isPhp81()) {
+        if ($this->tester->isPhp8()) {
             $this->assertSame('one-ONEONE-Lietuvikai', $sanitizedSku);
 
             return;
@@ -70,7 +70,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $sanitizedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        if ($this->tester->isPhp8() && !$this->tester->isPhp81()) {
+        if ($this->tester->isPhp8()) {
             $this->assertSame('one-ONEONE-Lietuvikai-key-value_key2-value2', $sanitizedSku);
 
             return;

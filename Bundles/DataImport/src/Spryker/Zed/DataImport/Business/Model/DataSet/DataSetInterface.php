@@ -30,4 +30,16 @@ interface DataSetInterface extends IteratorAggregate, ArrayAccess, Serializable,
      * @return array
      */
     public function getArrayCopy();
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array;
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return void
+     */
+    public function __unserialize(array $data): void;
 }

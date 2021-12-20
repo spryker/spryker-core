@@ -466,4 +466,23 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             sprintf('Property "%s" of transfer `%s` is null.', $propertyName, static::class),
         );
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function __serialize(): array
+    {
+        return $this->modifiedToArray();
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        $this->fromArray($data, true);
+        $this->initCollectionProperties();
+    }
 }

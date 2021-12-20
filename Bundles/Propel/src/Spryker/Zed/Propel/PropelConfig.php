@@ -105,7 +105,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getPropelConfig()
     {
-        return array_replace_recursive($this->getDefaultPropelConfig(), $this->get(PropelConstants::PROPEL));
+        return array_replace_recursive($this->getDefaultPropelConfig(), $this->get(PropelConstants::PROPEL, []));
     }
 
     /**
