@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Transfer\Helper;
 
 use Codeception\Module;
+use Exception;
 use Psr\Log\NullLogger;
 use Spryker\Zed\Transfer\Business\TransferFacade;
 use Symfony\Component\Filesystem\Filesystem;
@@ -28,6 +29,21 @@ class TransferGenerateHelper extends Module
     /**
      * @var string
      */
+    protected const CONFIG_ENTITY_SCHEMA_DIRECTORIES = 'entitySchemaDirectories';
+
+    /**
+     * @var string
+     */
+    protected const TRANSFER_SCHEMA_FILENAME_PATTERN = '*.transfer.xml';
+
+    /**
+     * @var string
+     */
+    protected const ENTITY_TRANSFER_SCHEMA_FILENAME_PATTERN = '*.schema.xml';
+
+    /**
+     * @var string
+     */
     protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
 
     /**
@@ -36,6 +52,9 @@ class TransferGenerateHelper extends Module
     protected $config = [
         self::CONFIG_SCHEMA_DIRECTORIES => [
             'src/*/Shared/*/Transfer/',
+        ],
+        self::CONFIG_ENTITY_SCHEMA_DIRECTORIES => [
+            'src/Orm/Propel/Schema/',
         ],
         self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
     ];
@@ -66,14 +85,15 @@ class TransferGenerateHelper extends Module
         $transferFacade->deleteGeneratedDataBuilderObjects();
         $transferFacade->deleteGeneratedEntityTransferObjects();
 
-        $this->debug('Generating Transfer Objects...');
+        $this->debug('Generating Transfer Objects ...');
         $transferFacade->generateTransferObjects(new NullLogger());
 
-        $this->debug('Generating Entity Transfer Objects...');
-        $this->debug('Note: Those are only generated while required schema files are available through usage of PropelHelper.');
-        $transferFacade->generateEntityTransferObjects(new NullLogger());
+        if ($this->hasEntityTransferSchemaFiles()) {
+            $this->debug('Generating Entity Transfer Objects ...');
+            $transferFacade->generateEntityTransferObjects(new NullLogger());
+        }
 
-        $this->debug('Generating DataBuilders...');
+        $this->debug('Generating DataBuilders ...');
         $transferFacade->generateDataBuilders(new NullLogger());
     }
 
@@ -106,7 +126,10 @@ class TransferGenerateHelper extends Module
      */
     protected function copySchemasFromDefinedSchemaDirectories(): void
     {
-        $finder = $this->createTransferSchemaFinder($this->config[static::CONFIG_SCHEMA_DIRECTORIES]);
+        $finder = $this->createTransferSchemaFinder(
+            $this->config[static::CONFIG_SCHEMA_DIRECTORIES],
+            static::TRANSFER_SCHEMA_FILENAME_PATTERN,
+        );
 
         if ($finder->count() > 0) {
             $pathForTransferSchemas = $this->getTargetSchemaDirectory();
@@ -120,10 +143,11 @@ class TransferGenerateHelper extends Module
 
     /**
      * @param array $schemaDirectories
+     * @param string $filenamePattern
      *
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
-    protected function createTransferSchemaFinder(array $schemaDirectories)
+    protected function createTransferSchemaFinder(array $schemaDirectories, string $filenamePattern)
     {
         $schemaDirectories = array_map(function (string $schemaDirectory) {
             if (defined('MODULE_UNDER_TEST_ROOT_DIR') && MODULE_UNDER_TEST_ROOT_DIR !== null) {
@@ -134,9 +158,28 @@ class TransferGenerateHelper extends Module
         }, $schemaDirectories);
 
         $finder = new Finder();
-        $finder->files()->in($schemaDirectories)->name('*.transfer.xml');
+        $finder->files()->in($schemaDirectories)->name($filenamePattern);
 
         return $finder;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasEntityTransferSchemaFiles(): bool
+    {
+        try {
+            $finder = $this->createTransferSchemaFinder(
+                $this->config[static::CONFIG_ENTITY_SCHEMA_DIRECTORIES],
+                static::ENTITY_TRANSFER_SCHEMA_FILENAME_PATTERN,
+            );
+
+            return $finder->count() > 0;
+        } catch (Exception $e) {
+            $this->debug('Note: Entity transfer objects only generated while required schema files are available through usage of PropelHelper before TransferGenerateHelper.');
+
+            return false;
+        }
     }
 
     /**
