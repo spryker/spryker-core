@@ -13,4 +13,9 @@ interface SalesOrderThresholdToLocaleFacadeInterface
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale();
 }

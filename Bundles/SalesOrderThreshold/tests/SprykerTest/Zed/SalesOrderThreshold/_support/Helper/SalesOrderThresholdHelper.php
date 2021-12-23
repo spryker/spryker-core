@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\SalesOrderThreshold\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\SalesOrderThresholdBuilder;
+use Generated\Shared\DataBuilder\SalesOrderThresholdValueBuilder;
+use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Orm\Zed\SalesOrderThreshold\Persistence\Map\SpySalesOrderThresholdTableMap;
 use Orm\Zed\SalesOrderThreshold\Persistence\Map\SpySalesOrderThresholdTypeTableMap;
@@ -77,6 +80,42 @@ class SalesOrderThresholdHelper extends Module
         });
 
         return $salesOrderThresholdTypeTransfer;
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
+     */
+    public function haveSalesOrderThreshold(array $seed = []): SalesOrderThresholdTransfer
+    {
+        $seed = $seed + [
+                SalesOrderThresholdTransfer::STORE => $seed[SalesOrderThresholdTransfer::STORE] ?? $this->getLocator()->store()->facade()->getCurrentStore(),
+            ];
+
+        $salesOrderThresholdTransfer = $this->buildSalesOrderThresholdTransfer($seed);
+        $salesOrderThresholdTransfer = $this->getFacade()->saveSalesOrderThreshold($salesOrderThresholdTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($salesOrderThresholdTransfer): void {
+            $this->getFacade()->deleteSalesOrderThreshold($salesOrderThresholdTransfer);
+        });
+
+        return $salesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
+     */
+    protected function buildSalesOrderThresholdTransfer(array $seed): SalesOrderThresholdTransfer
+    {
+        $salesOrderThresholdValueBuilder = (new SalesOrderThresholdValueBuilder($seed))
+            ->withSalesOrderThresholdType($seed);
+
+        return (new SalesOrderThresholdBuilder($seed))
+            ->withAnotherSalesOrderThresholdValue($salesOrderThresholdValueBuilder)
+            ->build();
     }
 
     /**

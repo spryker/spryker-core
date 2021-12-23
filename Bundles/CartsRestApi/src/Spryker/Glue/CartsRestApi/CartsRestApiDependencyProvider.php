@@ -57,6 +57,11 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CART_ITEM_FILTER = 'PLUGINS_CART_ITEM_FILTER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_REST_CART_ATTRIBUTES_MAPPER = 'PLUGINS_REST_CART_ATTRIBUTES_MAPPER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -69,6 +74,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRestCartItemsAttributesMapperPlugins($container);
         $container = $this->addCartItemExpanderPlugins($container);
         $container = $this->addCartItemFilterPlugins($container);
+        $container = $this->addRestCartAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -144,6 +150,20 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestCartAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_CART_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestCartAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected function getCustomerExpanderPlugins(): array
@@ -171,6 +191,14 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface>
      */
     protected function getCartItemFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartAttributesMapperPluginInterface>
+     */
+    protected function getRestCartAttributesMapperPlugins(): array
     {
         return [];
     }

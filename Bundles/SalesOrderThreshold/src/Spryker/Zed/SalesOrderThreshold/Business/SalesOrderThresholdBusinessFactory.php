@@ -10,6 +10,10 @@ namespace Spryker\Zed\SalesOrderThreshold\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesOrderThreshold\Business\DataSource\SalesOrderThresholdDataSourceStrategyResolver;
 use Spryker\Zed\SalesOrderThreshold\Business\DataSource\SalesOrderThresholdDataSourceStrategyResolverInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Expander\QuoteExpander;
+use Spryker\Zed\SalesOrderThreshold\Business\Expander\QuoteExpanderInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Expander\SalesOrderThresholdValueExpander;
+use Spryker\Zed\SalesOrderThreshold\Business\Expander\SalesOrderThresholdValueExpanderInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\ExpenseCalculator\ExpenseCalculator;
 use Spryker\Zed\SalesOrderThreshold\Business\ExpenseCalculator\ExpenseCalculatorInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\ExpenseRemover\ExpenseRemover;
@@ -40,6 +44,8 @@ use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTran
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationReaderInterface;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriter;
 use Spryker\Zed\SalesOrderThreshold\Business\Translation\SalesOrderThresholdTranslationWriterInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Validator\SalesOrderThresholdValidator;
+use Spryker\Zed\SalesOrderThreshold\Business\Validator\SalesOrderThresholdValidatorInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToGlossaryFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToLocaleFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMessengerFacadeInterface;
@@ -226,6 +232,43 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderThresholdTranslationHydrator(): SalesOrderThresholdTranslationHydratorInterface
     {
         return new SalesOrderThresholdTranslationHydrator($this->getGlossaryFacade(), $this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\Validator\SalesOrderThresholdValidatorInterface
+     */
+    public function createSalesOrderThresholdsValidator(): SalesOrderThresholdValidatorInterface
+    {
+        return new SalesOrderThresholdValidator(
+            $this->createSalesOrderThresholdDataSourceStrategyResolver(),
+            $this->createSalesOrderThresholdStrategyResolver(),
+            $this->getMoneyFacade(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\Expander\QuoteExpanderInterface
+     */
+    public function createQuoteExpander(): QuoteExpanderInterface
+    {
+        return new QuoteExpander(
+            $this->createSalesOrderThresholdDataSourceStrategyResolver(),
+            $this->createSalesOrderThresholdValueExpander(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesOrderThreshold\Business\Expander\SalesOrderThresholdValueExpanderInterface
+     */
+    public function createSalesOrderThresholdValueExpander(): SalesOrderThresholdValueExpanderInterface
+    {
+        return new SalesOrderThresholdValueExpander(
+            $this->createSalesOrderThresholdStrategyResolver(),
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade(),
+            $this->getMoneyFacade(),
+        );
     }
 
     /**

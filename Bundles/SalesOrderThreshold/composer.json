@@ -17,13 +17,15 @@
         "spryker/sales": "^8.16.0 || ^10.0.0 || ^11.0.0",
         "spryker/sales-order-threshold-extension": "^1.0.0",
         "spryker/store": "^1.2.0",
-        "spryker/tax": "^5.0.0"
+        "spryker/tax": "^5.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
         "spryker/country": "*",
         "spryker/installer": "*",
+        "spryker/merchant-relationship-sales-order-threshold": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

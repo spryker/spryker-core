@@ -711,6 +711,7 @@
         "spryker/sales-order-threshold-extension": "*",
         "spryker/sales-order-threshold-gui": "*",
         "spryker/sales-order-threshold-gui-extension": "*",
+        "spryker/sales-order-thresholds-rest-api": "*",
         "spryker/sales-payment": "*",
         "spryker/sales-payment-extension": "*",
         "spryker/sales-payment-gui": "*",

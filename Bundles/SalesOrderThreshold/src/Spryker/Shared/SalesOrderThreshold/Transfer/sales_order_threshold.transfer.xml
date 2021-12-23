@@ -13,6 +13,8 @@
         <property name="fee" type="int"/>
         <property name="messageGlossaryKey" type="string"/>
         <property name="salesOrderThresholdType" type="SalesOrderThresholdType"/>
+        <property name="deltaWithSubtotal" type="int"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderThreshold">
@@ -43,6 +45,7 @@
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="salesOrderThresholdValues" type="SalesOrderThresholdValue[]" singular="salesOrderThresholdValue"/>
     </transfer>
 
     <transfer name="Expense">
@@ -128,4 +131,12 @@
         <property name="glossaryKey" type="int"/>
         <property name="locales" type="array" singular="locales"/>
     </transfer>
+
+    <transfer name="CheckoutData">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartChange">
+    </transfer>
+
 </transfers>

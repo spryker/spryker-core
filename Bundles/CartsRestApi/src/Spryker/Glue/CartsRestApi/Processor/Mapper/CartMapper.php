@@ -34,15 +34,23 @@ class CartMapper implements CartMapperInterface
     protected $config;
 
     /**
+     * @var array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartAttributesMapperPluginInterface>
+     */
+    protected $restCartAttributesMapperPlugins;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
+     * @param array<\Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartAttributesMapperPluginInterface> $restCartAttributesMapperPlugins
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CartsRestApiConfig $config
+        CartsRestApiConfig $config,
+        array $restCartAttributesMapperPlugins
     ) {
         $this->config = $config;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->restCartAttributesMapperPlugins = $restCartAttributesMapperPlugins;
     }
 
     /**
@@ -58,7 +66,7 @@ class CartMapper implements CartMapperInterface
         $this->setTotals($quoteTransfer, $restCartsAttributesTransfer);
         $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
 
-        return $restCartsAttributesTransfer;
+        return $this->executeRestCartAttributesMapperPlugins($quoteTransfer, $restCartsAttributesTransfer);
     }
 
     /**
@@ -127,6 +135,26 @@ class CartMapper implements CartMapperInterface
         }
 
         return $restErrorMessageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCartsAttributesTransfer
+     */
+    protected function executeRestCartAttributesMapperPlugins(
+        QuoteTransfer $quoteTransfer,
+        RestCartsAttributesTransfer $restCartsAttributesTransfer
+    ): RestCartsAttributesTransfer {
+        foreach ($this->restCartAttributesMapperPlugins as $restCartAttributesMapperPlugin) {
+            $restCartsAttributesTransfer = $restCartAttributesMapperPlugin->mapQuoteTransferToRestCartAttributesTransfer(
+                $quoteTransfer,
+                $restCartsAttributesTransfer,
+            );
+        }
+
+        return $restCartsAttributesTransfer;
     }
 
     /**

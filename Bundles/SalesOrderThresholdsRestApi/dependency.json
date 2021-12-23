@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "spryker/glue-application": "Added for future compatibility.",
+        "spryker/sales-order-threshold": "Added for future compatibility."
+    }
+}

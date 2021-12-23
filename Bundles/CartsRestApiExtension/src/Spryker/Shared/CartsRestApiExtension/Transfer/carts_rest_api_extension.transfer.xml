@@ -37,4 +37,7 @@
     <transfer name="RestCartItemsAttributes">
     </transfer>
 
+    <transfer name="RestCartsAttributes">
+    </transfer>
+
 </transfers>

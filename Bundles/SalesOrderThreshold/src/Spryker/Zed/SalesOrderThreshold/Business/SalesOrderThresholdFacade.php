@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -258,5 +259,37 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     public function saveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer
     {
         return $this->getFactory()->createSalesOrderThresholdWriter()->saveSalesOrderThresholdType($salesOrderThresholdTypeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateSalesOrderThresholdsCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer
+    {
+        return $this->getFactory()
+            ->createSalesOrderThresholdsValidator()
+            ->validateSalesOrderThresholdsCheckoutData($checkoutDataTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithSalesOrderThresholdValues(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteExpander()
+            ->expandQuoteWithSalesOrderThresholdValues($quoteTransfer);
     }
 }

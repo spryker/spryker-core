@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -219,4 +220,37 @@ interface SalesOrderThresholdFacadeInterface
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
      */
     public function saveSalesOrderThresholdType(SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer): SalesOrderThresholdTypeTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CheckoutDataTransfer.quote` to be set.
+     * - Requires `CheckoutDataTransfer.quote.currency` to be set.
+     * - Finds applicable thresholds.
+     * - Adds error messages if threshold conditions are not matched.
+     * - Returns `CheckoutResponseTransfer.isSuccessful` equal to `true` if validation passed, `false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function validateSalesOrderThresholdsCheckoutData(CheckoutDataTransfer $checkoutDataTransfer): CheckoutResponseTransfer;
+
+    /**
+     * Specification:
+     * - Does nothing if `QuoteTransfer.totals` is not set.
+     * - Requires `QuoteTransfer.currency` to be set.
+     * - Finds applicable thresholds.
+     * - Calculates diff between minimal order value threshold and order value amounts.
+     * - Translates sales order threshold messages.
+     * - Expands quote with sales order thresholds data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithSalesOrderThresholdValues(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

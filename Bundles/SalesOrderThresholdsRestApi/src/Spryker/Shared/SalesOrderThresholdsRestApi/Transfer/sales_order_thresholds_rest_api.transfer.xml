@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="RestCartsAttributes">
+        <property name="thresholds" type="RestCartsThresholds[]" singular="threshold"/>
+    </transfer>
+
+    <transfer name="RestCartsThresholds">
+        <property name="type" type="string"/>
+        <property name="threshold" type="int"/>
+        <property name="fee" type="int"/>
+        <property name="deltaWithSubtotal" type="int"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="salesOrderThresholdValues" type="SalesOrderThresholdValue[]" singular="salesOrderThresholdValue"/>
+    </transfer>
+
+    <transfer name="SalesOrderThresholdValue">
+        <property name="salesOrderThresholdType" type="SalesOrderThresholdType"/>
+    </transfer>
+
+    <transfer name="SalesOrderThresholdType">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutData">
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+    </transfer>
+</transfers>
