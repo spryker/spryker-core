@@ -70,7 +70,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
 
         $searchString = $searchQuery->getSearchString();
 
-        return !empty($searchString);
+        return (bool)$searchString;
     }
 
     /**
@@ -83,7 +83,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
         $sortConfig = $this->getFactory()->getSearchConfig()->getSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 
-        return !empty($sortParamName);
+        return (bool)$sortParamName;
     }
 
     /**

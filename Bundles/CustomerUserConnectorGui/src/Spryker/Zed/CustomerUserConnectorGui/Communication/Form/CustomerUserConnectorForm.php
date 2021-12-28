@@ -105,7 +105,7 @@ class CustomerUserConnectorForm extends AbstractType
                     return implode(',', $idsCustomerAsArray);
                 },
                 function ($idsCustomerAsCsv) {
-                    if (empty($idsCustomerAsCsv)) {
+                    if (!$idsCustomerAsCsv) {
                         return [];
                     }
 

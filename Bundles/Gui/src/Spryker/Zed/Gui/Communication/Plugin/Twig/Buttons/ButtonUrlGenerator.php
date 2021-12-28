@@ -130,7 +130,7 @@ class ButtonUrlGenerator implements UrlGeneratorInterface
     {
         $extraAttributes = array_diff_key($this->options, array_flip(static::CUSTOM_OPTIONS));
 
-        if (empty($extraAttributes)) {
+        if (!$extraAttributes) {
             return '';
         }
 

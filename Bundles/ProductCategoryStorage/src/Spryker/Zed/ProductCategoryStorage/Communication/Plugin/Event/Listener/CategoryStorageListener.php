@@ -40,7 +40,7 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
         $this->preventTransaction();
 
         $categoryIds = $this->getCategoryIds($eventEntityTransfers, $eventName);
-        if (empty($categoryIds)) {
+        if (!$categoryIds) {
             return;
         }
 

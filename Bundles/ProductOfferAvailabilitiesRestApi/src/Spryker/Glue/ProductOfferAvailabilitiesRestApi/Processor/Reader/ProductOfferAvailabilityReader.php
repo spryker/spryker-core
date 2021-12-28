@@ -64,7 +64,7 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
         $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources($productOfferResources);
 
         $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$productOfferRestResource->getId()] ?? null;
-        if (!isset($productOfferAvailabilityRestResource)) {
+        if ($productOfferAvailabilityRestResource === null) {
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferAvailabilityEmptyRestResponse();
         }
 

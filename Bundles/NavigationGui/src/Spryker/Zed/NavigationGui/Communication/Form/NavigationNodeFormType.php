@@ -230,7 +230,7 @@ class NavigationNodeFormType extends AbstractType
         return new Callback([
             'callback' => function ($dateTimeFrom, ExecutionContext $context) {
                 $dateTimeTo = $context->getRoot()->getData()->getValidTo();
-                if (empty($dateTimeFrom) || empty($dateTimeTo)) {
+                if (!$dateTimeFrom || !$dateTimeTo) {
                     return;
                 }
 
@@ -249,7 +249,7 @@ class NavigationNodeFormType extends AbstractType
         return new Callback([
             'callback' => function ($dateTimeTo, ExecutionContext $context) {
                 $dateTimeFrom = $context->getRoot()->getData()->getValidFrom();
-                if (empty($dateTimeFrom) || empty($dateTimeTo)) {
+                if (!$dateTimeFrom || !$dateTimeTo) {
                     return;
                 }
 

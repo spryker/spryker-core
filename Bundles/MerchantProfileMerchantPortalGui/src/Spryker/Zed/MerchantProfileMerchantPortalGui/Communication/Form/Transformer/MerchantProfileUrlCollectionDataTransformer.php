@@ -20,7 +20,7 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     public function transform($value): ArrayObject
     {
         $merchantProfileUrlCollection = new ArrayObject();
-        if (empty($value)) {
+        if (!$value) {
             return $merchantProfileUrlCollection;
         }
         foreach ($value as $urlTransfer) {
@@ -46,7 +46,7 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     public function reverseTransform($value): ArrayObject
     {
         $merchantProfileUrlCollection = new ArrayObject();
-        if (empty($value)) {
+        if (!$value) {
             return $merchantProfileUrlCollection;
         }
 

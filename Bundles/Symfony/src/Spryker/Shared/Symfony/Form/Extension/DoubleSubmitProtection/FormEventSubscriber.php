@@ -193,8 +193,8 @@ class FormEventSubscriber implements EventSubscriberInterface
         $givenToken = $data[$this->fieldName];
         $expectedToken = $this->tokenStorage->getToken($formName);
 
-        return !empty($expectedToken) &&
-            !empty($givenToken) &&
+        return (bool)$expectedToken &&
+            $givenToken &&
             $this->tokenGenerator->checkTokenEquals($expectedToken, $givenToken);
     }
 

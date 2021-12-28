@@ -40,7 +40,7 @@ class RestRequestUpdater implements RestRequestUpdaterInterface
 
         $anonymousCustomerUniqueId = $restRequest->getHttpRequest()->headers
             ->get(CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID);
-        if (empty($anonymousCustomerUniqueId)) {
+        if (!$anonymousCustomerUniqueId) {
             return;
         }
 

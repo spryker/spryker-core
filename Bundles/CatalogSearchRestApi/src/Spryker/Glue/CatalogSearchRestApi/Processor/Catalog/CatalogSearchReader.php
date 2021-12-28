@@ -130,7 +130,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
     {
         $response = $this->restResourceBuilder->createRestResponse();
         $searchString = $this->getRequestParameter($restRequest, CatalogSearchRestApiConfig::QUERY_STRING_PARAMETER);
-        if (empty($searchString)) {
+        if (!$searchString) {
             return $this->createEmptyResponse($response);
         }
 

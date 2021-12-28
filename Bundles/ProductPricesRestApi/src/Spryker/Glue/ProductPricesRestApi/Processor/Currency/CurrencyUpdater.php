@@ -34,7 +34,7 @@ class CurrencyUpdater implements CurrencyUpdaterInterface
     public function setCurrentCurrency(RestRequestInterface $restRequest): void
     {
         $currencyIsoCode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_CURRENCY);
-        if (!empty($currencyIsoCode)) {
+        if ($currencyIsoCode) {
             $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);
         }
     }

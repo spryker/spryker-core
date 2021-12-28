@@ -44,7 +44,7 @@ class CategoryAttributeStorageListener extends AbstractPlugin implements EventBu
             $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);
         }
 
-        if (empty($categoryIds)) {
+        if (!$categoryIds) {
             return;
         }
 

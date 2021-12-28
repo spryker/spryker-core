@@ -209,11 +209,11 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
      */
     protected function getConcreteProductSkusInList(array $productConcreteSkus, string $listType, array $productListIds): array
     {
-        if (empty($productConcreteSkus)) {
+        if (!$productConcreteSkus) {
             return [];
         }
 
-        if (empty($productListIds)) {
+        if (!$productListIds) {
             return [];
         }
 

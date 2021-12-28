@@ -44,7 +44,7 @@ class ProductStorage implements ProductStorageInterface
     public function expandProductDetails(ShoppingListOverviewResponseTransfer $shoppingListResponseTransfer): ShoppingListOverviewResponseTransfer
     {
         $productSkuCollection = $this->getProductSkuCollection($shoppingListResponseTransfer);
-        if (empty($productSkuCollection)) {
+        if (!$productSkuCollection) {
             return $shoppingListResponseTransfer;
         }
 

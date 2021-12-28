@@ -257,7 +257,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
         $localizedAttributes = $datasetTransfer->getDatasetLocalizedAttributes();
         $existingDatasetLocalizedAttributes = $datasetEntity->getSpyDatasetLocalizedAttributess()
             ->toKeyIndex('fkLocale');
-        if (empty($existingDatasetLocalizedAttributes)) {
+        if (!$existingDatasetLocalizedAttributes) {
             $this->createLocalizedAttributes($datasetEntity, $localizedAttributes);
 
             return;

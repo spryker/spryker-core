@@ -63,7 +63,7 @@ class GlossaryStorage implements GlossaryStorageInterface
             $this->loadTranslation($keyName);
         }
 
-        if (empty($parameters)) {
+        if (!$parameters) {
             return $this->translations[$keyName];
         }
 

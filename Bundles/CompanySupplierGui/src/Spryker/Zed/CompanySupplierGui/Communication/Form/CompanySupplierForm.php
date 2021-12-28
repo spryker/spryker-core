@@ -87,7 +87,7 @@ class CompanySupplierForm extends AbstractType
         $builder->get(ProductConcreteTransfer::COMPANY_SUPPLIERS)->addModelTransformer(
             new CallbackTransformer(
                 function ($suppliers) {
-                    if (empty($suppliers)) {
+                    if (!$suppliers) {
                         return $suppliers;
                     }
                     $result = [];

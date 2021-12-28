@@ -74,7 +74,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
 
         $productConcreteTransfers = [];
         foreach ($skus as $index => $sku) {
-            if (empty($sku)) {
+            if (!$sku) {
                 continue;
             }
 

@@ -87,7 +87,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
         $builder->get(CompanyUnitAddressTransfer::LABEL_COLLECTION)->addModelTransformer(
             new CallbackTransformer(
                 function ($labels) {
-                    if (empty($labels)) {
+                    if (!$labels) {
                         return $labels;
                     }
                     $result = [];

@@ -106,7 +106,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
             ->getPriceProductOfferVolumeFacade()
             ->extractVolumePrices([$priceProductTransfer]);
 
-        if (empty($volumePriceProductTransfers)) {
+        if (!$volumePriceProductTransfers) {
             return;
         }
 

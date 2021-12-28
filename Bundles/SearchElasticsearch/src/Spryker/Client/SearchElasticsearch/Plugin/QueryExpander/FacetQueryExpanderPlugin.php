@@ -279,7 +279,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             return true;
         }
 
-        return empty($filterValue) && !is_numeric($filterValue);
+        return !$filterValue && !is_numeric($filterValue);
     }
 
     /**

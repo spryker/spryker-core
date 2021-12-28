@@ -165,14 +165,14 @@ class AssignController extends AbstractController
             $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
         }
 
-        if (!empty($removeProductMappingCollection)) {
+        if ($removeProductMappingCollection) {
             $this->getFacade()->removeProductCategoryMappings(
                 $idCategory,
                 $removeProductMappingCollection,
             );
         }
 
-        if (!empty($addProductsMappingCollection)) {
+        if ($addProductsMappingCollection) {
             $this->getFacade()->createProductCategoryMappings(
                 $idCategory,
                 $addProductsMappingCollection,

@@ -212,7 +212,7 @@ class FormCollectionHandlerTest extends Unit
      */
     private function getFormCollectionHandlerMock(array $formCollectionHandlerMethods = [], array $arguments = []): FormCollectionHandlerInterface
     {
-        if (empty($arguments)) {
+        if (!$arguments) {
             $arguments = [[], $this->getFormFactoryMock(), $this->getDataProviderMock()];
         }
 

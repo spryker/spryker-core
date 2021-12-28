@@ -74,14 +74,14 @@ class PriceGrouper implements PriceGrouperInterface
                 return true;
             }
 
-            return !empty($v);
+            return (bool)$v;
         }, ARRAY_FILTER_USE_BOTH);
 
         foreach ($priceData as $key => &$value) {
             if (is_array($value)) {
                 $value = $this->filterPriceData($value, $excludeKey);
 
-                if (empty($value) || $value === [$excludeKey => null]) {
+                if (!$value || $value === [$excludeKey => null]) {
                     unset($priceData[$key]);
                 }
             }
@@ -97,7 +97,7 @@ class PriceGrouper implements PriceGrouperInterface
      */
     protected function formatData(array $prices): array
     {
-        if (!empty($prices)) {
+        if ($prices) {
             return [
                 static::PRICES => $prices,
             ];

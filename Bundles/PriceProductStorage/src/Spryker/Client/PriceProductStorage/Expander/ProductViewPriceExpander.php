@@ -80,7 +80,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         $priceProductAbstractTransfers = $this->findPriceAbstractData($productViewTransfer);
         $priceProductConcreteTransfers = $this->findPriceConcreteData($productViewTransfer);
 
-        if (empty($priceProductConcreteTransfers)) {
+        if (!$priceProductConcreteTransfers) {
             return $this->setPrices($productViewTransfer, $priceProductAbstractTransfers);
         }
 

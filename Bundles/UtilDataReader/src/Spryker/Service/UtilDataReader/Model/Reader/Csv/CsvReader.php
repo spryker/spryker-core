@@ -113,7 +113,7 @@ class CsvReader implements CsvReaderInterface
         $data = array_values($data);
         $columns = array_values($columns);
 
-        if (empty($data)) {
+        if (!$data) {
             throw new UnexpectedValueException(sprintf(
                 'Expected %d column(s) but received data with %d column(s) in %s on line %d',
                 count($columns),
@@ -179,7 +179,7 @@ class CsvReader implements CsvReaderInterface
     public function read()
     {
         $data = $this->getFile()->fgetcsv();
-        if (empty($data)) {
+        if (!$data) {
             throw new UnexpectedValueException(sprintf(
                 'Malformed data at line %d in %s',
                 $this->readIndex,

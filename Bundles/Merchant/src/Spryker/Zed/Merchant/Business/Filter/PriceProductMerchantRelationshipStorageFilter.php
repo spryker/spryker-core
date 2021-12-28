@@ -36,7 +36,7 @@ class PriceProductMerchantRelationshipStorageFilter implements PriceProductMerch
     {
         $activeMerchantIds = $this->getActiveMerchantIds($priceProductMerchantRelationshipStorageTransfers);
 
-        if (empty($activeMerchantIds)) {
+        if (!$activeMerchantIds) {
             return [];
         }
 

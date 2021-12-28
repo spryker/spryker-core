@@ -293,7 +293,7 @@ class CreateController extends AbstractController
         $numberProcessedForms = count($filteredFormPlugins) + count($skippedFormPlugins);
 
         return $allFormsAreValid
-            && !empty($allFormPlugins)
+            && $allFormPlugins
             && count($allFormPlugins) === $numberProcessedForms;
     }
 }

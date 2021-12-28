@@ -102,7 +102,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     {
         $response = $event->getControllerResult();
 
-        if (empty($response) || is_array($response)) {
+        if (!$response || is_array($response)) {
             $response = $this->render((array)$response);
             if ($response instanceof Response) {
                 $event->setResponse($response);
@@ -136,7 +136,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             return $this->renderTemplateFromRouterCache($request, $parameters);
         }
 
-        if (!is_string($controller) || empty($controller)) {
+        if (!is_string($controller) || !$controller) {
             return null;
         }
 

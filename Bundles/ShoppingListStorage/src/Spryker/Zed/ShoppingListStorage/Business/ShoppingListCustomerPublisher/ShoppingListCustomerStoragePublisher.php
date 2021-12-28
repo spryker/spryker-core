@@ -85,7 +85,7 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
      */
     protected function storeDataSet(string $customerReference, ?SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity = null)
     {
-        if (!isset($shoppingListCustomerStorageEntity)) {
+        if ($shoppingListCustomerStorageEntity === null) {
             $shoppingListCustomerStorageEntity = new SpyShoppingListCustomerStorage();
         }
         $shoppingListCustomerStorageEntity->setCustomerReference($customerReference);

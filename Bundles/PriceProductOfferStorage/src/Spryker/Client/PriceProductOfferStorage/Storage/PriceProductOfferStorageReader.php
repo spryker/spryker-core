@@ -102,7 +102,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
         $priceProductOfferKey = $this->generateKey($idProductConcrete);
         $priceProductOfferData = $this->storageClient->get($priceProductOfferKey);
 
-        if (empty($priceProductOfferData)) {
+        if (!$priceProductOfferData) {
             static::$productOfferPricesByIdProductConcrete[$idProductConcrete] = [];
 
             return static::$productOfferPricesByIdProductConcrete[$idProductConcrete];

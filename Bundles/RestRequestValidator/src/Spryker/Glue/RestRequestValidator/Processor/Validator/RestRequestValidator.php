@@ -92,7 +92,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     {
         $validator = $this->validationAdapter->createValidator();
         $attributesDataFromRequest = $restRequest->getAttributesDataFromRequest();
-        if (!isset($attributesDataFromRequest)) {
+        if ($attributesDataFromRequest === null) {
             return null;
         }
 

@@ -558,7 +558,7 @@ class BridgeBuilder
         $useStatements = [];
 
         foreach (array_unique($methodNames) as $methodName) {
-            if (empty($methodName)) {
+            if (!$methodName) {
                 continue;
             }
             $method = $reflectionClass->getMethod($methodName);

@@ -27,7 +27,7 @@ class AttributeTranslationFormTransferMapper implements AttributeTranslationForm
         $attributeTransfer = new ProductManagementAttributeTransfer();
         $translationFormData = $translationForm->getData();
 
-        if (empty($translationFormData)) {
+        if (!$translationFormData) {
             return $attributeTransfer;
         }
 

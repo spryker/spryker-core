@@ -61,7 +61,7 @@ class PhpMdRunner
 
         if (!is_dir($path)) {
             $message = 'This path does not exist';
-            if (!empty($bundle)) {
+            if ($bundle) {
                 $message = 'This bundle does not exist';
             }
 

@@ -41,7 +41,7 @@ class ProductReviewSearchListener extends AbstractPlugin implements EventBulkHan
 
         $this->getFacade()->publish($productReviewIds);
 
-        if (!empty($productAbstractIds)) {
+        if ($productAbstractIds) {
             $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductReviewSearchConfig::PLUGIN_PRODUCT_PAGE_RATING_DATA]);
         }
     }

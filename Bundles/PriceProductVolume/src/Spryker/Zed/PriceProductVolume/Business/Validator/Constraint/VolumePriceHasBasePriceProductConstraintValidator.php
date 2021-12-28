@@ -61,7 +61,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
             if (
                 $moneyValueTransfer->getGrossAmount()
                 || $moneyValueTransfer->getNetAmount()
-                || empty($volumePriceProductTransfers)
+                || !$volumePriceProductTransfers
                 || $priceTypeName !== static::PRICE_TYPE_DEFAULT
             ) {
                 continue;

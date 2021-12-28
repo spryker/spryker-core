@@ -277,8 +277,8 @@ class MerchantRelationshipCreateForm extends AbstractType
                 return [];
             }
             $businessUnits = $businessUnitCollection->getCompanyBusinessUnits();
-            if (empty($businessUnits)) {
-                return $businessUnits;
+            if (!$businessUnits) {
+                return [];
             }
             $result = [];
             foreach ($businessUnits as $businessUnit) {

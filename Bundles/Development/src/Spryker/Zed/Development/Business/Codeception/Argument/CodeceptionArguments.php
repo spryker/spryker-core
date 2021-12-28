@@ -22,7 +22,7 @@ class CodeceptionArguments
      */
     public function addArgument(string $argumentName, array $argumentValues = [])
     {
-        if (empty($argumentValues)) {
+        if (!$argumentValues) {
             $this->arguments[] = $argumentName;
 
             return $this;

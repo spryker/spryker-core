@@ -39,11 +39,11 @@ class GroupKeyExpander implements GroupKeyExpanderInterface
         $sortedProductOptions = $this->sortOptions((array)$itemTransfer->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
-        if (empty($optionGroupKey)) {
+        if (!$optionGroupKey) {
             return $currentGroupKey;
         }
 
-        return !empty($currentGroupKey) ? $currentGroupKey . '-' . $optionGroupKey : $optionGroupKey;
+        return (bool)$currentGroupKey ? $currentGroupKey . '-' . $optionGroupKey : $optionGroupKey;
     }
 
     /**

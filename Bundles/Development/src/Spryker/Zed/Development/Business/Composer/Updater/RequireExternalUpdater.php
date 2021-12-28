@@ -80,7 +80,7 @@ class RequireExternalUpdater implements UpdaterInterface
         }
 
         foreach ($dependentModules as $dependentModule) {
-            if (empty($dependentModule) || $dependentModule === $composerJson[static::KEY_NAME]) {
+            if (!$dependentModule || $dependentModule === $composerJson[static::KEY_NAME]) {
                 continue;
             }
             $filter = new CamelCaseToDash();

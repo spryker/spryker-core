@@ -300,7 +300,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {
-        if (empty($productIds)) {
+        if (!$productIds) {
             return [];
         }
 
@@ -331,7 +331,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array
     {
-        if (empty($productAbstractIds)) {
+        if (!$productAbstractIds) {
             return [];
         }
 

@@ -151,7 +151,7 @@ class TranslationTable extends AbstractTable
             $result[] = array_merge($value, $details);
         }
 
-        if (!empty($result)) {
+        if ($result) {
             foreach ($result as $key => $value) {
                 $result[$key][static::ACTIONS] = implode(' ', $this->buildActionUrls($value));
             }

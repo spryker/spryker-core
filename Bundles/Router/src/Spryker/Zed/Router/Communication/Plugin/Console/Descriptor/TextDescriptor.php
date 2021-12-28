@@ -95,7 +95,7 @@ class TextDescriptor extends Descriptor
      */
     private function formatRouterConfig(array $config): string
     {
-        if (empty($config)) {
+        if (!$config) {
             return 'NONE';
         }
 

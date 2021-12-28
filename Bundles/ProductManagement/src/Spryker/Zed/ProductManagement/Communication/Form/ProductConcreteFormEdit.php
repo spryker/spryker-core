@@ -329,7 +329,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         $superAttributes = $this->getProductConcreteSuperAttributes($builder->getData()[static::FIELD_ID_PRODUCT_CONCRETE]);
 
-        if (empty($superAttributes)) {
+        if (!$superAttributes) {
             return $this;
         }
 

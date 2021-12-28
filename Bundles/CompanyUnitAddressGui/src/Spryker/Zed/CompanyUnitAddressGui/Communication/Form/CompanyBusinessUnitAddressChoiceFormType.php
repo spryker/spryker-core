@@ -84,7 +84,7 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
         $builder->get(CompanyBusinessUnitTransfer::ADDRESS_COLLECTION)->addModelTransformer(
             new CallbackTransformer(
                 function ($addresses) {
-                    if (empty($addresses)) {
+                    if (!$addresses) {
                         return $addresses;
                     }
                     $result = [];

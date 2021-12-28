@@ -34,7 +34,7 @@ class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterfa
     {
         $productConcreteSku = $dataSet[ProductConfigurationDataSet::KEY_CONCRETE_SKU];
 
-        if (empty($productConcreteSku)) {
+        if (!$productConcreteSku) {
             throw new DataKeyNotFoundInDataSetException(
                 sprintf(
                     '"%s" key must be in the data set. Given: "%s"',

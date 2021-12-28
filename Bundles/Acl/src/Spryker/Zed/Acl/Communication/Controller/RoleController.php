@@ -115,7 +115,7 @@ class RoleController extends AbstractController
     {
         $idAclRole = $this->castId($request->query->get(static::PARAM_ID_ROLE));
 
-        if (empty($idAclRole)) {
+        if (!$idAclRole) {
             $this->addErrorMessage('Missing role id!');
 
             return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
@@ -174,7 +174,7 @@ class RoleController extends AbstractController
 
         $idRole = $this->castId($request->request->get(static::PARAM_ID_ROLE));
 
-        if (empty($idRole)) {
+        if (!$idRole) {
             $this->addErrorMessage('Missing role id!');
 
             return $this->redirectResponse(static::ACL_ROLE_LIST_URL);

@@ -42,7 +42,7 @@ class TransferDefinitionFinder implements FinderInterface
         $finder = new Finder();
 
         $existingSourceDirectories = $this->getExistingSourceDirectories();
-        if (empty($existingSourceDirectories)) {
+        if (!$existingSourceDirectories) {
             return [];
         }
 

@@ -34,7 +34,7 @@ class ProductAlternativePublishStorageListener extends AbstractPlugin implements
 
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
-        if (empty($productIds)) {
+        if (!$productIds) {
             return;
         }
 

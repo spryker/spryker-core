@@ -41,12 +41,12 @@ class ProductSkuToIdProductStep implements DataImportStepInterface
         }
 
         $productAbstractSku = $dataSet[PriceProductMerchantRelationshipDataSetInterface::ABSTRACT_SKU];
-        if (!empty($productAbstractSku)) {
+        if ($productAbstractSku) {
             $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT] = $this->resolveIdProductByAbstractSku($productAbstractSku);
         }
 
         $productConcreteSku = $dataSet[PriceProductMerchantRelationshipDataSetInterface::CONCRETE_SKU];
-        if (!empty($productConcreteSku)) {
+        if ($productConcreteSku) {
             $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($productConcreteSku);
         }
     }

@@ -171,7 +171,7 @@ class TaxSetForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($name, ExecutionContextInterface $context) {
-                if (empty($name)) {
+                if (!$name) {
                     return;
                 }
 
@@ -179,8 +179,8 @@ class TaxSetForm extends AbstractType
                 $form = $context->getObject();
                 $idTaxSet = $form->getParent()->getData()->getIdTaxSet();
                 if (
-                    empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameExists($name) ||
-                    !empty($idTaxSet) && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)
+                    !$idTaxSet && $this->getFacade()->taxSetWithSameNameExists($name) ||
+                    $idTaxSet && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)
                 ) {
                     $context->addViolation('Tax Set with name "%name%" already exists.', [
                         '%name%' => $name,

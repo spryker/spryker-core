@@ -94,7 +94,7 @@ class PercentageType implements CalculatorTypeInterface
     {
         $quantity = $discountableItemTransfer->getQuantity();
 
-        if (empty($quantity)) {
+        if (!$quantity) {
             return 1;
         }
 

@@ -110,7 +110,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                     unset($offerPrices[$key]);
                 }
             }
-            if (empty($offerPrices)) {
+            if (!$offerPrices) {
                 $productConcreteProductOfferPriceStorageEntity->delete();
 
                 continue;

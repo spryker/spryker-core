@@ -132,7 +132,7 @@ class MerchantProfileFormDataProvider
         $merchantProfileData = $merchantProfileTransfer->toArray(true, true);
         foreach ($merchantProfileGlossaryAttributeValuesData as $merchantProfileGlossaryAttributeFieldName => $glossaryAttributeValue) {
             $merchantProfileGlossaryKey = $merchantProfileData[$merchantProfileGlossaryAttributeFieldName];
-            if (empty($merchantProfileGlossaryKey)) {
+            if (!$merchantProfileGlossaryKey) {
                 continue;
             }
 

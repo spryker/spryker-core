@@ -80,7 +80,7 @@ class ProcessManager implements ProcessManagerInterface
             ->queryProcessesByServerId($this->serverUniqueId)
             ->find();
 
-        if (!empty($processIds)) {
+        if ($processIds) {
             $this->releaseIdleProcesses($processIds);
         }
     }

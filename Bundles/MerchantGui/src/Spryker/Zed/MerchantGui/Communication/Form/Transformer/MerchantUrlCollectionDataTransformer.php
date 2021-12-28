@@ -20,7 +20,7 @@ class MerchantUrlCollectionDataTransformer implements DataTransformerInterface
     public function transform($value): ArrayObject
     {
         $merchantUrlCollection = new ArrayObject();
-        if (empty($value)) {
+        if (!$value) {
             return $merchantUrlCollection;
         }
         foreach ($value as $urlTransfer) {
@@ -41,7 +41,7 @@ class MerchantUrlCollectionDataTransformer implements DataTransformerInterface
     public function reverseTransform($value): ArrayObject
     {
         $merchantUrlCollection = new ArrayObject();
-        if (empty($value)) {
+        if (!$value) {
             return $merchantUrlCollection;
         }
         foreach ($value as $urlTransfer) {

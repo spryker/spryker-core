@@ -56,7 +56,7 @@ class PriceProductScheduleImportMapper implements PriceProductScheduleImportMapp
         $fieldsMap = $this->priceProductScheduleConfig->getImportFileToTransferFieldsMap();
 
         foreach ($importData as $key => $value) {
-            $preparedImportData[$fieldsMap[$key]] = empty($value) ? null : $value;
+            $preparedImportData[$fieldsMap[$key]] = $value ?: null;
         }
 
         return $priceProductScheduleImportTransfer

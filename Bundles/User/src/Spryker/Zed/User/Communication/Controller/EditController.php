@@ -156,7 +156,7 @@ class EditController extends AbstractController
     {
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
-        if (empty($idUser)) {
+        if (!$idUser) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
 
             return $this->redirectResponse(static::USER_LISTING_URL);
@@ -215,7 +215,7 @@ class EditController extends AbstractController
 
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
-        if (empty($idUser)) {
+        if (!$idUser) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
 
             return $this->redirectResponse(static::USER_LISTING_URL);
@@ -251,7 +251,7 @@ class EditController extends AbstractController
 
         $idUser = $this->castId($request->get(static::PARAM_ID_USER));
 
-        if (empty($idUser)) {
+        if (!$idUser) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
 
             return $this->redirectResponse(static::USER_LISTING_URL);
@@ -338,7 +338,7 @@ class EditController extends AbstractController
 
         $idUser = $this->castId($request->request->get(static::PARAM_ID_USER));
 
-        if (empty($idUser)) {
+        if (!$idUser) {
             $this->addErrorMessage(static::MESSAGE_ID_USER_EXTRACT_ERROR);
 
             return $this->redirectResponse(static::USER_LISTING_URL);

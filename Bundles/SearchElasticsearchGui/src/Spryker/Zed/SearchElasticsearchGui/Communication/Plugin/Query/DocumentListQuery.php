@@ -39,7 +39,7 @@ class DocumentListQuery extends AbstractPlugin implements QueryInterface, Search
         $baseQuery = new Query();
         $searchString = $this->getSearchStringFromSearchContext();
 
-        if (!empty($searchString)) {
+        if ($searchString) {
             $query = $this->createFullTextSearchQuery($searchString);
         } else {
             $query = new MatchAll();

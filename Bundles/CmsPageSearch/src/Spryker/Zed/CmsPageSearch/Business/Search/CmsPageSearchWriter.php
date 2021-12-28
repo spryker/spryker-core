@@ -161,7 +161,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     protected function deleteSearchEntities(array $cmsPageIds): void
     {
-        if (empty($cmsPageIds)) {
+        if (!$cmsPageIds) {
             return;
         }
 

@@ -703,7 +703,7 @@ abstract class AbstractTable
 
         $sorting = $this->createSortingParameters($orderParameter);
 
-        if (empty($sorting)) {
+        if (!$sorting) {
             return $defaultSorting;
         }
 
@@ -1477,7 +1477,7 @@ abstract class AbstractTable
             $class .= ' ' . $options[static::BUTTON_CLASS];
         }
 
-        if (empty($class)) {
+        if (!$class) {
             return static::BUTTON_DEFAULT_CLASS;
         }
 

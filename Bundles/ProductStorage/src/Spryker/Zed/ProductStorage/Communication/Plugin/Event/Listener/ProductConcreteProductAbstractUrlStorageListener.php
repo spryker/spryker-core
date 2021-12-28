@@ -34,7 +34,7 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractPlugin im
     {
         $this->preventTransaction();
         $productAbstractIds = $this->getValidProductIds($eventEntityTransfers);
-        if (empty($productAbstractIds)) {
+        if (!$productAbstractIds) {
             return;
         }
 

@@ -70,7 +70,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
                 $customerWhitelistIds,
             );
 
-        if (empty($restrictedProductConcreteSkus)) {
+        if (!$restrictedProductConcreteSkus) {
             return $cartPreCheckResponseTransfer;
         }
 

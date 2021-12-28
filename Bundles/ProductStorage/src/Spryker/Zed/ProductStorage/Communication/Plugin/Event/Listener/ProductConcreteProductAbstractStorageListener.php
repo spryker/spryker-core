@@ -33,7 +33,7 @@ class ProductConcreteProductAbstractStorageListener extends AbstractPlugin imple
     {
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        if (empty($productAbstractIds)) {
+        if (!$productAbstractIds) {
             return;
         }
 

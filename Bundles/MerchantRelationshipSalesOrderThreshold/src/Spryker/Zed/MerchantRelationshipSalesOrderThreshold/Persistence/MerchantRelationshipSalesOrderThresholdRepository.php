@@ -32,7 +32,7 @@ class MerchantRelationshipSalesOrderThresholdRepository extends AbstractReposito
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds
     ): array {
-        if (empty($merchantRelationshipIds)) {
+        if (!$merchantRelationshipIds) {
             return [];
         }
 

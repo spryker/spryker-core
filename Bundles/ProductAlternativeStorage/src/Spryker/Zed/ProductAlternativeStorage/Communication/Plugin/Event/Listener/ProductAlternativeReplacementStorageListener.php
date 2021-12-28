@@ -36,13 +36,13 @@ class ProductAlternativeReplacementStorageListener extends AbstractPlugin implem
 
         $productAbstractIds = $eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyProductAlternativeTableMap::COL_FK_PRODUCT_ABSTRACT_ALTERNATIVE);
 
-        if (!empty($productAbstractIds)) {
+        if ($productAbstractIds) {
             $this->getFacade()->publishAbstractReplacements($productAbstractIds);
         }
 
         $productConcreteIds = $eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyProductAlternativeTableMap::COL_FK_PRODUCT_CONCRETE_ALTERNATIVE);
 
-        if (!empty($productConcreteIds)) {
+        if ($productConcreteIds) {
             $this->getFacade()->publishConcreteReplacements($productConcreteIds);
         }
     }

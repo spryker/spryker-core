@@ -96,6 +96,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
             ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
             ->setIsActive($dataSet[MerchantDataSetInterface::IS_ACTIVE]);
 
+        $merchantResponseTransfer = null;
         if ($action === static::ACTION_CREATE) {
             $merchantTransfer->setStoreRelation(new StoreRelationTransfer())
                 ->setMerchantProfile(new MerchantProfileTransfer());
@@ -107,7 +108,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
             $merchantResponseTransfer = $this->merchantFacade->updateMerchant($merchantTransfer);
         }
 
-        if (!isset($merchantResponseTransfer) || !$merchantResponseTransfer->getMerchant()) {
+        if ($merchantResponseTransfer === null || !$merchantResponseTransfer->getMerchant()) {
             return;
         }
 

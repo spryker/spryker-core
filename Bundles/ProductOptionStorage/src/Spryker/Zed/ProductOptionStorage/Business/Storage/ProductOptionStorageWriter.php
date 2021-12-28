@@ -278,7 +278,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
             $hasPriceValues = false;
             foreach ($productOption['SpyProductOptionGroup']['SpyProductOptionValues'] as $productOptionValue) {
                 $prices = $this->getPrices($productOptionValue['ProductOptionValuePrices'], $idStore);
-                if (!empty($prices)) {
+                if ($prices) {
                     $productOptionGroupStorageTransfer->addProductOptionValue((new ProductOptionValueStorageTransfer())->setIdProductOptionValue($productOptionValue['id_product_option_value'])
                         ->setSku($productOptionValue['sku'])
                         ->setPrices($prices)

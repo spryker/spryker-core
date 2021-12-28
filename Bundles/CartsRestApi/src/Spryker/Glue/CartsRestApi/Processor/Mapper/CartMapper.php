@@ -210,7 +210,7 @@ class CartMapper implements CartMapperInterface
             ->fromArray($quoteTransfer->getTotals()->toArray(), true);
 
         $taxTotalTransfer = $quoteTransfer->getTotals()->getTaxTotal();
-        if (!empty($taxTotalTransfer)) {
+        if ($taxTotalTransfer) {
             $cartsTotalsTransfer->setTaxTotal($taxTotalTransfer->getAmount());
         }
 

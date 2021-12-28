@@ -102,7 +102,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             ->find()
             ->getColumnValues('FkGlossaryKey');
 
-        if (empty($glossaryKeys)) {
+        if (!$glossaryKeys) {
             return;
         }
 

@@ -45,7 +45,7 @@ class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHand
             $categoryNodeIds = $this->getValidCategoryNodeIds($eventEntityTransfers);
         }
 
-        if (empty($categoryNodeIds)) {
+        if (!$categoryNodeIds) {
             return;
         }
 

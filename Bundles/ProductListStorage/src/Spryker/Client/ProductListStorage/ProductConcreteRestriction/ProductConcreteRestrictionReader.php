@@ -101,7 +101,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         ?ProductConcreteProductListStorageTransfer $productListProductConcreteStorageTransfer,
         array $customerWhitelistIds
     ): bool {
-        if (empty($customerWhitelistIds)) {
+        if (!$customerWhitelistIds) {
             return false;
         }
 

@@ -104,7 +104,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
         );
 
         $productOfferPriceRestResource = $productOfferPriceRestResources[$productOfferRestResource->getId()] ?? null;
-        if (!isset($productOfferPriceRestResource)) {
+        if ($productOfferPriceRestResource === null) {
             return $this->productOfferPriceRestResponseBuilder->createProductOfferAvailabilityEmptyRestResponse();
         }
 

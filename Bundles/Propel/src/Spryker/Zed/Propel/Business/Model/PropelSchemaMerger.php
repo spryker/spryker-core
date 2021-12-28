@@ -374,7 +374,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $elementName = $tagName . '|' . $elementName['name'];
         }
 
-        if (empty($elementName) || is_array($elementName)) {
+        if (!$elementName || is_array($elementName)) {
             $elementName = sprintf(
                 static::PATTERN_ANONYMOUS_ELEMENT,
                 $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH),

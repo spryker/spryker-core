@@ -61,7 +61,7 @@ class CategoryTreeBuilder
             );
             $parentCategory = $this->kvReader->get($storageKey);
 
-            if (empty($subtree)) {
+            if (!$subtree) {
                 $subtree = $parentCategory;
             }
             if ($parentCategory) {
@@ -70,7 +70,7 @@ class CategoryTreeBuilder
             }
         }
 
-        if (empty($categoryNode[CategoryNodeKeyInterface::PARENTS]) || empty($subtree)) {
+        if (empty($categoryNode[CategoryNodeKeyInterface::PARENTS]) || !$subtree) {
             $subtree = $categoryNode;
         }
 

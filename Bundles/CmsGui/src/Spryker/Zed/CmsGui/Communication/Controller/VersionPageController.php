@@ -121,7 +121,7 @@ class VersionPageController extends AbstractController
             $redirect = $this->submitVersionForm($request, $version, $idCmsPage);
         }
 
-        if (!empty($redirect)) {
+        if ($redirect) {
             return $this->redirectResponse($redirect);
         }
 

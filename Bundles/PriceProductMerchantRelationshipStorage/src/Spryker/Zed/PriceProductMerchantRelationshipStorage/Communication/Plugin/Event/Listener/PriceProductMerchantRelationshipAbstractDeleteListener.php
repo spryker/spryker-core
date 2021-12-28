@@ -38,7 +38,7 @@ class PriceProductMerchantRelationshipAbstractDeleteListener extends AbstractPlu
                 PriceProductMerchantRelationshipStorageConfig::COL_FK_PRODUCT_ABSTRACT,
             );
 
-        if (empty($productAbstractIds)) {
+        if (!$productAbstractIds) {
             return;
         }
 

@@ -92,7 +92,7 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
             ],
         );
 
-        if (empty($salesOrderThresholdValueTransfers)) {
+        if (!$salesOrderThresholdValueTransfers) {
             return true;
         }
 

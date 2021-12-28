@@ -62,7 +62,7 @@ class CreateBlockController extends AbstractController
             if ($cmsBlockForm->isValid()) {
                 $cmsBlockTransfer = $this->createBlock($cmsBlockForm);
 
-                if (!empty($cmsBlockTransfer)) {
+                if ($cmsBlockTransfer) {
                     $redirectUrl = $this->createSuccessRedirectUrl($cmsBlockTransfer);
 
                     return $this->redirectResponse($redirectUrl);

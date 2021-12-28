@@ -94,7 +94,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     protected function checkQuoteItemPriceChanges(array $resultQuoteItemIndex, array $sourceQuoteItemIndex): void
     {
         $quoteItemDiff = $this->getQuoteItemsPriceDiff($resultQuoteItemIndex, $sourceQuoteItemIndex);
-        if (!empty($quoteItemDiff)) {
+        if ($quoteItemDiff) {
             $this->messengerFacade->addInfoMessage(
                 $this->createMessengerMessageTransfer(static::CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED, [
                     '%sku%' => implode(', ', $quoteItemDiff),

@@ -17,7 +17,7 @@ class System
     public function getPhpInfo($what = null)
     {
         ob_start();
-        if (isset($what)) {
+        if ($what !== null) {
             phpinfo($what);
         } else {
             phpinfo();

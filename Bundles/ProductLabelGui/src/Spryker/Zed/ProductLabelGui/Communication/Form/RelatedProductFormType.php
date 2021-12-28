@@ -155,7 +155,7 @@ class RelatedProductFormType extends AbstractType
                     return implode(',', $idsProductAbstractAsArray);
                 },
                 function ($idsProductAbstractAsCsv) {
-                    if (empty($idsProductAbstractAsCsv)) {
+                    if (!$idsProductAbstractAsCsv) {
                         return [];
                     }
 

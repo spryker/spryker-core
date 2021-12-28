@@ -40,7 +40,7 @@ class KeyController extends AbstractController
             ->findOne();
 
         $idGlossaryKey = false;
-        if (!empty($key)) {
+        if ($key) {
             $idGlossaryKey = $key->getIdGlossaryKey();
         }
 
@@ -52,7 +52,7 @@ class KeyController extends AbstractController
         }
 
         $result = [];
-        if (!empty($translations)) {
+        if ($translations) {
             $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
 
             foreach ($translations as $value) {

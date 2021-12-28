@@ -39,7 +39,7 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         $productCategoryFilterTransfer->setIdProductCategoryFilter($idProductCategoryFilter);
         $productCategoryFilterTransfer->setFkCategory($idCategory);
 
-        if (empty($jsonData)) {
+        if (!$jsonData) {
             return $productCategoryFilterTransfer;
         }
 

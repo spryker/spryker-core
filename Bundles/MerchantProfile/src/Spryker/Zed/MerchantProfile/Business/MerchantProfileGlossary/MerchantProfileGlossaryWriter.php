@@ -118,7 +118,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
                 $merchantProfileTransfer->getFkMerchantOrFail(),
             );
 
-            if (empty($glossaryAttributeValue)) {
+            if (!$glossaryAttributeValue) {
                 $this->deleteGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey);
 
                 continue;

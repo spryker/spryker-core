@@ -108,7 +108,7 @@ class TransitionLogTable extends AbstractTable
     {
         $array = $row[$column];
 
-        if (!empty($array)) {
+        if ($array) {
             foreach ($array as $i => $value) {
                 $pieces = explode('\\', $value);
                 $conditionShort = end($pieces);

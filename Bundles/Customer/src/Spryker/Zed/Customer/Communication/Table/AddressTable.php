@@ -143,7 +143,7 @@ class AddressTable extends AbstractTable
             $defaultShippingAddress = !empty($customer[static::DEFAULT_SHIPPING_ADDRESS]) ? $customer[static::DEFAULT_SHIPPING_ADDRESS] : false;
         }
 
-        if (!empty($lines)) {
+        if ($lines) {
             foreach ($lines as $key => $value) {
                 $id = !empty($value[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]) ? $value[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS] : false;
 
@@ -156,7 +156,7 @@ class AddressTable extends AbstractTable
                 }
 
                 $address = $this->utilSanitize->escapeHtml($lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1]);
-                $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1] = (!empty($tags) ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $address;
+                $lines[$key][SpyCustomerAddressTableMap::COL_ADDRESS1] = ($tags ? implode('&nbsp;', $tags) . '&nbsp;' : '') . $address;
 
                 $lines[$key][static::ACTIONS] = $this->buildLinks($value);
             }

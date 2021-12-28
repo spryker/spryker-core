@@ -121,7 +121,7 @@ class ProductAttributesController extends AbstractController
     {
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
-        if (empty($attributeName)) {
+        if (!$attributeName) {
             return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 

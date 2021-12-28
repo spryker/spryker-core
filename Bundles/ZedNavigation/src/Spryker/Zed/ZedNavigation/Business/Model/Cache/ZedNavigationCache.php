@@ -76,7 +76,7 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
 
         $content = file_get_contents($cacheFilePath);
 
-        if (empty($content)) {
+        if (!$content) {
             throw new ZedNavigationCacheEmptyException('Navigation cache is enabled, but cache is empty.');
         }
 
@@ -96,7 +96,7 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         }
         $cacheFileSized = filesize($cacheFilePath);
 
-        return !empty($cacheFileSized);
+        return (bool)$cacheFileSized;
     }
 
     /**

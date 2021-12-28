@@ -127,7 +127,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
             }
         }
 
-        if (!empty($idsToDelete) && $connection !== null) {
+        if ($idsToDelete && $connection !== null) {
             $sql = $this->bulkTouchDeleteQuery
                 ->addQuery(
                     $this->touchKeyTableName,

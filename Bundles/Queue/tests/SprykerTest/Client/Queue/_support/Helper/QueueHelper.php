@@ -156,7 +156,7 @@ class QueueHelper extends AbstractHelper
             $unhandledMessages[] = $receivedMessage;
         }
 
-        if (empty($unhandledMessages)) {
+        if (!$unhandledMessages) {
             return;
         }
 

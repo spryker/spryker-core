@@ -371,7 +371,7 @@ abstract class AbstractController
         $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
         $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 
-        if (empty($whitelistedDomains) && !$isStrictDomainRedirect) {
+        if (!$whitelistedDomains && !$isStrictDomainRedirect) {
             return true;
         }
 

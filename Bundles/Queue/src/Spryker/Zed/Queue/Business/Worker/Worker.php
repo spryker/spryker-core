@@ -266,7 +266,7 @@ class Worker implements WorkerInterface
     {
         $adapterConfiguration = $this->queueConfig->getQueueAdapterConfiguration();
 
-        if (empty($adapterConfiguration) || !array_key_exists($queueName, $adapterConfiguration)) {
+        if (!$adapterConfiguration || !array_key_exists($queueName, $adapterConfiguration)) {
             $adapterConfiguration = $this->getQueueAdapterDefaultConfiguration($queueName);
         }
 
@@ -288,7 +288,7 @@ class Worker implements WorkerInterface
     {
         $adapterConfiguration = $this->queueConfig->getDefaultQueueAdapterConfiguration();
 
-        if (!empty($adapterConfiguration)) {
+        if ($adapterConfiguration) {
             return [
                 $queueName => $adapterConfiguration,
             ];

@@ -148,13 +148,14 @@ class StepCollection implements StepCollectionInterface
     {
         $firstStep = reset($this->steps);
 
+        $previousStep = null;
         foreach ($this->steps as $position => $step) {
             if ($step->getStepRoute() === $currentStep->getStepRoute() && $position !== 0) {
                 $previousStep = $this->steps[$position - 1];
             }
         }
 
-        if (!isset($previousStep)) {
+        if ($previousStep === null) {
             $previousStep = $firstStep;
         }
 

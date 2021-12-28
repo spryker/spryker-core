@@ -215,7 +215,7 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
      */
     protected function buildDetails(array $orderItemIds)
     {
-        if (empty($orderItemIds)) {
+        if (!$orderItemIds) {
             return null;
         }
 

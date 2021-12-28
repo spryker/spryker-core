@@ -43,7 +43,7 @@ class CmsEntityManager extends AbstractEntityManager implements CmsEntityManager
      */
     public function removeStoreRelations(array $idStores, int $idCmsPage): void
     {
-        if (empty($idStores)) {
+        if (!$idStores) {
             return;
         }
 

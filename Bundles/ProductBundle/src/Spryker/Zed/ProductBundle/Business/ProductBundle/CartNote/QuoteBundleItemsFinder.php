@@ -24,7 +24,7 @@ class QuoteBundleItemsFinder implements QuoteBundleItemsFinderInterface
         if ($groupKey) {
             $itemTransferCollection = $this->findBundleItems($quoteTransfer, $groupKey);
         }
-        if (!empty($itemTransferCollection)) {
+        if ($itemTransferCollection) {
             return $itemTransferCollection;
         }
 

@@ -543,7 +543,7 @@ class AbstractProductFormDataProvider
             }
 
             $values[$type] = [
-                AttributeAbstractForm::FIELD_NAME => isset($attributeValue),
+                AttributeAbstractForm::FIELD_NAME => $attributeValue !== null,
                 AttributeAbstractForm::FIELD_VALUE => $attributeValue,
                 AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID => $attributeTransfer->getIdProductManagementAttribute(),
             ];
@@ -576,7 +576,7 @@ class AbstractProductFormDataProvider
             $values[$type] = [
                 static::FORM_FIELD_ID => $id,
                 static::FORM_FIELD_VALUE => $value,
-                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_NAME => $value !== null,
                 static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 static::FORM_FIELD_SUPER => $isSuper,
@@ -626,7 +626,7 @@ class AbstractProductFormDataProvider
             $values[$type] = [
                 static::FORM_FIELD_ID => $id,
                 static::FORM_FIELD_VALUE => $value,
-                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_NAME => $value !== null,
                 static::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 static::FORM_FIELD_SUPER => $isSuper,
@@ -778,7 +778,7 @@ class AbstractProductFormDataProvider
             $values[$key] = [
                 static::FORM_FIELD_ID => null,
                 static::FORM_FIELD_VALUE => $value,
-                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_NAME => $value !== null,
                 static::FORM_FIELD_PRODUCT_SPECIFIC => true,
                 static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($key),
                 static::FORM_FIELD_SUPER => false,

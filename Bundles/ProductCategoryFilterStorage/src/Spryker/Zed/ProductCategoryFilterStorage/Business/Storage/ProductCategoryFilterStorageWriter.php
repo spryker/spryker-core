@@ -117,7 +117,7 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
             $spyProductCategoryFilterStorage = new SpyProductCategoryFilterStorage();
         }
 
-        if (empty($filterData)) {
+        if (!$filterData) {
             if (!$spyProductCategoryFilterStorage->isNew()) {
                 $spyProductCategoryFilterStorage->delete();
             }

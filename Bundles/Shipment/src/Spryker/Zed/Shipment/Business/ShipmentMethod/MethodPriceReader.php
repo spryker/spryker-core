@@ -136,7 +136,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
         }
 
         $currencyCode = $currencyTransfer->getCode();
-        if (empty($currencyCode)) {
+        if (!$currencyCode) {
             return null;
         }
 

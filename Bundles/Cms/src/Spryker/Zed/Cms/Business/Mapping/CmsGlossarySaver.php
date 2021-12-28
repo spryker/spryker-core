@@ -100,7 +100,7 @@ class CmsGlossarySaver implements CmsGlossarySaverInterface
             ->find()
             ->toArray();
 
-        if (empty($idGlossaryKeys)) {
+        if (!$idGlossaryKeys) {
             return;
         }
 

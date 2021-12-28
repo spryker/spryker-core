@@ -219,7 +219,7 @@ class RelationResolver implements RelationResolverInterface
 
         $relation = call_user_func($callable);
 
-        if (isset($relation) && $relation) {
+        if ($relation) {
             $relationCollection->append($relation);
         }
 

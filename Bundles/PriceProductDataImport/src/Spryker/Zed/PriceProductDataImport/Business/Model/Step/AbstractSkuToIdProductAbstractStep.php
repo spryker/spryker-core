@@ -31,7 +31,7 @@ class AbstractSkuToIdProductAbstractStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $productAbstractSku = $dataSet[PriceProductDataSet::KEY_ABSTRACT_SKU];
-        if (empty($productAbstractSku)) {
+        if (!$productAbstractSku) {
             return;
         }
 

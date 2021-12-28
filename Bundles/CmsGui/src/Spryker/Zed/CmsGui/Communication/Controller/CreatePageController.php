@@ -73,7 +73,7 @@ class CreatePageController extends AbstractController
         }
 
         $redirectUrl = $this->createPage($pageForm);
-        if (empty($redirectUrl)) {
+        if (!$redirectUrl) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
 
             return [

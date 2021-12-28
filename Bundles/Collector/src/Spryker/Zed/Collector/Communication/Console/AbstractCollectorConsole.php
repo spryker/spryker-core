@@ -18,7 +18,7 @@ abstract class AbstractCollectorConsole extends Console
      */
     protected function buildSummary(array $resultData)
     {
-        if (empty($resultData)) {
+        if (!$resultData) {
             return PHP_EOL . '<fg=yellow>Nothing exported.</fg=yellow>' . PHP_EOL;
         }
 

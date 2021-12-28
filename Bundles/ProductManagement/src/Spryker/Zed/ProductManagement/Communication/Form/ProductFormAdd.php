@@ -515,7 +515,7 @@ class ProductFormAdd extends AbstractType
                 'constraints' => [new Callback([
                     'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
                         $selectedAttributes = array_filter(array_values($dataToValidate));
-                        if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
+                        if (!$selectedAttributes && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
                             $context->addViolation('Please enter at least an SKU and a Name of the product in every locale in the General section');
                             GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                         }

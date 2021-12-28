@@ -144,7 +144,7 @@ class CustomerAssignmentForm extends AbstractType
                     return implode(',', $idsAsArray);
                 },
                 function ($idsAsString) {
-                    if (empty($idsAsString)) {
+                    if (!$idsAsString) {
                         return [];
                     }
 

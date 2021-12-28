@@ -104,11 +104,11 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $productLabelProductAbstractRelationsTransfer = new ProductLabelProductAbstractRelationsTransfer();
         $productLabelProductAbstractRelationsTransfer->setIdProductLabel($idProductLabel);
 
-        if (!empty($idsToAssign)) {
+        if ($idsToAssign) {
             $productLabelProductAbstractRelationsTransfer->setIdsProductAbstractToAssign($idsToAssign);
         }
 
-        if (!empty($idsToDeAssign)) {
+        if ($idsToDeAssign) {
             $productLabelProductAbstractRelationsTransfer->setIdsProductAbstractToDeAssign($idsToDeAssign);
         }
 

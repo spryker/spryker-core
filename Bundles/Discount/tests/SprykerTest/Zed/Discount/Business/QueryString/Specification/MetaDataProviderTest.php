@@ -176,15 +176,15 @@ class MetaDataProviderTest extends Unit
         ?ComparatorOperators $comparatorOperators = null,
         ?LogicalComparators $logicalComparatorsMock = null
     ): MetaDataProvider {
-        if (!isset($decisionRulePluginMock)) {
+        if ($decisionRulePluginMock === null) {
             $decisionRulePluginMock = $this->createDecisionRulePluginMock();
         }
 
-        if (!isset($comparatorOperators)) {
+        if ($comparatorOperators === null) {
             $comparatorOperators = $this->createComparatorOperatorsMock();
         }
 
-        if (!isset($logicalComparatorsMock)) {
+        if ($logicalComparatorsMock === null) {
             $logicalComparatorsMock = $this->createLogicalComparatorsMock();
         }
 

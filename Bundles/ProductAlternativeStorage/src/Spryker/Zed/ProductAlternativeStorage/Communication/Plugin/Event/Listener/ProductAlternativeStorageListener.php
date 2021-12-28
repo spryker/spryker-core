@@ -39,7 +39,7 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
             SpyProductAlternativeTableMap::COL_FK_PRODUCT,
         );
 
-        if (empty($productIds)) {
+        if (!$productIds) {
             return;
         }
 

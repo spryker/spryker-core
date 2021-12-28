@@ -993,7 +993,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $this->editableConfiguration = (new GuiTableEditableConfigurationTransfer())->setEnabled(true);
         }
 
-        $guiTableEditableInitialDataTransfer = !empty($initialData) ? $this->mapInitialDataToTransfer($initialData) : null;
+        $guiTableEditableInitialDataTransfer = (bool)$initialData ? $this->mapInitialDataToTransfer($initialData) : null;
         $guiTableEditableCreateConfigurationTransfer = (new GuiTableEditableCreateConfigurationTransfer())
             ->setFormInputName($formInputName)
             ->setInitialData($guiTableEditableInitialDataTransfer)

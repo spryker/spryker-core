@@ -93,7 +93,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
         foreach ($attributesInitialData[GuiTableEditableInitialDataTransfer::DATA] as $newAttribute) {
             $newAttributeName = $newAttribute[ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME] ?? '';
 
-            if (empty($newAttributeName)) {
+            if (!$newAttributeName) {
                 return $localizedAttributesTransfers;
             }
 

@@ -1345,7 +1345,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         $methodArgumentTypeHint = $method['typeHintValue'] ?? $method['typeHint'] ?? null;
-        $method['isTypeAssertionEnabled'] = empty($methodArgumentTypeHint) || $methodArgumentTypeHint === 'array';
+        $method['isTypeAssertionEnabled'] = !$methodArgumentTypeHint || $methodArgumentTypeHint === 'array';
 
         return $method;
     }

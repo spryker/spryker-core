@@ -44,7 +44,7 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
             $categoryIds = $this->getValidCategoryIds($eventEntityTransfers);
         }
 
-        if (empty($categoryIds)) {
+        if (!$categoryIds) {
             return;
         }
 

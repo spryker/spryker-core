@@ -108,7 +108,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
      */
     public function removeAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void
     {
-        if (empty($assignedCompanyBusinessUnitIds)) {
+        if (!$assignedCompanyBusinessUnitIds) {
             return;
         }
 

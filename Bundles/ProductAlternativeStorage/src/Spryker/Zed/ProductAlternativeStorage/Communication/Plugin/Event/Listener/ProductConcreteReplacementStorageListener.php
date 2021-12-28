@@ -34,7 +34,7 @@ class ProductConcreteReplacementStorageListener extends AbstractPlugin implement
 
         $productConcreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
-        if (empty($productConcreteIds)) {
+        if (!$productConcreteIds) {
             return;
         }
 

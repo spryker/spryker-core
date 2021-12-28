@@ -142,7 +142,7 @@ class LocalizedContentForm extends AbstractType
                     };
                     $parameters = $arrayFilter($transfer->toArray());
 
-                    return (!empty($parameters)) ? $this->getFactory()->getUtilEncoding()->encodeJson($transfer->toArray()) : null;
+                    return ($parameters) ? $this->getFactory()->getUtilEncoding()->encodeJson($transfer->toArray()) : null;
                 },
             ));
 

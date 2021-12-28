@@ -48,7 +48,7 @@ class CurrencyValidator implements CurrencyValidatorInterface
     {
         $currencyIsoCode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_CURRENCY);
 
-        if (empty($currencyIsoCode)) {
+        if (!$currencyIsoCode) {
             return null;
         }
 

@@ -501,9 +501,9 @@ class Address implements AddressInterface
     protected function retrieveFkCountry(AddressTransfer $addressTransfer)
     {
         $fkCountry = $addressTransfer->getFkCountry();
-        if (empty($fkCountry)) {
+        if (!$fkCountry) {
             $iso2Code = $addressTransfer->getIso2Code();
-            if (empty($iso2Code) === false) {
+            if ($iso2Code) {
                 $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
                 $fkCountry = $countryTransfer->getIdCountry();
             } else {

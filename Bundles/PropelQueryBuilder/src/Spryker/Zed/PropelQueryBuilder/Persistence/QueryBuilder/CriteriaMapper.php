@@ -250,7 +250,7 @@ class CriteriaMapper implements CriteriaMapperInterface
      */
     protected function getMappedFields($key, array $mappings)
     {
-        if (empty($mappings) || !array_key_exists($key, $mappings)) {
+        if (!$mappings || !array_key_exists($key, $mappings)) {
             return [];
         }
 

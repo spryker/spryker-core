@@ -41,7 +41,7 @@ class OrderAddressUpdater implements OrderAddressUpdaterInterface
             ->querySalesOrderAddressById($idAddress)
             ->findOne();
 
-        if (empty($addressEntity)) {
+        if (!$addressEntity) {
             return false;
         }
 

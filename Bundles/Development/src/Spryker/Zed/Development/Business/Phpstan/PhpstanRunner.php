@@ -288,7 +288,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if ($module) {
             $paths = $this->getPaths($module);
 
-            if (empty($paths)) {
+            if (!$paths) {
                 throw new RuntimeException('No path found for module ' . $module);
             }
 

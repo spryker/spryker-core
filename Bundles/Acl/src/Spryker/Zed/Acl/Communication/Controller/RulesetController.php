@@ -40,7 +40,7 @@ class RulesetController extends AbstractController
         $idRule = $this->castId($request->request->get('id-rule'));
         $idRole = $this->castId($request->request->get('id-role'));
 
-        if (empty($idRule)) {
+        if (!$idRule) {
             $this->addErrorMessage('Missing rule id!');
 
             return $this->redirectResponse(sprintf(static::ROLE_UPDATE_URL, $idRole));

@@ -39,7 +39,7 @@ class OrderUpdater implements OrderUpdaterInterface
             ->querySalesOrderById($idSalesOrder)
             ->findOne();
 
-        if (empty($orderEntity)) {
+        if (!$orderEntity) {
             return false;
         }
 

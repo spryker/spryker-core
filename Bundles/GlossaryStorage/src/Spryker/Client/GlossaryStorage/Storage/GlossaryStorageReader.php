@@ -97,7 +97,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
         }
 
         $translation = $this->getTranslation($keyName, $localeName);
-        if (empty($parameters)) {
+        if (!$parameters) {
             return $translation;
         }
 

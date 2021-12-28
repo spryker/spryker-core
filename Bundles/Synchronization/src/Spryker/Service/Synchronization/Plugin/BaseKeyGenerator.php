@@ -45,12 +45,12 @@ class BaseKeyGenerator
         $locale = $dataTransfer->getLocale();
 
         $key = '';
-        if (!empty($store)) {
+        if ($store) {
             $key = sprintf('%s', strtolower($store));
         }
 
-        if (!empty($locale)) {
-            if (!empty($key)) {
+        if ($locale) {
+            if ($key) {
                 $key .= ':';
             }
 

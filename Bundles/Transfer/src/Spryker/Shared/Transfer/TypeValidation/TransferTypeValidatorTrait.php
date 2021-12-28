@@ -151,7 +151,7 @@ trait TransferTypeValidatorTrait
             return gettype($value);
         }
 
-        if (empty($value)) {
+        if (!$value) {
             return 'array';
         }
 

@@ -58,7 +58,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
 
         if (
-            empty($extractedPrices)
+            !$extractedPrices
             && !empty($priceProductTransfers[0])
             && $priceProductTransfers[0]->getSkuProduct() !== null
         ) {

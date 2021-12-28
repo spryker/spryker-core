@@ -47,13 +47,13 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     {
         $customerMerchantRelationships = $this->getCustomerMerchantRelationships($quoteTransfer);
 
-        if (empty($customerMerchantRelationships)) {
+        if (!$customerMerchantRelationships) {
             return [];
         }
 
         $itemMerchantRelationshipSubTotals = $this->getItemsMerchantRelationshipSubTotals($quoteTransfer);
 
-        if (empty($itemMerchantRelationshipSubTotals)) {
+        if (!$itemMerchantRelationshipSubTotals) {
             return [];
         }
 

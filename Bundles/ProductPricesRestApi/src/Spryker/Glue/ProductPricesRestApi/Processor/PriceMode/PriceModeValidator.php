@@ -38,7 +38,7 @@ class PriceModeValidator implements PriceModeValidatorInterface
     {
         $priceMode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_PRICE_MODE);
 
-        if (empty($priceMode)) {
+        if (!$priceMode) {
             return null;
         }
 

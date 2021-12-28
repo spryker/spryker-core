@@ -36,7 +36,7 @@ class ProductDiscontinuedNoteStorageListener extends AbstractPlugin implements E
         $productDiscontinuedIds = $this->getFactory()->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductDiscontinuedNoteTableMap::COL_FK_PRODUCT_DISCONTINUED);
 
-        if (empty($productDiscontinuedIds)) {
+        if (!$productDiscontinuedIds) {
             return;
         }
 

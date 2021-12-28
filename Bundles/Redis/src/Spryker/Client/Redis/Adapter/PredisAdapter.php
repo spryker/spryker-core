@@ -57,7 +57,7 @@ class PredisAdapter implements RedisAdapterInterface
      */
     public function set(string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool
     {
-        return isset($expireTTL)
+        return $expireTTL !== null
             ? (bool)$this->client->set($key, $value, $expireResolution, $expireTTL, $flag)
             : (bool)$this->client->set($key, $value);
     }

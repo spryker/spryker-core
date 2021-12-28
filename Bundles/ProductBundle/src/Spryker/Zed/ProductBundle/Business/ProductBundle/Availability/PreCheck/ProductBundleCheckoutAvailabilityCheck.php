@@ -61,7 +61,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
             $unavailableCheckoutBundledItems = $this->getUnavailableCheckoutBundledItems($itemsInCart, $bundleItemTransfer, $storeTransfer);
 
-            if (!empty($unavailableCheckoutBundledItems)) {
+            if ($unavailableCheckoutBundledItems) {
                 foreach ($unavailableCheckoutBundledItems as $unavailableCheckoutBundledItem) {
                     $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer($unavailableCheckoutBundledItem);
                 }

@@ -63,7 +63,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
                 $localeUrls = (array)$currentUrlStorage->getLocaleUrls();
             }
 
-            if (!empty($localeUrls)) {
+            if ($localeUrls) {
                 return $twig->render(
                     $templatePath,
                     [

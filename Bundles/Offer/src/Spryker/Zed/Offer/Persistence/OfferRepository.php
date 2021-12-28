@@ -90,7 +90,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
      */
     protected function applyPagination(SpyOfferQuery $spyOfferQuery, ?PaginationTransfer $paginationTransfer = null): SpyOfferQuery
     {
-        if (empty($paginationTransfer)) {
+        if (!$paginationTransfer) {
             return $spyOfferQuery;
         }
 

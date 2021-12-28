@@ -57,7 +57,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     {
         $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
 
-        if (empty($extractedPrices) && !empty($priceProductTransfers)) {
+        if (!$extractedPrices && $priceProductTransfers) {
             $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
                 $idProductConcrete,
             );

@@ -136,7 +136,7 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         array $replacementIds,
         ?SpyProductReplacementForStorage $productReplacementStorageEntity
     ): void {
-        if (empty($replacementIds) && $productReplacementStorageEntity) {
+        if (!$replacementIds && $productReplacementStorageEntity) {
             $this->productAlternativeStorageEntityManager->deleteProductReplacementForStorage($productReplacementStorageEntity);
 
             return;

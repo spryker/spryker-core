@@ -124,7 +124,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      */
     protected function applyPagination(SpyCustomerQuery $spyCustomerQuery, ?PaginationTransfer $paginationTransfer = null): SpyCustomerQuery
     {
-        if (empty($paginationTransfer)) {
+        if (!$paginationTransfer) {
             return $spyCustomerQuery;
         }
 

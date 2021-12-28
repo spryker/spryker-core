@@ -132,7 +132,7 @@ class PreparePriceDataStep implements DataImportStepInterface
             $priceData = $this->addPriceDataValue($priceData, $priceDataKey, $dataSet[$dataSetKey]);
         }
 
-        if (empty($priceData)) {
+        if (!$priceData) {
             return null;
         }
 
@@ -148,7 +148,7 @@ class PreparePriceDataStep implements DataImportStepInterface
      */
     protected function addPriceDataValue(array $priceData, string $key, string $value): array
     {
-        if (empty($value)) {
+        if (!$value) {
             return $priceData;
         }
 

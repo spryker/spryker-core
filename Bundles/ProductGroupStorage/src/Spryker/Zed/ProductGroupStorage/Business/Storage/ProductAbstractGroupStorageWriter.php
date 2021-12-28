@@ -46,7 +46,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
         $groupedProductAbstractIds = $this->getGroupedProductAbstractIdsByGroupIds($productAbstractIds);
         $allProductAbstractIds = $this->getProductAbstractIds($groupedProductAbstractIds, $productAbstractIds);
 
-        if (empty($allProductAbstractIds)) {
+        if (!$allProductAbstractIds) {
             return;
         }
 
@@ -109,7 +109,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
         }
 
         $allGroupedProductAbstractIds = $this->mergeRelatedProductAbstractIds($productAbstractId, $groupedProductAbstractIds);
-        if (empty($allGroupedProductAbstractIds)) {
+        if (!$allGroupedProductAbstractIds) {
             if (!$spyProductStorageGroupEntity->isNew()) {
                 $spyProductStorageGroupEntity->delete();
             }

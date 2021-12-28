@@ -436,7 +436,7 @@ class ProductConcreteFormAddDataProvider
             $values[$type] = [
                 static::FORM_FIELD_ID => null,
                 static::FORM_FIELD_VALUE => $value,
-                static::FORM_FIELD_NAME => isset($value),
+                static::FORM_FIELD_NAME => $value !== null,
                 static::FORM_FIELD_PRODUCT_SPECIFIC => true,
                 static::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 static::FORM_FIELD_SUPER => false,

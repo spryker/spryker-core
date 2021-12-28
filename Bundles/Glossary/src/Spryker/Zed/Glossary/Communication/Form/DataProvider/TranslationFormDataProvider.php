@@ -48,7 +48,7 @@ class TranslationFormDataProvider
 
         $translationCollection = $this->getGlossaryKeyTranslations($fkGlossaryKey, $locales);
 
-        if (!empty($translationCollection)) {
+        if ($translationCollection) {
             foreach ($translationCollection as $translation) {
                 $data[TranslationForm::FIELD_LOCALES][$translation[GlossaryQueryContainer::LOCALE]] = $translation[GlossaryQueryContainer::VALUE];
             }

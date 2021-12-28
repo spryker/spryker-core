@@ -442,7 +442,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     ): ShoppingListItemCollectionTransfer {
         $shoppingListItemsSkus = $this->getShoppingListItemsSkus($shoppingListItemCollectionTransfer);
 
-        if (empty($shoppingListItemsSkus)) {
+        if (!$shoppingListItemsSkus) {
             return $shoppingListItemCollectionTransfer;
         }
 

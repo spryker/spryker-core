@@ -365,7 +365,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     {
         $priceDataArray = $this->utilEncodingService->decodeJson($priceData, true);
 
-        if (empty($priceDataArray)) {
+        if (!$priceDataArray) {
             return null;
         }
 

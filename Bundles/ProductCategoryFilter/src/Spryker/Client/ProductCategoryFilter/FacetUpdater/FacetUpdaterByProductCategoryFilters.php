@@ -21,7 +21,7 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
      */
     public function update(array $facets, array $updateCriteria)
     {
-        if (empty($updateCriteria)) {
+        if (!$updateCriteria) {
             return $facets;
         }
 

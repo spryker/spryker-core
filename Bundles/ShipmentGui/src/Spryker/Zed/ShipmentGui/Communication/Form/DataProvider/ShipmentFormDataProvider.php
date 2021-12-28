@@ -324,7 +324,7 @@ class ShipmentFormDataProvider
     protected function getSalutationOptions(): array
     {
         $salutation = $this->customerFacade->getAllSalutations();
-        if (!is_array($salutation) || empty($salutation)) {
+        if (!is_array($salutation) || !$salutation) {
             return [];
         }
 

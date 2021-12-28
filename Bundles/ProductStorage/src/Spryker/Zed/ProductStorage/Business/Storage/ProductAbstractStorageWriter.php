@@ -414,7 +414,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $attributes = $this->productFacade->combineRawProductAttributes($rawProductAttributesTransfer);
 
         $attributes = array_filter($attributes, function ($attributeKey) {
-            return !empty($attributeKey);
+            return (bool)$attributeKey;
         }, ARRAY_FILTER_USE_KEY);
 
         return $attributes;

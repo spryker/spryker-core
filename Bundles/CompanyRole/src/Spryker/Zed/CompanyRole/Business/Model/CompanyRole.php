@@ -97,7 +97,7 @@ class CompanyRole implements CompanyRoleInterface
     {
         $companyRoles = $this->companyRoleConfig->getPredefinedCompanyRoles();
 
-        if (!empty($companyRoles)) {
+        if ($companyRoles) {
             return $this->createCompanyRoles($companyResponseTransfer, $companyRoles);
         }
 

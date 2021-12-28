@@ -43,7 +43,7 @@ class UniqueUserEmailConstraintValidator extends ConstraintValidator
      */
     protected function isUniqueUserEmail(?string $email, UniqueUserEmailConstraint $constraint): bool
     {
-        if (empty($email)) {
+        if (!$email) {
             return false;
         }
 

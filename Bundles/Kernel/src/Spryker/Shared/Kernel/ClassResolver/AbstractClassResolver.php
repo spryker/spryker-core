@@ -188,6 +188,7 @@ abstract class AbstractClassResolver
      */
     public function canResolve()
     {
+        $cacheKey = null;
         if ($this->canUseCaching()) {
             $cacheKey = $this->getCacheKey();
 
@@ -204,7 +205,7 @@ abstract class AbstractClassResolver
             if ($this->classExists($className)) {
                 $this->resolvedClassName = $className;
 
-                if (isset($cacheKey)) {
+                if ($cacheKey !== null) {
                     $this->addCache($cacheKey, $className);
                 }
 

@@ -69,7 +69,7 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     {
         $outdatedConfigFiles = glob($this->getCodeBucketCacheFilePath($codeBucket), GLOB_NOSORT);
 
-        if (!empty($outdatedConfigFiles)) {
+        if ($outdatedConfigFiles) {
             $this->filesystem->remove($outdatedConfigFiles);
         }
 

@@ -47,8 +47,8 @@ abstract class SessionFactory
     {
         // get the credentials from the first defined couchbase host
         $credentials = $this->getCredentialsFromSavePathSegment(explode(';', $savePath)[0]);
-        $user = !empty($credentials) && array_key_exists(static::USER, $credentials) ? $credentials[static::USER] : null;
-        $password = !empty($credentials) && array_key_exists(static::PASSWORD, $credentials) ? $credentials[static::PASSWORD] : null;
+        $user = (bool)$credentials && array_key_exists(static::USER, $credentials) ? $credentials[static::USER] : null;
+        $password = (bool)$credentials && array_key_exists(static::PASSWORD, $credentials) ? $credentials[static::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
@@ -66,8 +66,8 @@ abstract class SessionFactory
     public function registerMysqlSessionHandler($savePath)
     {
         $credentials = $this->getCredentialsFromSavePathSegment(explode(';', $savePath)[0]);
-        $user = !empty($credentials) && array_key_exists(static::USER, $credentials) ? $credentials[static::USER] : null;
-        $password = !empty($credentials) && array_key_exists(static::PASSWORD, $credentials) ? $credentials[static::PASSWORD] : null;
+        $user = (bool)$credentials && array_key_exists(static::USER, $credentials) ? $credentials[static::USER] : null;
+        $password = (bool)$credentials && array_key_exists(static::PASSWORD, $credentials) ? $credentials[static::PASSWORD] : null;
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 

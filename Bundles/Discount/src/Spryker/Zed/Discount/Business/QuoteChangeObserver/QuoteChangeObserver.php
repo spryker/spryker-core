@@ -62,7 +62,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             $this->checkRemovedDiscountsItemsSku($indexResultDiscountTransferCollection, $indexSourceDiscountTransferCollection, $sourceQuoteTransfer),
             $this->checkRemovedDiscountsItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $sourceQuoteTransfer),
         );
-        if (!empty($itemSkuCollection)) {
+        if ($itemSkuCollection) {
             $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE, $itemSkuCollection);
         }
 
@@ -70,7 +70,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             $this->checkCurrentDiscountsDiffItemsSku($indexResultDiscountTransferCollection, $indexSourceDiscountTransferCollection, $resultQuoteTransfer),
             $this->checkCurrentDiscountsDiffItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $resultQuoteTransfer),
         );
-        if (!empty($itemSkuCollection)) {
+        if ($itemSkuCollection) {
             $this->createInfoMessageWithSkuCollection(static::GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED, $itemSkuCollection);
         }
 

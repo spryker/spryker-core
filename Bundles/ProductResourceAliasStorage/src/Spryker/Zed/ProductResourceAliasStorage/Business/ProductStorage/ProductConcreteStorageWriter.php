@@ -58,7 +58,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             if ($oldSku === $sku) {
                 continue;
             }
-            if (!empty($oldSku)) {
+            if ($oldSku) {
                 $this->unpublishProductStorageMappingResource($productConcreteStorageEntity);
             }
 

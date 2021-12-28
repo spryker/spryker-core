@@ -168,11 +168,11 @@ class PriceVolumeCollectionDataProvider
                 ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
         }
 
-        if (empty($priceProductTransfers)) {
+        if (!$priceProductTransfers) {
             $priceProductTransfers = $this->priceProductFacade
                 ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
 
-            if (empty($priceProductTransfers)) {
+            if (!$priceProductTransfers) {
                 throw new PriceProductNotFoundException(
                     sprintf(static::MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR, $idProductAbstract),
                 );

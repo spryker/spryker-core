@@ -120,7 +120,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
     {
         $normalizableFields = $itemTransfer->getNormalizableFields();
 
-        return !empty($normalizableFields) && in_array(static::NORMALIZABLE_FIELD, $normalizableFields);
+        return (bool)$normalizableFields && in_array(static::NORMALIZABLE_FIELD, $normalizableFields);
     }
 
     /**

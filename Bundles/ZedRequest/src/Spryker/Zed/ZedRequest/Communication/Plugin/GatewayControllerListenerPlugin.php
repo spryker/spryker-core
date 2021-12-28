@@ -145,7 +145,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $parameter = array_shift($parameters);
         if ($parameter) {
             $class = $parameter->getClass();
-            if (empty($class)) {
+            if (!$class) {
                 throw new LogicException('You need to specify a class for the parameter in the yves-action.');
             }
 

@@ -85,7 +85,7 @@ class Cronjobs
      */
     public function generateCronjobs(array $roles)
     {
-        if (empty($roles)) {
+        if (!$roles) {
             $roles = [static::DEFAULT_ROLE];
         }
 

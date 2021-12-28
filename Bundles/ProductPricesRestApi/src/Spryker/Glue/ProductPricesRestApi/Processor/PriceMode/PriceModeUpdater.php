@@ -34,7 +34,7 @@ class PriceModeUpdater implements PriceModeUpdaterInterface
     public function switchPriceMode(RestRequestInterface $restRequest): void
     {
         $priceMode = $this->getRequestParameter($restRequest, ProductPricesRestApiConfig::REQUEST_PARAMETER_PRICE_MODE);
-        if (!empty($priceMode)) {
+        if ($priceMode) {
             $this->priceClient->switchPriceMode($priceMode);
         }
     }

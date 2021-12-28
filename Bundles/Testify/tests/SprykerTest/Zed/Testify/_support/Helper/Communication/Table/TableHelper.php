@@ -154,6 +154,7 @@ class TableHelper extends Module
             $xpath = sprintf('//a[contains(., "%1$s")] | //button[contains(., "%1$s")]', $name);
 
             $elements = $xhtml->xpath($xpath);
+            $link = null;
             if ($elements) {
                 $element = current($xhtml->xpath($xpath));
                 /** @var \SimpleXMLElement $attributes */
@@ -162,7 +163,7 @@ class TableHelper extends Module
                 $link = $attributes['@attributes']['href'];
             }
 
-            if (isset($link)) {
+            if ($link !== null) {
                 $this->getApplicationHelper()->amOnPage($link);
                 $this->getApplicationHelper()->seeResponseCodeIs(200);
 

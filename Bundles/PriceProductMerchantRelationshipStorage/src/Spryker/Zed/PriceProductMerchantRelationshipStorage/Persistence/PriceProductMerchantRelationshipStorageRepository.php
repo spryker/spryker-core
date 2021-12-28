@@ -314,7 +314,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->endUse()
             ->useMerchantRelationshipQuery()
                 ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
-                    ->_if(!empty($filterByCompanyBusinessUnitIds))
+                    ->_if((bool)$filterByCompanyBusinessUnitIds)
                         ->filterByFkCompanyBusinessUnit_In($filterByCompanyBusinessUnitIds)
                     ->_endif()
                 ->endUse()

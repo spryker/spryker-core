@@ -36,7 +36,7 @@ class VolumePriceReader implements VolumePriceReaderInterface
     {
         $volumePriceData = $this->getVolumePriceData($priceProductTransfer);
 
-        return !empty($volumePriceData);
+        return (bool)$volumePriceData;
     }
 
     /**

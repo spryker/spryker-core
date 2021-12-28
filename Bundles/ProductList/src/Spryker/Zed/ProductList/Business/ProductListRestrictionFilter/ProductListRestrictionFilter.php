@@ -34,20 +34,20 @@ class ProductListRestrictionFilter implements ProductListRestrictionFilterInterf
      */
     public function filterRestrictedProductConcreteSkus(array $productConcreteSkus, array $customerBlacklistIds, array $customerWhitelistIds): array
     {
-        if (empty($productConcreteSkus)) {
+        if (!$productConcreteSkus) {
             return [];
         }
 
         $restrictedProductConcreteSkus = [];
 
-        if (!empty($customerWhitelistIds)) {
+        if ($customerWhitelistIds) {
             $productConcreteSkusInWhitelist = $this->productListReader
                 ->getProductConcreteSkusInWhitelists($productConcreteSkus, $customerWhitelistIds);
 
             $restrictedProductConcreteSkus = array_diff($productConcreteSkus, $productConcreteSkusInWhitelist);
         }
 
-        if (!empty($customerBlacklistIds)) {
+        if ($customerBlacklistIds) {
             $productConcreteSkusInBlacklist = $this->productListReader
                 ->getProductConcreteSkusInBlacklists($productConcreteSkus, $customerBlacklistIds);
 

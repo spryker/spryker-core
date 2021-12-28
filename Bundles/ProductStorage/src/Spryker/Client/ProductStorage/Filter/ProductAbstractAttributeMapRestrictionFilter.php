@@ -64,7 +64,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
             $productStorageData[ProductStorageConfig::RESOURCE_TYPE_ATTRIBUTE_MAP][static::KEY_PRODUCT_CONCRETE_IDS],
         );
 
-        if (empty($restrictedProductConcreteIds)) {
+        if (!$restrictedProductConcreteIds) {
             return $productStorageData;
         }
 

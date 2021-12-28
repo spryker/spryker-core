@@ -77,7 +77,7 @@ class TransferConstraintValidator extends ConstraintValidator
 
                 continue;
             }
-            if (!empty($fieldConstraint)) {
+            if ($fieldConstraint) {
                 $this->context->getValidator()
                     ->inContext($this->context)
                     ->atPath('[' . $field . ']')

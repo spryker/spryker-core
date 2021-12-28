@@ -57,7 +57,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             if ($oldSku === $sku) {
                 continue;
             }
-            if (!empty($oldSku)) {
+            if ($oldSku) {
                 $this->unpublishProductStorageMappingResource($productAbstractStorageEntity);
             }
 

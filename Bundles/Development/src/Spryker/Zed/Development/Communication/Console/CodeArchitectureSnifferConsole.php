@@ -275,6 +275,7 @@ class CodeArchitectureSnifferConsole extends Console
         $projectNamespaces = $this->getFactory()->getConfig()->getProjectNamespaces();
 
         $result = 0;
+        $violations = null;
         foreach ($projectNamespaces as $projectNamespace) {
             $output->writeln($projectNamespace, OutputInterface::VERBOSITY_VERBOSE);
             $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $projectNamespace . DIRECTORY_SEPARATOR;
@@ -305,7 +306,7 @@ class CodeArchitectureSnifferConsole extends Console
             }
         }
 
-        if (!isset($violations)) {
+        if ($violations === null) {
             $output->writeln('<error>No paths found for checking</error>');
 
             return false;

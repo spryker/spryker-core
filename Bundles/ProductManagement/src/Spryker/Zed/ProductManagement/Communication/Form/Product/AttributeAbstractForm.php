@@ -268,7 +268,7 @@ class AttributeAbstractForm extends AbstractSubForm
                 $idLocale,
             )->find();
 
-        if (!$existingValue && isset($attributeValue)) {
+        if (!$existingValue && $attributeValue !== null) {
             $result[$attributeValue] = $attributeValue;
         }
 

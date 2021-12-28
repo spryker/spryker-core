@@ -307,7 +307,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $attributes = $localizedAttributesTransfer->getAttributes();
 
             foreach ($attributes as $key => $value) {
-                $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
+                $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = $value !== null;
                 $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
                 $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = null;
             }
@@ -317,7 +317,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         $attributes = $productTransfer->getAttributes();
 
         foreach ($attributes as $key => $value) {
-            $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
+            $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = $value !== null;
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = null;
         }

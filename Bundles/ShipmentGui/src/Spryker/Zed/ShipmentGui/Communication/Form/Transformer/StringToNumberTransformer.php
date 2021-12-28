@@ -28,7 +28,7 @@ class StringToNumberTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (empty($value)) {
+        if (!$value) {
             return null;
         }
 

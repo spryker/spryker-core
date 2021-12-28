@@ -166,7 +166,7 @@ class DiscountOrderSaver implements DiscountOrderSaverInterface
     {
         $voucherCode = $calculatedDiscountTransfer->getVoucherCode();
 
-        return (!empty($voucherCode));
+        return (bool)$voucherCode;
     }
 
     /**

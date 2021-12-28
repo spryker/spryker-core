@@ -118,7 +118,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
      */
     protected function getProductConcretePageSearchTransfers(array $productIds): array
     {
-        if (empty($productIds)) {
+        if (!$productIds) {
             $productIds = $this->getAllProductIds();
         }
 

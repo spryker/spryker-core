@@ -122,7 +122,7 @@ class Repeater implements RepeaterInterface
         }
 
         $content = file_get_contents($filePath);
-        if (empty($content)) {
+        if (!$content) {
             return [];
         }
 

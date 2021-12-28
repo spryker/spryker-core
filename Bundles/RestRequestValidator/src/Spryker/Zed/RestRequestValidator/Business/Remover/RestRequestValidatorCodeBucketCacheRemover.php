@@ -42,7 +42,7 @@ class RestRequestValidatorCodeBucketCacheRemover implements RestRequestValidator
     public function remove(string $codeBucket): void
     {
         $outdatedConfigFiles = $this->getOutdatedConfig($codeBucket);
-        if (!empty($outdatedConfigFiles)) {
+        if ($outdatedConfigFiles) {
             $this->filesystem->remove($outdatedConfigFiles);
         }
     }

@@ -28,7 +28,7 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
     {
         $voucherCodes = $this->getVoucherCodes($orderEntity);
 
-        if (empty($voucherCodes)) {
+        if (!$voucherCodes) {
             return [];
         }
 

@@ -62,7 +62,7 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
 
         $allowedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
 
-        if (empty($allowedDomains)) {
+        if (!$allowedDomains) {
             return !Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
         }
 

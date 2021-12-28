@@ -120,9 +120,9 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected function retrieveIdCountry(CompanyUnitAddressTransfer $companyUnitAddressTransfer): int
     {
         $idCountry = $companyUnitAddressTransfer->getFkCountry();
-        if (empty($idCountry)) {
+        if (!$idCountry) {
             $iso2Code = $companyUnitAddressTransfer->getIso2Code();
-            if (empty($iso2Code) === false) {
+            if ($iso2Code) {
                 $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
                 $idCountry = $countryTransfer->getIdCountry();
             } else {

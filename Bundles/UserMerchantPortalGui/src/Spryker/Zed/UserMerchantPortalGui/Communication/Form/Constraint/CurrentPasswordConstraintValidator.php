@@ -42,7 +42,7 @@ class CurrentPasswordConstraintValidator extends ConstraintValidator
      */
     protected function isValidPassword(?string $password, CurrentPasswordConstraint $constraint): bool
     {
-        if (empty($password)) {
+        if (!$password) {
             return false;
         }
 

@@ -53,7 +53,7 @@ class RestRequestValidatorCacheRemover implements RestRequestValidatorCacheRemov
     {
         foreach ($this->store->getAllowedStores() as $storeName) {
             $outdatedConfigFiles = $this->getOutdatedConfig($storeName);
-            if (!empty($outdatedConfigFiles)) {
+            if ($outdatedConfigFiles) {
                 $this->filesystem->remove($outdatedConfigFiles);
             }
         }

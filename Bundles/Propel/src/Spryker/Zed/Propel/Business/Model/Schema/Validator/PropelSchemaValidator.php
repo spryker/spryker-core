@@ -248,7 +248,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      */
     protected function anonymizeNameIfNeeded($elementName): string
     {
-        if (empty($elementName) || is_array($elementName)) {
+        if (!$elementName || is_array($elementName)) {
             $elementName = 'anonymous_' . $this->utilTextService->generateRandomString(32);
         }
 

@@ -58,7 +58,7 @@ class LocalizedMessagesType extends AbstractType
                         return;
                     }
 
-                    if (empty($value)) {
+                    if (!$value) {
                         $context->buildViolation((new NotBlank())->message)->addViolation();
                     }
                 }),

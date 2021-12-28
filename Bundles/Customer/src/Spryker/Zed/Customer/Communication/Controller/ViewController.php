@@ -45,7 +45,7 @@ class ViewController extends AbstractController
     {
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
-        if (empty($idCustomer)) {
+        if (!$idCustomer) {
             return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
         }
 

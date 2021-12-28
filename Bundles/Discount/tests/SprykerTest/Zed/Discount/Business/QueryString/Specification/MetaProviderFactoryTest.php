@@ -89,7 +89,7 @@ class MetaProviderFactoryTest extends Unit
      */
     protected function createMetaProviderFactory(?DiscountBusinessFactory $discountBusinessFactoryMock = null): MetaProviderFactory
     {
-        if (!isset($discountBusinessFactoryMock)) {
+        if ($discountBusinessFactoryMock === null) {
             $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();
         }
 

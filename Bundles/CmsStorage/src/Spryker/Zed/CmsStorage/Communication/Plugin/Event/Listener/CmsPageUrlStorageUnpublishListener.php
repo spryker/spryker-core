@@ -37,7 +37,7 @@ class CmsPageUrlStorageUnpublishListener extends AbstractPlugin implements Event
         $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PAGE);
 
-        if (empty($cmsPageIds)) {
+        if (!$cmsPageIds) {
             return;
         }
 

@@ -49,7 +49,7 @@ class ProductAbstractMapper implements ProductAbstractMapperInterface
     {
         $newAttributeName = $newAttribute[ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME] ?? '';
 
-        if (empty($newAttributeName)) {
+        if (!$newAttributeName) {
             return $productAbstractTransfer;
         }
 

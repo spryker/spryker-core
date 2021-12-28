@@ -79,7 +79,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
         array $blacklistIds,
         array $whitelistIds
     ): void {
-        if (empty($blacklistIds) && empty($whitelistIds)) {
+        if (!$blacklistIds && !$whitelistIds) {
             return;
         }
 
@@ -89,7 +89,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 
         $restrictedProductConcreteSkus = $this->productListRestrictionFilter->filterRestrictedProductConcreteSkus($quoteSkus, $blacklistIds, $whitelistIds);
 
-        if (empty($restrictedProductConcreteSkus)) {
+        if (!$restrictedProductConcreteSkus) {
             return;
         }
 

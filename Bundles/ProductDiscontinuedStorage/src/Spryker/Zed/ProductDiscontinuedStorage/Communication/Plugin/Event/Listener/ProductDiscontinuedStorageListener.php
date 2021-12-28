@@ -38,7 +38,7 @@ class ProductDiscontinuedStorageListener extends AbstractPlugin implements Event
 
         $productDiscontinuedIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
-        if (empty($productDiscontinuedIds)) {
+        if (!$productDiscontinuedIds) {
             return;
         }
 

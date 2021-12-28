@@ -175,6 +175,7 @@ class ZedControllerTable extends Module implements DependsOnModule
             $xpath = sprintf('//a[contains(., "%1$s")] | //button[contains(., "%1$s")]', $name);
 
             $elements = $xhtml->xpath($xpath);
+            $link = null;
             if ($elements) {
                 $element = current($xhtml->xpath($xpath));
                 /** @var \SimpleXMLElement $attributes */
@@ -183,7 +184,7 @@ class ZedControllerTable extends Module implements DependsOnModule
                 $link = $attributes['@attributes']['href'];
             }
 
-            if (isset($link)) {
+            if ($link !== null) {
                 $this->zedBootstrap->amOnPage($link);
                 $this->zedBootstrap->seeResponseCodeIs(200);
 

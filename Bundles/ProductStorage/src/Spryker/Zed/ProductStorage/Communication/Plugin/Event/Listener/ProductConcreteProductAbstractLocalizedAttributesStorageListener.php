@@ -37,7 +37,7 @@ class ProductConcreteProductAbstractLocalizedAttributesStorageListener extends A
             $eventEntityTransfers,
             SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
         );
-        if (empty($productAbstractIds)) {
+        if (!$productAbstractIds) {
             return;
         }
 

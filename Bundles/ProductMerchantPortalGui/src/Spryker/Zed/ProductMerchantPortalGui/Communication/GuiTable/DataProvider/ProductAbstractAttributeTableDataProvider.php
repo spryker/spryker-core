@@ -145,7 +145,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
      */
     protected function sortAttributesArray(array $attributes, string $orderBy, string $orderDirection): array
     {
-        if (empty($attributes)) {
+        if (!$attributes) {
             return $attributes;
         }
 

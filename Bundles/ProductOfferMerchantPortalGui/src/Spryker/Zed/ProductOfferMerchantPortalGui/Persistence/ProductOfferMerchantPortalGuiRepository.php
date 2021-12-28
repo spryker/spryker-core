@@ -372,7 +372,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         ProductTableCriteriaTransfer $productTableCriteriaTransfer
     ): SpyProductQuery {
         $filterValue = $productTableCriteriaTransfer->getFilterIsActive();
-        if (!isset($filterValue)) {
+        if ($filterValue !== null) {
             return $productConcreteQuery;
         }
 

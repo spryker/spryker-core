@@ -169,7 +169,7 @@ class AutoloadUpdaterTest extends Unit
             ],
         ];
 
-        if (!empty($dirMapAdditions)) {
+        if ($dirMapAdditions) {
             $dirMap = array_merge($dirMap, $dirMapAdditions);
         }
 
@@ -225,7 +225,7 @@ class AutoloadUpdaterTest extends Unit
             ],
         ];
 
-        if (!empty($autoloadKey)) {
+        if ($autoloadKey) {
             $composerArray['autoload-dev']['psr-0'] = [$autoloadKey => 'tests/'];
             unset($composerArray['autoload-dev']['psr-4']);
         }

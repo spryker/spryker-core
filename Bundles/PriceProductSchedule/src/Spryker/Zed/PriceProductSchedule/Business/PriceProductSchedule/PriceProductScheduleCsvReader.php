@@ -78,7 +78,7 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
     {
         $clearedRowData = $this->clearRowDataFromEmptyValues($rowData);
 
-        return empty($clearedRowData);
+        return !$clearedRowData;
     }
 
     /**

@@ -60,7 +60,7 @@ class CmsVersionFormType extends AbstractType
     {
         $attr = [];
 
-        if (empty($choices)) {
+        if (!$choices) {
             $attr['disabled'] = 'disabled';
         }
 

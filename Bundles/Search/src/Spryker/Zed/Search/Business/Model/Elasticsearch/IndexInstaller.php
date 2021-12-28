@@ -232,10 +232,10 @@ class IndexInstaller implements SearchInstallerInterface
     protected function isSettingsForUpdateExists(array $settings): bool
     {
         $settings = array_filter($settings, function ($setting) {
-            return !empty($setting);
+            return (bool)$setting;
         });
 
-        return !empty($settings);
+        return (bool)$settings;
     }
 
     /**

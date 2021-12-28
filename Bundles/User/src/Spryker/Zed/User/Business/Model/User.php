@@ -186,7 +186,7 @@ class User implements UserInterface
         $userEntity->fromArray($modifiedUser);
 
         $password = $userTransfer->getPassword();
-        if (!empty($password) && $this->isRawPassword($password)) {
+        if ($password && $this->isRawPassword($password)) {
             $passwordEncrypted = $this->encryptPassword($password);
             if ($passwordEncrypted === false) {
                 throw new PasswordEncryptionFailedException();

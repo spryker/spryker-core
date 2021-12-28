@@ -116,7 +116,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
                     $id = $attributeTransfer->getIdProductManagementAttribute();
                 }
 
-                $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
+                $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = $value !== null;
                 $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
                 $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = $id;
             }
@@ -132,7 +132,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
                 $id = $attributeTransfer->getIdProductManagementAttribute();
             }
 
-            $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = isset($value);
+            $formData[$formName][$key][AttributeAbstractForm::FIELD_NAME] = $value !== null;
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE] = $value;
             $formData[$formName][$key][AttributeAbstractForm::FIELD_VALUE_HIDDEN_ID] = $id;
         }

@@ -221,7 +221,7 @@ class ImageSetForm extends AbstractSubForm
                             }
                         }
 
-                        if (!empty($selectedAttributes)) {
+                        if ($selectedAttributes) {
                             $context->addViolation('Please enter required image information');
                         }
                     },
