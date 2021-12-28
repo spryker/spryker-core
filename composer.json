@@ -12,7 +12,10 @@
     "prefer-stable": true,
     "config": {
         "use-include-path": true,
-        "process-timeout": 1200
+        "process-timeout": 1200,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     },
     "bin": [
         "Bundles/Console/bin/console",
