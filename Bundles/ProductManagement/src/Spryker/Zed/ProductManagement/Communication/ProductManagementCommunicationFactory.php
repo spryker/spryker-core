@@ -370,6 +370,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->createProductTypeHelper(),
             $this->getRepository(),
             $this->getProductTableDataExpanderPlugins(),
+            $this->getProductFacade(),
         );
     }
 

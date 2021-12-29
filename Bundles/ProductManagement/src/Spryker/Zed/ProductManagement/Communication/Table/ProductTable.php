@@ -18,6 +18,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface;
 
 class ProductTable extends AbstractProductTable
@@ -68,16 +69,6 @@ class ProductTable extends AbstractProductTable
     public const COL_PRODUCT_TYPES = 'product_types';
 
     /**
-     * @var string
-     */
-    protected const COL_NAME_FALLBACK = 'name_fallback';
-
-    /**
-     * @var string
-     */
-    protected const RELATION_LOCALE_FALLBACK = 'locale_fallback';
-
-    /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryQueryContainer;
@@ -103,24 +94,32 @@ class ProductTable extends AbstractProductTable
     protected $productTableDataExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
      * @param array $productTableDataExpanderPlugins
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         LocaleTransfer $localeTransfer,
         ProductTypeHelperInterface $productTypeHelper,
         ProductManagementRepositoryInterface $productManagementRepository,
-        array $productTableDataExpanderPlugins
+        array $productTableDataExpanderPlugins,
+        ProductManagementToProductInterface $productFacade
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->productTypeHelper = $productTypeHelper;
         $this->productManagementRepository = $productManagementRepository;
         $this->productTableDataExpanderPlugins = $productTableDataExpanderPlugins;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -188,24 +187,27 @@ class ProductTable extends AbstractProductTable
             ->leftJoinSpyProductAbstractLocalizedAttributes()
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-            ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
-            ->addJoinCondition(
-                static::RELATION_LOCALE_FALLBACK,
-                '(SpyProductAbstractLocalizedAttributes.name is null OR SpyProductAbstractLocalizedAttributes.name = \'\')',
-            )
-            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
-            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
-            ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
-            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
-            ->groupByIdProductAbstract();
+            ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
 
         $query = $this->expandPropelQuery($query);
 
         $queryResults = $this->runQuery($query, $config, true);
 
+        $productAbstractIdsWithEmptyName = [];
+        foreach ($queryResults as $productAbstractEntity) {
+            if (!$productAbstractEntity->getVirtualColumn(static::COL_NAME)) {
+                $productAbstractIdsWithEmptyName[] = $productAbstractEntity->getIdProductAbstract();
+            }
+        }
+
+        $productAbstractLocalizedAttributeNames = [];
+        if ($productAbstractIdsWithEmptyName) {
+            $productAbstractLocalizedAttributeNames = $this->productFacade->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract($productAbstractIdsWithEmptyName);
+        }
+
         $productAbstractCollection = [];
         foreach ($queryResults as $productAbstractEntity) {
-            $productAbstractCollection[] = $this->generateItem($productAbstractEntity);
+            $productAbstractCollection[] = $this->generateItem($productAbstractEntity, $productAbstractLocalizedAttributeNames);
         }
 
         return $productAbstractCollection;
@@ -213,15 +215,16 @@ class ProductTable extends AbstractProductTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param array<int, string> $productAbstractLocalizedAttributeNames
      *
      * @return array
      */
-    protected function generateItem(SpyProductAbstract $productAbstractEntity)
+    protected function generateItem(SpyProductAbstract $productAbstractEntity, array $productAbstractLocalizedAttributeNames): array
     {
         $item = [
             static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_SKU => $productAbstractEntity->getSku(),
-            static::COL_NAME => $this->resolveProductName($productAbstractEntity),
+            static::COL_NAME => $this->resolveProductName($productAbstractEntity, $productAbstractLocalizedAttributeNames),
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
@@ -376,11 +379,17 @@ class ProductTable extends AbstractProductTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param array<int, string> $productAbstractLocalizedAttributeNames
      *
      * @return string|null
      */
-    protected function resolveProductName(SpyProductAbstract $productAbstractEntity): ?string
+    protected function resolveProductName(SpyProductAbstract $productAbstractEntity, array $productAbstractLocalizedAttributeNames): ?string
     {
-        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?: $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
+        $productName = $productAbstractEntity->getVirtualColumn(static::COL_NAME);
+        if ($productName) {
+            return $productName;
+        }
+
+        return $productAbstractLocalizedAttributeNames[$productAbstractEntity->getIdProductAbstract()] ?? null;
     }
 }

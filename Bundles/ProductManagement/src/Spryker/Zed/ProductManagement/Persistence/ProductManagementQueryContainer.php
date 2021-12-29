@@ -153,7 +153,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      *
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
     {
@@ -170,7 +170,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery|\Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryUnusedProductAttributeKeys()
     {

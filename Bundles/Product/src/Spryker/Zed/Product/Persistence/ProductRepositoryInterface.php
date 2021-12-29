@@ -174,4 +174,11 @@ interface ProductRepositoryInterface
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRawProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array;
 }

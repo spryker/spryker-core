@@ -16,7 +16,7 @@
         "spryker/money": "^2.4.0",
         "spryker/price": "^5.0.0",
         "spryker/price-product": "^2.1.0 || ^4.0.0",
-        "spryker/product": "^6.7.0",
+        "spryker/product": "^6.26.0",
         "spryker/product-attribute": "^1.9.0",
         "spryker/product-bundle": "^2.0.0 || ^3.0.0 || ^4.0.0 || ^6.0.0 || ^7.0.0",
         "spryker/product-category": "^4.12.1",
@@ -38,8 +38,10 @@
         "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/testify": "*",
+        "spryker/twig": "*",
         "spryker/zed-navigation": "*"
     },
     "autoload": {

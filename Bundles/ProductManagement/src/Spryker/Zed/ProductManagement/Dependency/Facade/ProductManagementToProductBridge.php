@@ -232,4 +232,14 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     {
         return $this->productFacade->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
     }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array
+    {
+        return $this->productFacade->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract($productAbstractIds);
+    }
 }

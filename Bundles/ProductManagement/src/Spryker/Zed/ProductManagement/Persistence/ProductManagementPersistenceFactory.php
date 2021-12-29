@@ -12,6 +12,7 @@ use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Persistence\Expander\ProductAbstractQueryExpander;
 use Spryker\Zed\ProductManagement\Persistence\Expander\ProductAbstractQueryExpanderInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
@@ -73,5 +74,13 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     public function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
+     */
+    public function getProductFacade(): ProductManagementToProductInterface
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRODUCT);
     }
 }

@@ -634,6 +634,38 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array
+    {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        $productAbstractLocalizedAttributesDataCollection = $this->getFactory()
+            ->createProductAbstractLocalizedAttributesQuery()
+            ->select([SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductAbstractLocalizedAttributesTableMap::COL_NAME])
+            ->filterByName(null, Criteria::ISNOTNULL)
+            ->filterByName('', Criteria::NOT_EQUAL)
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find();
+
+        $productAbstractLocalizedAttributeNames = [];
+        foreach ($productAbstractLocalizedAttributesDataCollection as $productAbstractLocalizedAttributesData) {
+            $idProductAbstract = $productAbstractLocalizedAttributesData[SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT];
+            $name = $productAbstractLocalizedAttributesData[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME];
+
+            if (!isset($productAbstractLocalizedAttributeNames[$idProductAbstract])) {
+                $productAbstractLocalizedAttributeNames[$idProductAbstract] = $name;
+            }
+        }
+
+        return $productAbstractLocalizedAttributeNames;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>

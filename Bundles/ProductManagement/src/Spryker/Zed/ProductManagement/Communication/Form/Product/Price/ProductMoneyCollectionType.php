@@ -132,13 +132,13 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      *    'store2' => ...
      * ]
      *
-     * @param \Symfony\Component\Form\FormView $formViewCollection
+     * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array<string, mixed> $options
      *
      * @return void
      */
-    public function finishView(FormView $formViewCollection, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $priceTypes = [
             $this->getGrossPriceModeIdentifier() => [],
@@ -149,7 +149,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $currencies = [];
         $additionalParameters = [];
 
-        foreach ($formViewCollection as $productMoneyTypeFormView) {
+        foreach ($view as $productMoneyTypeFormView) {
             $moneyValueFormView = $productMoneyTypeFormView['moneyValue'];
             $additionalParameters = $this->buildAdditionalParameters($productMoneyTypeFormView, $moneyValueFormView, $additionalParameters);
 
@@ -162,11 +162,11 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         $this->sortTable($priceTable);
 
-        $formViewCollection->vars['priceTable'] = $priceTable;
-        $formViewCollection->vars['priceTypes'] = $priceTypes;
-        $formViewCollection->vars['currencies'] = $currencies;
+        $view->vars['priceTable'] = $priceTable;
+        $view->vars['priceTypes'] = $priceTypes;
+        $view->vars['currencies'] = $currencies;
 
-        $formViewCollection->vars = array_merge($additionalParameters, $formViewCollection->vars);
+        $view->vars = array_merge($additionalParameters, $view->vars);
     }
 
     /**
@@ -206,7 +206,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
         $priceTypeName = $priceProductTransfer->getPriceType()->getName();
 
-        if ($priceData && isset($priceData->volume_prices)) {
+        if ($priceData && isset($priceData['volume_prices'])) {
             $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(
                 static::PRICE_PRODUCT_VOLUME_EDIT_URL,
                 sprintf('Edit Volume Price: %s', $priceTypeName),

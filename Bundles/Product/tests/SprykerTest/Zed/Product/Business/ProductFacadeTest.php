@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
@@ -16,7 +17,6 @@ use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
-use Spryker\Zed\Product\Business\ProductFacade;
 
 /**
  * Auto-generated group annotations
@@ -37,9 +37,22 @@ class ProductFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var array<string, string>
      */
-    protected $productFacade;
+    protected const PRODUCT_NAME = [
+        self::LOCALE_NAME_EN => 'Product name en_US',
+        self::LOCALE_NAME_DE => 'Product name de_DE',
+    ];
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_NAME_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_NAME_EN = 'en_US';
 
     /**
      * @var string
@@ -64,7 +77,6 @@ class ProductFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->setUpDatabase();
-        $this->productFacade = new ProductFacade();
     }
 
     /**
@@ -72,7 +84,7 @@ class ProductFacadeTest extends Unit
      */
     public function testGenerateProductConcreteSku(): void
     {
-        $sku = $this->productFacade->generateProductConcreteSku(
+        $sku = $this->tester->getFacade()->generateProductConcreteSku(
             $this->createProductAbstractTransfer(),
             $this->createProductConcreteTransfer(),
         );
@@ -222,7 +234,7 @@ class ProductFacadeTest extends Unit
     {
         // Arrange
         $productConcreteIds = $this->tester->getProductConcreteIds();
-        $productConcreteTransfer = $this->productFacade->findProductConcreteById($productConcreteIds[0]);
+        $productConcreteTransfer = $this->tester->getFacade()->findProductConcreteById($productConcreteIds[0]);
         $productCriteriaTransferWithExistingStore = new ProductCriteriaTransfer();
         $productCriteriaTransferWithExistingStore->setIdStore(
             $this->tester->getStoreFacade()->getCurrentStore()->getIdStore(),
@@ -234,8 +246,8 @@ class ProductFacadeTest extends Unit
         $productCriteriaTransferWithNotExistingStore->setIdStore(9999);
 
         // Act
-        $productConcreteTransfersWithStore = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransferWithExistingStore);
-        $productConcreteTransfersWithoutStore = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransferWithNotExistingStore);
+        $productConcreteTransfersWithStore = $this->tester->getFacade()->getProductConcretesByCriteria($productCriteriaTransferWithExistingStore);
+        $productConcreteTransfersWithoutStore = $this->tester->getFacade()->getProductConcretesByCriteria($productCriteriaTransferWithNotExistingStore);
 
         // Assert
         $this->assertCount(1, $productConcreteTransfersWithStore);
@@ -263,7 +275,7 @@ class ProductFacadeTest extends Unit
             );
 
         // Act
-        $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
+        $this->tester->getFacade()->createProductConcreteCollection($productConcreteCollectionTransfer);
 
         // Assert
         $this->assertEquals($expectedProductsNumber, $this->tester->getProductConcreteDatabaseEntriesCount());
@@ -292,7 +304,7 @@ class ProductFacadeTest extends Unit
             );
 
         // Act
-        $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
+        $this->tester->getFacade()->createProductConcreteCollection($productConcreteCollectionTransfer);
 
         // Assert
         $this->assertEquals(
@@ -319,6 +331,80 @@ class ProductFacadeTest extends Unit
         $this->expectException(ProductConcreteExistsException::class);
 
         // Act
-        $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
+        $this->tester->getFacade()->createProductConcreteCollection($productConcreteCollectionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstractShouldReturnProductAbstractNamesByGivenIds(): void
+    {
+        // Arrange
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+
+        $localeTransfers = $this->getLocales();
+
+        $localizedAttributeEN = $this->createLocalizedAttributesTransfer(static::PRODUCT_NAME[static::LOCALE_NAME_EN], $localeTransfers[static::LOCALE_NAME_EN]);
+        $localizedAttributeDE = $this->createLocalizedAttributesTransfer(static::PRODUCT_NAME[static::LOCALE_NAME_DE], $localeTransfers[static::LOCALE_NAME_DE]);
+
+        $this->tester->addLocalizedAttributesToProductAbstract($productAbstractTransfer1, [$localizedAttributeEN]);
+        $this->tester->addLocalizedAttributesToProductAbstract($productAbstractTransfer2, [$localizedAttributeDE]);
+
+        $expectedProductAbstractLocalizedAttributeNames = [];
+        $expectedProductAbstractLocalizedAttributeNames[$productAbstractTransfer1->getIdProductAbstract()] = static::PRODUCT_NAME[static::LOCALE_NAME_EN];
+        $expectedProductAbstractLocalizedAttributeNames[$productAbstractTransfer2->getIdProductAbstract()] = static::PRODUCT_NAME[static::LOCALE_NAME_DE];
+
+        // Act
+        $actualProductAbstractLocalizedAttributeNames = $this->tester->getFacade()->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract([
+            $productAbstractTransfer1->getIdProductAbstract(), $productAbstractTransfer2->getIdProductAbstract(),
+        ]);
+
+        // Assert
+        $this->assertEquals($expectedProductAbstractLocalizedAttributeNames, $actualProductAbstractLocalizedAttributeNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstractShouldReturnEmptyArrayWhenProductAbstractDoesNotHaveLocalizedAttributes(): void
+    {
+        // Arrange
+        $this->tester->ensureProductAbstractTableIsEmpty();
+
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+
+        // Act
+        $productAbstractLocalizedAttributeNames = $this->tester->getFacade()->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract([
+            $productAbstractTransfer1->getIdProductAbstract(), $productAbstractTransfer2->getIdProductAbstract(),
+        ]);
+
+        // Assert
+        $this->assertEmpty($productAbstractLocalizedAttributeNames);
+    }
+
+    /**
+     * @param string $localizedAttributeName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    protected function createLocalizedAttributesTransfer(string $localizedAttributeName, LocaleTransfer $localeTransfer): LocalizedAttributesTransfer
+    {
+        return (new LocalizedAttributesTransfer())
+            ->setName($localizedAttributeName)
+            ->setLocale($localeTransfer);
+    }
+
+    /**
+     * @return array<string, \Generated\Shared\Transfer\LocaleTransfer>
+     */
+    protected function getLocales(): array
+    {
+        return [
+            static::LOCALE_NAME_DE => $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_NAME_DE]),
+            static::LOCALE_NAME_EN => $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_NAME_EN]),
+        ];
     }
 }

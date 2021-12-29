@@ -165,4 +165,11 @@ interface ProductManagementToProductInterface
      * @return string
      */
     public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<string>
+     */
+    public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array;
 }

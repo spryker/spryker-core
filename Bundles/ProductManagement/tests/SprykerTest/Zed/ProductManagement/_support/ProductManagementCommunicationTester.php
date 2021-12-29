@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductManagement;
 
 use Codeception\Actor;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,20 @@ use Codeception\Actor;
 class ProductManagementCommunicationTester extends Actor
 {
     use _generated\ProductManagementCommunicationTesterActions;
+
+    /**
+     * @return void
+     */
+    public function ensureProductAbstractTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getProductAbstractQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function getProductAbstractQuery(): SpyProductAbstractQuery
+    {
+        return SpyProductAbstractQuery::create();
+    }
 }

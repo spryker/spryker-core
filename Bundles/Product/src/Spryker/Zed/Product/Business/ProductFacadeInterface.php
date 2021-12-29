@@ -1022,4 +1022,18 @@ interface ProductFacadeInterface
     public function createProductConcreteCollection(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Retrieves non-empty localized attribute names from persistence by provided product abstract ids.
+     * - Sets first found localized attribute name per each abstract product.
+     * - Returns localized attribute names indexed by product abstract id.
+     *
+     * @api
+     *
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array;
 }

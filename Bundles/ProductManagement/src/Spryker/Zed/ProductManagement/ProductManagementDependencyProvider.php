@@ -233,9 +233,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container->set(static::FACADE_PRODUCT, function (Container $container) {
-            return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        });
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addProductFacade($container);
 
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductManagementToLocaleBridge($container->getLocator()->locale()->facade());
@@ -293,10 +293,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container->set(static::FACADE_PRODUCT, function (Container $container) {
-            return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
-        });
+        $container = parent::provideCommunicationLayerDependencies($container);
 
+        $container = $this->addProductFacade($container);
         $container = $this->addProductBundleFacade($container);
 
         $container->set(static::FACADE_PRODUCT_CATEGORY, function (Container $container) {
@@ -506,6 +505,20 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 FormTypeInterface::class,
             ),
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
+            return new ProductManagementToProductBridge($container->getLocator()->product()->facade());
+        });
+
+        return $container;
     }
 
     /**

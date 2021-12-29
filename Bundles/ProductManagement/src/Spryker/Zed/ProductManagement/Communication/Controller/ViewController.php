@@ -328,9 +328,9 @@ class ViewController extends AddController
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $stores
      *
-     * @return array<string>
+     * @return array<int, null|string>
      */
-    protected function getStoreNames(ArrayObject $stores)
+    protected function getStoreNames(ArrayObject $stores): array
     {
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getName();

@@ -1176,4 +1176,19 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createProductConcreteWriter()
             ->createProductConcreteCollection($productConcreteCollectionTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, string>
+     */
+    public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array
+    {
+        return $this->getRepository()
+            ->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract($productAbstractIds);
+    }
 }

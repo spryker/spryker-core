@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
@@ -287,5 +288,21 @@ class ProductBusinessTester extends Actor
                 ->filterBySku_In($skus)
             ->endUse()
             ->count();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductAbstractTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->getProductAbstractQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function getProductAbstractQuery(): SpyProductAbstractQuery
+    {
+        return SpyProductAbstractQuery::create();
     }
 }
