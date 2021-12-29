@@ -185,6 +185,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createGlueAnnotationAnalyzer(),
             $this->getTextInflector(),
             $this->createResourceSchemaNameStorageProcessor(),
+            $this->getConfig(),
         );
     }
 
@@ -217,6 +218,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createOpenApiSpecificationSecuritySchemeGenerator(),
             $this->createOpenApiSpecificationParameterSchemeGenerator(),
             $this->createOpenApiTagGenerator(),
+            $this->getConfig(),
         );
     }
 

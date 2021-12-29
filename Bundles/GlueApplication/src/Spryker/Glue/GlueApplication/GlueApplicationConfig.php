@@ -163,4 +163,52 @@ class GlueApplicationConfig extends AbstractBundleConfig
     {
         return $this->get(GlueApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
     }
+
+    /**
+     * Specification:
+     * - Overwrite this to true if API version resolving should happen to all endpoints via the first part of the path
+     * - e.g /1/resource1 or /v1/resource2 instead of header value
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function getPathVersionResolving(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
+     * - Set this to the value you want to be the prefix of the version in the URL (if any)
+     * - In the default setting, it will not exist, but if it is set to "v" then all versionable resources will have
+     * - a "v" as a prefix to their version in the URL. e.g. /v1/resource
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getPathVersionPrefix(): string
+    {
+        return '';
+    }
+
+    /**
+     * Specification:
+     * - Official semver regex for matching a semver version, but removed the requirement for patch or minor version
+     * - for easier versioning of APIs. API versions do not have patch versions since patches do not change the response type
+     *
+     * - To overwrite this smoothly, please add a named capturing group called "fullVersion" to your regex that contains
+     * - your full semVer version (e.g 1.1 or 1). Otherwise, the first capture group will be taken as full version number
+     *
+     * @api
+     *
+     * @see https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+     *
+     * @return string
+     */
+    public function getApiVersionResolvingRegex(): string
+    {
+        return '/^(?P<fullVersion>(0|[1-9]\d*)(\.(0|[1-9]\d*))?)$/';
+    }
 }

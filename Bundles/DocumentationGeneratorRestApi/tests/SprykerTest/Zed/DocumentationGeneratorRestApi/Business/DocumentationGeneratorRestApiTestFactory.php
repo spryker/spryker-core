@@ -132,7 +132,6 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     public function createGlueControllerFinderMock(string $controller)
     {
         $mock = $this->getMockBuilder(GlueControllerFinder::class)
-            ->setMethods(['getGlueControllerFilesFromPlugin'])
             ->disableOriginalConstructor()
             ->getMock();
         $mock->method('getGlueControllerFilesFromPlugin')
@@ -235,6 +234,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createGlueAnnotationAnalyzer(),
             $this->createInflector(),
             $this->createResourceSchemaNameStorageProcessor(),
+            $this->createConfig(),
         );
     }
 
@@ -279,6 +279,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createOpenApiSpecificationSecuritySchemeGenerator(),
             $this->createOpenApiSpecificationParameterGenerator(),
             $this->createOpenApiTagGeneratorInterface(),
+            $this->createConfig(),
         );
     }
 

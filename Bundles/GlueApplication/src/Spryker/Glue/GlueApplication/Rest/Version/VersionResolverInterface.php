@@ -18,4 +18,11 @@ interface VersionResolverInterface
      * @return \Generated\Shared\Transfer\RestVersionTransfer
      */
     public function findVersion(Request $request): RestVersionTransfer;
+
+    /**
+     * @param string $urlString
+     *
+     * @return array
+     */
+    public function getUrlVersionMatches(string $urlString): array;
 }

@@ -11,10 +11,12 @@ use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\PathAnnotationsTransfer;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
@@ -105,24 +107,32 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
     protected $resourceSchemaNameStorageProcessor;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\HttpMethodProcessorInterface $httpMethodProcessor
      * @param array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface> $resourceRoutesPluginsProviderPlugins
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToTextInflectorInterface $textInflector
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceSchemaNameStorageProcessorInterface $resourceSchemaNameStorageProcessor
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig $config
      */
     public function __construct(
         HttpMethodProcessorInterface $httpMethodProcessor,
         array $resourceRoutesPluginsProviderPlugins,
         GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
         DocumentationGeneratorRestApiToTextInflectorInterface $textInflector,
-        ResourceSchemaNameStorageProcessorInterface $resourceSchemaNameStorageProcessor
+        ResourceSchemaNameStorageProcessorInterface $resourceSchemaNameStorageProcessor,
+        DocumentationGeneratorRestApiConfig $config
     ) {
         $this->httpMethodProcessor = $httpMethodProcessor;
         $this->resourceRoutesPluginsProviderPlugins = $resourceRoutesPluginsProviderPlugins;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->textInflector = $textInflector;
         $this->resourceSchemaNameStorageProcessor = $resourceSchemaNameStorageProcessor;
+        $this->config = $config;
     }
 
     /**
@@ -176,8 +186,35 @@ class ResourcePluginAnalyzer implements ResourcePluginAnalyzerInterface
      */
     protected function processMethods(ResourceRoutePluginInterface $plugin, PathAnnotationsTransfer $pathAnnotationsTransfer, ?array $parentResource): void
     {
-        $resourcePath = '/' . $plugin->getResourceType();
-        $resourcePathWithParent = $this->parseParentToPath($resourcePath, $parentResource);
+        $version = '';
+        if ($plugin instanceof ResourceVersionableInterface && $this->config->getPathVersionResolving()) {
+            $versionTransfer = $plugin->getVersion();
+            if ($versionTransfer->getMajor()) {
+                if ($this->config->getPathVersionPrefix()) {
+                    $version .= $this->config->getPathVersionPrefix();
+                }
+
+                $version .= $versionTransfer->getMajor();
+
+                if ($versionTransfer->getMinor()) {
+                    $version .= '.' . $versionTransfer->getMinor();
+                }
+
+                $version .= '/';
+            }
+        }
+
+        $resourcePath = sprintf(
+            '/%s%s',
+            $version,
+            $plugin->getResourceType(),
+        );
+
+        $resourcePathWithParent = sprintf(
+            '/%s%s',
+            $version,
+            ltrim($this->parseParentToPath('/' . $plugin->getResourceType(), $parentResource), '/'),
+        );
 
         $this->processGetResourceByIdPath($plugin, $resourcePathWithParent, $pathAnnotationsTransfer->getGetResourceById());
         $this->processGetResourceCollectionPath($plugin, $resourcePathWithParent, $pathAnnotationsTransfer->getGetCollection());

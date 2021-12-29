@@ -106,7 +106,6 @@ class RequestMetadataExtractorTest extends Unit
     protected function createVersionResolverMock(): VersionResolverInterface
     {
         return $this->getMockBuilder(VersionResolverInterface::class)
-            ->setMethods(['findVersion'])
             ->getMock();
     }
 

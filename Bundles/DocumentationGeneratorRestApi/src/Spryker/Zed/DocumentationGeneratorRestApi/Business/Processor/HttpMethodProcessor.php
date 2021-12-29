@@ -11,12 +11,14 @@ use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\PathMethodDataTransfer;
 use Generated\Shared\Transfer\PathSchemaDataTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
 
 class HttpMethodProcessor implements HttpMethodProcessorInterface
 {
@@ -96,24 +98,32 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected $tagGenerator;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\PathGeneratorInterface $pathGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SchemaGeneratorInterface $schemaGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\SecuritySchemeGeneratorInterface $securitySchemeGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiSpecificationParameterGeneratorInterface $parameterGenerator
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Generator\OpenApiTagGeneratorInterface $tagGenerator
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig $config
      */
     public function __construct(
         PathGeneratorInterface $pathGenerator,
         SchemaGeneratorInterface $schemaGenerator,
         SecuritySchemeGeneratorInterface $securitySchemeGenerator,
         OpenApiSpecificationParameterGeneratorInterface $parameterGenerator,
-        OpenApiTagGeneratorInterface $tagGenerator
+        OpenApiTagGeneratorInterface $tagGenerator,
+        DocumentationGeneratorRestApiConfig $config
     ) {
         $this->pathGenerator = $pathGenerator;
         $this->schemaGenerator = $schemaGenerator;
         $this->securitySchemeGenerator = $securitySchemeGenerator;
         $this->parameterGenerator = $parameterGenerator;
         $this->tagGenerator = $tagGenerator;
+        $this->config = $config;
     }
 
     /**
@@ -559,7 +569,23 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
     protected function getFullResource(ResourceRoutePluginInterface $plugin): string
     {
         $parentResourceType = $this->getParentResourceType($plugin);
+        $fullResource = ($parentResourceType ? $parentResourceType . '-' : '') . $plugin->getResourceType();
 
-        return ($parentResourceType ? $parentResourceType . '-' : '') . $plugin->getResourceType();
+        if ($plugin instanceof ResourceVersionableInterface && $this->config->getPathVersionResolving()) {
+            $versionTransfer = $plugin->getVersion();
+            if ($versionTransfer->getMajor()) {
+                $fullResource .= '-';
+                if ($this->config->getPathVersionPrefix()) {
+                    $fullResource .= $this->config->getPathVersionPrefix();
+                }
+                $fullResource .= $versionTransfer->getMajor();
+
+                if ($versionTransfer->getMinor()) {
+                    $fullResource .= '.' . $versionTransfer->getMinor();
+                }
+            }
+        }
+
+        return $fullResource;
     }
 }

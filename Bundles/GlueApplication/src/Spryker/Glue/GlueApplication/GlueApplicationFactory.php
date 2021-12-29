@@ -233,7 +233,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestUriParser(): UriParserInterface
     {
-        return new UriParser();
+        return new UriParser($this->createRestVersionResolver());
     }
 
     /**
@@ -308,7 +308,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestVersionResolver(): VersionResolverInterface
     {
-        return new VersionResolver($this->createRestContentTypeResolver());
+        return new VersionResolver($this->createRestContentTypeResolver(), $this->getConfig());
     }
 
     /**

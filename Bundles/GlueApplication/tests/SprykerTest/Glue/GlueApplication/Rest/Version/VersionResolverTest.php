@@ -8,6 +8,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Version;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolver;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
@@ -40,7 +41,9 @@ class VersionResolverTest extends Unit
                 2 => '1.0',
             ]);
 
-        $versionResolver = $this->createVersionResolver($contentTypeResolverMock);
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)->getMock();
+
+        $versionResolver = $this->createVersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
 
         $request = Request::create(
             '/',
@@ -65,8 +68,9 @@ class VersionResolverTest extends Unit
     public function testFindVersionShouldReturnEmptyTransferWhenContentTypeNotProvided(): void
     {
         $contentTypeResolverMock = $this->createContentTypeResolverMock();
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)->getMock();
 
-        $versionResolver = $this->createVersionResolver($contentTypeResolverMock);
+        $versionResolver = $this->createVersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
 
         $request = Request::create('/', Request::METHOD_GET);
 
@@ -87,7 +91,9 @@ class VersionResolverTest extends Unit
             ->method('matchContentType')
             ->willReturn([]);
 
-        $versionResolver = $this->createVersionResolver($contentTypeResolverMock);
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)->getMock();
+
+        $versionResolver = $this->createVersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
 
         $request = Request::create(
             '/',
@@ -107,14 +113,73 @@ class VersionResolverTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetUrlVersionShouldReturnFullVersionWhenVersionPresent(): void
+    {
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)->getMock();
+        $glueApplicationConfigMock->method('getPathVersionResolving')->willReturn(true);
+        $glueApplicationConfigMock->method('getPathVersionPrefix')->willReturn('v');
+        $glueApplicationConfigMock->method('getApiVersionResolvingRegex')->willReturn('/^(?P<fullVersion>(0|[1-9]\d*)(\.(0|[1-9]\d*))?)$/');
+
+        $contentTypeResolverMock = $this->createContentTypeResolverMock();
+
+        $versionResolver = new VersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
+
+        $versionMatches = $versionResolver->getUrlVersionMatches('v1.2');
+
+        $this->assertSame('1.2', $versionMatches['fullVersion']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUrlVersionShouldNotReturnVersionTransferWhenWrongVersionPrefixPresent(): void
+    {
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)->getMock();
+        $glueApplicationConfigMock->method('getPathVersionResolving')->willReturn(true);
+        $glueApplicationConfigMock->method('getPathVersionPrefix')->willReturn('v');
+        $glueApplicationConfigMock->method('getApiVersionResolvingRegex')->willReturn('/^(?P<fullVersion>(0|[1-9]\d*)(\.(0|[1-9]\d*))?)$/');
+
+        $contentTypeResolverMock = $this->createContentTypeResolverMock();
+
+        $versionResolver = new VersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
+
+        $versionMatches = $versionResolver->getUrlVersionMatches('version1.2');
+
+        $this->assertEmpty($versionMatches);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUrlVersionShouldNotReturnVersionTransferWhenNoVersionGiven(): void
+    {
+        $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)->getMock();
+        $glueApplicationConfigMock->method('getPathVersionResolving')->willReturn(true);
+        $glueApplicationConfigMock->method('getPathVersionPrefix')->willReturn('v');
+        $glueApplicationConfigMock->method('getApiVersionResolvingRegex')->willReturn('/^(?P<fullVersion>(0|[1-9]\d*)(\.(0|[1-9]\d*))?)$/');
+
+        $contentTypeResolverMock = $this->createContentTypeResolverMock();
+
+        $versionResolver = new VersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
+
+        $versionMatches = $versionResolver->getUrlVersionMatches('');
+
+        $this->assertEmpty($versionMatches);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface $contentTypeResolverMock
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfigMock
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface
      */
     protected function createVersionResolver(
-        ContentTypeResolverInterface $contentTypeResolverMock
+        ContentTypeResolverInterface $contentTypeResolverMock,
+        GlueApplicationConfig $glueApplicationConfigMock
     ): VersionResolverInterface {
-        return new VersionResolver($contentTypeResolverMock);
+        return new VersionResolver($contentTypeResolverMock, $glueApplicationConfigMock);
     }
 
     /**

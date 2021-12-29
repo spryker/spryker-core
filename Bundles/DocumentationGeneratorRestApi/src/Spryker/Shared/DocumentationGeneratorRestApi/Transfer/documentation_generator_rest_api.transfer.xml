@@ -171,4 +171,9 @@
     <transfer name="RestErrorMessage">
     </transfer>
 
+    <transfer name="RestVersion">
+        <property name="major" type="int"/>
+        <property name="minor" type="int"/>
+    </transfer>
+
 </transfers>

@@ -198,7 +198,9 @@ class CorsResponseTest extends Unit
     {
         $glueApplicationConfig = new GlueApplicationConfig();
 
-        $uriParser = new UriParser();
+        $versionResolverMock = $this->getMockBuilder(VersionResolverInterface::class)->getMock();
+
+        $uriParser = new UriParser($versionResolverMock);
 
         return new CorsResponse($resourceRouteLoader, $glueApplicationConfig, $uriParser);
     }

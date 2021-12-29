@@ -168,7 +168,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SECURITY_SCHEMES] = $data[static::KEY_SECURITY_SCHEMES];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_PARAMETERS] = $data[static::KEY_PARAMETERS];
 
-        $fileName = $this->resolveGeneratedFileName();
+        $fileName = str_replace('//', '/', $this->resolveGeneratedFileName());
         $yaml = $this->yamlDumper->dump(
             $dataStructure,
             static::YAML_NESTING_LEVEL,
