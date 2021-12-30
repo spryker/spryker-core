@@ -104,20 +104,24 @@ class Address implements AddressInterface
     }
 
     /**
-     * @param int $idAddress
+     * @param int|null $idAddress
      * @param int|null $idCustomer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getAddressTransferById($idAddress, $idCustomer = null)
+    protected function getAddressTransferById(?int $idAddress = null, ?int $idCustomer = null): AddressTransfer
     {
-        $addressCriteriaFilterTransfer = (new AddressCriteriaFilterTransfer())
-            ->setIdCustomerAddress($idAddress)
-            ->setFkCustomer($idCustomer);
+        $addressTransfer = null;
 
-        $addressTransfer = $this->customerRepository->findAddressByCriteria($addressCriteriaFilterTransfer);
+        if ($idAddress || $idCustomer) {
+            $addressCriteriaFilterTransfer = (new AddressCriteriaFilterTransfer())
+                ->setIdCustomerAddress($idAddress)
+                ->setFkCustomer($idCustomer);
+
+            $addressTransfer = $this->customerRepository->findAddressByCriteria($addressCriteriaFilterTransfer);
+        }
 
         if ($addressTransfer === null) {
             throw new AddressNotFoundException(sprintf('Address not found for ID `%s` (and optional customer ID `%s`).', $idAddress, $idCustomer));
@@ -419,7 +423,7 @@ class Address implements AddressInterface
         $customerEntity = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $idAddress = $customerEntity->getDefaultShippingAddress();
 
-        return $this->getAddressTransferById($idAddress);
+        return $this->getAddressTransferById($idAddress, $customerEntity->getIdCustomer());
     }
 
     /**
@@ -432,7 +436,7 @@ class Address implements AddressInterface
         $customerEntity = $this->getCustomerFromCustomerTransfer($customerTransfer);
         $idAddress = $customerEntity->getDefaultBillingAddress();
 
-        return $this->getAddressTransferById($idAddress);
+        return $this->getAddressTransferById($idAddress, $customerEntity->getIdCustomer());
     }
 
     /**

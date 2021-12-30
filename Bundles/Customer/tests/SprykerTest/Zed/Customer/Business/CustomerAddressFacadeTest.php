@@ -313,6 +313,117 @@ class CustomerAddressFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetAddressReturnsAddressByProvidedAddressIdWhenCustomerIdNotSpecified(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomer();
+        $addressTransfer = $this->createTestAddress($customerTransfer);
+        $addressTransfer->setCustomerId(null);
+
+        // Act
+        $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
+
+        // Assert
+        $this->assertSame($customerTransfer->getIdCustomer(), $addressTransfer->getFkCustomer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAddressReturnsFirstAddressOfCustomerWhenNoDefaultAddress(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomer();
+        $addressTransfer = $this->createTestAddress($customerTransfer);
+
+        // Act
+        $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
+
+        // Assert
+        $this->assertSame($customerTransfer->getIdCustomer(), $addressTransfer->getFkCustomer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAddressTrowsAddressNotFoundExceptionWhenAddressIdAndCustomerIdNotPassed(): void
+    {
+        // Arrange
+        $addressTransfer = new AddressTransfer();
+
+        // Assert
+        $this->expectException(AddressNotFoundException::class);
+        $this->expectExceptionMessage('Address not found for ID `` (and optional customer ID ``).');
+
+        // Act
+        $this->customerFacade->getAddress($addressTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDefaultBillingAddressReturnsFirstAddressOfCustomerWhenNoDefaultAddress(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createCustomerWithAddress();
+
+        // Act
+        $addressTransfer = $this->customerFacade->getDefaultBillingAddress($customerTransfer);
+
+        // Assert
+        $this->assertSame($customerTransfer->getIdCustomer(), $addressTransfer->getFkCustomer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDefaultBillingAddressTrowsAddressNotFoundExceptionWhenCustomerDontHaveAddress(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomer();
+
+        // Assert
+        $this->expectException(AddressNotFoundException::class);
+        $this->expectExceptionMessage("Address not found for ID `` (and optional customer ID `{$customerTransfer->getIdCustomer()}`).");
+
+        // Act
+        $this->customerFacade->getDefaultBillingAddress($customerTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDefaultShippingAddressReturnsFirstAddressOfCustomerWhenNoDefaultAddress(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createCustomerWithAddress();
+
+        // Act
+        $addressTransfer = $this->customerFacade->getDefaultShippingAddress($customerTransfer);
+
+        // Assert
+        $this->assertSame($customerTransfer->getIdCustomer(), $addressTransfer->getFkCustomer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDefaultShippingAddressTrowsAddressNotFoundExceptionWhenCustomerDontHaveAddress(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomer();
+
+        // Assert
+        $this->expectException(AddressNotFoundException::class);
+        $this->expectExceptionMessage("Address not found for ID `` (and optional customer ID `{$customerTransfer->getIdCustomer()}`).");
+
+        // Act
+        $this->customerFacade->getDefaultShippingAddress($customerTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomerWithAddress(): CustomerTransfer
