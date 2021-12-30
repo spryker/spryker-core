@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Discount\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountStore;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
@@ -32,6 +34,13 @@ class UpdateDiscountWithValidationTest extends Unit
      * @var string
      */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * @uses \Spryker\Zed\Discount\DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE
+     *
+     * @var string
+     */
+    protected const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
 
     /**
      * @var int
@@ -94,6 +103,98 @@ class UpdateDiscountWithValidationTest extends Unit
 
         $discountConditionTransfer = $discountConfiguratorTransfer->getDiscountCondition();
         $this->assertSame($discountConditionTransfer->getDecisionRuleQueryString(), $discountEntity->getDecisionRuleQueryString());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDiscountShouldRemoveDiscountAmountWhenFixedDiscountTypeChangedToPercentageType(): void
+    {
+        // Arrange
+        $currencyTransfer = $this->tester->haveCurrencyTransfer();
+        $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
+        $discountConfiguratorTransfer->getDiscountCalculator()
+            ->addMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setGrossAmount(50)
+                    ->setFkCurrency($currencyTransfer->getIdCurrency()),
+            );
+
+        $discountGeneralTransfer = $this->tester->haveDiscount($discountConfiguratorTransfer->toArray());
+        $idDiscount = $discountGeneralTransfer->getIdDiscount();
+
+        $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($idDiscount);
+        $discountConfiguratorTransfer->getDiscountCalculator()
+            ->setCalculatorPlugin(static::PLUGIN_CALCULATOR_PERCENTAGE);
+
+        // Act
+        $discountConfiguratorResponseTransfer = $this->tester->getFacade()->updateDiscountWithValidation($discountConfiguratorTransfer);
+        $discountEntity = SpyDiscountQuery::create()->leftJoinWithDiscountAmount()->findByIdDiscount($idDiscount)->getFirst();
+
+        // Assert
+        $this->assertTrue($discountConfiguratorResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $discountEntity->getDiscountAmounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDiscountShouldNotRemoveDiscountAmountWhenFixedDiscountTypeChangedToPluginWithCalculatorMoneyInputType(): void
+    {
+        // Arrange
+        $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
+        $discountGeneralTransfer = $this->tester->haveDiscount($discountConfiguratorTransfer->toArray());
+        $currencyTransfer = $this->tester->haveCurrencyTransfer();
+        $idDiscount = $discountGeneralTransfer->getIdDiscount();
+
+        $discountConfiguratorTransfer->getDiscountGeneral()
+            ->setDescription('test')
+            ->setIdDiscount($idDiscount);
+        $discountConfiguratorTransfer->getDiscountCalculator()
+            ->addMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setGrossAmount(50)
+                    ->setFkCurrency($currencyTransfer->getIdCurrency()),
+            );
+
+        // Act
+        $discountConfiguratorResponseTransfer = $this->tester->getFacade()->updateDiscountWithValidation($discountConfiguratorTransfer);
+        $discountEntity = SpyDiscountQuery::create()->leftJoinWithDiscountAmount()->findByIdDiscount($idDiscount)->getFirst();
+
+        // Assert
+        $this->assertTrue($discountConfiguratorResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $discountEntity->getDiscountAmounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDiscountShouldRemoveDiscountAmountWhenFixedDiscountTypeChangedToPluginThatWasntFoundInStack(): void
+    {
+        // Arrange
+        $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
+        $discountGeneralTransfer = $this->tester->haveDiscount($discountConfiguratorTransfer->toArray());
+        $currencyTransfer = $this->tester->haveCurrencyTransfer();
+        $idDiscount = $discountGeneralTransfer->getIdDiscount();
+
+        $discountConfiguratorTransfer->getDiscountGeneral()
+            ->setDescription('test')
+            ->setIdDiscount($idDiscount);
+        $discountConfiguratorTransfer->getDiscountCalculator()
+            ->setCalculatorPlugin('not_registered_plugin')
+            ->addMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setGrossAmount(50)
+                    ->setFkCurrency($currencyTransfer->getIdCurrency()),
+            );
+
+        // Act
+        $discountConfiguratorResponseTransfer = $this->tester->getFacade()->updateDiscountWithValidation($discountConfiguratorTransfer);
+        $discountEntity = SpyDiscountQuery::create()->leftJoinWithDiscountAmount()->findByIdDiscount($idDiscount)->getFirst();
+
+        // Assert
+        $this->assertTrue($discountConfiguratorResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $discountEntity->getDiscountAmounts());
     }
 
     /**

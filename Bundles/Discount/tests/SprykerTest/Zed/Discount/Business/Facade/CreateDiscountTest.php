@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Discount\Business\Facade;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
 
 /**
@@ -30,6 +32,13 @@ class CreateDiscountTest extends Unit
      * @var string
      */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * @uses \Spryker\Zed\Discount\DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE
+     *
+     * @var string
+     */
+    protected const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
 
     /**
      * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
@@ -169,5 +178,56 @@ class CreateDiscountTest extends Unit
         /** @var \Generated\Shared\Transfer\MessageTransfer $messageTransfer */
         $messageTransfer = $discountConfiguratorResponseTransfer->getMessages()->offsetGet(0);
         $this->assertSame('The discount cannot end before the starting date.', $messageTransfer->getValue());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDiscountShouldNotAddDiscountAmountForPercentageType(): void
+    {
+        // Arrange
+        $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
+        $discountConfiguratorTransfer->getDiscountCalculator()
+            ->setAmount(10)
+            ->setCalculatorPlugin(static::PLUGIN_CALCULATOR_PERCENTAGE);
+
+        // Act
+        $discountConfiguratorResponseTransfer = $this->tester->getFacade()->createDiscount($discountConfiguratorTransfer);
+        $discountEntity = SpyDiscountQuery::create()
+            ->leftJoinWithDiscountAmount()
+            ->findByIdDiscount($discountConfiguratorResponseTransfer->getDiscountConfigurator()->getDiscountGeneral()->getIdDiscount())
+            ->getFirst();
+
+        // Assert
+        $this->assertTrue($discountConfiguratorResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($discountEntity->getDiscountAmounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateDiscountShouldAddDiscountAmountForFixedType(): void
+    {
+        // Arrange
+        $currencyTransfer = $this->tester->haveCurrencyTransfer();
+        $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
+
+        $discountConfiguratorTransfer->getDiscountCalculator()
+            ->addMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setGrossAmount(50)
+                    ->setFkCurrency($currencyTransfer->getIdCurrency()),
+            );
+
+        // Act
+        $discountConfiguratorResponseTransfer = $this->tester->getFacade()->createDiscount($discountConfiguratorTransfer);
+        $discountEntity = SpyDiscountQuery::create()
+            ->leftJoinWithDiscountAmount()
+            ->findByIdDiscount($discountConfiguratorResponseTransfer->getDiscountConfigurator()->getDiscountGeneral()->getIdDiscount())
+            ->getFirst();
+
+        // Assert
+        $this->assertTrue($discountConfiguratorResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $discountEntity->getDiscountAmounts());
     }
 }

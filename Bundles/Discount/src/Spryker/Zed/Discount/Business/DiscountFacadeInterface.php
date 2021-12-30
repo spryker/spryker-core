@@ -646,7 +646,7 @@ interface DiscountFacadeInterface
      * - Hydrates discount entity from `DiscountConfiguratorTransfer` and persists it.
      * - Creates discount store relationships.
      * - If discount type is voucher, creates voucher pool without voucherCodes.
-     * - If discount calculator type is `PLUGIN_CALCULATOR_FIXED`, creates discount amounts.
+     * - If discount calculator input type is `CALCULATOR_MONEY_INPUT_TYPE`, creates discount amounts.
      * - Executes {@link \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface} plugins stack.
      * - Returns "DiscountConfiguratorResponseTransfer.isSuccessful=true" on successful validation and entity persistence.
      * - Returns "isSuccessful=false" with error messages otherwise.
@@ -671,7 +671,7 @@ interface DiscountFacadeInterface
      * - Hydrates discount entity from `DiscountConfiguratorTransfer` and persists it.
      * - Updates discount store relationships.
      * - If discount type is voucher, creates/updates voucher pool without voucherCodes.
-     * - If discount calculator type is `PLUGIN_CALCULATOR_FIXED`, updates discount amounts.
+     * - If discount calculator input type is `CALCULATOR_MONEY_INPUT_TYPE`, updates discount amounts.
      * - Executes {@link \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface} plugins stack.
      * - Returns "DiscountConfiguratorResponseTransfer.isSuccessful=true" on successful validation and entity persistence.
      * - Returns "DiscountConfiguratorResponseTransfer.isSuccessful=false" with error messages otherwise.

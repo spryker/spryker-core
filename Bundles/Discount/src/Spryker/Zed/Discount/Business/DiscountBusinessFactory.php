@@ -793,6 +793,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         return new DiscountAmountCreator(
             $this->getEntityManager(),
             $this->createDiscountMapper(),
+            $this->getCalculatorPlugins(),
         );
     }
 
@@ -858,6 +859,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createDiscountMapper(),
+            $this->getCalculatorPlugins(),
         );
     }
 

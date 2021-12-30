@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountMoneyAmountTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Mapper\DiscountMapperInterface;
-use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface;
 use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -22,6 +24,11 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
 {
     use TransactionTrait;
+
+    /**
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
+     */
+    protected $discountCalculatorPlugins;
 
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface
@@ -42,15 +49,18 @@ class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
      * @param \Spryker\Zed\Discount\Persistence\DiscountEntityManagerInterface $discountEntityManager
      * @param \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface $discountRepository
      * @param \Spryker\Zed\Discount\Business\Mapper\DiscountMapperInterface $discountMapper
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $discountCalculatorPlugins
      */
     public function __construct(
         DiscountEntityManagerInterface $discountEntityManager,
         DiscountRepositoryInterface $discountRepository,
-        DiscountMapperInterface $discountMapper
+        DiscountMapperInterface $discountMapper,
+        array $discountCalculatorPlugins
     ) {
         $this->discountEntityManager = $discountEntityManager;
         $this->discountRepository = $discountRepository;
         $this->discountMapper = $discountMapper;
+        $this->discountCalculatorPlugins = $discountCalculatorPlugins;
     }
 
     /**
@@ -75,9 +85,11 @@ class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
         $idDiscount = $discountConfiguratorTransfer->getDiscountGeneralOrFail()->getIdDiscountOrFail();
         $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculatorOrFail();
         $requestedMoneyValueCollection = $discountCalculatorTransfer->getMoneyValueCollection();
+        $discountCalculatorPlugin = $this->getDiscountCalculatorPlugin($discountCalculatorTransfer);
 
         if (
-            $discountCalculatorTransfer->getCalculatorPluginOrFail() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED
+            !$discountCalculatorPlugin instanceof DiscountCalculatorPluginWithAmountInputTypeInterface
+            || $discountCalculatorPlugin->getInputType() !== DiscountConstants::CALCULATOR_MONEY_INPUT_TYPE
             || $requestedMoneyValueCollection->count() === 0
         ) {
             return $this->deleteDiscountAmountsForDiscount($discountCalculatorTransfer, $discountConfiguratorTransfer);
@@ -101,6 +113,16 @@ class DiscountAmountUpdater implements DiscountAmountUpdaterInterface
         }
 
         return $discountConfiguratorTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountCalculatorTransfer $discountCalculatorTransfer
+     *
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|null
+     */
+    protected function getDiscountCalculatorPlugin(DiscountCalculatorTransfer $discountCalculatorTransfer): ?DiscountCalculatorPluginInterface
+    {
+        return $this->discountCalculatorPlugins[$discountCalculatorTransfer->getCalculatorPlugin()] ?? null;
     }
 
     /**
