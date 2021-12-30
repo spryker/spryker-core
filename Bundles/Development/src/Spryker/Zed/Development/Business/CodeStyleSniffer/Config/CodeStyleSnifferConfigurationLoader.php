@@ -41,15 +41,18 @@ class CodeStyleSnifferConfigurationLoader implements CodeStyleSnifferConfigurati
     /**
      * @param array<string, mixed> $configurationOptions
      * @param string $modulePath
+     * @param string|null $namespace
      *
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface
      */
-    public function load(array $configurationOptions, string $modulePath): CodeStyleSnifferConfigurationInterface
+    public function load(array $configurationOptions, string $modulePath, ?string $namespace): CodeStyleSnifferConfigurationInterface
     {
         $this->codeStyleSnifferConfiguration->setConfigurationOptions($configurationOptions);
 
         $generalModuleConfiguration = $this->configurationReader->getModuleConfigurationByAbsolutePath($modulePath);
+
         $this->codeStyleSnifferConfiguration->setModuleConfig($generalModuleConfiguration[static::MODULE_CONFIG_TOOL_KEY] ?? []);
+        $this->codeStyleSnifferConfiguration->setNamespace($namespace ?? '');
 
         return $this->codeStyleSnifferConfiguration;
     }

@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\Development\Business\CodeStyleSniffer;
 
 use Codeception\Test\Unit;
+use ReflectionMethod;
+use ReflectionObject;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +27,11 @@ use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 class CodeStyleSnifferTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const DEVELOPMENT_MODULE_PATH_REGEX = '#' . APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . '.+/Development/#';
+
+    /**
      * @var \SprykerTest\Zed\Development\DevelopmentBusinessTester
      */
     protected $tester;
@@ -32,6 +40,11 @@ class CodeStyleSnifferTest extends Unit
      * @var string
      */
     protected $pathToCore = 'vendor/spryker/spryker/Bundles/';
+
+    /**
+     * @var string
+     */
+    protected $developmentModule = 'Spryker.Development';
 
     /**
      * The list of default CodeStyleSniffer options.
@@ -60,18 +73,25 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInCore(): void
+    public function testCheckCsForAllModulesRunsWithSpecificRuleset(): void
     {
-        $module = 'Spryker.all';
+        $resolvedPaths = $this->getResolvedPathsForAllSprykerModules();
+
+        $developmentModulePath = current(preg_grep(static::DEVELOPMENT_MODULE_PATH_REGEX, array_keys($resolvedPaths)));
+        $developmentLevel = $this->getDevelopmentCsLevel($resolvedPaths[$developmentModulePath]);
+
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock(
+            $this->normalizePathToModule($developmentModulePath),
+            $developmentLevel,
+        );
+
         $options = [
-            'ignore' => 'vendor/',
-            'module' => $module,
-        ] + $this->defaultOptions;
+                'ignore' => 'vendor/',
+                'module' => $this->developmentModule,
+                'level' => $this->tester->getDefaultLevel(),
+            ] + $this->defaultOptions;
 
-        $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore;
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
-
-        $codeStyleSnifferMock->checkCodeStyle($module, $options);
+        $codeStyleSnifferMock->checkCodeStyle($this->developmentModule, $options);
     }
 
     /**
@@ -79,17 +99,16 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInCoreModuleForLevelOne(): void
     {
-        $module = 'Spryker.Development';
         $options = [
             'ignore' => 'vendor/',
-            'module' => $module,
+            'module' => $this->developmentModule,
             'level' => 1,
         ] + $this->defaultOptions;
 
-        $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore . 'Development/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
+        $developmentModulePath = dirname(__DIR__, 6) . DIRECTORY_SEPARATOR;
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($developmentModulePath, $options['level']);
 
-        $codeStyleSnifferMock->checkCodeStyle($module, $options);
+        $codeStyleSnifferMock->checkCodeStyle($this->developmentModule, $options);
     }
 
     /**
@@ -97,33 +116,32 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInCoreModuleForLevelTwo(): void
     {
-        $module = 'Spryker.Development';
         $options = [
             'ignore' => 'vendor/',
-            'module' => $module,
+            'module' => $this->developmentModule,
             'level' => 2,
         ] + $this->defaultOptions;
 
-        $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore . 'Development/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
+        $developmentModulePath = dirname(__DIR__, 6) . DIRECTORY_SEPARATOR;
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($developmentModulePath, $options['level']);
 
-        $codeStyleSnifferMock->checkCodeStyle($module, $options);
+        $codeStyleSnifferMock->checkCodeStyle($this->developmentModule, $options);
     }
 
     /**
-     * @param string $expectedPathToRunCommandWith
-     * @param array<string, mixed> $options
+     * @param string $developmentModulePath
+     * @param int $level
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
      */
-    protected function getCodeStyleSnifferMock(string $expectedPathToRunCommandWith, array $options): CodeStyleSniffer
+    protected function getCodeStyleSnifferMock(string $developmentModulePath, int $level): CodeStyleSniffer
     {
         $developmentConfig = $this->tester->createDevelopmentConfig();
-        $codingStandard = $developmentConfig->getCodingStandard();
+        $codingStandard = $developmentModulePath . 'ruleset.xml';
 
-        if ($options['level'] === 2) {
+        if ($level === $this->tester->getDefaultPriority()) {
             /** @see \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration::getCodingStandard() */
-            $codingStandard = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR . 'spryker/code-sniffer/SprykerStrict/ruleset.xml';
+            $codingStandard = $developmentModulePath . 'rulesetStrict.xml';
         }
 
         $codeStyleSnifferMock = $this
@@ -138,12 +156,79 @@ class CodeStyleSnifferTest extends Unit
         $codeStyleSnifferMock
             ->method('runSnifferCommand')
             ->with(
-                $expectedPathToRunCommandWith,
-                $this->callback(function ($subject) use ($codingStandard) {
-                    return is_callable([$subject, 'getCodingStandard']) && $subject->getCodingStandard() === $codingStandard;
+                $this->buildPathWithProperRootDir($developmentModulePath),
+                $this->callback(function ($subject) use ($codingStandard, $developmentModulePath) {
+                    return is_callable([$subject, 'getCodingStandard']) &&
+                        $subject->getCodingStandard($this->buildPathWithProperVendorDir($developmentModulePath)) === $codingStandard;
                 }),
             );
 
         return $codeStyleSnifferMock;
+    }
+
+    /**
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
+     */
+    protected function getResolvedPathsForAllSprykerModules(): array
+    {
+        $module = 'Spryker.all';
+        $options = [
+                'ignore' => 'vendor/',
+                'module' => $module,
+            ] + $this->defaultOptions;
+
+        $reflectedResolvePathsMethod = new ReflectionMethod(CodeStyleSniffer::class, 'resolvePaths');
+        $reflectedResolvePathsMethod->setAccessible(true);
+        $paths = $reflectedResolvePathsMethod->invokeArgs(
+            $this->tester->createCodeStyleSniffer(),
+            ['all', 'Spryker', null, $options],
+        );
+
+        return $paths;
+    }
+
+    /**
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface $developmentCsConfiguration
+     *
+     * @return int
+     */
+    protected function getDevelopmentCsLevel(CodeStyleSnifferConfigurationInterface $developmentCsConfiguration): int
+    {
+        $reflectedObject = new ReflectionObject($developmentCsConfiguration);
+        $reflectedModuleConfigProperty = $reflectedObject->getProperty('moduleConfig');
+        $reflectedModuleConfigProperty->setAccessible(true);
+        $moduleConfig = $reflectedModuleConfigProperty->getValue($developmentCsConfiguration);
+
+        return $moduleConfig['level'] ?? $this->tester->getDefaultLevel();
+    }
+
+    /**
+     * @param string $modulePath
+     *
+     * @return string
+     */
+    protected function buildPathWithProperRootDir(string $modulePath): string
+    {
+        return str_replace(APPLICATION_ROOT_DIR, APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR, $modulePath);
+    }
+
+    /**
+     * @param string $modulePath
+     *
+     * @return string
+     */
+    protected function buildPathWithProperVendorDir(string $modulePath): string
+    {
+        return str_replace(APPLICATION_VENDOR_DIR, APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR, $modulePath);
+    }
+
+    /**
+     * @param string $modulePath
+     *
+     * @return string
+     */
+    protected function normalizePathToModule(string $modulePath): string
+    {
+        return str_replace(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR, APPLICATION_ROOT_DIR, $modulePath);
     }
 }

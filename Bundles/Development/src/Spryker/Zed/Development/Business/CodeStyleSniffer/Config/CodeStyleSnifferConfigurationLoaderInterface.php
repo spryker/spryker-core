@@ -12,8 +12,9 @@ interface CodeStyleSnifferConfigurationLoaderInterface
     /**
      * @param array<string, mixed> $configurationOptions
      * @param string $modulePath
+     * @param string|null $namespace
      *
      * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface
      */
-    public function load(array $configurationOptions, string $modulePath): CodeStyleSnifferConfigurationInterface;
+    public function load(array $configurationOptions, string $modulePath, ?string $namespace): CodeStyleSnifferConfigurationInterface;
 }

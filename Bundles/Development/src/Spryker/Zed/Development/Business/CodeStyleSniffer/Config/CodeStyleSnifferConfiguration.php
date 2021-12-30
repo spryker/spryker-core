@@ -62,6 +62,13 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected const OPTION_IGNORE = 'ignore';
 
     /**
+     * @see \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer::OPTION_MODULE
+     *
+     * @var string
+     */
+    protected const OPTION_MODULE = 'module';
+
+    /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_LEVEL
      *
      * @var string
@@ -94,6 +101,11 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     protected $moduleConfig;
 
     /**
+     * @var string
+     */
+    protected $namespace;
+
+    /**
      * @var array<string, mixed>
      */
     protected $configurationOptions;
@@ -119,6 +131,26 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
+     * @param string $namespace
+     *
+     * @return $this
+     */
+    public function setNamespace(string $namespace)
+    {
+        $this->namespace = $namespace;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    /**
      * @param array<string, mixed> $configurationOptions
      *
      * @return $this
@@ -133,12 +165,26 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     /**
      * {@inheritDoc}
      *
+     * @param string $modulePath
+     *
      * @return string
      */
-    public function getCodingStandard(): string
+    public function getCodingStandard(string $modulePath): string
     {
-        if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
-            return APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR . 'spryker/code-sniffer/SprykerStrict/ruleset.xml';
+        $phpcsRootFilePath = $modulePath . 'phpcs.xml';
+
+        if (file_exists($phpcsRootFilePath)) {
+            return $phpcsRootFilePath;
+        }
+
+        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+
+        if (strpos($modulePath, $vendorDir) !== false) {
+            if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
+                return $this->developmentConfig->getCodeSnifferStrictRuleset();
+            }
+
+            return $this->developmentConfig->getCodeSnifferRuleset();
         }
 
         return $this->developmentConfig->getCodingStandard();
@@ -152,6 +198,16 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     public function getIgnoredPaths(): ?string
     {
         return $this->configurationOptions[static::OPTION_IGNORE];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return string|null
+     */
+    public function getModule(): ?string
+    {
+        return $this->configurationOptions[static::OPTION_MODULE];
     }
 
     /**

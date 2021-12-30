@@ -639,6 +639,26 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @return string
      */
+    public function getCodeSnifferRuleset(): string
+    {
+        return dirname(__DIR__, 4) . DIRECTORY_SEPARATOR . 'ruleset.xml';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getCodeSnifferStrictRuleset(): string
+    {
+        return dirname(__DIR__, 4) . DIRECTORY_SEPARATOR . 'rulesetStrict.xml';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
     public function getPhpMdCommand()
     {
         return 'vendor/bin/phpmd';

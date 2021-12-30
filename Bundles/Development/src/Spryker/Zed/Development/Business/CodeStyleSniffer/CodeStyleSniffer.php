@@ -15,6 +15,7 @@ use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferCon
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface;
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 use Spryker\Zed\Development\DevelopmentConfig;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
 
 class CodeStyleSniffer
@@ -60,9 +61,29 @@ class CodeStyleSniffer
     protected $config;
 
     /**
+     * @var array <string, mixed>
+     */
+    protected $options = [];
+
+    /**
      * @var \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoaderInterface
      */
     protected $codeStyleSnifferConfigurationLoader;
+
+    /**
+     * @var int
+     */
+    protected $countResolvedPaths = 0;
+
+    /**
+     * @var int
+     */
+    protected $countTotalPaths = 0;
+
+    /**
+     * @var array<string>
+     */
+    protected $commandsToFix = [];
 
     /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
@@ -80,8 +101,10 @@ class CodeStyleSniffer
      *
      * @return int
      */
-    public function checkCodeStyle($module, array $options = [])
+    public function checkCodeStyle(?string $module, array $options = []): int
     {
+        $resultCode = static::CODE_SUCCESS;
+
         $namespace = null;
         if (strpos($module, '.') !== false) {
             [$namespace, $module] = explode('.', $module, 2);
@@ -93,51 +116,74 @@ class CodeStyleSniffer
         ];
         $options += $defaults;
 
-        $path = $this->resolvePath($module, $namespace, $pathOption);
-        $codeStyleSnifferConfiguration = $this->codeStyleSnifferConfigurationLoader->load($options, $path);
+        $paths = $this->resolvePaths($module, $namespace, $pathOption, $options);
+        $this->countTotalPaths = count($paths);
 
-        return $this->runSnifferCommand($path, $codeStyleSnifferConfiguration);
+        foreach ($paths as $path => $codeStyleSnifferConfiguration) {
+            $this->countResolvedPaths++;
+            $resultCode |= $this->runSnifferCommand($path, $codeStyleSnifferConfiguration);
+        }
+
+        if ($this->commandsToFix) {
+            echo 'To fix run the following command: ' . PHP_EOL;
+            echo implode('', $this->commandsToFix);
+        }
+
+        return $resultCode;
     }
 
     /**
-     * @param string $module
+     * @param string|null $module
      * @param string|null $namespace
      * @param string|null $path
+     * @param array<string, mixed> $options
      *
-     * @return string
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
      */
-    protected function resolvePath($module, $namespace = null, $path = null)
+    protected function resolvePaths(?string $module, ?string $namespace, ?string $path, array $options): array
     {
         $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) : null;
 
         if ($namespace) {
-            if ($module === 'all') {
-                return $this->getPathToCore($namespace, $path);
-            }
-
-            return $this->getPathToModule($module, $namespace, $path);
+            return $this->resolveCorePath($module, $namespace, $path, $options);
         }
-
-        $pathToRoot = $this->config->getPathToRoot();
 
         if (!$module) {
-            return $pathToRoot . $path;
+            return $this->addPath([], $this->config->getPathToRoot() . $path, $options);
         }
 
-        return $this->resolveProjectPath($module, $path);
+        return $this->resolveProjectPath($module, $path, $options);
+    }
+
+    /**
+     * @param string $module
+     * @param string $namespace
+     * @param string|null $path
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
+     */
+    protected function resolveCorePath(string $module, string $namespace, ?string $path, array $options)
+    {
+        if ($module === 'all') {
+            return $this->getPathsToAllCoreModules($namespace, $path, $options);
+        }
+
+        return $this->getPathToCoreModule($module, $namespace, $path, $options);
     }
 
     /**
      * @param string $namespace
-     * @param string $path
+     * @param string|null $pathSuffix
+     * @param array<string, mixed> $options
      *
      * @throws \RuntimeException
      *
-     * @return string
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
      */
-    protected function getPathToCore($namespace, $path)
+    protected function getPathsToAllCoreModules(string $namespace, ?string $pathSuffix, array $options): array
     {
-        if ($path) {
+        if ($pathSuffix) {
             throw new RuntimeException('Path suffix option is not possible for "all".');
         }
 
@@ -147,23 +193,32 @@ class CodeStyleSniffer
             throw new RuntimeException('Namespace invalid: ' . $namespace);
         }
 
-        return $pathToInternalNamespace;
+        $paths = [];
+        $modules = $this->getCoreModules($pathToInternalNamespace);
+        foreach ($modules as $module) {
+            $path = $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
+            $paths = $this->addPath($paths, $path, $options, $namespace);
+        }
+
+        return $paths;
     }
 
     /**
      * @param string $module
      * @param string $namespace
      * @param string|null $pathSuffix
+     * @param array<string, mixed> $options
      *
      * @throws \Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException
      *
-     * @return string
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
      */
-    protected function getPathToModule($module, $namespace, $pathSuffix = null)
+    protected function getPathToCoreModule(string $module, string $namespace, ?string $pathSuffix, array $options)
     {
         $path = $this->getCorePath($module, $namespace, $pathSuffix);
+
         if ($this->isPathValid($path)) {
-            return $path;
+            return $this->addPath([], $path, $options, $namespace);
         }
 
         $message = sprintf(
@@ -244,7 +299,8 @@ class CodeStyleSniffer
      */
     protected function runSnifferCommand($path, CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration)
     {
-        $processConfig = ' --standard=' . $codeStyleSnifferConfiguration->getCodingStandard();
+        $standard = $codeStyleSnifferConfiguration->getCodingStandard($path);
+        $processConfig = ' --standard=' . $standard;
 
         if ($codeStyleSnifferConfiguration->isVerbose()) {
             $processConfig .= ' -v';
@@ -272,6 +328,14 @@ class CodeStyleSniffer
 
         $processConfig .= ' --extensions=' . implode(',', static::EXTENSIONS);
 
+        if (is_dir($path . 'src')) {
+            $processConfig .= ' ' . $path . 'src/';
+        }
+
+        if (is_dir($path . 'tests')) {
+            $processConfig .= ' ' . $path . 'tests/';
+        }
+
         $optionVerbose = $codeStyleSnifferConfiguration->isVerbose();
         $optionFix = $codeStyleSnifferConfiguration->isFixing();
 
@@ -296,6 +360,11 @@ class CodeStyleSniffer
 
         $process = new Process(explode(' ', $command), $this->config->getPathToRoot());
         $process->setTimeout($this->config->getProcessTimeout());
+
+        if (strpos($codeStyleSnifferConfiguration->getModule(), '.all') !== false) {
+            return $this->runSnifferCommandForAll($process, $path, $codeStyleSnifferConfiguration);
+        }
+
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
@@ -304,12 +373,54 @@ class CodeStyleSniffer
     }
 
     /**
-     * @param string $module
-     * @param string|null $pathSuffix
+     * @param \Symfony\Component\Process\Process $process
+     * @param string $path
+     * @param \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration
+     *
+     * @return int
+     */
+    protected function runSnifferCommandForAll(
+        Process $process,
+        string $path,
+        CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration
+    ): int {
+        $process->run();
+
+        echo sprintf(
+            'Finished %s/%s %s (level %s) /%s %s' . PHP_EOL,
+            $this->countResolvedPaths,
+            $this->countTotalPaths,
+            basename($path),
+            $codeStyleSnifferConfiguration->getLevel(),
+            $this->getSnifferResultMessage($process),
+            ($process->getExitCode() !== static::CODE_SUCCESS ? $process->getOutput() : ''),
+        );
+
+        if ($process->getExitCode() !== static::CODE_SUCCESS) {
+            $this->commandsToFix[] = sprintf('vendor/bin/console c:s:s -m %s.%s -f' . PHP_EOL, $codeStyleSnifferConfiguration->getNamespace(), basename($path));
+        }
+
+        return $process->getExitCode();
+    }
+
+    /**
+     * @param \Symfony\Component\Process\Process $process
      *
      * @return string
      */
-    protected function resolveProjectPath($module, $pathSuffix = null)
+    protected function getSnifferResultMessage(Process $process): string
+    {
+        return sprintf('%s', $process->getExitCode() === static::CODE_SUCCESS ? "\033[32m OK \033[0m" : "\033[31m FAIL \033[0m");
+    }
+
+    /**
+     * @param string $module
+     * @param string|null $pathSuffix
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
+     */
+    protected function resolveProjectPath(string $module, ?string $pathSuffix, array $options): array
     {
         $projectNamespaces = $this->config->getProjectNamespaces();
         $namespaces = array_merge(static::APPLICATION_NAMESPACES, $projectNamespaces);
@@ -333,6 +444,43 @@ class CodeStyleSniffer
             }
         }
 
-        return implode(' ', $paths);
+        return $this->addPath([], implode(' ', $paths), $options);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return array<string>
+     */
+    protected function getCoreModules(string $path): array
+    {
+        /** @var array<\Symfony\Component\Finder\SplFileInfo> $directories */
+        $directories = (new Finder())
+            ->directories()
+            ->in($path)
+            ->depth('== 0')
+            ->sortByName();
+
+        $modules = [];
+        foreach ($directories as $dir) {
+            $modules[] = $dir->getFilename();
+        }
+
+        return $modules;
+    }
+
+    /**
+     * @param array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface> $paths
+     * @param string $moduleDirectoryPath
+     * @param array<string, mixed> $options
+     * @param string|null $namespace
+     *
+     * @return array<string, \Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface>
+     */
+    protected function addPath(array $paths, string $moduleDirectoryPath, array $options, ?string $namespace = null): array
+    {
+        $paths[$moduleDirectoryPath] = clone $this->codeStyleSnifferConfigurationLoader->load($options, $moduleDirectoryPath, $namespace);
+
+        return $paths;
     }
 }

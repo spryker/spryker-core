@@ -17,6 +17,18 @@ interface CodeStyleSnifferConfigurationInterface
     public function setModuleConfig(array $moduleConfig);
 
     /**
+     * @param string $namespace
+     *
+     * @return $this
+     */
+    public function setNamespace(string $namespace);
+
+    /**
+     * @return string
+     */
+    public function getNamespace(): string;
+
+    /**
      * @param array<string, mixed> $configurationOptions
      *
      * @return $this
@@ -27,9 +39,11 @@ interface CodeStyleSnifferConfigurationInterface
      * Returns the list of paths to the coding standards which should be used in current CodeStyleSniffer run.
      * Multiple paths should be separated by coma.
      *
+     * @param string $path
+     *
      * @return string
      */
-    public function getCodingStandard(): string;
+    public function getCodingStandard(string $path): string;
 
     /**
      * Returns the list of patterns to the files or folders which should be skipped in current CodeStyleSniffer run.
@@ -38,6 +52,13 @@ interface CodeStyleSnifferConfigurationInterface
      * @return string|null
      */
     public function getIgnoredPaths(): ?string;
+
+    /**
+     * Returns module.
+     *
+     * @return string|null
+     */
+    public function getModule(): ?string;
 
     /**
      * Returns true if current CodeStyleSniffer run should fix all the fixable errors.

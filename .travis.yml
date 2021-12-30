@@ -24,7 +24,8 @@ install:
     - npm ci
 
 script:
-    - php -d memory_limit=1300M vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p
+    - chmod +x *.sh
+    - bash travis_check_touched_modules.sh
     - npm run formatter
     - npm run mp:tslint
 

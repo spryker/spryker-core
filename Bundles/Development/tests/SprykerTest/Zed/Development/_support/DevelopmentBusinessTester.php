@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Development;
 
 use Codeception\Actor;
+use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationLoader;
 use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\ArchitectureSnifferConfigurationBuilder;
@@ -41,6 +42,11 @@ class DevelopmentBusinessTester extends Actor
     protected const DEFAULT_PRIORITY = 2;
 
     /**
+     * @var int
+     */
+    protected const DEFAULT_LEVEL = 1;
+
+    /**
      * @return \Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigurationBuilderInterface
      */
     public function createArchitectureSnifferConfigurationBuilder(): SnifferConfigurationBuilderInterface
@@ -67,6 +73,14 @@ class DevelopmentBusinessTester extends Actor
     public function getDefaultPriority(): int
     {
         return static::DEFAULT_PRIORITY;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefaultLevel(): int
+    {
+        return static::DEFAULT_LEVEL;
     }
 
     /**
@@ -104,5 +118,16 @@ class DevelopmentBusinessTester extends Actor
     public function createDevelopmentConfig(): DevelopmentConfig
     {
         return new DevelopmentConfig();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer
+     */
+    public function createCodeStyleSniffer(): CodeStyleSniffer
+    {
+        return new CodeStyleSniffer(
+            $this->createDevelopmentConfig(),
+            $this->createCodeStyleSnifferConfigurationLoader(),
+        );
     }
 }
