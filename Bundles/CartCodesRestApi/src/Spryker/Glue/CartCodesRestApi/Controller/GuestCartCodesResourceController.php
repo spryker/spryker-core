@@ -21,7 +21,7 @@ class GuestCartCodesResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Adds a code to guest cart."
+     *              "Applies a gift card code to a guest cart."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
@@ -52,7 +52,7 @@ class GuestCartCodesResourceController extends AbstractController
      *     "delete": {
      *          "path": "/guest-carts/{guestCartId}/cart-codes/{code}",
      *          "summary": [
-     *              "Deletes a code from guest cart."
+     *              "Deletes a gift card code from a guest cart."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"

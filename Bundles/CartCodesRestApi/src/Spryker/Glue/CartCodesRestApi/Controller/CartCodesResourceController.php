@@ -21,7 +21,7 @@ class CartCodesResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Adds a code to cart."
+     *              "Applies a gift card code to a cart"
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
@@ -54,7 +54,7 @@ class CartCodesResourceController extends AbstractController
      *     "delete": {
      *          "path": "/carts/{cartId}/cart-codes/{code}",
      *          "summary": [
-     *              "Deletes a code from cart."
+     *              "Deletes a gift card code from a cart."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
