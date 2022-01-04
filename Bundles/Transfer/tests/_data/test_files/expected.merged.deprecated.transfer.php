@@ -499,7 +499,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
 
-                    if ($this->isPropertyStrict($normalizedPropertyName)) {
+                    if ($value !== null && $this->isPropertyStrict($normalizedPropertyName)) {
                         $this->assertInstanceOfTransfer($normalizedPropertyName, $value);
                     }
                     $this->$normalizedPropertyName = $value;

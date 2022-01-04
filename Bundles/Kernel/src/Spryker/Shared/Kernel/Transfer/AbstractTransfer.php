@@ -181,7 +181,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             } elseif ($this->transferMetadata[$property]['is_transfer']) {
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
 
-                if ($this->isPropertyStrict($property)) {
+                if ($value !== null && $this->isPropertyStrict($property)) {
                     $this->assertInstanceOfTransfer($property, $value);
                 }
             }
