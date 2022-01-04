@@ -23,4 +23,16 @@ class KernelFacade extends AbstractFacade implements KernelFacadeInterface
     {
         $this->getFactory()->createCacheBuilder()->build();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getCodeBuckets(): array
+    {
+        return $this->getFactory()->createCodeBucketConfig()->getCodeBuckets();
+    }
 }

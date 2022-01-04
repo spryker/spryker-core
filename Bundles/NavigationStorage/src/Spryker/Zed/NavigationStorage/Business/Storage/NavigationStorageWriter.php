@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface;
+use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeInterface;
 use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -41,9 +41,9 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
@@ -56,20 +56,20 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
      * @param \Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface $utilSanitizeService
      * @param \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface $navigationFacade
      * @param \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         NavigationStorageToUtilSanitizeServiceInterface $utilSanitizeService,
         NavigationStorageToNavigationInterface $navigationFacade,
         NavigationStorageQueryContainerInterface $queryContainer,
-        Store $store,
+        NavigationStorageToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->utilSanitizeService = $utilSanitizeService;
         $this->navigationFacade = $navigationFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -178,11 +178,10 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
-        $localeNames = $this->store->getLocales();
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
-                $localeNames[] = $localeName;
-            }
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $localeNames = $currentStoreTransfer->getAvailableLocaleIsoCodes();
+        foreach ($this->storeFacade->getStoresWithSharedPersistence($currentStoreTransfer) as $storeTransfer) {
+            $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
         }
 
         return array_unique($localeNames);

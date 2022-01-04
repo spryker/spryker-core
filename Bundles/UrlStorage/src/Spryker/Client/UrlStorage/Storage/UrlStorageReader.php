@@ -15,7 +15,6 @@ use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServ
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface;
 use Spryker\Client\UrlStorage\UrlStorageConfig;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-use Spryker\Shared\Kernel\Store;
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
@@ -162,7 +161,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
         $clientLocatorClassName = Locator::class;
         /** @var \Spryker\Client\Url\UrlClientInterface $urlClient */
         $urlClient = $clientLocatorClassName::getInstance()->url()->client();
-        $localeName = Store::getInstance()->getCurrentLocale();
+        $localeName = $clientLocatorClassName::getInstance()->locale()->client()->getCurrentLocale();
         $urlCollectorStorageTransfer = $urlClient->findUrl($url, $localeName);
 
         if (!$urlCollectorStorageTransfer) {

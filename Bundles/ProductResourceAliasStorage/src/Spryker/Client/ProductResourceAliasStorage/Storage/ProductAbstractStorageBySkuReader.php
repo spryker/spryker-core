@@ -9,8 +9,8 @@ namespace Spryker\Client\ProductResourceAliasStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStorageClientInterface;
+use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStoreClientInterface;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourceAliasStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductAbstractStorageBySkuReader implements ProductAbstractStorageReaderInterface
@@ -31,23 +31,23 @@ class ProductAbstractStorageBySkuReader implements ProductAbstractStorageReaderI
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
      * @param \Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourceAliasStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStoreClientInterface $storeClient
      */
     public function __construct(
         ProductResourceAliasStorageToStorageClientInterface $storageClient,
         ProductResourceAliasStorageToSynchronizationServiceInterface $synchronizationService,
-        Store $store
+        ProductResourceAliasStorageToStoreClientInterface $storeClient
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -62,7 +62,7 @@ class ProductAbstractStorageBySkuReader implements ProductAbstractStorageReaderI
         $synchronizationDataTransfer
             ->setReference(static::REFERENCE_NAME . $identifier)
             ->setLocale($localeName)
-            ->setStore($this->store->getStoreName());
+            ->setStore($this->storeClient->getCurrentStore()->getNameOrFail());
 
         $key = $this->synchronizationService
             ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)

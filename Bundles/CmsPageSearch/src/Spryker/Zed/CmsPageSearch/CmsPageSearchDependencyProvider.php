@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\CmsPageSearch;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeBridge;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToCmsQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingBridge;
@@ -21,6 +22,11 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     /**
      * @var string
      */
@@ -59,7 +65,7 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'store';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -90,9 +96,8 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsPageSearchToCmsBridge($container->getLocator()->cms()->facade());
         });
 
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
-        });
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -110,6 +115,38 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 
         $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CmsPageSearchToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new CmsPageSearchToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CmsPageSearchToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
         });
 
         return $container;

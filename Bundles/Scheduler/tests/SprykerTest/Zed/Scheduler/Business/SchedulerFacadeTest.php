@@ -39,6 +39,11 @@ class SchedulerFacadeTest extends Unit
     protected const TEST_SCHEDULER = 'test';
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\Scheduler\SchedulerBusinessTester
      */
     protected $tester;
@@ -57,7 +62,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertSame(1, $scheduleTransfer->getJobs()->count());
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
-            $this->assertStringContainsString(APPLICATION_STORE, $jobTransfer->getName());
+            $this->assertStringContainsString(static::STORE_NAME, $jobTransfer->getName());
         }
     }
 
@@ -144,7 +149,7 @@ class SchedulerFacadeTest extends Unit
     {
         return (new SchedulerFilterTransfer())
                 ->setSchedulers([static::TEST_SCHEDULER])
-                ->setStore('DE')
+                ->setStore(static::STORE_NAME)
                 ->setRoles(['admin']);
     }
 

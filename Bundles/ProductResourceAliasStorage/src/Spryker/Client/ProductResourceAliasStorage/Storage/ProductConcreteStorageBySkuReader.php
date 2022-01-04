@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductResourceAliasStorage\Storage;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStorageClientInterface;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourceAliasStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductConcreteStorageBySkuReader implements ProductConcreteStorageReaderInterface
@@ -31,23 +30,15 @@ class ProductConcreteStorageBySkuReader implements ProductConcreteStorageReaderI
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductResourceAliasStorage\Dependency\Service\ProductResourceAliasStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductResourceAliasStorageToStorageClientInterface $storageClient,
-        ProductResourceAliasStorageToSynchronizationServiceInterface $synchronizationService,
-        Store $store
+        ProductResourceAliasStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**

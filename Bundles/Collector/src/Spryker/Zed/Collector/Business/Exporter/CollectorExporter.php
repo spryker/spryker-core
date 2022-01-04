@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
@@ -50,14 +49,14 @@ class CollectorExporter
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      * @param \Spryker\Zed\Collector\CollectorConfig $collectorConfig
-     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface|null $storeFacade
+     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
         ExporterInterface $exporter,
         CollectorConfig $collectorConfig,
-        ?CollectorToStoreFacadeInterface $storeFacade = null
+        CollectorToStoreFacadeInterface $storeFacade
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
@@ -220,11 +219,7 @@ class CollectorExporter
      */
     protected function getStoreName()
     {
-        if ($this->storeFacade) {
-            return $this->storeFacade->getCurrentStore()->getName();
-        }
-
-        return Store::getInstance()->getStoreName();
+        return $this->storeFacade->getCurrentStore()->getName();
     }
 
     /**
@@ -232,10 +227,6 @@ class CollectorExporter
      */
     protected function getLocalesForStore()
     {
-        if ($this->storeFacade) {
-            return $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
-        }
-
-        return Store::getInstance()->getLocalesPerStore($this->getStoreName());
+        return $this->storeFacade->getCurrentStore()->getAvailableLocaleIsoCodes();
     }
 }

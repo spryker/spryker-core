@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsPageSearch\Business\Search\DataMapper;
 use DateTime;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeInterface;
 
 class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
 {
@@ -90,15 +90,30 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     protected const DATE_FORMAT = 'Y-m-d';
 
     /**
+     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        CmsPageSearchToStoreFacadeInterface $storeFacade
+    ) {
+        $this->storeFacade = $storeFacade;
+    }
+
+    /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName
      *
      * @return array
      */
-    public function mapCmsDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
+    public function mapCmsDataToSearchData(array $data, LocaleTransfer $localeTransfer, ?string $storeName = null): array
     {
         $isActive = $data[static::KEY_IS_ACTIVE] && $data[static::KEY_IS_SEARCHABLE];
-        $storeName = $data[static::KEY_STORE_NAME] ?? Store::getInstance()->getStoreName();
+        $storeName = $data[static::KEY_STORE_NAME] ?? $storeName ?? $this->getStoreName();
 
         return [
             PageIndexMap::IS_ACTIVE => $isActive,
@@ -162,5 +177,13 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     protected function getActiveTo(array $data): ?string
     {
         return isset($data[static::KEY_VALID_TO]) ? (new DateTime($data[static::KEY_VALID_TO]))->format(static::DATE_FORMAT) : null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        return $this->storeFacade->getCurrentStore()->getNameOrFail();
     }
 }

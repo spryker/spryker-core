@@ -40,10 +40,12 @@ class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements Search
     {
         $currentLocale = $this->getCurrentLocale();
 
+        $storeName = $this->getFactory()->getStoreClient()->getCurrentStore()->getNameOrFail();
+
         $key = $this
             ->getFactory()
             ->createProductSearchConfigExtensionKeyBuilder()
-            ->generateKey([], $currentLocale);
+            ->generateKey([], $currentLocale, $storeName);
 
         return $key;
     }
@@ -55,7 +57,7 @@ class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements Search
     {
         $locale = $this
             ->getFactory()
-            ->getStore()
+            ->getLocaleClient()
             ->getCurrentLocale();
 
         return $locale;

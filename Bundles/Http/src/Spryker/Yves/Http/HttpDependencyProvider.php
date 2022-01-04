@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Http;
 
 use Spryker\Yves\Http\Dependency\Client\HttpToLocaleClientBridge;
+use Spryker\Yves\Http\Dependency\Client\HttpToStoreClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -16,6 +17,11 @@ use Spryker\Yves\Kernel\Container;
  */
 class HttpDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -35,6 +41,7 @@ class HttpDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addLocaleClient($container);
         $container = $this->addFragmentHandlerPlugins($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -73,5 +80,21 @@ class HttpDependencyProvider extends AbstractBundleDependencyProvider
     protected function getFragmentHandlerPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new HttpToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
+        });
+
+        return $container;
     }
 }

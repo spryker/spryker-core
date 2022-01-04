@@ -19,12 +19,13 @@ trait KeyBuilderTrait
     /**
      * @param mixed $data
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return string
      */
-    public function generateKey($data, $localeName)
+    public function generateKey($data, $localeName, ?string $storeName = null): string
     {
-        $keyParts = $this->getKeyParts($data, $localeName);
+        $keyParts = $this->getKeyParts($data, $localeName, $storeName);
 
         return $this->escapeKey(implode($this->keySeparator, $keyParts));
     }
@@ -37,13 +38,14 @@ trait KeyBuilderTrait
     /**
      * @param mixed $data
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return array
      */
-    protected function getKeyParts($data, $localeName)
+    protected function getKeyParts($data, $localeName, ?string $storeName)
     {
         return [
-            Store::getInstance()->getStoreName(),
+            $this->resolveStoreName($storeName),
             $localeName,
             $this->getBundleName(),
             $this->buildKey($data),
@@ -67,5 +69,17 @@ trait KeyBuilderTrait
         $charsToReplace = ['"', "'", ' ', "\0", "\n", "\r"];
 
         return str_replace($charsToReplace, '-', mb_strtolower(trim($key)));
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param string|null $storeName
+     *
+     * @return string
+     */
+    protected function resolveStoreName(?string $storeName): string
+    {
+        return $storeName ?? Store::getInstance()->getStoreName();
     }
 }

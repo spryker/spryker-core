@@ -24,6 +24,8 @@ use Symfony\Component\HttpFoundation\Request;
  * @group CacheKey
  * @group CacheKeyGeneratorTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Client\Storage\StorageClientTester $tester
  */
 class CacheKeyGeneratorTest extends Unit
 {
@@ -41,6 +43,11 @@ class CacheKeyGeneratorTest extends Unit
      * @var \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorInterface
      */
     protected $cacheKeyGenerator;
+
+    /**
+     * @var \SprykerTest\Client\Storage\StorageClientTester
+     */
+    protected $tester;
 
     /**
      * @var array<string>
@@ -107,15 +114,19 @@ class CacheKeyGeneratorTest extends Unit
     /**
      * @dataProvider generatesCacheKeyProvider
      *
-     * @param string $expectedCacheKey
+     * @param string $expectedCacheKeyTemplate
      * @param string $requestUri
      * @param array<string> $queryStringParameters
      * @param bool $isCacheEnabled
      *
      * @return void
      */
-    public function testGeneratesCacheKey(string $expectedCacheKey, string $requestUri, array $queryStringParameters = [], bool $isCacheEnabled = true): void
-    {
+    public function testGeneratesCacheKey(
+        string $expectedCacheKeyTemplate,
+        string $requestUri,
+        array $queryStringParameters = [],
+        bool $isCacheEnabled = true
+    ): void {
         // Arrange
         $request = new Request();
         $request->server->set('SERVER_NAME', 'localhost');
@@ -126,6 +137,12 @@ class CacheKeyGeneratorTest extends Unit
 
         // Act
         $actualCacheKey = $this->cacheKeyGenerator->generateCacheKey($request);
+
+        $expectedCacheKey = sprintf(
+            $expectedCacheKeyTemplate,
+            $this->tester->getLocator()->store()->client()->getCurrentStore()->getNameOrFail(),
+            $this->tester->getLocator()->locale()->client()->getCurrentLocale(),
+        );
 
         // Assert
         $this->assertSame($expectedCacheKey, $actualCacheKey);
@@ -138,18 +155,18 @@ class CacheKeyGeneratorTest extends Unit
     {
         return [
             'no query string parameters' => [
-                $this->buildExpectedCacheKey('/en/request-uri'),
+                $this->buildExpectedCacheKeyTemplate('/en/request-uri'),
                 '/en/request-uri',
             ],
             'one allowed query string parameter' => [
-                $this->buildExpectedCacheKey('/en/another-request-uri?allowedParameter1=1'),
+                $this->buildExpectedCacheKeyTemplate('/en/another-request-uri?allowedParameter1=1'),
                 '/en/another-request-uri',
                 [
                     'allowedParameter1' => '1',
                 ],
             ],
             'both allowed query string parameters' => [
-                $this->buildExpectedCacheKey('/en/yet-another-request-uri?allowedParameter1=1&allowedParameter2=2'),
+                $this->buildExpectedCacheKeyTemplate('/en/yet-another-request-uri?allowedParameter1=1&allowedParameter2=2'),
                 '/en/yet-another-request-uri',
                 [
                     'allowedParameter1' => '1',
@@ -157,7 +174,7 @@ class CacheKeyGeneratorTest extends Unit
                 ],
             ],
             'one allowed and one disallowed query string parameter' => [
-                $this->buildExpectedCacheKey('/en/cameras-&-camcorders?allowedParameter2=2'),
+                $this->buildExpectedCacheKeyTemplate('/en/cameras-&-camcorders?allowedParameter2=2'),
                 '/en/cameras-&-camcorders',
                 [
                     'disallowedParameter1' => '1',
@@ -165,7 +182,7 @@ class CacheKeyGeneratorTest extends Unit
                 ],
             ],
             'only disallowed query string parameters' => [
-                $this->buildExpectedCacheKey('/en/computers'),
+                $this->buildExpectedCacheKeyTemplate('/en/computers'),
                 '/en/computers',
                 [
                     'disallowedParameter1' => '1',
@@ -186,19 +203,19 @@ class CacheKeyGeneratorTest extends Unit
      *
      * @return string
      */
-    protected function buildExpectedCacheKey(string $expectedRequestUriFragment): string
+    protected function buildExpectedCacheKeyTemplate(string $expectedRequestUriFragment): string
     {
-        return implode(static::KEY_NAME_SEPARATOR, [$this->buildCacheKeyPrefix(), $expectedRequestUriFragment]);
+        return implode(static::KEY_NAME_SEPARATOR, [$this->buildCacheKeyPrefixTemplate(), $expectedRequestUriFragment]);
     }
 
     /**
      * @return string
      */
-    protected function buildCacheKeyPrefix(): string
+    protected function buildCacheKeyPrefixTemplate(): string
     {
         return implode(static::KEY_NAME_SEPARATOR, [
-            $this->getStore()->getStoreName(),
-            $this->getStore()->getCurrentLocale(),
+            '%s',
+            '%s',
             static::KEY_NAME_PREFIX,
         ]);
     }

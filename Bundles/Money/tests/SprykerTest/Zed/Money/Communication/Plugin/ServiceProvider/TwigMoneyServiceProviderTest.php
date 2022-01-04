@@ -9,9 +9,10 @@ namespace SprykerTest\Zed\Money\Communication\Plugin\ServiceProvider;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
 use Silex\Application;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -86,8 +87,7 @@ class TwigMoneyServiceProviderTest extends Unit
 
         $callable = $filter->getCallable();
 
-        Store::getInstance()->setCurrentLocale($locale);
-        $this->tester->clearLocaleCacheForMoneyFormatter();
+        $this->getLocaleFacade()->setCurrentLocale((new LocaleTransfer())->setLocaleName($locale));
 
         $result = $callable($input, $withSymbol);
         $this->assertSame($expected, $result);
@@ -141,5 +141,13 @@ class TwigMoneyServiceProviderTest extends Unit
         $moneyTransfer->setCurrency($currencyTransfer);
 
         return $moneyTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->tester->getLocator()->locale()->facade();
     }
 }

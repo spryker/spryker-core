@@ -9,6 +9,7 @@ namespace Spryker\Client\ZedRequest;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToLocaleClientBridge;
 use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientBridge;
 use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingServiceBridge;
 
@@ -17,6 +18,11 @@ use Spryker\Shared\ZedRequest\Dependency\Service\ZedRequestToUtilEncodingService
  */
 class ZedRequestDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
     /**
      * @var string
      */
@@ -60,6 +66,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
         $container = $this->addMessengerClient($container);
         $container = $this->addHeaderExpanderPlugins($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -165,6 +172,22 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ZedRequestToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ZedRequestToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
             );
         });
 

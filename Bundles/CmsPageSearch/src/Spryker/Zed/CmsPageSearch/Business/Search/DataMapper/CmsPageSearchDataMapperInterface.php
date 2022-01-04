@@ -14,8 +14,9 @@ interface CmsPageSearchDataMapperInterface
     /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string|null $storeName
      *
      * @return array
      */
-    public function mapCmsDataToSearchData(array $data, LocaleTransfer $localeTransfer): array;
+    public function mapCmsDataToSearchData(array $data, LocaleTransfer $localeTransfer, ?string $storeName = null): array;
 }

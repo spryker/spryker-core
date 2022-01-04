@@ -46,7 +46,7 @@ class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTe
      */
     public function testConstruct(): void
     {
-        $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock());
+        $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock(), static::LOCALE);
         $this->assertInstanceOf(MoneyFormatterInterface::class, $intlMoneyFormatter);
     }
 
@@ -55,7 +55,7 @@ class IntlMoneyFormatterWithoutCurrencyTest extends AbstractIntlMoneyFormatterTe
      */
     public function testFormatShouldReturnFormatted(): void
     {
-        $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock());
+        $intlMoneyFormatter = new IntlMoneyFormatterWithoutCurrency($this->getTransferToMoneyConverterMock(), static::LOCALE);
         $moneyTransfer = new MoneyTransfer();
         $moneyTransfer->setAmount(static::AMOUNT);
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductSetCollector\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSetCollector\Business\Collector\ProductSetCollectorRunner;
 use Spryker\Zed\ProductSetCollector\Business\Collector\ProductSetCollectorRunnerInterface;
@@ -15,6 +14,7 @@ use Spryker\Zed\ProductSetCollector\Business\Collector\Search\ProductSetCollecto
 use Spryker\Zed\ProductSetCollector\Business\Collector\Storage\ProductSetCollector as ProductSetStorageCollector;
 use Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReader;
 use Spryker\Zed\ProductSetCollector\Business\Map\ProductSetPageMapBuilder;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeInterface;
 use Spryker\Zed\ProductSetCollector\Persistence\Storage\Propel\ProductSetCollectorQuery;
 use Spryker\Zed\ProductSetCollector\ProductSetCollectorDependencyProvider;
 
@@ -61,7 +61,7 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductSetPageMapBuilder()
     {
-        return new ProductSetPageMapBuilder($this->createStorageProductImageReader(), $this->getCurrentStore());
+        return new ProductSetPageMapBuilder($this->createStorageProductImageReader(), $this->getStoreFacade());
     }
 
     /**
@@ -78,14 +78,6 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     protected function createStorageProductImageReader()
     {
         return new StorageProductImageReader($this->getProductSetFacade());
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getCurrentStore()
-    {
-        return Store::getInstance();
     }
 
     /**
@@ -118,6 +110,14 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getSearchFacade()
     {
         return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductSetCollectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::FACADE_STORE);
     }
 
     /**

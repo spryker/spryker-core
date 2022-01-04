@@ -8,6 +8,7 @@
 namespace Spryker\Client\AvailabilityStorage;
 
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientBridge;
+use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStoreClientBridge;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -17,6 +18,11 @@ use Spryker\Client\Kernel\Container;
  */
 class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -43,6 +49,7 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSynchronizationService($container);
 
         $container = $this->addAvailabilityStorageStrategyPlugins($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -95,5 +102,21 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
     protected function getAvailabilityStorageStrategyPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new AvailabilityStorageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
+        });
+
+        return $container;
     }
 }

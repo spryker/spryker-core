@@ -697,18 +697,6 @@
             "selected_text": "$config",
             "error_level": 3,
             "shortcode": 18
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "RedundantCondition",
-            "message": "The call to strtolower is unnecessary",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/CollectorConfig.php",
-            "snippet": "        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));",
-            "selected_text": "strtolower",
-            "error_level": 4,
-            "shortcode": 122
         }
     ],
     "deprecation": [

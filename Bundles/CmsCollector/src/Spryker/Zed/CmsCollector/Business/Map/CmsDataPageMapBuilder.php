@@ -10,8 +10,8 @@ namespace Spryker\Zed\CmsCollector\Business\Map;
 use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToStoreFacadeInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
@@ -48,11 +48,20 @@ class CmsDataPageMapBuilder implements PageMapInterface
     protected $cmsFacade;
 
     /**
-     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface $cmsFacade
+     * @var \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToStoreFacadeInterface
      */
-    public function __construct(CmsCollectorToCmsInterface $cmsFacade)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        CmsCollectorToCmsInterface $cmsFacade,
+        CmsCollectorToStoreFacadeInterface $storeFacade
+    ) {
         $this->cmsFacade = $cmsFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -70,7 +79,7 @@ class CmsDataPageMapBuilder implements PageMapInterface
         $isActive = $data[AbstractCmsVersionPageCollector::COL_IS_ACTIVE] && $data[AbstractCmsVersionPageCollector::COL_IS_SEARCHABLE];
 
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore(Store::getInstance()->getStoreName())
+            ->setStore($this->storeFacade->getCurrentStore()->getNameOrFail())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CMS_PAGE)
             ->setIsActive($isActive);

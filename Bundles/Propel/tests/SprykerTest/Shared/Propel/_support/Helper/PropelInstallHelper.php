@@ -18,6 +18,11 @@ use Symfony\Component\Process\Process;
 class PropelInstallHelper extends Module
 {
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
@@ -80,9 +85,9 @@ class PropelInstallHelper extends Module
     private function getBaseCommand(): string
     {
         return 'APPLICATION_ENV=' . APPLICATION_ENV
-        . ' APPLICATION_STORE=' . APPLICATION_STORE
-        . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
-        . ' APPLICATION=' . APPLICATION;
+            . ' APPLICATION_STORE=' . $this->getApplicationStore()
+            . ' APPLICATION_ROOT_DIR=' . APPLICATION_ROOT_DIR
+            . ' APPLICATION=' . APPLICATION;
     }
 
     /**
@@ -202,5 +207,17 @@ class PropelInstallHelper extends Module
         }
 
         return Process::fromShellCommandline($command, Configuration::projectDir());
+    }
+
+    /**
+     * @return string
+     */
+    private function getApplicationStore(): string
+    {
+        if (!defined('APPLICATION_STORE')) {
+            return static::DEFAULT_STORE;
+        }
+
+        return APPLICATION_STORE;
     }
 }

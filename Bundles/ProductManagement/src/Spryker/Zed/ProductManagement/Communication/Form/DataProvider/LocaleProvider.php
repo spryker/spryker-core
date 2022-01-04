@@ -30,8 +30,6 @@ class LocaleProvider
      * @param bool $includeDefault
      *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
-     *
-     * TODO: Check usages and fix to transfers
      */
     public function getLocaleCollection($includeDefault = false)
     {
@@ -42,7 +40,7 @@ class LocaleProvider
                 ->setLocaleName(ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE);
         }
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeCode => $localeTransfer) {
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $result[] = $localeTransfer;
         }
 

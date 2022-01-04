@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
@@ -23,7 +22,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBu
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockBridge;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
@@ -36,11 +34,6 @@ use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginEx
  */
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
     /**
      * @var string
      */
@@ -373,7 +366,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         $container = $this->addStockFacade($container);
-        $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addMoneyFormTypePlugin($container);
@@ -403,20 +395,6 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addProductTableQueryCriteriaExpanderPluginInterfaces($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return new ProductManagementToStoreBridge(Store::getInstance());
-        });
 
         return $container;
     }

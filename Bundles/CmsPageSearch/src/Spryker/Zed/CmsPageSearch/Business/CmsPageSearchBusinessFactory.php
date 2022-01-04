@@ -11,6 +11,8 @@ use Spryker\Zed\CmsPageSearch\Business\Search\CmsPageSearchWriter;
 use Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapper;
 use Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface;
 use Spryker\Zed\CmsPageSearch\CmsPageSearchDependencyProvider;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeInterface;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -29,7 +31,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getCmsFacade(),
             $this->createCmsPageSearchDataMapper(),
             $this->getUtilEncoding(),
-            $this->getStore(),
+            $this->getLocaleFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
@@ -39,7 +41,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageSearchDataMapper(): CmsPageSearchDataMapperInterface
     {
-        return new CmsPageSearchDataMapper();
+        return new CmsPageSearchDataMapper($this->getStoreFacade());
     }
 
     /**
@@ -59,10 +61,18 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeInterface
      */
-    protected function getStore()
+    public function getLocaleFacade(): CmsPageSearchToLocaleFacadeInterface
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::STORE);
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CmsPageSearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_STORE);
     }
 }

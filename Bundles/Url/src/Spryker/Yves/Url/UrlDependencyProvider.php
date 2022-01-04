@@ -7,16 +7,16 @@
 
 namespace Spryker\Yves\Url;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Url\Dependency\Client\UrlToLocaleClientBridge;
 
 class UrlDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @var string
      */
-    public const STORE = 'STORE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -25,7 +25,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $this->addStore($container);
+        $this->addLocaleClient($container);
 
         return $container;
     }
@@ -35,10 +35,12 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new UrlToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductLabel;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToLocaleClientInterface;
 use Spryker\Client\ProductLabel\Storage\Dictionary\DictionaryFactory;
 use Spryker\Client\ProductLabel\Storage\LabelDictionaryReader;
 use Spryker\Client\ProductLabel\Storage\ProductAbstractRelationReader;
@@ -60,10 +61,10 @@ class ProductLabelFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToLocaleClientInterface
      */
-    public function getStore()
+    public function getLocaleClient(): ProductLabelToLocaleClientInterface
     {
-        return $this->getProvidedDependency(ProductLabelDependencyProvider::STORE);
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::CLIENT_LOCALE);
     }
 }

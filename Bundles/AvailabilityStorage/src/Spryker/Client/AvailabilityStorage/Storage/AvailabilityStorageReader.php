@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
+use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStoreClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
 use Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
 class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 {
@@ -49,18 +49,26 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     protected static $storeName;
 
     /**
+     * @var \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\AvailabilityStorage\Mapper\AvailabilityStorageMapperInterface $availabilityStorageMapper
+     * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStoreClientInterface $storeClient
      */
     public function __construct(
         AvailabilityStorageToStorageClientInterface $storageClient,
         AvailabilityStorageToSynchronizationServiceInterface $synchronizationService,
-        AvailabilityStorageMapperInterface $availabilityStorageMapper
+        AvailabilityStorageMapperInterface $availabilityStorageMapper,
+        AvailabilityStorageToStoreClientInterface $storeClient
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->availabilityStorageMapper = $availabilityStorageMapper;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -199,7 +207,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     protected function getStoreName(): string
     {
         if (static::$storeName === null) {
-            static::$storeName = Store::getInstance()->getStoreName();
+            static::$storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
         }
 
         return static::$storeName;

@@ -91,8 +91,9 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $this->monitoringService->setTransactionName($transactionName);
         $this->monitoringService->addCustomParameter('request_uri', $requestUri);
         $this->monitoringService->addCustomParameter('host', $host);
-        $this->monitoringService->addCustomParameter('store', $this->storeFacade->getStore()->getName());
         $this->monitoringService->addCustomParameter('locale', $this->localeFacade->getCurrentLocale()->getLocaleName());
+
+        $this->addStore();
 
         if ($this->isTransactionIgnorable($transactionName)) {
             $this->monitoringService->markIgnoreTransaction();
@@ -138,5 +139,17 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         return [
             KernelEvents::CONTROLLER => ['onKernelController', static::PRIORITY],
         ];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return void
+     */
+    protected function addStore(): void
+    {
+        if (defined('APPLICATION_STORE')) {
+            $this->monitoringService->addCustomParameter('store', $this->storeFacade->getCurrentStore()->getName());
+        }
     }
 }

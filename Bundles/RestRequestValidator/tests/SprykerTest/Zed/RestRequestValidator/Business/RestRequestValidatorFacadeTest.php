@@ -13,6 +13,8 @@ use Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactor
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToYamlAdapter;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToKernelFacadeInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreBridge;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
@@ -92,6 +94,8 @@ class RestRequestValidatorFacadeTest extends Unit
                 'getFilesystemAdapter',
                 'getYamlAdapter',
                 'getStore',
+                'getStoreFacade',
+                'getKernelFacade',
             ],
         );
 
@@ -100,6 +104,8 @@ class RestRequestValidatorFacadeTest extends Unit
         $mockFactory = $this->addMockFilesystemAdapter($mockFactory);
         $mockFactory = $this->addMockYamlAdapter($mockFactory);
         $mockFactory = $this->addStore($mockFactory);
+        $mockFactory = $this->addStoreFacade($mockFactory);
+        $mockFactory = $this->addKernelFacade($mockFactory);
 
         return $mockFactory;
     }
@@ -173,6 +179,66 @@ class RestRequestValidatorFacadeTest extends Unit
 
         $mockFactory
             ->method('getStore')
+            ->willReturn($mockStore);
+
+        return $mockFactory;
+    }
+
+    /**
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
+     *
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addStoreFacade(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
+    {
+        $mockStore = $this->createPartialMock(
+            RestRequestValidatorToStoreFacadeInterface::class,
+            [
+                'getAllStores',
+            ],
+        );
+
+        $mockStore
+            ->method('getAllStores')
+            ->willReturn(
+                [
+                    (new StoreTransfer())->setName(static::STORE_DE),
+                    (new StoreTransfer())->setName(static::STORE_AT),
+                ],
+            );
+
+        $mockFactory
+            ->method('getStoreFacade')
+            ->willReturn($mockStore);
+
+        return $mockFactory;
+    }
+
+    /**
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
+     *
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addKernelFacade(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
+    {
+        $mockStore = $this->createPartialMock(
+            RestRequestValidatorToKernelFacadeInterface::class,
+            [
+                'getCodeBuckets',
+            ],
+        );
+
+        $mockStore
+            ->method('getCodeBuckets')
+            ->willReturn(
+                [
+                    static::STORE_DE,
+                    static::STORE_DE,
+                ],
+            );
+
+        $mockFactory
+            ->method('getKernelFacade')
             ->willReturn($mockStore);
 
         return $mockFactory;

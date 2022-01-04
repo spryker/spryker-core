@@ -94,16 +94,22 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
-    public function getCustomerReferenceDefaults()
+    public function getCustomerReferenceDefaults(?string $storeName = null)
     {
+        if (!$storeName) {
+            $storeName = $this->getStoreName();
+        }
+
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
         $sequenceNumberSettingsTransfer->setName(CustomerConstants::NAME_CUSTOMER_REFERENCE);
 
         $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
+        $sequenceNumberPrefixParts[] = $storeName;
         $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
@@ -237,5 +243,15 @@ class CustomerConfig extends AbstractBundleConfig
     protected function getUniqueIdentifierSeparator()
     {
         return '-';
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        return Store::getInstance()->getStoreName();
     }
 }

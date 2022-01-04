@@ -9,7 +9,6 @@ namespace Spryker\Client\ZedRequest;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
@@ -23,7 +22,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     private function getClient()
     {
         return $this->getFactory()
-            ->getCashedClient();
+            ->getCachedClient();
     }
 
     /**
@@ -39,7 +38,9 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function call($url, TransferInterface $object, $requestOptions = null)
     {
-        $localeName = Store::getInstance()->getCurrentLocale();
+        $localeName = $this->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($localeName);
 

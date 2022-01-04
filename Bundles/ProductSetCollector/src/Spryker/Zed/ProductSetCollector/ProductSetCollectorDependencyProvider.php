@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToCollectorBridge;
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToProductSetBridge;
 use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearchBridge;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeBridge;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeInterface;
 
 /**
  * @method \Spryker\Zed\ProductSetCollector\ProductSetCollectorConfig getConfig()
@@ -36,6 +38,11 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
     /**
      * @var string
      */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
     /**
@@ -55,6 +62,7 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
         $this->addProductSetFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
+        $this->addStoreFacade($container);
 
         return $container;
     }
@@ -116,6 +124,18 @@ class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addStoreFacade(Container $container): void
+    {
+        $container->set(static::FACADE_STORE, function (Container $container): ProductSetCollectorToStoreFacadeInterface {
+            return new ProductSetCollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
     }
 }

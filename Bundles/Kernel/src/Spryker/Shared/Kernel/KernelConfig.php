@@ -79,6 +79,8 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return string
      */
     public function getCurrentStoreName(): string

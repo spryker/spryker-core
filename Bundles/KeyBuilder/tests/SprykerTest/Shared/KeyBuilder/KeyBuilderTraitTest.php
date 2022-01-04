@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\KeyBuilder;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Kernel\Store;
 use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
 
 /**
@@ -23,6 +22,11 @@ use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
 class KeyBuilderTraitTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
      * @dataProvider generateKey
      *
      * @param mixed $data
@@ -33,7 +37,7 @@ class KeyBuilderTraitTest extends Unit
     public function testGenerateKeyBuildExpectedStrings($data, string $expectedGeneratedKey): void
     {
         $keyBuilder = new KeyBuilder();
-        $generatedKey = $keyBuilder->generateKey($data, 'de_DE');
+        $generatedKey = $keyBuilder->generateKey($data, 'de_DE', static::STORE_NAME);
 
         $this->assertSame($expectedGeneratedKey, $generatedKey);
     }
@@ -43,7 +47,7 @@ class KeyBuilderTraitTest extends Unit
      */
     public function generateKey(): array
     {
-        $storeName = strtolower(Store::getInstance()->getStoreName());
+        $storeName = strtolower(static::STORE_NAME);
 
         return [
             ['string', $storeName . '.de_de.key-builder.identifier.string'],

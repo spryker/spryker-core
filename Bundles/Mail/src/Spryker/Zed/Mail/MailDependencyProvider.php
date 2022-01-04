@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryBridge;
+use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeBridge;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Swift_Mailer;
@@ -40,6 +41,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_GLOSSARY = 'glossary facade';
+
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @var string
@@ -76,6 +82,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRenderer($container);
         $container = $this->addSwiftMailer($container);
         $container = $this->addMailer($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -218,6 +225,22 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
 
             return new MailToMailerBridge($message, $swiftMailer);
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new MailToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
+        });
 
         return $container;
     }

@@ -15,7 +15,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 
@@ -88,7 +87,7 @@ class ProductCartPluginTest extends Unit
      */
     public function testPluginExpandsCartItemWithExpectedProductData(): void
     {
-        $localeName = Store::getInstance()->getCurrentLocale();
+        $localeName = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
         $localeTransfer = $this->localeFacade->getLocale($localeName);
 
         $taxRateEntity = new SpyTaxRate();

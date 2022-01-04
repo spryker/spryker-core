@@ -551,6 +551,8 @@ abstract class AbstractClassResolver
     }
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return string
      */
     protected function getStoreName(): string

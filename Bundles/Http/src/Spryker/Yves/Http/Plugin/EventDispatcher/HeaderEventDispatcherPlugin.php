@@ -42,9 +42,10 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
             $response = $event->getResponse();
 
             $localeClient = $this->getFactory()->getLocaleClient();
+            $storeClient = $this->getFactory()->getStoreClient();
 
             $response->headers->set('X-CodeBucket', APPLICATION_CODE_BUCKET);
-            $response->headers->set('X-Store', APPLICATION_STORE);
+            $response->headers->set('X-Store', $storeClient->getCurrentStore()->getNameOrFail());
             $response->headers->set('X-Env', APPLICATION_ENV);
             $response->headers->set('X-Locale', $localeClient->getCurrentLocale());
 

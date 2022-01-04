@@ -12,8 +12,9 @@ interface KeyBuilderInterface
     /**
      * @param mixed $data
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return string
      */
-    public function generateKey($data, $localeName);
+    public function generateKey($data, $localeName, ?string $storeName = null): string;
 }

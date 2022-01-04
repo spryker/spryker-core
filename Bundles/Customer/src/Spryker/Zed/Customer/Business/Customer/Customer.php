@@ -22,7 +22,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
@@ -30,6 +29,7 @@ use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorI
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTypePlugin;
 use Spryker\Zed\Customer\CustomerConfig;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
@@ -96,11 +96,6 @@ class Customer implements CustomerInterface
     protected $localeQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
      */
     protected $customerExpander;
@@ -116,13 +111,18 @@ class Customer implements CustomerInterface
     protected $customerPasswordPolicyValidator;
 
     /**
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      * @param \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface $emailValidator
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
      * @param array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface> $postCustomerRegistrationPlugins
@@ -134,7 +134,7 @@ class Customer implements CustomerInterface
         EmailValidatorInterface $emailValidator,
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
-        Store $store,
+        CustomerToLocaleInterface $localeFacade,
         CustomerExpanderInterface $customerExpander,
         CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
         array $postCustomerRegistrationPlugins = []
@@ -145,10 +145,10 @@ class Customer implements CustomerInterface
         $this->emailValidator = $emailValidator;
         $this->mailFacade = $mailFacade;
         $this->localeQueryContainer = $localeQueryContainer;
-        $this->store = $store;
         $this->customerExpander = $customerExpander;
         $this->customerPasswordPolicyValidator = $customerPasswordPolicyValidator;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -293,7 +293,7 @@ class Customer implements CustomerInterface
             return;
         }
 
-        $localeName = $this->store->getCurrentLocale();
+        $localeName = $this->localeFacade->getCurrentLocaleName();
         $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
 
         if ($localeEntity) {

@@ -14,7 +14,6 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInt
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Client\CategoryStorage\Exception\CategoryNodeDataCacheNotFoundException;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
 class CategoryNodeStorage implements CategoryNodeStorageInterface
 {
@@ -137,7 +136,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     protected function getStorageData(int $idCategoryNode, string $localeName, string $storeName): ?array
     {
         if (CategoryStorageConfig::isCollectorCompatibilityMode()) {
-            return $this->getCollectorStorageData($idCategoryNode, $localeName);
+            return $this->getCollectorStorageData($idCategoryNode, $localeName, $storeName);
         }
 
         $categoryNodeKey = $this->generateKey($idCategoryNode, $localeName, $storeName);
@@ -165,14 +164,15 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     /**
      * @param int $idCategoryNode
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array|null
      */
-    protected function getCollectorStorageData(int $idCategoryNode, string $localeName): ?array
+    protected function getCollectorStorageData(int $idCategoryNode, string $localeName, string $storeName): ?array
     {
         $categoryNodeKey = sprintf(
             '%s.%s.resource.categorynode.%s',
-            strtolower(Store::getInstance()->getStoreName()),
+            strtolower($storeName),
             strtolower($localeName),
             $idCategoryNode,
         );

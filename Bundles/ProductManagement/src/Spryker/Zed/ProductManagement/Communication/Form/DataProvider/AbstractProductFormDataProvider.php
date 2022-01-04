@@ -31,7 +31,6 @@ use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInt
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -196,7 +195,6 @@ class AbstractProductFormDataProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
      * @param array $taxCollection
      * @param string $imageUrlPrefix
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
      * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
@@ -211,7 +209,6 @@ class AbstractProductFormDataProvider
         LocaleTransfer $currentLocale,
         array $taxCollection,
         $imageUrlPrefix,
-        ?ProductManagementToStoreInterface $store = null,
         ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
@@ -225,7 +222,6 @@ class AbstractProductFormDataProvider
         $this->currentLocale = $currentLocale;
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
-        $this->store = $store;
         $this->productAttributeReader = $productAttributeReader;
         $this->attributeTransferCollection = $this->getAttributeTransferCollection();
     }
@@ -251,10 +247,6 @@ class AbstractProductFormDataProvider
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
-
-        if ($this->store) {
-            $formOptions[ProductFormAdd::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
-        }
 
         return $formOptions;
     }

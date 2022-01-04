@@ -9,7 +9,8 @@
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0",
         "spryker/product-category-storage": "^1.9.0 || ^2.0.0",
-        "spryker/transfer": "^3.8.0"
+        "spryker/store": "^1.4.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

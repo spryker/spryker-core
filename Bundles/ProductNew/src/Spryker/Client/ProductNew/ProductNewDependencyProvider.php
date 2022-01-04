@@ -9,10 +9,11 @@ namespace Spryker\Client\ProductNew;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToLocaleClientBridge;
 use Spryker\Client\ProductNew\Dependency\Client\ProductNewToProductLabelStorageClientBridge;
 use Spryker\Client\ProductNew\Dependency\Client\ProductNewToSearchClientBridge;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToStoreClientBridge;
 use Spryker\Client\ProductNew\Plugin\Elasticsearch\Query\NewProductsQueryPlugin;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\ProductNew\ProductNewConfig getConfig()
@@ -22,17 +23,22 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
     /**
      * @var string
      */
     public const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
-
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
 
     /**
      * @var string
@@ -58,7 +64,8 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addSearchClient($container);
         $container = $this->addProductLabelStorageClient($container);
-        $container = $this->addStore($container);
+        $container = $this->addLocaleClient($container);
+        $container = $this->addStoreClient($container);
         $container = $this->addNewProductsQueryPlugin($container);
         $container = $this->addNewProductsQueryExpanderPlugins($container);
         $container = $this->addNewProductsResultFormatterPlugins($container);
@@ -89,20 +96,6 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_PRODUCT_LABEL_STORAGE, function (Container $container) {
             return new ProductNewToProductLabelStorageClientBridge($container->getLocator()->productLabelStorage()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
         });
 
         return $container;
@@ -172,5 +165,37 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     protected function getNewProductsResultFormatterPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductNewToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductNewToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
+        });
+
+        return $container;
     }
 }

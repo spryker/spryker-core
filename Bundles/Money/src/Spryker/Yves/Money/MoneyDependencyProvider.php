@@ -14,18 +14,20 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Money\Dependency\Client\MoneyToLocaleClientBridge;
+use Spryker\Yves\Money\Dependency\Client\MoneyToLocaleClientInterface;
 
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @var string
      */
-    public const STORE = 'store';
+    public const MONEY_PARSER = 'money parser';
 
     /**
      * @var string
      */
-    public const MONEY_PARSER = 'money parser';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -34,22 +36,8 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addStore($container);
         $container = $this->addMoneyParser($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return $this->getStore();
-        });
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -69,8 +57,12 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyParser(Container $container)
     {
-        $container->set(static::MONEY_PARSER, function () {
-            $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser());
+        $container->set(static::MONEY_PARSER, function (Container $container) {
+            $moneyToParserBridge = new MoneyToParserBridge(
+                $this->getIntlMoneyParser(
+                    $container->getLocator()->locale()->client()->getCurrentLocale(),
+                ),
+            );
 
             return $moneyToParserBridge;
         });
@@ -79,11 +71,29 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container): MoneyToLocaleClientInterface {
+            return new MoneyToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param string $locale
+     *
      * @return \Money\Parser\IntlMoneyParser
      */
-    protected function getIntlMoneyParser()
+    protected function getIntlMoneyParser(string $locale)
     {
-        $numberFormatter = $this->getNumberFormatter();
+        $numberFormatter = $this->getNumberFormatter($locale);
         $currencies = $this->getIsoCurrencies();
         $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
 
@@ -91,12 +101,14 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param string $locale
+     *
      * @return \NumberFormatter
      */
-    protected function getNumberFormatter()
+    protected function getNumberFormatter(string $locale): NumberFormatter
     {
         $numberFormatter = new NumberFormatter(
-            $this->getStore()->getCurrentLocale(),
+            $locale,
             NumberFormatter::CURRENCY,
         );
 

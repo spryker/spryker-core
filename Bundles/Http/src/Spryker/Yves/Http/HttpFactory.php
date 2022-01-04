@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Http;
 
 use Spryker\Yves\Http\Dependency\Client\HttpToLocaleClientInterface;
+use Spryker\Yves\Http\Dependency\Client\HttpToStoreClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -68,5 +69,13 @@ class HttpFactory extends AbstractFactory
     public function createFormTypeHttpFoundationExtension(): FormTypeExtensionInterface
     {
         return new FormTypeHttpFoundationExtension();
+    }
+
+    /**
+     * @return \Spryker\Yves\Http\Dependency\Client\HttpToStoreClientInterface
+     */
+    public function getStoreClient(): HttpToStoreClientInterface
+    {
+        return $this->getProvidedDependency(HttpDependencyProvider::CLIENT_STORE);
     }
 }

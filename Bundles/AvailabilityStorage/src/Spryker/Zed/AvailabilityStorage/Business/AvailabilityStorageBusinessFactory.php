@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Business;
 
-use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\AvailabilityStorage\AvailabilityStorageDependencyProvider;
 use Spryker\Zed\AvailabilityStorage\Business\Storage\AvailabilityStorage;
 use Spryker\Zed\AvailabilityStorage\Business\Storage\AvailabilityStorageInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -26,18 +24,9 @@ class AvailabilityStorageBusinessFactory extends AbstractBusinessFactory
     public function createAvailabilityStorage(): AvailabilityStorageInterface
     {
         return new AvailabilityStorage(
-            $this->getStore(),
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue(),
             $this->getRepository(),
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::STORE);
     }
 }

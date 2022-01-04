@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorFacadeBridge;
@@ -89,7 +88,9 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     protected function addStoreFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
-            return new ProductCustomerPermissionCollectorToStoreFacadeBridge(Store::getInstance());
+            return new ProductCustomerPermissionCollectorToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
         });
 
         return $container;

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
@@ -80,11 +79,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
 
     /**
      * @var string
@@ -176,7 +170,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addLocaleQueryContainer($container);
         $container = $this->addOrderExpanderPreSavePlugins($container);
         $container = $this->addHydrateOrderPlugins($container);
@@ -408,20 +402,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
         });
 
         return $container;

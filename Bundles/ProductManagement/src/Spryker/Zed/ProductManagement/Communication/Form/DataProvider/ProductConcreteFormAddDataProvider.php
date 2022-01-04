@@ -20,7 +20,6 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -122,11 +121,6 @@ class ProductConcreteFormAddDataProvider
     protected $taxCollection = [];
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null
      */
     protected $productAttributeReader;
@@ -137,7 +131,6 @@ class ProductConcreteFormAddDataProvider
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
      * @param array $taxCollection
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface $productAttributeFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
@@ -147,7 +140,6 @@ class ProductConcreteFormAddDataProvider
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
         array $taxCollection,
-        ProductManagementToStoreInterface $store,
         ProductManagementToProductAttributeInterface $productAttributeFacade,
         ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
@@ -156,7 +148,6 @@ class ProductConcreteFormAddDataProvider
         $this->localeProvider = $localeProvider;
         $this->currentLocale = $currentLocale;
         $this->taxCollection = $taxCollection;
-        $this->store = $store;
         $this->productAttributeFacade = $productAttributeFacade;
         $this->productAttributeReader = $productAttributeReader;
         $this->attributeTransferCollection = $this->getAttributeTransferCollection();
@@ -185,9 +176,6 @@ class ProductConcreteFormAddDataProvider
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_SUPER] = [];
         $formOptions[ProductConcreteFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
 
-        if ($this->store->getCurrencyIsoCode()) {
-            $formOptions[ProductConcreteFormAdd::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
-        }
         $formOptions[ProductConcreteFormAdd::OPTION_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
         $formOptions[ProductConcreteFormAdd::OPTION_IS_BUNDLE_ITEM] = $type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE;
         $formOptions[ProductConcreteFormAdd::OPTION_SUPER_ATTRIBUTES] = $this->getSuperAttributesOption($productAbstractTransfer);

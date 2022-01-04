@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface;
 use Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheBuilder\CacheBuilder;
 use Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheBuilder\CacheBuilderInterface;
 use Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheWriter\CacheWriterInterface;
@@ -47,5 +49,13 @@ class KernelBusinessFactory extends AbstractBusinessFactory
     public function createCacheWriter(): CacheWriterInterface
     {
         return new CacheWriterPhp($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
+     */
+    public function createCodeBucketConfig(): CodeBucketConfigInterface
+    {
+        return new CodeBucketConfig();
     }
 }

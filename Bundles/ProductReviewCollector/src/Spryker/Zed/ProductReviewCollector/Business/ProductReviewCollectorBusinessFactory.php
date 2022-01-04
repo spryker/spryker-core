@@ -12,6 +12,8 @@ use Spryker\Zed\ProductReviewCollector\Business\Collector\ProductReviewCollector
 use Spryker\Zed\ProductReviewCollector\Business\Collector\ProductReviewCollectorRunnerInterface;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Search\ProductReviewCollector as ProductReviewSearchCollector;
 use Spryker\Zed\ProductReviewCollector\Business\Collector\Storage\ProductAbstractReviewCollector as ProductAbstractReviewStorageCollector;
+use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToSearchInterface;
+use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeInterface;
 use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery;
 use Spryker\Zed\ProductReviewCollector\Persistence\Storage\Propel\ProductAbstractReviewStorageCollectorQuery;
 use Spryker\Zed\ProductReviewCollector\ProductReviewCollectorDependencyProvider;
@@ -28,7 +30,7 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $storageProductReviewCollector = new ProductReviewSearchCollector(
             $this->getUtilDataReaderService(),
-            $this->getCurrentStore(),
+            $this->getStoreFacade(),
         );
 
         $storageProductReviewCollector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -69,14 +71,6 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getCurrentStore()
-    {
-        return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
     protected function getUtilDataReaderService()
@@ -103,9 +97,17 @@ class ProductReviewCollectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToSearchInterface
      */
-    protected function getSearchFacade()
+    public function getSearchFacade(): ProductReviewCollectorToSearchInterface
     {
         return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductReviewCollectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductReviewCollectorDependencyProvider::FACADE_STORE);
     }
 
     /**

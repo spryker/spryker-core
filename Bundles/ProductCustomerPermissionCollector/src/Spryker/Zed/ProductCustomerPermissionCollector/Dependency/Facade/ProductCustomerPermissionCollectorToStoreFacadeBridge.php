@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductCustomerPermissionCollectorToStoreFacadeBridge implements ProductCustomerPermissionCollectorToStoreFacadeInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $storeFacade
+     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
      */
     public function __construct($storeFacade)
     {
@@ -23,10 +25,10 @@ class ProductCustomerPermissionCollectorToStoreFacadeBridge implements ProductCu
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStoreName(): string
+    public function getCurrentStore(): StoreTransfer
     {
-        return $this->storeFacade->getStoreName();
+        return $this->storeFacade->getCurrentStore();
     }
 }

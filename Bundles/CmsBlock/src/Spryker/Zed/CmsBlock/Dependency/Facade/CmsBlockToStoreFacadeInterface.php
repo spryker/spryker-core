@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagement\Dependency\Facade;
+namespace Spryker\Zed\CmsBlock\Dependency\Facade;
 
-interface ProductManagementToStoreInterface
+interface CmsBlockToStoreFacadeInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrencyIsoCode();
+    public function getCurrentStore();
 }

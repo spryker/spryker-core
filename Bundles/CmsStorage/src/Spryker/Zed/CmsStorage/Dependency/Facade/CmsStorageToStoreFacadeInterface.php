@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface CmsStorageToStoreFacadeInterface
 {
     /**
@@ -18,4 +20,11 @@ interface CmsStorageToStoreFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 }

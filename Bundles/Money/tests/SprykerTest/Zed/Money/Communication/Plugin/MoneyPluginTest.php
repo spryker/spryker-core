@@ -99,8 +99,7 @@ class MoneyPluginTest extends Unit
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
 
-        $defaultCurrency = Store::getInstance()->getCurrencyIsoCode();
-        $this->assertSame($defaultCurrency, $moneyTransfer->getCurrency()->getCode());
+        $this->assertSame(static::CURRENCY_EUR, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**

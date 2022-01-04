@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -30,7 +31,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -75,9 +75,9 @@ class SalesFacadeSaveOrderTest extends Unit
     {
         parent::setUp();
 
-        $countryFacadeMock = $this->getMockBuilder(SalesToCountryInterface::class)->setMethods(['getIdCountryByIso2Code', 'getAvailableCountries'])->getMock();
-        $countryFacadeMock->method('getIdCountryByIso2Code')
-            ->will($this->returnValue(1));
+        $countryFacadeMock = $this->getMockBuilder(SalesToCountryInterface::class)->setMethods(['getCountryByIso2Code', 'getAvailableCountries'])->getMock();
+        $countryFacadeMock->method('getCountryByIso2Code')
+            ->willReturn((new CountryTransfer())->setIdCountry(1));
 
         $omsOrderProcessEntity = $this->getProcessEntity();
 
@@ -119,7 +119,6 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::FACADE_OMS] = new SalesToOmsBridge($omsFacadeMock);
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
-        $container[SalesDependencyProvider::STORE] = Store::getInstance();
         $container[SalesDependencyProvider::FACADE_STORE] = new SalesToStoreBridge(new StoreFacade());
         $container[SalesDependencyProvider::FACADE_LOCALE] = new SalesToLocaleBridge(new LocaleFacade());
         $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];

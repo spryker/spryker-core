@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\RestRequestValidator\Dependency\Store;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface} instead.
+ */
 interface RestRequestValidatorToStoreInterface
 {
     /**

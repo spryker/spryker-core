@@ -10,6 +10,8 @@ namespace Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder;
 interface ModuleNameCandidatesBuilderConfigInterface
 {
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return string
      */
     public function getCurrentStoreName(): string;

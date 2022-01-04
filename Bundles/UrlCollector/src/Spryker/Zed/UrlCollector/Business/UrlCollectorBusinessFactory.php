@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\UrlCollector\Business\Collector\Storage\UrlCollector;
 use Spryker\Zed\UrlCollector\Business\Collector\UrlCollectorRunner;
 use Spryker\Zed\UrlCollector\Business\Collector\UrlCollectorRunnerInterface;
+use Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToStoreFacadeInterface;
 use Spryker\Zed\UrlCollector\Persistence\Collector\Propel\UrlCollectorQuery;
 use Spryker\Zed\UrlCollector\UrlCollectorDependencyProvider;
 
@@ -35,6 +36,7 @@ class UrlCollectorBusinessFactory extends AbstractBusinessFactory
         $collector = new UrlCollector(
             $this->getDataReaderService(),
             $this->getUrlQueryContainer(),
+            $this->getStoreFacade(),
         );
 
         $collector->setTouchQueryContainer($this->getTouchQueryContainer());
@@ -49,6 +51,14 @@ class UrlCollectorBusinessFactory extends AbstractBusinessFactory
     public function getDataReaderService()
     {
         return $this->getProvidedDependency(UrlCollectorDependencyProvider::SERVICE_DATA_READER);
+    }
+
+    /**
+     * @return \Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): UrlCollectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(UrlCollectorDependencyProvider::FACADE_STORE);
     }
 
     /**

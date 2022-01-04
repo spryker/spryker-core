@@ -34,7 +34,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link clearCodeBucketCache()} instead.
+     * @deprecated Use {@link emptyCodeBucketCache()} instead.
      *
      * @return array<string>
      */
@@ -90,7 +90,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
-     * @deprecated Use emptyCodeBucketAutoloaderCache instead.
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @return array<string>
      */

@@ -7,7 +7,7 @@
         "php": ">=7.4",
         "spryker/kernel": "^3.30.0",
         "spryker/key-builder": "^1.0.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.8.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/storage": "^3.0.0",
         "spryker/symfony": "^3.0.0",

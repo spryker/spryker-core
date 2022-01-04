@@ -165,10 +165,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
             $cmsBlockStorageEntities,
         );
 
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $storesWithSharedPersistence = $storeTransfer->getStoresWithSharedPersistence();
-        $storeName = $storeTransfer->getName();
-        $storeRelations = array_merge($storesWithSharedPersistence, [$storeName]);
+        $storeRelations = $this->getStoreNames();
 
         foreach ($pairedEntities as $pair) {
             $cmsBlockStorageEntity = $pair[static::CMS_BLOCK_STORAGE_ENTITY];
@@ -391,5 +388,16 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         }
 
         return $localeNameMapByStoreName;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getStoreNames(): array
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storesWithSharedPersistence = $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
+
+        return array_merge($storesWithSharedPersistence, [$storeTransfer->getName()]);
     }
 }

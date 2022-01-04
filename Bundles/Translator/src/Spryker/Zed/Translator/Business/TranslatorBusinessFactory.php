@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Translator\Business;
 
 use Spryker\Shared\Kernel\Communication\Application;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslationCache\CacheCleaner;
 use Spryker\Zed\Translator\Business\TranslationCache\CacheCleanerInterface;
@@ -75,7 +74,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
             $this->createCsvFileLoader(),
             $this->createTranslationFileFinder(),
             $this->getConfig(),
-            $this->getStore()->getLocales(),
+            $this->getLocaleFacade()->getSupportedLocaleCodes(),
         );
     }
 
@@ -165,14 +164,6 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
         return new CacheGenerator(
             $this->createTranslatorCollection(),
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(TranslatorDependencyProvider::STORE);
     }
 
     /**

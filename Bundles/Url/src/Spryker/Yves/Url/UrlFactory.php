@@ -8,14 +8,15 @@
 namespace Spryker\Yves\Url;
 
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Url\Dependency\Client\UrlToLocaleClientInterface;
 
 class UrlFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Yves\Url\Dependency\Client\UrlToLocaleClientInterface
      */
-    public function getStore()
+    public function getLocaleClient(): UrlToLocaleClientInterface
     {
-        return $this->getProvidedDependency(UrlDependencyProvider::STORE);
+        return $this->getProvidedDependency(UrlDependencyProvider::CLIENT_LOCALE);
     }
 }

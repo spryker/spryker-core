@@ -98,8 +98,7 @@ class MoneyPluginTest extends Unit
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
 
-        $defaultCurrency = Store::getInstance()->getCurrencyIsoCode();
-        $this->assertSame($defaultCurrency, $moneyTransfer->getCurrency()->getCode());
+        $this->assertSame(static::CURRENCY_EUR, $moneyTransfer->getCurrency()->getCode());
     }
 
     /**
@@ -135,8 +134,6 @@ class MoneyPluginTest extends Unit
      */
     public function testFormatWithoutSymbolShouldReturnFormattedStringWithoutCurrencySymbol(): void
     {
-        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
-
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 

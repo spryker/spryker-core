@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductSetPageSearchTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface;
 
@@ -58,11 +58,16 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface $productSetFacade
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
@@ -70,15 +75,15 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         ProductSetPageSearchToUtilEncodingInterface $utilEncodingService,
         ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper,
         ProductSetPageSearchToProductSetInterface $productSetFacade,
-        Store $store,
+        ProductSetPageSearchToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->utilEncodingService = $utilEncodingService;
         $this->productSetPageSearchDataMapper = $productSetPageSearchDataMapper;
         $this->productSetFacade = $productSetFacade;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -180,7 +185,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $productSetPageSearchTransfer->fromArray($spyProductAbstractLocalizedEntity, true);
         $productSetPageSearchTransfer->fromArray($spyProductAbstractLocalizedEntity['SpyProductSet'], true);
         $productSetPageSearchTransfer->setLocale($spyProductAbstractLocalizedEntity['SpyLocale']['locale_name']);
-        $productSetPageSearchTransfer->setStore($this->store->getStoreName());
+        $productSetPageSearchTransfer->setStore($this->storeFacade->getCurrentStore()->getNameOrFail());
         $productSetPageSearchTransfer->setIdProductAbstracts($productAbstractIds);
         $productSetPageSearchTransfer->setType('product_set');
         $productSetPageSearchTransfer->setImageSets($this->getProductSetImageSets($spyProductAbstractLocalizedEntity['fk_product_set'], $spyProductAbstractLocalizedEntity['SpyLocale']['id_locale']));

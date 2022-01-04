@@ -99,12 +99,10 @@ class UrlStorageWriter implements UrlStorageWriterInterface
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $localeNames = $storeTransfer->getAvailableLocaleIsoCodes();
-        foreach ($storeTransfer->getStoresWithSharedPersistence() as $storeName) {
-            foreach ($this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes() as $localeName) {
-                $localeNames[] = $localeName;
-            }
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $localeNames = $currentStoreTransfer->getAvailableLocaleIsoCodes();
+        foreach ($this->storeFacade->getStoresWithSharedPersistence($currentStoreTransfer) as $storeTransfer) {
+            $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
         }
 
         return array_unique($localeNames);

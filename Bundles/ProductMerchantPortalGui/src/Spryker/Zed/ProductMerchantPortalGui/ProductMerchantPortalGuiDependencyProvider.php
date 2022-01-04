@@ -13,7 +13,6 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapter;
@@ -198,11 +197,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -236,8 +230,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductAttributeFacade($container);
 
         $container = $this->addValidationAdapter($container);
-
-        $container = $this->addStore($container);
 
         return $container;
     }
@@ -718,20 +710,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::ADAPTER_VALIDATION, function () {
             return new ProductMerchantPortalGuiToValidationAdapter();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
         });
 
         return $container;

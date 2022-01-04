@@ -20,6 +20,7 @@ use Spryker\Shared\Log\Processor\ResponseProcessor;
 use Spryker\Shared\Log\Processor\ServerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Log\Dependency\Client\LogToLocaleClientInterface;
 use Spryker\Yves\Log\Handler\QueueHandler;
 
 /**
@@ -60,7 +61,17 @@ class LogFactory extends AbstractFactory
      */
     public function createEnvironmentProcessorPublic()
     {
-        return new EnvironmentProcessor();
+        return new EnvironmentProcessor(
+            $this->getLocaleClient()->getCurrentLocale(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Yves\Log\Dependency\Client\LogToLocaleClientInterface
+     */
+    public function getLocaleClient(): LogToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

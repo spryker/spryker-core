@@ -673,14 +673,15 @@ class CalculationFacadeTest extends Unit
         // Arrange
         $calculationFacade = new CalculationFacade();
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->setStore(APPLICATION_STORE);
+        $storeTransfer = $this->tester->haveStore();
+        $orderTransfer->setStore($storeTransfer->getNameOrFail());
         $orderTransfer->addItem(new ItemTransfer());
 
         // Act
         $calculatedOrderTransfer = $calculationFacade->recalculateOrder($orderTransfer);
 
         // Assert
-        $this->assertSame(APPLICATION_STORE, $calculatedOrderTransfer->getStore());
+        $this->assertSame($storeTransfer->getNameOrFail(), $calculatedOrderTransfer->getStore());
     }
 
     /**

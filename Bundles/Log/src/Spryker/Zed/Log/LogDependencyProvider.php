@@ -9,6 +9,7 @@ namespace Spryker\Zed\Log;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Log\Dependency\Facade\LogToLocaleFacadeBridge;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -42,6 +43,11 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -51,6 +57,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueueClient($container);
         $container = $this->addLogHandlers($container);
         $container = $this->addProcessors($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -77,6 +84,20 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::CLIENT_QUEUE, function () use ($container) {
             return $container->getLocator()->queue()->client();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function () use ($container) {
+            return new LogToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;

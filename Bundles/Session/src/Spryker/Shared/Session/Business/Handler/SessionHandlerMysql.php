@@ -134,11 +134,11 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
         $startTime = microtime(true);
 
-        $store = Store::getInstance()->getStoreName();
+        $codeBucket = $this->getCodeBucket();
         $query = 'SELECT * FROM session WHERE session.key=? AND session.store=? AND session.environment=? AND session.expires >= session.updated_at + ' . $this->lifetime . ' LIMIT 1';
 
         $statement = $this->connection->prepare($query);
-        $statement->execute([$key, $store, $this->getEnvironmentName()]);
+        $statement->execute([$key, $codeBucket, $this->getEnvironmentName()]);
         $result = $statement->fetch();
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
@@ -164,12 +164,12 @@ class SessionHandlerMysql implements SessionHandlerInterface
         $expireTimestamp = time() + $this->lifetime;
         $expires = date('Y-m-d H:i:s', $expireTimestamp);
 
-        $storeName = Store::getInstance()->getStoreName();
+        $codeBucket = $this->getCodeBucket();
         $timestamp = date('Y-m-d H:i:s', time());
         $query = 'REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)';
 
         $statement = $this->connection->prepare($query);
-        $result = $statement->execute([$key, $data, $storeName, $this->getEnvironmentName(), $expires, $timestamp]);
+        $result = $statement->execute([$key, $data, $codeBucket, $this->getEnvironmentName(), $expires, $timestamp]);
 
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
@@ -234,5 +234,27 @@ class SessionHandlerMysql implements SessionHandlerInterface
     protected function getEnvironmentName(): string
     {
         return APPLICATION_ENV;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCodeBucket(): string
+    {
+        if (defined('APPLICATION_CODE_BUCKET')) {
+            return APPLICATION_CODE_BUCKET;
+        }
+
+        return $this->getStoreName();
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled
+     *
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        return Store::getInstance()->getStoreName();
     }
 }

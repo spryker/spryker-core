@@ -13,6 +13,7 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface;
 
 class ExportMarker implements MarkerInterface
 {
@@ -37,21 +38,29 @@ class ExportMarker implements MarkerInterface
     protected $collectorConfig;
 
     /**
+     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param \Spryker\Zed\Collector\CollectorConfig $collectorConfig
+     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         WriterInterface $writer,
         ReaderInterface $reader,
         KeyBuilderInterface $keyBuilder,
-        CollectorConfig $collectorConfig
+        CollectorConfig $collectorConfig,
+        CollectorToStoreFacadeInterface $storeFacade
     ) {
         $this->writer = $writer;
         $this->reader = $reader;
         $this->keyBuilder = $keyBuilder;
         $this->collectorConfig = $collectorConfig;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -82,7 +91,11 @@ class ExportMarker implements MarkerInterface
      */
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $localeTransfer, DateTime $timestamp)
     {
-        $timestampKey = $this->keyBuilder->generateKey($exportType, $localeTransfer->getLocaleName());
+        $timestampKey = $this->keyBuilder->generateKey(
+            $exportType,
+            $localeTransfer->getLocaleName(),
+            $this->storeFacade->getCurrentStore()->getNameOrFail(),
+        );
         $this->writer->write([$timestampKey => $timestamp->format('Y-m-d H:i:s')]);
     }
 

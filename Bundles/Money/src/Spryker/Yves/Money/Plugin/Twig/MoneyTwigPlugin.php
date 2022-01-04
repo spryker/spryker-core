@@ -74,6 +74,10 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
         $moneyFactory = $this->getFactory();
 
         $filter = new TwigFilter(static::FILTER_NAME_MONEY, function ($money, bool $withSymbol = true, ?string $isoCode = null) use ($moneyFactory) {
+            if ($money === null) {
+                return $money;
+            }
+
             if (!$money instanceof MoneyTransfer) {
                 $money = $this->getMoneyTransfer($money, $isoCode);
             }

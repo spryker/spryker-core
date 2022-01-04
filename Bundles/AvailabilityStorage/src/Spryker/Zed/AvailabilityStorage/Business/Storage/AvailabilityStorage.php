@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityStorage\Business\Storage;
 
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface;
 use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface;
 
@@ -40,11 +39,6 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     public const STORE_NAME = 'name';
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface
      */
     protected $queryContainer;
@@ -62,18 +56,15 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected $availabilityStorageRepository;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface $availabilityStorageRepository
      */
     public function __construct(
-        Store $store,
         AvailabilityStorageQueryContainerInterface $queryContainer,
         $isSendingToQueue,
         AvailabilityStorageRepositoryInterface $availabilityStorageRepository
     ) {
-        $this->store = $store;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
         $this->availabilityStorageRepository = $availabilityStorageRepository;
@@ -195,14 +186,6 @@ class AvailabilityStorage implements AvailabilityStorageInterface
             ->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)
             ->find()
             ->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 
     /**

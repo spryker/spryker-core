@@ -11,28 +11,30 @@ use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractConfigurableSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeInterface;
 use Spryker\Zed\ProductReviewCollector\Persistence\Search\Propel\ProductReviewSearchCollectorQuery;
 
 class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
 {
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeInterface $storeFacade
      */
-    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService, Store $store)
-    {
+    public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        ProductReviewCollectorToStoreFacadeInterface $storeFacade
+    ) {
         parent::__construct($utilDataReaderService);
 
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -63,7 +65,7 @@ class ProductReviewCollector extends AbstractConfigurableSearchPropelCollector
     protected function collectItem($touchKey, array $collectItemData)
     {
         $result = [
-            ProductReviewIndexMap::STORE => $this->store->getStoreName(),
+            ProductReviewIndexMap::STORE => $this->storeFacade->getCurrentStore()->getNameOrFail(),
             ProductReviewIndexMap::LOCALE => $this->locale->getLocaleName(),
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $collectItemData[ProductReviewSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT],
             ProductReviewIndexMap::RATING => $collectItemData[ProductReviewSearchCollectorQuery::FIELD_RATING],

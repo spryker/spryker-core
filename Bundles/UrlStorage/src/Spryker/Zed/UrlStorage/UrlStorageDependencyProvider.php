@@ -23,6 +23,11 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
 
     /**
@@ -34,11 +39,6 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-
-    /**
-     * @var string
-     */
-    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -147,7 +147,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
-            return new UrlStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
+            return new UrlStorageToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
         });
 
         return $container;

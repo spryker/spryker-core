@@ -10,11 +10,15 @@ namespace Spryker\Zed\Cache\Business\Model;
 interface CacheClearerInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Cache\Business\Model\CacheClearerInterface::clearCodeBucketCache()} instead.
+     *
      * @return array<string>
      */
     public function clearCache();
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string>
      */
     public function clearAutoLoaderCache();

@@ -9,12 +9,12 @@ namespace Spryker\Client\ProductLabelStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
+use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToLocaleClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProductLabelStorageConfig;
 
 class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
@@ -55,21 +55,29 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     protected static $storageKeyBuilder;
 
     /**
+     * @var \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToLocaleClientInterface
+     */
+    protected $localeClient;
+
+    /**
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReaderInterface $labelDictionaryReader
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToLocaleClientInterface $localeClient
      */
     public function __construct(
         ProductLabelStorageToStorageClientInterface $storageClient,
         ProductLabelStorageToSynchronizationServiceInterface $synchronizationService,
         LabelDictionaryReaderInterface $labelDictionaryReader,
-        ProductLabelStorageToUtilEncodingServiceInterface $utilEncodingService
+        ProductLabelStorageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductLabelStorageToLocaleClientInterface $localeClient
     ) {
         $this->storageClient = $storageClient;
         $this->labelDictionaryReader = $labelDictionaryReader;
         $this->synchronizationService = $synchronizationService;
         $this->utilEncodingService = $utilEncodingService;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -168,7 +176,10 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
             $clientLocatorClassName = Locator::class;
             /** @var \Spryker\Client\ProductLabel\ProductLabelClientInterface $productLabelClient */
             $productLabelClient = $clientLocatorClassName::getInstance()->productLabel()->client();
-            $collectorData = $productLabelClient->findLabelsByIdProductAbstract($idProductAbstract, Store::getInstance()->getCurrentLocale());
+            $collectorData = $productLabelClient->findLabelsByIdProductAbstract(
+                $idProductAbstract,
+                $this->localeClient->getCurrentLocale(),
+            );
 
             $labelIds = [];
             foreach ($collectorData as $storageProductLabelTransfer) {

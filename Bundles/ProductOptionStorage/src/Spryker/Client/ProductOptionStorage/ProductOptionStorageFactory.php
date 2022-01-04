@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductOptionStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToLocaleClientInterface;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStoreClientInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapper;
 use Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapperInterface;
@@ -23,11 +25,12 @@ class ProductOptionStorageFactory extends AbstractFactory
     {
         return new ProductOptionStorageReader(
             $this->getStorage(),
-            $this->getStore(),
+            $this->getStoreClient(),
             $this->getSynchronizationService(),
             $this->createValuePriceReader(),
             $this->createProductOptionMapper(),
             $this->getUtilEncodingService(),
+            $this->getLocaleClient(),
         );
     }
 
@@ -91,10 +94,18 @@ class ProductOptionStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStoreClientInterface
      */
-    public function getStore()
+    public function getStoreClient(): ProductOptionStorageToStoreClientInterface
     {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductOptionStorageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_LOCALE);
     }
 }

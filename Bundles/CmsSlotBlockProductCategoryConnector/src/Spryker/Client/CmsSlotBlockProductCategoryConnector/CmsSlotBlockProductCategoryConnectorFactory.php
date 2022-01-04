@@ -9,6 +9,7 @@ namespace Spryker\Client\CmsSlotBlockProductCategoryConnector;
 
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface;
+use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToStoreClientInterface;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReader;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Resolver\ProductCategoryCmsSlotBlockConditionResolver;
@@ -35,6 +36,7 @@ class CmsSlotBlockProductCategoryConnectorFactory extends AbstractFactory
         return new ProductCategoryReader(
             $this->getLocaleClient(),
             $this->getProductCategoryStorageClient(),
+            $this->getStoreClient(),
         );
     }
 
@@ -52,5 +54,13 @@ class CmsSlotBlockProductCategoryConnectorFactory extends AbstractFactory
     public function getProductCategoryStorageClient(): CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockProductCategoryConnectorDependencyProvider::CLIENT_PRODUCT_CATEGORY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToStoreClientInterface
+     */
+    public function getStoreClient(): CmsSlotBlockProductCategoryConnectorToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockProductCategoryConnectorDependencyProvider::CLIENT_STORE);
     }
 }

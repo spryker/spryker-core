@@ -10,6 +10,7 @@ namespace Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader;
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface;
+use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToStoreClientInterface;
 
 class ProductCategoryReader implements ProductCategoryReaderInterface
 {
@@ -24,15 +25,23 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
     protected $productCategoryStorageClient;
 
     /**
+     * @var \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface $localeClient
      * @param \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface $productCategoryStorageClient
+     * @param \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToStoreClientInterface $storeClient
      */
     public function __construct(
         CmsSlotBlockProductCategoryConnectorToLocaleClientInterface $localeClient,
-        CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface $productCategoryStorageClient
+        CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface $productCategoryStorageClient,
+        CmsSlotBlockProductCategoryConnectorToStoreClientInterface $storeClient
     ) {
         $this->localeClient = $localeClient;
         $this->productCategoryStorageClient = $productCategoryStorageClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -46,7 +55,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
         $productAbstractCategoryStorageTransfer = $this->productCategoryStorageClient->findProductAbstractCategory(
             $idProductAbstract,
             $localeName,
-            APPLICATION_STORE,
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
         );
 
         if (!$productAbstractCategoryStorageTransfer) {

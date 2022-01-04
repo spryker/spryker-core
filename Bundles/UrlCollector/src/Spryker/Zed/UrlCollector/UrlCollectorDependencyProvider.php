@@ -10,6 +10,7 @@ namespace Spryker\Zed\UrlCollector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToCollectorFacadeBridge;
+use Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToStoreFacadeBridge;
 use Spryker\Zed\UrlCollector\Dependency\QueryContainer\UrlCollectorToUrlQueryContainerBridge;
 
 /**
@@ -21,6 +22,11 @@ class UrlCollectorDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -45,6 +51,7 @@ class UrlCollectorDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addCollectorFacade($container);
+        $this->addStoreFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
         $this->addUrlQueryContainer($container);
@@ -61,6 +68,18 @@ class UrlCollectorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new UrlCollectorToCollectorFacadeBridge($container->getLocator()->collector()->facade());
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addStoreFacade(Container $container): void
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new UrlCollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
     }
 

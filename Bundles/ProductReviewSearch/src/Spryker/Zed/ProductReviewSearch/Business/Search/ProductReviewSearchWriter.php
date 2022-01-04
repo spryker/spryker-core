@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductReviewSearchTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface;
 
@@ -29,11 +29,6 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
@@ -41,20 +36,25 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductReviewSearchQueryContainerInterface $queryContainer,
         ProductReviewSearchToUtilEncodingInterface $utilEncodingService,
-        Store $store,
+        ProductReviewSearchToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->utilEncodingService = $utilEncodingService;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -157,7 +157,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected function mapToSearchData(SpyProductReview $productReviewEntity)
     {
         return [
-            ProductReviewIndexMap::STORE => $this->store->getStoreName(),
+            ProductReviewIndexMap::STORE => $this->storeFacade->getCurrentStore(),
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $productReviewEntity->getFkProductAbstract(),
             ProductReviewIndexMap::RATING => $productReviewEntity->getRating(),
             ProductReviewIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($productReviewEntity),

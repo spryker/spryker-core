@@ -21,4 +21,14 @@ interface KernelFacadeInterface
      * @return void
      */
     public function buildResolvableClassCache(): void;
+
+    /**
+     * Specification:
+     * - Return all available code buckets.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getCodeBuckets(): array;
 }

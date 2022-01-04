@@ -67,4 +67,8 @@
         <property name="validTo" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
 </transfers>

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\NavigationStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationBridge;
+use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeBridge;
 use Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToLocaleQueryContainerBridge;
 use Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToNavigationQueryContainerBridge;
 use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceBridge;
@@ -21,6 +21,11 @@ use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSani
  */
 class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -45,11 +50,6 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-
-    /**
-     * @var string
-     */
-    public const STORE = 'store';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -80,9 +80,7 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
             return new NavigationStorageToNavigationBridge($container->getLocator()->navigation()->facade());
         });
 
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
-        });
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -100,6 +98,22 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
 
         $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new NavigationStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new NavigationStorageToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
         });
 
         return $container;

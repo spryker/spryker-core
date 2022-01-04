@@ -35,8 +35,8 @@ class MoneyCommunicationTester extends Actor
     public function clearLocaleCacheForMoneyFormatter(): void
     {
         $moneyFormatter = new ReflectionClass(IntlMoneyFormatterWithoutCurrency::class);
-        $localeProperty = $moneyFormatter->getProperty('locale');
+        $localeProperty = $moneyFormatter->getProperty('currentLocale');
         $localeProperty->setAccessible(true);
-        $localeProperty->setValue(null);
+        $localeProperty->setValue($moneyFormatter, null);
     }
 }

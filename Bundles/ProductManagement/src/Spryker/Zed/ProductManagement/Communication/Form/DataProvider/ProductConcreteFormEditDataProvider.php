@@ -25,7 +25,6 @@ use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInt
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -54,7 +53,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
      * @param array $taxCollection
      * @param string $imageUrlPrefix
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
      * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface> $formEditDataProviderExpanderPlugins
      * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
@@ -71,7 +69,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         LocaleTransfer $currentLocale,
         array $taxCollection,
         $imageUrlPrefix,
-        ProductManagementToStoreInterface $store,
         ProductStockHelperInterface $productStockHelper,
         array $formEditDataProviderExpanderPlugins,
         ?ProductAttributeReaderInterface $productAttributeReader = null
@@ -88,7 +85,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $currentLocale,
             $taxCollection,
             $imageUrlPrefix,
-            $store,
             $productAttributeReader,
         );
 

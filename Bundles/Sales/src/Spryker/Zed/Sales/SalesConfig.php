@@ -63,16 +63,20 @@ class SalesConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
-    public function getOrderReferenceDefaults()
+    public function getOrderReferenceDefaults(?string $storeName = null)
     {
+        $storeName = $this->resolveStoreName($storeName);
+
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
         $sequenceNumberSettingsTransfer->setName(SalesConstants::NAME_ORDER_REFERENCE);
 
         $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
+        $sequenceNumberPrefixParts[] = $storeName;
         $sequenceNumberPrefixParts[] = $this->get(SalesConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
@@ -197,5 +201,17 @@ class SalesConfig extends AbstractBundleConfig
         }
 
         return true;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param string|null $storeName
+     *
+     * @return string
+     */
+    protected function resolveStoreName(?string $storeName): string
+    {
+        return $storeName ?? Store::getInstance()->getStoreName();
     }
 }

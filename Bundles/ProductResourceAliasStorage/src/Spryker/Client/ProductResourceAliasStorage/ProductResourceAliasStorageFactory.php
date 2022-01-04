@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductResourceAliasStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToProductStorageClientInterface;
+use Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStoreClientInterface;
 use Spryker\Client\ProductResourceAliasStorage\Storage\ProductAbstractBulkStorageReader;
 use Spryker\Client\ProductResourceAliasStorage\Storage\ProductAbstractBulkStorageReaderInterface;
 use Spryker\Client\ProductResourceAliasStorage\Storage\ProductAbstractStorageBySkuReader;
@@ -24,7 +25,7 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
         return new ProductAbstractStorageBySkuReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore(),
+            $this->getStoreClient(),
         );
     }
 
@@ -44,7 +45,6 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
         return new ProductConcreteStorageBySkuReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore(),
         );
     }
 
@@ -73,10 +73,10 @@ class ProductResourceAliasStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Client\ProductResourceAliasStorage\Dependency\Client\ProductResourceAliasStorageToStoreClientInterface
      */
-    public function getStore()
+    public function getStoreClient(): ProductResourceAliasStorageToStoreClientInterface
     {
-        return $this->getProvidedDependency(ProductResourceAliasStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(ProductResourceAliasStorageDependencyProvider::CLIENT_STORE);
     }
 }

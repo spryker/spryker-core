@@ -7,23 +7,24 @@
 
 namespace Spryker\Client\Money\Mapper;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Money\Money;
-use Spryker\Client\Currency\Plugin\CurrencyPluginInterface;
+use Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientInterface;
 use Spryker\Shared\Money\Mapper\MoneyToTransferMapper as SharedMoneyToTransferMapper;
 
 class MoneyToTransferMapper extends SharedMoneyToTransferMapper
 {
     /**
-     * @var \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
+     * @var \Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientInterface
      */
-    protected $currencyPlugin;
+    protected $currencyClient;
 
     /**
-     * @param \Spryker\Client\Currency\Plugin\CurrencyPluginInterface $currencyPlugin
+     * @param \Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientInterface $currencyClient
      */
-    public function __construct(CurrencyPluginInterface $currencyPlugin)
+    public function __construct(MoneyToCurrencyClientInterface $currencyClient)
     {
-        $this->currencyPlugin = $currencyPlugin;
+        $this->currencyClient = $currencyClient;
     }
 
     /**
@@ -31,8 +32,8 @@ class MoneyToTransferMapper extends SharedMoneyToTransferMapper
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrencyTransfer(Money $money)
+    protected function getCurrencyTransfer(Money $money): CurrencyTransfer
     {
-        return $this->currencyPlugin->fromIsoCode($money->getCurrency()->getCode());
+        return $this->currencyClient->fromIsoCode($money->getCurrency()->getCode());
     }
 }

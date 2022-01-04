@@ -8,31 +8,40 @@
 namespace Spryker\Zed\Customer\Business\ReferenceGenerator;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface;
 
 class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 {
     /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface
      */
-    protected $facadeSequenceNumber;
+    protected $sequenceNumberFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface
      */
-    protected $sequenceNumberSettings;
+    protected $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\Customer\CustomerConfig
+     */
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberInterface $sequenceNumberFacade
-     * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Customer\CustomerConfig $config
      */
     public function __construct(
         CustomerToSequenceNumberInterface $sequenceNumberFacade,
-        SequenceNumberSettingsTransfer $sequenceNumberSettings
+        CustomerToStoreFacadeInterface $storeFacade,
+        CustomerConfig $config
     ) {
-        $this->facadeSequenceNumber = $sequenceNumberFacade;
-        $this->sequenceNumberSettings = $sequenceNumberSettings;
+        $this->sequenceNumberFacade = $sequenceNumberFacade;
+        $this->storeFacade = $storeFacade;
+        $this->config = $config;
     }
 
     /**
@@ -42,6 +51,10 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
      */
     public function generateCustomerReference(CustomerTransfer $orderTransfer)
     {
-        return $this->facadeSequenceNumber->generate($this->sequenceNumberSettings);
+        $storeName = $this->storeFacade->getCurrentStore()->getNameOrFail();
+
+        return $this->sequenceNumberFacade->generate(
+            $this->config->getCustomerReferenceDefaults($storeName),
+        );
     }
 }

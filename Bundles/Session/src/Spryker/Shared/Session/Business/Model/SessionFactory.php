@@ -251,10 +251,9 @@ abstract class SessionFactory
      */
     protected function getBucketName()
     {
-        $storeName = Store::getInstance()->getStoreName();
         $environment = $this->getEnvironmentName();
 
-        return $storeName . '_' . $environment . '_' . static::BUCKET_NAME_POSTFIX;
+        return $this->getCodeBucket() . '_' . $environment . '_' . static::BUCKET_NAME_POSTFIX;
     }
 
     /**
@@ -311,5 +310,27 @@ abstract class SessionFactory
     protected function getEnvironmentName(): string
     {
         return APPLICATION_ENV;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled
+     *
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        return Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCodeBucket(): string
+    {
+        if (defined('APPLICATION_CODE_BUCKET')) {
+            return APPLICATION_CODE_BUCKET;
+        }
+
+        return $this->getStoreName();
     }
 }

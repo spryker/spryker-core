@@ -8,6 +8,7 @@
 namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToKernelFacadeInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
@@ -24,6 +25,11 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected $config;
 
     /**
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToKernelFacadeInterface
+     */
+    protected $kernelFacade;
+
+    /**
      * @var \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
      */
     protected $store;
@@ -31,15 +37,18 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     /**
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface $finder
      * @param \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig $config
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToKernelFacadeInterface $kernelFacade
      * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
      */
     public function __construct(
         RestRequestValidatorToFinderAdapterInterface $finder,
         RestRequestValidatorConfig $config,
+        RestRequestValidatorToKernelFacadeInterface $kernelFacade,
         RestRequestValidatorToStoreInterface $store
     ) {
         $this->finder = $finder;
         $this->config = $config;
+        $this->kernelFacade = $kernelFacade;
         $this->store = $store;
     }
 
@@ -106,6 +115,27 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
      *
      * @return string
      */
+    protected function addCodeBucketsToPath(string $pathPattern): string
+    {
+        if (!defined('APPLICATION_CODE_BUCKET')) {
+            return $this->addStoreCodesToPath($pathPattern);
+        }
+
+        $excludedCodeBuckets = [];
+        foreach ($this->kernelFacade->getCodeBuckets() as $codeBucket) {
+            $excludedCodeBuckets[] = $codeBucket;
+        }
+
+        return sprintf($pathPattern, implode('|', $excludedCodeBuckets));
+    }
+
+    /**
+     * @deprecated will be removed without replacement.
+     *
+     * @param string $pathPattern
+     *
+     * @return string
+     */
     protected function addStoreCodesToPath(string $pathPattern): string
     {
         $excludedStoreCodes = [];
@@ -147,7 +177,7 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
         if ($this->isProjectLevelPath($pathPattern)) {
             $currentLevelPaths = array_filter($currentLevelPaths, function ($pathItem) {
                 return !preg_match(
-                    $this->addStoreCodesToPath($this->config->getStoreModulesPattern()),
+                    $this->addCodeBucketsToPath($this->config->getStoreModulesPattern()),
                     $pathItem,
                 );
             });

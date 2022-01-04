@@ -46,6 +46,8 @@ class ModuleNameCandidatesBuilder implements ModuleNameCandidatesBuilderInterfac
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getCurrentStoreName(): string

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class CmsBlockStorageToStoreFacadeBridge implements CmsBlockStorageToStoreFacadeInterface
 {
     /**
@@ -36,5 +38,15 @@ class CmsBlockStorageToStoreFacadeBridge implements CmsBlockStorageToStoreFacade
     public function getAllStores()
     {
         return $this->storeFacade->getAllStores();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array
+    {
+        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }
 }

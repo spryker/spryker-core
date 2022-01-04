@@ -21,6 +21,7 @@ use Spryker\Shared\Log\Processor\ServerProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Log\Communication\Handler\QueueHandler;
+use Spryker\Zed\Log\Dependency\Facade\LogToLocaleFacadeInterface;
 use Spryker\Zed\Log\LogDependencyProvider;
 
 /**
@@ -62,7 +63,17 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createEnvironmentProcessorPublic()
     {
-        return new EnvironmentProcessor();
+        return new EnvironmentProcessor(
+            $this->getLocaleFacade()->getCurrentLocale()->getLocaleNameOrFail(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Log\Dependency\Facade\LogToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): LogToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::FACADE_LOCALE);
     }
 
     /**

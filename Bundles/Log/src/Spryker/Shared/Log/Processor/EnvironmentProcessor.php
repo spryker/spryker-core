@@ -27,6 +27,8 @@ class EnvironmentProcessor implements ProcessorInterface
     public const ENVIRONMENT = 'environment';
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @var string
      */
     public const STORE = 'store';
@@ -47,6 +49,19 @@ class EnvironmentProcessor implements ProcessorInterface
     public const RECORD_EXTRA = 'extra';
 
     /**
+     * @var string|null
+     */
+    protected $currentLocale;
+
+    /**
+     * @param string|null $currentLocale
+     */
+    public function __construct(?string $currentLocale = null)
+    {
+        $this->currentLocale = $currentLocale;
+    }
+
+    /**
      * @param array $record
      *
      * @return array
@@ -63,18 +78,32 @@ class EnvironmentProcessor implements ProcessorInterface
      */
     protected function getData()
     {
-        $store = $this->getStore();
-
         return [
             static::APPLICATION => APPLICATION,
             static::ENVIRONMENT => APPLICATION_ENV,
-            static::STORE => $store->getStoreName(),
+            static::STORE => $this->getStoreName(),
             static::CODE_BUCKET => APPLICATION_CODE_BUCKET,
-            static::LOCALE => $store->getCurrentLocale(),
+            static::LOCALE => $this->currentLocale ?? $this->getStore()->getCurrentLocale(),
         ];
     }
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return string|null
+     */
+    protected function getStoreName()
+    {
+        if (defined('APPLICATION_CODE_BUCKET')) {
+            return null;
+        }
+
+        return $this->getStore()->getStoreName();
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()

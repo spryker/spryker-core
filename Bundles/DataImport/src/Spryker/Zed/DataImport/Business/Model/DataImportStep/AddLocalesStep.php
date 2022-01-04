@@ -9,8 +9,8 @@ namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeInterface;
 
 class AddLocalesStep implements DataImportStepInterface
 {
@@ -25,16 +25,16 @@ class AddLocalesStep implements DataImportStepInterface
     protected $locales = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeInterface $storeFacade
      */
-    public function __construct(Store $store)
+    public function __construct(DataImportToStoreFacadeInterface $storeFacade)
     {
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -58,14 +58,14 @@ class AddLocalesStep implements DataImportStepInterface
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     protected function getLocales(): array
     {
-        $locales = $this->store->getLocales();
+        $locales = [];
 
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            $locales = array_merge($locales, $this->store->getLocalesPerStore($storeName));
+        foreach ($this->storeFacade->getStoresAvailableForCurrentPersistence() as $storeTransfers) {
+            $locales = array_merge($locales, $storeTransfers->getAvailableLocaleIsoCodes());
         }
 
         return $locales;

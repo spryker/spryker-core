@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductSetPageSearch;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetBridge;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer\ProductSetPageSearchToProductSetQueryContainerBridge;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingBridge;
@@ -21,6 +21,11 @@ use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUt
  */
 class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -86,17 +91,10 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductSetPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        });
-
-        $container->set(static::FACADE_PRODUCT_SET, function (Container $container) {
-            return new ProductSetPageSearchToProductSetBridge($container->getLocator()->productSet()->facade());
-        });
-
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
-        });
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addProductSetFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -114,6 +112,50 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
 
         $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductSetPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductSetPageSearchToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductSetPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductSetFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_SET, function (Container $container) {
+            return new ProductSetPageSearchToProductSetBridge($container->getLocator()->productSet()->facade());
         });
 
         return $container;

@@ -9,6 +9,7 @@ namespace Spryker\Zed\NavigationStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\NavigationStorage\Business\Storage\NavigationStorageWriter;
+use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeInterface;
 use Spryker\Zed\NavigationStorage\NavigationStorageDependencyProvider;
 
 /**
@@ -26,7 +27,7 @@ class NavigationStorageBusinessFactory extends AbstractBusinessFactory
             $this->getUtilSanitizeService(),
             $this->getNavigationFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
@@ -48,10 +49,10 @@ class NavigationStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeInterface
      */
-    protected function getStore()
+    public function getStoreFacade(): NavigationStorageToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(NavigationStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(NavigationStorageDependencyProvider::FACADE_STORE);
     }
 }

@@ -63,10 +63,16 @@ class CustomerFormDataProvider extends AbstractCustomerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, string>
      */
-    protected function getLocaleChoices()
+    protected function getLocaleChoices(): array
     {
-        return $this->localeFacade->getAvailableLocales();
+        $result = [];
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $result[$localeTransfer->getIdLocaleOrFail()] = $localeTransfer->getLocaleNameOrFail();
+        }
+
+        return $result;
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlock\Communication\Twig;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\CmsBlock\Communication\Exception\MissingCmsBlockException;
+use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToStoreFacadeInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface;
 use Twig\Environment;
 
@@ -26,18 +27,27 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
     protected $cmsBlockRepository;
 
     /**
-     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface $cmsBlockRepository
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToStoreFacadeInterface
      */
-    public function __construct(CmsBlockRepositoryInterface $cmsBlockRepository)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface $cmsBlockRepository
+     * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        CmsBlockRepositoryInterface $cmsBlockRepository,
+        CmsBlockToStoreFacadeInterface $storeFacade
+    ) {
         $this->cmsBlockRepository = $cmsBlockRepository;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
      * @param \Twig\Environment $environment
      * @param array<mixed> $context
      * @param string $cmsBlockName
-     * @param string $storeName
+     * @param string|null $storeName
      * @param string $localeName
      * @param array<mixed>|null $providedData
      *
@@ -49,10 +59,14 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
         Environment $environment,
         array $context,
         string $cmsBlockName,
-        string $storeName,
+        ?string $storeName,
         string $localeName,
         ?array $providedData = null
     ): string {
+        if ($storeName === null) {
+            $storeName = $this->storeFacade->getCurrentStore()->getNameOrFail();
+        }
+
         $cmsBlockTransfer = $this->cmsBlockRepository
             ->findCmsBlockWithGlossary($cmsBlockName, $storeName, $localeName);
 

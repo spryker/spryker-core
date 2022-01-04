@@ -10,12 +10,17 @@ namespace Spryker\Client\ProductMeasurementUnitStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientBridge;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStoreClientBridge;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceBridge;
-use Spryker\Shared\Kernel\Store;
 
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -32,11 +37,6 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
-    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -45,7 +45,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -98,10 +98,12 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addStoreClient(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductMeasurementUnitStorageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
         });
 
         return $container;

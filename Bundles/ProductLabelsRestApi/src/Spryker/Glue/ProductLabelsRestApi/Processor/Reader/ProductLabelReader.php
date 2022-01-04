@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToStoreClientInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface;
 use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,21 +62,29 @@ class ProductLabelReader implements ProductLabelReaderInterface
     protected $productStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient
      * @param \Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapperInterface $productLabelMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         ProductLabelsRestApiToProductLabelStorageClientInterface $productLabelStorageClient,
         ProductLabelMapperInterface $productLabelMapper,
         RestResourceBuilderInterface $restResourceBuilder,
-        ProductLabelsRestApiToProductStorageClientInterface $productStorageClient
+        ProductLabelsRestApiToProductStorageClientInterface $productStorageClient,
+        ProductLabelsRestApiToStoreClientInterface $storeClient
     ) {
         $this->productLabelStorageClient = $productLabelStorageClient;
         $this->productLabelMapper = $productLabelMapper;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->productStorageClient = $productStorageClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -94,7 +103,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $labelTransfers = $this->productLabelStorageClient->findLabels(
             [$restRequest->getResource()->getId()],
             $restRequest->getMetadata()->getLocale(),
-            APPLICATION_STORE,
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
         );
 
         if (!count($labelTransfers)) {
@@ -137,7 +146,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $productLabels = $this->productLabelStorageClient->findLabelsByIdProductAbstract(
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
             $localeName,
-            APPLICATION_STORE,
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
         );
 
         return $this->prepareRestResourceCollection($productLabels);
@@ -155,7 +164,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $productLabels = $this->productLabelStorageClient->getProductLabelsByProductAbstractIds(
             array_unique($productAbstractIdsByProductConcreteSku),
             $localeName,
-            APPLICATION_STORE,
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
         );
         $restResourceCollectionsByProductConcreteSku = [];
 

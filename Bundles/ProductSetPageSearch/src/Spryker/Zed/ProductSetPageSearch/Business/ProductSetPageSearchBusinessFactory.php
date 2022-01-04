@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapper;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Business\Search\ProductSetPageSearchWriter;
+use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchDependencyProvider;
 
 /**
@@ -29,7 +30,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->createProductSetSearchDataMapper(),
             $this->getProductSetFacade(),
-            $this->getStore(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
@@ -37,23 +38,15 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface
      */
-    protected function getUtilEncoding()
+    public function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface
      */
-    protected function getProductSetFacade()
+    public function getProductSetFacade()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_PRODUCT_SET);
     }
@@ -64,5 +57,13 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductSetSearchDataMapper(): ProductSetSearchDataMapperInterface
     {
         return new ProductSetSearchDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductSetPageSearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_STORE);
     }
 }

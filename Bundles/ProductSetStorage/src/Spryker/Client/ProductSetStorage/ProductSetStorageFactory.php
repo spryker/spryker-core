@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductSetStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStoreClientInterface;
 use Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapper;
 use Spryker\Client\ProductSetStorage\Storage\ProductSetStorageReader;
 
@@ -47,5 +48,13 @@ class ProductSetStorageFactory extends AbstractFactory
     public function createProductSetStorageMapper()
     {
         return new ProductSetStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStoreClientInterface
+     */
+    public function getStoreClient(): ProductSetStorageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductSetStorageDependencyProvider::CLIENT_STORE);
     }
 }

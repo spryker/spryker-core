@@ -23,4 +23,8 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

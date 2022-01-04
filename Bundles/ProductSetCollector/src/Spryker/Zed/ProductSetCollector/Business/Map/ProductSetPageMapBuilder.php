@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductSetCollector\Business\Map;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductSetStorageTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductSetCollector\ProductSetCollectorConfig;
 use Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface;
+use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeInterface;
 use Spryker\Zed\ProductSetCollector\Persistence\Search\Propel\ProductSetCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -28,18 +28,20 @@ class ProductSetPageMapBuilder implements PageMapInterface
     protected $storageProductImageReader;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\ProductSetCollector\Business\Image\StorageProductImageReaderInterface $storageProductImageReader
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToStoreFacadeInterface $storeFacade
      */
-    public function __construct(StorageProductImageReaderInterface $storageProductImageReader, Store $store)
-    {
+    public function __construct(
+        StorageProductImageReaderInterface $storageProductImageReader,
+        ProductSetCollectorToStoreFacadeInterface $storeFacade
+    ) {
         $this->storageProductImageReader = $storageProductImageReader;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -54,7 +56,7 @@ class ProductSetPageMapBuilder implements PageMapInterface
         $productSetStorageTransfer = $this->mapProductSetStorageTransfer($productSetData, $localeTransfer);
 
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore($this->store->getStoreName())
+            ->setStore($this->storeFacade->getCurrentStore()->getNameOrFail())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(ProductSetCollectorConfig::SEARCH_TYPE_PRODUCT_SET);
 

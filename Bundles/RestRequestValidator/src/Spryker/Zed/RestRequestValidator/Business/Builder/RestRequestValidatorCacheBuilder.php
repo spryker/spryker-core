@@ -10,7 +10,7 @@ namespace Spryker\Zed\RestRequestValidator\Business\Builder;
 use Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface;
 use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface;
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
-use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilder} instead.
@@ -38,21 +38,26 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
     protected $store;
 
     /**
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\RestRequestValidator\Business\Collector\RestRequestValidatorCacheCollectorInterface $restRequestValidatorCacheCollector
      * @param \Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaMergerInterface $restRequestValidatorSchemaMerger
      * @param \Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver
-     * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         RestRequestValidatorCacheCollectorInterface $restRequestValidatorCacheCollector,
         RestRequestValidatorSchemaMergerInterface $restRequestValidatorSchemaMerger,
         RestRequestValidatorCacheSaverInterface $restRequestValidatorCacheSaver,
-        RestRequestValidatorToStoreInterface $store
+        RestRequestValidatorToStoreFacadeInterface $storeFacade
     ) {
         $this->restRequestValidatorCacheCollector = $restRequestValidatorCacheCollector;
         $this->restRequestValidatorSchemaMerger = $restRequestValidatorSchemaMerger;
         $this->restRequestValidatorCacheSaver = $restRequestValidatorCacheSaver;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -60,11 +65,11 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
      */
     public function build(): void
     {
-        foreach ($this->store->getAllowedStores() as $storeName) {
-            $config = $this->restRequestValidatorCacheCollector->collect($storeName);
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $config = $this->restRequestValidatorCacheCollector->collect($storeTransfer->getNameOrFail());
             $config = $this->restRequestValidatorSchemaMerger->merge($config);
 
-            $this->restRequestValidatorCacheSaver->save($config, $storeName);
+            $this->restRequestValidatorCacheSaver->save($config, $storeTransfer->getNameOrFail());
         }
     }
 }

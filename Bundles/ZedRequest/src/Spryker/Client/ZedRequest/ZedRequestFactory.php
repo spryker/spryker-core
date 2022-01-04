@@ -10,6 +10,7 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToLocaleClientInterface;
 use Spryker\Client\ZedRequest\Header\AuthToken\AuthToken;
 use Spryker\Client\ZedRequest\Header\AuthToken\AuthTokenInterface;
 use Spryker\Client\ZedRequest\Header\RequestId\RequestId;
@@ -38,7 +39,7 @@ class ZedRequestFactory extends AbstractFactory
     public function createMessenger(): MessengerInterface
     {
         return new Messenger(
-            $this->getCashedClient(),
+            $this->getCachedClient(),
             $this->getMessengerClient(),
         );
     }
@@ -46,7 +47,7 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
      */
-    public function getCashedClient()
+    public function getCachedClient()
     {
         if (!static::$zedClient) {
             static::$zedClient = $this->createClient();
@@ -184,5 +185,13 @@ class ZedRequestFactory extends AbstractFactory
     public function getUtilEncodingService(): ZedRequestToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToLocaleClientInterface
+     */
+    public function getLocaleClient(): ZedRequestToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_LOCALE);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductBundleToStoreFacadeBridge implements ProductBundleToStoreFacadeInterface
 {
     /**
@@ -38,5 +40,15 @@ class ProductBundleToStoreFacadeBridge implements ProductBundleToStoreFacadeInte
     public function getStoreByName($storeName)
     {
         return $this->storeFacade->getStoreByName($storeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array
+    {
+        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }
 }

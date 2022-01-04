@@ -31,11 +31,11 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     }
 
     /**
-     * @return array
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getAvailableLocales()
+    public function getLocaleCollection(): array
     {
-        return $this->localeFacade->getAvailableLocales();
+        return $this->localeFacade->getLocaleCollection();
     }
 
     /**
@@ -46,5 +46,13 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     public function getLocaleById($idLocale)
     {
         return $this->localeFacade->getLocaleById($idLocale);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string
+    {
+        return $this->localeFacade->getCurrentLocaleName();
     }
 }

@@ -38,6 +38,8 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getCurrentStoreName(): string

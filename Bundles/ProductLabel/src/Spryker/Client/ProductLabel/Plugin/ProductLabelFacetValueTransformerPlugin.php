@@ -56,6 +56,6 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
      */
     protected function getCurrentLocale()
     {
-        return $this->getFactory()->getStore()->getCurrentLocale();
+        return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade;
 interface ProductCustomerPermissionCollectorToStoreFacadeInterface
 {
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStoreName(): string;
+    public function getCurrentStore();
 }

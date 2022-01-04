@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductNew;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToLocaleClientInterface;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToStoreClientInterface;
 
 class ProductNewFactory extends AbstractFactory
 {
@@ -33,14 +35,6 @@ class ProductNewFactory extends AbstractFactory
     public function getProductLabelStorageClient()
     {
         return $this->getProvidedDependency(ProductNewDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductNewDependencyProvider::STORE);
     }
 
     /**
@@ -76,5 +70,21 @@ class ProductNewFactory extends AbstractFactory
     public function getNewProductsSearchResultFormatterPlugins()
     {
         return $this->getProvidedDependency(ProductNewDependencyProvider::NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductNew\Dependency\Client\ProductNewToStoreClientInterface
+     */
+    public function getStoreClient(): ProductNewToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductNewDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductNew\Dependency\Client\ProductNewToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductNewToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductNewDependencyProvider::CLIENT_LOCALE);
     }
 }

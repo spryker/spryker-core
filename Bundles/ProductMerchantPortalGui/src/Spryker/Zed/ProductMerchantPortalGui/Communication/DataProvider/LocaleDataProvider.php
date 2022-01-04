@@ -8,41 +8,23 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\DefaultStoreDefaultLocaleNotFoundException;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
 
 class LocaleDataProvider implements LocaleDataProviderInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
-        ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade,
-        ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
-        Store $store
+        ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
     ) {
-        $this->storeFacade = $storeFacade;
         $this->localeFacade = $localeFacade;
-        $this->store = $store;
     }
 
     /**
@@ -52,17 +34,12 @@ class LocaleDataProvider implements LocaleDataProviderInterface
      */
     public function getDefaultStoreDefaultLocale(): LocaleTransfer
     {
-        $defaultStore = $this->store::getDefaultStore();
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            if ($storeTransfer->getName() === $defaultStore) {
-                $availableLocaleIsoCodes = array_values($storeTransfer->getAvailableLocaleIsoCodes());
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
 
-                if (!isset($availableLocaleIsoCodes[0])) {
-                    throw new DefaultStoreDefaultLocaleNotFoundException();
-                }
+        $defaultLocaleTransfer = current($localeTransfers);
 
-                return $this->localeFacade->getLocale($availableLocaleIsoCodes[0]);
-            }
+        if ($defaultLocaleTransfer) {
+            return $defaultLocaleTransfer;
         }
 
         throw new DefaultStoreDefaultLocaleNotFoundException();

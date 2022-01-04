@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToLocaleClientInterface;
+use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStoreClientInterface;
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\ProductSearchConfigExtensionKeyBuilder;
 
 class ProductSearchFactory extends AbstractFactory
@@ -29,10 +31,18 @@ class ProductSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToStoreClientInterface
      */
-    public function getStore()
+    public function getStoreClient(): ProductSearchToStoreClientInterface
     {
-        return $this->getProvidedDependency(ProductSearchDependencyProvider::STORE);
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductSearchToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::CLIENT_LOCALE);
     }
 }

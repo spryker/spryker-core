@@ -10,8 +10,10 @@
         "spryker/product": "^6.0.0",
         "spryker/product-storage": "^1.15.0",
         "spryker/storage": "^3.4.0",
+        "spryker/store": "^1.4.0",
         "spryker/synchronization": "^1.0.0",
-        "spryker/synchronization-behavior": "^1.0.0"
+        "spryker/synchronization-behavior": "^1.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

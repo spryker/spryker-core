@@ -8,9 +8,11 @@
         "psr/log": "^1.0.0",
         "spryker/config": "^3.0.0",
         "spryker/kernel": "^3.48.0",
+        "spryker/locale": "^3.0.0",
         "spryker/monolog": "^2.0.0",
         "spryker/queue": "^0.3.0 || ^1.0.0",
         "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/util-network": "^1.0.0"
     },
     "require-dev": {

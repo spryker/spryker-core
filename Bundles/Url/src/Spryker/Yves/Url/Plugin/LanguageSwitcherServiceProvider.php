@@ -53,10 +53,10 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
         $options = ['is_safe' => ['html']];
 
         return new TwigFunction(static::FUNCTION_RENDER_LANGUAGE_SWITCHER, function (Request $request, $templatePath) use ($twig) {
-            $currentLanguage = $this->getFactory()->getStore()->getCurrentLanguage();
+            $currentLanguage = $this->getFactory()->getLocaleClient()->getCurrentLanguage();
             $currentUrl = $request->getPathInfo();
             $currentUrlStorage = $this->getClient()->findUrl($currentUrl, $this->getLocale());
-            $locales = $this->getFactory()->getStore()->getLocales();
+            $locales = $this->getFactory()->getLocaleClient()->getLocales();
 
             $localeUrls = [];
             if ($currentUrlStorage !== false && $currentUrlStorage->getLocaleUrls()->count() !== 0) {

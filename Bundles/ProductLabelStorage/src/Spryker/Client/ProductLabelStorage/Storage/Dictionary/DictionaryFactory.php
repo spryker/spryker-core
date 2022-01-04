@@ -87,12 +87,4 @@ class DictionaryFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::STORE);
-    }
 }

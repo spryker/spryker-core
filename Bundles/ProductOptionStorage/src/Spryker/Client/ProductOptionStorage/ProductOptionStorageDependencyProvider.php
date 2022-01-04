@@ -10,17 +10,28 @@ namespace Spryker\Client\ProductOptionStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientBridge;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToLocaleClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageBridge;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStoreClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceBridge;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\ProductOptionStorage\ProductOptionStorageConfig getConfig()
  */
 class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
@@ -47,11 +58,6 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
-    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -63,7 +69,8 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCurrencyClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -145,10 +152,28 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addStoreClient(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductOptionStorageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductOptionStorageToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

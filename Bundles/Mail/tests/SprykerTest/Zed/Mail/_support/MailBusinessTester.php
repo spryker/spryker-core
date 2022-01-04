@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Mail;
 
 use Codeception\Actor;
+use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeBridge;
+use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +28,12 @@ use Codeception\Actor;
 class MailBusinessTester extends Actor
 {
     use _generated\MailBusinessTesterActions;
+
+    /**
+     * @return \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): MailToLocaleFacadeInterface
+    {
+        return new MailToLocaleFacadeBridge($this->getLocator()->locale()->facade());
+    }
 }

@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Mail\Business\Model\Renderer;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface;
 
 class TwigRenderer implements RendererInterface
@@ -30,11 +29,20 @@ class TwigRenderer implements RendererInterface
     protected $renderer;
 
     /**
-     * @param \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface $renderer
+     * @var \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
      */
-    public function __construct(MailToRendererInterface $renderer)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface $renderer
+     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        MailToRendererInterface $renderer,
+        MailToLocaleFacadeInterface $localeFacade
+    ) {
         $this->renderer = $renderer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -70,8 +78,7 @@ class TwigRenderer implements RendererInterface
      */
     protected function getCurrentLocaleTransfer()
     {
-        return (new LocaleTransfer())
-            ->setLocaleName(Store::getInstance()->getCurrentLocale());
+        return $this->localeFacade->getCurrentLocale();
     }
 
     /**

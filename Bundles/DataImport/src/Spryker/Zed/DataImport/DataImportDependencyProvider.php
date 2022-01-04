@@ -8,10 +8,10 @@
 namespace Spryker\Zed\DataImport;
 
 use Propel\Runtime\Propel;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerBridge;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeBridge;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchBridge;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionBridge;
 use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilDataReaderServiceBridge;
@@ -24,6 +24,11 @@ use Spryker\Zed\Kernel\Container;
  */
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const DATA_IMPORT_STORE_FACADE = 'SPRYKER_STORE_FACADE';
+
     /**
      * @var string
      */
@@ -67,11 +72,6 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'store';
-
-    /**
-     * @var string
-     */
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
 
     /**
@@ -96,12 +96,12 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGracefulRunnerFacade($container);
         $container = $this->addPropelConnection($container);
         $container = $this->addDataImporterPlugins($container);
-        $container = $this->addStore($container);
         $container = $this->addDataImportBeforeImportHookPlugins($container);
         $container = $this->addDataImportAfterImportHookPlugins($container);
         $container = $this->addDataImportDefaultWriterPlugins($container);
         $container = $this->addQueueClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addDataImportStoreFacade($container);
 
         return $container;
     }
@@ -162,20 +162,6 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
             return new DataImportToGracefulRunnerBridge(
                 $container->getLocator()->gracefulRunner()->facade(),
             );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    private function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
         });
 
         return $container;
@@ -322,6 +308,22 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_UTIL_DATA_READER, function (Container $container) {
             return new DataImportToUtilDataReaderServiceBridge($container->getLocator()->utilDataReader()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataImportStoreFacade(Container $container): Container
+    {
+        $container->set(static::DATA_IMPORT_STORE_FACADE, function (Container $container) {
+            return new DataImportToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
         });
 
         return $container;

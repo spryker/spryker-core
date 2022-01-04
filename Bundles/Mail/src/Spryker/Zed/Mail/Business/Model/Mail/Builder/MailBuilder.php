@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\Mail\Business\Model\Mail\Builder;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Mail\Business\Exception\MissingMailTransferException;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
+use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface;
 use Spryker\Zed\Mail\MailConfig;
 
 class MailBuilder implements MailBuilderInterface
@@ -35,15 +34,23 @@ class MailBuilder implements MailBuilderInterface
     protected $mailConfig;
 
     /**
+     * @var \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\Mail\MailConfig $mailConfig
+     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         MailToGlossaryInterface $glossaryFacade,
-        MailConfig $mailConfig
+        MailConfig $mailConfig,
+        MailToLocaleFacadeInterface $localeFacade
     ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->mailConfig = $mailConfig;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -80,8 +87,7 @@ class MailBuilder implements MailBuilderInterface
         $localeTransfer = $this->getMailTransfer()->getLocale();
 
         if (!$localeTransfer) {
-            $localeTransfer = new LocaleTransfer();
-            $localeTransfer->setLocaleName(Store::getInstance()->getCurrentLocale());
+            return $this->localeFacade->getCurrentLocale();
         }
 
         return $localeTransfer;

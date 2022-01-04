@@ -20,6 +20,8 @@ class ProductAttributeConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string>
      */
     public function getAllowedStores()

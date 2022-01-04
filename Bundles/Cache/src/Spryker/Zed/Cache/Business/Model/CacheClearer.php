@@ -42,6 +42,8 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Cache\Business\Model\CacheClearer::clearCodeBucketCache()} instead.
+     *
      * @return array<string>
      */
     public function clearCache()
@@ -88,6 +90,8 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<string>
      */
     public function clearAutoLoaderCache()

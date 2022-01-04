@@ -14,6 +14,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
@@ -44,6 +45,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @deprecated Use SERVICE_UTIL_DATE_TIME instead.
@@ -125,7 +131,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCountryFacade($container);
         $container = $this->addMailFacade($container);
         $container = $this->addLocaleQueryConainer($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addCustomerAnonymizerPlugins($container);
         $container = $this->addUtilValidateService($container);
         $container = $this->addLocaleFacade($container);
@@ -145,7 +151,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCountryFacade($container);
         $container = $this->addDateFormatterService($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
@@ -406,6 +412,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_CUSTOMER, function (Container $container): CustomerServiceInterface {
             return $container->getLocator()->customer()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CustomerToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

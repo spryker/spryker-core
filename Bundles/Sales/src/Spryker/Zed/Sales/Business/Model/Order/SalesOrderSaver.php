@@ -18,11 +18,12 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
@@ -59,11 +60,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $localeQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     protected $orderExpanderPreSavePlugins;
@@ -84,16 +80,27 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $orderPostSavePlugins;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface $salesOrderItemMapper
      * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface> $orderPostSavePlugins
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $storeFacade
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface $localeFacade
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -101,22 +108,24 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         OrderReferenceGeneratorInterface $orderReferenceGenerator,
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
-        Store $store,
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesOrderItemMapperInterface $salesOrderItemMapper,
-        array $orderPostSavePlugins = []
+        array $orderPostSavePlugins,
+        SalesToStoreInterface $storeFacade,
+        SalesToLocaleInterface $localeFacade
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
         $this->orderReferenceGenerator = $orderReferenceGenerator;
         $this->salesConfiguration = $salesConfiguration;
         $this->localeQueryContainer = $localeQueryContainer;
-        $this->store = $store;
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
         $this->orderPostSavePlugins = $orderPostSavePlugins;
+        $this->storeFacade = $storeFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -228,8 +237,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function addLocale(SpySalesOrder $salesOrderEntity)
     {
-        $localeName = $this->store->getCurrentLocale();
-        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer
+            ->queryLocaleByName($localeTransfer->getLocaleNameOrFail())
+            ->findOne();
 
         if ($localeEntity) {
             $salesOrderEntity->setLocale($localeEntity);
@@ -262,7 +273,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     {
         $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
         $salesOrderAddressEntity->setFkCountry(
-            $this->countryFacade->getIdCountryByIso2Code($addressTransfer->getIso2Code()),
+            $this->countryFacade->getCountryByIso2Code($addressTransfer->getIso2Code())->getIdCountryOrFail(),
         );
     }
 
@@ -277,7 +288,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $this->hydrateSalesOrderCustomer($quoteTransfer, $salesOrderEntity);
         $salesOrderEntity->setPriceMode($quoteTransfer->getPriceMode());
-        $salesOrderEntity->setStore($this->store->getStoreName());
+        $salesOrderEntity->setStore($this->storeFacade->getCurrentStore()->getNameOrFail());
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));

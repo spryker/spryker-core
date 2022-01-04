@@ -27,6 +27,8 @@ interface CacheFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link emptyCodeBucketCache()} instead.
+     *
      * @return array<string>
      */
     public function emptyCache();
@@ -68,6 +70,8 @@ interface CacheFacadeInterface
      * - Empties configured auto-loader cache directory
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major without replacement.
      *
      * @return array<string>
      */

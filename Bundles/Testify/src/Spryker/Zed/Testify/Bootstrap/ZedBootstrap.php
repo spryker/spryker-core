@@ -209,6 +209,8 @@ class ZedBootstrap
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     private function getCurrentLocale()

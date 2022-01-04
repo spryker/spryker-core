@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductReviewSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 
 /**
@@ -26,24 +27,24 @@ class ProductReviewSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductReviewSearchWriter(
             $this->getQueryContainer(),
             $this->getUtilEncoding(),
-            $this->getStore(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
         );
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface
      */
-    protected function getStore()
+    public function getUtilEncoding()
     {
-        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::STORE);
+        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
-     * @return \Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface
+     * @return \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToStoreFacadeInterface
      */
-    protected function getUtilEncoding()
+    public function getStoreFacade(): ProductReviewSearchToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::SERVICE_UTIL_ENCODING);
+        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::FACADE_STORE);
     }
 }

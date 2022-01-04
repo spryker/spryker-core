@@ -78,18 +78,6 @@
         },
         {
             "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Glue\\RestRequestValidator\\RestRequestValidatorConfig::getValidationCacheFilenamePattern has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/RestRequestValidator/src/Spryker/Glue/RestRequestValidator/Processor/Validator/Configuration/RestRequestValidatorConfigReader.php",
-            "snippet": "        return sprintf($this->config->getValidationCacheFilenamePattern(), APPLICATION_STORE);",
-            "selected_text": "getValidationCacheFilenamePattern",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 56,
             "line_to": 56,
             "type": "DeprecatedConstant",

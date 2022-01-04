@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Money\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
 {
     /**
@@ -46,5 +48,13 @@ class MoneyToCurrencyBridge implements MoneyToCurrencyInterface
     public function getAllStoresWithCurrencies()
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getCurrent(): CurrencyTransfer
+    {
+        return $this->currencyFacade->getCurrent();
     }
 }

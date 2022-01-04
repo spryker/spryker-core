@@ -62,7 +62,7 @@ class ClassResolverHelper extends Module
         $resolverStub = Stub::make($resolverClassName, [
             'getClassNameFinder' => function () use ($resolverClassName, $codeBucket) {
                 $sharedConfig = $this->getConfigStub($resolverClassName);
-                $moduleNameCandidatesBuilder = $this->getModuleNameCandidatesBuilderStub($sharedConfig->getCurrentStoreName(), $codeBucket);
+                $moduleNameCandidatesBuilder = $this->getModuleNameCandidatesBuilderStub($sharedConfig, $codeBucket);
                 $classNameCandidatesBuilder = new ClassNameCandidatesBuilder($moduleNameCandidatesBuilder, $sharedConfig);
                 $resolverCacheManager = new ResolverCacheManager();
 
@@ -265,21 +265,39 @@ class ClassResolverHelper extends Module
     }
 
     /**
-     * @param string $storeName
+     * @param \Spryker\Shared\Kernel\KernelConfig $config
      * @param string $codeBucket
      *
      * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder
      */
-    protected function getModuleNameCandidatesBuilderStub(string $storeName, string $codeBucket = ''): ModuleNameCandidatesBuilder
+    protected function getModuleNameCandidatesBuilderStub(KernelConfig $config, string $codeBucket = ''): ModuleNameCandidatesBuilder
     {
-        return Stub::make(ModuleNameCandidatesBuilder::class, [
+        $methodMocks = [
             'getApplicationCodeBucket' => function () use ($codeBucket) {
                 return $codeBucket;
             },
-            'getCurrentStoreName' => function () use ($storeName) {
-                return $storeName;
+        ];
+
+        $methodMocks = $this->addGetCurrentStoreMethodMock($methodMocks, $config);
+
+        return Stub::make(ModuleNameCandidatesBuilder::class, $methodMocks);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @param array $methodMocks
+     * @param \Spryker\Shared\Kernel\KernelConfig $config
+     *
+     * @return array
+     */
+    public function addGetCurrentStoreMethodMock(array $methodMocks, KernelConfig $config): array
+    {
+        return [
+            'getCurrentStoreName' => function () use ($config) {
+                return $config->getCurrentStoreName();
             },
-        ]);
+        ] + $methodMocks;
     }
 
     /**

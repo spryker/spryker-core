@@ -28,6 +28,8 @@ use Twig\Environment;
  * @group Renderer
  * @group TwigRendererTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\Mail\MailBusinessTester $tester
  */
 class TwigRendererTest extends Unit
 {
@@ -47,7 +49,11 @@ class TwigRendererTest extends Unit
     public function testHydrateMailCallsTwigsRenderMethodWithTextTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
-        $twigRenderer = new TwigRenderer($this->getTwigEnvironmentMock());
+        $twigRenderer = new TwigRenderer(
+            $this->getTwigEnvironmentMock(),
+            $this->tester->getLocaleFacade(),
+            $this->tester->getModuleConfig(),
+        );
         $twigRenderer->render($mailTransfer);
 
         $mailTemplateTextTransfer = $mailTransfer->getTemplates()[static::INDEX_OF_TEMPLATE_TEXT];
@@ -60,7 +66,11 @@ class TwigRendererTest extends Unit
     public function testHydrateMailCallsTwigsRenderMethodWithHtmlTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
-        $twigRenderer = new TwigRenderer($this->getTwigEnvironmentMock());
+        $twigRenderer = new TwigRenderer(
+            $this->getTwigEnvironmentMock(),
+            $this->tester->getLocaleFacade(),
+            $this->tester->getModuleConfig(),
+        );
         $twigRenderer->render($mailTransfer);
 
         $mailTemplateHtmlTransfer = $mailTransfer->getTemplates()[static::INDEX_OF_TEMPLATE_HTML];

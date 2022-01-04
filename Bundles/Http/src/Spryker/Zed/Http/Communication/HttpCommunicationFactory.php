@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Http\Communication;
 
 use Spryker\Zed\Http\Dependency\Facade\HttpToLocaleFacadeInterface;
+use Spryker\Zed\Http\Dependency\Facade\HttpToStoreFacadeInterface;
 use Spryker\Zed\Http\HttpDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
@@ -69,5 +70,13 @@ class HttpCommunicationFactory extends AbstractCommunicationFactory
     public function createFormTypeHttpFoundationExtension(): FormTypeExtensionInterface
     {
         return new FormTypeHttpFoundationExtension();
+    }
+
+    /**
+     * @return \Spryker\Zed\Http\Dependency\Facade\HttpToStoreFacadeInterface
+     */
+    public function getStoreFacade(): HttpToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(HttpDependencyProvider::FACADE_STORE);
     }
 }

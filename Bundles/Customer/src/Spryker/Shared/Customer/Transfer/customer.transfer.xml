@@ -161,6 +161,7 @@
 
     <transfer name="Locale">
         <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="Button">
@@ -207,4 +208,13 @@
 
     <transfer name="AuthorizationEntity">
     </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
 </transfers>

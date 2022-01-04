@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStoreClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 
 class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeasurementUnitStorageReaderInterface
@@ -21,11 +21,6 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface
      */
     protected $storageClient;
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
 
     /**
      * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface
@@ -38,21 +33,26 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface $storageClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ProductMeasurementUnitStorageToStorageClientInterface $storageClient,
-        Store $store,
+        ProductMeasurementUnitStorageToStoreClientInterface $storeClient,
         ProductMeasurementUnitStorageToSynchronizationServiceInterface $synchronizationService,
         ProductMeasurementUnitStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
-        $this->store = $store;
         $this->synchronizationService = $synchronizationService;
         $this->utilEncodingService = $utilEncodingService;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -165,7 +165,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     protected function generateKey(int $idProduct): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setStore($this->store->getStoreName())
+            ->setStore($this->storeClient->getCurrentStore()->getNameOrFail())
             ->setReference($idProduct);
 
         return $this->synchronizationService

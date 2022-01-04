@@ -123,10 +123,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
             $cmsPageStorageEntities,
         );
 
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $storesWithSharedPersistence = $storeTransfer->getStoresWithSharedPersistence();
-        $storeName = $storeTransfer->getName();
-        $storeRelations = array_merge($storesWithSharedPersistence, [$storeName]);
+        $storeRelations = $this->getStoreRelations();
 
         foreach ($pairedEntities as $pair) {
             $cmsPageEntity = $pair[static::CMS_PAGE_ENTITY];
@@ -403,5 +400,22 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         }
 
         return $localeNameMapByStoreName;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getStoreRelations(): array
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storesWithSharedPersistence = $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
+
+        $storeRelations = [$storeTransfer->getNameOrFail()];
+
+        foreach ($storesWithSharedPersistence as $storeTransfer) {
+            $storeRelations[] = $storeTransfer->getNameOrFail();
+        }
+
+        return $storeRelations;
     }
 }

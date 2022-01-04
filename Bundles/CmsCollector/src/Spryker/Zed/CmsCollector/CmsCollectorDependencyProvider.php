@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsCollector;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -32,6 +33,11 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_CMS = 'FACADE_CMS';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -67,6 +73,7 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         $container = $this->addCmsFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -80,6 +87,20 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CMS, function (Container $container) {
             return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CmsCollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

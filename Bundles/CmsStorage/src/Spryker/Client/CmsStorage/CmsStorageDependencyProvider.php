@@ -8,11 +8,11 @@
 namespace Spryker\Client\CmsStorage;
 
 use Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStorageClientBridge;
+use Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStoreClientBridge;
 use Spryker\Client\CmsStorage\Dependency\Service\CmsStorageToSynchronizationServiceBridge;
 use Spryker\Client\CmsStorage\Dependency\Service\CmsStorageToUtilEncodingServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\CmsStorage\CmsStorageConfig getConfig()
@@ -27,7 +27,7 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'STORE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @var string
@@ -47,7 +47,7 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addSynchronizationService($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
         $container = $this->addStorageClient($container);
         $container = $this->addUtilEncodingService($container);
 
@@ -63,20 +63,6 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CmsStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
         });
 
         return $container;
@@ -106,6 +92,22 @@ class CmsStorageDependencyProvider extends AbstractDependencyProvider
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsStorageToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new CmsStorageToStoreClientBridge(
+                $container->getLocator()->store()->client(),
             );
         });
 

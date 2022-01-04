@@ -9,7 +9,6 @@ namespace Spryker\Glue\RestRequestValidator;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\RestRequestValidator\RestRequestValidatorConfig as RestRequestValidatorConfigShared;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -117,7 +116,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
 
         foreach ($this->get(KernelConstants::PROJECT_NAMESPACES) as $projectNamespaces) {
             $projectConstraintNamespaces[] = $projectNamespaces .
-                sprintf(static::CONSTRAINTS_NAMESPACE_PROJECT_STORE_REST_REQUEST_VALIDATOR, Store::getInstance()->getCurrencyIsoCode());
+                sprintf(static::CONSTRAINTS_NAMESPACE_PROJECT_STORE_REST_REQUEST_VALIDATOR, APPLICATION_CODE_BUCKET);
             $projectConstraintNamespaces[] = $projectNamespaces . static::CONSTRAINTS_NAMESPACE_REST_REQUEST_VALIDATOR;
         }
 

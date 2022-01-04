@@ -21,6 +21,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Url\UrlConfig;
+use Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToStoreFacadeInterface;
 use Spryker\Zed\UrlCollector\Dependency\QueryContainer\UrlCollectorToUrlQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -57,13 +58,24 @@ class UrlCollector extends AbstractStoragePropelCollector
     protected $chunkSize = 2000;
 
     /**
+     * @var \Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\UrlCollector\Dependency\QueryContainer\UrlCollectorToUrlQueryContainerInterface $urlQueryContainer
+     * @param \Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToStoreFacadeInterface $storeFacade
      */
-    public function __construct(UtilDataReaderServiceInterface $utilDataReaderService, UrlCollectorToUrlQueryContainerInterface $urlQueryContainer)
-    {
-        $this->urlQueryContainer = $urlQueryContainer;
+    public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        UrlCollectorToUrlQueryContainerInterface $urlQueryContainer,
+        UrlCollectorToStoreFacadeInterface $storeFacade
+    ) {
         parent::__construct($utilDataReaderService);
+
+        $this->urlQueryContainer = $urlQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -172,7 +184,11 @@ class UrlCollector extends AbstractStoragePropelCollector
      */
     protected function collectKey($data, $localeName, array $collectedItemData)
     {
-        return $this->generateKey($collectedItemData['url'], $localeName);
+        return $this->generateKey(
+            $collectedItemData['url'],
+            $localeName,
+            $this->storeFacade->getCurrentStore()->getNameOrFail(),
+        );
     }
 
     /**
@@ -243,13 +259,14 @@ class UrlCollector extends AbstractStoragePropelCollector
     /**
      * @param mixed $data
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return array
      */
-    protected function getKeyParts($data, $localeName)
+    protected function getKeyParts($data, $localeName, ?string $storeName)
     {
         return [
-            $this->getCurrentStore()->getName(),
+            $storeName ?? $this->getCurrentStore()->getName(),
             $localeName,
             $this->buildKey($data),
         ];

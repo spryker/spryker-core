@@ -15,9 +15,9 @@ interface CustomerToLocaleInterface
     public function getCurrentLocale();
 
     /**
-     * @return array<string>
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getAvailableLocales();
+    public function getLocaleCollection();
 
     /**
      * @param int $idLocale
@@ -25,4 +25,9 @@ interface CustomerToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleById($idLocale);
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName();
 }

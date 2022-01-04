@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityStorage;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\AvailabilityStorage\Dependency\Facade\AvailabilityStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToAvailabilityQueryContainerBridge;
 use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToProductQueryContainerBridge;
@@ -41,11 +40,6 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -54,20 +48,6 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new AvailabilityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container)
-    {
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
         });
 
         return $container;

@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Spryker\Client\Storage\StorageClient;
 use Spryker\Client\Storage\StorageFactory;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Storage
  * @group StorageClientTest
  * Add your own group annotations below this line
+ *
  * @property \SprykerTest\Client\Storage\StorageClientTester $tester
  */
 class StorageClientTest extends Unit
@@ -90,8 +90,8 @@ class StorageClientTest extends Unit
      */
     protected function getStoreAndLocale(): string
     {
-        return strtolower(Store::getInstance()->getStoreName()) . '.' .
-            strtolower(Store::getInstance()->getCurrentLocale()) . '.';
+        return strtolower($this->tester->getLocator()->store()->client()->getCurrentStore()->getNameOrFail()) . '.' .
+            strtolower($this->tester->getLocator()->locale()->client()->getCurrentLocale()) . '.';
     }
 
     /**

@@ -9,20 +9,20 @@ namespace Spryker\Client\ProductLabel;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToLocaleClientBridge;
 use Spryker\Client\ProductLabel\Dependency\Client\ProductLabelToStorageBridge;
-use Spryker\Shared\Kernel\Store;
 
 class ProductLabelDependencyProvider extends AbstractDependencyProvider
 {
     /**
      * @var string
      */
-    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @var string
      */
-    public const STORE = 'STORE';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -32,7 +32,7 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStorageClient($container);
-        $container = $this->addStore($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -56,10 +56,12 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductLabelToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

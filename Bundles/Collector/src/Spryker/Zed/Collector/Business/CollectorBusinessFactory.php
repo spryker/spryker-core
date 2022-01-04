@@ -120,6 +120,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createRedisReader(),
             $this->createKvMarkerKeyBuilder(),
             $this->getConfig(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -261,6 +262,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
             $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder(),
             $this->getConfig(),
+            $this->getStoreFacade(),
         );
     }
 

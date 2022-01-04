@@ -18,6 +18,7 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Parser\Parser;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Money\Business\Model\Mapper\MoneyToTransferMapper;
+use Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface;
 use Spryker\Zed\Money\MoneyDependencyProvider;
 
 /**
@@ -33,7 +34,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getStore()->getCurrencyIsoCode(),
+            $this->getCurrencyFacade()->getCurrent()->getCodeOrFail(),
         );
     }
 
@@ -86,14 +87,6 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(MoneyDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\Money\Dependency\Facade\MoneyToCurrencyInterface
      */
     protected function getCurrencyFacade()
@@ -126,6 +119,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     {
         return new IntlMoneyFormatterWithCurrency(
             $this->createTransferToMoneyMapper(),
+            $this->getLocaleFacade()->getCurrentLocale()->getLocaleNameOrFail(),
         );
     }
 
@@ -136,6 +130,7 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     {
         return new IntlMoneyFormatterWithoutCurrency(
             $this->createTransferToMoneyMapper(),
+            $this->getLocaleFacade()->getCurrentLocale()->getLocaleNameOrFail(),
         );
     }
 
@@ -153,5 +148,13 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     public function createDecimalToIntegerConverter()
     {
         return new DecimalToIntegerConverter();
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): MoneyToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_LOCALE);
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Yves\Log;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Log\Dependency\Client\LogToLocaleClientBridge;
 
 /**
  * @method \Spryker\Yves\Log\LogConfig getConfig()
@@ -31,6 +32,11 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
@@ -38,6 +44,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container)
     {
         $container = $this->addQueueClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addLogHandlers($container);
         $container = $this->addProcessors($container);
 
@@ -81,6 +88,20 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::LOG_PROCESSORS, function () {
             return [];
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new LogToLocaleClientBridge($container->getLocator()->locale()->client());
         });
 
         return $container;

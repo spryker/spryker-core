@@ -8,8 +8,6 @@
 namespace SprykerTest\Yves\Money;
 
 use Codeception\Actor;
-use ReflectionClass;
-use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutCurrency;
 
 /**
  * @method void wantToTest($text)
@@ -28,15 +26,4 @@ use Spryker\Shared\Money\Formatter\IntlMoneyFormatter\IntlMoneyFormatterWithoutC
 class MoneyYvesTester extends Actor
 {
     use _generated\MoneyYvesTesterActions;
-
-    /**
-     * @return void
-     */
-    public function clearLocaleCacheForMoneyFormatter(): void
-    {
-        $moneyFormatter = new ReflectionClass(IntlMoneyFormatterWithoutCurrency::class);
-        $localeProperty = $moneyFormatter->getProperty('locale');
-        $localeProperty->setAccessible(true);
-        $localeProperty->setValue(null);
-    }
 }

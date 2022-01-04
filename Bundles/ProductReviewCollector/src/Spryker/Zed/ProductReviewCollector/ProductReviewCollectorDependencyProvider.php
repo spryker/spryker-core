@@ -7,22 +7,18 @@
 
 namespace Spryker\Zed\ProductReviewCollector;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToCollectorBridge;
 use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToSearchBridge;
+use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeBridge;
+use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorToStoreFacadeInterface;
 
 /**
  * @method \Spryker\Zed\ProductReviewCollector\ProductReviewCollectorConfig getConfig()
  */
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
-
     /**
      * @var string
      */
@@ -37,6 +33,11 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      * @var string
      */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
+
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -57,9 +58,9 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
     {
         $this->addCollectorFacade($container);
         $this->addSearchFacade($container);
+        $this->addStoreFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
-        $this->addStore($container);
 
         return $container;
     }
@@ -93,6 +94,18 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      *
      * @return void
      */
+    protected function addStoreFacade(Container $container): void
+    {
+        $container->set(static::FACADE_STORE, function (Container $container): ProductReviewCollectorToStoreFacadeInterface {
+            return new ProductReviewCollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
     protected function addDataReaderService(Container $container)
     {
         $container->set(static::SERVICE_DATA_READER, function (Container $container) {
@@ -110,19 +123,5 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
         });
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
-        });
-
-        return $container;
     }
 }

@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryTransfer;
+
 interface SalesToCountryInterface
 {
     /**
      * @param string $iso2Code
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getIdCountryByIso2Code($iso2Code);
+    public function getCountryByIso2Code($iso2Code): CountryTransfer;
 
     /**
      * @api

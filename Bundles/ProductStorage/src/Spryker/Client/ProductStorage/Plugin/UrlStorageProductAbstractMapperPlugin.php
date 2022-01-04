@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 /**
@@ -62,7 +61,7 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
             $collectorDataKey = sprintf(
                 '%s.%s.resource.product_abstract.%s',
-                strtolower(Store::getInstance()->getStoreName()),
+                strtolower($this->getStoreName()),
                 strtolower($locale),
                 $idProductAbstract,
             );
@@ -84,8 +83,9 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
     {
         if (static::$storeName === null) {
             static::$storeName = $this->getFactory()
-                ->getStore()
-                ->getStoreName();
+                ->getStoreClient()
+                ->getCurrentStore()
+                ->getNameOrFail();
         }
 
         return static::$storeName;

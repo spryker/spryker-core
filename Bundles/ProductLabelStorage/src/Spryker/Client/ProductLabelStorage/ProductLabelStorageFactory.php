@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductLabelStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToLocaleClientInterface;
+use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStoreClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductView\ProductViewExpander;
 use Spryker\Client\ProductLabelStorage\ProductView\ProductViewExpanderInterface;
@@ -27,6 +29,7 @@ class ProductLabelStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->createLabelDictionaryReader(),
             $this->getUtilEncodingService(),
+            $this->getLocaleClient(),
         );
     }
 
@@ -79,10 +82,18 @@ class ProductLabelStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToLocaleClientInterface
      */
-    public function getStore()
+    public function getLocaleClient(): ProductLabelStorageToLocaleClientInterface
     {
-        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStoreClientInterface
+     */
+    public function getStoreClient(): ProductLabelStorageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::CLIENT_STORE);
     }
 }

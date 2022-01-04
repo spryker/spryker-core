@@ -8,6 +8,8 @@
 namespace Spryker\Client\Money;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientInterface;
+use Spryker\Client\Money\Dependency\Client\MoneyToLocaleClientInterface;
 use Spryker\Client\Money\Mapper\MoneyToTransferMapper;
 use Spryker\Shared\Money\Builder\MoneyBuilder;
 use Spryker\Shared\Money\Converter\DecimalToIntegerConverter;
@@ -29,7 +31,7 @@ class MoneyFactory extends AbstractFactory
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getStore()->getCurrencyIsoCode(),
+            $this->getCurrencyClient()->getCurrent()->getCodeOrFail(),
         );
     }
 
@@ -82,29 +84,21 @@ class MoneyFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(MoneyDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface
      */
     protected function createMoneyToTransferMapper()
     {
         return new MoneyToTransferMapper(
-            $this->getCurrencyPlugin(),
+            $this->getCurrencyClient(),
         );
     }
 
     /**
-     * @return \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
+     * @return \Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientInterface
      */
-    protected function getCurrencyPlugin()
+    public function getCurrencyClient(): MoneyToCurrencyClientInterface
     {
-        return $this->getProvidedDependency(MoneyDependencyProvider::PLUGIN_CURRENCY);
+        return $this->getProvidedDependency(MoneyDependencyProvider::CLIENT_CURRENCY);
     }
 
     /**
@@ -122,6 +116,7 @@ class MoneyFactory extends AbstractFactory
     {
         return new IntlMoneyFormatterWithCurrency(
             $this->createTransferToMoneyMapper(),
+            $this->getLocaleClient()->getCurrentLocale(),
         );
     }
 
@@ -132,6 +127,7 @@ class MoneyFactory extends AbstractFactory
     {
         return new IntlMoneyFormatterWithoutCurrency(
             $this->createTransferToMoneyMapper(),
+            $this->getLocaleClient()->getCurrentLocale(),
         );
     }
 
@@ -149,5 +145,13 @@ class MoneyFactory extends AbstractFactory
     public function createDecimalToIntegerConverter()
     {
         return new DecimalToIntegerConverter();
+    }
+
+    /**
+     * @return \Spryker\Client\Money\Dependency\Client\MoneyToLocaleClientInterface
+     */
+    public function getLocaleClient(): MoneyToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(MoneyDependencyProvider::CLIENT_LOCALE);
     }
 }

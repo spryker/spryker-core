@@ -81,12 +81,18 @@ class EmptyAllCachesConsole extends Console
     }
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
     protected function emptyCache(OutputInterface $output)
     {
+        if (APPLICATION_CODE_BUCKET) {
+            return;
+        }
+
         $emptiedDirectories = $this->getFacade()->emptyCache();
 
         $this->info('Removed cache files', true);
@@ -94,12 +100,18 @@ class EmptyAllCachesConsole extends Console
     }
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
      */
     protected function emptyAutoLoadCache(OutputInterface $output)
     {
+        if (APPLICATION_CODE_BUCKET) {
+            return;
+        }
+
         $emptiedDirectories = $this->getFacade()->emptyAutoLoaderCache();
 
         $this->info('Removed auto-load cache files', true);

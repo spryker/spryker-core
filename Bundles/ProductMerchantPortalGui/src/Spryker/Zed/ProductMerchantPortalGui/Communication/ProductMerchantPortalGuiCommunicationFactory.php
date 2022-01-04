@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreator;
@@ -865,9 +864,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createLocaleDataProvider(): LocaleDataProviderInterface
     {
         return new LocaleDataProvider(
-            $this->getStoreFacade(),
             $this->getLocaleFacade(),
-            $this->getStore(),
         );
     }
 
@@ -1152,13 +1149,5 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new LocaleTransformer(
             $this->getLocaleFacade(),
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::STORE);
     }
 }

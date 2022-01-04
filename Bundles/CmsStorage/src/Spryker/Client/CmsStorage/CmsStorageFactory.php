@@ -8,12 +8,12 @@
 namespace Spryker\Client\CmsStorage;
 
 use Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStorageClientInterface;
+use Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStoreClientInterface;
 use Spryker\Client\CmsStorage\Dependency\Service\CmsStorageToUtilEncodingServiceInterface;
 use Spryker\Client\CmsStorage\Mapper\CmsPageStorageMapper;
 use Spryker\Client\CmsStorage\Reader\CmsPageStorageReader;
 use Spryker\Client\CmsStorage\Reader\CmsPageStorageReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Kernel\Store;
 
 class CmsStorageFactory extends AbstractFactory
 {
@@ -46,14 +46,6 @@ class CmsStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStorageClientInterface
      */
     public function getStorageClient(): CmsStorageToStorageClientInterface
@@ -67,5 +59,13 @@ class CmsStorageFactory extends AbstractFactory
     public function getUtilEncodingService(): CmsStorageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStoreClientInterface
+     */
+    public function getStoreClient(): CmsStorageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::CLIENT_STORE);
     }
 }

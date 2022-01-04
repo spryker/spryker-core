@@ -13,11 +13,11 @@ use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Spryker\Client\Kernel\Locator;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
-use Spryker\Shared\Kernel\Store;
 
 class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 {
@@ -32,17 +32,25 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface
+     */
+    protected $localeClient;
+
+    /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper::filterProductStorageExpanderPlugins()
      *
      * @param array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface> $storageProductExpanderPlugins
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+     * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
      */
     public function __construct(
         array $storageProductExpanderPlugins,
-        ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+        ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter,
+        ProductStorageToLocaleInterface $localeClient
     ) {
         $this->productStorageExpanderPlugins = array_filter($storageProductExpanderPlugins, [$this, 'filterProductStorageExpanderPlugins']);
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -117,7 +125,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
         $productClient = $clientLocatorClassName::getInstance()->product()->client();
 
-        $attributeMap = $productClient->getAttributeMapByIdAndLocale($productStorageData['id_product_abstract'], Store::getInstance()->getCurrentLocale());
+        $attributeMap = $productClient->getAttributeMapByIdAndLocale($productStorageData['id_product_abstract'], $this->localeClient->getCurrentLocale());
         $attributeMap = $this->changeKeys($attributeMap);
 
         $productStorageData['attribute_map'] = $attributeMap;

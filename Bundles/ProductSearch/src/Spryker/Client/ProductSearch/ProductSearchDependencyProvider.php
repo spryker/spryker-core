@@ -9,14 +9,19 @@ namespace Spryker\Client\ProductSearch;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Client\ProductSearch\Dependency\Client\ProductSearchToLocaleClientBridge;
 
 class ProductSearchDependencyProvider extends AbstractDependencyProvider
 {
     /**
      * @var string
      */
-    public const STORE = 'store';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @var string
@@ -32,22 +37,9 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->provideStore($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addStorageClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function provideStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
-        });
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -61,6 +53,36 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return $container->getLocator()->storage()->client();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return $container->getLocator()->store()->client();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductSearchToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

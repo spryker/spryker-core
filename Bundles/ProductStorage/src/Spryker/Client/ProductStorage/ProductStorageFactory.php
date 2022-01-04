@@ -131,6 +131,7 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
+            $this->getLocaleClient(),
         );
     }
 
@@ -142,6 +143,7 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductAbstractStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
+            $this->getLocaleClient(),
         );
     }
 
@@ -198,14 +200,6 @@ class ProductStorageFactory extends AbstractFactory
     protected function getStorageProductExpanderPlugins()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_PRODUCT_VIEW_EXPANDERS);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
     }
 
     /**

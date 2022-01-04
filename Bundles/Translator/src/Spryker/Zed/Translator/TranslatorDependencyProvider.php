@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Translator;
 
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface;
 use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface as LegacyTranslatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -41,11 +40,6 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'STORE';
-
-    /**
-     * @var string
-     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
@@ -63,7 +57,6 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addApplication($container);
-        $container = $this->addStore($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
@@ -112,20 +105,6 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::APPLICATION, function () {
             return (new Pimple())->getApplication();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
         });
 
         return $container;

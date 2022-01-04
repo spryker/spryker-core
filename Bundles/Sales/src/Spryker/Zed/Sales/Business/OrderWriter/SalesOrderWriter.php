@@ -302,7 +302,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
         $iso2code = $addressTransfer->getIso2CodeOrFail();
 
         if (!isset($this->idCountryCache[$iso2code])) {
-            $this->idCountryCache[$iso2code] = $this->countryFacade->getIdCountryByIso2Code($iso2code);
+            $this->idCountryCache[$iso2code] = $this->countryFacade->getCountryByIso2Code($iso2code)->getIdCountryOrFail();
         }
 
         return $this->idCountryCache[$iso2code];

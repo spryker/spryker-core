@@ -31,6 +31,8 @@ use Spryker\Zed\Mail\MailConfig;
  * @group Builder
  * @group MailBuilderTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\Mail\MailBusinessTester $tester
  */
 class MailBuilderTest extends Unit
 {
@@ -249,6 +251,7 @@ class MailBuilderTest extends Unit
         $mailBuilder = new MailBuilder(
             $glossaryFacadeMock,
             $this->getConfigMock(),
+            $this->tester->getLocaleFacade(),
         );
 
         return $mailBuilder;
@@ -263,6 +266,7 @@ class MailBuilderTest extends Unit
         $mailBuilder = new MailBuilder(
             $glossaryFacadeMock,
             $this->getConfigMock(),
+            $this->tester->getLocaleFacade(),
         );
 
         $localeTransfer = new LocaleTransfer();

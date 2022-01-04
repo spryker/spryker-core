@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeInterface;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface;
 
@@ -61,11 +61,6 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
@@ -73,11 +68,16 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface $cmsFacade
      * @param \Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface $cmsPageSearchDataMapper
      * @param \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeInterface $localeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
@@ -85,15 +85,15 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         CmsPageSearchToCmsInterface $cmsFacade,
         CmsPageSearchDataMapperInterface $cmsPageSearchDataMapper,
         CmsPageSearchToUtilEncodingInterface $utilEncodingService,
-        Store $store,
+        CmsPageSearchToLocaleFacadeInterface $localeFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->cmsFacade = $cmsFacade;
         $this->cmsPageSearchDataMapper = $cmsPageSearchDataMapper;
         $this->utilEncodingService = $utilEncodingService;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -197,7 +197,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         }
 
         $localeCmsPageDataTransfer = $this->getLocaleCmsPageDataTransfer($cmsPageEntity, $localeName, $storeName);
-        $data = $this->mapToSearchData($localeCmsPageDataTransfer, $localeName);
+        $data = $this->mapToSearchData($localeCmsPageDataTransfer, $localeName, $storeName);
 
         $cmsPageSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray()));
         $cmsPageSearchEntity->setData($data);
@@ -211,14 +211,16 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     /**
      * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $cmsPageDataTransfer
      * @param string $localeName
+     * @param string|null $storeName
      *
      * @return array
      */
-    public function mapToSearchData(LocaleCmsPageDataTransfer $cmsPageDataTransfer, string $localeName): array
+    public function mapToSearchData(LocaleCmsPageDataTransfer $cmsPageDataTransfer, string $localeName, ?string $storeName = null): array
     {
         return $this->cmsPageSearchDataMapper->mapCmsDataToSearchData(
             $cmsPageDataTransfer->toArray(),
             (new LocaleTransfer())->setLocaleName($localeName),
+            $storeName,
         );
     }
 
@@ -326,7 +328,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         array $cmsPageEntities,
         array $cmsPageSearchEntities
     ): array {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getLocaleNames();
 
         $pairs = [];
 
@@ -400,5 +402,15 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         });
 
         return $pairs;
+    }
+
+    /**
+     * @return array<string>
+     */
+    protected function getLocaleNames(): array
+    {
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+
+        return array_keys($localeTransfers);
     }
 }

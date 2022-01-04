@@ -91,7 +91,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
     protected function getKeyPartsForProduct($idProductAbstract, $localeName): array
     {
         return [
-            $this->storeFacade->getCurrentStoreName(),
+            $this->storeFacade->getCurrentStore()->getNameOrFail(),
             $localeName,
             $this->getBundleName(),
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT . '.' . $idProductAbstract,

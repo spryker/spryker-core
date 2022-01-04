@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Kernel\Communication;
 
 /**
- * Deprecated: Use {@link \Spryker\Shared\Application\Application} instead.
+ * @deprecated Use {@link \Spryker\Shared\Application\Application} instead.
  */
 class Application extends ApplicationProxy
 {

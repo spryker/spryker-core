@@ -13,6 +13,9 @@ use NumberFormatter;
 use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientBridge;
+use Spryker\Client\Money\Dependency\Client\MoneyToLocaleClientBridge;
+use Spryker\Client\Money\Dependency\Client\MoneyToLocaleClientInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
 
@@ -21,9 +24,16 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
-    public const STORE = 'store';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @var string
      */
     public const PLUGIN_CURRENCY = 'currency plugin';
@@ -40,22 +50,25 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container = $this->addStore($container);
         $container = $this->addCurrencyPlugin($container);
+        $container = $this->addCurrencyClient($container);
         $container = $this->addMoneyParser($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container)
+    protected function addCurrencyPlugin(Container $container)
     {
-        $container->set(static::STORE, function () {
-            return $this->getStore();
+        $container->set(static::PLUGIN_CURRENCY, function () {
+            return new CurrencyPlugin();
         });
 
         return $container;
@@ -66,10 +79,26 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCurrencyPlugin(Container $container)
+    protected function addCurrencyClient(Container $container): Container
     {
-        $container->set(static::PLUGIN_CURRENCY, function () {
-            return new CurrencyPlugin();
+        $container->set(static::CLIENT_CURRENCY, function ($container) {
+            return new MoneyToCurrencyClientBridge(
+                $container->getLocator()->currency()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function ($container) {
+            return $this->getLocaleClient($container);
         });
 
         return $container;
@@ -90,8 +119,8 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMoneyParser(Container $container)
     {
-        $container->set(static::MONEY_PARSER, function () {
-            $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser());
+        $container->set(static::MONEY_PARSER, function (Container $container) {
+            $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser($container));
 
             return $moneyToParserBridge;
         });
@@ -100,11 +129,13 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
      * @return \Money\Parser\IntlMoneyParser
      */
-    protected function getIntlMoneyParser()
+    protected function getIntlMoneyParser(Container $container)
     {
-        $numberFormatter = $this->getNumberFormatter();
+        $numberFormatter = $this->getNumberFormatter($container);
         $currencies = $this->getIsoCurrencies();
         $intlMoneyParser = new IntlMoneyParser($numberFormatter, $currencies);
 
@@ -112,12 +143,14 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
      * @return \NumberFormatter
      */
-    protected function getNumberFormatter()
+    protected function getNumberFormatter(Container $container)
     {
         $numberFormatter = new NumberFormatter(
-            $this->getStore()->getCurrentLocale(),
+            $this->getLocaleClient($container)->getCurrentLocale(),
             NumberFormatter::CURRENCY,
         );
 
@@ -132,5 +165,17 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
         $isoCurrencies = new ISOCurrencies();
 
         return $isoCurrencies;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Money\Dependency\Client\MoneyToLocaleClientInterface
+     */
+    protected function getLocaleClient(Container $container): MoneyToLocaleClientInterface
+    {
+        return new MoneyToLocaleClientBridge(
+            $container->getLocator()->locale()->client(),
+        );
     }
 }

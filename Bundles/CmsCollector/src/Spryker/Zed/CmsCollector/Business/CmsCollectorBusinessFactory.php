@@ -13,6 +13,7 @@ use Spryker\Zed\CmsCollector\Business\Collector\Search\CmsVersionPageCollector a
 use Spryker\Zed\CmsCollector\Business\Collector\Storage\CmsVersionPageCollector as CmsVersionStoragePageCollector;
 use Spryker\Zed\CmsCollector\Business\Map\CmsDataPageMapBuilder;
 use Spryker\Zed\CmsCollector\CmsCollectorDependencyProvider;
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToStoreFacadeInterface;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorSearchQuery;
 use Spryker\Zed\CmsCollector\Persistence\Collector\Storage\Propel\CmsVersionPageCollectorQuery as CmsVersionPageCollectorStorageQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -60,7 +61,7 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsDataPageMapBuilder()
     {
-        return new CmsDataPageMapBuilder($this->getCmsFacade());
+        return new CmsDataPageMapBuilder($this->getCmsFacade(), $this->getStoreFacade());
     }
 
     /**
@@ -93,6 +94,14 @@ class CmsCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getSearchFacade()
     {
         return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CmsCollectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsCollectorDependencyProvider::FACADE_STORE);
     }
 
     /**

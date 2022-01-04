@@ -45,6 +45,7 @@ use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToGracefulRunnerInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -403,15 +404,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
      */
     protected function createAddLocalesStep()
     {
-        return new AddLocalesStep($this->getStore());
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(DataImportDependencyProvider::STORE);
+        return new AddLocalesStep($this->getDataImportStoreFacade());
     }
 
     /**
@@ -422,5 +415,13 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     protected function createLocalizedAttributesExtractorStep(array $defaultAttributes = [])
     {
         return new LocalizedAttributesExtractorStep($defaultAttributes);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToStoreFacadeInterface
+     */
+    public function getDataImportStoreFacade(): DataImportToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORT_STORE_FACADE);
     }
 }

@@ -17,6 +17,7 @@ use Monolog\Logger;
 use Monolog\Processor\ProcessorInterface as MonologProcessorInterface;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\Log\Dependency\Client\LogToLocaleClientInterface;
 use Spryker\Glue\Log\Handler\QueueHandler;
 use Spryker\Shared\Log\Processor\EnvironmentProcessor;
 use Spryker\Shared\Log\Processor\GuzzleBodyProcessor;
@@ -128,7 +129,17 @@ class LogFactory extends AbstractFactory
      */
     public function createEnvironmentProcessor(): ProcessorInterface
     {
-        return new EnvironmentProcessor();
+        return new EnvironmentProcessor(
+            $this->getLocaleClient()->getCurrentLocale(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\Log\Dependency\Client\LogToLocaleClientInterface
+     */
+    public function getLocaleClient(): LogToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(LogDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

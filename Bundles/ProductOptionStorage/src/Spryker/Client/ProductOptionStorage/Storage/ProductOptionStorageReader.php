@@ -11,13 +11,14 @@ use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\Kernel\PermissionAwareTrait;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToLocaleClientInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStoreClientInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapperInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
 use Spryker\Client\ProductOptionStorage\ProductOptionStorageConfig;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig as SharedProductOptionStorageConfig;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
@@ -28,11 +29,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface
      */
     protected $storageClient;
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
 
     /**
      * @var \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface
@@ -55,27 +51,40 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
+     * @var \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToLocaleClientInterface
+     */
+    private $localeClient;
+
+    /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface $valuePriceReader
      * @param \Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapperInterface $productOptionMapper
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToLocaleClientInterface $localeClient
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
-        Store $store,
+        ProductOptionStorageToStoreClientInterface $storeClient,
         ProductOptionStorageToSynchronizationServiceInterface $synchronizationService,
         ValuePriceReaderInterface $valuePriceReader,
         ProductOptionMapperInterface $productOptionMapper,
-        ProductOptionStorageToUtilEncodingServiceInterface $utilEncodingService
+        ProductOptionStorageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductOptionStorageToLocaleClientInterface $localeClient
     ) {
         $this->storageClient = $storageClient;
-        $this->store = $store;
         $this->synchronizationService = $synchronizationService;
         $this->valuePriceReader = $valuePriceReader;
         $this->productOptionMapper = $productOptionMapper;
         $this->utilEncodingService = $utilEncodingService;
+        $this->storeClient = $storeClient;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -166,7 +175,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         if (ProductOptionStorageConfig::isCollectorCompatibilityMode()) {
             if ($localeName === null) {
-                $localeName = Store::getInstance()->getCurrentLocale();
+                $localeName = $this->localeClient->getCurrentLocale();
             }
             $clientLocatorName = Locator::class;
             /** @var \Spryker\Client\ProductOption\ProductOptionClientInterface $productOptionClient */
@@ -224,7 +233,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected function generateStorageKey(int $idProductAbstract): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setStore($this->store->getStoreName())
+            ->setStore($this->storeClient->getCurrentStore()->getNameOrFail())
             ->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService
