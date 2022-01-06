@@ -11,30 +11,27 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
 
 class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $unitAddressTransfer
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function mapEntityTransferToCompanyUnitAddressTransfer(
-        SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer,
-        CompanyUnitAddressTransfer $unitAddressTransfer
+    public function mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer(
+        SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer,
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer {
-        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->fromArray(
-            $unitAddressEntityTransfer->toArray(),
-            true,
-        );
+        $companyUnitAddressTransfer->fromArray($companyUnitAddressEntityTransfer->toArray(), true);
 
-        $companyUnitAddressTransfer->setIso2Code($unitAddressEntityTransfer->getCountry()->getIso2Code());
+        $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntityTransfer->getCountry()->getIso2Code());
 
-        $companyBusinessUnitTransfers = $this->mapCompanyBusinessUnitCollection($unitAddressEntityTransfer);
+        $companyBusinessUnitTransfers = $this->mapCompanyBusinessUnitCollection($companyUnitAddressEntityTransfer);
         $companyUnitAddressTransfer->setCompanyBusinessUnits($companyBusinessUnitTransfers);
 
         return $companyUnitAddressTransfer;
@@ -51,11 +48,15 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         foreach ($companyUnitAddressEntityTransfer->getSpyCompanyUnitAddressToCompanyBusinessUnits() as $companyUnitAddressToCompanyBusinessUnit) {
             $companyBusinessUnitEntityTransfer = $companyUnitAddressToCompanyBusinessUnit->getCompanyBusinessUnit();
-
-            if ($companyBusinessUnitEntityTransfer->getIdCompanyBusinessUnit()) {
-                $companyBusinessUnitTransfer = $this->mapEntityToCompanyBusinessUnitTransfer($companyUnitAddressToCompanyBusinessUnit);
-                $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
+            if (!$companyBusinessUnitEntityTransfer || $companyBusinessUnitEntityTransfer->getIdCompanyBusinessUnit() === null) {
+                continue;
             }
+
+            $companyBusinessUnitTransfer = $this->mapEntityToCompanyBusinessUnitTransfer(
+                $companyBusinessUnitEntityTransfer,
+                new CompanyBusinessUnitTransfer(),
+            );
+            $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
         return $companyBusinessUnitCollectionTransfer;
@@ -63,20 +64,18 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer
      */
     public function mapCompanyUnitAddressTransferToEntityTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
-        SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer
+        SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
     ): SpyCompanyUnitAddressEntityTransfer {
-        $companyUnitAddressEntityTransfer = (new SpyCompanyUnitAddressEntityTransfer())->fromArray(
+        return $companyUnitAddressEntityTransfer->fromArray(
             $companyUnitAddressTransfer->modifiedToArray(),
             true,
         );
-
-        return $companyUnitAddressEntityTransfer;
     }
 
     /**
@@ -133,7 +132,16 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
             if (!isset($companyBusinessUnitIndex[$idCompanyUnitAddress])) {
                 $companyBusinessUnitIndex[$idCompanyUnitAddress] = new CompanyBusinessUnitCollectionTransfer();
             }
-            $companyBusinessUnitTransfer = $this->mapEntityToCompanyBusinessUnitTransfer($companyUnitAddressToCompanyBusinessUnitEntity);
+
+            $companyBusinessUnitEntityTransfer = $companyUnitAddressToCompanyBusinessUnitEntity->getCompanyBusinessUnit();
+            if (!$companyBusinessUnitEntityTransfer || $companyBusinessUnitEntityTransfer->getIdCompanyBusinessUnit() === null) {
+                continue;
+            }
+
+            $companyBusinessUnitTransfer = $this->mapEntityToCompanyBusinessUnitTransfer(
+                $companyBusinessUnitEntityTransfer,
+                new CompanyBusinessUnitTransfer(),
+            );
             $companyBusinessUnitIndex[$idCompanyUnitAddress]->addCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
@@ -141,14 +149,15 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntity
+     * @param \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    protected function mapEntityToCompanyBusinessUnitTransfer(
-        SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntity
+    public function mapEntityToCompanyBusinessUnitTransfer(
+        SpyCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        return (new CompanyBusinessUnitTransfer())
-            ->fromArray($companyUnitAddressToCompanyBusinessUnitEntity->toArray(), true);
+            return $companyBusinessUnitTransfer->fromArray($companyBusinessUnitEntityTransfer->toArray(), true);
     }
 }

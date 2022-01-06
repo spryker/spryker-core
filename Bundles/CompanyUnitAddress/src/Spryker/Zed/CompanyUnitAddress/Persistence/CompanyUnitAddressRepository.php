@@ -40,11 +40,11 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                 ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
-        $entityTransfer = $this->buildQueryFromCriteria($query)->find();
+        $companyUnitAddressEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
         return $this->getFactory()
             ->createCompanyUnitAddressMapper()
-            ->mapEntityTransferToCompanyUnitAddressTransfer($entityTransfer[0], $companyUnitAddressTransfer);
+            ->mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer($companyUnitAddressEntityTransfers[0], new CompanyUnitAddressTransfer());
     }
 
     /**
@@ -72,8 +72,9 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         if ($criteriaFilterTransfer->getIdCompanyBusinessUnit() !== null) {
-            $query->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
-                ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
+            $query->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
+                    ->leftJoinWithCompanyBusinessUnit()
                 ->endUse();
         }
 
@@ -85,7 +86,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
             $unitAddressTransfer = $this->getFactory()
                 ->createCompanyUnitAddressMapper()
-                ->mapEntityTransferToCompanyUnitAddressTransfer(
+                ->mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer(
                     $companyUnitAddressEntityTransfer,
                     new CompanyUnitAddressTransfer(),
                 );
@@ -130,7 +131,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
             $companyUnitAddressTransfer = $this->getFactory()
                 ->createCompanyUnitAddressMapper()
-                ->mapEntityTransferToCompanyUnitAddressTransfer(
+                ->mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer(
                     $companyUnitAddressEntityTransfer,
                     new CompanyUnitAddressTransfer(),
                 );

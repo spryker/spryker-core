@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CompanyUnitAddress\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -41,6 +42,16 @@ class CompanyUnitAddressDataHelper extends Module
     {
         $companyUnitAddressQuery = $this->getCompanyUnitAddressQuery();
         $companyUnitAddressQuery->filterByKey($key)->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function haveCompanyUnitAddressToCompanyBusinessUnitRelation(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
+    {
+        $this->getCompanyUnitAddressFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 
     /**

@@ -145,7 +145,7 @@ class CompanyUnitAddressFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyUnitAddressByReturnsTransferWhenExists(): void
+    public function testGetCompanyUnitAddressByIdReturnsTransferWhenExists(): void
     {
         // Arrange
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress();
@@ -155,7 +155,54 @@ class CompanyUnitAddressFacadeTest extends Test
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);
 
         // Assert
-        $this->assertNotNull($companyUnitAddressTransferLoaded);
+        $this->assertEquals(
+            $companyUnitAddressTransfer->getIdCompanyUnitAddress(),
+            $companyUnitAddressTransferLoaded->getIdCompanyUnitAddress(),
+        );
+
+        $this->assertCount(
+            0,
+            $companyUnitAddressTransferLoaded->getCompanyBusinessUnits()->getCompanyBusinessUnits(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyUnitAddressByIdReturnsWithCompanyBusinessUnitWhenMapped(): void
+    {
+        // Arrange
+        $companyUnitAddressCollection = $this->tester->createCompanyUnitAddressCollection();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $companyUnitAddressCollection,
+        ]);
+        $this->tester->haveCompanyUnitAddressToCompanyBusinessUnitRelation($companyBusinessUnitTransfer);
+
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
+        $companyUnitAddressTransfer = $companyUnitAddressCollection->getCompanyUnitAddresses()->getIterator()->current();
+
+        // Act
+        $companyUnitAddressTransferLoaded = $this->tester->getFacade()
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+        // Assert
+        $this->assertCount(
+            1,
+            $companyUnitAddressTransferLoaded->getCompanyBusinessUnits()->getCompanyBusinessUnits(),
+        );
+
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransferLoaded */
+        $companyBusinessUnitTransferLoaded = $companyUnitAddressTransferLoaded
+            ->getCompanyBusinessUnits()
+            ->getCompanyBusinessUnits()
+            ->getIterator()
+            ->current();
+
+        $this->assertEquals(
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            $companyBusinessUnitTransferLoaded->getIdCompanyBusinessUnit(),
+        );
     }
 
     /**
@@ -280,6 +327,26 @@ class CompanyUnitAddressFacadeTest extends Test
         $this->assertCount(
             static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT_EXPECTED,
             $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
+        );
+
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
+        $companyUnitAddressTransfer = $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->getIterator()->current();
+
+        $this->assertCount(
+            1,
+            $companyUnitAddressTransfer->getCompanyBusinessUnits()->getCompanyBusinessUnits(),
+        );
+
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransferLoaded */
+        $companyBusinessUnitTransferLoaded = $companyUnitAddressTransfer
+            ->getCompanyBusinessUnits()
+            ->getCompanyBusinessUnits()
+            ->getIterator()
+            ->current();
+
+        $this->assertEquals(
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            $companyBusinessUnitTransferLoaded->getIdCompanyBusinessUnit(),
         );
     }
 }
