@@ -141,7 +141,7 @@ function createFilter(filterKey, filterLabel, nonFilterAttribute, anchorClass, a
         '"></i>\n' +
         '    </a>\n' +
         '    <div class="dd-handle">\n' +
-        filterLabel +
+        $('<div/>').text(filterLabel).html() +
         '    </div>\n' +
         '</li>'
     );
