@@ -1,28 +1,28 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
-        "description": "\n      Bridges: The bridge has incorrect method 'unmarkProductAsDiscontinued' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAvailableLocales()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
+        "description": "Bridges: The bridge has incorrect method signature for `unmarkProductAsDiscontinued()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
-        "description": "\n      Bridges: The bridge has incorrect method 'markProductAsDiscontinued' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'unmarkProductAsDiscontinued' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'markProductAsDiscontinued' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
+        "description": "Bridges: The bridge has incorrect method signature for `markProductAsDiscontinued()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

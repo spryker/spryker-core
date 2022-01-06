@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/SearchElasticsearch/Dependency/Client/SearchElasticsearchToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/SearchElasticsearch/Dependency/Client/SearchElasticsearchToLocaleClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/SearchElasticsearch/Dependency/Service/SearchElasticsearchToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/SearchElasticsearch/Dependency/Service/SearchElasticsearchToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

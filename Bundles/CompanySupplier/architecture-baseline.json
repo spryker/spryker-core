@@ -1,7 +1,7 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CompanySupplier/src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierPersistenceFactory.php",
-        "description": "\n      CompanySupplierPersistenceFactory::createCompanyQuery() in Spryker\\Zed\\CompanySupplier\\Persistence\\CompanySupplierPersistenceFactory::createCompanyQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "fileName": "src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierPersistenceFactory.php",
+        "description": "`CompanySupplierPersistenceFactory::createCompanyQuery()()` in `Spryker\\Zed\\CompanySupplier\\Persistence\\CompanySupplierPersistenceFactory::createCompanyQuery()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"

@@ -1,22 +1,92 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'search' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'expandQuery' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `expandQuery()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToCmsInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'extractCmsVersionDataTransfer' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToCmsInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `extractCmsVersionDataTransfer()`. Got `$cmsPageData` but expected to be `string $cmsPageData`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToCmsInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `extractLocaleCmsPageDataTransfer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/QueryContainer/CmsPageSearchToCmsQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryAllCmsVersions()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/QueryContainer/CmsPageSearchToCmsQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryPages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/QueryContainer/CmsPageSearchToLocaleQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryLocales()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

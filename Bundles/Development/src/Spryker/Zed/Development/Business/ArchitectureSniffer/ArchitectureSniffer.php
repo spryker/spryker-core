@@ -347,7 +347,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function normalizeProjectPath(string $path): string
     {
-        return str_replace(APPLICATION_ROOT_DIR, '', $path);
+        $basePath = rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        $path = str_replace($basePath, '', $path);
+        $pos = strpos($path, DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR);
+        if ($pos) {
+            $path = substr($path, $pos + 1);
+        }
+
+        return $path;
     }
 
     /**

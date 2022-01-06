@@ -1,7 +1,7 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Api/src/Spryker/Zed/Api/Business/ApiFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Api\\Business\\ApiFacade::getApiRouter() is using an invalid return type \"\\Symfony\\Component\\Routing\\RouterInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Api/Business/ApiFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Api\\Business\\ApiFacade::getApiRouter()()` is using an invalid return type `\\Symfony\\Component\\Routing\\RouterInterface` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"

@@ -1,1 +1,121 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Client/ProductOptionStorageToCurrencyClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Client/ProductOptionStorageToLocaleClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Client/ProductOptionStorageToPriceClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentPriceMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Client/ProductOptionStorageToStorageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Client/ProductOptionStorageToStorageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getMulti()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Client/ProductOptionStorageToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Service/ProductOptionStorageToSynchronizationServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOptionStorage/Dependency/Service/ProductOptionStorageToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToProductOptionFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductOptionValueStorePrices()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToProductOptionFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllProductOptionValuePrices()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/QueryContainer/ProductOptionStorageToProductOptionQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryAllProductOptionGroups()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/QueryContainer/ProductOptionStorageToProductOptionQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryAllProductAbstractProductOptionGroups()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/QueryContainer/ProductOptionStorageToProductOptionQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryAllProductOptionValues()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/QueryContainer/ProductOptionStorageToProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryAllProductAbstractLocalizedAttributes()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -1,105 +1,112 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The method Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlCreatorObservers() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "fileName": "src/Spryker/Client/Url/Dependency/Client/UrlToStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The method `Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlCreatorObservers()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The method Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlCreatorObservers() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The method `Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlCreatorObservers()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The factory method attachUrlCreatorObservers() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The factory method `attachUrlCreatorObservers()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The method Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlUpdaterObservers() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The method `Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlUpdaterObservers()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The method Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlUpdaterObservers() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The method `Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlUpdaterObservers()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The factory method attachUrlUpdaterObservers() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The factory method `attachUrlUpdaterObservers()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The method Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlDeleterObservers() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The method `Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlDeleterObservers()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The method Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlDeleterObservers() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The method `Spryker\\Zed\\Url\\Business\\UrlBusinessFactory::attachUrlDeleterObservers()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
-        "description": "\n      Factories: The factory method attachUrlDeleterObservers() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlBusinessFactory.php",
+        "description": "Factories: The factory method `attachUrlDeleterObservers()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Url\\Business\\UrlFacade::createUrl() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::createUrl()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
         "rule": "FacadeNoLogicRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Url\\Business\\UrlFacade::legacyCreateUrl()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::legacyCreateUrl()()` is not public which violates rule \"A facade must only contain public methods.\"",
         "rule": "AllMethodsPublicInFacadeRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Url\\Business\\UrlFacade::hasUrl() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::hasUrl()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
         "rule": "FacadeNoLogicRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Url\\Business\\UrlFacade::legacyHasUrl()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::legacyHasUrl()()` is not public which violates rule \"A facade must only contain public methods.\"",
         "rule": "AllMethodsPublicInFacadeRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Url\\Business\\UrlFacade::deleteUrlRedirect() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::deleteUrlRedirect()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
         "rule": "FacadeNoLogicRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Url/src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method \"Spryker\\Zed\\Url\\Business\\UrlFacade::legacyDeleteUrlRedirect()\" is not public which violates rule \"A facade must only contain public methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::legacyDeleteUrlRedirect()()` is not public which violates rule \"A facade must only contain public methods.\"",
         "rule": "AllMethodsPublicInFacadeRule",
         "ruleset": "Spryker Zed",
         "priority": "1"

@@ -1,15 +1,15 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Dependency/Service/SchedulerJenkinsToUtilEncodingServiceInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'decodeJson' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/SchedulerJenkins/Dependency/Service/SchedulerJenkinsToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/SchedulerJenkins/src/Spryker/Zed/SchedulerJenkins/Dependency/TwigEnvironment/SchedulerJenkinsToTwigEnvironmentInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'render' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/SchedulerJenkins/Dependency/TwigEnvironment/SchedulerJenkinsToTwigEnvironmentInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `render()`. 1 params expexted but got 2. Got `array $options` but expected to be `array $context`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/TaxProductStorage/Dependency/Client/TaxProductStorageToStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/TaxProductStorage/Dependency/Service/TaxProductStorageToSynchronizationServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/TaxProductStorage/Dependency/Facade/TaxProductStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

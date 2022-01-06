@@ -1,1 +1,107 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/ProductSet/Dependency/Client/ProductSetToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductSet/Dependency/Client/ProductSetToStorageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductSet/Dependency/Client/ProductSetToStorageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getMulti()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToProductImageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductImageSetById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToProductImageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `saveProductImageSet()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToProductImageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteProductImageSet()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchDeleted()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToUrlInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToUrlInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToUrlInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToUrlInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `activateUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/Facade/ProductSetToUrlInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deactivateUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/QueryContainer/ProductSetToProductImageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProductImageSet()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSet/Dependency/QueryContainer/ProductSetToUrlInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryUrls()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

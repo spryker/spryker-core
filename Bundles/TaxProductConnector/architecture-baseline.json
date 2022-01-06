@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/TaxProductConnector/Dependency/Facade/TaxProductConnectorToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchProductActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/TaxProductConnector/Dependency/Facade/TaxProductConnectorToTaxInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getDefaultTaxCountryIso2Code()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/TaxProductConnector/Dependency/Facade/TaxProductConnectorToTaxInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getDefaultTaxRate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

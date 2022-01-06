@@ -1,1 +1,72 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToEventFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToGlossaryInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteTranslationsByFkKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToGlossaryInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToGlossaryInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToGlossaryInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `saveGlossaryKeyTranslations()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAvailableLocales()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/Facade/CmsBlockToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchDeleted()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlock/Dependency/QueryContainer/CmsBlockToGlossaryQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

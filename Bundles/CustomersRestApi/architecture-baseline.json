@@ -1,8 +1,92 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToSessionClientInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'set' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `registerCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `sendPasswordRestoreMail()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `restorePassword()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createAddressAndUpdateCustomerDefaultAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateAddressAndCustomerDefaultAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateCustomerPassword()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteAddress()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `anonymizeCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToSessionClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomersRestApi/Dependency/Facade/CustomersRestApiToCustomerFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

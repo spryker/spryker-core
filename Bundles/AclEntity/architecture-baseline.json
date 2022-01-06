@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/AclEntity/Dependency/Facade/AclEntityToAclFacadeBridgeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getUserRoles()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclEntity/Dependency/Facade/AclEntityToUserFacadeBridgeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclEntity/Dependency/Facade/AclEntityToUserFacadeBridgeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasCurrentUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

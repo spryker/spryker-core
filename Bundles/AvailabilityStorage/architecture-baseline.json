@@ -1,1 +1,51 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/AvailabilityStorage/Dependency/Client/AvailabilityStorageToStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/AvailabilityStorage/Dependency/Client/AvailabilityStorageToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/AvailabilityStorage/Dependency/Service/AvailabilityStorageToSynchronizationServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AvailabilityStorage/Dependency/Facade/AvailabilityStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AvailabilityStorage/Dependency/Facade/AvailabilityStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AvailabilityStorage/Dependency/QueryContainer/AvailabilityStorageToAvailabilityQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryAllAvailabilityAbstracts()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AvailabilityStorage/Dependency/QueryContainer/AvailabilityStorageToProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

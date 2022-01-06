@@ -1,133 +1,175 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
-        "description": "\n      Factories: The factory method setContainer() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "Factories: The factory method `setContainer()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
-        "description": "\n      Factories: The factory method Spryker\\Service\\Kernel\\AbstractServiceFactory::getProvidedDependency() contains 1 new statements which violates rule \"A `get*()` method in factories must not contain a `new` keyword.\"\n    ",
+        "fileName": "src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "Factories: The factory method `Spryker\\Service\\Kernel\\AbstractServiceFactory::getProvidedDependency()()` contains 1 new statements which violates rule \"A `get*()` method in factories must not contain a `new` keyword.\"",
         "rule": "FactoryGetContainNoNewRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
-        "description": "\n      Factories: The factory method resolveDependencyProvider() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "Factories: The factory method `resolveDependencyProvider()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
-        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Service/Kernel/AbstractServiceFactory.php",
+        "description": "Factories: The factory method `provideExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
-        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Yves/Kernel/Dependency/Messenger/KernelToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Kernel/Dependency/Messenger/KernelToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Kernel/Dependency/Messenger/KernelToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
+        "description": "Factories: The factory method `provideExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
-        "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractBusinessFactory.php",
+        "description": "Factories: The factory method `injectExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The are properties in class Spryker\\Zed\\Kernel\\Business\\AbstractFacade which violates rule \"A facade must not have properties. It must also not contain any instantiations, only delegation.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: There are properties in class `Spryker\\Zed\\Kernel\\Business\\AbstractFacade` which violates rule \"A facade must not have properties. It must also not contain any instantiations, only delegation.\"",
         "rule": "FacadeRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::setFactory() is using an invalid return type \"$this\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Kernel\\Business\\AbstractFacade::setFactory()()` is using an invalid return type `$this` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
         "rule": "FacadeNoLogicRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\Business\\BusinessFactoryInterface\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactory()()` is using an invalid return type `\\Spryker\\Zed\\Kernel\\Business\\BusinessFactoryInterface` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::resolveFactory() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\Business\\AbstractBusinessFactory\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Kernel\\Business\\AbstractFacade::resolveFactory()()` is using an invalid return type `\\Spryker\\Zed\\Kernel\\Business\\AbstractBusinessFactory` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver() uses \"new\" to instantiate an object which violates rule \"No instantiations with 'new'\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver()()` uses `new` to instantiate an object which violates rule \"No instantiations with 'new'\"",
         "rule": "FacadeRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver() is using an invalid return type \"\\Spryker\\Zed\\Kernel\\ClassResolver\\Business\\BusinessFactoryResolver\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Kernel\\Business\\AbstractFacade::getFactoryResolver()()` is using an invalid return type `\\Spryker\\Zed\\Kernel\\ClassResolver\\Business\\BusinessFactoryResolver` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
-        "description": "\n      Factories: The factory method resolveFacade() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "Factories: The factory method `resolveFacade()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
-        "description": "\n      Factories: The factory method Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory::getFacadeResolver() contains 1 new statements which violates rule \"A `get*()` method in factories must not contain a `new` keyword.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "Factories: The factory method `Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory::getFacadeResolver()()` contains 1 new statements which violates rule \"A `get*()` method in factories must not contain a `new` keyword.\"",
         "rule": "FactoryGetContainNoNewRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
-        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "Factories: The factory method `provideExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
-        "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
+        "description": "Factories: The factory method `injectExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
-        "description": "\n      Factories: The factory method provideExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Dependency/Facade/KernelToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Kernel/Dependency/Facade/KernelToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Kernel/Dependency/Facade/KernelToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
+        "description": "Factories: The factory method `provideExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
-        "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
+        "description": "Factories: The factory method `injectExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"

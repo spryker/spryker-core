@@ -1,78 +1,99 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
-        "description": "\n      Bridges: The bridge has incorrect method 'setFrom' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToGlossaryInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToGlossaryInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: The bridge has incorrect method signature for `setFrom()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
-        "description": "\n      Bridges: The bridge has incorrect method 'addTo' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: The bridge has incorrect method signature for `addTo()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'setFrom' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setSubject()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'addTo' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setFrom()`. 1 params expexted but got 2. Got `$name` but expected to be `$name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'addBcc' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addTo()`. 1 params expexted but got 2. Got `$name` but expected to be `$name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'setHtmlContent' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setHtmlContent()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'setTextContent' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setTextContent()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'send' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `send()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'attach' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `attach()`. Got `string $attachmentUrl` but expected to be `Swift_Mime_SimpleMimeEntity $entity`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Renderer/MailToRendererInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'render' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Renderer/MailToRendererInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `render()`. 1 params expexted but got 2. Got `array $options` but expected to be `array $context`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Renderer/MailToRendererInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'setLocaleTransfer' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Renderer/MailToRendererInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `setLocaleTransfer()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

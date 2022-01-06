@@ -1,14 +1,14 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Graph/src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
-        "description": "\n      Factories: The factory method validateAdapterName() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
+        "description": "Factories: The factory method `validateAdapterName()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Graph/src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
-        "description": "\n      Factories: The factory method validateAdapterClass() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
+        "fileName": "src/Spryker/Zed/Graph/Communication/GraphCommunicationFactory.php",
+        "description": "Factories: The factory method `validateAdapterClass()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
         "ruleset": "Spryker",
         "priority": "1"

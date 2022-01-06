@@ -1,1 +1,65 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/Wishlist/Dependency/Client/WishlistToCartInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Wishlist/Dependency/Client/WishlistToCartInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Wishlist/Dependency/Client/WishlistToCartInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Wishlist/Dependency/Client/WishlistToCustomerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Wishlist/Dependency/Client/WishlistToPriceProductClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `resolveProductPrice()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Wishlist/Dependency/Client/WishlistToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductConcreteCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Wishlist/Dependency/Facade/WishlistToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Wishlist/Dependency/Facade/WishlistToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Wishlist/Dependency/QueryContainer/WishlistToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProduct()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

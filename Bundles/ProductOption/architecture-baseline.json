@@ -1,1 +1,275 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/ProductOption/Dependency/Client/ProductOptionToCurrencyClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOption/Dependency/Client/ProductOptionToPriceClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentPriceMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductOption/Dependency/Client/ProductOptionToStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromIsoCode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToEventFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createAndTouchTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateAndTouchTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleByCode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `convertDecimalToInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithoutSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromFloat()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromString()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToPriceFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getGrossPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToPriceFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getNetPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToPriceFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getDefaultPriceMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getTaxAmountFromGrossPrice()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getDefaultTaxCountryIso2Code()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getDefaultTaxRate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getTaxSets()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getTaxSet()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTouchFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/QueryContainer/ProductOptionToCountryQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryCountries()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/QueryContainer/ProductOptionToSalesQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `querySalesOrderItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Service/ProductOptionToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

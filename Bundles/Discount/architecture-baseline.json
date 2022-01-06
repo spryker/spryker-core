@@ -1,22 +1,106 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Service/Discount/Calculator/Calculator.php",
-        "description": "\n      Access: Method Spryker\\Service\\Discount\\Calculator\\Calculator::getDiscountCalculatorPlugin() accesses Spryker\\Zed\\Discount\\Dependency\\Plugin\\DiscountCalculatorPluginInterface which violates rule \"No call from Service to Zed\"\n    ",
+        "fileName": "src/Spryker/Service/Discount/Calculator/Calculator.php",
+        "description": "Access: Method Spryker\\Service\\Discount\\Calculator\\Calculator::getDiscountCalculatorPlugin() accesses Spryker\\Zed\\Discount\\Dependency\\Plugin\\DiscountCalculatorPluginInterface which violates rule \"No call from Service to Zed\"",
         "rule": "LayerAccessRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Service/Discount/DiscountServiceFactory.php",
-        "description": "\n      Access: Method Spryker\\Service\\Discount\\DiscountServiceFactory::getZedCalculatorPlugins() accesses Spryker\\Zed\\Kernel\\ClassResolver\\Business\\BusinessFactoryResolver which violates rule \"No call from Service to Zed\"\n    ",
+        "fileName": "src/Spryker/Service/Discount/DiscountServiceFactory.php",
+        "description": "Access: Method Spryker\\Service\\Discount\\DiscountServiceFactory::getZedCalculatorPlugins() accesses Spryker\\Zed\\Kernel\\ClassResolver\\Business\\BusinessFactoryResolver which violates rule \"No call from Service to Zed\"",
         "rule": "LayerAccessRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'trans' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStoreWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMessengerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithoutSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `convertDecimalToInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `convertIntegerToDecimal()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `?string $domain`. Got `$locale` but expected to be `?string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

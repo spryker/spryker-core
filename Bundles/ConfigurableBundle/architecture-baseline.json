@@ -1,1 +1,86 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToEventFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToProductImageFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteProductImageSet()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Service/ConfigurableBundleToUtilTextServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `generateSlug()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

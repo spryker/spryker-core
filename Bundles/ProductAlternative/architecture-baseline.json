@@ -1,14 +1,42 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativePersistenceFactory.php",
-        "description": "\n      ProductAlternativePersistenceFactory::createProductPropelQuery() in Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductPropelQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "fileName": "src/Spryker/Zed/ProductAlternative/Dependency/Facade/ProductAlternativeToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAlternative/Dependency/Facade/ProductAlternativeToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isProductActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAlternative/Dependency/Facade/ProductAlternativeToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractIdBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAlternative/Dependency/Facade/ProductAlternativeToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductConcreteIdBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativePersistenceFactory.php",
+        "description": "`ProductAlternativePersistenceFactory::createProductPropelQuery()()` in `Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductPropelQuery()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativePersistenceFactory.php",
-        "description": "\n      ProductAlternativePersistenceFactory::createProductAbstractPropelQuery() in Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductAbstractPropelQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "fileName": "src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativePersistenceFactory.php",
+        "description": "`ProductAlternativePersistenceFactory::createProductAbstractPropelQuery()()` in `Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductAbstractPropelQuery()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"

@@ -1,15 +1,57 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/Facade/CmsBlockCategoryConnectorToTouchInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'touchActive' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/Facade/CmsBlockCategoryConnectorToCollectorInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `runCollector()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/Facade/CmsBlockCategoryConnectorToTouchInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'touchDeleted' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/Facade/CmsBlockCategoryConnectorToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/Facade/CmsBlockCategoryConnectorToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/Facade/CmsBlockCategoryConnectorToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchDeleted()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/QueryContainer/CmsBlockCategoryConnectorToCategoryQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryCategory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/QueryContainer/CmsBlockCategoryConnectorToCategoryQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryCategoryById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/QueryContainer/CmsBlockCategoryConnectorToCategoryQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryCategoryTemplate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockCategoryConnector/Dependency/QueryContainer/CmsBlockCategoryConnectorToCmsBlockQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryCmsBlockWithTemplate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -1,1 +1,44 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/WishlistsRestApi/Dependency/Client/WishlistsRestApiToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `call()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/WishlistsRestApi/Dependency/Client/WishlistsRestApiToWishlistClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `validateAndCreateWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `validateAndUpdateWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

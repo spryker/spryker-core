@@ -1,1 +1,107 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToCurrencyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStoresWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToCurrencyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToLocaleFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `convertIntegerToDecimal()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToMoneyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `convertDecimalToInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getPriceTypeValues()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductConcreteById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductConcreteIdBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `combineRawProductAttributes()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToRouterFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getMerchantPortalRouter()`. Invalid return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Service/ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Service/ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

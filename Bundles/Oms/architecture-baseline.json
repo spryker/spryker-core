@@ -1,50 +1,134 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::sumReservedProductQuantitiesForSku() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::sumReservedProductQuantitiesForSku()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSku() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSku()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSkus() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSkus()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getProcessEntity() is using an invalid return type \"\\Orm\\Zed\\Oms\\Persistence\\SpyOmsOrderProcess\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::getProcessEntity()()` is using an invalid return type `\\Orm\\Zed\\Oms\\Persistence\\SpyOmsOrderProcess` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getInitialStateEntity() is using an invalid return type \"\\Orm\\Zed\\Oms\\Persistence\\SpyOmsOrderItemState\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::getInitialStateEntity()()` is using an invalid return type `\\Orm\\Zed\\Oms\\Persistence\\SpyOmsOrderItemState` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Oms\\Business\\OmsFacade::getReservationsFromOtherStores() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::getReservationsFromOtherStores()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilTextBridge.php",
-        "description": "\n      Bridges: The bridge has incorrect method 'generateRandomString' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToMailInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `handleMail()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToSalesInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStoresWithSharedPersistence()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/QueryContainer/OmsToSalesInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `querySalesOrderItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/QueryContainer/OmsToSalesInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `querySalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/QueryContainer/OmsToSalesInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `querySalesOrderItemsByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilNetworkInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getHostName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilSanitizeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `escapeHtml()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilTextBridge.php",
+        "description": "Bridges: The bridge has incorrect method signature for `generateRandomString()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilTextInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `generateRandomString()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -1,1 +1,79 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createNavigation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateNavigation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteNavigation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createNavigationNode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateNavigationNode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findNavigationNode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteNavigationNode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findNavigationTree()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/NavigationGui/Dependency/Facade/NavigationGuiToNavigationInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateNavigationTreeHierarchy()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

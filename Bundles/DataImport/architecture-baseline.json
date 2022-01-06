@@ -1,8 +1,106 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Dependency/Propel/DataImportToPropelConnectionInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'endTransaction' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Client/DataImportToQueueClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `sendMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Client/DataImportToQueueClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `receiveMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Client/DataImportToQueueClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `acknowledge()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Client/DataImportToQueueClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `reject()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Client/DataImportToQueueClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `handleError()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Facade/DataImportToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `bulkTouchSetActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Facade/DataImportToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `bulkTouchSetInactive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Facade/DataImportToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `bulkTouchSetDeleted()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Propel/DataImportToPropelConnectionInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `inTransaction()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Propel/DataImportToPropelConnectionInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `beginTransaction()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Propel/DataImportToPropelConnectionInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `endTransaction()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Propel/DataImportToPropelConnectionInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `rollBack()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Service/DataImportToUtilDataReaderServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getYamlBatchIterator()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Service/DataImportToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/DataImport/Dependency/Service/DataImportToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

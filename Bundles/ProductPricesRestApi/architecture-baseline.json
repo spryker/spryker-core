@@ -1,1 +1,44 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Glue/ProductPricesRestApi/Dependency/Client/ProductPricesRestApiToCurrencyClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductPricesRestApi/Dependency/Client/ProductPricesRestApiToPriceClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentPriceMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductPricesRestApi/Dependency/Client/ProductPricesRestApiToPriceClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getGrossPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductPricesRestApi/Dependency/Client/ProductPricesRestApiToPriceClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getNetPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductPricesRestApi/Dependency/Client/ProductPricesRestApiToPriceClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getPriceModes()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductPricesRestApi/Dependency/Client/ProductPricesRestApiToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

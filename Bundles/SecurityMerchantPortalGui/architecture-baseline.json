@@ -1,8 +1,15 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Dependency/Facade/SecurityMerchantPortalGuiToMerchantUserFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'authorizeMerchantUser' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Dependency/Facade/SecurityMerchantPortalGuiToMerchantUserFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `authorizeMerchantUser()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Dependency/Facade/SecurityMerchantPortalGuiToMessengerFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

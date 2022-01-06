@@ -1,22 +1,36 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Facade/ProductCategoryFilterToTouchFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'touchActive' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/ProductCategoryFilter/Dependency/Client/ProductCategoryFilterToStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Facade/ProductCategoryFilterToTouchFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'touchDeleted' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/ProductCategoryFilter/Dependency/Facade/ProductCategoryFilterToTouchFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Service/ProductCategoryFilterToUtilEncodingServiceInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'decodeJson' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/ProductCategoryFilter/Dependency/Facade/ProductCategoryFilterToTouchFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchDeleted()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilter/Dependency/Service/ProductCategoryFilterToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilter/Dependency/Service/ProductCategoryFilterToUtilEncodingServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

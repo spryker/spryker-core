@@ -1,9 +1,100 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Availability\\Business\\AvailabilityFacade::calculateAvailabilityForProductWithStore() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Client/Availability/Dependency/Client/AvailabilityToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Availability/Dependency/Client/AvailabilityToStorageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Availability/Dependency/Client/AvailabilityToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `call()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Availability\\Business\\AvailabilityFacade::calculateAvailabilityForProductWithStore()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToEventFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStockFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isNeverOutOfStockForStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStockFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStoreToWarehouseMapping()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStoreById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToTouchFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/QueryContainer/AvailabilityToProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

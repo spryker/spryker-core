@@ -1,22 +1,36 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/Dependency/Client/AgentToSessionClientInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'has' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/Agent/Dependency/Client/AgentToCustomerClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `logout()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/Dependency/Client/AgentToSessionClientInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'get' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/Agent/Dependency/Client/AgentToSessionClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `has()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/Dependency/Client/AgentToSessionClientInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'set' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/Agent/Dependency/Client/AgentToSessionClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Agent/Dependency/Client/AgentToSessionClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Agent/Dependency/Client/AgentToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `call()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -1,15 +1,99 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToMoneyInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'fromInteger' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'removeAbstractProductRelationsForLabel' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToMoneyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findPriceBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findLabelById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findAllLabels()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createLabel()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `updateLabel()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `addAbstractProductRelationsForLabel()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `removeAbstractProductRelationsForLabel()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractRelationsByIdProductLabel()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/QueryContainer/ProductLabelGuiToProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

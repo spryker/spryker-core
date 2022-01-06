@@ -1,8 +1,29 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductOptionCartConnector/src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'getProductOptionValue' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToPriceFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getGrossPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToPriceFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getDefaultPriceMode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductOptionValue()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getProductOptionValueById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

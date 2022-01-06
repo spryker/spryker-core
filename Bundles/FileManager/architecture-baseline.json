@@ -1,7 +1,147 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Persistence/FileManagerPersistenceFactory.php",
-        "description": "\n      FileManagerPersistenceFactory::createFileQuery() in Spryker\\Zed\\FileManager\\Persistence\\FileManagerPersistenceFactory::createFileQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "fileName": "src/Spryker/Service/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `read()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `readStream()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getMimeType()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getMimeType()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getTimestamp()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getSize()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `isPrivate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `read()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `listContents()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `has()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `markAsPrivate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `markAsPublic()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `createDirectory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `deleteDirectory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `copy()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `delete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `rename()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `write()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `readStream()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `writeStream()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManager/Persistence/FileManagerPersistenceFactory.php",
+        "description": "`FileManagerPersistenceFactory::createFileQuery()()` in `Spryker\\Zed\\FileManager\\Persistence\\FileManagerPersistenceFactory::createFileQuery()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"

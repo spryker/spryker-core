@@ -1,8 +1,36 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/MerchantOms/src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToMerchantSalesOrderFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'findMerchantOrder' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `triggerForNewStateMachineItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `triggerEventForItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getManualEventsForStateMachineItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getManualEventsForStateMachineItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Service/MerchantOmsToUtilDataReaderServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCsvReader()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

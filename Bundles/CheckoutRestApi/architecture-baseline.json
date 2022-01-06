@@ -1,1 +1,44 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/CheckoutRestApi/Dependency/Client/CheckoutRestApiToZedRequestClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `call()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CheckoutRestApi/Dependency/Client/CheckoutRestApiToGlossaryStorageClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToCalculationFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `recalculateQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToCartFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `validateQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToCheckoutFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `placeOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToPaymentFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAvailableMethods()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

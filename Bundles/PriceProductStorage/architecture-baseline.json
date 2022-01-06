@@ -1,29 +1,106 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/PriceProductStorage/src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'findProductAbstractPrices' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/PriceProductStorage/Dependency/Client/PriceProductStorageToStorageInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/PriceProductStorage/src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'findProductConcretePrices' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/PriceProductStorage/Dependency/Client/PriceProductStorageToStoreClientInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/PriceProductStorage/src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'findProductAbstractPricesWithoutPriceExtraction' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Client/PriceProductStorage/Dependency/Service/PriceProductStorageToSynchronizationServiceInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/PriceProductStorage/src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
-        "description": "\n      Bridges: The bridge interface has incorrect method 'findProductConcretePricesWithoutPriceExtraction' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
-        "rule": "BridgeMethodsRule",
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToEventBehaviorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractPrices()`. Got `$idProductAbstract` but expected to be `int $idProductAbstract`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductConcretePrices()`. Got `$idProductConcrete` but expected to be `int $idProductConcrete`. Got `$idProductAbstract` but expected to be `int $idProductAbstract`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `groupPriceProductCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractPricesWithoutPriceExtraction()`. Got `$idProductAbstract` but expected to be `int $idProductAbstract`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductConcretePricesWithoutPriceExtraction()`. Got `$idProductConcrete` but expected to be `int $idProductConcrete`. Got `$idProductAbstract` but expected to be `int $idProductAbstract`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/QueryContainer/PriceProductStorageToPriceProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryPriceProduct()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/QueryContainer/PriceProductStorageToProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/QueryContainer/PriceProductStorageToProductQueryContainerInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `queryProduct()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

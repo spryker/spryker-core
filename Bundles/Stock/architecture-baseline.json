@@ -1,23 +1,65 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/StockFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Stock\\Business\\StockFacade::calculateStockForProduct() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Stock/Business/StockFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Stock\\Business\\StockFacade::calculateStockForProduct()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/StockFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Stock\\Business\\StockFacade::calculateProductStockForStore() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Stock/Business/StockFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Stock\\Business\\StockFacade::calculateProductStockForStore()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/StockFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Stock\\Business\\StockFacade::calculateProductAbstractStockForStore() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "fileName": "src/Spryker/Zed/Stock/Business/StockFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Stock\\Business\\StockFacade::calculateProductAbstractStockForStore()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractIdBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `findProductConcreteIdBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `hasProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToStoreFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToTouchInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]
