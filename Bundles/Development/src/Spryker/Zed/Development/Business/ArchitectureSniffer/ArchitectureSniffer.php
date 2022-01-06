@@ -329,7 +329,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             foreach ($violations as $violation) {
                 $result[] = [
                     static::VIOLATION_FIELD_NAME_FILENAME => $this->normalizeProjectPath($file),
-                    static::VIOLATION_FIELD_NAME_DESCRIPTION => $violation['_'],
+                    static::VIOLATION_FIELD_NAME_DESCRIPTION => $this->cleanDescription($violation['_']),
                     static::VIOLATION_FIELD_NAME_RULE => $violation['rule'],
                     static::VIOLATION_FIELD_NAME_RULESET => $violation['ruleset'],
                     static::VIOLATION_FIELD_NAME_PRIORITY => $violation['priority'],
@@ -348,6 +348,16 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function normalizeProjectPath(string $path): string
     {
         return str_replace(APPLICATION_ROOT_DIR, '', $path);
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return string
+     */
+    protected function cleanDescription(string $description): string
+    {
+        return trim($description);
     }
 
     /**

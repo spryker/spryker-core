@@ -372,19 +372,22 @@ class CodeArchitectureSnifferConsole extends Console
 
             foreach ($violationsArray as $violation) {
                 if ($type === ArchitectureSniffer::NAME_VISIBLE_VIOLATIONS) {
-                    $output->writeln('<error> ' . trim($violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_DESCRIPTION]) . '<error> ', OutputInterface::VERBOSITY_VERBOSE);
+                    $output->writeln('<error> - ' . trim($violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_DESCRIPTION]) . '</error> ', OutputInterface::VERBOSITY_VERBOSE);
                 } else {
                     $output->writeln(' - ' . trim($violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_DESCRIPTION]), OutputInterface::VERBOSITY_VERBOSE);
                 }
 
-                $output->writeln(' ' . $violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_RULESET] . ' > ' . $violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_RULE], OutputInterface::VERBOSITY_VERBOSE);
+                $ruleset = $violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_RULESET];
+                $rule = $violation[ArchitectureSniffer::VIOLATION_FIELD_NAME_RULE];
+                $filename = pathinfo($violation['fileName'], PATHINFO_FILENAME);
+                $output->writeln('   ' . $ruleset . ' > ' . $rule . ' > ' . $filename, OutputInterface::VERBOSITY_VERBOSE);
                 $count++;
             }
 
             $this->displayViolationsCountMessage($output, $count, ($type === ArchitectureSniffer::NAME_IGNORED_VIOLATIONS));
         }
 
-            return count($violations[ArchitectureSniffer::NAME_VISIBLE_VIOLATIONS]);
+        return count($violations[ArchitectureSniffer::NAME_VISIBLE_VIOLATIONS]);
     }
 
     /**
