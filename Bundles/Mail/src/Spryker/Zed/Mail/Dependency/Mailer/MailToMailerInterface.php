@@ -18,19 +18,19 @@ interface MailToMailerInterface
 
     /**
      * @param string $email
-     * @param string $name
+     * @param string|null $name
      *
      * @return void
      */
-    public function setFrom($email, $name);
+    public function setFrom($email, $name = null);
 
     /**
      * @param string $email
-     * @param string $name
+     * @param string|null $name
      *
      * @return void
      */
-    public function addTo($email, $name);
+    public function addTo($email, $name = null);
 
     /**
      * @param string $email

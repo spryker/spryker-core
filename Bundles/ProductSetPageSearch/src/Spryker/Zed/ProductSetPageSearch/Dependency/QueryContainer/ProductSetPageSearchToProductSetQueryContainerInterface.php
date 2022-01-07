@@ -19,11 +19,11 @@ interface ProductSetPageSearchToProductSetQueryContainerInterface
     /**
      * @api
      *
-     * @param array<int> $ids
+     * @param array<int> $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryProductSetByIds(array $ids);
+    public function queryProductSetByIds(array $productSetIds);
 
     /**
      * @api

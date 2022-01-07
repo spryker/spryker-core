@@ -13,21 +13,21 @@ use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 interface ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function unmarkProductAsDiscontinued(
-        ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function markProductAsDiscontinued(
-        ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
     /**

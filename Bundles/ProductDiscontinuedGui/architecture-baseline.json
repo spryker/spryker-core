@@ -12,19 +12,5 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
-        "description": "Bridges: The bridge has incorrect method signature for `unmarkProductAsDiscontinued()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
-        "description": "Bridges: The bridge has incorrect method signature for `markProductAsDiscontinued()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
     }
 ]

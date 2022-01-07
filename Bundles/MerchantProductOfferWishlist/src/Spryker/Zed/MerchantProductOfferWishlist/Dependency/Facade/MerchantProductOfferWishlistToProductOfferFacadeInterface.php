@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 interface MerchantProductOfferWishlistToProductOfferFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteria): ?ProductOfferTransfer;
+    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ?ProductOfferTransfer;
 }

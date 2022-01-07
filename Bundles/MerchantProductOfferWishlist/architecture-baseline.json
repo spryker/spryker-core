@@ -1,9 +1,1 @@
-[
-    {
-        "fileName": "src/Spryker/Zed/MerchantProductOfferWishlist/Dependency/Facade/MerchantProductOfferWishlistToProductOfferFacadeBridge.php",
-        "description": "Bridges: The bridge has incorrect method signature for `findOne()`. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    }
-]
+[]

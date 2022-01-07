@@ -27,7 +27,7 @@ class OmsToUtilTextBridge implements OmsToUtilTextInterface
      *
      * @return string
      */
-    public function generateRandomString($length = 31)
+    public function generateRandomString($length)
     {
         return $this->utilTextService->generateRandomString($length);
     }

@@ -26,12 +26,12 @@ class MerchantProductOfferWishlistToProductOfferFacadeBridge implements Merchant
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ?ProductOfferTransfer
     {
-        return $this->productOfferFacade->findOne($productOfferCriteriaFilter);
+        return $this->productOfferFacade->findOne($productOfferCriteriaTransfer);
     }
 }
