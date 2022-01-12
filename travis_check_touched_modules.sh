@@ -46,7 +46,7 @@ validateModuleCodeSniffer() {
               output=$(runCommand $module $RULESET)
 
               if [ $? -ne 0 ]; then
-                  echo $output
+                  echo "${output}"
                   EXITCODE=1
               fi
 
@@ -65,7 +65,7 @@ validateModuleCodeSniffer() {
 
           output=$(runCommand $module $RULESET)
           if [ $? -ne 0 ]; then
-              echo $output
+              echo "${output}"
               EXITCODE=1
           fi
       done
