@@ -9,6 +9,7 @@ namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use InvalidArgumentException;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,21 +89,35 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     /**
      * @param string $authorizationToken
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string|null
      */
     protected function extractToken(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken)[1] ?? null;
+        $result = preg_split('/\s+/', $authorizationToken);
+        if ($result === false) {
+            throw new InvalidArgumentException('Not a valid token, cannot `preg_split()` it.');
+        }
+
+        return $result[1] ?? null;
     }
 
     /**
      * @param string $authorizationToken
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string|null
      */
     protected function extractTokenType(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken)[0] ?? null;
+        $result = preg_split('/\s+/', $authorizationToken);
+        if ($result === false) {
+            throw new InvalidArgumentException('Not a valid token, cannot `preg_split()` it.');
+        }
+
+        return $result[0] ?? null;
     }
 
     /**

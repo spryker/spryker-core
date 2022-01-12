@@ -9,6 +9,7 @@ namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthAccessTokenDataTransfer;
 use Generated\Shared\Transfer\RestUserTransfer;
+use InvalidArgumentException;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToOauthServiceInterface;
 use Spryker\Glue\AuthRestApi\Dependency\Service\AuthRestApiToUtilEncodingServiceInterface;
@@ -91,11 +92,18 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
     /**
      * @param string $authorizationToken
      *
+     * @throws \InvalidArgumentException
+     *
      * @return array
      */
     protected function extractToken(string $authorizationToken): array
     {
-        return preg_split('/\s+/', $authorizationToken);
+        $result = preg_split('/\s+/', $authorizationToken);
+        if ($result === false) {
+            throw new InvalidArgumentException('Not a valid token, cannot `preg_split()` it.');
+        }
+
+        return $result;
     }
 
     /**
@@ -125,6 +133,7 @@ class AccessTokenUserFinder implements AccessTokenUserFinderInterface
         OauthAccessTokenDataTransfer $oauthAccessTokenDataTransfer,
         RestRequestInterface $restRequest
     ): RestUserTransfer {
+        /** @var array<string, mixed> $customerIdentifier */
         $customerIdentifier = $this->utilEncodingService->decodeJson(
             $oauthAccessTokenDataTransfer->getOauthUserId(),
             true,
