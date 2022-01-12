@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchInterface;
 use Spryker\Client\ProductReview\ProductReviewDependencyProvider;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -46,6 +47,46 @@ class ProductReviewClientTest extends Unit
             $this->assertEquals($productViewsExpended[$productId]->getIdProductAbstract(), $productId);
             $this->assertEquals($productViewsExpended[$productId]->getRating()->getAverageRating(), $testData['averageRating']);
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetBulkProductReviewsFromSearchEnsureBulkPluginStackExecution(): void
+    {
+        // Arrange
+        $resultFormatterPluginMock = $this->getResultFormatterPluginMock();
+        $this->tester->setDependency(ProductReviewDependencyProvider::PLUGINS_PRODUCT_REVIEWS_BULK_SEARCH_RESULT_FORMATTER, [
+            $resultFormatterPluginMock,
+        ]);
+
+        // Assert
+        $productReviewToSearchBridgeMock = $this->getMockBuilder(ProductReviewToSearchInterface::class)->getMock();
+
+        $productReviewToSearchBridgeMock->method('expandQuery')->willReturn($this->createQueryMock());
+        $productReviewToSearchBridgeMock->method('search')->willReturnCallback(
+            function (QueryInterface $searchQuery, array $resultFormatters = []) use ($resultFormatterPluginMock) {
+                $this->assertCount(1, $resultFormatters);
+                $this->assertSame($resultFormatters[0], $resultFormatterPluginMock);
+
+                return $this->tester->createClinetSearchMockResponse();
+            },
+        );
+
+        $this->tester->setDependency(ProductReviewDependencyProvider::CLIENT_SEARCH, $productReviewToSearchBridgeMock);
+
+        // Act
+        $this->tester->getClient()->getBulkProductReviewsFromSearch($this->tester->createBulkProductReviewSearchRequestTransfer());
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getResultFormatterPluginMock(): ResultFormatterPluginInterface
+    {
+        return $this->getMockBuilder(ResultFormatterPluginInterface::class)
+            ->onlyMethods(['formatResult', 'getName'])
+            ->getMock();
     }
 
     /**

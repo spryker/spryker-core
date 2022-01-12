@@ -64,7 +64,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     public function getBulkProductReviewsFromSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
     {
         $searchQuery = $this->getFactory()->createBulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer);
-        $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
+        $resultFormatters = $this->getFactory()->getProductReviewsBulkSearchResultFormatterPlugins();
 
         return $this->getFactory()
             ->getSearchClient()
