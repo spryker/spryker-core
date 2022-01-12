@@ -263,7 +263,7 @@ class Discount implements DiscountInterface
     protected function isDiscountApplicable(QuoteTransfer $quoteTransfer, SpyDiscount $discountEntity): bool
     {
         if ($this->isDiscountEntityOfTypeVoucher($discountEntity)) {
-            if ($this->voucherValidator->isUsable($discountEntity->getVoucherCode()) === false) {
+            if (!$quoteTransfer->getOrderReference() && $this->voucherValidator->isUsable($discountEntity->getVoucherCode()) === false) {
                 return false;
             }
         }

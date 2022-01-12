@@ -38,7 +38,12 @@ class DiscountCalculator implements DiscountCalculatorInterface
 
         $this->removeCalculatedDiscountsForItems($calculableObjectTransfer);
 
-        $quoteTransfer = (new QuoteTransfer())->fromArray($calculableObjectTransfer->toArray(), true);
+        $quoteTransfer = (new QuoteTransfer())
+            ->fromArray($calculableObjectTransfer->toArray(), true);
+
+        if ($calculableObjectTransfer->getOriginalOrder()) {
+            $quoteTransfer->setOrderReference($calculableObjectTransfer->getOriginalOrderOrFail()->getOrderReference());
+        }
         $quoteTransfer = $this->discountFacade->calculateDiscounts($quoteTransfer);
 
         return $calculableObjectTransfer->fromArray($quoteTransfer->toArray(), true);

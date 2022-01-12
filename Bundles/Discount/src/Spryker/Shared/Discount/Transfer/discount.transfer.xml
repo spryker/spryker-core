@@ -51,6 +51,7 @@
         <property name="priceMode" type="string"/>
         <property name="currency" type="Currency"/>
         <property name="store" type="Store"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="Item">
