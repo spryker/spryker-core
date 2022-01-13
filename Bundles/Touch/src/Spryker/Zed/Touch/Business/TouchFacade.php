@@ -153,7 +153,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use TouchFacadeInterface::cleanTouchEntitiesForDeletedItemEvent() instead.
+     * @deprecated Use {@link cleanTouchEntitiesForDeletedItemEvent()} instead.
      *
      * @return int
      */

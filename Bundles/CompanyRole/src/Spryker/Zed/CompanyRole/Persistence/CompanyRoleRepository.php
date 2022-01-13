@@ -337,7 +337,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
-     * @deprecated Use CompanyRoleRepository::findDefaultCompanyRoleByIdCompany() instead.
+     * @deprecated Use {@link findDefaultCompanyRoleByIdCompany()} instead.
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */

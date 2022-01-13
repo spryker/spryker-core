@@ -42,7 +42,7 @@ class DeleteCompanyUserController extends AbstractController
     protected const PARAM_ID_COMPANY_USER = 'id-company-user';
 
     /**
-     * @deprecated Use DeleteCompanyUserController::deleteConfirmAction() instead.
+     * @deprecated Use {@link deleteConfirmAction()} instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

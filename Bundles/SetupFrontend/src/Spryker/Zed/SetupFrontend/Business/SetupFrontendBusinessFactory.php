@@ -72,7 +72,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link createInstallMultiPathFinderForYves()} instead
+     * @deprecated Use {@link createInstallMultiPathFinderForYves()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
@@ -124,7 +124,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link createInstallMultiPathFinderForZed()} instead
+     * @deprecated Use {@link createInstallMultiPathFinderForZed()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */

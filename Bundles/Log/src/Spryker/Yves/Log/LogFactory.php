@@ -45,7 +45,7 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link createEnvironmentProcessorPublic()} instead
+     * @deprecated Use {@link createEnvironmentProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
@@ -75,7 +75,7 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link createRequestProcessorPublic()} instead
+     * @deprecated Use {@link createRequestProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
@@ -95,7 +95,7 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link createResponseProcessorPublic()} instead
+     * @deprecated Use {@link createResponseProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
@@ -115,7 +115,7 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link createServerProcessorPublic()} instead
+     * @deprecated Use {@link createServerProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
@@ -135,7 +135,7 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link createGuzzleBodyProcessorPublic()} instead
+     * @deprecated Use {@link createGuzzleBodyProcessorPublic()} instead.
      *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
@@ -230,7 +230,7 @@ class LogFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link createBufferedQueueHandlerPublic()} instead
+     * @deprecated Use {@link createBufferedQueueHandlerPublic()} instead.
      *
      * @return \Monolog\Handler\HandlerInterface
      */

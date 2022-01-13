@@ -90,7 +90,7 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
-     * @deprecated Use CartSharerInterface::updateQuotePermissions() instead
+     * @deprecated Use {@link updateQuotePermissions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
@@ -114,7 +114,7 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
-     * @deprecated Use CartSharerInterface::updateQuotePermissions() instead
+     * @deprecated Use {@link updateQuotePermissions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *

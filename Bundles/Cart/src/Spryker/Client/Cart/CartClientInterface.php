@@ -236,7 +236,7 @@ interface CartClientInterface
      *
      * @api
      *
-     * @deprecated Use QuoteClient::setQuote() instead.
+     * @deprecated Use {@link \Spryker\Client\Quote\QuoteClient::setQuote()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

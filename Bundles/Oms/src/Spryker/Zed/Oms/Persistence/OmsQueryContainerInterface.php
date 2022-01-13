@@ -222,7 +222,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @deprecated Use {@link queryGroupedMatrixOrderItems()} instead
+     * @deprecated Use {@link queryGroupedMatrixOrderItems()} instead.
      *
      * @param array $processIds
      * @param array $stateBlacklist

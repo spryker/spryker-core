@@ -62,7 +62,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriter::writeGlossaryStorageCollectionByGlossaryKeyEvents()} instead
+     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriter::writeGlossaryStorageCollectionByGlossaryKeyEvents()} instead.
      *
      * @param array<int> $glossaryKeyIds
      *

@@ -350,7 +350,7 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @deprecated Use ProductTypeHelperInterface::isProductBundleByProductAbstractEntity() instead
+     * @deprecated Use {@link \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface::isProductBundleByProductAbstractEntity()} instead.
      *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *

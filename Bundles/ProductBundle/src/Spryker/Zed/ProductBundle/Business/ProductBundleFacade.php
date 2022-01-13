@@ -259,7 +259,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @deprecated Use {@link saveOrderBundleItems()} instead
+     * @deprecated Use {@link saveOrderBundleItems()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse

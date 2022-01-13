@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShareCartRequestTransfer;
 interface CartSharerInterface
 {
     /**
-     * @deprecated Use CartSharerInterface::updateQuotePermissions() instead
+     * @deprecated Use {@link updateQuotePermissions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *

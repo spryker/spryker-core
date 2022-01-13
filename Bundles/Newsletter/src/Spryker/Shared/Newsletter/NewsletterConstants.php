@@ -28,7 +28,7 @@ interface NewsletterConstants
     public const MERGE_LANGUAGE_HANDLEBARS = 'MERGE_LANGUAGE_HANDLEBARS';
 
     /**
-     * @deprecated Use NewsletterConstants::BASE_URL_YVES instead
+     * @deprecated Use NewsletterConstants::BASE_URL_YVES instead.
      *
      * @var string
      */

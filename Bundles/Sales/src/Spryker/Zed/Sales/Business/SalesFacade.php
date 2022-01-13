@@ -201,7 +201,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::saveSalesOrder()} instead
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::saveSalesOrder()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
