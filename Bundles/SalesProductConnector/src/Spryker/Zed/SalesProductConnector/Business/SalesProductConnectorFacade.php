@@ -25,7 +25,7 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
-     * @deprecated Use {@link saveOrderItemMetadata()} instead
+     * @deprecated Use {@link saveOrderItemMetadata()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse

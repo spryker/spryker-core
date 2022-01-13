@@ -18,7 +18,7 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
 class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
     /**
-     * @deprecated Use GiftCardConfig::getGiftCardOnlyShipmentMethods() instead.
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\GiftCardConfig::getGiftCardOnlyShipmentMethods()} instead.
      *
      * @var string
      */

@@ -39,7 +39,7 @@ interface SharedCartClientInterface
      *
      * @api
      *
-     * @deprecated Use SharedCartClientInterface::updateQuotePermissions() instead
+     * @deprecated Use {@link updateQuotePermissions()} instead.
      *
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *

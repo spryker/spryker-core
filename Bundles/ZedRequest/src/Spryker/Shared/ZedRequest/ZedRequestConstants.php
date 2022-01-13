@@ -25,7 +25,7 @@ interface ZedRequestConstants
     public const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
 
     /**
-     * @deprecated Use {@link ZedRequestConstants::BASE_URL_SSL_ZED_API} instead
+     * @deprecated Use {@link ZedRequestConstants::BASE_URL_SSL_ZED_API} instead.
      *
      * @var string
      */

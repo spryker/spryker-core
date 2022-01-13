@@ -80,7 +80,7 @@ interface ProductListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ProductListFacadeInterface::removeProductList() instead.
+     * @deprecated Use {@link removeProductList()} instead.
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *

@@ -128,7 +128,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createProductBundleOrderSaver instead
+     * @deprecated Use createProductBundleOrderSaver instead.
      *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaverInterface
      */

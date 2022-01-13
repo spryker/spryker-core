@@ -18,7 +18,7 @@ use Propel\Runtime\Map\RelationMap;
 class ShoppingListDataImportHelper extends Module
 {
     /**
-     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead.
      *
      * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
      *
@@ -122,7 +122,7 @@ class ShoppingListDataImportHelper extends Module
     }
 
     /**
-     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead.
      *
      * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
      *

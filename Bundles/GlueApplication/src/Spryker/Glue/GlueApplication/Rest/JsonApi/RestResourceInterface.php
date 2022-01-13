@@ -37,7 +37,7 @@ interface RestResourceInterface
     public const RESOURCE_LINKS = 'links';
 
     /**
-     * @deprecated Use {@link \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface::LINK_SELF} instead
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface::LINK_SELF} instead.
      *
      * @var string
      */

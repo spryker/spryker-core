@@ -20,7 +20,7 @@ abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
     public const AGGREGATION_PARAM_SIZE = 'size';
 
     /**
-     * @deprecated Use FacetConfigTransfer::setAggregationParams() instead
+     * @deprecated Use {@link \Generated\Shared\Transfer\FacetConfigTransfer::setAggregationParams()} instead.
      *
      * @param \Elastica\Aggregation\AbstractTermsAggregation $aggregation
      * @param int|null $size

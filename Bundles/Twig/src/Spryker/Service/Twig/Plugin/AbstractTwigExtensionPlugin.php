@@ -33,7 +33,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @deprecated since 1.23 (to be removed in 2.0), implement \Twig\Extension\InitRuntimeInterface instead
+     * @deprecated since 1.23 (to be removed in 2.0), implement \Twig\Extension\InitRuntimeInterface instead.
      *
      * @param \Twig\Environment $environment
      *
@@ -92,7 +92,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @deprecated since 1.23 (to be removed in 2.0), implement Twig\Extension\GlobalsInterface instead
+     * @deprecated since 1.23 (to be removed in 2.0), implement Twig\Extension\GlobalsInterface instead.
      *
      * @return array
      */

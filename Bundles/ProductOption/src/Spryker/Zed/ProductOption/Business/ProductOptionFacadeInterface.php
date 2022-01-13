@@ -284,7 +284,7 @@ interface ProductOptionFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link checkProductOptionGroupExistenceByProductOptionValueId()} instead
+     * @deprecated Use {@link checkProductOptionGroupExistenceByProductOptionValueId()} instead.
      *
      * @param int $idProductOptionValue
      *

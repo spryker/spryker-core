@@ -67,7 +67,7 @@ interface CompanyRoleRepositoryInterface
     ): CompanyRoleCollectionTransfer;
 
     /**
-     * @deprecated Use CompanyRoleRepositoryInterface::findDefaultCompanyRoleByIdCompany() instead.
+     * @deprecated Use {@link findDefaultCompanyRoleByIdCompany()} instead.
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */

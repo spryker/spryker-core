@@ -74,7 +74,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveSalesOrder()} instead
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveSalesOrder()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -93,7 +93,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveOrderRaw()} instead
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveOrderRaw()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer

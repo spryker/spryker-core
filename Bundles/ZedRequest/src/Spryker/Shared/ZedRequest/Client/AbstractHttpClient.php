@@ -37,7 +37,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
 
     /**
-     * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
+     * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead.
      *
      * @var string
      */

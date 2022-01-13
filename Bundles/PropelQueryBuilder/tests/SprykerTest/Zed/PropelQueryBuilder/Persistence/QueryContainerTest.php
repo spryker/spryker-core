@@ -361,7 +361,7 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @deprecated Use limit/offset instead
+     * @deprecated Use limit/offset instead.
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer
      */

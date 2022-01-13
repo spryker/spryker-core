@@ -150,7 +150,7 @@ interface WishlistClientInterface
      *
      * @api
      *
-     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
+     * @deprecated Use {@link getWishlistByFilter()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *

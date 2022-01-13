@@ -37,7 +37,7 @@ class BusinessOnBehalfDataImportHelper extends Module
     }
 
     /**
-     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead.
      *
      * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
      *
@@ -49,7 +49,7 @@ class BusinessOnBehalfDataImportHelper extends Module
     }
 
     /**
-     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead.
      *
      * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
      *

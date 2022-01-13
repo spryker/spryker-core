@@ -80,7 +80,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @deprecated Use IndexController::restore() instead.
+     * @deprecated Use {@link restore()} instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
