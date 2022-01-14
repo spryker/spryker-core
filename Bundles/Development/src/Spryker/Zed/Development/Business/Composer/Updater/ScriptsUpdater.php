@@ -29,8 +29,8 @@ class ScriptsUpdater implements UpdaterInterface
         $path = pathinfo($composerJsonFile, PATHINFO_DIRNAME) . DIRECTORY_SEPARATOR;
         $composerJson = $this->assertCsScripts($path, $composerJson);
 
-        if (isset($composerJson['scripts']) && empty($composerJson['scripts'])) {
-            $composerJson['scripts'] = new stdClass();
+        if (isset($composerJson[static::KEY_SCRIPTS]) && empty($composerJson[static::KEY_SCRIPTS])) {
+            $composerJson[static::KEY_SCRIPTS] = new stdClass();
         }
 
         return $composerJson;

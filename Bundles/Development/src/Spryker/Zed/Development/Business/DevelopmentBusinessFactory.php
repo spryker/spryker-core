@@ -33,6 +33,7 @@ use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerNameFinder;
 use Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface;
+use Spryker\Zed\Development\Business\Composer\Updater\AllowPluginsUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
@@ -1510,7 +1511,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             ->addUpdater($this->createComposerJsonStabilityUpdater())
             ->addUpdater($this->createComposerJsonAutoloadUpdater())
             ->addUpdater($this->createComposerJsonScriptsUpdater())
-            ->addUpdater($this->createComposerJsonBranchAliasUpdater());
+            ->addUpdater($this->createComposerJsonBranchAliasUpdater())
+            ->addUpdater($this->createComposerJsonAllowPluginsUpdater());
 
         return $updaterComposite;
     }
@@ -1593,6 +1595,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonBranchAliasUpdater()
     {
         return new BranchAliasUpdater();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
+     */
+    protected function createComposerJsonAllowPluginsUpdater()
+    {
+        return new AllowPluginsUpdater();
     }
 
     /**
