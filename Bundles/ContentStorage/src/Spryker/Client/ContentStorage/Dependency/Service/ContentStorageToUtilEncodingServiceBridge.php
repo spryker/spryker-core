@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ContentStorage\Dependency\Service;
 
-use InvalidArgumentException;
-
 class ContentStorageToUtilEncodingServiceBridge implements ContentStorageToUtilEncodingServiceInterface
 {
     /**
@@ -30,14 +28,12 @@ class ContentStorageToUtilEncodingServiceBridge implements ContentStorageToUtilE
      * @param int|null $depth
      * @param int|null $options
      *
-     * @throws \InvalidArgumentException
-     *
      * @return array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         if ($assoc === false) {
-            throw new InvalidArgumentException('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.');
+            trigger_error('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.', E_USER_DEPRECATED);
         }
 
         /** @phpstan-var array<mixed>|null */

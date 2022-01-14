@@ -48,7 +48,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
         foreach ($this->pathPattern as $pathPattern) {
             $paths = array_merge(
                 $paths,
-                glob($pathPattern, GLOB_NOSORT | GLOB_ONLYDIR),
+                glob($pathPattern, GLOB_NOSORT | GLOB_ONLYDIR) ?: [],
             );
         }
 
