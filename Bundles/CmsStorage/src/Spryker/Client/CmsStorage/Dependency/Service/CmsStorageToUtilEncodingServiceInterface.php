@@ -15,7 +15,7 @@ interface CmsStorageToUtilEncodingServiceInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return object|array<mixed>|null
+     * @return array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

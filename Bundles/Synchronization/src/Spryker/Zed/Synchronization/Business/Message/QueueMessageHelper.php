@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Synchronization\Business\Message;
 
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
-use InvalidArgumentException;
 use Spryker\Shared\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 
@@ -64,14 +63,12 @@ class QueueMessageHelper implements QueueMessageHelperInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @throws \InvalidArgumentException
-     *
      * @return array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         if ($assoc === false) {
-            throw new InvalidArgumentException('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.');
+            trigger_error('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.', E_USER_DEPRECATED);
         }
 
         /** @phpstan-var array<mixed>|null */
