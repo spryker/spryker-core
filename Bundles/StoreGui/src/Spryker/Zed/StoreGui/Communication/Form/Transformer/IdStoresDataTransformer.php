@@ -26,7 +26,7 @@ class IdStoresDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array|null $storeIds
+     * @param array<mixed> $storeIds
      *
      * @return string|null
      */
@@ -38,10 +38,11 @@ class IdStoresDataTransformer implements DataTransformerInterface
     /**
      * @param string $storeIds
      *
-     * @return mixed
+     * @return array<mixed>|null
      */
     public function reverseTransform($storeIds)
     {
+        /** @phpstan-var array<mixed>|null */
         return $this->utilEncodingService->decodeJson($storeIds, true);
     }
 }

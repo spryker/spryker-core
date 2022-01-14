@@ -58,7 +58,7 @@ class DeletePriceProductOfferController extends AbstractPriceProductOfferControl
         $quantity = $this->castId($request->get(static::PARAM_QUANTITY));
         $priceProductOfferIds = array_map(
             'intval',
-            $this->getFactory()->getUtilEncodingService()->decodeJson($request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS), true),
+            $this->getFactory()->getUtilEncodingService()->decodeJson($request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS), true) ?: [],
         );
 
         $priceProductOfferCollectionTransfer = $this->createPriceProductOfferCollectionTransferByPriceProductOfferIds(

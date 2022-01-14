@@ -7,24 +7,27 @@
 
 namespace Spryker\Zed\ApiQueryBuilder\Dependency\Service;
 
+/**
+ * @deprecated Not in use anymore.
+ */
 interface ApiQueryBuilderToUtilEncodingInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null);
 
     /**
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return object|array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

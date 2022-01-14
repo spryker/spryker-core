@@ -21,7 +21,7 @@ interface JsonInterface
     public function encode($value, $options = null, $depth = null);
 
     /**
-     * @param string $jsonString
+     * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth
      * @param int|null $options
@@ -30,5 +30,5 @@ interface JsonInterface
      *
      * @return mixed|null
      */
-    public function decode($jsonString, $assoc = false, $depth = null, $options = null);
+    public function decode($jsonValue, $assoc = false, $depth = null, $options = null);
 }

@@ -46,7 +46,7 @@ class CategoryNodeOrderUpdater implements CategoryNodeOrderUpdaterInterface
      */
     public function updateCategoryNodeOrder(string $categoryNodesData): void
     {
-        $categoryNodesToReorder = $this->utilEncodingService->decodeJson($categoryNodesData, true);
+        $categoryNodesToReorder = $this->utilEncodingService->decodeJson($categoryNodesData, true) ?: [];
 
         $positionCursor = count($categoryNodesToReorder);
 

@@ -78,7 +78,8 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
             return new JsonResponse(['success' => false]);
         }
 
-        $requestData = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true)['data'];
+        $requestDataArray = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true);
+        $requestData = $requestDataArray && isset($requestDataArray['data']) ? $requestDataArray['data'] : [];
 
         $priceProductTransfers = $this->getFactory()->createPriceProductDataProvider()->getPriceProductOfferPrices(
             $typePriceProductOfferIds,

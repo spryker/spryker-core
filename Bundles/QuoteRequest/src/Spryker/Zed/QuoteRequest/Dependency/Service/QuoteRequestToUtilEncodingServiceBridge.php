@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteRequest\Dependency\Service;
 
+use InvalidArgumentException;
+
 class QuoteRequestToUtilEncodingServiceBridge implements QuoteRequestToUtilEncodingServiceInterface
 {
     /**
@@ -23,7 +25,7 @@ class QuoteRequestToUtilEncodingServiceBridge implements QuoteRequestToUtilEncod
     }
 
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -31,19 +33,31 @@ class QuoteRequestToUtilEncodingServiceBridge implements QuoteRequestToUtilEncod
      */
     public function encodeJson($value, ?int $options = null, ?int $depth = null): string
     {
-        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+        return $this->utilEncodingService->encodeJson($value, $options, $depth) ?? '';
     }
 
     /**
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @throws \InvalidArgumentException
+     *
+     * @return array<mixed>
      */
     public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): array
     {
-        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+        if ($assoc === false) {
+            throw new InvalidArgumentException('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.');
+        }
+
+        /** @var array|null $result */
+        $result = $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+        if ($result === null) {
+            throw new InvalidArgumentException('Null returned, invalid value given.');
+        }
+
+        return $result;
     }
 }

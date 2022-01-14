@@ -67,6 +67,16 @@ JSON;
     /**
      * @return void
      */
+    public function testEncodeArrayEmpty(): void
+    {
+        $jsonEncodeValue = $this->utilEncodingService->encodeJson([]);
+
+        $this->assertSame('[]', $jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
     public function testEncodeString(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson('A string!');
@@ -123,6 +133,8 @@ JSON;
     }
 
     /**
+     * Deprecated: `false` is deprecated, always use `true` for array return.
+     *
      * @return void
      */
     public function testDecodeJsonWhenAssocFlagIsOffShouldReturnStdObject(): void
@@ -135,6 +147,28 @@ JSON;
     /**
      * @return void
      */
+    public function testDecodeArrayEmpty(): void
+    {
+        $jsonEncodeValue = $this->utilEncodingService->decodeJson('[]');
+
+        $this->assertSame([], $jsonEncodeValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecodeStringEmpty(): void
+    {
+        $jsonEncodeValue = $this->utilEncodingService->decodeJson('');
+
+        $this->assertNull($jsonEncodeValue);
+    }
+
+    /**
+     * Deprecated: Non array return is deprecated.
+     *
+     * @return void
+     */
     public function testDecodeString(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('"A string!"');
@@ -143,9 +177,11 @@ JSON;
     }
 
     /**
+     * Deprecated: Non array return is deprecated.
+     *
      * @return void
      */
-    public function testDecodeBooleanAndNull(): void
+    public function testDecodeBoolean(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('true');
 
@@ -154,7 +190,13 @@ JSON;
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('false');
 
         $this->assertFalse($jsonEncodeValue);
+    }
 
+    /**
+     * @return void
+     */
+    public function testDecodeNull(): void
+    {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('null');
 
         $this->assertNull($jsonEncodeValue);

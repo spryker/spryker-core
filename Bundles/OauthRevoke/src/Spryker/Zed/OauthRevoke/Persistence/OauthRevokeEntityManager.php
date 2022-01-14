@@ -98,6 +98,7 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
             $identifiers[] = $oauthRefreshTokenTransfer->getIdentifier();
         }
 
+        /** @phpstan-var array<string> */
         return $identifiers;
     }
 }

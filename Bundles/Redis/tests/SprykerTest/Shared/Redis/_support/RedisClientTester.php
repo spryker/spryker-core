@@ -95,7 +95,7 @@ class RedisClientTester extends Actor
      */
     public function encodeJson($data, ?int $options = null): string
     {
-        return $this->getUtilEncodingService()->encodeJson($data, $options);
+        return $this->getUtilEncodingService()->encodeJson($data, $options) ?? '';
     }
 
     /**

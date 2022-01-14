@@ -84,7 +84,7 @@ class DataRequestBuilder implements DataRequestBuilderInterface
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
         GuiTableDataRequestTransfer $guiTableDataRequestTransfer
     ): GuiTableDataRequestTransfer {
-        $requestFilters = $this->utilEncodingService->decodeJson($request->get('filter') ?? '[]', true);
+        $requestFilters = $this->utilEncodingService->decodeJson($request->get('filter') ?? '[]', true) ?: [];
         $guiTableFiltersConfigurationTransfer = $guiTableConfigurationTransfer->getFilters();
 
         if (!$guiTableFiltersConfigurationTransfer) {

@@ -23,11 +23,11 @@ class ProductAttributeToUtilEncodingBridge implements ProductAttributeToUtilEnco
     }
 
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null)
     {
@@ -35,15 +35,15 @@ class ProductAttributeToUtilEncodingBridge implements ProductAttributeToUtilEnco
     }
 
     /**
-     * @param string $jsonString
-     * @param bool $assoc
+     * @param string $jsonValue
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return object|array<mixed>|null
      */
-    public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
-        return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 }

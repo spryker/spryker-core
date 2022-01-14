@@ -23,7 +23,7 @@ class ContentProductSetDataImportToUtilEncodingServiceBridge implements ContentP
     }
 
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

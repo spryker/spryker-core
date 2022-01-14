@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductCategory\Dependency\Service;
 interface ProductCategoryToUtilEncodingInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
-     * @return string
+     * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null);
 }

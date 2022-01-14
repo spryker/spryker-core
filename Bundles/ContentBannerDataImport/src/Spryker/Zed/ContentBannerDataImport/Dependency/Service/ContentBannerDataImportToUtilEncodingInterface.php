@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentBannerDataImport\Dependency\Service;
 interface ContentBannerDataImportToUtilEncodingInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

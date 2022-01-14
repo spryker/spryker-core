@@ -19,7 +19,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      *
      * @api
      *
-     * @param mixed $value
+     * @param array<string, mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -38,11 +38,11 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      * @api
      *
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return object|array<mixed>|null Deprecated: `object` return value is deprecated.
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {

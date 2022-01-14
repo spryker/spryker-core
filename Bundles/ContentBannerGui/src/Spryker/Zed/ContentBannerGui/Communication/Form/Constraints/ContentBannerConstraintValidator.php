@@ -63,17 +63,17 @@ class ContentBannerConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string|null $bannerData
+     * @param string|null $bannerDataString
      * @param \Spryker\Zed\ContentBannerGui\Communication\Form\Constraints\ContentBannerConstraint $constraint
      *
      * @return \Generated\Shared\Transfer\ContentBannerTermTransfer
      */
-    protected function mapBannerDataToTransfer($bannerData, ContentBannerConstraint $constraint): ContentBannerTermTransfer
+    protected function mapBannerDataToTransfer($bannerDataString, ContentBannerConstraint $constraint): ContentBannerTermTransfer
     {
         $contentBannerTermTransfer = new ContentBannerTermTransfer();
 
-        if ($bannerData !== null) {
-            $bannerData = $constraint->getUtilEncoding()->decodeJson($bannerData, true);
+        if ($bannerDataString !== null) {
+            $bannerData = $constraint->getUtilEncoding()->decodeJson($bannerDataString, true);
             if ($bannerData !== null) {
                 $contentBannerTermTransfer->fromArray($bannerData);
             }

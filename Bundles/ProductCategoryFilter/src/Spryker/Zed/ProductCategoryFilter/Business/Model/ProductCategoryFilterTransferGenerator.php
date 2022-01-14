@@ -43,7 +43,7 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
             return $productCategoryFilterTransfer;
         }
 
-        $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true), true);
+        $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true) ?: [], true);
 
         return $productCategoryFilterTransfer;
     }

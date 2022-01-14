@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\Service;
 interface CategoryPageSearchToUtilEncodingInterface
 {
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

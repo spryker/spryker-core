@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnSearch\Dependency\Service;
 interface SalesReturnSearchToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

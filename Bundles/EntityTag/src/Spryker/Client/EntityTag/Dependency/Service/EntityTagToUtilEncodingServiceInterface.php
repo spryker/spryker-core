@@ -10,7 +10,7 @@ namespace Spryker\Client\EntityTag\Dependency\Service;
 interface EntityTagToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

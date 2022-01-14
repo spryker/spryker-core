@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductConfigurationWishlist\Dependency\Service;
 interface ProductConfigurationWishlistToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -20,11 +20,11 @@ interface ProductConfigurationWishlistToUtilEncodingServiceInterface
 
     /**
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return array<mixed>|null
      */
     public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
 }

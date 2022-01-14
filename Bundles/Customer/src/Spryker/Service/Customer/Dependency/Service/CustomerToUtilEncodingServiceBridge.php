@@ -23,7 +23,7 @@ class CustomerToUtilEncodingServiceBridge implements CustomerToUtilEncodingServi
     }
 
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

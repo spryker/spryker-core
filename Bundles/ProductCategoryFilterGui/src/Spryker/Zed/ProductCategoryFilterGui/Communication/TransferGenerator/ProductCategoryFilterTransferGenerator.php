@@ -38,7 +38,7 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
         $productCategoryFilterTransfer->setFkCategory($idCategory);
         $productCategoryFilterTransfer->setIdProductCategoryFilter($idProductCategoryFilter);
-        $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true), true);
+        $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true) ?: [], true);
         $productCategoryFilterTransfer->setFilterData($jsonData);
         $productCategoryFilterTransfer->setFilterDataArray($this->utilEncodingService->decodeJson($jsonData, true));
 

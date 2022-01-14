@@ -78,7 +78,7 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
             );
         }
 
-        $responseData = $this->utilEncodingService->decodeJson($response->getBody(), true);
+        $responseData = $this->utilEncodingService->decodeJson($response->getBody(), true) ?: [];
         $productConfiguratorPageResponseTransfer = (new ProductConfiguratorPageResponseTransfer())->fromArray($responseData);
 
         if ($productConfiguratorPageResponseTransfer->getIsSuccessful()) {

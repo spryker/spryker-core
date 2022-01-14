@@ -250,6 +250,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
         PriceProductTableViewTransfer $priceProductTableViewTransfer,
         PriceProductTransfer $priceProductTransfer
     ): ?string {
+        /** @var array<int> $existingStoreIds */
         $existingStoreIds = $this->utilEncodingService->decodeJson(
             (string)$priceProductTableViewTransfer->getTypePriceProductStoreIds(),
             true,

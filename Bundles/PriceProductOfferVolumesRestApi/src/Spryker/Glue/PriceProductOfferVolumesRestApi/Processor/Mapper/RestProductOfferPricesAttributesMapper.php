@@ -124,7 +124,7 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
             ->setPriceData($priceData);
 
         $priceData = $this->utilEncodingService->decodeJson($moneyValueTransfer->getPriceDataOrFail(), true);
-        if (!array_key_exists(static::VOLUME_PRICE_KEY, $priceData)) {
+        if (!$priceData || !isset($priceData[static::VOLUME_PRICE_KEY])) {
             return null;
         }
 

@@ -23,7 +23,7 @@ class ConfigurableBundlePageSearchToUtilEncodingServiceBridge implements Configu
     }
 
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

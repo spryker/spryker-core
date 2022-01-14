@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductConfigurationWishlist;
 
 use Codeception\Actor;
+use InvalidArgumentException;
 
 /**
  * Inherited Methods
@@ -33,10 +34,17 @@ class ProductConfigurationWishlistBusinessTester extends Actor
     /**
      * @param array $data
      *
+     * @throws \InvalidArgumentException
+     *
      * @return string
      */
     public function encodeJson(array $data): string
     {
-        return $this->getLocator()->utilEncoding()->service()->encodeJson($data);
+        $result = $this->getLocator()->utilEncoding()->service()->encodeJson($data);
+        if ($result === null) {
+            throw new InvalidArgumentException('Null value returned, invalid $data');
+        }
+
+        return $result;
     }
 }

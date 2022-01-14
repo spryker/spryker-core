@@ -10,17 +10,17 @@ namespace Spryker\Zed\ProductCategoryFilter\Dependency\Service;
 interface ProductCategoryFilterToUtilEncodingServiceInterface
 {
     /**
-     * @param string $jsonString
+     * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @return array<mixed>|null
      */
-    public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

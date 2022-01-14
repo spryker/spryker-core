@@ -23,7 +23,7 @@ class ZedRequestToUtilEncodingServiceBridge implements ZedRequestToUtilEncodingS
     }
 
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

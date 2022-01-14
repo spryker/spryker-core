@@ -10,7 +10,7 @@ namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependenc
 interface ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface
 {
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

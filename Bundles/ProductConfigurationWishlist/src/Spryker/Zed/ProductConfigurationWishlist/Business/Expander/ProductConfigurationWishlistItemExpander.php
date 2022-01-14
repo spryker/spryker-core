@@ -62,7 +62,7 @@ class ProductConfigurationWishlistItemExpander implements ProductConfigurationWi
             return $wishlistItemTransfer;
         }
 
-        $productConfigurationInstanceData = $this->utilEncodingService->decodeJson($productConfigurationInstanceData, true) ?? [];
+        $productConfigurationInstanceData = $this->utilEncodingService->decodeJson($productConfigurationInstanceData, true) ?: [];
 
         $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())
             ->fromArray($productConfigurationInstanceData, true);

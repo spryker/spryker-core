@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Synchronization\Business\Message;
 
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use InvalidArgumentException;
 use Spryker\Shared\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 
@@ -59,19 +60,26 @@ class QueueMessageHelper implements QueueMessageHelperInterface
 
     /**
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @throws \InvalidArgumentException
+     *
+     * @return array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
+        if ($assoc === false) {
+            throw new InvalidArgumentException('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.');
+        }
+
+        /** @phpstan-var array<mixed>|null */
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 
     /**
-     * @param array $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -79,6 +87,6 @@ class QueueMessageHelper implements QueueMessageHelperInterface
      */
     public function encodeJson(array $value, ?int $options = null, ?int $depth = null): string
     {
-        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+        return $this->utilEncodingService->encodeJson($value, $options, $depth) ?? '';
     }
 }

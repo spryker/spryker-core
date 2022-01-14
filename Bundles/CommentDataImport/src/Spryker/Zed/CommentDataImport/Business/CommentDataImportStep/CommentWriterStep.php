@@ -106,6 +106,7 @@ class CommentWriterStep implements DataImportStepInterface
     protected function saveCommentTags(DataSetInterface $dataSet): array
     {
         $commentTagIds = [];
+        /** @var array<string> $decodedTags */
         $decodedTags = $this->utilEncodingService->decodeJson($dataSet[CommentDataSetInterface::COLUMN_TAGS]);
 
         if (!$decodedTags) {

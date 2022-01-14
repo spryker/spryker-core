@@ -114,6 +114,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         $configurableBundleTemplateStorageFilterTransfer->requireLocaleName();
 
         $storageKeys = $this->prepareStorageKeys($configurableBundleTemplateStorageFilterTransfer);
+        /** @var array<string> $configurableBundleTemplateStorageData */
         $configurableBundleTemplateStorageData = $this->storageClient->getMulti($storageKeys);
 
         if (!$configurableBundleTemplateStorageData) {
@@ -152,7 +153,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     }
 
     /**
-     * @param array $configurableBundleTemplateStorageData
+     * @param array<string, mixed> $configurableBundleTemplateStorageData
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer
      */
@@ -202,7 +203,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     }
 
     /**
-     * @param array $configurableBundleTemplateStorageData
+     * @param array<string> $configurableBundleTemplateStorageData
      *
      * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */

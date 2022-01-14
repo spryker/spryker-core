@@ -23,7 +23,7 @@ class PriceProductDataImportToUtilEncodingServiceBridge implements PriceProductD
     }
 
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -36,11 +36,11 @@ class PriceProductDataImportToUtilEncodingServiceBridge implements PriceProductD
 
     /**
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return object|array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {

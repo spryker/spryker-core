@@ -74,9 +74,10 @@ abstract class AbstractSavePriceProductController extends AbstractController
             return new JsonResponse(['success' => false]);
         }
 
+        /** @var array<int> $typePriceProductStoreIds */
         $typePriceProductStoreIds = $this->getFactory()
             ->getUtilEncodingService()
-            ->decodeJson((string)$request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS), true);
+            ->decodeJson((string)$request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS), true) ?: [];
 
         $requestBodyContent = $this->getFactory()
             ->getUtilEncodingService()

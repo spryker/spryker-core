@@ -10,7 +10,7 @@ namespace Spryker\Service\Shipment\Dependency\Service;
 interface ShipmentToUtilEncodingServiceInterface
 {
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

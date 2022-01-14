@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryFilter\Dependency\Service;
 
+use InvalidArgumentException;
+
 class ProductCategoryFilterToUtilEncodingServiceBridge implements ProductCategoryFilterToUtilEncodingServiceInterface
 {
     /**
@@ -23,20 +25,27 @@ class ProductCategoryFilterToUtilEncodingServiceBridge implements ProductCategor
     }
 
     /**
-     * @param string $jsonString
+     * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array
+     * @throws \InvalidArgumentException
+     *
+     * @return array<mixed>|null
      */
-    public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
-        return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);
+        if ($assoc === false) {
+            throw new InvalidArgumentException('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.');
+        }
+
+        /** @phpstan-var array<mixed>|null */
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

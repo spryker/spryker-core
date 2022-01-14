@@ -72,7 +72,7 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
         $jobs = $this->getJobs($configurationProvider);
         $executionStrategy = new ExecutionStrategy($this->executorForExistingJob, $this->executorForAbsentJob);
 
-        if (!is_array($jobs)) {
+        if (!$jobs) {
             return $executionStrategy;
         }
 
@@ -99,7 +99,7 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
     /**
      * @param \Spryker\Zed\SchedulerJenkins\Business\Api\Configuration\ConfigurationProviderInterface $configurationProvider
      *
-     * @return mixed|null
+     * @return array<mixed>|null
      */
     protected function getJobs(ConfigurationProviderInterface $configurationProvider)
     {
@@ -109,8 +109,6 @@ class ExecutionStrategyBuilder implements ExecutionStrategyBuilderInterface
             return null;
         }
 
-        $jobs = $this->utilEncodingService->decodeJson($response->getPayload(), true);
-
-        return $jobs;
+        return $this->utilEncodingService->decodeJson($response->getPayload(), true);
     }
 }

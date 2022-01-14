@@ -24,11 +24,11 @@ class AuthRestApiToUtilEncodingServiceBridge implements AuthRestApiToUtilEncodin
 
     /**
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return object|array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {

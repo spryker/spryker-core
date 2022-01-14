@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesProductConnector\Dependency\Service;
 
+use InvalidArgumentException;
+
 class SalesProductConnectorToUtilEncodingBridge implements SalesProductConnectorToUtilEncodingInterface
 {
     /**
@@ -23,7 +25,7 @@ class SalesProductConnectorToUtilEncodingBridge implements SalesProductConnector
     }
 
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -35,15 +37,22 @@ class SalesProductConnectorToUtilEncodingBridge implements SalesProductConnector
     }
 
     /**
-     * @param string $jsonString
+     * @param string $jsonValue
      * @param bool $assoc
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @throws \InvalidArgumentException
+     *
+     * @return array<mixed>|null
      */
-    public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
-        return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);
+        if ($assoc === false) {
+            throw new InvalidArgumentException('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.');
+        }
+
+        /** @phpstan-var array<mixed>|null */
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 }

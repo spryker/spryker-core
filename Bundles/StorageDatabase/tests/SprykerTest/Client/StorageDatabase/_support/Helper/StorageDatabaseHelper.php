@@ -150,11 +150,11 @@ class StorageDatabaseHelper extends Module
     }
 
     /**
-     * @param mixed $value
+     * @param array $value
      *
      * @return string
      */
-    public function encodeJson($value): string
+    public function encodeJson(array $value): string
     {
         return (new UtilEncodingService())->encodeJson($value) ?? '';
     }
@@ -162,9 +162,9 @@ class StorageDatabaseHelper extends Module
     /**
      * @param string $value
      *
-     * @return mixed|null
+     * @return array<mixed>|null
      */
-    public function decodeJson(string $value)
+    public function decodeJson(string $value): ?array
     {
         return (new UtilEncodingService())->decodeJson($value, true);
     }

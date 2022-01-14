@@ -14,11 +14,11 @@ interface UtilEncodingServiceInterface
 {
     /**
      * Specification:
-     * - Encodes given value to JSON string.
+     * - Encodes given array value to JSON string.
      *
      * @api
      *
-     * @param array $value
+     * @param array<string, mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *
@@ -28,16 +28,16 @@ interface UtilEncodingServiceInterface
 
     /**
      * Specification:
-     * - Decodes given JSON string, returns array or stdObject.
+     * - Decodes given JSON string, returns array or stdObject. Array usage is preferred.
      *
      * @api
      *
      * @param string $jsonValue
-     * @param bool $assoc
+     * @param bool $assoc Deprecated: `false` is deprecated, always use `true` for array return.
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return object|array<mixed>|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 

@@ -214,7 +214,7 @@ class CreateProductAbstractController extends AbstractController
 
         $productConcreteData = $this->getFactory()
             ->getUtilEncodingService()
-            ->decodeJson($concreteProductsJson, true);
+            ->decodeJson($concreteProductsJson, true) ?: [];
         $createProductAbstractWithMultiConcreteForm = $this->getFactory()
             ->createCreateProductAbstractWithMultiConcreteForm($request->query->all());
         $createProductAbstractWithMultiConcreteForm->handleRequest($request);

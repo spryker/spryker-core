@@ -260,7 +260,7 @@ class JenkinsApi implements JenkinsApiInterface
             throw new InvalidJenkinsConfiguration('Cannot generate CSRF token. Please check that CSRF protection is enabled on Jenkins server.');
         }
 
-        $crumbIssuer = $this->utilEncodingService->decodeJson($payload, true);
+        $crumbIssuer = $this->utilEncodingService->decodeJson($payload, true) ?: [];
         $crumbIssuer['cookie'] = $responseTransfer->getCookie();
 
         return $crumbIssuer;

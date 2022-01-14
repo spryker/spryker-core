@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Service;
 interface CmsSlotBlockCmsGuiToUtilEncodingInterface
 {
     /**
-     * @param mixed $value
+     * @param array<mixed> $value
      * @param int|null $options
      * @param int|null $depth
      *

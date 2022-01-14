@@ -85,7 +85,7 @@ class ResourceShareMapper
      */
     protected function mapResourceDataToResourceShareDataTransfer(string $resourceData): ResourceShareDataTransfer
     {
-        $decodedResourceData = $this->utilEncodingService->decodeJson($resourceData, true);
+        $decodedResourceData = $this->utilEncodingService->decodeJson($resourceData, true) ?: [];
 
         return (new ResourceShareDataTransfer())
             ->fromArray($decodedResourceData, true);
