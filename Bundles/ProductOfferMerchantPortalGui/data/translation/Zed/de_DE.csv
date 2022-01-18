@@ -80,7 +80,6 @@ Add,Hinzufügen
 "Approval Status",Genehmigungsstatus
 Product,Produkt
 "Offer status",Angebotsstatus
-"Available Stock","Verfügbarer Lagerbestand"
 "Volume Quantity",Menge
 "A Price for Quantity of 2 or above requires a Price for 1 for this set of inputs Store, Currency, and Quantity.","Um einen Mengenpreis für diese Kombination aus Store, Währung und Menge zu erstellen, bitte zuvor den Preis für die Anzahl von 1 defineren."
 "To save an Offer please resolve all errors.","Um das Angebot zu speichern, bitte alle Fehler beheben."
