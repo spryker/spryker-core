@@ -39,7 +39,7 @@ validateModuleCodeSniffer() {
   echo "code sniffer check"
   for module in $MODULES
       do
-          echo $2.$module
+          echo $1.$module
 
           local RULESET="Bundles/$module/phpcs.xml"
           if [ -f "$RULESET" ]; then

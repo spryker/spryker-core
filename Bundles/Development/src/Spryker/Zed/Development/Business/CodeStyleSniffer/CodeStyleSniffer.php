@@ -300,7 +300,7 @@ class CodeStyleSniffer
     protected function runSnifferCommand($path, CodeStyleSnifferConfigurationInterface $codeStyleSnifferConfiguration)
     {
         $standard = $codeStyleSnifferConfiguration->getCodingStandard($path);
-        $processConfig = ' --standard=' . $standard;
+        $processConfig = '--standard=' . $standard;
 
         if ($codeStyleSnifferConfiguration->isVerbose()) {
             $processConfig .= ' -v';
@@ -315,26 +315,30 @@ class CodeStyleSniffer
         }
 
         $optionSniffs = $codeStyleSnifferConfiguration->getSpecificSniffs();
-
         if ($optionSniffs) {
             $processConfig .= ' --sniffs=' . $optionSniffs;
         }
 
+        $processConfig .= ' --extensions=' . implode(',', static::EXTENSIONS);
+
         $optionIgnore = $codeStyleSnifferConfiguration->getIgnoredPaths();
+
+        $customPaths = [];
+        if (!file_exists($path . DIRECTORY_SEPARATOR . 'phpcs.xml')) {
+            if (is_dir($path . 'src')) {
+                $customPaths[] = $path . 'src/';
+            }
+            if (is_dir($path . 'tests')) {
+                $customPaths[] = $path . 'tests/';
+            }
+            $optionIgnore .= ($optionIgnore ? ',' : '') . '/src/Generated/';
+        }
 
         if ($optionIgnore) {
             $processConfig .= ' --ignore=' . $optionIgnore;
         }
 
-        $processConfig .= ' --extensions=' . implode(',', static::EXTENSIONS);
-
-        if (is_dir($path . 'src')) {
-            $processConfig .= ' ' . $path . 'src/';
-        }
-
-        if (is_dir($path . 'tests')) {
-            $processConfig .= ' ' . $path . 'tests/';
-        }
+        $processConfig .= ' ' . implode(' ', $customPaths);
 
         $optionVerbose = $codeStyleSnifferConfiguration->isVerbose();
         $optionFix = $codeStyleSnifferConfiguration->isFixing();
@@ -346,8 +350,8 @@ class CodeStyleSniffer
         $command = sprintf(
             'vendor/bin/%s %s%s',
             $optionFix ? 'phpcbf' : 'phpcs',
-            $path,
             $processConfig,
+            $customPaths ? '' : ' ' . $path,
         );
 
         $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();
@@ -396,7 +400,7 @@ class CodeStyleSniffer
             ($process->getExitCode() !== static::CODE_SUCCESS ? $process->getOutput() : ''),
         );
 
-        if ($process->getExitCode() !== static::CODE_SUCCESS) {
+        if ($process->getExitCode() !== static::CODE_SUCCESS && !$codeStyleSnifferConfiguration->isFixing()) {
             $this->commandsToFix[] = sprintf('vendor/bin/console c:s:s -m %s.%s -f' . PHP_EOL, $codeStyleSnifferConfiguration->getNamespace(), basename($path));
         }
 
