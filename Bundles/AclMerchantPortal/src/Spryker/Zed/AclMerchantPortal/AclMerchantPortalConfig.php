@@ -164,6 +164,11 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Sales\Persistence\SpySalesOrderAddress')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ);
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity('Orm\Zed\Sales\Persistence\SpySalesOrderItem')
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE);

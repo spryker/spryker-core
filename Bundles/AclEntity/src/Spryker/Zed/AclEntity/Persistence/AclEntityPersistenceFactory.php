@@ -7,46 +7,75 @@
 
 namespace Spryker\Zed\AclEntity\Persistence;
 
-use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
-use Generated\Shared\Transfer\AclEntityRuleCollectionTransfer;
+use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery;
 use Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery;
 use Propel\Generator\Model\Database;
 use Propel\Generator\Model\Table;
+use Propel\Runtime\Propel;
+use Propel\Runtime\ServiceContainer\ServiceContainerInterface;
 use Spryker\Service\AclEntity\AclEntityServiceInterface;
-use Spryker\Shared\AclEntity\AclEntityConstants;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
 use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface;
 use Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridgeInterface;
 use Spryker\Zed\AclEntity\Persistence\Filter\AclEntityRuleCollectionTransferFilter;
 use Spryker\Zed\AclEntity\Persistence\Filter\AclEntityRuleCollectionTransferFilterInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclJoinDirector;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclJoinDirectorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirector;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirectorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclQueryDirector;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclQueryDirectorInterface;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\AclQueryDirectorStrategyInterface;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\DefaultScopeAclQueryDirectorStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\GlobalScopeAclQueryDirectorStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\InheritedScopeAclQueryDirectorStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\SegmentScopeAclQueryDirectorStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolver;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\AclJoinInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\InnerAclJoin;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\LeftAclJoin;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\RightAclJoin;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\AclModelScopeInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\DefaultAclModelScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\GlobalAclModelScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\InheritedAclModelScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\SegmentAclModelScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\AclQueryScopeInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\DefaultAclQueryScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\GlobalAclQueryScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\InheritedAclQueryScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\SegmentAclQueryScope;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclJoinResolver;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclJoinResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclModelScopeResolver;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclModelScopeResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolver;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Builder\ConnectorTableBuilder;
 use Spryker\Zed\AclEntity\Persistence\Propel\Builder\ConnectorTableBuilderInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparator;
 use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\AclQueryExpander;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\AclQueryExpanderInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\AclEntityConnectionInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\ForeignKeyEntityConnection;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\PivotTableEntityConnection;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\ReferenceColumnEntityConnection;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\StrategyResolver\AclEntityConnectionResolver;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\StrategyResolver\AclEntityConnectionResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntityRuleMapper;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntitySegmentMapper;
+use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProvider;
+use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProviderInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProvider;
+use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProviderInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMerger;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolver;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\ForeignKeyRelationResolverStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\PivotTableRelationResolverStrategy;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\ReferenceColumnRelationResolverStrategy;
-use Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProvider;
-use Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\AclRelationReader;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\AclRelationReaderInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\AclEntityRelationInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\ForeignKeyEntityRelation;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\PivotTableEntityRelation;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\ReferenceColumnEntityRelation;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\StrategyResolver\AclEntityRelationResolver;
+use Spryker\Zed\AclEntity\Persistence\Propel\Reader\StrategyResolver\AclEntityRelationResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReader;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 use Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSorterInterface;
@@ -61,21 +90,61 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class AclEntityPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
      * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclQueryDirectorInterface
      */
     public function createAclQueryDirector(
-        AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclQueryDirectorInterface {
         return new AclQueryDirector(
-            $this->getRepository(),
-            $this->createAclDirectorStrategyResolver($aclEntityMetadataCollectionTransfer),
-            $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer),
-            $this->createRelationResolver($aclEntityMetadataCollectionTransfer),
-            $this->getAclRoleProvider(),
+            $this->createAclJoinDirector($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityRuleProvider(),
+            $this->createAclQueryScopeResolver($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryExpander($aclEntityMetadataConfigTransfer),
             $this->createAclEntityQueryMerger(),
+            $this->createAclModelDirector($aclEntityMetadataConfigTransfer),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirectorInterface
+     */
+    public function createAclModelDirector(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclModelDirectorInterface {
+        return new AclModelDirector(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityRuleProvider(),
+            $this->createAclModelScopeResolver($aclEntityMetadataConfigTransfer),
+            $this->createAclRelationReader($aclEntityMetadataConfigTransfer),
+            $this->getPropelServiceContainer(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclJoinDirectorInterface
+     */
+    public function createAclJoinDirector(AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer): AclJoinDirectorInterface
+    {
+        return new AclJoinDirector(
+            $this->createAclJoinResolver($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->getPropelServiceContainer(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProviderInterface
+     */
+    public function createAclEntityRuleProvider(): AclEntityRuleProviderInterface
+    {
+        return new AclEntityRuleProvider($this->getAclRoleProvider(), $this->getRepository());
     }
 
     /**
@@ -107,35 +176,158 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolverInterface
      */
-    public function createAclDirectorStrategyResolver(
-        AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
-    ): AclDirectorStrategyResolverInterface {
-        $strategyContainer = [];
-        $strategyContainer[AclEntityConstants::SCOPE_GLOBAL] =
-            function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) {
-                return $this->createGlobalScopeQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
-            };
-        $strategyContainer[AclEntityConstants::SCOPE_SEGMENT] =
-            function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) {
-                return $this->createSegmentScopeAclQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
-            };
-        $strategyContainer[AclEntityConstants::SCOPE_INHERITED] =
-            function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) use ($aclEntityMetadataCollectionTransfer) {
-                return $this->createInheritedScopeAclQueryDirectorStrategy($aclEntityRuleCollectionTransfer, $aclEntityMetadataCollectionTransfer);
-            };
-        $strategyContainer[AclEntityConstants::SCOPE_DEFAULT] =
-            function () use ($aclEntityMetadataCollectionTransfer) {
-                return $this->createDefaultScopeAclQueryDirectorStrategy($aclEntityMetadataCollectionTransfer);
-            };
-
-        return new AclDirectorStrategyResolver(
-            $strategyContainer,
+    public function createAclQueryScopeResolver(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclQueryScopeResolverInterface {
+        return new AclQueryScopeResolver(
+            [
+                $this->createGlobalScopeQueryDirector(),
+                $this->createSegmentScopeAclQueryDirector(),
+                $this->createInheritedScopeAclQueryDirector($aclEntityMetadataConfigTransfer),
+                $this->createDefaultScopeAclQueryDirector($aclEntityMetadataConfigTransfer),
+            ],
             $this->createAclEntityRuleCollectionTransferFilter(),
             $this->createAclEntityRuleCollectionTransferSorter(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclJoinResolverInterface
+     */
+    public function createAclJoinResolver(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclJoinResolverInterface {
+        return new AclJoinResolver(
+            [
+                $this->createLeftAclJoin($aclEntityMetadataConfigTransfer),
+                $this->createRightAclJoin($aclEntityMetadataConfigTransfer),
+                $this->createInnerAclJoin($aclEntityMetadataConfigTransfer),
+            ],
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\AclJoinInterface
+     */
+    public function createInnerAclJoin(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclJoinInterface {
+        return new InnerAclJoin(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryScopeResolver($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryExpander($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityQueryMerger(),
+            $this->getPropelServiceContainer(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\AclJoinInterface
+     */
+    public function createLeftAclJoin(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclJoinInterface {
+        return new LeftAclJoin(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryScopeResolver($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryExpander($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityQueryMerger(),
+            $this->getPropelServiceContainer(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Join\AclJoinInterface
+     */
+    public function createRightAclJoin(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclJoinInterface {
+        return new RightAclJoin(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryScopeResolver($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryExpander($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityQueryMerger(),
+            $this->getPropelServiceContainer(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclModelScopeResolverInterface
+     */
+    public function createAclModelScopeResolver(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclModelScopeResolverInterface {
+        return new AclModelScopeResolver(
+            [
+                $this->createGlobalAclModelScope(),
+                $this->createSegmentAclModelScope(),
+                $this->createInheritedAclModelScope($aclEntityMetadataConfigTransfer),
+                $this->createDefaultAclModelScope($aclEntityMetadataConfigTransfer),
+            ],
+            $this->createAclEntityRuleCollectionTransferFilter(),
+            $this->createAclEntityRuleCollectionTransferSorter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\AclModelScopeInterface
+     */
+    public function createGlobalAclModelScope(): AclModelScopeInterface
+    {
+        return new GlobalAclModelScope();
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\AclModelScopeInterface
+     */
+    public function createSegmentAclModelScope(): AclModelScopeInterface
+    {
+        return new SegmentAclModelScope(
+            $this->getAclEntityService(),
+            $this->createAclEntityRuleCollectionTransferFilter(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\AclModelScopeInterface
+     */
+    public function createDefaultAclModelScope(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclModelScopeInterface {
+        return new DefaultAclModelScope(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Model\AclModelScopeInterface
+     */
+    public function createInheritedAclModelScope(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclModelScopeInterface {
+        return new InheritedAclModelScope(
+            $this->createAclEntityRuleCollectionTransferFilter(),
+            $this->createAclRelationReader($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createSegmentAclModelScope(),
         );
     }
 
@@ -176,148 +368,195 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\AclQueryDirectorStrategyInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\AclQueryScopeInterface
      */
-    public function createGlobalScopeQueryDirectorStrategy(
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-    ): AclQueryDirectorStrategyInterface {
-        return new GlobalScopeAclQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
+    public function createGlobalScopeQueryDirector(): AclQueryScopeInterface
+    {
+        return new GlobalAclQueryScope();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\AclQueryDirectorStrategyInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\AclQueryScopeInterface
      */
-    public function createSegmentScopeAclQueryDirectorStrategy(
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-    ): AclQueryDirectorStrategyInterface {
-        return new SegmentScopeAclQueryDirectorStrategy(
-            $aclEntityRuleCollectionTransfer,
+    public function createSegmentScopeAclQueryDirector(): AclQueryScopeInterface
+    {
+        return new SegmentAclQueryScope(
             $this->getAclEntityService(),
             $this->createAclEntityRuleCollectionTransferFilter(),
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\AclQueryDirectorStrategyInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\AclQueryScopeInterface
      */
-    public function createInheritedScopeAclQueryDirectorStrategy(
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
-        AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
-    ): AclQueryDirectorStrategyInterface {
-        $strategyContainer = [];
-        $strategyContainer[AclEntityConstants::SCOPE_SEGMENT] =
-            function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) {
-                return $this->createSegmentScopeAclQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
-            };
-        $strategyContainer[AclEntityConstants::SCOPE_GLOBAL] =
-            function (AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer) {
-                return $this->createGlobalScopeQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
-            };
-        $strategyContainer[AclEntityConstants::SCOPE_DEFAULT] =
-            function () use ($aclEntityMetadataCollectionTransfer) {
-                return $this->createDefaultScopeAclQueryDirectorStrategy($aclEntityMetadataCollectionTransfer);
-            };
-
-        return new InheritedScopeAclQueryDirectorStrategy(
-            $aclEntityRuleCollectionTransfer,
-            $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer),
-            $this->createRelationResolver($aclEntityMetadataCollectionTransfer),
+    public function createInheritedScopeAclQueryDirector(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclQueryScopeInterface {
+        return new InheritedAclQueryScope(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclQueryExpander($aclEntityMetadataConfigTransfer),
             $this->createAclEntityRuleCollectionTransferFilter(),
             $this->createAclEntityRuleCollectionTransferSorter(),
             $this->createAclEntityQueryMerger(),
-            $strategyContainer,
+            [
+                $this->createGlobalScopeQueryDirector(),
+                $this->createSegmentScopeAclQueryDirector(),
+                $this->createDefaultScopeAclQueryDirector($aclEntityMetadataConfigTransfer),
+            ],
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\AclQueryDirectorStrategyInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\AclQueryScopeInterface
      */
-    public function createDefaultScopeAclQueryDirectorStrategy(
-        AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
-    ): AclQueryDirectorStrategyInterface {
-        return new DefaultScopeAclQueryDirectorStrategy($this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer));
+    public function createDefaultScopeAclQueryDirector(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclQueryScopeInterface {
+        return new DefaultAclQueryScope($this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
      * @return \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface
      */
     public function createAclEntityMetadataReader(
-        AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataReaderInterface {
         return new AclEntityMetadataReader(
-            $aclEntityMetadataCollectionTransfer,
+            $aclEntityMetadataConfigTransfer,
             $this->getConfig()->getDefaultGlobalOperationMask(),
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Expander\AclQueryExpanderInterface
      */
-    public function createRelationResolver(AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer): RelationResolverInterface
+    public function createAclQueryExpander(AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer): AclQueryExpanderInterface
     {
-        $strategyContainer = [];
-        $strategyContainer[RelationResolverInterface::STRATEGY_FOREIGN_KEY] = function () {
-            return $this->createForeignKeyRelationResolverStrategy();
-        };
-        $strategyContainer[RelationResolverInterface::STRATEGY_REFERENCE_COLUMN] = function () {
-            return $this->createReferenceColumnRelationResolverStrategy();
-        };
-        $strategyContainer[RelationResolverInterface::STRATEGY_PIVOT_TABLE] = function () {
-            return $this->createPivotTableRelationResolverStrategy();
-        };
-
-        return new RelationResolver(
-            $strategyContainer,
-            $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer),
+        return new AclQueryExpander(
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+            $this->createAclEntityConnectionResolver(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Expander\StrategyResolver\AclEntityConnectionResolverInterface
      */
-    public function createForeignKeyRelationResolverStrategy(): AbstractRelationResolverStrategy
+    public function createAclEntityConnectionResolver(): AclEntityConnectionResolverInterface
     {
-        return new ForeignKeyRelationResolverStrategy(
-            $this->createJoinComparator(),
-            $this->createQueryAliasGenerator(),
+        return new AclEntityConnectionResolver(
+            [
+                $this->createForeignKeyAclEntityConnection(),
+                $this->createReferenceColumnAclEntityConnection(),
+                $this->createPivotTableAclEntityConnection(),
+            ],
         );
     }
 
     /**
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\AclEntityConnectionInterface
      */
-    public function createReferenceColumnRelationResolverStrategy(): AbstractRelationResolverStrategy
+    public function createForeignKeyAclEntityConnection(): AclEntityConnectionInterface
     {
-        return new ReferenceColumnRelationResolverStrategy(
+        return new ForeignKeyEntityConnection(
             $this->createJoinComparator(),
             $this->createQueryAliasGenerator(),
+            $this->getPropelServiceContainer(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\AclEntityConnectionInterface
+     */
+    public function createReferenceColumnAclEntityConnection(): AclEntityConnectionInterface
+    {
+        return new ReferenceColumnEntityConnection(
+            $this->createJoinComparator(),
+            $this->createQueryAliasGenerator(),
+            $this->getPropelServiceContainer(),
         );
     }
 
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Expander\Strategy\AclEntityConnectionInterface
      */
-    public function createPivotTableRelationResolverStrategy(): AbstractRelationResolverStrategy
+    public function createPivotTableAclEntityConnection(): AclEntityConnectionInterface
     {
-        return new PivotTableRelationResolverStrategy(
+        return new PivotTableEntityConnection(
             $this->createJoinComparator(),
             $this->createQueryAliasGenerator(),
+            $this->getPropelServiceContainer(),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Reader\AclRelationReaderInterface
+     */
+    public function createAclRelationReader(AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer): AclRelationReaderInterface
+    {
+        return new AclRelationReader(
+            $this->createAclEntityRelationResolver(),
+            $this->createAclEntityMetadataReader($aclEntityMetadataConfigTransfer),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Reader\StrategyResolver\AclEntityRelationResolverInterface
+     */
+    public function createAclEntityRelationResolver(): AclEntityRelationResolverInterface
+    {
+        return new AclEntityRelationResolver(
+            [
+                $this->createForeignKeyEntityRelation(),
+                $this->createPivotTableEntityRelation(),
+                $this->createReferenceColumnEntityRelation(),
+            ],
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\AclEntityRelationInterface
+     */
+    public function createForeignKeyEntityRelation(): AclEntityRelationInterface
+    {
+        return new ForeignKeyEntityRelation($this->getPropelServiceContainer());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\AclEntityRelationInterface
+     */
+    public function createPivotTableEntityRelation(): AclEntityRelationInterface
+    {
+        return new PivotTableEntityRelation($this->getPropelServiceContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Reader\Strategy\AclEntityRelationInterface
+     */
+    public function createReferenceColumnEntityRelation(): AclEntityRelationInterface
+    {
+        return new ReferenceColumnEntityRelation($this->getPropelServiceContainer());
+    }
+
+    /**
+     * @return \Propel\Runtime\ServiceContainer\ServiceContainerInterface
+     */
+    public function getPropelServiceContainer(): ServiceContainerInterface
+    {
+        return Propel::getServiceContainer();
     }
 
     /**
@@ -356,7 +595,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclRoleProviderInterface
      */
     public function getAclRoleProvider(): AclRoleProviderInterface
     {

@@ -5,22 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AclEntity\Persistence\Propel\AclDirector;
+namespace Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query;
 
+use Generated\Shared\Transfer\AclEntityRuleCollectionTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Shared\AclEntity\AclEntityConstants;
 
-interface AclQueryDirectorInterface
+class GlobalAclQueryScope implements AclQueryScopeInterface
 {
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
+     * @param string $scope
      *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return bool
      */
-    public function applyAclRuleOnSelectQuery(ModelCriteria $query): ModelCriteria;
+    public function isSupported(string $scope): bool
+    {
+        return $scope === AclEntityConstants::SCOPE_GLOBAL;
+    }
 
     /**
      * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
@@ -28,10 +29,16 @@ interface AclQueryDirectorInterface
      * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function applyAclRuleOnUpdateQuery(ModelCriteria $query): ModelCriteria;
+    public function applyAclRuleOnSelectQuery(
+        ModelCriteria $query,
+        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
+    ): ModelCriteria {
+        return $query;
+    }
 
     /**
      * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
@@ -39,8 +46,31 @@ interface AclQueryDirectorInterface
      * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function applyAclRuleOnDeleteQuery(ModelCriteria $query): ModelCriteria;
+    public function applyAclRuleOnUpdateQuery(
+        ModelCriteria $query,
+        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
+    ): ModelCriteria {
+        return $query;
+    }
+
+    /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
+     *
+     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function applyAclRuleOnDeleteQuery(
+        ModelCriteria $query,
+        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
+    ): ModelCriteria {
+        return $query;
+    }
 }

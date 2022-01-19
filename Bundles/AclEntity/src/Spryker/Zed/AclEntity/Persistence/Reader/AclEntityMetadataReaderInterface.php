@@ -33,6 +33,15 @@ interface AclEntityMetadataReaderInterface
     public function findRootAclEntityMetadataTransferForEntityClass(string $entityClass): ?AclEntityMetadataTransfer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param string $connectionClass
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataTransfer|null
+     */
+    public function findAclEntityMetadataTransferByConnectionClass(string $connectionClass): ?AclEntityMetadataTransfer;
+
+    /**
      * @param string $entitySubClass
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataTransfer
@@ -59,4 +68,11 @@ interface AclEntityMetadataReaderInterface
      * @return int
      */
     public function getDefaultOperationMaskForEntityClass(string $entityClass): int;
+
+    /**
+     * @param string $entityClass
+     *
+     * @return bool
+     */
+    public function isAllowListItem(string $entityClass): bool;
 }

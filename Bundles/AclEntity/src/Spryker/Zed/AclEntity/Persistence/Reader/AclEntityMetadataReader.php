@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AclEntity\Persistence\Reader;
 
-use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
+use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
 use Spryker\Zed\AclEntity\Persistence\Exception\MissingMetadataException;
 use Spryker\Zed\AclEntity\Persistence\Exception\MissingRootMetadataException;
@@ -15,9 +15,9 @@ use Spryker\Zed\AclEntity\Persistence\Exception\MissingRootMetadataException;
 class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer
+     * @var \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    protected $aclEntityMetadataCollectionTransfer;
+    protected $aclEntityMetadataConfig;
 
     /**
      * @var int
@@ -25,14 +25,14 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
     protected $defaultGlobalOperationMask;
 
     /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfig
      * @param int $defaultGlobalOperationMask
      */
     public function __construct(
-        AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer,
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfig,
         int $defaultGlobalOperationMask
     ) {
-        $this->aclEntityMetadataCollectionTransfer = $aclEntityMetadataCollectionTransfer;
+        $this->aclEntityMetadataConfig = $aclEntityMetadataConfig;
         $this->defaultGlobalOperationMask = $defaultGlobalOperationMask;
     }
 
@@ -43,7 +43,7 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
      */
     public function findAclEntityMetadataTransferForEntityClass(string $entityClass): ?AclEntityMetadataTransfer
     {
-        $aclEntityMetadataCollection = $this->aclEntityMetadataCollectionTransfer->getCollection();
+        $aclEntityMetadataCollection = $this->aclEntityMetadataConfig->getAclEntityMetadataCollectionOrFail()->getCollection();
 
         return $aclEntityMetadataCollection[$entityClass] ?? null;
     }
@@ -84,6 +84,32 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
         }
 
         return $aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getParent() ? null : $aclEntityMetadataTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param string $connectionClass
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataTransfer|null
+     */
+    public function findAclEntityMetadataTransferByConnectionClass(string $connectionClass): ?AclEntityMetadataTransfer
+    {
+        /** @var \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer */
+        foreach ($this->aclEntityMetadataConfig->getAclEntityMetadataCollectionOrFail()->getCollection() as $aclEntityMetadataTransfer) {
+            if (
+                !$aclEntityMetadataTransfer->getParent()
+                || !$aclEntityMetadataTransfer->getParentOrFail()->getConnection()
+            ) {
+                continue;
+            }
+            $pivotEntity = $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityName();
+            if ($pivotEntity === $connectionClass) {
+                return $aclEntityMetadataTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -144,7 +170,7 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
      */
     public function getDefaultOperationMaskForEntityClass(string $entityClass): int
     {
-        $aclEntityMetadataCollection = $this->aclEntityMetadataCollectionTransfer->getCollection();
+        $aclEntityMetadataCollection = $this->aclEntityMetadataConfig->getAclEntityMetadataCollectionOrFail()->getCollection();
 
         if (!isset($aclEntityMetadataCollection[$entityClass])) {
             return $this->defaultGlobalOperationMask;
@@ -154,5 +180,15 @@ class AclEntityMetadataReader implements AclEntityMetadataReaderInterface
         $aclEntityMetadataTransfer = $aclEntityMetadataCollection[$entityClass];
 
         return $aclEntityMetadataTransfer->getDefaultGlobalOperationMask() ?? $this->defaultGlobalOperationMask;
+    }
+
+    /**
+     * @param string $entityClass
+     *
+     * @return bool
+     */
+    public function isAllowListItem(string $entityClass): bool
+    {
+        return in_array($entityClass, $this->aclEntityMetadataConfig->getAclEntityAllowList());
     }
 }

@@ -69,7 +69,7 @@ class AclEntityBehavior extends Behavior
      */
     public function preUpdate(): string
     {
-        return $this->renderTemplate('objectPreHook', ['action' => static::ACTION_UPDATE]);
+        return $this->renderTemplate('modelPreHook', ['action' => static::ACTION_UPDATE]);
     }
 
     /**
@@ -77,7 +77,7 @@ class AclEntityBehavior extends Behavior
      */
     public function preInsert(): string
     {
-        return $this->renderTemplate('objectPreHook', ['action' => static::ACTION_CREATE]);
+        return $this->renderTemplate('modelPreHook', ['action' => static::ACTION_CREATE]);
     }
 
     /**
@@ -110,10 +110,8 @@ class AclEntityBehavior extends Behavior
     public function modifyTable(): void
     {
         $aclEntityMetadataConfigTransfer = $this->getAclEntityFacade()->getAclEntityMetadataConfig(false);
-        /** @var \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer */
-        $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
         $aclEntityMetadataReader = $this->getAclEntityPersistenceFactory()->createAclEntityMetadataReader(
-            $aclEntityMetadataCollectionTransfer,
+            $aclEntityMetadataConfigTransfer,
         );
         $aclEntityMetadataTransfer = $aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             $this->getEntityName(),

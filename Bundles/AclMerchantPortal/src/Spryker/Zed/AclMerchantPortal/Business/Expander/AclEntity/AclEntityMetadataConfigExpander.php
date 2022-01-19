@@ -97,6 +97,15 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Sales\Persistence\SpySalesOrderAddress',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesOrderAddress')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesOrder'),
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             'Orm\Zed\Sales\Persistence\SpySalesOrderComment',
             (new AclEntityMetadataTransfer())
                 ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesOrderComment')

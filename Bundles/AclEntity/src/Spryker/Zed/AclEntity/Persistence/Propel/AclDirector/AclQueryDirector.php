@@ -9,38 +9,32 @@ namespace Spryker\Zed\AclEntity\Persistence\Propel\AclDirector;
 
 use Generated\Shared\Transfer\AclEntityMetadataTransfer;
 use Generated\Shared\Transfer\AclEntityRuleCollectionTransfer;
-use InvalidArgumentException;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\PropelQuery;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Propel\Runtime\Collection\ObjectCollection;
-use Propel\Runtime\Propel;
 use Spryker\Shared\AclEntity\AclEntityConstants;
-use Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface;
 use Spryker\Zed\AclEntity\Persistence\Exception\FunctionalityNotSupportedException;
-use Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException;
-use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Expander\AclQueryExpanderInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProviderInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface;
-use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface;
-use Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 
 class AclQueryDirector implements AclQueryDirectorInterface
 {
     /**
-     * @var \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclJoinDirectorInterface
      */
-    protected $recursionCache;
+    protected $aclJoinDirector;
 
     /**
-     * @var \Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProviderInterface
      */
-    protected $aclEntityRepository;
+    protected $aclEntityRuleProvider;
 
     /**
-     * @var \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolverInterface
      */
-    protected $aclDirectorStrategyResolver;
+    protected $aclQueryScopeResolver;
 
     /**
      * @var \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface
@@ -48,43 +42,45 @@ class AclQueryDirector implements AclQueryDirectorInterface
     protected $aclEntityMetadataReader;
 
     /**
-     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\Expander\AclQueryExpanderInterface
      */
-    protected $relationResolver;
-
-    /**
-     * @var \Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface
-     */
-    protected $aclRoleProvider;
+    protected $aclQueryExpander;
 
     /**
      * @var \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface
      */
-    protected $queryMerger;
+    protected $aclQueryMerger;
 
     /**
-     * @param \Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface $aclEntityRepository
-     * @param \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface $aclDirectorStrategyResolver
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirectorInterface
+     */
+    protected $aclModelDirector;
+
+    /**
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclJoinDirectorInterface $aclJoinDirector
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Provider\AclEntityRuleProviderInterface $aclEntityRuleProvider
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolverInterface $aclQueryScopeResolver
      * @param \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface $aclEntityMetadataReader
-     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface $relationResolver
-     * @param \Spryker\Zed\AclEntity\Persistence\Provider\AclRoleProviderInterface $aclRoleProvider
-     * @param \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface $queryMerger
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\Expander\AclQueryExpanderInterface $aclQueryExpander
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface $aclQueryMerger
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\AclModelDirectorInterface $aclModelDirector
      */
     public function __construct(
-        AclEntityRepositoryInterface $aclEntityRepository,
-        AclDirectorStrategyResolverInterface $aclDirectorStrategyResolver,
+        AclJoinDirectorInterface $aclJoinDirector,
+        AclEntityRuleProviderInterface $aclEntityRuleProvider,
+        AclQueryScopeResolverInterface $aclQueryScopeResolver,
         AclEntityMetadataReaderInterface $aclEntityMetadataReader,
-        RelationResolverInterface $relationResolver,
-        AclRoleProviderInterface $aclRoleProvider,
-        AclEntityQueryMergerInterface $queryMerger
+        AclQueryExpanderInterface $aclQueryExpander,
+        AclEntityQueryMergerInterface $aclQueryMerger,
+        AclModelDirectorInterface $aclModelDirector
     ) {
-        $this->recursionCache = new ObjectCollection();
-        $this->aclEntityRepository = $aclEntityRepository;
-        $this->aclDirectorStrategyResolver = $aclDirectorStrategyResolver;
+        $this->aclJoinDirector = $aclJoinDirector;
+        $this->aclEntityRuleProvider = $aclEntityRuleProvider;
+        $this->aclQueryScopeResolver = $aclQueryScopeResolver;
         $this->aclEntityMetadataReader = $aclEntityMetadataReader;
-        $this->relationResolver = $relationResolver;
-        $this->aclRoleProvider = $aclRoleProvider;
-        $this->queryMerger = $queryMerger;
+        $this->aclQueryExpander = $aclQueryExpander;
+        $this->aclQueryMerger = $aclQueryMerger;
+        $this->aclModelDirector = $aclModelDirector;
     }
 
     /**
@@ -98,18 +94,22 @@ class AclQueryDirector implements AclQueryDirectorInterface
      */
     public function applyAclRuleOnSelectQuery(ModelCriteria $query): ModelCriteria
     {
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->aclRoleProvider->getCurrentUserAclRoles(),
-        );
+        $aclEntityRuleCollectionTransfer = $this->aclEntityRuleProvider->getCurrentUserAclEntityRules();
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
             $query->getModelName(),
         );
+        if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
+            $query = $this->applyAclRuleToSubEntityQuery($query, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer);
 
-        $query = $this->applyAclRuleOnSelectQueryRelations($query, $aclEntityRuleCollectionTransfer);
+            return $this->aclJoinDirector->applyAclRuleOnSelectQueryRelations(
+                $query,
+                $aclEntityRuleCollectionTransfer,
+            );
+        }
 
-        return $aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()
-            ? $this->applyAclRuleToSubEntityQuery($query, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer)
-            : $this->applyAclRulesToRootEntityQuery($query, $aclEntityRuleCollectionTransfer);
+        $query = $this->applyAclRulesToRootEntityQuery($query, $aclEntityRuleCollectionTransfer);
+
+        return $this->aclJoinDirector->applyAclRuleOnSelectQueryRelations($query, $aclEntityRuleCollectionTransfer);
     }
 
     /**
@@ -123,16 +123,14 @@ class AclQueryDirector implements AclQueryDirectorInterface
      */
     public function applyAclRuleOnUpdateQuery(ModelCriteria $query): ModelCriteria
     {
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->aclRoleProvider->getCurrentUserAclRoles(),
-        );
-        $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
+        $aclEntityRuleCollectionTransfer = $this->aclEntityRuleProvider->getCurrentUserAclEntityRules();
+        $aclQueryScope = $this->aclQueryScopeResolver->resolve(
             $query,
             $aclEntityRuleCollectionTransfer,
             AclEntityConstants::OPERATION_MASK_UPDATE,
         );
 
-        return $aclQueryDirectorStrategy->applyAclRuleOnUpdateQuery($query);
+        return $aclQueryScope->applyAclRuleOnUpdateQuery($query, $aclEntityRuleCollectionTransfer);
     }
 
     /**
@@ -148,9 +146,11 @@ class AclQueryDirector implements AclQueryDirectorInterface
      */
     public function applyAclRuleOnDeleteQuery(ModelCriteria $query): ModelCriteria
     {
+        $aclEntityRuleCollectionTransfer = $this->aclEntityRuleProvider->getCurrentUserAclEntityRules();
+
         if ($this->isSingleRecordQuery($query)) {
             $entity = (clone $query)->findOne();
-            $this->inspectDelete($entity);
+            $this->aclModelDirector->inspectDelete($entity);
 
             return $query;
         }
@@ -165,285 +165,13 @@ class AclQueryDirector implements AclQueryDirectorInterface
             );
         }
 
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->aclRoleProvider->getCurrentUserAclRoles(),
-        );
-        $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
+        $aclQueryScope = $this->aclQueryScopeResolver->resolve(
             $query,
             $aclEntityRuleCollectionTransfer,
             AclEntityConstants::OPERATION_MASK_DELETE,
         );
 
-        return $aclQueryDirectorStrategy->applyAclRuleOnDeleteQuery($query);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return void
-     */
-    public function inspectCreate(ActiveRecordInterface $entity): void
-    {
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->aclRoleProvider->getCurrentUserAclRoles(),
-        );
-        $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            get_class($entity),
-        );
-
-        $this->inspectEntityRelations($entity);
-
-        if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
-            $this->inspectSubEntityCreate($entity, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer);
-
-            return;
-        }
-
-        $this->inspectRootEntityCreate($entity, $aclEntityRuleCollectionTransfer);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return void
-     */
-    public function inspectUpdate(ActiveRecordInterface $entity): void
-    {
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->aclRoleProvider->getCurrentUserAclRoles(),
-        );
-        $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            get_class($entity),
-        );
-
-        $this->inspectEntityRelations($entity);
-
-        if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
-            $this->inspectSubEntityUpdate($entity, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer);
-
-            return;
-        }
-
-        $this->inspectRootEntityUpdate($entity, $aclEntityRuleCollectionTransfer);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return void
-     */
-    public function inspectDelete(ActiveRecordInterface $entity): void
-    {
-        $aclEntityRuleCollectionTransfer = $this->aclEntityRepository->getAclEntityRulesByRoles(
-            $this->aclRoleProvider->getCurrentUserAclRoles(),
-        );
-        $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            get_class($entity),
-        );
-        if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
-            $this->inspectSubEntityDelete($entity, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer);
-
-            return;
-        }
-
-        $this->inspectRootEntityDelete($entity, $aclEntityRuleCollectionTransfer);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException
-     *
-     * @return void
-     */
-    protected function inspectRootEntityCreate(
-        ActiveRecordInterface $entity,
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-    ): void {
-        $aclDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
-            $entity,
-            $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_CREATE,
-        );
-
-        if (!$aclDirectorStrategy->isCreatable($entity)) {
-            throw new OperationNotAuthorizedException(
-                sprintf(
-                    OperationNotAuthorizedException::MESSAGE_TEMPLATE,
-                    AclEntityConstants::OPERATION_CREATE,
-                    get_class($entity),
-                ),
-            );
-        }
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $subEntity
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException
-     *
-     * @return void
-     */
-    protected function inspectSubEntityCreate(
-        ActiveRecordInterface $subEntity,
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
-        AclEntityMetadataTransfer $aclEntityMetadataTransfer
-    ): void {
-        $rootEntityAclEntityMetadataTransfer = $this->aclEntityMetadataReader
-            ->getRootAclEntityMetadataTransferForEntitySubClass($aclEntityMetadataTransfer->getEntityNameOrFail());
-        $rootEntityClass = $rootEntityAclEntityMetadataTransfer->getEntityNameOrFail();
-
-        /** @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface $rootEntity */
-        $rootEntity = new $rootEntityClass();
-        $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
-            $rootEntity,
-            $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_CREATE,
-        );
-
-        if (!$aclQueryDirectorStrategy->isCreatable($rootEntity)) {
-            throw new OperationNotAuthorizedException(
-                sprintf(
-                    OperationNotAuthorizedException::MESSAGE_TEMPLATE,
-                    AclEntityConstants::OPERATION_CREATE,
-                    get_class($subEntity),
-                ),
-            );
-        }
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException
-     *
-     * @return void
-     */
-    protected function inspectRootEntityUpdate(
-        ActiveRecordInterface $entity,
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-    ): void {
-        $aclDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
-            $entity,
-            $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_UPDATE,
-        );
-
-        if (!$aclDirectorStrategy->isUpdatable($entity)) {
-            throw new OperationNotAuthorizedException(
-                sprintf(
-                    OperationNotAuthorizedException::MESSAGE_TEMPLATE,
-                    AclEntityConstants::OPERATION_UPDATE,
-                    get_class($entity),
-                ),
-            );
-        }
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $subEntity
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException
-     *
-     * @return void
-     */
-    protected function inspectSubEntityUpdate(
-        ActiveRecordInterface $subEntity,
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
-        AclEntityMetadataTransfer $aclEntityMetadataTransfer
-    ): void {
-        $rootEntities = $this->relationResolver->getRootRelationsByAclEntityMetadata(
-            $subEntity,
-            $aclEntityMetadataTransfer,
-        );
-        foreach ($rootEntities as $rootEntity) {
-            $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
-                $rootEntity,
-                $aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_UPDATE,
-            );
-            if ($aclQueryDirectorStrategy->isUpdatable($rootEntity)) {
-                return;
-            }
-        }
-
-        throw new OperationNotAuthorizedException(
-            sprintf(
-                OperationNotAuthorizedException::MESSAGE_TEMPLATE,
-                AclEntityConstants::OPERATION_UPDATE,
-                get_class($subEntity),
-            ),
-        );
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException
-     *
-     * @return void
-     */
-    protected function inspectRootEntityDelete(
-        ActiveRecordInterface $entity,
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-    ): void {
-        $aclDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
-            $entity,
-            $aclEntityRuleCollectionTransfer,
-            AclEntityConstants::OPERATION_MASK_DELETE,
-        );
-
-        if (!$aclDirectorStrategy->isDeletable($entity)) {
-            throw new OperationNotAuthorizedException(
-                sprintf(
-                    OperationNotAuthorizedException::MESSAGE_TEMPLATE,
-                    AclEntityConstants::OPERATION_DELETE,
-                    get_class($entity),
-                ),
-            );
-        }
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $subEntity
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
-     *
-     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException
-     *
-     * @return void
-     */
-    protected function inspectSubEntityDelete(
-        ActiveRecordInterface $subEntity,
-        AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
-        AclEntityMetadataTransfer $aclEntityMetadataTransfer
-    ): void {
-        $rootEntities = $this->relationResolver->getRootRelationsByAclEntityMetadata($subEntity, $aclEntityMetadataTransfer);
-        foreach ($rootEntities as $rootEntity) {
-            $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByEntity(
-                $rootEntity,
-                $aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_DELETE,
-            );
-            if ($aclQueryDirectorStrategy->isDeletable($rootEntity)) {
-                return;
-            }
-        }
-
-        throw new OperationNotAuthorizedException(
-            sprintf(
-                OperationNotAuthorizedException::MESSAGE_TEMPLATE,
-                AclEntityConstants::OPERATION_DELETE,
-                get_class($subEntity),
-            ),
-        );
+        return $aclQueryScope->applyAclRuleOnDeleteQuery($query, $aclEntityRuleCollectionTransfer);
     }
 
     /**
@@ -460,13 +188,13 @@ class AclQueryDirector implements AclQueryDirectorInterface
         ModelCriteria $query,
         AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
     ): ModelCriteria {
-        $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
+        $aclQueryScope = $this->aclQueryScopeResolver->resolve(
             $query,
             $aclEntityRuleCollectionTransfer,
             AclEntityConstants::OPERATION_MASK_READ,
         );
 
-        return $aclQueryDirectorStrategy->applyAclRuleOnSelectQuery($query);
+        return $aclQueryScope->applyAclRuleOnSelectQuery($query, $aclEntityRuleCollectionTransfer);
     }
 
     /**
@@ -485,102 +213,22 @@ class AclQueryDirector implements AclQueryDirectorInterface
         AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
         AclEntityMetadataTransfer $aclEntityMetadataTransfer
     ): ModelCriteria {
-        $query = $this->relationResolver->joinSubEntityRootRelation($query, $aclEntityMetadataTransfer);
+        $query = $this->aclQueryExpander->joinSubEntityRootRelation($query, $aclEntityMetadataTransfer);
         $rootAclEntityMetadata = $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass(
             $query->getModelName(),
         );
 
         $rootEntityQuery = PropelQuery::from($rootAclEntityMetadata->getEntityNameOrFail());
-        $aclQueryDirectorStrategy = $this->aclDirectorStrategyResolver->resolveByQuery(
+        $aclQueryScope = $this->aclQueryScopeResolver->resolve(
             $rootEntityQuery,
             $aclEntityRuleCollectionTransfer,
             AclEntityConstants::OPERATION_MASK_READ,
         );
 
-        return $this->queryMerger->mergeQueries($query, $aclQueryDirectorStrategy->applyAclRuleOnSelectQuery($rootEntityQuery));
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return void
-     */
-    protected function inspectEntityRelations(ActiveRecordInterface $entity): void
-    {
-        $this->recursionCache->append($entity);
-
-        $entityTableMap = Propel::getServiceContainer()->getDatabaseMap()->getTableByPhpName((get_class($entity)));
-        foreach ($entityTableMap->getRelations() as $relationMap) {
-            foreach ($this->relationResolver->getRelationsByRelationMap($entity, $relationMap) as $relation) {
-                if ($this->recursionCache->contains($relation)) {
-                    continue;
-                }
-                if ($relation->isNew()) {
-                    $this->inspectCreate($relation);
-                } elseif ($relation->isModified()) {
-                    $this->inspectUpdate($relation);
-                }
-                $this->recursionCache->append($relation);
-            }
-        }
-    }
-
-    /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    protected function applyAclRuleOnSelectQueryRelations(ModelCriteria $query, AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer): ModelCriteria
-    {
-        $with = [];
-        foreach ($query->getWith() as $relation) {
-            $relationModelClass = $relation->getModelName();
-            $relationAclEntityMetadataTransfer = $this->aclEntityMetadataReader
-                ->findAclEntityMetadataTransferForEntityClass($relationModelClass);
-
-            $subQueryModelClass = $relationModelClass;
-            if ($relationAclEntityMetadataTransfer && $relationAclEntityMetadataTransfer->getIsSubEntity()) {
-                $relationRootAclEntityMetadataTransfer = $this->aclEntityMetadataReader
-                    ->getRootAclEntityMetadataTransferForEntitySubClass($relationModelClass);
-                $subQueryModelClass = $relationRootAclEntityMetadataTransfer->getEntityNameOrFail();
-                $query = $this->relationResolver->joinSubEntityRootRelation($query, $relationAclEntityMetadataTransfer);
-            }
-
-            $withQuery = PropelQuery::from($subQueryModelClass);
-            $strategy = $this->aclDirectorStrategyResolver->resolveByQuery(
-                $withQuery,
-                $aclEntityRuleCollectionTransfer,
-                AclEntityConstants::OPERATION_MASK_READ,
-            );
-
-            if (!$strategy->isReadableQuery($withQuery)) {
-                $callable = [$withQuery->getTableMap(), 'removeSelectColumns'];
-
-                if (!is_callable($callable)) {
-                    throw new InvalidArgumentException(sprintf('Expected a valid callable, %s given.', gettype($callable)));
-                }
-
-                // remove columns from select clause
-                call_user_func($callable, $query);
-
-                continue;
-            }
-
-            $withQuery = $strategy->applyAclRuleOnSelectQuery($withQuery);
-
-            $query = $this->queryMerger->mergeQueries($query, $withQuery);
-
-            $with[] = $relation;
-        }
-
-        return $query->setWith($with);
+        return $this->aclQueryMerger->mergeQueries(
+            $query,
+            $aclQueryScope->applyAclRuleOnSelectQuery($rootEntityQuery, $aclEntityRuleCollectionTransfer),
+        );
     }
 
     /**
@@ -602,11 +250,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
         }
 
         $condition = current($conditions);
+        /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
         $primaryKey = current($query->getTableMap()->getPrimaryKeys());
-
-        if (!$primaryKey) {
-            return false;
-        }
 
         return $condition->getColumn() === $primaryKey->getName()
             && $condition->getComparison() === ModelCriteria::EQUAL
