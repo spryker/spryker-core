@@ -12,6 +12,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/persistent-cart-extension": "^1.0.0",
         "spryker/product": "^5.0.0 || ^6.0.0",
+        "spryker/sales-quantity-extension": "^1.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.18.0"
     },

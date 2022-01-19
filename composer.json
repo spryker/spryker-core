@@ -723,6 +723,7 @@
         "spryker/sales-product-configuration-gui-extension": "*",
         "spryker/sales-product-connector": "*",
         "spryker/sales-quantity": "*",
+        "spryker/sales-quantity-extension": "*",
         "spryker/sales-reclamation": "*",
         "spryker/sales-reclamation-gui": "*",
         "spryker/sales-return": "*",

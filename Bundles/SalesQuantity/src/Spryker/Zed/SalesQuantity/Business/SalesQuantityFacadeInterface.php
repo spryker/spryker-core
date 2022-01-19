@@ -31,6 +31,7 @@ interface SalesQuantityFacadeInterface
 
     /**
      * Specification:
+     * - Executes `NonSplittableItemFilterPluginInterface` plugin stack to filter out non-splittable items.
      * - Reads a persisted concrete product from database.
      * - Expands the items of the CartChangeTransfer with a specific concrete product's data.
      * - Returns the expanded CartChangeTransfer.

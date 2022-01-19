@@ -14,12 +14,12 @@ interface DiscountPromotionToProductInterface
      *
      * @return int|null
      */
-    public function findProductAbstractIdBySku($sku);
+    public function findProductAbstractIdBySku($sku): ?int;
 
     /**
      * @param string $sku
      *
      * @return bool
      */
-    public function hasProductAbstract($sku);
+    public function hasProductAbstract($sku): bool;
 }

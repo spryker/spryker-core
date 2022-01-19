@@ -18,12 +18,20 @@ class ItemExpander implements ItemExpanderInterface
     protected $salesQuantityRepository;
 
     /**
+     * @var array<\Spryker\Zed\SalesQuantityExtension\Dependency\Plugin\NonSplittableItemFilterPluginInterface>
+     */
+    protected $nonSplittableItemFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesQuantity\Persistence\SalesQuantityRepositoryInterface $salesQuantityRepository
+     * @param array<\Spryker\Zed\SalesQuantityExtension\Dependency\Plugin\NonSplittableItemFilterPluginInterface> $nonSplittableItemFilterPlugins
      */
     public function __construct(
-        SalesQuantityRepositoryInterface $salesQuantityRepository
+        SalesQuantityRepositoryInterface $salesQuantityRepository,
+        array $nonSplittableItemFilterPlugins
     ) {
         $this->salesQuantityRepository = $salesQuantityRepository;
+        $this->nonSplittableItemFilterPlugins = $nonSplittableItemFilterPlugins;
     }
 
     /**
@@ -33,13 +41,43 @@ class ItemExpander implements ItemExpanderInterface
      */
     public function expandCartChangeWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $productConcreteSkus = $this->getSkusFromCartChangeTransfer($cartChangeTransfer);
+        $filteredCartChangeTransfer = $this->filterNonSplittableItems($cartChangeTransfer);
+
+        $productConcreteSkus = $this->getSkusFromCartChangeTransfer($filteredCartChangeTransfer);
         $indexedIsQuantitySplittableData = $this
             ->salesQuantityRepository
             ->getIsProductQuantitySplittableByProductConcreteSkus($productConcreteSkus);
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $isQuantitySplittable = $indexedIsQuantitySplittableData[$itemTransfer->getSku()] ?? false;
             $itemTransfer->setIsQuantitySplittable($isQuantitySplittable);
+        }
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function filterNonSplittableItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        $clonedCartChangeTransfer = (new CartChangeTransfer())
+            ->fromArray($cartChangeTransfer->toArray());
+
+        return $this->executeNonSplittableItemFilterPlugins($clonedCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function executeNonSplittableItemFilterPlugins(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        foreach ($this->nonSplittableItemFilterPlugins as $isQuantitySplittableFilterPlugin) {
+            $cartChangeTransfer = $isQuantitySplittableFilterPlugin->filterNonSplittableItems($cartChangeTransfer);
         }
 
         return $cartChangeTransfer;

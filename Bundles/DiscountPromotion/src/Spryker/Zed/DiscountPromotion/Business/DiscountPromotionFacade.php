@@ -179,4 +179,20 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
             ->createCartValidator()
             ->validateCartDiscountPromotions($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterDiscountPromotionItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountPromotionItemFilter()
+            ->filterDiscountPromotionItems($cartChangeTransfer);
+    }
 }

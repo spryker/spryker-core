@@ -13,6 +13,8 @@ use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountProm
 use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreatorInterface;
 use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdater;
 use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdaterInterface;
+use Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilter;
+use Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategy;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
@@ -62,6 +64,14 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     protected function createDiscountPromotionMapper()
     {
         return new DiscountPromotionMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilterInterface
+     */
+    public function createDiscountPromotionItemFilter(): DiscountPromotionItemFilterInterface
+    {
+        return new DiscountPromotionItemFilter();
     }
 
     /**

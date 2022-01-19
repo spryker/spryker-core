@@ -139,4 +139,16 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateCartDiscountPromotions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters discount promotion items from `CartChangeTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function filterDiscountPromotionItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

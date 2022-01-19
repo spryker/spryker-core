@@ -28,6 +28,11 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_NON_SPLITTABLE_ITEM_FILTER = 'PLUGINS_NON_SPLITTABLE_ITEM_FILTER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -35,6 +40,7 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addProductFacade($container);
+        $container = $this->addNonSplittableItemFilterPlugins($container);
 
         return $container;
     }
@@ -79,5 +85,27 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addNonSplittableItemFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_NON_SPLITTABLE_ITEM_FILTER, function () {
+            return $this->getNonSplittableItemFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesQuantityExtension\Dependency\Plugin\NonSplittableItemFilterPluginInterface>
+     */
+    protected function getNonSplittableItemFilterPlugins(): array
+    {
+        return [];
     }
 }

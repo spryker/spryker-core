@@ -37,6 +37,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemExpander(
             $this->getRepository(),
+            $this->getNonSplittableItemFilterPlugins(),
         );
     }
 
@@ -64,5 +65,13 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     public function createItemQuantityValidator()
     {
         return new ItemQuantityValidator($this->getConfig());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesQuantityExtension\Dependency\Plugin\NonSplittableItemFilterPluginInterface>
+     */
+    public function getNonSplittableItemFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::PLUGINS_NON_SPLITTABLE_ITEM_FILTER);
     }
 }
