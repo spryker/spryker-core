@@ -328,7 +328,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder
+     * @return \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
     protected function createDecisionRuleBuilder()
     {
