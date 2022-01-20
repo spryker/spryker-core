@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Cms/Business/Template/TemplateManager.php",
+        "description": "Prefix `is` must not be used with postfix `Exist`. Method: Spryker\\Zed\\Cms\\Business\\Template\\TemplateManager::isTemplateFileExists().",
+        "rule": "ExistsPostfixRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `translateByKeyId()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

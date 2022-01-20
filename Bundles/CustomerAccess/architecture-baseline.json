@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/CustomerAccess/CustomerAccessConfig.php",
+        "description": "Boolean methods do not use `get` prefix, use `is`/`has` instead or alike. Getter `Spryker\\Zed\\CustomerAccess\\CustomerAccessConfig::getContentTypeAccess()` must not return bool.",
+        "rule": "GetterReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

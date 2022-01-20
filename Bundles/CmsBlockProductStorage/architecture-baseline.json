@@ -47,5 +47,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockProductStorage/Persistence/CmsBlockProductStorageQueryContainer.php",
+        "description": "Prefix `is` must not be used with postfix `Exist`. Method: Spryker\\Zed\\CmsBlockProductStorage\\Persistence\\CmsBlockProductStorageQueryContainer::isCmsBlockKeyPropertyExists().",
+        "rule": "ExistsPostfixRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

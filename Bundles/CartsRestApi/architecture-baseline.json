@@ -7,6 +7,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Glue/CartsRestApi/CartsRestApiConfig.php",
+        "description": "Boolean methods do not use `get` prefix, use `is`/`has` instead or alike. Getter `Spryker\\Glue\\CartsRestApi\\CartsRestApiConfig::getAllowedCartItemEagerRelationship()` must not return bool.",
+        "rule": "GetterReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CartsRestApi/CartsRestApiConfig.php",
+        "description": "Boolean methods do not use `get` prefix, use `is`/`has` instead or alike. Getter `Spryker\\Glue\\CartsRestApi\\CartsRestApiConfig::getAllowedGuestCartItemEagerRelationship()` must not return bool.",
+        "rule": "GetterReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/CartsRestApi/Dependency/Facade/CartsRestApiToCartFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `reloadItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
