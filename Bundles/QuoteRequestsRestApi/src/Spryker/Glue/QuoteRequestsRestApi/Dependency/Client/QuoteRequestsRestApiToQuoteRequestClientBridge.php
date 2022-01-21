@@ -55,4 +55,24 @@ class QuoteRequestsRestApiToQuoteRequestClientBridge implements QuoteRequestsRes
     {
         return $this->quoteRequestClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function reviseQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->reviseQuoteRequest($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToUser(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestClient->sendQuoteRequestToUser($quoteRequestFilterTransfer);
+    }
 }

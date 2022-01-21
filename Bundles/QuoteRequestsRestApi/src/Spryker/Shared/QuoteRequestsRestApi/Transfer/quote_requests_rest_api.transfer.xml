@@ -14,6 +14,12 @@
     <transfer name="RestQuoteRequestCancelAttributes">
     </transfer>
 
+    <transfer name="RestQuoteRequestReviseAttributes">
+    </transfer>
+
+    <transfer name="RestQuoteRequestSendAttributes">
+    </transfer>
+
     <transfer name="RestQuoteRequestVersion">
         <property name="version" type="int"/>
         <property name="versionReference" type="string"/>
@@ -213,4 +219,5 @@
         <property name="pagination" type="Pagination"/>
         <property name="withVersions" type="bool"/>
     </transfer>
+
 </transfers>

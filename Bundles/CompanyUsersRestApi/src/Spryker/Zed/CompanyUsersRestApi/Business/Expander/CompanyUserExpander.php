@@ -42,6 +42,7 @@ class CompanyUserExpander implements CompanyUserExpanderInterface
         $companyUserTransfer = $this->companyUserFacade->findCompanyUserById($idCompanyUser);
 
         $quoteTransfer->getCustomer()->setCompanyUserTransfer($companyUserTransfer);
+        $quoteTransfer->setCompanyUserId($idCompanyUser);
 
         return $quoteTransfer;
     }

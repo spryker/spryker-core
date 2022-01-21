@@ -88,4 +88,33 @@ class QuoteRequestAgentsResourceController extends AbstractController
             ->createQuoteRequestCreator()
             ->createQuoteRequest($restRequest);
     }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates a quote request as a agent."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *     "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "responses": {
+     *              "400": "Quote request id is missing.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Quote request not found."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()
+            ->createQuoteRequestUpdater()
+            ->update($restRequest);
+    }
 }

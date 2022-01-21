@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -97,6 +98,35 @@ class QuoteRequestFacadeTest extends Unit
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
+
+    /**
+     * @var string
+     */
+    protected const METADATA_KEY_DELIVERY_DATE = 'delivery_date';
+
+    /**
+     * @var string
+     */
+    protected const METADATA_KEY_NOTE = 'note';
+
+    /**
+     * @var string
+     */
+    protected const METADATA_KEY_PURCHASE_ORDER_NUMBER = 'purchase_order_number';
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER
+     *
+     * @var int
+     */
+    protected const MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER = 128;
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_NOTE
+     *
+     * @var int
+     */
+    protected const MAX_LENGTH_METADATA_NOTE = 1024;
 
     /**
      * @var \SprykerTest\Zed\QuoteRequest\QuoteRequestBusinessTester
@@ -1527,6 +1557,46 @@ class QuoteRequestFacadeTest extends Unit
     }
 
     /**
+     * @return array<array>
+     */
+    public function getValidateQuoteRequestDeliveryDateMetadataDataProvider(): array
+    {
+        return [
+            [true],
+            [true, (new DateTime('now'))->setTime(0, 0)->format('Y-m-d H:i:s')],
+            [true, (new DateTime('+1 day'))->setTime(0, 0)->format('Y-m-d H:i:s')],
+            [false, 'testDate'],
+            [false, (new DateTime('-1 day'))->setTime(0, 0)->format('Y-m-d H:i:s')],
+        ];
+    }
+
+    /**
+     * @return array<array>
+     */
+    public function getValidateQuoteRequestNoteMetadataDataProvider(): array
+    {
+        return [
+            [true],
+            [true, static::MAX_LENGTH_METADATA_NOTE - 1],
+            [true, static::MAX_LENGTH_METADATA_NOTE],
+            [false, static::MAX_LENGTH_METADATA_NOTE + 1],
+        ];
+    }
+
+    /**
+     * @return array<array>
+     */
+    public function getValidateQuoteRequestPurchaseOrderNumberMetadataDataProvider(): array
+    {
+        return [
+            [true],
+            [true, static::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER - 1],
+            [true, static::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER],
+            [false, static::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER + 1],
+        ];
+    }
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
@@ -1604,12 +1674,14 @@ class QuoteRequestFacadeTest extends Unit
     }
 
     /**
+     * @param array $metadata
+     *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
-    protected function haveQuoteRequestInDraftStatus(): QuoteRequestTransfer
+    protected function haveQuoteRequestInDraftStatus(array $metadata = []): QuoteRequestTransfer
     {
         return $this->tester->createQuoteRequest(
-            $this->tester->createQuoteRequestVersion($this->quoteTransfer),
+            $this->tester->createQuoteRequestVersion($this->quoteTransfer, $metadata),
             $this->companyUserTransfer,
         );
     }
@@ -1624,5 +1696,30 @@ class QuoteRequestFacadeTest extends Unit
         return (new QuoteRequestFilterTransfer())
             ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
             ->setIdCompanyUser($quoteRequestTransfer->getCompanyUser()->getIdCompanyUser());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
+     * @param bool $isSuccessful
+     * @param string|null $errorMessage
+     *
+     * @return void
+     */
+    protected function assertQuoteRequestMetadataValidationResponse(
+        QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
+        bool $isSuccessful,
+        ?string $errorMessage = null
+    ): void {
+        $this->tester->assertSame($isSuccessful, $quoteRequestResponseTransfer->getIsSuccessful());
+        if ($isSuccessful) {
+            $this->tester->assertEmpty($quoteRequestResponseTransfer->getMessages());
+
+            return;
+        }
+
+        $this->tester->assertSame(
+            $errorMessage,
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue(),
+        );
     }
 }

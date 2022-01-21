@@ -44,4 +44,14 @@ class QuoteRequestsRestApiToQuoteRequestFacadeBridge implements QuoteRequestsRes
     {
         return $this->quoteRequestFacade->isQuoteApplicableForQuoteRequest($quoteRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestFacade->updateQuoteRequest($quoteRequestTransfer);
+    }
 }

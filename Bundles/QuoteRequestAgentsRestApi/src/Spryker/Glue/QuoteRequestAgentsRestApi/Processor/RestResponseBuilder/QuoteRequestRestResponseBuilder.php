@@ -124,4 +124,44 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->createRestResponse()
             ->addError($restErrorTransfer);
     }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createQuoteRequestReferenceMissingErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(QuoteRequestAgentsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_REFERENCE_MISSING)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(QuoteRequestAgentsRestApiConfig::RESPONSE_DETAIL_QUOTE_REQUEST_REFERENCE_MISSING);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createNoContentResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->setStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createDeliveryDateIsNotValidErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(QuoteRequestAgentsRestApiConfig::RESPONSE_CODE_METADATA_DELIVERY_DATE_IS_INVALID)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(QuoteRequestAgentsRestApiConfig::RESPONSE_DETAILS_METADATA_DELIVERY_DATE_IS_INVALID);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorTransfer);
+    }
 }

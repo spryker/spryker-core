@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface;
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
+use Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface;
 
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
 {
@@ -32,18 +33,26 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
     protected $quoteRequestMapper;
 
     /**
+     * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface
+     */
+    protected $quoteRequestValidator;
+
+    /**
      * @param \Spryker\Client\QuoteRequestsRestApi\QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder
      * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Mapper\QuoteRequestMapperInterface $quoteRequestMapper
+     * @param \Spryker\Glue\QuoteRequestsRestApi\Processor\Validator\QuoteRequestValidatorInterface $quoteRequestValidator
      */
     public function __construct(
         QuoteRequestsRestApiClientInterface $quoteRequestsRestApiClient,
         QuoteRequestRestResponseBuilderInterface $quoteRequestRestResponseBuilder,
-        QuoteRequestMapperInterface $quoteRequestMapper
+        QuoteRequestMapperInterface $quoteRequestMapper,
+        QuoteRequestValidatorInterface $quoteRequestValidator
     ) {
         $this->quoteRequestsRestApiClient = $quoteRequestsRestApiClient;
         $this->quoteRequestRestResponseBuilder = $quoteRequestRestResponseBuilder;
         $this->quoteRequestMapper = $quoteRequestMapper;
+        $this->quoteRequestValidator = $quoteRequestValidator;
     }
 
     /**
@@ -55,6 +64,10 @@ class QuoteRequestCreator implements QuoteRequestCreatorInterface
     {
         $quoteRequestTransfer = $this->quoteRequestMapper
             ->mapRestRequestToQuoteRequestTransfer($restRequest, new QuoteRequestTransfer());
+
+        if (!$this->quoteRequestValidator->validateDeliveryDate($quoteRequestTransfer)) {
+            return $this->quoteRequestRestResponseBuilder->createDeliveryDateIsNotValidErrorResponse();
+        }
 
         $quoteRequestResponseTransfer = $this->quoteRequestsRestApiClient->createQuoteRequest($quoteRequestTransfer);
 

@@ -31,4 +31,20 @@ class QuoteRequestsRestApiFacade extends AbstractFacade implements QuoteRequests
             ->createQuoteRequestCreator()
             ->createQuoteRequest($quoteRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestUpdater()
+            ->updateQuoteRequest($quoteRequestTransfer);
+    }
 }

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsCartTransfer;
+use Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestsTotalsTransfer;
 use Generated\Shared\Transfer\RestQuoteRequestVersionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -140,7 +141,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         $quoteRequestVersions = [];
         foreach ($quoteRequestTransfer->getQuoteRequestVersions() as $quoteRequestVersion) {
             if ($quoteRequestVersion->getVersionReference() !== null) {
-                $quoteRequestVersions[] = $quoteRequestVersion->getVersionReference();
+                $quoteRequestVersions[] = $quoteRequestVersion->getVersionReferenceOrFail();
             }
         }
 
@@ -220,5 +221,30 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
         $restQuoteRequestsCartTransfer->setTotals($restQuoteRequestsTotalsTransfer);
 
         return $restQuoteRequestsCartTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function mapRestQuoteRequestsRequestAttributesTransferToQuoteRequestTransfer(
+        RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer,
+        QuoteRequestTransfer $quoteRequestTransfer
+    ): QuoteRequestTransfer {
+        $quoteTransfer = (new QuoteTransfer())
+            ->setUuid($restQuoteRequestsRequestAttributesTransfer->getCartUuid());
+
+        if ($quoteRequestTransfer->getLatestVersion() === null) {
+            return $quoteRequestTransfer;
+        }
+
+        $quoteRequestVersionTransfer = ($quoteRequestTransfer->getLatestVersion())
+            ->setMetadata($restQuoteRequestsRequestAttributesTransfer->getMetadata())
+            ->setQuote($quoteTransfer);
+
+        return $quoteRequestTransfer
+            ->setLatestVersion($quoteRequestVersionTransfer);
     }
 }

@@ -32,7 +32,8 @@
         "spryker/company-business-unit": "*",
         "spryker/propel": "*",
         "spryker/shipment": "*",
-        "spryker/testify": "*"
+        "spryker/testify": "*",
+        "spryker/util-text": "*"
     },
     "suggest": {
         "spryker/checkout": "If you want to use Checkout plugins.",

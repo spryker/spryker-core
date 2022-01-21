@@ -29,7 +29,8 @@ class QuoteRequestsResourceRoutePlugin extends AbstractPlugin implements Resourc
     {
         $resourceRouteCollection
             ->addPost('post', true)
-            ->addGet('get', true);
+            ->addGet('get', true)
+            ->addPatch('patch', true);
 
         return $resourceRouteCollection;
     }

@@ -41,7 +41,7 @@ class QuoteRequestCancelResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createQuoteRequestCanceler()
+            ->createQuoteRequestCanceller()
             ->cancelQuoteRequest($restRequest);
     }
 }

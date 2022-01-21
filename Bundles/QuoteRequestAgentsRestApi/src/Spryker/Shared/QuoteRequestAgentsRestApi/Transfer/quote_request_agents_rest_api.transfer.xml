@@ -16,13 +16,26 @@
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="RestAgentQuoteRequestsRequestAttributes">
         <property name="companyUserUuid" type="string"/>
+        <property name="cartUuid" type="string"/>
+        <property name="metadata" type="array" singular="metadata" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="RestAgentQuoteRequestCancelAttributes">
+    </transfer>
+
+    <transfer name="RestAgentQuoteRequestReviseAttributes">
+    </transfer>
+
+    <transfer name="RestAgentQuoteRequestSendAttributes">
     </transfer>
 
     <transfer name="Customer">
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Message">
@@ -32,9 +45,13 @@
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
+        <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
     <transfer name="Quote">
+        <property name="uuid" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -45,6 +62,7 @@
 
     <transfer name="QuoteRequest">
         <property name="companyUser" type="CompanyUser"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -61,7 +79,17 @@
         <property name="withVersions" type="bool"/>
     </transfer>
 
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
     <transfer name="QuoteRequestCollection">
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="errorIdentifier" type="string"/>
     </transfer>
 
 </transfers>

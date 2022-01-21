@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi\Controller;
 
+use Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -91,5 +92,37 @@ class QuoteRequestsResourceController extends AbstractController
         return $this->getFactory()
             ->createQuoteRequestCreator()
             ->createQuoteRequest($restRequest);
+    }
+
+    /**
+     * @Glue({
+     *     "patch": {
+     *          "summary": [
+     *              "Updates a quote request as a company user."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
+     *          "responses": {
+     *              "400": "Quote request id is missing.",
+     *              "403": "Unauthorized request.",
+     *              "404": "Quote request not found."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function patchAction(
+        RestRequestInterface $restRequest,
+        RestQuoteRequestsRequestAttributesTransfer $restQuoteRequestsRequestAttributesTransfer
+    ): RestResponseInterface {
+        return $this->getFactory()
+            ->createQuoteRequestUpdater()
+            ->update($restRequest, $restQuoteRequestsRequestAttributesTransfer);
     }
 }

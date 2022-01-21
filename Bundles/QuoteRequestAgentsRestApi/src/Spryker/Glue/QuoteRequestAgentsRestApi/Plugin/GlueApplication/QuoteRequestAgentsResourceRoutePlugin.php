@@ -29,7 +29,8 @@ class QuoteRequestAgentsResourceRoutePlugin extends AbstractPlugin implements Re
     {
         $resourceRouteCollection
             ->addGet('get', true)
-            ->addPost('post', true);
+            ->addPost('post', true)
+            ->addPatch('patch', true);
 
         return $resourceRouteCollection;
     }

@@ -139,6 +139,21 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createDeliveryDateIsNotValidErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(QuoteRequestsRestApiConfig::RESPONSE_CODE_METADATA_DELIVERY_DATE_IS_INVALID)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(QuoteRequestsRestApiConfig::RESPONSE_DETAILS_METADATA_DELIVERY_DATE_IS_INVALID);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createQuoteRequestReferenceMissingErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
@@ -167,8 +182,10 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
      */
-    protected function mapMessageTransferToRestErrorMessageTransfer(MessageTransfer $messageTransfer, RestErrorMessageTransfer $restErrorMessageTransfer)
-    {
+    protected function mapMessageTransferToRestErrorMessageTransfer(
+        MessageTransfer $messageTransfer,
+        RestErrorMessageTransfer $restErrorMessageTransfer
+    ): RestErrorMessageTransfer {
         $errorIdentifier = $messageTransfer->getValue();
 
         $errorIdentifierToRestErrorMapping = $this->quoteRequestsRestApiConfig->getErrorIdentifierToRestErrorMapping();

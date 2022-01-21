@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Canceler;
+namespace Spryker\Glue\QuoteRequestsRestApi\Processor\Canceller;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
@@ -15,7 +15,7 @@ use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQu
 use Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 use Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig;
 
-class QuoteRequestCanceler implements QuoteRequestCancelerInterface
+class QuoteRequestCanceller implements QuoteRequestCancellerInterface
 {
     /**
      * @var \Spryker\Glue\QuoteRequestsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface
@@ -46,18 +46,13 @@ class QuoteRequestCanceler implements QuoteRequestCancelerInterface
      */
     public function cancelQuoteRequest(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (
-            $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS) === null
-            || $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)->getId() === null
-        ) {
+        $parentResource = $restRequest->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS);
+        if (!$parentResource || $parentResource->getId() === null) {
             return $this->quoteRequestRestResponseBuilder->createQuoteRequestReferenceMissingErrorResponse();
         }
 
-        $quoteRequestReference = $restRequest
-            ->findParentResourceByType(QuoteRequestsRestApiConfig::RESOURCE_QUOTE_REQUESTS)
-            ->getId();
-
-        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer());
+        $quoteRequestFilterTransfer = $this->createQuoteRequestFilterTransfer();
+        $quoteRequestFilterTransfer->setQuoteRequestReference($parentResource->getId());
 
         $restUserTransfer = $restRequest->getRestUser();
         if ($restUserTransfer) {
@@ -66,16 +61,27 @@ class QuoteRequestCanceler implements QuoteRequestCancelerInterface
 
             $quoteRequestFilterTransfer
                 ->setCompanyUser($companyUserTransfer)
-                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser())
-                ->setQuoteRequestReference($quoteRequestReference);
+                ->setIdCompanyUser($restUserTransfer->getIdCompanyUser());
         }
 
         $quoteRequestResponseTransfer = $this->quoteRequestClient->cancelQuoteRequest($quoteRequestFilterTransfer);
 
-        if (!$quoteRequestResponseTransfer->getIsSuccessful()) {
-            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse(($quoteRequestResponseTransfer->getMessages())->getArrayCopy());
+        if ($quoteRequestResponseTransfer->getIsSuccessful()) {
+            return $this->quoteRequestRestResponseBuilder->createNoContentResponse();
         }
 
-        return $this->quoteRequestRestResponseBuilder->createNoContentResponse();
+        if ($quoteRequestResponseTransfer->getQuoteRequest() === null) {
+            return $this->quoteRequestRestResponseBuilder->createQuoteRequestNotFoundErrorResponse();
+        }
+
+        return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse(($quoteRequestResponseTransfer->getMessages())->getArrayCopy());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteRequestFilterTransfer
+     */
+    protected function createQuoteRequestFilterTransfer(): QuoteRequestFilterTransfer
+    {
+        return new QuoteRequestFilterTransfer();
     }
 }

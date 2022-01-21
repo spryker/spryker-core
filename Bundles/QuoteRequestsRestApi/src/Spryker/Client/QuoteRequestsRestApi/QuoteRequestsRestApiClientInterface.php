@@ -18,10 +18,10 @@ interface QuoteRequestsRestApiClientInterface
     /**
      * Specification:
      * - Creates a quote request by provided QuoteRequestTransfer.
-     * - `QuoteRequest.companyUser.customer` should be provided.
-     * - `QuoteRequest.latestVersion.quote.uuid` should be provided.
+     * - `QuoteRequest.companyUser.customer` must be provided.
+     * - `QuoteRequest.latestVersion.quote.uuid` must be provided.
      * - Finds quote by uuid for customer.
-     * - `Quoterequest.latestVersion.quote` should be probided.
+     * - `QuoteRequest.latestVersion.quote` must be provided.
      *
      * @api
      *
@@ -30,4 +30,20 @@ interface QuoteRequestsRestApiClientInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates a quote request by provided QuoteRequestTransfer.
+     * - `QuoteRequest.companyUser.customer` must be provided.
+     * - `QuoteRequest.latestVersion.quote.uuid` must be provided.
+     * - Finds quote by uuid for customer.
+     * - `QuoteRequest.latestVersion.quote` must be provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 }

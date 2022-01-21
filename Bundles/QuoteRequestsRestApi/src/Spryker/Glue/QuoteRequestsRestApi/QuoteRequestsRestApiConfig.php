@@ -24,6 +24,16 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_QUOTE_REQUEST_CANCEL = 'quote-request-cancel';
 
     /**
+     * @var string
+     */
+    public const RESOURCE_QUOTE_REQUEST_REVISE = 'quote-request-revise';
+
+    /**
+     * @var string
+     */
+    public const RESOURCE_QUOTE_REQUEST_SEND_TO_CUSTOMER = 'quote-request-send-to-customer';
+
+    /**
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminator::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
      *
      * @var string
@@ -50,6 +60,27 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteValidator::GLOSSARY_KEY_QUOTE_REQUEST_IS_NOT_APPLICABLE
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_IS_NOT_APPLICABLE = 'quote_request.validation.error.is_not_applicable';
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER
+     *
+     * @var int
+     */
+    protected const MAX_LENGTH_METADATA_PURCHASE_ORDER_NUMBER = 128;
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestMetadataValidator::MAX_LENGTH_METADATA_NOTE
+     *
+     * @var int
+     */
+    protected const MAX_LENGTH_METADATA_NOTE = 1024;
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
@@ -103,6 +134,26 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    public const RESPONSE_CODE_QUOTE_REQUEST_IS = '4506';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_CODE_METADATA_DELIVERY_DATE_IS_INVALID = '4506';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_CODE_METADATA_NOTE_IS_INVALID = '4506';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_CODE_METADATA_PURCHASE_ORDER_NUMBER_IS_INVALID = '4506';
+
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAIL_CART_IS_EMPTY = 'Cart is empty.';
 
     /**
@@ -141,13 +192,23 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_QUOTE_REQUEST_REFERENCE_MISSING = 'Quote request reference is required.';
 
     /**
+     * @var string
+     */
+    public const RESPONSE_DETAIL_QUOTE_REQUEST_VALIDATION = 'Request for quote denied. User does not have permissions to request quote.';
+
+    /**
+     * @var string
+     */
+    public const RESPONSE_DETAILS_METADATA_DELIVERY_DATE_IS_INVALID = 'The date should be greater than the current date.';
+
+    /**
      * Specification:
      * - Contains mapping from possible `MessageTransfer.value` to Glue error.
      * - Handle "Cart not found" error.
      * - Handle "Cart has wrong status" error.
      * - Handle "User not found" error.
      * - Handle use case, when several customers are trying to manage quote request in parallel.
-     * - Handle unsuccessfull result.
+     * - Handle unsuccessful result.
      *
      * @api
      *
@@ -180,6 +241,11 @@ class QuoteRequestsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_IS_EMPTY,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_CART_IS_EMPTY,
+            ],
+            static::GLOSSARY_KEY_QUOTE_REQUEST_IS_NOT_APPLICABLE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_QUOTE_REQUEST_VALIDATION,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_QUOTE_REQUEST_VALIDATION,
             ],
         ];
     }

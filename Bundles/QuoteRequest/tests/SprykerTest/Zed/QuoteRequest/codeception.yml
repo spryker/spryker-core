@@ -31,3 +31,4 @@ suites:
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\QuoteRequest\Helper\QuoteRequestHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\UtilText\Helper\UtilTextHelper

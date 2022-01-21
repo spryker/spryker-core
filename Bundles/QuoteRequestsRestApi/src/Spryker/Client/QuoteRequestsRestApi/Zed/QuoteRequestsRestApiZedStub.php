@@ -40,4 +40,19 @@ class QuoteRequestsRestApiZedStub implements QuoteRequestsRestApiZedStubInterfac
 
         return $quoteRequestResponseTransfer;
     }
+
+    /**
+     * @uses \Spryker\Zed\QuoteRequestsRestApi\Communication\Controller\GatewayController::updateQuoteRequestAction()
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer */
+        $quoteRequestResponseTransfer = $this->zedRequestClient->call('/quote-requests-rest-api/gateway/update-quote-request', $quoteRequestTransfer);
+
+        return $quoteRequestResponseTransfer;
+    }
 }

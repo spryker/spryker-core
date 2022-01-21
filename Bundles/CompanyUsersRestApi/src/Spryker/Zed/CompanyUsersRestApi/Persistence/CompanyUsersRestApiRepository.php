@@ -33,6 +33,7 @@ class CompanyUsersRestApiRepository extends AbstractRepository implements Compan
      */
     public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer
     {
+        /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser */
         $queryCompanyUser = $this->getFactory()
             ->getCompanyUserPropelQuery()
             ->joinWithCompany()

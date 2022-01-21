@@ -31,4 +31,20 @@ class QuoteRequestsRestApiClient extends AbstractClient implements QuoteRequests
             ->createQuoteRequestsRestApiZedStub()
             ->createQuoteRequest($quoteRequestTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function updateQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestsRestApiZedStub()
+            ->updateQuoteRequest($quoteRequestTransfer);
+    }
 }

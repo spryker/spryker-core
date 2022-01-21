@@ -94,6 +94,7 @@
 
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
+        <property name="companyUserId" type="int"/>
     </transfer>
 
     <transfer name="RestCustomer">

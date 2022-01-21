@@ -57,13 +57,15 @@ class QuoteRequestBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $metadata
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
      */
-    public function createQuoteRequestVersion(QuoteTransfer $quoteTransfer): QuoteRequestVersionTransfer
+    public function createQuoteRequestVersion(QuoteTransfer $quoteTransfer, array $metadata = []): QuoteRequestVersionTransfer
     {
         return $this->haveQuoteRequestVersion([
             QuoteRequestVersionTransfer::QUOTE => $quoteTransfer,
+            QuoteRequestVersionTransfer::METADATA => $metadata,
         ]);
     }
 

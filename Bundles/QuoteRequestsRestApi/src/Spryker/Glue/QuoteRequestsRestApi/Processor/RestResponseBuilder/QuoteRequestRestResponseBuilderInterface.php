@@ -50,6 +50,11 @@ interface QuoteRequestRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createDeliveryDateIsNotValidErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createQuoteRequestReferenceMissingErrorResponse(): RestResponseInterface;
 
     /**

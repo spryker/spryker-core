@@ -56,4 +56,34 @@ class QuoteRequestAgentsRestApiToQuoteRequestAgentClientBridge implements QuoteR
     {
         return $this->quoteRequestAgentClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function reviseQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestAgentClient->reviseQuoteRequest($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function cancelQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestAgentClient->cancelQuoteRequest($quoteRequestFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function sendQuoteRequestToCustomer(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer
+    {
+        return $this->quoteRequestAgentClient->sendQuoteRequestToCustomer($quoteRequestFilterTransfer);
+    }
 }

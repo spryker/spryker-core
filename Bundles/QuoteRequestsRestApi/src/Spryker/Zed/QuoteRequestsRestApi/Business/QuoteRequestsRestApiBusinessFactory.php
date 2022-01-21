@@ -10,8 +10,12 @@ namespace Spryker\Zed\QuoteRequestsRestApi\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteRequestsRestApi\Business\Creator\QuoteRequestCreator;
 use Spryker\Zed\QuoteRequestsRestApi\Business\Creator\QuoteRequestCreatorInterface;
+use Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapper;
+use Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapperInterface;
 use Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReader;
 use Spryker\Zed\QuoteRequestsRestApi\Business\Reader\QuoteReaderInterface;
+use Spryker\Zed\QuoteRequestsRestApi\Business\Updater\QuoteRequestUpdater;
+use Spryker\Zed\QuoteRequestsRestApi\Business\Updater\QuoteRequestUpdaterInterface;
 use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuoteRequestFacadeInterface;
 use Spryker\Zed\QuoteRequestsRestApi\QuoteRequestsRestApiDependencyProvider;
@@ -36,8 +40,29 @@ class QuoteRequestsRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteRequestCreator(
             $this->createQuoteReader(),
+            $this->createQuoteRequestResponseMapper(),
             $this->getQuoteRequestFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequestsRestApi\Business\Updater\QuoteRequestUpdaterInterface
+     */
+    public function createQuoteRequestUpdater(): QuoteRequestUpdaterInterface
+    {
+        return new QuoteRequestUpdater(
+            $this->createQuoteReader(),
+            $this->createQuoteRequestResponseMapper(),
+            $this->getQuoteRequestFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequestsRestApi\Business\Mapper\QuoteRequestResponseMapperInterface
+     */
+    public function createQuoteRequestResponseMapper(): QuoteRequestResponseMapperInterface
+    {
+        return new QuoteRequestResponseMapper();
     }
 
     /**
