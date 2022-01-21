@@ -51,7 +51,10 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
             ->joinWithSpyCmsBlockGlossaryKeyMapping()
             ->useSpyCmsBlockGlossaryKeyMappingQuery()
                 ->joinWithGlossaryKey()
-            ->endUse()
+            ->endUse();
+
+        /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $query */
+        $query = $query
             ->joinWithSpyCmsBlockStore()
             ->useSpyCmsBlockStoreQuery()
                 ->joinWithSpyStore()

@@ -398,6 +398,12 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $storesWithSharedPersistence = $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
 
-        return array_merge($storesWithSharedPersistence, [$storeTransfer->getName()]);
+        $storeNames = [$storeTransfer->getNameOrFail()];
+
+        foreach ($storesWithSharedPersistence as $storeWithSharedPersistenceName) {
+            $storeNames[] = $storeWithSharedPersistenceName->getNameOrFail();
+        }
+
+        return $storeNames;
     }
 }
