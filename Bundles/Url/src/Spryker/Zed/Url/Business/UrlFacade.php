@@ -46,7 +46,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\Url\Business\Url\UrlCreatorInterface::createUrl()} instead.
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $url
+     * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $resourceType
      * @param int|null $idResource

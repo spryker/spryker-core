@@ -56,7 +56,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @param string $searchString
      * @param array $requestParameters
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function catalogSuggestSearch($searchString, array $requestParameters = [])
     {

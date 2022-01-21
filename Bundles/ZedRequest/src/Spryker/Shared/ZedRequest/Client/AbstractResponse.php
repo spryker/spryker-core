@@ -266,6 +266,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     private function createTransferObject($transferClassName)
     {
+        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer */
         $transfer = new $transferClassName();
 
         return $transfer;

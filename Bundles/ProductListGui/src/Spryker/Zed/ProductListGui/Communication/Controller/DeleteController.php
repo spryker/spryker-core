@@ -42,7 +42,7 @@ class DeleteController extends ProductListAbstractController
             ->getConfig()
             ->getDefaultRedirectUrl();
 
-        $redirectUrl = $request->query->get(
+        $redirectUrl = (string)$request->query->get(
             static::URL_PARAM_REDIRECT_URL,
             $defaultRedirectUrl,
         );

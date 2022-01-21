@@ -47,8 +47,7 @@ class SuggestController extends AbstractController
      */
     protected function executeIndexAction(Request $request): array
     {
-        $suggestionName = $request->query->get(static::PARAM_TERM);
-
+        $suggestionName = (string)$request->query->get(static::PARAM_TERM);
         $companyCriteriaFilterTransfer = $this->createCompanyCriteriaFilterTransfer($suggestionName);
 
         $companyCollectionTransfer = $this->getFactory()

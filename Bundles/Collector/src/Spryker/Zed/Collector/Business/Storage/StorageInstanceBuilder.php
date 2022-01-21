@@ -115,6 +115,7 @@ class StorageInstanceBuilder
         $configArray = static::createAdapterConfig($kvAdapter);
         $options = static::getAdapterOptions();
 
+        /** @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface $storage */
         $storage = new $storageAdapter($configArray, $options, $debug);
         static::$storageInstances[$storageAdapter] = $storage;
 

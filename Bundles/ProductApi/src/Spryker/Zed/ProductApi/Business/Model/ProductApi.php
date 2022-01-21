@@ -177,6 +177,7 @@ class ProductApi implements ProductApiInterface
             $query->find()->toArray(),
         );
 
+        /** @var \Generated\Shared\Transfer\ProductApiTransfer $productApiTransfer */
         foreach ($collection as $k => $productApiTransfer) {
             $collection[$k] = $this->get($productApiTransfer->getIdProductAbstract())->getData();
         }

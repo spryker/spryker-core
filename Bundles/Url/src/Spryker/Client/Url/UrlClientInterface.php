@@ -18,7 +18,7 @@ interface UrlClientInterface
      * @param string $url
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\UrlCollectorStorageTransfer|bool
+     * @return \Generated\Shared\Transfer\UrlCollectorStorageTransfer|false
      */
     public function findUrl($url, $localeName);
 

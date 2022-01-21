@@ -13,7 +13,7 @@ interface UrlStorageReaderInterface
      * @param string $url
      * @param string|null $localeName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function matchUrl($url, $localeName);
 

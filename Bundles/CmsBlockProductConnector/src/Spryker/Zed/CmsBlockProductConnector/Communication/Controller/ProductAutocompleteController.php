@@ -73,7 +73,7 @@ class ProductAutocompleteController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $suggestion = $request->query->get(static::REQUEST_PARAM_SUGGESTION, '');
+        $suggestion = (string)$request->query->get(static::REQUEST_PARAM_SUGGESTION, '');
         $page = $request->query->getInt(static::REQUEST_PARAM_PAGE, static::DEFAULT_PAGE);
         $paginationTransfer = $this->getPaginationTransfer($page);
 

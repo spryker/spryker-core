@@ -48,7 +48,7 @@ class SuggestController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $suggestion = $request->query->get(static::PARAM_NAME, '');
+        $suggestion = (string)$request->query->get(static::PARAM_NAME, '');
 
         $productAbstractSuggestions = $this->getFactory()
             ->getProductFacade()

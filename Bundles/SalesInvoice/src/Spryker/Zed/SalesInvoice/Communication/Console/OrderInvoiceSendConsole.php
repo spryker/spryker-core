@@ -86,7 +86,7 @@ class OrderInvoiceSendConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $orderIds = $this->getArgumentOrderIdsValue($input);
-        $force = $input->getOption(static::ARGUMENT_FORCE_EMAIL_SEND);
+        $force = (bool)$input->getOption(static::ARGUMENT_FORCE_EMAIL_SEND);
 
         $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer())
             ->setBatch(static::BATCH);

@@ -14,7 +14,7 @@ interface QuoteFieldsConfiguratorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<string>
+     * @return array<string|array<string>>
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array;
 }

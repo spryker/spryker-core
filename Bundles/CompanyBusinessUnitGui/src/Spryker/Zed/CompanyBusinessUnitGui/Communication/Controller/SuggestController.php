@@ -75,7 +75,7 @@ class SuggestController extends AbstractController
      */
     protected function createCompanyBusinessUnitCriteriaFilterTransfer(Request $request): CompanyBusinessUnitCriteriaFilterTransfer
     {
-        $suggestionName = $request->query->get(static::PARAM_SUGGESTION);
+        $suggestionName = (string)$request->query->get(static::PARAM_SUGGESTION) ?: null;
         $idCompany = $this->castId($request->query->get(static::PARAM_ID_COMPANY));
 
         $limit = $this->getFactory()->getConfig()->getCompanyBusinessUnitSuggestionLimit();

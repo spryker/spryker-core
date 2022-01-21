@@ -281,7 +281,7 @@ class IndexController extends AbstractController
         $idDiscount = $this->castId($request->query->get(static::URL_PARAM_ID_DISCOUNT));
 
         $form = $this->getFactory()->createDiscountVisibilityForm()->handleRequest($request);
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL);
         if (!$redirectUrl) {
             $redirectUrl = $this->createEditRedirectUrl($idDiscount);
         }

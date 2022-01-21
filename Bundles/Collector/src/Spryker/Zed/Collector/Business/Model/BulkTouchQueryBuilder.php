@@ -31,6 +31,7 @@ class BulkTouchQueryBuilder
     public function createBulkTouchUpdateQuery()
     {
         $className = CollectorConfig::COLLECTOR_BULK_UPDATE_QUERY_CLASS;
+        /** @var \Spryker\Zed\Collector\Persistence\Pdo\BulkUpdateTouchKeyByIdQueryInterface $resolvedClassName */
         $resolvedClassName = $this->getResolvedClassName($className);
 
         return new $resolvedClassName();
@@ -42,6 +43,7 @@ class BulkTouchQueryBuilder
     public function createBulkTouchDeleteQuery()
     {
         $className = CollectorConfig::COLLECTOR_BULK_DELETE_QUERY_CLASS;
+        /** @var \Spryker\Zed\Collector\Persistence\Pdo\BulkDeleteTouchByIdQueryInterface $resolvedClassName */
         $resolvedClassName = $this->getResolvedClassName($className);
 
         return new $resolvedClassName();

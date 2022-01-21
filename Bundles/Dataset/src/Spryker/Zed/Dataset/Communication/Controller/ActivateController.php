@@ -52,7 +52,7 @@ class ActivateController extends AbstractController
     public function indexAction(Request $request): RedirectResponse
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
         $this->getFacade()->activateDataset((new DatasetTransfer())->setIdDataset($idDataset)->setIsActive(true));
         $this->addSuccessMessage(static::MESSAGE_DATASET_ACTIVATE_SUCCESS);
 

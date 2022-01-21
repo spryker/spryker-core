@@ -45,8 +45,8 @@ class SalesController extends AbstractController
      */
     public function saveAction(Request $request): RedirectResponse
     {
-        $orderCustomReference = $request->request->get(static::PARAM_ORDER_CUSTOM_REFERENCE);
-        $backUrl = $request->request->get(static::PARAM_BACK_URL);
+        $orderCustomReference = (string)$request->request->get(static::PARAM_ORDER_CUSTOM_REFERENCE);
+        $backUrl = (string)$request->request->get(static::PARAM_BACK_URL);
 
         $orderTransfer = (new OrderTransfer())
             ->setIdSalesOrder($request->request->getInt(static::PARAM_ID_SALES_ORDER));

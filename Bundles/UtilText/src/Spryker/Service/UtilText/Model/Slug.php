@@ -17,7 +17,7 @@ class Slug implements SlugInterface
     public function generate($value)
     {
         if (function_exists('iconv')) {
-            $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
+            $value = (string)iconv('UTF-8', 'ASCII//TRANSLIT', $value);
         }
 
         $value = preg_replace('/[^a-zA-Z0-9 -]/', '', trim($value));

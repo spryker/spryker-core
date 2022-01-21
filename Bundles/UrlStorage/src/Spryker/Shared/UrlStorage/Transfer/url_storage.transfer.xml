@@ -37,6 +37,11 @@
     </transfer>
 
     <transfer name="Url">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="UrlCollectorStorage">
+        <property name="localeUrls" type="Url[]" singular="localeUrls"/>
     </transfer>
 
 </transfers>

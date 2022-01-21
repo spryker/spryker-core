@@ -48,7 +48,7 @@ class QuoteMapper implements QuoteMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
-     * @param array<string> $quoteFieldsAllowedForSaving
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
      * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
@@ -78,7 +78,7 @@ class QuoteMapper implements QuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array<string> $quoteFieldsAllowedForSaving
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
      * @return string
      */
@@ -93,10 +93,10 @@ class QuoteMapper implements QuoteMapperInterface
     }
 
     /**
-     * @param array $quoteData
-     * @param array $quoteFieldsAllowedForSaving
+     * @param array<string, mixed> $quoteData
+     * @param array<string|array<string>> $quoteFieldsAllowedForSaving
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function filterDisallowedQuoteData(array $quoteData, array $quoteFieldsAllowedForSaving): array
     {

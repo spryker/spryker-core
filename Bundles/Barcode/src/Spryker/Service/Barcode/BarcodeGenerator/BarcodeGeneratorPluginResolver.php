@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\Barcode\BarcodeGenerator;
 
+use RuntimeException;
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException;
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginsNotProvided;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
@@ -31,12 +32,19 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
     /**
      * @param string|null $generatorPluginClassName
      *
+     * @throws \RuntimeException
+     *
      * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
     public function getBarcodeGeneratorPlugin(?string $generatorPluginClassName): BarcodeGeneratorPluginInterface
     {
         if (!$generatorPluginClassName) {
-            return reset($this->barcodeGeneratorPlugins);
+            $plugin = reset($this->barcodeGeneratorPlugins);
+            if (!$plugin) {
+                throw new RuntimeException('No plugin found to return, `$barcodeGeneratorPlugins` plugin stack empty.');
+            }
+
+            return $plugin;
         }
 
         return $this->getPluginByClassName($generatorPluginClassName);

@@ -179,8 +179,10 @@ abstract class AbstractClassResolver
      */
     public function getClassInfo()
     {
-        /** @phpstan-var \Spryker\Shared\Kernel\ClassResolver\ClassInfo */
-        return $this->classInfo;
+        /** @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo $classInfo */
+        $classInfo = $this->classInfo;
+
+        return $classInfo;
     }
 
     /**

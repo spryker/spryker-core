@@ -25,6 +25,7 @@ class LoggerConfigLoaderZed implements LoggerConfigLoaderInterface
      */
     public function create()
     {
+        /** @phpstan-var class-string<\Spryker\Shared\Log\Config\LoggerConfigInterface> $loggerClassName */
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_ZED);
 
         return new $loggerClassName();

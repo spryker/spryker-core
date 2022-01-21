@@ -65,7 +65,7 @@ class CreateContentController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_CREATE);
 
             return $this->redirectResponse(
-                $request->query->get(
+                (string)$request->query->get(
                     static::PARAM_REDIRECT_URL,
                     static::URL_REDIRECT_CONTENT_LIST_PAGE,
                 ),

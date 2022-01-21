@@ -102,6 +102,7 @@ class BundleProxy
         if (!class_exists($matcherClass)) {
             throw new LogicException(sprintf('Could not find a "%s"!', $matcherClass));
         }
+        /** @var \Spryker\Shared\Kernel\Locator\LocatorMatcherInterface $matcher */
         $matcher = new $matcherClass();
 
         $this->locators[] = $locator;

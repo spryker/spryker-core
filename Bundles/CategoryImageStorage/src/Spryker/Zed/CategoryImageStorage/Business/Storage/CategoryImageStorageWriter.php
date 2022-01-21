@@ -148,7 +148,7 @@ class CategoryImageStorageWriter implements CategoryImageStorageWriterInterface
             $this->mapSpyCategoryImageSetEntityTransferCollection($imageSets),
         ));
 
-        $spyCategoryImageStorage->setData(json_encode($categoryStorageTransfer->toArray()));
+        $spyCategoryImageStorage->setData(json_encode($categoryStorageTransfer->toArray()) ?: null);
         $spyCategoryImageStorage->setKey('category_images');
         $this->entityManager->saveCategoryImageStorage($spyCategoryImageStorage);
     }

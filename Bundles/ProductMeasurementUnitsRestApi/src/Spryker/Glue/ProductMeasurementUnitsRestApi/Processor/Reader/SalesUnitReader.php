@@ -63,6 +63,7 @@ class SalesUnitReader implements SalesUnitReaderInterface
             return $this->salesUnitRestResponseBuilder->createProductConcreteSkuMissingErrorResponse();
         }
 
+        /** @var string $concreteProductResourceId */
         $concreteProductResourceId = $parentResource->getId();
         $productConcreteIds = $this->productStorageClient->getProductConcreteIdsByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,

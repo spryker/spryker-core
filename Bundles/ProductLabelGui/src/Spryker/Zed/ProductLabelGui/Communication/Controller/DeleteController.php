@@ -43,7 +43,7 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         $idProductLabel = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LABEL));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL);
 
         $productLabelDeleteForm = $this->getFactory()->createProductLabelDeleteForm();
         $productLabelDeleteForm->handleRequest($request);

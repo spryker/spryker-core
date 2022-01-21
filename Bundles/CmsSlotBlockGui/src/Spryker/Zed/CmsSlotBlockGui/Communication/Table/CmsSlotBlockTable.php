@@ -208,9 +208,16 @@ class CmsSlotBlockTable extends AbstractTable
      */
     protected function formatValidityDateTime(?string $dateTime): string
     {
-        return $dateTime
-            ? date('F d, Y H:i', strtotime($dateTime))
-            : '-';
+        if (!$dateTime) {
+            return '-';
+        }
+
+        $timestamp = strtotime($dateTime);
+        if ($timestamp === false) {
+            return '-';
+        }
+
+        return (string)date('F d, Y H:i', $timestamp);
     }
 
     /**

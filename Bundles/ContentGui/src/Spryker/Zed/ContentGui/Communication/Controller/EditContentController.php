@@ -82,7 +82,7 @@ class EditContentController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_CONTENT_UPDATE);
 
             return $this->redirectResponse(
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE),
+                (string)$request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE),
             );
         }
         $contentTabs = $this->getFactory()->createContentTabs();

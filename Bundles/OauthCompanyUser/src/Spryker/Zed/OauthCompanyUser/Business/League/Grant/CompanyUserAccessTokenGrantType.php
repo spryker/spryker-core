@@ -85,7 +85,7 @@ class CompanyUserAccessTokenGrantType extends AbstractGrant implements GrantType
         }
 
         $userEntity = $this->userRepository
-            ->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);
+            ->getUserEntityByRequest((array)$request->getParsedBody(), $this->getIdentifier(), $clientEntity);
 
         if ($userEntity === null) {
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));

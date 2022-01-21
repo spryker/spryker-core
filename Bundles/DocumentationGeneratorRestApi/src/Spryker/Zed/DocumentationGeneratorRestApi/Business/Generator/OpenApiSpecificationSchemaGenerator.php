@@ -127,6 +127,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     public function addRequestSchemaForPlugin(ResourceRoutePluginInterface $plugin): string
     {
+        /** @phpstan-var class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transferClassName */
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin);
         if (!$this->isRequestSchemaRequired($transferClassName)) {
             return '';
@@ -151,6 +152,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
+        /** @phpstan-var class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transferClassName */
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName($transferClassName);
@@ -176,6 +178,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     public function addResponseCollectionSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
+        /** @phpstan-var class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transferClassName */
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName($transferClassName);
@@ -200,6 +203,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function addAttributesSchemasFromResourceRelationshipAnnotations(ResourceRoutePluginInterface $plugin): void
     {
+        /** @phpstan-var array<class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer>> $resourceAttributesClassNames */
         $resourceAttributesClassNames = $this->resourceRelationshipProcessor->getResourceAttributesClassNamesFromPlugin($plugin);
 
         if (!$resourceAttributesClassNames) {
@@ -233,7 +237,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
             if ($property[static::KEY_IS_TRANSFER]) {
                 $this->validateTransfer($property[static::KEY_TYPE]);
                 $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($property[static::KEY_TYPE]);
-                $this->addResponseDataAttributesSchemaFromTransfer(new $property[static::KEY_TYPE](), $schemaName);
+                /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
+                $transfer = new $property[static::KEY_TYPE]();
+                $this->addResponseDataAttributesSchemaFromTransfer($transfer, $schemaName);
             }
         }
 
@@ -258,7 +264,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
             if ($property[static::KEY_IS_TRANSFER] && $property[static::KEY_REST_REQUEST_PARAMETER] !== static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
                 $this->validateTransfer($property[static::KEY_TYPE]);
                 $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($property[static::KEY_TYPE]);
-                $this->addRequestDataAttributesSchemaFromTransfer(new $property[static::KEY_TYPE](), $schemaName);
+                /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
+                $transfer = new $property[static::KEY_TYPE]();
+                $this->addRequestDataAttributesSchemaFromTransfer($transfer, $schemaName);
             }
         }
 
@@ -342,7 +350,9 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     protected function isRequestSchemaRequired(string $transferClassName): bool
     {
-        $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata(new $transferClassName());
+        /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
+        $transfer = new $transferClassName();
+        $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
         foreach ($transferMetadata as $metadataParameter) {
             if ($metadataParameter[static::KEY_REST_REQUEST_PARAMETER] !== static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
                 return true;

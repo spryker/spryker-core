@@ -128,7 +128,9 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     protected function setDataSetKeys()
     {
         if ($this->csvReaderConfiguration->hasHeader()) {
-            $this->dataSetKeys = $this->fileObject->current();
+            /** @var array|null $dataSetKeys */
+            $dataSetKeys = $this->fileObject->current();
+            $this->dataSetKeys = $dataSetKeys;
             $this->next();
         }
     }

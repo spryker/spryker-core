@@ -80,6 +80,7 @@ class CartItemReplacer implements CartItemReplacerInterface
         );
 
         $itemsToRemoval = $this->prepareItemsForRemoval($persistentItemReplaceTransfer, $quoteTransfer);
+        /** @var array<\Generated\Shared\Transfer\ItemTransfer> $itemsToAdding */
         $itemsToAdding = [$persistentItemReplaceTransfer->getNewItem()];
 
         $quoteResponseTransfer = $this->executeReplaceItem($itemsToRemoval, $itemsToAdding, $quoteTransfer);

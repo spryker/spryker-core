@@ -60,7 +60,7 @@ class MerchantStatusController extends AbstractController
         }
 
         $idMerchant = $request->query->getInt(static::PARAM_ID_MERCHANT);
-        $newMerchantStatus = $request->query->get(static::PARAM_MERCHANT_STATUS);
+        $newMerchantStatus = (string)$request->query->get(static::PARAM_MERCHANT_STATUS) ?: null;
 
         if (!$idMerchant || !$newMerchantStatus) {
             return $this->returnErrorRedirect($request);

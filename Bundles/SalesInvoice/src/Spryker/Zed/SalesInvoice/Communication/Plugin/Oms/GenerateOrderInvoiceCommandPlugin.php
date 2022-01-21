@@ -35,7 +35,7 @@ class GenerateOrderInvoiceCommandPlugin extends AbstractPlugin implements Comman
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         $orderTransfer = (new OrderTransfer())
-            ->fromArray($orderEntity->toArray(), true);
+            ->fromArray((array)$orderEntity->toArray(), true);
 
         $this->getFacade()->generateOrderInvoice($orderTransfer);
 

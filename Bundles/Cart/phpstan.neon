@@ -3,4 +3,5 @@ parameters:
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        - '#Cannot unset offset (\w+) on iterable<.+ItemTransfer>&Traversable#'
+        - '#Cannot access offset int on Traversable<.+ItemTransfer>#'
+        - '#Call to an undefined method Orm\\Zed\\#'

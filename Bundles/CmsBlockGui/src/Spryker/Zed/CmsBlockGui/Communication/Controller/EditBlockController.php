@@ -102,7 +102,7 @@ class EditBlockController extends AbstractCmsBlockController
     public function activateAction(Request $request)
     {
         $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $form = $this->getFactory()->createToggleActiveCmsBlockForm()->handleRequest($request);
 
@@ -129,7 +129,7 @@ class EditBlockController extends AbstractCmsBlockController
     public function deactivateAction(Request $request)
     {
         $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $form = $this->getFactory()->createToggleActiveCmsBlockForm()->handleRequest($request);
 

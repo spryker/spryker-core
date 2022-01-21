@@ -25,6 +25,7 @@ class LoggerConfigLoaderGlue implements LoggerConfigLoaderInterface
      */
     public function create()
     {
+        /** @phpstan-var class-string<\Spryker\Shared\Log\Config\LoggerConfigInterface> $loggerClassName */
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_GLUE);
 
         return new $loggerClassName();

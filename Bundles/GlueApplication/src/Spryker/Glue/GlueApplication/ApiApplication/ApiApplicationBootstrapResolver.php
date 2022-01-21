@@ -77,6 +77,7 @@ class ApiApplicationBootstrapResolver implements ApiApplicationBootstrapResolver
                 class_exists($glueApplicationBootstrapPluginClassName)
                 && is_subclass_of($glueApplicationBootstrapPluginClassName, GlueApplicationBootstrapPluginInterface::class)
             ) {
+                /** @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface $apiApplicationPlugin */
                 $apiApplicationPlugin = new $glueApplicationBootstrapPluginClassName();
                 if ($apiApplicationPlugin->isServing($apiApplicationContext) === true) {
                     return $apiApplicationPlugin;

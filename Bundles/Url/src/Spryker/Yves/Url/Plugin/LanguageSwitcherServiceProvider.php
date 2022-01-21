@@ -148,7 +148,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function getLanguageFromLocale($locale): string
     {
-        return substr($locale, 0, strpos($locale, '_'));
+        return substr($locale, 0, strpos($locale, '_') ?: 0);
     }
 
     /**

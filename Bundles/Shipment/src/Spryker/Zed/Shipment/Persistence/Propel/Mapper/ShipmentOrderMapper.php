@@ -23,7 +23,7 @@ class ShipmentOrderMapper implements ShipmentOrderMapperInterface
         SpySalesOrder $salesOrderEntity,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
-        return $orderTransfer->fromArray($salesOrderEntity->toArray(), true);
+        return $orderTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
     }
 
     /**

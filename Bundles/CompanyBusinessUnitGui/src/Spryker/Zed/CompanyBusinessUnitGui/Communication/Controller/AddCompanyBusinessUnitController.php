@@ -45,7 +45,7 @@ class AddCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
+        $redirectUrl = (string)$request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()

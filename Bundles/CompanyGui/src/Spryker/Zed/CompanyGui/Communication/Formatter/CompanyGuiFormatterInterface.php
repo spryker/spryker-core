@@ -14,7 +14,7 @@ interface CompanyGuiFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function formatCompanyCollectionToSuggestions(CompanyCollectionTransfer $companyCollectionTransfer): array;
 }

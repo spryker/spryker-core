@@ -46,6 +46,7 @@ class GlobalThresholdDataProviderResolver implements GlobalThresholdDataProvider
             throw new MissingThresholdDataProviderException();
         }
 
+        /** @phpstan-var class-string<\Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface> $dataProvider */
         $dataProvider = $this->config->getStrategyGroupToDataProviderMap()[$salesOrderThresholdTypeGroup];
 
         return new $dataProvider($this->formExpanderPlugins);

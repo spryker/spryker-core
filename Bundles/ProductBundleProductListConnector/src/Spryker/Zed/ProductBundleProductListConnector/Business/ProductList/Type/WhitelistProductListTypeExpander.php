@@ -130,7 +130,9 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
                 continue;
             }
 
-            $productForBundleIdsToAssign[] = $productForBundleTransfer->getIdProductConcrete();
+            /** @var int $idProductConcrete */
+            $idProductConcrete = $productForBundleTransfer->getIdProductConcrete();
+            $productForBundleIdsToAssign[] = $idProductConcrete;
         }
 
         if (!$productForBundleIdsToAssign) {

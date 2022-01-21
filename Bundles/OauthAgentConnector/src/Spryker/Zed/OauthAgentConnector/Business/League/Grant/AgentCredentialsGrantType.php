@@ -103,7 +103,7 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
             throw OAuthServerException::invalidRequest(static::REQUEST_PARAMETER_PASSWORD);
         }
 
-        $user = $this->userRepository->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);
+        $user = $this->userRepository->getUserEntityByRequest((array)$request->getParsedBody(), $this->getIdentifier(), $clientEntity);
 
         if (!($user instanceof UserEntityInterface)) {
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));

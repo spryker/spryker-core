@@ -58,7 +58,7 @@ class EditCompanyBusinessUnitController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCompanyBusinessUnit = $this->castId($request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT));
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
+        $redirectUrl = (string)$request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $companyBusinessUnitTransfer = $dataProvider->getData($idCompanyBusinessUnit);

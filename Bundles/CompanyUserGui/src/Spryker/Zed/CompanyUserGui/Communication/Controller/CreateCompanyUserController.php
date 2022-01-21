@@ -61,7 +61,7 @@ class CreateCompanyUserController extends AbstractController
         if ($companyUserForm->isSubmitted() && $companyUserForm->isValid()) {
             return $this->createCompanyUser(
                 $companyUserForm,
-                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE),
+                (string)$request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_COMPANY_USER_PAGE),
             );
         }
 

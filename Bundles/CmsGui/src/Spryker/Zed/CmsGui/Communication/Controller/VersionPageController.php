@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use InvalidArgumentException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
@@ -77,12 +78,17 @@ class VersionPageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \InvalidArgumentException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function discardAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL);
+        if (!$redirectUrl) {
+            throw new InvalidArgumentException(sprintf('Query string `%s` required.', static::URL_PARAM_REDIRECT_URL));
+        }
 
         $this->getFactory()
             ->getCmsFacade()

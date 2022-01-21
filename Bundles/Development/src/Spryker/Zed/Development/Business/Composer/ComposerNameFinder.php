@@ -140,6 +140,7 @@ class ComposerNameFinder implements ComposerNameFinderInterface
      */
     protected function getCurrentModuleTransfer(array $moduleTransferCollection): ModuleTransfer
     {
+        /** @var \Generated\Shared\Transfer\ModuleTransfer */
         return current($moduleTransferCollection);
     }
 

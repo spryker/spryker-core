@@ -72,6 +72,7 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
      */
     public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds)
     {
+        /** @phpstan-var \Orm\Zed\Url\Persistence\SpyUrlQuery */
         return $this->getFactory()
             ->getUrlQueryContainer()
             ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)

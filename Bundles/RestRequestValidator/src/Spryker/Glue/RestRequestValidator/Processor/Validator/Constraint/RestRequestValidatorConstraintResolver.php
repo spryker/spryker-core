@@ -126,9 +126,11 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     protected function instantiateConstraintFromConfig(): callable
     {
         return function (array $validatorConfig): Constraint {
+            /** @var string $shortClassName */
             $shortClassName = key($validatorConfig);
             $parameters = $this->getParameters($validatorConfig);
 
+            /** @phpstan-var class-string<\Symfony\Component\Validator\Constraint> $className */
             $className = $this->resolveConstraintClassName($shortClassName);
 
             if ($parameters !== null) {
@@ -158,7 +160,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getConstraintCollectionOptions(): array
     {

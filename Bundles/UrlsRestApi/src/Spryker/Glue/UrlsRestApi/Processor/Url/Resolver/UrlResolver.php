@@ -58,7 +58,7 @@ class UrlResolver implements UrlResolverInterface
      */
     public function getUrlResolver(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $urlRequestParameter = urldecode($restRequest->getHttpRequest()->query->get(static::URL_REQUEST_PARAMETER));
+        $urlRequestParameter = urldecode((string)$restRequest->getHttpRequest()->query->get(static::URL_REQUEST_PARAMETER));
 
         if (!$urlRequestParameter) {
             return $this->urlResponseBuilder->createUrlRequestParamMissingErrorResponse();

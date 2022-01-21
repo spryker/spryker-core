@@ -85,10 +85,11 @@ class OauthPermissionReader implements OauthPermissionReaderInterface
     /**
      * @param string $authorizationToken
      *
-     * @return array
+     * @return array<string>
      */
     protected function extractToken(string $authorizationToken): array
     {
+        /** @phpstan-var array<string> */
         return preg_split('/\s+/', $authorizationToken);
     }
 }

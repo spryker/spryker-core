@@ -26,6 +26,7 @@ class InitialVectorConverter implements InitialVectorConverterInterface
      */
     public function convertToBin(string $initialVector): string
     {
+        /** @var string */
         return hex2bin($initialVector);
     }
 }

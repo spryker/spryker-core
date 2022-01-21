@@ -126,7 +126,7 @@ class EditCompanyController extends AbstractController
      */
     public function activateAction(Request $request)
     {
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $form = $this->getFactory()->createActivateCompanyForm()->handleRequest($request);
 
@@ -160,7 +160,7 @@ class EditCompanyController extends AbstractController
     public function deactivateAction(Request $request)
     {
         $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $form = $this->getFactory()->createDeativateCompanyForm()->handleRequest($request);
 
@@ -192,7 +192,7 @@ class EditCompanyController extends AbstractController
     public function approveAction(Request $request)
     {
         $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $form = $this->getFactory()->createApproveCompanyForm()->handleRequest($request);
 
@@ -222,7 +222,7 @@ class EditCompanyController extends AbstractController
     public function denyAction(Request $request)
     {
         $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $form = $this->getFactory()->createDenyCompanyForm()->handleRequest($request);
 

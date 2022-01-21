@@ -151,7 +151,7 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \Traversable<\Generated\Shared\Transfer\ItemTransfer> $existingItems
+     * @param \Traversable<int, \Generated\Shared\Transfer\ItemTransfer> $existingItems
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $itemIndex
      *

@@ -156,7 +156,7 @@ class EditController extends BaseProductRelationController
      */
     protected function executeToggleIsActiveAction(Request $request): RedirectResponse
     {
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = (string)$request->query->get(static::URL_PARAM_REDIRECT_URL);
         $productRelationStatusForm = $this->getFactory()
             ->createProductRelationToggleIsActiveForm()
             ->handleRequest($request);

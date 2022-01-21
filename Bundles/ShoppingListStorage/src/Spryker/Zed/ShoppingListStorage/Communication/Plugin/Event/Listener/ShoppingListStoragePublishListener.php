@@ -45,7 +45,9 @@ class ShoppingListStoragePublishListener extends AbstractPlugin implements Event
             ]);
 
         foreach ($validEventTransfers as $eventTransfer) {
-            $customerReferences[] = array_search(ShoppingListTransfer::CUSTOMER_REFERENCE, $eventTransfer->getModifiedColumns());
+            /** @var string $customerReference */
+            $customerReference = array_search(ShoppingListTransfer::CUSTOMER_REFERENCE, $eventTransfer->getModifiedColumns());
+            $customerReferences[] = $customerReference;
         }
 
         $customerReferences = array_unique($customerReferences);

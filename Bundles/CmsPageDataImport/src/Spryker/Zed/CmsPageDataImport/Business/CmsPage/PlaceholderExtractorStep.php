@@ -15,12 +15,12 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class PlaceholderExtractorStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var array<string>
      */
     protected $placeholderNames;
 
     /**
-     * @param array $attributeNames
+     * @param array<string> $attributeNames
      */
     public function __construct(array $attributeNames)
     {

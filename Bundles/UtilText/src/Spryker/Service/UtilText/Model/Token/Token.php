@@ -17,7 +17,7 @@ class Token implements TokenInterface
      */
     public function generate($rawToken, array $options = [])
     {
-        return base64_encode(password_hash($rawToken, PASSWORD_DEFAULT, $options));
+        return base64_encode((string)password_hash($rawToken, PASSWORD_DEFAULT, $options));
     }
 
     /**
