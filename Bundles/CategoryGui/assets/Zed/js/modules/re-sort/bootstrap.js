@@ -21,6 +21,7 @@ jQuery(document).ready(function () {
     categoryNestable.on('change', function (event) {
         var list = event.length ? event : jQuery(event.target);
         window.serializedList = window.JSON.stringify(list.nestable('serialize'));
+        jQuery(SELECTOR_SAVE_BUTTON).removeAttr('disabled');
     });
 
     jQuery(SELECTOR_SAVE_BUTTON).on('click', function () {

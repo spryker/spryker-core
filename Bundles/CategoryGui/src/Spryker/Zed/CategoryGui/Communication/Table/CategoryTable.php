@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Table;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
@@ -77,6 +79,11 @@ class CategoryTable extends AbstractTable
     /**
      * @var string
      */
+    protected const COL_COUNT_CHILDREN = 'count_children';
+
+    /**
+     * @var string
+     */
     protected const COL_IS_ROOT = 'is_root';
 
     /**
@@ -121,7 +128,7 @@ class CategoryTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
             static::COL_CATEGORY_KEY => 'Category Key',
@@ -167,7 +174,7 @@ class CategoryTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocaleOrFail();
         $query = $this->prepareQuery($fkLocale);
@@ -203,6 +210,15 @@ class CategoryTable extends AbstractTable
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
         $query = $query
             ->useNodeQuery('node', Criteria::LEFT_JOIN)
+                ->addJoinObject(
+                    (new Join(
+                        SpyCategoryNodeTableMap::alias('node', SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE),
+                        SpyCategoryNodeTableMap::alias('child_node', SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE),
+                        Criteria::LEFT_JOIN,
+                    ))
+                        ->setRightTableName(SpyCategoryNodeTableMap::TABLE_NAME)
+                        ->setRightTableAlias('child_node'),
+                )
                 ->groupByFkCategory()
                 ->groupByIsMain()
                 ->useParentCategoryNodeQuery('parent_node')
@@ -217,6 +233,7 @@ class CategoryTable extends AbstractTable
             ->having('node.is_main = ?', true)
             ->withColumn('count(node.fk_category)', 'count')
             ->withColumn('attr.name', static::COL_NAME)
+            ->withColumn('count(child_node.fk_parent_category_node)', static::COL_COUNT_CHILDREN)
             ->withColumn('tpl.name', static::COL_TEMPLATE)
             ->withColumn('parent_attr.name', static::COL_PARENT)
             ->withColumn('node.id_category_node', static::COL_ID_CATEGORY_NODE)
@@ -276,7 +293,10 @@ class CategoryTable extends AbstractTable
         }
 
         $buttonGroupItems[] = $this->generateAddCategoryToNodeButtonGroupItem($item);
-        $buttonGroupItems[] = $this->generateCategoryResortButtonGroupItem($item);
+        if ($item->getVirtualColumn(static::COL_COUNT_CHILDREN)) {
+            $buttonGroupItems[] = $this->generateCategoryResortButtonGroupItem($item);
+        }
+
         $buttonGroupItems[] = $this->generateAssignProductsButtonGroupItem($item);
 
         return $this->generateButtonGroup(
