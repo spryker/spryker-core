@@ -54,12 +54,13 @@ class ProductPriceQueryExpanderPlugin extends AbstractPlugin implements QueryExp
      */
     protected function getBoolQuery(Query $query)
     {
+        /** @var \Elastica\Query\AbstractQuery|array $boolQuery */
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
             throw new InvalidArgumentException(sprintf(
                 'Product Price Query Expander available only with %s, got: %s',
                 BoolQuery::class,
-                get_class($boolQuery),
+                is_object($boolQuery) ? get_class($boolQuery) : gettype($boolQuery),
             ));
         }
 

@@ -1,5 +1,5 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
-    excludePaths:
-        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Persistence/ProductMerchantPortalGuiRepository.php'
     ignoreErrors:
+        - '#Call to an undefined method .+SpyUrlQuery::useSpyProductLocalizedAttributesQuery\(\).#'

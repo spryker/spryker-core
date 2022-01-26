@@ -34,6 +34,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
             return null;
         }
 
+        /** @var string|null $fromDate */
         $fromDate = $value['from'] ?? null;
         if ($fromDate) {
             $date = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $fromDate);
@@ -44,6 +45,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
                 ));
         }
 
+        /** @var string|null $toDate */
         $toDate = $value['to'] ?? null;
         if ($toDate) {
             $date = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $toDate);

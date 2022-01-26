@@ -152,6 +152,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             }
         }
 
+        /** @var callable $sortAlphabetically */
         $sortAlphabetically = function ($first, $second) {
             return strcasecmp($first['name'], $second['name']) < 0;
         };
@@ -239,11 +240,12 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function saveBaseline(array $result, $reportPath): void
     {
-        $content = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;
-
+        $content = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         if ($content === false) {
             throw new RuntimeException('Error encoding:' . json_last_error());
         }
+
+        $content .= PHP_EOL;
 
         file_put_contents($reportPath, $content);
     }

@@ -1,13 +1,13 @@
 parameters:
+    level: 6
     reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
-    excludePaths:
-            - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/CodeBuilder/Bridge/BridgeBuilder.php
-            - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/ArchitectureSniffer/ArchitectureSniffer.php
     ignoreErrors:
         - '#Constant T_SEMICOLON not found.#'
         - '#Constant T_OPEN_PARENTHESIS not found.#'
         - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
         - '#Call to an undefined method ReflectionType::getName\(\)#'
-        - "#Call to function method_exists\\(\\) with Symfony\\\\Component\\\\Console\\\\Helper\\\\ProgressBar and 'maxSecondsBetweenRe…' will always evaluate to false.#"
+        - '#Call to function method_exists\(\) with Symfony\\Component\\Console\\Helper\\ProgressBar and ''maxSecondsBetweenRe…'' will always evaluate to false.#'
+        - '#Call to an undefined method ReflectionType::isBuiltin\(\)#'
+        - '#Comparison operation ">" between int<2, max> and 1 is always true.#'

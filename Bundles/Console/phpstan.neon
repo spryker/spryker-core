@@ -1,4 +1,5 @@
 parameters:
+    level: 7
     dynamicConstantNames:
         - APPLICATION_CODE_BUCKET
     checkMissingIterableValueType: false

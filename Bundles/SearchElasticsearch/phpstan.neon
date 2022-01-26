@@ -1,12 +1,13 @@
 parameters:
+    level: 6
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     excludePaths:
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Query/QueryBuilder.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Query/QueryBuilderInterface.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/IsActiveQueryExpanderPlugin.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/LocalizedQueryExpanderPlugin.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/StoreQueryExpanderPlugin.php
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Query/QueryBuilder.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Query/QueryBuilderInterface.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/IsActiveQueryExpanderPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/LocalizedQueryExpanderPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/StoreQueryExpanderPlugin.php'
     ignoreErrors:
         - { message: '#Negated boolean expression is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Shared/SearchElasticsearch/ElasticaClient/ElasticaClientFactory.php' }
         - { message: '#Negated boolean expression is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Config/SearchConfigBuilder.php' }
@@ -33,8 +34,8 @@ parameters:
         - '#Return typehint of method .+MappingBuilder.+::buildMapping\(\) has invalid type Elastica\\Mapping.#'
         - '#Instantiated class Elastica\\Mapping not found.#'
         - '#PHPDoc tag @var for variable \$mapping contains unknown class Elastica\\Mapping#'
-        - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"
-        - "#Strict comparison using === between '' and 'docker.dev' will always evaluate to false.#"
+        - '#Strict comparison using === between '''' and ''development'' will always evaluate to false.#'
+        - '#Strict comparison using === between '''' and ''docker.dev'' will always evaluate to false.#'
         - '#Result of \|\| is always false.#'
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed, mixed\): bool\)\|null, ''strlen'' given.#'
         - '#Method Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\Mapping.+::buildMapping\(\) has invalid return type Elastica.+Mapping#'

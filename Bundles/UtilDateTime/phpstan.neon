@@ -1,4 +1,5 @@
 parameters:
+    level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#2 \$callable of class .+TwigFilter constructor expects \(callable\(\): mixed\)\|null, array.+ given.#'

@@ -1,5 +1,4 @@
 parameters:
+    level: 8
     ignoreErrors:
-    -
-        message: '#Parameter \#1 \$omsProcessorIdentifier of method Generated\\Shared\\Transfer\\SpySalesOrderEntityTransfer::setOmsProcessorIdentifier\(\) expects string\|null, int given.#'
-        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/OmsMultiThread/src/Spryker/Zed/OmsMultiThread/Business/OrderExpander/OrderExpander.php'
+        - { message: '#Parameter \#1 \$omsProcessorIdentifier of method Generated\\Shared\\Transfer\\SpySalesOrderEntityTransfer::setOmsProcessorIdentifier\(\) expects string\|null, int given.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/OmsMultiThread/src/Spryker/Zed/OmsMultiThread/Business/OrderExpander/OrderExpander.php' }

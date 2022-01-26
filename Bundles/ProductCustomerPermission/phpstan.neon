@@ -1,5 +1,6 @@
 parameters:
+    level: 7
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     excludePaths:
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductCustomerPermission/src/Spryker/Client/ProductCustomerPermission/Plugin/ProductCustomerPermissionQueryExpanderPlugin.php'

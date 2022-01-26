@@ -1,6 +1,6 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     excludePaths:
-            - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php'
-    ignoreErrors:
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CategoryGui/src/Spryker/Zed/CategoryGui/Communication/Table/CategoryTable.php'

@@ -1,6 +1,4 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
-    excludePaths:
-            - %rootDir%/../../../vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Normalizer/DateRangeRequestFilterValueNormalizer.php
-    ignoreErrors:

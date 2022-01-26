@@ -1,4 +1,5 @@
 parameters:
+    level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Static call to instance method .+StorageClient::getFactory\(\).#'

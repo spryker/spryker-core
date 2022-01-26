@@ -1,5 +1,6 @@
 parameters:
+    level: 7
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-      - '#Parameter \#1 \$message of method .+ValidationErrorTransfer::setMessage\(\) expects string\|null, object\|string given.#'
+        - '#Parameter \#1 \$message of method .+ValidationErrorTransfer::setMessage\(\) expects string\|null, object\|string given.#'

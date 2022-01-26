@@ -1,4 +1,5 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#3 \$depth of function .+expects int\<1, max\>, int\|int\<1, max\> given.#'

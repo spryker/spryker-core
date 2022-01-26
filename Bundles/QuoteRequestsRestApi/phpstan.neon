@@ -1,4 +1,5 @@
 parameters:
+    level: 8
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
         - '#Method .+::call\(\) has parameter \$requestOptions with no value type specified in iterable type array#'

@@ -1,2 +1,3 @@
 parameters:
+    level: 7
     checkGenericClassInNonGenericObjectType: false

@@ -1,6 +1,7 @@
 parameters:
+    level: 8
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-    - '#PHPDoc tag \@var for variable \$merchantOrderTransfer has no value type specified in iterable type array.#'
-    - '#Strict comparison using === between array and false will always evaluate to false.#'
-    - '#Parameter \#1 \$customerReference of method .+MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface::findByReference\(\) expects string, array\|float\|int\|string\|false\|null given.#'
+        - '#PHPDoc tag \@var for variable \$merchantOrderTransfer has no value type specified in iterable type array.#'
+        - '#Strict comparison using === between array and false will always evaluate to false.#'
+        - '#Parameter \#1 \$customerReference of method .+MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface::findByReference\(\) expects string, array\|float\|int\|string\|false\|null given.#'

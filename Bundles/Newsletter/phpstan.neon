@@ -1,4 +1,7 @@
 parameters:
+    level: 6
     checkMissingIterableValueType: false
-    excludePaths:
-        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/DoubleOptInSubscriptionSender.php'
+    ignoreErrors:
+        - '#Call to an undefined method .+\\NewsletterToMailInterface::sendMail\(\)#'
+        - '#Call to an undefined method .+\\NewsletterToMailInterface::isMailSent\(\)#'
+        - '#Call to an undefined method .+\\NewsletterToGlossaryInterface::translate\(\)#'

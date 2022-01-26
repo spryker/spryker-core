@@ -1,7 +1,8 @@
 parameters:
+    level: 6
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     excludePaths:
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/Query/CmsPageSearchQueryPlugin.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/QueryExpander/PaginatedCmsPageQueryExpanderPlugin.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/QueryExpander/SortedCmsPageQueryExpanderPlugin.php
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/Query/CmsPageSearchQueryPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/QueryExpander/PaginatedCmsPageQueryExpanderPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Client/CmsPageSearch/Plugin/Elasticsearch/QueryExpander/SortedCmsPageQueryExpanderPlugin.php'

@@ -1,4 +1,5 @@
 parameters:
+    level: 6
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#1 \$data of method .+SpyProductMeasurementUnitStorageEntityTransfer::setData\(\) expects string\|null, array\<string, mixed\> given.#'

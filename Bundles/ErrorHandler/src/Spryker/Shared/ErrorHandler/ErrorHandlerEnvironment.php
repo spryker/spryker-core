@@ -57,6 +57,7 @@ class ErrorHandlerEnvironment
     protected function setErrorHandler()
     {
         $errorLevel = error_reporting();
+        /** @var callable $errorHandler */
         $errorHandler = function ($severity, $message, $file, $line) {
             $exception = new ErrorException($message, 0, $severity, $file, $line);
 

@@ -1,7 +1,6 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
-    excludePaths:
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorHandlerEnvironment.php
     ignoreErrors:
         - '#Call to an undefined method .+Locator::utilSanitize\(\)#'

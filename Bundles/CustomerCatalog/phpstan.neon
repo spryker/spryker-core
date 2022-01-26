@@ -1,4 +1,5 @@
 parameters:
+    level: 8
     checkMissingIterableValueType: false
     excludePaths:
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/CustomerCatalog/src/Spryker/Client/CustomerCatalog/Plugin/Search/ProductListQueryExpanderPlugin.php
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/CustomerCatalog/src/Spryker/Client/CustomerCatalog/Plugin/Search/ProductListQueryExpanderPlugin.php'

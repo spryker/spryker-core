@@ -1,4 +1,5 @@
 parameters:
+    level: 8
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-    - '#Else branch is unreachable because ternary operator condition is always true.#'
+        - '#Else branch is unreachable because ternary operator condition is always true.#'

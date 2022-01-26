@@ -174,7 +174,7 @@ class AbstractProductFormDataProvider
     protected $imageUrlPrefix;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface|null
      */
     protected $store;
 
@@ -526,9 +526,10 @@ class AbstractProductFormDataProvider
      */
     protected function convertAbstractLocalizedAttributesToFormValues($isNew = false)
     {
+        /** @var array<string, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $values */
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
-            $attributeValue = $attributes[$type] ?? null;
+            $attributeValue = $values[$type] ?? null;
 
             if ($isNew) {
                 $attributeValue = null;
@@ -561,7 +562,7 @@ class AbstractProductFormDataProvider
             $isSuper = $attributeTransfer->getIsSuper();
             $inputType = $attributeTransfer->getInputType();
             $allowInput = $attributeTransfer->getAllowInput();
-            $value = $productAttributeValues[$type] ?? null;
+            $value = null;
             $checkboxDisabled = false;
             $valueDisabled = true;
 
@@ -639,6 +640,7 @@ class AbstractProductFormDataProvider
      */
     protected function convertVariantAttributesToFormValues($isNew = false)
     {
+        /** @var array<string, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productAttributes */
         $productAttributes = [];
 
         $result = [];
@@ -684,6 +686,7 @@ class AbstractProductFormDataProvider
             }
         }
 
+        /** @var array<string, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productAttributeValues */
         $productAttributeValues = [];
 
         $values = [];
