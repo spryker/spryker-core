@@ -5,4 +5,11 @@
         <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
     </table>
 
+    <table name="spy_shopping_list_item" identifierQuoting="true">
+        <column name="key" required="false" type="VARCHAR" size="255"/>
+        <unique name="spy_shopping_list_item-unique-key">
+            <unique-column name="key"/>
+        </unique>
+    </table>
+
 </database>

@@ -11,7 +11,7 @@
         "spryker/merchant-product": "^1.0.0",
         "spryker/merchant-product-offer-storage-extension": "^1.0.0",
         "spryker/product-storage": "^1.26.0",
-        "spryker/product-storage-extension": "^1.5.0",
+        "spryker/product-storage-extension": "^1.6.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/synchronization-behavior": "^1.4.0"
     },

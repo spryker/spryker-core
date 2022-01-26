@@ -82,6 +82,40 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     }
 
     /**
+     * @param array<int> $merchantIds
+     * @param int $minIdProductOffer
+     * @param int $total
+     *
+     * @return iterable<array<string>>
+     */
+    public function iterateProductOfferReferencesByMerchantIds(array $merchantIds, int $minIdProductOffer = 0, int $total = 1000): iterable
+    {
+        $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
+        $productOfferPropelQuery
+            ->select([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE])
+            ->distinct()
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+            ->addAnd($productOfferPropelQuery->getNewCriterion(SpyMerchantTableMap::COL_ID_MERCHANT, $merchantIds, Criteria::IN))
+            ->orderByIdProductOffer();
+
+        do {
+            $data = $productOfferPropelQuery
+                ->filterByIdProductOffer($minIdProductOffer, Criteria::GREATER_THAN)
+                ->setLimit($total)
+                ->find()
+                ->getData();
+
+            if ($data) {
+                $minIdProductOffer = max(
+                    array_column($data, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER),
+                );
+
+                yield array_column($data, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
+            }
+        } while ($data);
+    }
+
+    /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *

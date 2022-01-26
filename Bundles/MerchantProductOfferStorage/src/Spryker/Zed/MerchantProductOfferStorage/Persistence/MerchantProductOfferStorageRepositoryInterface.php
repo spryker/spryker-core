@@ -25,4 +25,13 @@ interface MerchantProductOfferStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function getProductOffers(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer;
+
+    /**
+     * @param array<int> $merchantIds
+     * @param int $minIdProductOffer
+     * @param int $total
+     *
+     * @return iterable<array<string>>
+     */
+    public function iterateProductOfferReferencesByMerchantIds(array $merchantIds, int $minIdProductOffer = 0, int $total = 1000): iterable;
 }

@@ -14,6 +14,7 @@
 
     <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -23,6 +24,10 @@
     </transfer>
 
     <transfer name="ProductOfferResponse">
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 
 </transfers>

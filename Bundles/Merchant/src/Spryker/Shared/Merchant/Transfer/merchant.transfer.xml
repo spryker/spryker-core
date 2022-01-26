@@ -130,4 +130,8 @@
         <property name="grossPrice" type="int"/>
         <property name="netPrice" type="int"/>
     </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="merchantReference" type="string"/>
+    </transfer>
 </transfers>

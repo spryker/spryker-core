@@ -35,7 +35,11 @@ interface ProductStorageFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Finds product concrete localized entities by product abstract ids.
+     * - Finds product concrete storage entities by product abstract ids.
+     * - Deletes product concrete storage entities if no localized entities are found.
+     * - Expands ProductConcreteStorageTransfer collection with a stack of `ProductConcreteStorageCollectionExpanderPluginInterface`.
+     * - Publishes product concrete storage collection to storage.
      *
      * @api
      *

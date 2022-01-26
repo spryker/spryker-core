@@ -25,6 +25,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductOfferRepository extends AbstractRepository implements ProductOfferRepositoryInterface
 {
     /**
+     * @var string
+     */
+    protected const ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
@@ -35,6 +40,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
+        $productOfferQuery = $this->expandProductOfferQueryWithIdProductConcrete($productOfferQuery);
         $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteria);
 
         $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteria->getPagination());
@@ -202,5 +208,19 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         }
 
         return $query->find();
+    }
+
+    /**
+     * @module Product
+     *
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function expandProductOfferQueryWithIdProductConcrete(SpyProductOfferQuery $productOfferQuery): SpyProductOfferQuery
+    {
+        return $productOfferQuery
+            ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT_CONCRETE);
     }
 }

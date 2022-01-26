@@ -17,6 +17,11 @@ interface ShoppingListItemDataSetInterface
     /**
      * @var string
      */
+    public const COLUMN_SHOPPING_LIST_ITEM_KEY = 'shopping_list_item_key';
+
+    /**
+     * @var string
+     */
     public const COLUMN_PRODUCT_SKU = 'product_sku';
 
     /**

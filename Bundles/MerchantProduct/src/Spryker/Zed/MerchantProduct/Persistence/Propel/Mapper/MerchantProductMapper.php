@@ -46,6 +46,8 @@ class MerchantProductMapper
             ->setIdProductAbstract($merchantProductAbstractEntity->getFkProductAbstract())
             ->setIdMerchant($merchantProductAbstractEntity->getFkMerchant());
 
+        $merchantProductTransfer->setMerchantReference($merchantProductAbstractEntity->getMerchant()->getMerchantReference());
+
         $this->mapConcreteProductsToMerchantProductTransfer(
             $merchantProductTransfer,
             $merchantProductAbstractEntity->getProductAbstract()->getSpyProducts(),

@@ -152,6 +152,15 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
                 ->endUse();
         }
 
+        if ($merchantProductCriteriaTransfer->getProductConcreteSkus()) {
+            $merchantProductAbstractQuery
+                ->useProductAbstractQuery()
+                    ->useSpyProductQuery()
+                        ->filterBySku_In($merchantProductCriteriaTransfer->getProductConcreteSkus())
+                    ->endUse()
+                ->endUse();
+        }
+
         return $merchantProductAbstractQuery;
     }
 }

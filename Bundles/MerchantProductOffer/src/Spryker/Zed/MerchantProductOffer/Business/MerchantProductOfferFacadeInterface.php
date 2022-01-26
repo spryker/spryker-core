@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOffer\Business;
 
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 
 interface MerchantProductOfferFacadeInterface
 {
@@ -25,4 +26,18 @@ interface MerchantProductOfferFacadeInterface
     public function getProductOfferCollection(
         MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): ProductOfferCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Populates shopping list item collection with merchant reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 }

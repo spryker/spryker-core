@@ -12,6 +12,7 @@
         "spryker/merchant-extension": "^1.1.0",
         "spryker/price-product-merchant-relationship-storage-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/shopping-list-extension": "^1.2.0",
         "spryker/store": "^1.1.0",
         "spryker/transfer": "^3.25.0",
         "spryker/url": "^3.0.0",

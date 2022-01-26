@@ -41,3 +41,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\ProductOfferValidity\Helper\ProductOfferValidityHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper

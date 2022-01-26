@@ -176,6 +176,37 @@ class MerchantProductFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetBySkus(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer2 = $this->tester->haveMerchant();
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+        ]);
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer2->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer2->getFkProductAbstract(),
+        ]);
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addProductConcreteSku($productConcreteTransfer->getSku())
+            ->addProductConcreteSku($productConcreteTransfer2->getSku());
+
+        // Act
+        $merchantProductCollectionTransfer = $this->tester->getFacade()->get($merchantProductCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $merchantProductCollectionTransfer->getMerchantProducts());
+    }
+
+    /**
+     * @return void
+     */
     public function testValidateCartChangeIgnoresGenericProducts(): void
     {
         // Arrange
@@ -637,8 +668,9 @@ class MerchantProductFacadeTest extends Unit
         ));
 
         // Assert
+        $this->assertSame($merchantTransfer->getMerchantReference(), $createdMerchantProductTransfer->getMerchantReference());
         $this->assertSame(
-            $createdMerchantProductTransfer->setProducts(new ArrayObject())->toArray(),
+            $createdMerchantProductTransfer->setMerchantReference(null)->setProducts(new ArrayObject())->toArray(),
             $merchantProductTransferFromDb->toArray(),
         );
     }

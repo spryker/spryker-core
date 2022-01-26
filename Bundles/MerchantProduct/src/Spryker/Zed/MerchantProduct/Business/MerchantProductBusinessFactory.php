@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProduct\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpander;
+use Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpanderInterface;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReader;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReaderInterface;
 use Spryker\Zed\MerchantProduct\Business\Validator\Constraint\ProductAbstractBelongsToMerchantConstraint;
@@ -88,6 +90,16 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractBelongsToMerchantConstraint(): Constraint
     {
         return new ProductAbstractBelongsToMerchantConstraint($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpanderInterface
+     */
+    public function createShoppingListItemExpander(): ShoppingListItemExpanderInterface
+    {
+        return new ShoppingListItemExpander(
+            $this->getRepository(),
+        );
     }
 
     /**

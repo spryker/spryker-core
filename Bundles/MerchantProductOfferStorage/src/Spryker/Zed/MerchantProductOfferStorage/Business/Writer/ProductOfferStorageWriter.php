@@ -103,6 +103,24 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        if (!$merchantIds) {
+            return;
+        }
+
+        foreach ($this->merchantProductOfferStorageRepository->iterateProductOfferReferencesByMerchantIds($merchantIds) as $productOfferReferences) {
+            $this->writeByProductOfferReferences($productOfferReferences);
+        }
+    }
+
+    /**
      * @param array<string> $productOfferReferences
      *
      * @return void

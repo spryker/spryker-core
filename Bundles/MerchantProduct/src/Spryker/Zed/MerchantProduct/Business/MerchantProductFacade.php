@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -181,5 +182,22 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
         return $this->getFactory()
             ->createMerchantProductReader()
             ->isProductAbstractOwnedByMerchant($productAbstractTransfer, $merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getFactory()
+            ->createShoppingListItemExpander()
+            ->expandShoppingListItemCollectionWithMerchantReference($shoppingListItemCollectionTransfer);
     }
 }

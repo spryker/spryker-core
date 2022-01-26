@@ -123,7 +123,7 @@ class ShoppingListItemDataImportPluginTest extends Unit
 
         // Assert
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Could not find shopping list by key "incorrect-shopping-list-key"');
+        $this->expectExceptionMessage('Could not find shopping list by key "test-shopping-list-22"');
 
         // Act
         $shoppingListItemDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -148,7 +148,7 @@ class ShoppingListItemDataImportPluginTest extends Unit
 
         // Assert
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Could not find product concrete by SKU "incorrect-product-concrete-SKU"');
+        $this->expectExceptionMessage('Could not find product concrete by SKU "test-product-concrete-sku-111"');
 
         // Act
         $shoppingListItemDataImportPlugin->import($dataImportConfigurationTransfer);

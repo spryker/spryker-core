@@ -4,6 +4,7 @@
     <transfer name="ProductOffer">
         <property name="merchantReference" type="string"/>
         <property name="merchantSku" type="string"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantProductOfferCriteria">
@@ -14,8 +15,19 @@
 
     <transfer name="ProductOfferCriteria">
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ShoppingListItemCollection">
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 </transfers>

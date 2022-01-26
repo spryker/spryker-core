@@ -37,4 +37,18 @@ interface MerchantProductStorageFacadeInterface
      * @return void
      */
     public function writeCollectionByIdMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Gets ProductAbstract ids from productConcreteStorageTransfers.
+     * - Finds product abstract storage transfers by ProductAbstract ids.
+     * - Expands productConcreteStorageTransfers with ProductAbstractStorageTransfer.merchantReference.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer> $productConcreteStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    public function expandProductConcreteStorages(array $productConcreteStorageTransfers): array;
 }

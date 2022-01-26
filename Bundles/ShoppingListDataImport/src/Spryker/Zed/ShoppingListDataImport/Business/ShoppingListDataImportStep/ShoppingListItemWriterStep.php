@@ -28,6 +28,7 @@ class ShoppingListItemWriterStep implements DataImportStepInterface
 
         $shoppingListItemEntity
             ->setQuantity($dataSet[ShoppingListItemDataSetInterface::COLUMN_QUANTITY])
+            ->setKey($dataSet[ShoppingListItemDataSetInterface::COLUMN_SHOPPING_LIST_ITEM_KEY])
             ->save();
     }
 

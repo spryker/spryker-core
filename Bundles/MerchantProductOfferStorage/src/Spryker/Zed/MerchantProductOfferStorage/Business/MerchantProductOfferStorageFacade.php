@@ -95,4 +95,18 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
             ->createProductOfferStorageDeleter()
             ->deleteCollectionByProductOfferReferenceEvents($eventTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void
+    {
+        $this->getFactory()->createProductOfferStorageWriter()->writeCollectionByMerchantEvents($eventTransfers);
+    }
 }

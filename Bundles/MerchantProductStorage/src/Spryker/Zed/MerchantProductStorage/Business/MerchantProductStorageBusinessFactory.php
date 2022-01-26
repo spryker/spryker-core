@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProductStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductStorage\Business\Expander\MerchantReferenceProductConcreteStorageExpander;
+use Spryker\Zed\MerchantProductStorage\Business\Expander\MerchantReferenceProductConcreteStorageExpanderInterface;
 use Spryker\Zed\MerchantProductStorage\Business\Writer\MerchantProductStorageWriter;
 use Spryker\Zed\MerchantProductStorage\Business\Writer\MerchantProductStorageWriterInterface;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
@@ -29,6 +31,16 @@ class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getMerchantProductFacade(),
             $this->getProductStorageFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductStorage\Business\Expander\MerchantReferenceProductConcreteStorageExpanderInterface
+     */
+    public function createMerchantReferenceProductConcreteStorageExpander(): MerchantReferenceProductConcreteStorageExpanderInterface
+    {
+        return new MerchantReferenceProductConcreteStorageExpander(
+            $this->getMerchantProductFacade(),
         );
     }
 

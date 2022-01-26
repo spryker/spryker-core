@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface MerchantProductFacadeInterface
@@ -164,4 +165,18 @@ interface MerchantProductFacadeInterface
         ProductAbstractTransfer $productAbstractTransfer,
         MerchantTransfer $merchantTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Populates shopping list item collection with merchant reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 }

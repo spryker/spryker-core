@@ -83,18 +83,26 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $superAttributeKeyBuffer = [];
 
     /**
+     * @var array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionExpanderPluginInterface>
+     */
+    protected $productConcreteStorageCollectionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionExpanderPluginInterface> $productConcreteStorageCollectionExpanderPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
         ProductStorageQueryContainerInterface $queryContainer,
-        $isSendingToQueue
+        $isSendingToQueue,
+        array $productConcreteStorageCollectionExpanderPlugins
     ) {
         $this->productFacade = $productFacade;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->productConcreteStorageCollectionExpanderPlugins = $productConcreteStorageCollectionExpanderPlugins;
     }
 
     /**
@@ -165,7 +173,11 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             $productConcreteStorageEntities,
         );
 
-        foreach ($pairedEntities as $pair) {
+        $productConcreteStorageTransfers = $this->getProductConcreteStorageTransfers($pairedEntities);
+
+        $this->expandProductConcreteStorageCollection($productConcreteStorageTransfers);
+
+        foreach ($pairedEntities as $index => $pair) {
             $productConcreteLocalizedEntity = $pair[static::PRODUCT_CONCRETE_LOCALIZED_ENTITY];
             $productConcreteStorageEntity = $pair[static::PRODUCT_CONCRETE_STORAGE_ENTITY];
 
@@ -176,7 +188,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             }
 
             $this->storeProductConcreteStorageEntity(
-                $productConcreteLocalizedEntity,
+                $productConcreteStorageTransfers[$index],
                 $productConcreteStorageEntity,
                 $pair[static::LOCALE_NAME],
             );
@@ -275,21 +287,19 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param array $productConcreteLocalizedEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
      * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage $productConcreteStorageEntity
      * @param string $localeName
      *
      * @return void
      */
     protected function storeProductConcreteStorageEntity(
-        array $productConcreteLocalizedEntity,
+        ProductConcreteStorageTransfer $productConcreteStorageTransfer,
         SpyProductConcreteStorage $productConcreteStorageEntity,
         $localeName
     ) {
-        $productConcreteStorageTransfer = $this->mapToProductConcreteStorageTransfer($productConcreteLocalizedEntity);
-
         $productConcreteStorageEntity
-            ->setFkProduct($productConcreteLocalizedEntity[static::COL_FK_PRODUCT])
+            ->setFkProduct($productConcreteStorageTransfer->getIdProductConcrete())
             ->setData($productConcreteStorageTransfer->toArray())
             ->setLocale($localeName)
             ->setIsSendingToQueue($this->isSendingToQueue)
@@ -437,5 +447,39 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         }
 
         return $mappedProductConcreteStorageEntities;
+    }
+
+    /**
+     * @param array $pairedEntities
+     *
+     * @return array<string, \Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    protected function getProductConcreteStorageTransfers(
+        array $pairedEntities
+    ): array {
+        $productConcreteStorageTransfers = [];
+
+        foreach ($pairedEntities as $index => $pair) {
+            $productConcreteLocalizedEntity = $pair[static::PRODUCT_CONCRETE_LOCALIZED_ENTITY];
+
+            $productConcreteStorageTransfers[$index] = $this->mapToProductConcreteStorageTransfer($productConcreteLocalizedEntity);
+        }
+
+        return $productConcreteStorageTransfers;
+    }
+
+    /**
+     * @param array $productConcreteStorageCollection
+     *
+     * @return array<string, \Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    protected function expandProductConcreteStorageCollection(
+        array $productConcreteStorageCollection
+    ) {
+        foreach ($this->productConcreteStorageCollectionExpanderPlugins as $concreteStorageCollectionExpanderPlugin) {
+            $productConcreteStorageCollection = $concreteStorageCollectionExpanderPlugin->expand($productConcreteStorageCollection);
+        }
+
+        return $productConcreteStorageCollection;
     }
 }

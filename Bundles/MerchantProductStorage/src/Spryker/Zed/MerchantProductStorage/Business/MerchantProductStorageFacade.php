@@ -43,4 +43,20 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
     {
         $this->getFactory()->createMerchantProductStorageWriter()->writeCollectionByIdMerchantEvents($eventTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer> $productConcreteStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    public function expandProductConcreteStorages(array $productConcreteStorageTransfers): array
+    {
+        return $this->getFactory()
+            ->createMerchantReferenceProductConcreteStorageExpander()
+            ->expandProductConcreteStorages($productConcreteStorageTransfers);
+    }
 }

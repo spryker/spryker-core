@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 
 /**
@@ -33,6 +34,16 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantProductOfferStorageTester extends Actor
 {
     use _generated\MerchantProductOfferStorageTesterActions;
+
+    /**
+     * @return void
+     */
+    public function clearProductOfferData(): void
+    {
+        SpyProductOfferStoreQuery::create()->deleteAll();
+        SpyProductOfferStorageQuery::create()->deleteAll();
+        SpyProductConcreteProductOffersStorageQuery::create()->deleteAll();
+    }
 
     /**
      * @param string $productOfferReference
