@@ -155,7 +155,7 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
         $requestTransfer->setHeaderData($headerData);
 
         if (strpos($request->headers->get('Content-Type'), 'application/json') === 0) {
-            $data = json_decode($request->getContent(), true);
+            $data = json_decode((string)$request->getContent(), true);
             $request->request->replace(is_array($data) && isset($data['data']) ? $data['data'] : []);
         }
 

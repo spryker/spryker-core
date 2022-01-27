@@ -49,12 +49,13 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      */
     public function onKernelController(ControllerEvent $event)
     {
-        /** @var array $currentController */
+        /** @var callable|array<int, string> $currentController */
         $currentController = $event->getController();
         $controller = $currentController[0];
         $action = $currentController[1];
 
         if (!($controller instanceof AbstractApiController)) {
+            /** @phpstan-var callable */
             return $currentController;
         }
 
@@ -140,7 +141,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         $requestTransfer->setHeaderData($headerData);
 
         if (strpos($request->headers->get('Content-Type'), 'application/json') === 0) {
-            $data = json_decode($request->getContent(), true);
+            $data = json_decode((string)$request->getContent(), true);
             $request->request->replace(is_array($data) && isset($data['data']) ? $data['data'] : []);
         }
 

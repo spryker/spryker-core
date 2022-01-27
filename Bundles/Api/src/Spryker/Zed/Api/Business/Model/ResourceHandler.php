@@ -57,8 +57,10 @@ class ResourceHandler implements ResourceHandlerInterface
                 return $this->getOptions($plugin, $id, $params);
             }
 
+            /** @var callable $callable */
+            $callable = [$plugin, $method];
             /** @var \Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer $responseTransfer */
-            $responseTransfer = call_user_func_array([$plugin, $method], $params);
+            $responseTransfer = call_user_func_array($callable, $params);
             $apiOptionsTransfer = $this->getOptions($plugin, $id, $params);
             $responseTransfer->setOptions($apiOptionsTransfer->getOptions());
 
