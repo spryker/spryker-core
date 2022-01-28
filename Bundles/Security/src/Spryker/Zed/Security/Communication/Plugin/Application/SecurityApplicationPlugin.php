@@ -405,6 +405,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                 $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                 $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
+                false, // Shim for Symfony Security Core 5.2.8 - 5.3.*, to be removed when Symfony Security Core dependency becomes 5.4+
             );
         });
 
