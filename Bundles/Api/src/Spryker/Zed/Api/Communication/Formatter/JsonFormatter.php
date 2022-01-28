@@ -8,21 +8,21 @@
 namespace Spryker\Zed\Api\Communication\Formatter;
 
 use Spryker\Service\UtilEncoding\Model\Json;
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
+use Spryker\Zed\Api\Dependency\Service\ApiToUtilEncodingServiceInterface;
 
 class JsonFormatter implements FormatterInterface
 {
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     * @var \Spryker\Zed\Api\Dependency\Service\ApiToUtilEncodingServiceInterface
      */
-    protected $service;
+    protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $service
+     * @param \Spryker\Zed\Api\Dependency\Service\ApiToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(UtilEncodingServiceInterface $service)
+    public function __construct(ApiToUtilEncodingServiceInterface $utilEncodingService)
     {
-        $this->service = $service;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -34,6 +34,6 @@ class JsonFormatter implements FormatterInterface
     {
         $options = Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT;
 
-        return $this->service->encodeJson($value, $options);
+        return $this->utilEncodingService->encodeJson($value, $options) ?? '';
     }
 }

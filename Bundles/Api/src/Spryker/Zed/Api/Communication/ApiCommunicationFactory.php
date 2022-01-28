@@ -7,71 +7,73 @@
 
 namespace Spryker\Zed\Api\Communication;
 
-use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiDependencyProvider;
-use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
+use Spryker\Zed\Api\Communication\EventListener\ApiControllerEventListener;
+use Spryker\Zed\Api\Communication\EventListener\ApiControllerEventListenerInterface;
+use Spryker\Zed\Api\Communication\Formatter\FormatterInterface;
 use Spryker\Zed\Api\Communication\Formatter\JsonFormatter;
-use Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerPlugin;
+use Spryker\Zed\Api\Communication\Resolver\FormatterResolver;
+use Spryker\Zed\Api\Communication\Resolver\FormatterResolverInterface;
 use Spryker\Zed\Api\Communication\Transformer\Transformer;
+use Spryker\Zed\Api\Communication\Transformer\TransformerInterface;
+use Spryker\Zed\Api\Dependency\Service\ApiToUtilEncodingServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param string $formatType
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\FormatterNotFoundException
-     *
-     * @return \Spryker\Zed\Api\Communication\Formatter\FormatterInterface
+     * @return \Spryker\Zed\Api\Communication\EventListener\ApiControllerEventListenerInterface
      */
-    public function createFormatter($formatType)
+    public function createApiControllerEventListener(): ApiControllerEventListenerInterface
     {
-        if (!$formatType) {
-            $formatType = 'json';
-        }
-        switch ($formatType) {
-            case 'json':
-                return new JsonFormatter($this->getUtilEncoding());
-        }
-
-        throw new FormatterNotFoundException(sprintf('Formatter for type `%s` not found', $formatType));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
-     *
-     * @return \Spryker\Zed\Api\Communication\Transformer\TransformerInterface
-     */
-    public function createTransformer(ApiRequestTransfer $apiRequestTransfer)
-    {
-        return new Transformer(
-            $this->createFormatter($apiRequestTransfer->getFormatType()),
-            $this->getConfig(),
+        return new ApiControllerEventListener(
+            $this->createTransformer(),
+            $this->getFacade(),
+            $this->getUtilEncodingService(),
         );
     }
 
     /**
-     * @return \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     * @return \Spryker\Zed\Api\Communication\Transformer\TransformerInterface
      */
-    protected function getUtilEncoding()
+    public function createTransformer(): TransformerInterface
     {
-        return $this->getProvidedDependency(ApiDependencyProvider::SERVICE_ENCODING);
+        return new Transformer(
+            $this->createFormatterResolver(),
+            $this->getConfig(),
+            $this->getUtilEncodingService(),
+        );
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
-     *
-     * @return \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
+     * @return \Spryker\Zed\Api\Communication\Resolver\FormatterResolverInterface
      */
-    public function createControllerListener()
+    public function createFormatterResolver(): FormatterResolverInterface
     {
-        return new ApiControllerListenerPlugin();
+        return new FormatterResolver([
+            FormatterResolver::FORMATTER_TYPE_JSON => function () {
+                return $this->createJsonFormatter();
+            },
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Communication\Formatter\FormatterInterface
+     */
+    public function createJsonFormatter(): FormatterInterface
+    {
+        return new JsonFormatter($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Dependency\Service\ApiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ApiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ApiDependencyProvider::SERVICE_ENCODING);
     }
 }

@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductApi\Business\Model;
 
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ApiValidationErrorTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
@@ -20,22 +22,17 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\ApiConfig;
-use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface;
+use Spryker\Zed\ProductApi\Business\Request\ProductRequestDataInterface;
+use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToApiFacadeInterface;
 use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface;
 use Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductApi implements ProductApiInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface
-     */
-    protected $apiQueryContainer;
-
     /**
      * @var \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface
      */
@@ -62,27 +59,32 @@ class ProductApi implements ProductApiInterface
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface $apiQueryContainer
+     * @var \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToApiFacadeInterface
+     */
+    protected $apiFacade;
+
+    /**
      * @param \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer
      * @param \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\ProductApi\Business\Mapper\TransferMapperInterface $transferMapper
      * @param \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToApiFacadeInterface $apiFacade
      */
     public function __construct(
-        ProductApiToApiInterface $apiQueryContainer,
         ProductApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer,
         ProductApiQueryContainerInterface $queryContainer,
         EntityMapperInterface $entityMapper,
         TransferMapperInterface $transferMapper,
-        ProductApiToProductInterface $productFacade
+        ProductApiToProductInterface $productFacade,
+        ProductApiToApiFacadeInterface $apiFacade
     ) {
-        $this->apiQueryContainer = $apiQueryContainer;
         $this->apiQueryBuilderQueryContainer = $apiQueryBuilderQueryContainer;
         $this->queryContainer = $queryContainer;
         $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
         $this->productFacade = $productFacade;
+        $this->apiFacade = $apiFacade;
     }
 
     /**
@@ -113,25 +115,21 @@ class ProductApi implements ProductApiInterface
     /**
      * @param int $idProductAbstract
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
     public function get($idProductAbstract)
     {
         $productTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
         if (!$productTransfer) {
-            throw new EntityNotFoundException(sprintf('Product Abstract not found for id %s', $idProductAbstract));
+            return $this->createAbstractProductNotFoundApiItemTransfer($idProductAbstract);
         }
 
-        return $this->apiQueryContainer->createApiItem($productTransfer, $idProductAbstract);
+        return $this->apiFacade->createApiItem($productTransfer, (string)$idProductAbstract);
     }
 
     /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
@@ -143,7 +141,7 @@ class ProductApi implements ProductApiInterface
             ->findOne();
 
         if (!$entityToUpdate) {
-            throw new EntityNotFoundException(sprintf('Product not found: %s', $idProductAbstract));
+            return $this->createAbstractProductNotFoundApiItemTransfer($idProductAbstract);
         }
 
         $data = (array)$apiDataTransfer->getData();
@@ -177,11 +175,7 @@ class ProductApi implements ProductApiInterface
             $query->find()->toArray(),
         );
 
-        /** @var \Generated\Shared\Transfer\ProductApiTransfer $productApiTransfer */
-        foreach ($collection as $k => $productApiTransfer) {
-            $collection[$k] = $this->get($productApiTransfer->getIdProductAbstract())->getData();
-        }
-        $apiCollectionTransfer = $this->apiQueryContainer->createApiCollection($collection);
+        $apiCollectionTransfer = $this->apiFacade->createApiCollection($collection);
 
         $apiCollectionTransfer = $this->addPagination($query, $apiCollectionTransfer, $apiRequestTransfer);
 
@@ -204,19 +198,24 @@ class ProductApi implements ProductApiInterface
         $query->setOffset(0);
         $query->setLimit(-1);
         $total = $query->count();
-        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;
-        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;
-        if ($page > $pageTotal) {
-            throw new NotFoundHttpException('Out of bounds.', null, ApiConfig::HTTP_CODE_NOT_FOUND);
+
+        $apiFilterTransfer = $apiRequestTransfer->getFilter();
+        if ($apiFilterTransfer !== null) {
+            $page = $apiFilterTransfer->getLimit() ? ($apiFilterTransfer->getOffset() / $apiFilterTransfer->getLimit() + 1) : 1;
+            $pageTotal = ($total && $apiFilterTransfer->getLimit()) ? (int)ceil($total / $apiFilterTransfer->getLimit()) : 1;
+
+            if ($page > $pageTotal) {
+                throw new NotFoundHttpException('Out of bounds.', null, ApiConfig::HTTP_CODE_NOT_FOUND);
+            }
+
+            $apiPaginationTransfer = new ApiPaginationTransfer();
+            $apiPaginationTransfer->setItemsPerPage($apiFilterTransfer->getLimit());
+            $apiPaginationTransfer->setPage($page);
+            $apiPaginationTransfer->setTotal($total);
+            $apiPaginationTransfer->setPageTotal($pageTotal);
+
+            $apiCollectionTransfer->setPagination($apiPaginationTransfer);
         }
-
-        $apiPaginationTransfer = new ApiPaginationTransfer();
-        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());
-        $apiPaginationTransfer->setPage($page);
-        $apiPaginationTransfer->setTotal($total);
-        $apiPaginationTransfer->setPageTotal($pageTotal);
-
-        $apiCollectionTransfer->setPagination($apiPaginationTransfer);
 
         return $apiCollectionTransfer;
     }
@@ -269,5 +268,36 @@ class ProductApi implements ProductApiInterface
         }
 
         return $columnSelectionTransfer;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    protected function createAbstractProductNotFoundApiItemTransfer(int $idProductAbstract): ApiItemTransfer
+    {
+        $apiValidationErrorTransfer = $this->createApiValidationErrorTransfer(
+            sprintf('Product not found: %s', $idProductAbstract),
+            ProductRequestDataInterface::KEY_ID,
+        );
+
+        return $this->apiFacade
+            ->createApiItem(null, (string)$idProductAbstract)
+            ->setStatusCode(ApiConfig::HTTP_CODE_NOT_FOUND)
+            ->addValidationError($apiValidationErrorTransfer);
+    }
+
+    /**
+     * @param string $message
+     * @param string|null $field
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer
+     */
+    protected function createApiValidationErrorTransfer(string $message, ?string $field = null): ApiValidationErrorTransfer
+    {
+        return (new ApiValidationErrorTransfer())
+            ->setField($field)
+            ->addMessages($message);
     }
 }

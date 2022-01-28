@@ -19,19 +19,20 @@ class ResourceIdPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
-        $path = $apiRequestTransfer->getPath();
+        $path = $apiRequestTransfer->getPath() ?? '';
         $identifier = $path;
-        if (strpos($path, '/') !== false) {
-            $identifier = substr($path, 0, strpos($path, '/'));
-            $path = substr($path, strpos($path, '/') + 1);
+        $delimiterPosition = strpos($path, '/');
+        if ($delimiterPosition !== false) {
+            $identifier = substr($path, 0, $delimiterPosition);
+            $path = substr($path, $delimiterPosition + 1);
         }
 
         $resourceId = null;
         $identifier = trim($identifier);
         if ($identifier !== '') {
-            $resourceId = $identifier;
+            $resourceId = (int)$identifier;
         }
 
         $apiRequestTransfer->setResourceId($resourceId);

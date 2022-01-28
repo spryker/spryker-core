@@ -12,6 +12,7 @@ use Spryker\Zed\ProductApi\Business\Mapper\EntityMapper;
 use Spryker\Zed\ProductApi\Business\Mapper\TransferMapper;
 use Spryker\Zed\ProductApi\Business\Model\ProductApi;
 use Spryker\Zed\ProductApi\Business\Model\Validator\ProductApiValidator;
+use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToApiFacadeInterface;
 use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
 
 /**
@@ -26,12 +27,12 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     public function createProductApi()
     {
         return new ProductApi(
-            $this->getApiQueryContainer(),
             $this->getApiQueryBuilderQueryContainer(),
             $this->getQueryContainer(),
             $this->createEntityMapper(),
             $this->createTransferMapper(),
             $this->getProductFacade(),
+            $this->getApiFacade(),
         );
     }
 
@@ -60,14 +61,6 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface
-     */
-    protected function getApiQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderInterface
      */
     protected function getApiQueryBuilderQueryContainer()
@@ -81,5 +74,13 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductApiDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToApiFacadeInterface
+     */
+    protected function getApiFacade(): ProductApiToApiFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductApiDependencyProvider::FACADE_API);
     }
 }

@@ -37,7 +37,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         $headers = $apiRequestTransfer->getHeaderData();
         if (empty($headers[static::RANGE])) {
@@ -49,12 +49,12 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
             return $apiRequestTransfer;
         }
 
-        $offset = $this->validateOffset($matches[1]);
-        $limit = $this->validateLimitRange($matches[2] - $offset + 1);
+        $offset = $this->validateOffset((int)$matches[1]);
+        $limit = $this->validateLimitRange((int)$matches[2] - $offset + 1);
         $this->validateOffsetAndLimitFitsToPage($limit, $offset);
 
-        $apiRequestTransfer->getFilter()->setOffset($offset);
-        $apiRequestTransfer->getFilter()->setLimit($limit);
+        $apiRequestTransfer->getFilterOrFail()->setOffset($offset);
+        $apiRequestTransfer->getFilterOrFail()->setLimit($limit);
 
         return $apiRequestTransfer;
     }
@@ -64,7 +64,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
      *
      * @return int
      */
-    protected function validateOffset($offset)
+    protected function validateOffset($offset): int
     {
         if ($offset < 0) {
             $offset = 0;
@@ -78,7 +78,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
      *
      * @return int
      */
-    protected function validateLimitRange($limit)
+    protected function validateLimitRange($limit): int
     {
         if ($limit < 0 || $limit > $this->apiConfig->getMaxLimitPerPage()) {
             $limit = $this->apiConfig->getLimitPerPage();
@@ -97,7 +97,7 @@ class PaginationByHeaderFilterPreProcessor implements PreProcessorInterface
      *
      * @return void
      */
-    protected function validateOffsetAndLimitFitsToPage($limit, $offset)
+    protected function validateOffsetAndLimitFitsToPage($limit, $offset): void
     {
         if ($offset % $limit === 0) {
             return;

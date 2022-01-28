@@ -23,7 +23,7 @@ class OptionsActionPostProcessor implements PostProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer): ApiResponseTransfer
     {
         $action = $apiRequestTransfer->getResourceAction();
         if ($action !== ApiConfig::ACTION_OPTIONS) {

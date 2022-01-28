@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CustomerApi\Communication\Plugin\Api;
 
-use Generated\Shared\Transfer\ApiDataTransfer;
-use Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface;
+use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Zed\ApiExtension\Dependency\Plugin\ApiValidatorPluginInterface;
 use Spryker\Zed\CustomerApi\CustomerApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -26,22 +26,24 @@ class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorP
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CustomerApiConfig::RESOURCE_CUSTOMERS;
     }
 
     /**
      * {@inheritDoc}
+     * - Requires `ApiRequestTransfer.apiData` transfer property to be set.
+     * - Validates the given API data and returns an array of errors if any occurs.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    public function validate(ApiDataTransfer $apiDataTransfer)
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array
     {
-        return $this->getFacade()->validate($apiDataTransfer);
+        return $this->getFacade()->validate($apiRequestTransfer);
     }
 }

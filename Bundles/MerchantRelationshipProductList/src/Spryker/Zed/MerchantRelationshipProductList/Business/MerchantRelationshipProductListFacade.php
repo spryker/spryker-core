@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -128,5 +129,43 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
         $this->getFactory()
             ->createProductListWriter()
             ->clearMerchantRelationshipFromProductLists($merchantRelationshipTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer $merchantRelationshipValidationErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer
+     */
+    public function validateMerchantRelationshipProductList(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        MerchantRelationshipValidationErrorCollectionTransfer $merchantRelationshipValidationErrorCollectionTransfer
+    ): MerchantRelationshipValidationErrorCollectionTransfer {
+        return $this->getFactory()
+            ->createMerchantRelationshipProductListValidator()
+            ->validate(
+                $merchantRelationshipTransfer,
+                $merchantRelationshipValidationErrorCollectionTransfer,
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function expandMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantRelationshipProductListExpander()
+            ->expandMerchantRelationship($merchantRelationshipTransfer);
     }
 }

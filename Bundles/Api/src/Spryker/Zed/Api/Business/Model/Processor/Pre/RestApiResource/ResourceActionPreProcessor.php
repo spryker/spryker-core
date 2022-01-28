@@ -23,10 +23,10 @@ class ResourceActionPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         $resourceId = $apiRequestTransfer->getResourceId();
-        $requestType = $apiRequestTransfer->getRequestType();
+        $requestType = $apiRequestTransfer->getRequestTypeOrFail();
 
         $resourceAction = null;
         if ($requestType === ApiConfig::HTTP_METHOD_OPTIONS) {

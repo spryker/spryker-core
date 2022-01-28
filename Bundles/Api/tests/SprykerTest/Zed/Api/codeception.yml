@@ -1,9 +1,11 @@
 namespace: SprykerTest\Zed\Api
+
 paths:
     tests: .
     data: ../../../_data
     support: _support
     log: ../../../_output
+
 coverage:
     enabled: true
     remote: false
@@ -20,6 +22,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+
     Communication:
         path: Communication
         class_name: ApiCommunicationTester

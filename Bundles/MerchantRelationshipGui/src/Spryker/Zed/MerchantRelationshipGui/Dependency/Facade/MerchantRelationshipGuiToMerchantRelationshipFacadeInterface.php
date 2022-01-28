@@ -7,30 +7,43 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|\Generated\Shared\Transfer\MerchantRelationshipResponseTransfer
      */
-    public function createMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
+    public function createMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    );
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|\Generated\Shared\Transfer\MerchantRelationshipResponseTransfer
      */
-    public function updateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
+    public function updateMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    );
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
      * @return void
      */
-    public function deleteMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
+    public function deleteMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ): void;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer

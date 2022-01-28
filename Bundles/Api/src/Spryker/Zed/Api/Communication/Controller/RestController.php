@@ -10,7 +10,6 @@ namespace Spryker\Zed\Api\Communication\Controller;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 
 /**
- * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class RestController extends AbstractApiController

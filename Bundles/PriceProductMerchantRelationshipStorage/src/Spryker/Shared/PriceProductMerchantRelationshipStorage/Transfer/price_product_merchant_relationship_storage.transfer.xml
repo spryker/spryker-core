@@ -99,4 +99,17 @@
     <transfer name="CompanyBusinessUnitCollection">
         <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
     </transfer>
+
+    <transfer name="MerchantRelationshipCriteria">
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipConditions">
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
 </transfers>

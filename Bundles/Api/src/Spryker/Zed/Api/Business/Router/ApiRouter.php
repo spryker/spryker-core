@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Router;
 
 use Spryker\Zed\Api\ApiConfig;
+use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
+use TypeError;
 
 class ApiRouter implements RouterInterface
 {
@@ -100,6 +102,8 @@ class ApiRouter implements RouterInterface
      *
      * @param string $pathinfo
      *
+     * @throws \TypeError
+     *
      * @return array
      */
     public function match($pathinfo)
@@ -119,6 +123,12 @@ class ApiRouter implements RouterInterface
 
         /** @var \Spryker\Zed\Kernel\Communication\Controller\AbstractController $controller */
         $controller = $controllerResolver->resolve($bundleControllerAction);
+
+        if (!$controller instanceof AbstractApiController) {
+            $class = get_class($controller);
+
+            throw new TypeError(sprintf('"%s" should be an instance of "%s"', $class, AbstractApiController::class));
+        }
         $controller->initialize();
 
         return [
@@ -138,7 +148,7 @@ class ApiRouter implements RouterInterface
     {
         if (strpos($path, ApiConfig::ROUTE_PREFIX_API_REST) !== 0) {
             throw new ResourceNotFoundException(sprintf(
-                'Invalid URI prefix, expected %s in path %s',
+                'Invalid URI prefix, expected "%s" in path "%s"',
                 ApiConfig::ROUTE_PREFIX_API_REST,
                 $path,
             ));

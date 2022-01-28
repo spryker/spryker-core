@@ -7,65 +7,92 @@
 
 namespace Spryker\Zed\CustomerApi\Business\Model\Validator;
 
-use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ApiValidationErrorTransfer;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Validation;
 
 class CustomerApiValidator implements CustomerApiValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return array
+     * @var string
      */
-    public function validate(ApiDataTransfer $apiDataTransfer)
+    protected const KEY_EMAIL = 'email';
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
+     */
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array
     {
-        $data = $apiDataTransfer->getData();
+        $apiData = $apiRequestTransfer->getApiDataOrFail()->getData();
 
-        $errors = [];
-        $errors = $this->assertRequiredField($data, 'email', $errors);
-        $errors = $this->assertValidEmail($data, 'email', $errors);
+        $apiValidationErrorTransfers = [];
+        $apiValidationErrorTransfers = $this->assertRequiredField($apiData, static::KEY_EMAIL, $apiValidationErrorTransfers);
+        $apiValidationErrorTransfers = $this->assertValidEmail($apiData, static::KEY_EMAIL, $apiValidationErrorTransfers);
 
-        return $errors;
+        return $apiValidationErrorTransfers;
     }
 
     /**
      * @param array $data
      * @param string $field
-     * @param array $errors
+     * @param array<\Generated\Shared\Transfer\ApiValidationErrorTransfer> $apiValidationErrorTransfers
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    protected function assertRequiredField(array $data, $field, array $errors)
+    protected function assertRequiredField(array $data, string $field, array $apiValidationErrorTransfers): array
     {
         if (!isset($data[$field]) || (array_key_exists($field, $data) && !$data[$field])) {
             $message = sprintf('Missing value for required field "%s"', $field);
-            $errors[$field][] = $message;
+            $apiValidationErrorTransfers[] = $this->createApiValidationErrorTransfer($field, [$message]);
         }
 
-        return $errors;
+        return $apiValidationErrorTransfers;
     }
 
     /**
      * @param array $data
      * @param string $field
-     * @param array $errors
+     * @param array<\Generated\Shared\Transfer\ApiValidationErrorTransfer> $apiValidationErrorTransfers
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    protected function assertValidEmail(array $data, $field, array $errors)
+    protected function assertValidEmail(array $data, string $field, array $apiValidationErrorTransfers): array
     {
         if (isset($data[$field])) {
             $validator = Validation::createValidator();
             $violations = $validator->validate($data[$field], [
                 new Email(),
             ]);
+
+            if ($violations->count() === 0) {
+                return $apiValidationErrorTransfers;
+            }
+
+            $messages = [];
             /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
-                $errors[$field] = $violation->getMessage();
+                $messages[] = (string)$violation->getMessage();
             }
+
+            $apiValidationErrorTransfers[] = $this->createApiValidationErrorTransfer($field, $messages);
         }
 
-        return $errors;
+        return $apiValidationErrorTransfers;
+    }
+
+    /**
+     * @param string $field
+     * @param array<string> $messages
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer
+     */
+    protected function createApiValidationErrorTransfer(string $field, array $messages): ApiValidationErrorTransfer
+    {
+        return (new ApiValidationErrorTransfer())
+            ->setField($field)
+            ->setMessages($messages);
     }
 }

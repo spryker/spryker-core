@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Communication\Controller;
 
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTableConstants;
 use Symfony\Component\Form\FormInterface;
@@ -74,12 +75,20 @@ class CreateMerchantRelationshipController extends AbstractController
     {
         $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
         $merchantRelationshipTransfer = $merchantRelationshipForm->getData();
-        $merchantRelationshipTransfer = $this->getFactory()
-            ->getMerchantRelationshipFacade()
-            ->createMerchantRelationship($merchantRelationshipTransfer);
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())->setMerchantRelationship($merchantRelationshipTransfer);
 
-        if (!$merchantRelationshipTransfer->getIdMerchantRelationship()) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_RELATION_CREATE_ERROR);
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipResponseTransfer $merchantRelationshipResponseTransfer */
+        $merchantRelationshipResponseTransfer = $this->getFactory()
+            ->getMerchantRelationshipFacade()
+            ->createMerchantRelationship(
+                $merchantRelationshipTransfer,
+                $merchantRelationshipRequestTransfer,
+            );
+
+        if (!$merchantRelationshipResponseTransfer->getIsSuccessfulOrFail()) {
+            foreach ($merchantRelationshipResponseTransfer->getErrors() as $merchantRelationshipErrorTransfer) {
+                $this->addErrorMessage($merchantRelationshipErrorTransfer->getMessageOrFail());
+            }
 
             return $this->viewResponse([
                 'form' => $merchantRelationshipForm->createView(),

@@ -7,34 +7,34 @@
 
 namespace Spryker\Zed\Api\Business\Model\Validator;
 
-use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiRequestTransfer;
 
 class ApiValidator implements ApiValidatorInterface
 {
     /**
-     * @var array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface>
+     * @var array<\Spryker\Zed\ApiExtension\Dependency\Plugin\ApiValidatorPluginInterface>
      */
-    protected $validatorPlugins;
+    protected $apiValidatorPlugins;
 
     /**
-     * @param array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface> $validatorPlugins
+     * @param array<\Spryker\Zed\ApiExtension\Dependency\Plugin\ApiValidatorPluginInterface> $apiValidatorPlugins
      */
-    public function __construct(array $validatorPlugins)
+    public function __construct(array $apiValidatorPlugins)
     {
-        $this->validatorPlugins = $validatorPlugins;
+        $this->apiValidatorPlugins = $apiValidatorPlugins;
     }
 
     /**
-     * @param string $resourceName
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    public function validate($resourceName, ApiDataTransfer $apiDataTransfer)
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array
     {
-        foreach ($this->validatorPlugins as $plugin) {
-            if (mb_strtolower($plugin->getResourceName()) === mb_strtolower($resourceName)) {
-                return $plugin->validate($apiDataTransfer);
+        $resourceName = $apiRequestTransfer->getResourceOrFail();
+        foreach ($this->apiValidatorPlugins as $apiValidatorPlugin) {
+            if (mb_strtolower($apiValidatorPlugin->getResourceName()) === mb_strtolower($resourceName)) {
+                return $apiValidatorPlugin->validate($apiRequestTransfer);
             }
         }
 

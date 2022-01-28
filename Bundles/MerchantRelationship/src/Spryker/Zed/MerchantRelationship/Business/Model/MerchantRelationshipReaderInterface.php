@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
@@ -35,10 +36,14 @@ interface MerchantRelationshipReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|\Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array;
+    public function getMerchantRelationshipCollection(
+        ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,
+        ?MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer = null
+    );
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer

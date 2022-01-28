@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Api\Business;
 
-use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiCollectionTransfer;
+use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -38,16 +40,15 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
      *
      * @api
      *
-     * @param string $resourceName
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    public function validate($resourceName, ApiDataTransfer $apiDataTransfer)
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array
     {
         return $this->getFactory()
             ->createValidator()
-            ->validate($resourceName, $apiDataTransfer);
+            ->validate($apiRequestTransfer);
     }
 
     /**
@@ -61,11 +62,9 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
      */
     public function filterApiRequestTransfer(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
-        $filteredApiRequestTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createRequestTransferFilter()
             ->filter(clone $apiRequestTransfer);
-
-        return $filteredApiRequestTransfer;
     }
 
     /**
@@ -80,5 +79,38 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
     public function getApiRouter(): RouterInterface
     {
         return $this->getFactory()->createApiRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transfers
+     *
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
+     */
+    public function createApiCollection(array $transfers): ApiCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createApiDataCreator()
+            ->createApiCollectionTransfer($transfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $transfer
+     * @param string|null $id
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    public function createApiItem(?AbstractTransfer $transfer = null, ?string $id = null): ApiItemTransfer
+    {
+        return $this->getFactory()
+            ->createApiDataCreator()
+            ->createApiItemTransfer($transfer, $id);
     }
 }

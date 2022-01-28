@@ -16,7 +16,7 @@ interface ProductApiToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract);
+    public function findProductAbstractById($idProductAbstract): ?ProductAbstractTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -24,7 +24,7 @@ interface ProductApiToProductInterface
      *
      * @return int
      */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -32,5 +32,5 @@ interface ProductApiToProductInterface
      *
      * @return int
      */
-    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int;
 }

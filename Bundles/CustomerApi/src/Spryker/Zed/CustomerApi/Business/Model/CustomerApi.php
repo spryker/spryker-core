@@ -9,9 +9,11 @@ namespace Spryker\Zed\CustomerApi\Business\Model;
 
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiPaginationTransfer;
 use Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ApiValidationErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer;
@@ -20,22 +22,19 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Api\ApiConfig;
-use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
-use Spryker\Zed\Api\Business\Exception\EntityNotSavedException;
 use Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface;
 use Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface;
+use Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToApiFacadeInterface;
 use Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface;
-use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface;
 use Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface;
 use Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CustomerApi implements CustomerApiInterface
 {
     /**
-     * @var \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface
+     * @var string
      */
-    protected $apiQueryContainer;
+    protected const KEY_ID = 'id';
 
     /**
      * @var \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface
@@ -63,27 +62,32 @@ class CustomerApi implements CustomerApiInterface
     protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiInterface $apiQueryContainer
+     * @var \Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToApiFacadeInterface
+     */
+    protected $apiFacade;
+
+    /**
      * @param \Spryker\Zed\CustomerApi\Dependency\QueryContainer\CustomerApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer
      * @param \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CustomerApi\Business\Mapper\EntityMapperInterface $entityMapper
      * @param \Spryker\Zed\CustomerApi\Business\Mapper\TransferMapperInterface $transferMapper
      * @param \Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\CustomerApi\Dependency\Facade\CustomerApiToApiFacadeInterface $apiFacade
      */
     public function __construct(
-        CustomerApiToApiInterface $apiQueryContainer,
         CustomerApiToApiQueryBuilderInterface $apiQueryBuilderQueryContainer,
         CustomerApiQueryContainerInterface $queryContainer,
         EntityMapperInterface $entityMapper,
         TransferMapperInterface $transferMapper,
-        CustomerApiToCustomerInterface $customerFacade
+        CustomerApiToCustomerInterface $customerFacade,
+        CustomerApiToApiFacadeInterface $apiFacade
     ) {
-        $this->apiQueryContainer = $apiQueryContainer;
         $this->apiQueryBuilderQueryContainer = $apiQueryBuilderQueryContainer;
         $this->queryContainer = $queryContainer;
         $this->entityMapper = $entityMapper;
         $this->transferMapper = $transferMapper;
         $this->customerFacade = $customerFacade;
+        $this->apiFacade = $apiFacade;
     }
 
     /**
@@ -100,15 +104,11 @@ class CustomerApi implements CustomerApiInterface
 
         $customerResponseTransfer = $this->customerFacade->addCustomer($customerTransfer);
 
-        $customerTransfer = $this->getCustomerFromResponse($customerResponseTransfer);
-
-        return $this->apiQueryContainer->createApiItem($customerTransfer, $customerTransfer->getIdCustomer());
+        return $this->createApiItemFromCustomerResponseTransfer($customerResponseTransfer);
     }
 
     /**
      * @param int $idCustomer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
@@ -119,17 +119,15 @@ class CustomerApi implements CustomerApiInterface
 
         $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
         if (!$customerTransfer) {
-            throw new EntityNotFoundException(sprintf('Customer not found for id %s', $idCustomer));
+            return $this->createCustomerNotFoundApiItemTransfer($idCustomer);
         }
 
-        return $this->apiQueryContainer->createApiItem($customerTransfer, $idCustomer);
+        return $this->apiFacade->createApiItem($customerTransfer, (string)$idCustomer);
     }
 
     /**
      * @param int $idCustomer
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
@@ -141,7 +139,7 @@ class CustomerApi implements CustomerApiInterface
             ->findOne();
 
         if (!$entityToUpdate) {
-            throw new EntityNotFoundException(sprintf('Customer not found: %s', $idCustomer));
+            return $this->createCustomerNotFoundApiItemTransfer($idCustomer);
         }
 
         $data = (array)$apiDataTransfer->getData();
@@ -153,9 +151,7 @@ class CustomerApi implements CustomerApiInterface
 
         $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
 
-        $customerTransfer = $this->getCustomerFromResponse($customerResponseTransfer);
-
-        return $this->apiQueryContainer->createApiItem($customerTransfer, $idCustomer);
+        return $this->createApiItemFromCustomerResponseTransfer($customerResponseTransfer, (string)$idCustomer);
     }
 
     /**
@@ -171,7 +167,7 @@ class CustomerApi implements CustomerApiInterface
             ->findOne();
 
         if (!$entityToUpdate) {
-            return $this->apiQueryContainer->createApiItem([]);
+            return $this->apiFacade->createApiItem();
         }
 
         $customerTransfer = new CustomerTransfer();
@@ -183,7 +179,7 @@ class CustomerApi implements CustomerApiInterface
             $idCustomer = null;
         }
 
-        return $this->apiQueryContainer->createApiItem([], $idCustomer);
+        return $this->apiFacade->createApiItem($customerTransfer, (string)$idCustomer);
     }
 
     /**
@@ -199,10 +195,7 @@ class CustomerApi implements CustomerApiInterface
             $query->find()->toArray(),
         );
 
-        foreach ($collection as $k => $customerApiTransfer) {
-            $collection[$k] = $this->get($customerApiTransfer->getIdCustomer())->getData();
-        }
-        $apiCollectionTransfer = $this->apiQueryContainer->createApiCollection($collection);
+        $apiCollectionTransfer = $this->apiFacade->createApiCollection($collection);
 
         $apiCollectionTransfer = $this->addPagination($query, $apiCollectionTransfer, $apiRequestTransfer);
 
@@ -216,28 +209,27 @@ class CustomerApi implements CustomerApiInterface
      * @param \Generated\Shared\Transfer\ApiCollectionTransfer $apiCollectionTransfer
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer|array
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     protected function addPagination(ModelCriteria $query, ApiCollectionTransfer $apiCollectionTransfer, ApiRequestTransfer $apiRequestTransfer)
     {
         $query->setOffset(0);
         $query->setLimit(-1);
         $total = $query->count();
-        $page = $apiRequestTransfer->getFilter()->getLimit() ? ($apiRequestTransfer->getFilter()->getOffset() / $apiRequestTransfer->getFilter()->getLimit() + 1) : 1;
-        $pageTotal = ($total && $apiRequestTransfer->getFilter()->getLimit()) ? (int)ceil($total / $apiRequestTransfer->getFilter()->getLimit()) : 1;
-        if ($page > $pageTotal) {
-            throw new NotFoundHttpException('Out of bounds.', null, ApiConfig::HTTP_CODE_NOT_FOUND);
+
+        $apiFilterTransfer = $apiRequestTransfer->getFilter();
+        if ($apiFilterTransfer !== null) {
+            $page = $apiFilterTransfer->getLimit() ? ($apiFilterTransfer->getOffset() / $apiFilterTransfer->getLimit() + 1) : 1;
+            $pageTotal = ($total && $apiFilterTransfer->getLimit()) ? (int)ceil($total / $apiFilterTransfer->getLimit()) : 1;
+
+            $apiPaginationTransfer = (new ApiPaginationTransfer())
+                ->setItemsPerPage($apiFilterTransfer->getLimit())
+                ->setPage($page)
+                ->setTotal($total)
+                ->setPageTotal($pageTotal);
+
+            $apiCollectionTransfer->setPagination($apiPaginationTransfer);
         }
-
-        $apiPaginationTransfer = new ApiPaginationTransfer();
-        $apiPaginationTransfer->setItemsPerPage($apiRequestTransfer->getFilter()->getLimit());
-        $apiPaginationTransfer->setPage($page);
-        $apiPaginationTransfer->setTotal($total);
-        $apiPaginationTransfer->setPageTotal($pageTotal);
-
-        $apiCollectionTransfer->setPagination($apiPaginationTransfer);
 
         return $apiCollectionTransfer;
     }
@@ -310,23 +302,65 @@ class CustomerApi implements CustomerApiInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param string|null $idCustomer
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotSavedException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    protected function getCustomerFromResponse(CustomerResponseTransfer $customerResponseTransfer)
-    {
-        $customerTransfer = $customerResponseTransfer->getCustomerTransfer();
-        if (!$customerTransfer) {
-            $errors = [];
-            foreach ($customerResponseTransfer->getErrors() as $error) {
-                $errors[] = $error->getMessage();
-            }
+    protected function createApiItemFromCustomerResponseTransfer(
+        CustomerResponseTransfer $customerResponseTransfer,
+        ?string $idCustomer = null
+    ): ApiItemTransfer {
+        if ($customerResponseTransfer->getIsSuccess()) {
+            $customerTransfer = $customerResponseTransfer->getCustomerTransferOrFail();
 
-            throw new EntityNotSavedException('Could not save customer: ' . implode(',', $errors));
+            return $this->apiFacade->createApiItem(
+                $customerTransfer,
+                (string)$customerTransfer->getIdCustomerOrFail(),
+            );
         }
 
-        return $this->customerFacade->findCustomerById($customerTransfer);
+        $apiItemTransfer = $this->apiFacade->createApiItem(
+            $customerResponseTransfer->getCustomerTransfer(),
+            $idCustomer,
+        );
+
+        foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
+            $apiValidationErrorTransfer = $this->createApiValidationErrorTransfer($customerErrorTransfer->getMessageOrFail());
+
+            $apiItemTransfer->addValidationError($apiValidationErrorTransfer);
+        }
+
+        return $apiItemTransfer;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\ApiItemTransfer
+     */
+    protected function createCustomerNotFoundApiItemTransfer(int $idCustomer): ApiItemTransfer
+    {
+        $apiValidationErrorTransfer = $this->createApiValidationErrorTransfer(
+            sprintf('Customer not found: %s', $idCustomer),
+            static::KEY_ID,
+        );
+
+        return $this->apiFacade
+            ->createApiItem(null, (string)$idCustomer)
+            ->setStatusCode(ApiConfig::HTTP_CODE_NOT_FOUND)
+            ->addValidationError($apiValidationErrorTransfer);
+    }
+
+    /**
+     * @param string $message
+     * @param string|null $field
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer
+     */
+    protected function createApiValidationErrorTransfer(string $message, ?string $field = null): ApiValidationErrorTransfer
+    {
+        return (new ApiValidationErrorTransfer())
+            ->setField($field)
+            ->addMessages($message);
     }
 }

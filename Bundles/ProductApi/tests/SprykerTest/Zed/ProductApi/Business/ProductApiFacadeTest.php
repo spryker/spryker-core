@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ProductApiTransfer;
 use Spryker\Zed\ProductApi\Business\ProductApiFacade;
 
 /**
@@ -63,7 +64,7 @@ class ProductApiFacadeTest extends Unit
         $this->assertNotEmpty($id);
 
         $newData = $resultTransfer->getData();
-        $this->assertNotEmpty($newData['id_product_abstract']);
+        $this->assertNotEmpty($newData[ProductApiTransfer::ID_PRODUCT_ABSTRACT]);
     }
 
     /**
@@ -83,7 +84,7 @@ class ProductApiFacadeTest extends Unit
         $this->assertGreaterThan(1, count($resultTransfer->getData()));
 
         $data = $resultTransfer->getData();
-        $this->assertNotEmpty($data[0]['id_product_abstract']);
+        $this->assertNotEmpty($data[0][ProductApiTransfer::ID_PRODUCT_ABSTRACT]);
     }
 
     /**
@@ -113,8 +114,8 @@ class ProductApiFacadeTest extends Unit
         $this->assertSame(2, count($resultTransfer->getData()));
 
         $data = $resultTransfer->getData();
-        $this->assertGreaterThanOrEqual(209, $data[0]['id_product_abstract']);
-        $this->assertGreaterThanOrEqual(209, $data[1]['id_product_abstract']);
+        $this->assertGreaterThanOrEqual(209, $data[0][ProductApiTransfer::ID_PRODUCT_ABSTRACT]);
+        $this->assertGreaterThanOrEqual(209, $data[1][ProductApiTransfer::ID_PRODUCT_ABSTRACT]);
 
         $apiPaginationTransfer = $resultTransfer->getPagination();
         $this->assertSame(2, $apiPaginationTransfer->getPage());
@@ -166,7 +167,7 @@ class ProductApiFacadeTest extends Unit
         $this->assertNotEmpty($id);
 
         $newData = $resultTransfer->getData();
-        $this->assertNotEmpty($newData['id_product_abstract']);
+        $this->assertNotEmpty($newData['idProductAbstract']);
     }
 
     /**
@@ -194,7 +195,7 @@ class ProductApiFacadeTest extends Unit
         $this->assertNotEmpty($id);
 
         $newData = $resultTransfer->getData();
-        $this->assertNotEmpty($newData['id_product_abstract']);
+        $this->assertNotEmpty($newData[ProductApiTransfer::ID_PRODUCT_ABSTRACT]);
         $this->assertSame($data['sku'], $newData['sku']);
     }
 

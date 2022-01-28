@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use ArrayObject;
+
 interface MerchantRelationshipProductListEntityManagerInterface
 {
     /**
      * @param array<int> $productListIds
      * @param int $idMerchantRelationship
      *
-     * @return void
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductListTransfer>
      */
-    public function assignProductListsToMerchantRelationship(array $productListIds, int $idMerchantRelationship): void;
+    public function assignProductListsToMerchantRelationship(array $productListIds, int $idMerchantRelationship): ArrayObject;
 
     /**
      * @param int $idProductList

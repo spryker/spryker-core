@@ -11,7 +11,6 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\SpyMerchantRelationshipEntityTransfer;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface;
 use Spryker\Zed\ProductList\Business\ProductListFacadeInterface;
@@ -56,18 +55,15 @@ class MerchantRelationshipProductListBusinessTester extends Actor
      */
     public function createMerchantRelationship(): MerchantRelationshipTransfer
     {
-        $idMerchant = $this->haveMerchant()->getIdMerchant();
-        $idCompanyBusinessUnit = $this->haveCompanyBusinessUnit([
+        $merchantTransfer = $this->haveMerchant();
+        $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
-        ])->getIdCompanyBusinessUnit();
-
-        $merchantRelationship = $this->haveMerchantRelationship([
-            SpyMerchantRelationshipEntityTransfer::FK_MERCHANT => $idMerchant,
-            SpyMerchantRelationshipEntityTransfer::FK_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
-            SpyMerchantRelationshipEntityTransfer::MERCHANT_RELATIONSHIP_KEY => uniqid(),
         ]);
 
-        return $this->getMerchantRelationshipFacade()->createMerchantRelationship($merchantRelationship);
+        return $this->haveMerchantRelationship([
+            MerchantRelationshipTransfer::MERCHANT => $merchantTransfer->toArray(),
+            MerchantRelationshipTransfer::OWNER_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->toArray(),
+        ]);
     }
 
     /**

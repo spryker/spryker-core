@@ -10,23 +10,22 @@ namespace Spryker\Zed\Api\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
     /**
      * @return void
      */
-    public function indexAction()
+    public function indexAction(): void
     {
     }
 
     /**
      * @return void
      */
-    public function deniedAction()
+    public function deniedAction(): void
     {
     }
 }

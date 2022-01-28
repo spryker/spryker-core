@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductApi\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
@@ -23,13 +22,5 @@ class ProductApiPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractQuery()
     {
         return SpyProductAbstractQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiInterface
-     */
-    public function getApiQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductApiDependencyProvider::QUERY_CONTAINER_API);
     }
 }

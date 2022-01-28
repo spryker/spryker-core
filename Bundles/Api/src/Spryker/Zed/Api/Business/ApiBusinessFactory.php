@@ -8,6 +8,11 @@
 namespace Spryker\Zed\Api\Business;
 
 use Spryker\Zed\Api\ApiDependencyProvider;
+use Spryker\Zed\Api\Business\Creator\ApiDataCreator;
+use Spryker\Zed\Api\Business\Creator\ApiDataCreatorInterface;
+use Spryker\Zed\Api\Business\Executor\ResourcePluginExecutor;
+use Spryker\Zed\Api\Business\Mapper\ApiResponseMapper;
+use Spryker\Zed\Api\Business\Mapper\ApiResponseMapperInterface;
 use Spryker\Zed\Api\Business\Model\Dispatcher;
 use Spryker\Zed\Api\Business\Model\Filter\ApiRequestTransferFilter;
 use Spryker\Zed\Api\Business\Model\Processor;
@@ -34,7 +39,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceActionP
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceIdPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourcePreProcessor;
-use Spryker\Zed\Api\Business\Model\ResourceHandler;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidator;
 use Spryker\Zed\Api\Business\Router\ApiRouter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -42,7 +46,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiBusinessFactory extends AbstractBusinessFactory
 {
@@ -52,18 +55,19 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createDispatcher()
     {
         return new Dispatcher(
-            $this->createResourceHandler(),
+            $this->createResourcePluginExecutor(),
             $this->createProcessor(),
             $this->createValidator(),
+            $this->createApiResponseMapper(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
+     * @return \Spryker\Zed\Api\Business\Executor\ResourcePluginExecutorInterface
      */
-    public function createResourceHandler()
+    public function createResourcePluginExecutor()
     {
-        return new ResourceHandler(
+        return new ResourcePluginExecutor(
             $this->getApiPlugins(),
             $this->getConfig(),
         );
@@ -91,9 +95,9 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface>
+     * @return array<\Spryker\Zed\ApiExtension\Dependency\Plugin\ApiValidatorPluginInterface>
      */
-    protected function getApiValidatorPlugins()
+    public function getApiValidatorPlugins()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API_VALIDATOR);
     }
@@ -101,7 +105,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface>
      */
-    protected function getApiPlugins()
+    public function getApiPlugins()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API);
     }
@@ -109,7 +113,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return array<\Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface>
      */
-    protected function getPreProcessorStack()
+    public function getPreProcessorStack()
     {
         return [
             $this->createPathPreProcessor(),
@@ -136,7 +140,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return array<\Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface>
      */
-    protected function getPostProcessorStack()
+    public function getPostProcessorStack()
     {
         return [
             $this->createCorsFilterPostProcessor(),
@@ -151,7 +155,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createPathPreProcessor()
+    public function createPathPreProcessor()
     {
         return new PathPreProcessor();
     }
@@ -159,7 +163,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createFormatTypeByHeaderPreProcessor()
+    public function createFormatTypeByHeaderPreProcessor()
     {
         return new FormatTypeByHeaderPreProcessor();
     }
@@ -167,7 +171,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createFormatTypeByPathPreProcessor()
+    public function createFormatTypeByPathPreProcessor()
     {
         return new FormatTypeByPathPreProcessor();
     }
@@ -175,7 +179,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createResourcePreProcessor()
+    public function createResourcePreProcessor()
     {
         return new ResourcePreProcessor();
     }
@@ -183,7 +187,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createResourceIdPreProcessor()
+    public function createResourceIdPreProcessor()
     {
         return new ResourceIdPreProcessor();
     }
@@ -191,7 +195,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createResourceActionPreProcessor()
+    public function createResourceActionPreProcessor()
     {
         return new ResourceActionPreProcessor();
     }
@@ -199,7 +203,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createResourceParametersPreProcessor()
+    public function createResourceParametersPreProcessor()
     {
         return new ResourceParametersPreProcessor();
     }
@@ -207,7 +211,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createFilterPreProcessor()
+    public function createFilterPreProcessor()
     {
         return new FilterPreProcessor();
     }
@@ -215,7 +219,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createFieldsByQueryPreProcessor()
+    public function createFieldsByQueryPreProcessor()
     {
         return new FieldsByQueryPreProcessor();
     }
@@ -223,7 +227,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createSortByQueryFilterPreProcessor()
+    public function createSortByQueryFilterPreProcessor()
     {
         return new SortByQueryFilterPreProcessor();
     }
@@ -231,7 +235,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createCriteriaByQueryFilterPreProcessor()
+    public function createCriteriaByQueryFilterPreProcessor()
     {
         return new CriteriaByQueryFilterPreProcessor();
     }
@@ -239,7 +243,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createPaginationByQueryFilterPreProcessor()
+    public function createPaginationByQueryFilterPreProcessor()
     {
         return new PaginationByQueryFilterPreProcessor(
             $this->getConfig(),
@@ -249,7 +253,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createPaginationByHeaderFilterPreProcessor()
+    public function createPaginationByHeaderFilterPreProcessor()
     {
         return new PaginationByHeaderFilterPreProcessor(
             $this->getConfig(),
@@ -259,7 +263,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createAddActionPreProcessor()
+    public function createAddActionPreProcessor()
     {
         return new AddActionPreProcessor();
     }
@@ -267,7 +271,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createUpdateActionPreProcessor()
+    public function createUpdateActionPreProcessor()
     {
         return new UpdateActionPreProcessor();
     }
@@ -275,7 +279,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createGetActionPreProcessor()
+    public function createGetActionPreProcessor()
     {
         return new GetActionPreProcessor();
     }
@@ -283,7 +287,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    protected function createFindActionPreProcessor()
+    public function createFindActionPreProcessor()
     {
         return new FindActionPreProcessor();
     }
@@ -291,7 +295,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    protected function createAddActionPostProcessor()
+    public function createAddActionPostProcessor()
     {
         return new AddActionPostProcessor(
             $this->getConfig(),
@@ -301,7 +305,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    protected function createRemoveActionPostProcessor()
+    public function createRemoveActionPostProcessor()
     {
         return new RemoveActionPostProcessor();
     }
@@ -309,7 +313,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    protected function createOptionsActionPostProcessor()
+    public function createOptionsActionPostProcessor()
     {
         return new OptionsActionPostProcessor();
     }
@@ -317,7 +321,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    protected function createPaginationByHeaderFilterPostProcessor()
+    public function createPaginationByHeaderFilterPostProcessor()
     {
         return new PaginationByHeaderFilterPostProcessor();
     }
@@ -325,7 +329,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    protected function createCorsFilterPostProcessor()
+    public function createCorsFilterPostProcessor()
     {
         return new CorsFilterPostProcessor(
             $this->getConfig(),
@@ -335,7 +339,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    protected function createFindActionPostProcessor()
+    public function createFindActionPostProcessor()
     {
         return new FindActionPostProcessor(
             $this->getConfig(),
@@ -353,7 +357,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface>
      */
-    protected function getApiRequestTransferFilterPlugins()
+    public function getApiRequestTransferFilterPlugins()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::PLUGINS_API_REQUEST_TRANSFER_FILTER);
     }
@@ -364,5 +368,21 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     public function createApiRouter(): RouterInterface
     {
         return new ApiRouter($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Mapper\ApiResponseMapperInterface
+     */
+    public function createApiResponseMapper(): ApiResponseMapperInterface
+    {
+        return new ApiResponseMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Business\Creator\ApiDataCreatorInterface
+     */
+    public function createApiDataCreator(): ApiDataCreatorInterface
+    {
+        return new ApiDataCreator();
     }
 }

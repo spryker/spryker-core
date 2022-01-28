@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\CustomerApiTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use RuntimeException;
-use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\CustomerApi\Business\CustomerApiFacade;
 
 /**
@@ -73,7 +73,7 @@ class CustomerApiFacadeTest extends Unit
         $this->assertNotEmpty($id);
 
         $data = $resultTransfer->getData();
-        $this->assertNotEmpty($data['customer_reference']);
+        $this->assertNotEmpty($data[CustomerApiTransfer::CUSTOMER_REFERENCE]);
     }
 
     /**
@@ -81,13 +81,19 @@ class CustomerApiFacadeTest extends Unit
      */
     public function testGetInvalid(): void
     {
+        // Arrange
         $customerApiFacade = new CustomerApiFacade();
-
         $idCustomer = 999;
 
-        $this->expectException(EntityNotFoundException::class);
+        // Act
+        $apiItemTransfer = $customerApiFacade->getCustomer($idCustomer);
 
-        $customerApiFacade->getCustomer($idCustomer);
+        // Assert
+        $this->assertCount(1, $apiItemTransfer->getValidationErrors());
+
+        $messages = $apiItemTransfer->getValidationErrors()->offsetGet(0)->getMessages();
+        $this->assertCount(1, $messages);
+        $this->assertSame(sprintf('Customer not found: %s', $idCustomer), $messages[0]);
     }
 
     /**
@@ -106,7 +112,7 @@ class CustomerApiFacadeTest extends Unit
         $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
 
         $data = $resultTransfer->getData();
-        $this->assertNotEmpty($data[0]['customer_reference']);
+        $this->assertNotEmpty($data[0][CustomerApiTransfer::CUSTOMER_REFERENCE]);
     }
 
     /**
@@ -130,7 +136,7 @@ class CustomerApiFacadeTest extends Unit
         $this->assertNotEmpty($id);
 
         $data = $resultTransfer->getData();
-        $this->assertNotEmpty($data['id_customer']);
+        $this->assertNotEmpty($data[CustomerApiTransfer::ID_CUSTOMER]);
     }
 
     /**
@@ -155,7 +161,7 @@ class CustomerApiFacadeTest extends Unit
         $this->assertNotEmpty($id);
 
         $data = $resultTransfer->getData();
-        $this->assertNotEmpty($data['id_customer']);
+        $this->assertNotEmpty($data[CustomerApiTransfer::ID_CUSTOMER]);
     }
 
     /**
@@ -169,7 +175,7 @@ class CustomerApiFacadeTest extends Unit
 
         $result = $customerApiFacade->removeCustomer($idCustomer);
 
-        $this->assertSame($this->idCustomer, $result->getId());
+        $this->assertSame((string)$this->idCustomer, $result->getId());
     }
 
     /**

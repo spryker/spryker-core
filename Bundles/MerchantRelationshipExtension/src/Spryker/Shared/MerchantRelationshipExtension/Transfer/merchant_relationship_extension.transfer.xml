@@ -4,4 +4,7 @@
     <transfer name="MerchantRelationship">
     </transfer>
 
+    <transfer name="MerchantRelationshipValidationErrorCollection">
+    </transfer>
+
 </transfers>

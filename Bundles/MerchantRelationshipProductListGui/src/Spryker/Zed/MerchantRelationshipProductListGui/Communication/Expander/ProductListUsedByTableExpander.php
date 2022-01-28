@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander;
 
-use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableTransfer;
@@ -80,10 +81,17 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
             return [];
         }
 
-        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
-            ->setMerchantRelationshipIds($merchantRelationshipIds);
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setMerchantRelationshipConditions(
+                (new MerchantRelationshipConditionsTransfer())
+                    ->setMerchantRelationshipIds($merchantRelationshipIds),
+            );
 
-        return $this->merchantRelationshipFacade->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer */
+        $merchantRelationshipCollectionTransfer = $this->merchantRelationshipFacade
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        return $merchantRelationshipCollectionTransfer->getMerchantRelationships()->getArrayCopy();
     }
 
     /**

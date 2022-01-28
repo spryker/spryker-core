@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -18,19 +20,28 @@ class MerchantRelationshipProductListEntityManager extends AbstractEntityManager
      * @param array<int> $productListIds
      * @param int $idMerchantRelationship
      *
-     * @return void
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductListTransfer>
      */
-    public function assignProductListsToMerchantRelationship(array $productListIds, int $idMerchantRelationship): void
+    public function assignProductListsToMerchantRelationship(array $productListIds, int $idMerchantRelationship): ArrayObject
     {
         $productListEntities = $this->getFactory()
             ->getProductListQuery()
             ->filterByIdProductList_In($productListIds)
             ->find();
 
+        $merchantRelationshipProductListMapper = $this->getFactory()->createMerchantRelationshipProductListMapper();
+        $productListTransfers = [];
         foreach ($productListEntities as $productListEntity) {
             $productListEntity->setFkMerchantRelationship($idMerchantRelationship)
                 ->save();
+
+            $productListTransfers[] = $merchantRelationshipProductListMapper->mapProductList(
+                $productListEntity,
+                new ProductListTransfer(),
+            );
         }
+
+        return new ArrayObject($productListTransfers);
     }
 
     /**

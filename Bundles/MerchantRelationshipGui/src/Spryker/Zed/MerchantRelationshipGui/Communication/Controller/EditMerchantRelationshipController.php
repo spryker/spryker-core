@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Communication\Controller;
 
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTableConstants;
@@ -78,10 +79,25 @@ class EditMerchantRelationshipController extends AbstractController
     {
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
         $merchantRelationshipTransfer = $merchantRelationshipForm->getData();
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())->setMerchantRelationship($merchantRelationshipTransfer);
 
-        $this->getFactory()
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipResponseTransfer $merchantRelationshipResponseTransfer */
+        $merchantRelationshipResponseTransfer = $this->getFactory()
             ->getMerchantRelationshipFacade()
-            ->updateMerchantRelationship($merchantRelationshipTransfer);
+            ->updateMerchantRelationship(
+                $merchantRelationshipTransfer,
+                $merchantRelationshipRequestTransfer,
+            );
+
+        if (!$merchantRelationshipResponseTransfer->getIsSuccessfulOrFail()) {
+            foreach ($merchantRelationshipResponseTransfer->getErrors() as $merchantRelationshipErrorTransfer) {
+                $this->addErrorMessage($merchantRelationshipErrorTransfer->getMessageOrFail());
+            }
+
+            return $this->viewResponse([
+                'form' => $merchantRelationshipForm->createView(),
+            ]);
+        }
 
         $this->addSuccessMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS);
 

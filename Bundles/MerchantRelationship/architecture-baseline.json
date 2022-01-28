@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationship/Business/MerchantRelationshipFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\MerchantRelationship\\Business\\MerchantRelationshipFacade::createMerchantRelationship()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationship/Business/MerchantRelationshipFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\MerchantRelationship\\Business\\MerchantRelationshipFacade::updateMerchantRelationship()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationship/Business/MerchantRelationshipFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\MerchantRelationship\\Business\\MerchantRelationshipFacade::deleteMerchantRelationship()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationship/Business/MerchantRelationshipFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\MerchantRelationship\\Business\\MerchantRelationshipFacade::getMerchantRelationshipCollection()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

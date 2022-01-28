@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\Api\Business\Model\Processor\Provider;
 
+use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
+
 interface PostProcessorProviderInterface
 {
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    public function buildAddActionPostProcessor();
+    public function buildAddActionPostProcessor(): PostProcessorInterface;
 
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface
      */
-    public function buildRemoveActionPostProcessor();
+    public function buildRemoveActionPostProcessor(): PostProcessorInterface;
 }

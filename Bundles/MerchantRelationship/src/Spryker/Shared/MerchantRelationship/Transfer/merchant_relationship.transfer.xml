@@ -12,10 +12,76 @@
         <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection"/>
     </transfer>
 
+    <transfer name="MerchantRelationshipRequest">
+        <property name="merchantRelationship" type="MerchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipResponse">
+        <property name="merchantRelationship" type="MerchantRelationship"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="MerchantRelationshipError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCriteria">
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="sortCollection" type="SortCollection"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipConditions">
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
+        <property name="companyIds" type="int[]" singular="idCompany"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="SortCollection">
+        <property name="sorts" type="Sort[]" singular="sort"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipValidationErrorCollection">
+        <property name="errors" type="MerchantRelationshipError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipError">
+        <property name="field" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollectionRequest">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollectionResponse">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
     <transfer name="CompanyBusinessUnit">
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
         <property name="name" type="string"/>
         <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
@@ -28,15 +94,30 @@
     </transfer>
 
     <transfer name="Merchant">
-    </transfer>
-
-    <transfer name="ProductList">
-        <property name="idProductList" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantRelationshipFilter">
         <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="sortBy" type="string[]" singular="sortBy" associative="true"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>

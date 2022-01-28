@@ -80,13 +80,14 @@ interface CustomerApiFacadeInterface
 
     /**
      * Specification:
-     * - Validates the given API data and returns an array of errors if necessary.
+     * - Requires `ApiRequestTransfer.apiData` transfer property to be set.
+     * - Validates the given API data and returns an array of errors if any occurs.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    public function validate(ApiDataTransfer $apiDataTransfer);
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array;
 }

@@ -11,8 +11,17 @@ use Codeception\Test\Unit;
 use Exception;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\SortCollectionTransfer;
+use Generated\Shared\Transfer\SortTransfer;
+use Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipBusinessFactory;
+use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipPersistenceFactory;
+use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepository;
 
 /**
  * Auto-generated group annotations
@@ -48,7 +57,7 @@ class MerchantRelationshipFacadeTest extends Unit
     protected const BU_KEY_UNIT_2 = 'unit-2';
 
     /**
-     * @uses \Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableMapper::ENTITY_TITLE
+     * @uses \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapper::ENTITY_TITLE
      *
      * @var string
      */
@@ -73,18 +82,68 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCreateMerchantRelationshipForwardCompatibility(): void
+    {
+        // Arrange
+        $merchantRelationshipRequestTransfer = $this->tester->createMerchantRelationshipRequest(static::MR_KEY_TEST);
+        $merchantRelationshipTransfer = $merchantRelationshipRequestTransfer->getMerchantRelationship();
+
+        // Act
+        $merchantRelationshipResponseTransfer = $this->tester->getFacade()->createMerchantRelationship(
+            $merchantRelationshipTransfer,
+            $merchantRelationshipRequestTransfer,
+        );
+
+        // Assert
+        $this->assertNotNull($merchantRelationshipResponseTransfer->getMerchantRelationship());
+        $this->assertNotNull($merchantRelationshipResponseTransfer->getMerchantRelationship()->getIdMerchantRelationship());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantRelationshipWithNotUniqueKeyHasErrorsInResponse(): void
+    {
+        // Arrange
+        $merchantRelationshipRequestTransfer = $this->tester->createMerchantRelationshipRequest(static::MR_KEY_TEST);
+        $merchantRelationshipTransfer = $merchantRelationshipRequestTransfer->getMerchantRelationship();
+        $merchantRelationshipTransfer = clone $merchantRelationshipTransfer;
+        $merchantRelationshipTransfer->setIdMerchantRelationship(null);
+        $merchantRelationshipRequestTransfer->setMerchantRelationship($merchantRelationshipTransfer);
+
+        // Act
+        $merchantRelationshipResponseTransfer = $this->tester->getFacade()->createMerchantRelationship(
+            new MerchantRelationshipTransfer(),
+            $merchantRelationshipRequestTransfer,
+        );
+
+        // Assert
+        $this->assertFalse($merchantRelationshipResponseTransfer->getIsSuccessfulOrFail());
+        $this->assertCount(1, $merchantRelationshipResponseTransfer->getErrors());
+
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipErrorTransfer $merchantRelationshipErrorTransfer */
+        $merchantRelationshipErrorTransfer = $merchantRelationshipResponseTransfer->getErrors()->offsetGet(0);
+        $this->assertSame(MerchantRelationshipTransfer::MERCHANT_RELATIONSHIP_KEY, $merchantRelationshipErrorTransfer->getField());
+        $this->assertSame(
+            sprintf('Merchant relationship key "%s" already exists.', $merchantRelationshipTransfer->getMerchantRelationshipKey()),
+            $merchantRelationshipErrorTransfer->getMessage(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateMerchantRelationshipWithNotUniqueKeyThrowsException(): void
     {
-        // Prepare
+        // Arrange
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $newMerchantRelationshipTransfer = clone $merchantRelationshipTransfer;
         $newMerchantRelationshipTransfer->setIdMerchantRelationship(null);
 
         $this->expectException(Exception::class);
 
-        // Action
-        $this->tester->getFacade()
-            ->createMerchantRelationship($newMerchantRelationshipTransfer);
+        // Act
+        $this->tester->getFacade()->createMerchantRelationship($newMerchantRelationshipTransfer);
     }
 
     /**
@@ -108,7 +167,7 @@ class MerchantRelationshipFacadeTest extends Unit
      */
     public function testCreateMerchantRelationshipWithOneAssignee(): void
     {
-        // Prepare
+        // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => static::BU_OWNER_KEY_OWNER,
@@ -124,7 +183,7 @@ class MerchantRelationshipFacadeTest extends Unit
                     ->addCompanyBusinessUnit($companyBusinessUnitTransfer),
             );
 
-        // Action
+        // Act
         $this->tester->getFacade()
             ->createMerchantRelationship($merchantRelationshipTransfer);
 
@@ -140,7 +199,7 @@ class MerchantRelationshipFacadeTest extends Unit
      */
     public function testCreateMerchantRelationshipWithFewAssignee(): void
     {
-        // Prepare
+        // Arrange
         $merchantRelationship = $this->tester->createMerchantRelationship(
             static::MR_KEY_TEST,
             static::BU_OWNER_KEY_OWNER,
@@ -158,7 +217,7 @@ class MerchantRelationshipFacadeTest extends Unit
      */
     public function testUpdateMerchantRelationship(): void
     {
-        // Prepare
+        // Arrange
         $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
@@ -173,7 +232,7 @@ class MerchantRelationshipFacadeTest extends Unit
             ->setFkCompanyBusinessUnit($newCompanyBusinessUnit->getIdCompanyBusinessUnit())
             ->setMerchantRelationshipKey($newKey);
 
-        // Action
+        // Act
         $updatedMerchantRelationship = $this->tester->getFacade()
             ->updateMerchantRelationship($merchantRelationship);
 
@@ -187,9 +246,48 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateMerchantRelationshipWithForwardCompatibility(): void
+    {
+        // Arrange
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
+
+        $newMerchant = $this->tester->haveMerchant();
+        $newCompanyBusinessUnit = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $newKey = 'mr-test-1';
+
+        $merchantRelationship
+            ->setIdMerchantRelationship($idMerchantRelationship)
+            ->setFkMerchant($newMerchant->getIdMerchant())
+            ->setFkCompanyBusinessUnit($newCompanyBusinessUnit->getIdCompanyBusinessUnit())
+            ->setMerchantRelationshipKey($newKey);
+
+        $merchantRelationshipRequestTransfer = new MerchantRelationshipRequestTransfer();
+        $merchantRelationshipRequestTransfer->setMerchantRelationship($merchantRelationship);
+
+        // Act
+        $updatedMerchantRelationship = $this->tester->getFacade()
+            ->updateMerchantRelationship(
+                $merchantRelationship,
+                $merchantRelationshipRequestTransfer,
+            )
+            ->getMerchantRelationship();
+
+        // Assert
+        $this->assertSame($idMerchantRelationship, $updatedMerchantRelationship->getIdMerchantRelationship());
+        $this->assertSame($newMerchant->getIdMerchant(), $updatedMerchantRelationship->getFkMerchant());
+        $this->assertSame($newCompanyBusinessUnit->getIdCompanyBusinessUnit(), $updatedMerchantRelationship->getFkCompanyBusinessUnit());
+        $this->assertSame($newKey, $updatedMerchantRelationship->getMerchantRelationshipKey());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetMerchantRelationshipById(): void
     {
-        // Prepare
+        // Arrange
         $expectedMerchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $expectedMerchantRelationship->setName(
             sprintf('%s - %s', $expectedMerchantRelationship->getIdMerchantRelationship(), $expectedMerchantRelationship->getOwnerCompanyBusinessUnit()->getName()),
@@ -213,24 +311,45 @@ class MerchantRelationshipFacadeTest extends Unit
      */
     public function testDeleteMerchantRelationship(): void
     {
-        // Prepare
+        // Arrange
         $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
-        // Action
+        // Act
         $this->tester->getFacade()
             ->deleteMerchantRelationship($merchantRelationship);
 
         // Assert
-        $this->tester->assertMerchantRelationshipNotExists($idMerchantRelationship);
+        $this->tester->assertMerchantRelationshipDoesNotExist($idMerchantRelationship);
     }
 
     /**
      * @return void
      */
+    public function testDeleteMerchantRelationshipForwardCompatible(): void
+    {
+        // Arrange
+        $merchantRelationship = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())
+            ->setMerchantRelationship($merchantRelationship);
+
+        // Act
+        $this->tester->getFacade()
+            ->deleteMerchantRelationship($merchantRelationship, $merchantRelationshipRequestTransfer);
+
+        // Assert
+        $this->tester->assertMerchantRelationshipDoesNotExist($idMerchantRelationship);
+    }
+
+    /**
+     * @group test
+     *
+     * @return void
+     */
     public function testDeleteMerchantRelationshipWithAssigneeDeletesAssignee(): void
     {
-        // Prepare
+        // Arrange
         $merchantRelationship = $this->tester->createMerchantRelationship(
             static::MR_KEY_TEST,
             static::BU_OWNER_KEY_OWNER,
@@ -238,15 +357,13 @@ class MerchantRelationshipFacadeTest extends Unit
         );
         $idMerchantRelationship = $merchantRelationship->getIdMerchantRelationship();
 
-        // Action
-        $this->tester->getFacade()
-            ->deleteMerchantRelationship(
-                (new MerchantRelationshipTransfer())
-                    ->setIdMerchantRelationship($idMerchantRelationship),
-            );
+        // Act
+        $this->tester->getFacade()->deleteMerchantRelationship(
+            (new MerchantRelationshipTransfer())->setIdMerchantRelationship($idMerchantRelationship),
+        );
 
         // Assert
-        $this->tester->assertMerchantRelationshipToCompanyBusinessUnitNotExists($idMerchantRelationship);
+        $this->tester->assertMerchantRelationshipToCompanyBusinessUnitDoesNotExist($idMerchantRelationship);
     }
 
     /**
@@ -255,13 +372,20 @@ class MerchantRelationshipFacadeTest extends Unit
     public function testGetMerchantRelationshipCollectionWillReturnAllAvailableRelationships(): void
     {
         // Arrange
+        $merchantRelationshipConfigMock = $this->tester->mockConfigMethod('getDefaultPaginationLimit', 1000);
+
+        $merchantRelationshipPersistenceFactory = (new MerchantRelationshipPersistenceFactory())->setConfig($merchantRelationshipConfigMock);
+        $merchantRelationshipRepository = (new MerchantRelationshipRepository())->setFactory($merchantRelationshipPersistenceFactory);
+        $merchantRelationshipBusinessFactory = (new MerchantRelationshipBusinessFactory())->setRepository($merchantRelationshipRepository);
+        $merchantRelationshipFacade = $this->tester->getFacade()->setFactory($merchantRelationshipBusinessFactory);
+
         $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
 
         // Act
-        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection();
+        $merchantRelationTransfers = $merchantRelationshipFacade->getMerchantRelationshipCollection();
 
         // Assert
-        $this->assertCount($this->tester->getMerchantRelationsCount(), $merhcantRelationTransfers);
+        $this->assertCount($this->tester->getMerchantRelationsCount(), $merchantRelationTransfers);
     }
 
     /**
@@ -276,9 +400,276 @@ class MerchantRelationshipFacadeTest extends Unit
         );
 
         // Act
-        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+        $merchantRelationTransfers = $this->tester
+            ->getFacade()
+            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         // Assert
-        $this->assertCount(1, $merhcantRelationTransfers);
+        $this->assertCount(1, $merchantRelationTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilteredMerchantRelationshipCollection(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationships(30);
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
+            ->setLimit(10);
+
+        // Act
+        $merchantRelationshipTransfers = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertNotEmpty($merchantRelationshipTransfers);
+        $this->assertCount(10, $merchantRelationshipTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilteredMerchantRelationshipCollectionShouldReturnEmptyCollectionWhenOutOfBounds(): void
+    {
+        // Arrange
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
+            ->setOffset(100000)
+            ->setLimit(10);
+
+        // Act
+        $merchantRelationshipTransfers = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $merchantRelationshipTransfers, 'The collection should be empty');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilteredMerchantRelationshipCollectionFilteredByIdMerchantRelationship(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
+            ->setLimit(10)
+            ->setMerchantRelationshipIds(
+                [$merchantRelationshipTransfer->getIdMerchantRelationship()],
+            );
+
+        // Act
+        $merchantRelationshipTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $merchantRelationshipTransfers);
+        $this->assertSame(
+            $merchantRelationshipTransfer->getIdMerchantRelationship(),
+            $merchantRelationshipTransfers[0]->getIdMerchantRelationship(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilteredMerchantRelationshipCollectionWithSortingAsc(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationshipsForSorting(5);
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
+            ->setLimit(5)
+            ->setSortBy([
+                'Merchant.name' => 'ASC',
+                'Merchant.status' => 'ASC',
+            ]);
+
+        // Act
+        $merchantRelationshipTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertCount(5, $merchantRelationshipTransfers);
+        $this->assertSame('AAA-1', $merchantRelationshipTransfers[0]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-2', $merchantRelationshipTransfers[1]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-3', $merchantRelationshipTransfers[2]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-4', $merchantRelationshipTransfers[3]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-5', $merchantRelationshipTransfers[4]->getMerchantRelationshipKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilteredMerchantRelationshipCollectionWithSortingDesc(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationshipsForSorting(5, 'DESC');
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
+            ->setLimit(5)
+            ->setSortBy([
+                'Merchant.name' => 'DESC',
+                'Merchant.status' => 'DESC',
+            ]);
+
+        // Act
+        $merchantRelationshipTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertCount(5, $merchantRelationshipTransfers);
+        $this->assertSame('ZZZ-5', $merchantRelationshipTransfers[0]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-4', $merchantRelationshipTransfers[1]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-3', $merchantRelationshipTransfers[2]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-2', $merchantRelationshipTransfers[3]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-1', $merchantRelationshipTransfers[4]->getMerchantRelationshipKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionByCriteriaTransfer(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationships(30);
+        $paginationTransfer = (new PaginationTransfer())
+            ->setFirstIndex(10)
+            ->setMaxPerPage(10);
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setPagination($paginationTransfer);
+
+        // Act
+        $merchantRelationshipCollectionTransfer = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection(
+                null,
+                $merchantRelationshipCriteriaTransfer,
+            );
+
+        // Assert
+        $this->assertGreaterThan(0, $merchantRelationshipCollectionTransfer->getMerchantRelationships()->count());
+        $paginationTransfer = $merchantRelationshipCollectionTransfer->getPagination();
+        $this->assertNotEmpty($paginationTransfer);
+        $this->assertSame(2, $paginationTransfer->getPage());
+        $this->assertSame(10, $paginationTransfer->getMaxPerPage());
+        $this->assertSame($this->tester->getMerchantRelationsCount(), $paginationTransfer->getNbResults());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionByCriteriaShouldReturnEmptyCollectionWhenOutOfBounds(): void
+    {
+        // Arrange
+        $paginationTransfer = (new PaginationTransfer())
+            ->setFirstIndex(10000)
+            ->setMaxPerPage(10);
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setPagination($paginationTransfer);
+
+        // Act
+        $merchantRelationshipCollectionTransfer = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(0, $merchantRelationshipCollectionTransfer->getMerchantRelationships(), 'The collection should be empty');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionByCriteriaFilteredByIdMerchantRelationship(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setMaxPerPage(10);
+        $merchantRelationshipConditionsTransfer = (new MerchantRelationshipConditionsTransfer())
+            ->setMerchantRelationshipIds([$merchantRelationshipTransfer->getIdMerchantRelationship()]);
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setMerchantRelationshipConditions($merchantRelationshipConditionsTransfer)
+            ->setPagination($paginationTransfer);
+
+        // Act
+        $merchantRelationshipCollectionTransfer = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $merchantRelationshipCollectionTransfer->getMerchantRelationships());
+        $this->assertSame(
+            $merchantRelationshipTransfer->getIdMerchantRelationship(),
+            $merchantRelationshipCollectionTransfer->getMerchantRelationships()[0]->getIdMerchantRelationship(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionByCriteriaWithSortingAsc(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationshipsForSorting(5);
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setMaxPerPage(5);
+        $sortCollectionTransfer = (new SortCollectionTransfer())
+            ->addSort((new SortTransfer())
+                ->setField('Merchant.name')
+                ->setIsAscending(true))
+            ->addSort((new SortTransfer())
+                ->setField('Merchant.status')
+                ->setIsAscending(true));
+
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setPagination($paginationTransfer)
+            ->setSortCollection($sortCollectionTransfer);
+
+        // Act
+        $merchantRelationshipCollectionTransfer = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(5, $merchantRelationshipCollectionTransfer->getMerchantRelationships());
+        $merchantRelationships = $merchantRelationshipCollectionTransfer->getMerchantRelationships();
+
+        $this->assertSame('AAA-1', $merchantRelationships[0]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-2', $merchantRelationships[1]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-3', $merchantRelationships[2]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-4', $merchantRelationships[3]->getMerchantRelationshipKey());
+        $this->assertSame('AAA-5', $merchantRelationships[4]->getMerchantRelationshipKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionByCriteriaWithSortingDesc(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationshipsForSorting(5, 'DESC');
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setMaxPerPage(5);
+        $sortCollectionTransfer = (new SortCollectionTransfer())
+            ->addSort((new SortTransfer())
+                ->setField('Merchant.name')
+                ->setIsAscending(false))
+            ->addSort((new SortTransfer())
+                ->setField('Merchant.status')
+                ->setIsAscending(false));
+
+        $merchantRelationshipCriteriaTransfer = (new MerchantRelationshipCriteriaTransfer())
+            ->setPagination($paginationTransfer)
+            ->setSortCollection($sortCollectionTransfer);
+
+        // Act
+        $merchantRelationshipCollectionTransfer = $this->tester->getFacade()
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(5, $merchantRelationshipCollectionTransfer->getMerchantRelationships());
+        $merchantRelationships = $merchantRelationshipCollectionTransfer->getMerchantRelationships();
+
+        $this->assertSame('ZZZ-5', $merchantRelationships[0]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-4', $merchantRelationships[1]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-3', $merchantRelationships[2]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-2', $merchantRelationships[3]->getMerchantRelationshipKey());
+        $this->assertSame('ZZZ-1', $merchantRelationships[4]->getMerchantRelationshipKey());
     }
 }

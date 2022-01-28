@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -110,4 +111,34 @@ interface MerchantRelationshipProductListFacadeInterface
     public function clearMerchantRelationshipFromProductLists(
         MerchantRelationshipTransfer $merchantRelationshipTransfer
     ): void;
+
+    /**
+     * Specification:
+     * - Validates if passed `MerchantRelationshipTransfer.productListIds` are available for merchant relationship.
+     * - Adds validation errors to `MerchantRelationshipValidationErrorCollectionTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer $merchantRelationshipValidationErrorCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer
+     */
+    public function validateMerchantRelationshipProductList(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        MerchantRelationshipValidationErrorCollectionTransfer $merchantRelationshipValidationErrorCollectionTransfer
+    ): MerchantRelationshipValidationErrorCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantRelationshipTransfer.idMerchantRelationship` transfer property to be set.
+     * - Expands `MerchantRelationshipTransfer` with product lists available for given merchant relationship.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function expandMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 }

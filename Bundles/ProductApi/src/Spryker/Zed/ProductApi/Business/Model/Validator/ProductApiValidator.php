@@ -7,42 +7,66 @@
 
 namespace Spryker\Zed\ProductApi\Business\Model\Validator;
 
-use Generated\Shared\Transfer\ApiDataTransfer;
+use Generated\Shared\Transfer\ApiRequestTransfer;
+use Generated\Shared\Transfer\ApiValidationErrorTransfer;
+use Spryker\Zed\ProductApi\Business\Request\ProductRequestDataInterface;
 
 class ProductApiValidator implements ProductApiValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
-     *
-     * @return array
+     * @var array<string>
      */
-    public function validate(ApiDataTransfer $apiDataTransfer)
+    protected const REQUIRED_FIELDS = [
+        ProductRequestDataInterface::KEY_NAME,
+        ProductRequestDataInterface::KEY_SKU,
+        ProductRequestDataInterface::KEY_FK_LOCALE,
+        ProductRequestDataInterface::KEY_ID_TAX_SET,
+    ];
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
+     */
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array
     {
-        $data = $apiDataTransfer->getData();
+        $data = $apiRequestTransfer->getApiDataOrFail()->getData();
 
         $errors = [];
-        $errors = $this->assertRequiredField($data, 'name', $errors);
-        $errors = $this->assertRequiredField($data, 'sku', $errors);
-        $errors = $this->assertRequiredField($data, 'fk_locale', $errors);
-        $errors = $this->assertRequiredField($data, 'id_tax_set', $errors);
+        foreach (static::REQUIRED_FIELDS as $field) {
+            $errors = $this->assertRequiredField($data, $field, $errors);
+        }
 
         return $errors;
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $field
-     * @param array $errors
+     * @param array<\Generated\Shared\Transfer\ApiValidationErrorTransfer> $errors
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
     protected function assertRequiredField(array $data, $field, array $errors)
     {
         if (!isset($data[$field]) || (array_key_exists($field, $data) && !$data[$field])) {
             $message = sprintf('Missing value for required field "%s"', $field);
-            $errors[$field][] = $message;
+            $errors[] = $this->createApiValidationErrorTransfer($field, $message);
         }
 
         return $errors;
+    }
+
+    /**
+     * @param string $field
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ApiValidationErrorTransfer
+     */
+    protected function createApiValidationErrorTransfer(string $field, string $message): ApiValidationErrorTransfer
+    {
+        return (new ApiValidationErrorTransfer())
+            ->setField($field)
+            ->addMessages($message);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipEntityManagerInterface
@@ -42,9 +43,9 @@ interface MerchantRelationshipEntityManagerInterface
      * @param array<int> $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship);
+    public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): CompanyBusinessUnitCollectionTransfer;
 
     /**
      * Specification:

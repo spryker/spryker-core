@@ -28,7 +28,7 @@ class PathPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         $path = $apiRequestTransfer->getServerData()[static::SERVER_REQUEST_URI];
         $queryStringIndex = strpos($path, '?');

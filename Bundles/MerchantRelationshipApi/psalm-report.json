@@ -1,0 +1,79 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 201,
+            "line_to": 201,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationshipApi\\Business\\Updater\\MerchantRelationshipUpdater::getValidationErrorsApiItem expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ApiValidationErrorTransfer>, ArrayObject<0, Generated\\Shared\\Transfer\\ApiValidationErrorTransfer&static> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Updater/MerchantRelationshipUpdater.php",
+            "snippet": "            new ArrayObject([$apiValidationErrorTransfer]),",
+            "selected_text": "new ArrayObject([$apiValidationErrorTransfer])",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantRelationshipTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Creator/MerchantRelationshipCreator.php",
+            "snippet": "        $merchantRelationshipTransfer = $merchantRelationshipCollectionTransfer->getMerchantRelationships()->offsetGet(0);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 233,
+            "line_to": 233,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $preparedValidationErrors[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Mapper/MerchantRelationshipMapper.php",
+            "snippet": "            $preparedValidationErrors[$merchantRelationshipErrorTransfer->getField()][] = $merchantRelationshipErrorTransfer;",
+            "selected_text": "$preparedValidationErrors",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantRelationshipTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Reader/MerchantRelationshipReader.php",
+            "snippet": "        if ($merchantRelationshipCollectionTransfer->getMerchantRelationships()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantRelationshipTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Reader/MerchantRelationshipReader.php",
+            "snippet": "        $merchantRelationshipTransfer = $merchantRelationshipCollectionTransfer->getMerchantRelationships()->offsetGet(0);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantRelationshipTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Updater/MerchantRelationshipUpdater.php",
+            "snippet": "        $merchantRelationshipTransfer = $merchantRelationshipCollectionTransfer->getMerchantRelationships()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

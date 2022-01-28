@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider;
 
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
 
@@ -46,8 +47,12 @@ class MerchantRelationshipChoiceFormDataProvider
     protected function getMerchantRelationshipChoices(): array
     {
         $result = [];
+        $merchantRelationshipTransfers = $this->merchantRelationshipFacade->getMerchantRelationshipCollection();
+        if ($merchantRelationshipTransfers instanceof MerchantRelationshipCollectionTransfer) {
+            $merchantRelationshipTransfers = $merchantRelationshipTransfers->getMerchantRelationships()->getArrayCopy();
+        }
 
-        foreach ($this->merchantRelationshipFacade->getMerchantRelationshipCollection() as $merchantRelationshipTransfer) {
+        foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
             $merchantRelationshipKey = sprintf(
                 static::PATTERN_MERCHANT_RELATIONSHIP_KEY,
                 $merchantRelationshipTransfer->getMerchant()->getName(),

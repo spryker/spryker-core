@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Communication\Form\MerchantRelationshipPriceDimensionForm;
 use Spryker\Zed\PriceProductMerchantRelationshipGui\Dependency\Facade\PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeInterface;
 
@@ -43,9 +44,12 @@ class MerchantRelationshipPriceDimensionFormDataProvider
     protected function prepareMerchantRelationshipChoices(): array
     {
         $choices = [];
-        $merchantRelationships = $this->merchantRelationshipFacade->getMerchantRelationshipCollection();
+        $merchantRelationshipTransfers = $this->merchantRelationshipFacade->getMerchantRelationshipCollection();
+        if ($merchantRelationshipTransfers instanceof MerchantRelationshipCollectionTransfer) {
+            $merchantRelationshipTransfers = $merchantRelationshipTransfers->getMerchantRelationships()->getArrayCopy();
+        }
 
-        foreach ($merchantRelationships as $merchantRelationshipTransfer) {
+        foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
             $choices[$merchantRelationshipTransfer->getMerchant()->getName()][$merchantRelationshipTransfer->getName()] = $merchantRelationshipTransfer->getIdMerchantRelationship();
         }
 

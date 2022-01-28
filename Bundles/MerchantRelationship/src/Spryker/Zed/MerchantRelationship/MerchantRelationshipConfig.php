@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantRelationshipConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getDefaultPaginationLimit(): int
+    {
+        return 20;
+    }
 }

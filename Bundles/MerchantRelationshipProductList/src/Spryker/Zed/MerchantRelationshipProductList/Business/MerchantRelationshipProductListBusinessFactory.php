@@ -12,12 +12,16 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDele
 use Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteCheckerInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpanderInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Expander\MerchantRelationshipProductListExpander;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Expander\MerchantRelationshipProductListExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReaderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelationshipReader;
 use Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelationshipReaderInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Validator\MerchantRelationshipProductListValidator;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Validator\MerchantRelationshipProductListValidatorInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListDependencyProvider;
@@ -76,6 +80,22 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
         return new ProductListDeleteChecker(
             $this->createMerchantRelationshipReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\Validator\MerchantRelationshipProductListValidatorInterface
+     */
+    public function createMerchantRelationshipProductListValidator(): MerchantRelationshipProductListValidatorInterface
+    {
+        return new MerchantRelationshipProductListValidator($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\Expander\MerchantRelationshipProductListExpanderInterface
+     */
+    public function createMerchantRelationshipProductListExpander(): MerchantRelationshipProductListExpanderInterface
+    {
+        return new MerchantRelationshipProductListExpander($this->getRepository());
     }
 
     /**

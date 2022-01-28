@@ -56,14 +56,14 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int $id
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function update($idProductAbstract, ApiDataTransfer $apiDataTransfer)
+    public function update($id, ApiDataTransfer $apiDataTransfer)
     {
-        return $this->getFacade()->updateProduct($idProductAbstract, $apiDataTransfer);
+        return $this->getFacade()->updateProduct($id, $apiDataTransfer);
     }
 
     /**
@@ -71,13 +71,13 @@ class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePlug
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int $id
      *
      * @throws \RuntimeException
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
-    public function remove($idProductAbstract)
+    public function remove($id)
     {
         throw new RuntimeException('Remove action not implemented on core level', ApiConfig::HTTP_CODE_NOT_FOUND);
     }

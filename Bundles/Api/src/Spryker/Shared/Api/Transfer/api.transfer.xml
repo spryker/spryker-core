@@ -14,8 +14,8 @@
         <property name="resourceAction" type="string"/>
         <property name="resourceId" type="int"/>
         <property name="resourceParameters" type="array" singular="resourceParameters"/>
-
         <property name="filter" type="ApiFilter"/>
+        <property name="apiData" type="ApiData"/>
     </transfer>
 
     <transfer name="ApiResponse">
@@ -64,12 +64,16 @@
         <property name="data" type="array" singular="data"/>
         <property name="pagination" type="ApiPagination"/>
         <property name="options" type="array" singular="options"/>
+        <property name="statusCode" type="int"/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
     </transfer>
 
     <transfer name="ApiItem">
         <property name="id" type="string"/>
         <property name="data" type="array" singular="data"/>
         <property name="options" type="array" singular="options"/>
+        <property name="statusCode" type="int"/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
     </transfer>
 
     <transfer name="ApiOptions">

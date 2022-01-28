@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Communication\Controller;
 
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTableConstants;
@@ -48,9 +49,14 @@ class DeleteMerchantRelationshipController extends AbstractController
 
         $merchantRelationshipTransfer = (new MerchantRelationshipTransfer())
             ->setIdMerchantRelationship($idMerchantRelationship);
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())->setMerchantRelationship($merchantRelationshipTransfer);
+
         $this->getFactory()
             ->getMerchantRelationshipFacade()
-            ->deleteMerchantRelationship($merchantRelationshipTransfer);
+            ->deleteMerchantRelationship(
+                $merchantRelationshipTransfer,
+                $merchantRelationshipRequestTransfer,
+            );
 
         $this->addSuccessMessage(static::MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS);
 

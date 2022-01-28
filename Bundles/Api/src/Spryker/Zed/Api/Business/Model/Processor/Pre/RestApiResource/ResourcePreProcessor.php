@@ -23,10 +23,10 @@ class ResourcePreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         // GET orders/1
-        $path = $apiRequestTransfer->getPath();
+        $path = $apiRequestTransfer->getPath() ?? '';
 
         $resource = $path;
 

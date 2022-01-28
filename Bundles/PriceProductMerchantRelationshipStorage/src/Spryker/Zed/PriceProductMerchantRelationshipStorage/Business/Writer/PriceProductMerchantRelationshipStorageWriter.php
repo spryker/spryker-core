@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Writer;
 
-use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractStorageWriterInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriterInterface;
@@ -64,9 +66,7 @@ class PriceProductMerchantRelationshipStorageWriter implements PriceProductMerch
         $merchantIds = $this->eventBehaviorFacade
             ->getEventTransferIds($eventEntityTransfers);
 
-        $deletingCompanyBusinessUnitIds = [];
         $companyBusinessUnitIds = [];
-
         foreach ($merchantIds as $idMerchant) {
             $merchantRelationshipTransfers = $this->getMerchantRelationshipTransfersByIdMerchant($idMerchant);
 
@@ -80,17 +80,22 @@ class PriceProductMerchantRelationshipStorageWriter implements PriceProductMerch
     }
 
     /**
-     * @param int $merchantId
+     * @param int $idMerchant
      *
      * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
-    protected function getMerchantRelationshipTransfersByIdMerchant(int $merchantId): array
+    protected function getMerchantRelationshipTransfersByIdMerchant(int $idMerchant): array
     {
-        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
-            ->setMerchantIds([$merchantId]);
+        $merchantRelationshipCriteriaTransfer = $this->createMerchantRelationshipCriteriaTransfer($idMerchant);
 
-        return $this->merchantRelationshipFacade
-            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+        $merchantRelationshipCollection = $this->merchantRelationshipFacade
+            ->getMerchantRelationshipCollection(null, $merchantRelationshipCriteriaTransfer);
+
+        if ($merchantRelationshipCollection instanceof MerchantRelationshipCollectionTransfer) {
+            return $merchantRelationshipCollection->getMerchantRelationships()->getArrayCopy();
+        }
+
+        return $merchantRelationshipCollection;
     }
 
     /**
@@ -107,5 +112,18 @@ class PriceProductMerchantRelationshipStorageWriter implements PriceProductMerch
         }
 
         return $companyBusinessUnitIds;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer
+     */
+    protected function createMerchantRelationshipCriteriaTransfer(int $idMerchant): MerchantRelationshipCriteriaTransfer
+    {
+        $merchantRelationshipConditionsTransfer = (new MerchantRelationshipConditionsTransfer())->addIdMerchant($idMerchant);
+
+        return (new MerchantRelationshipCriteriaTransfer())
+            ->setMerchantRelationshipConditions($merchantRelationshipConditionsTransfer);
     }
 }

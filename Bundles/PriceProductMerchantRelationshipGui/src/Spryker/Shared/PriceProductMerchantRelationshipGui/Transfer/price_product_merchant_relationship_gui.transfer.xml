@@ -19,4 +19,16 @@
     <transfer name="MerchantRelationshipFilter">
     </transfer>
 
+    <transfer name="MerchantRelationshipResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="merchantRelationshipCollection" type="MerchantRelationshipCollection"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCriteria">
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
 </transfers>

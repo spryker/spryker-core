@@ -12,10 +12,9 @@ use Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  */
 class ApiRouterPlugin extends AbstractPlugin implements RouterPluginInterface
 {

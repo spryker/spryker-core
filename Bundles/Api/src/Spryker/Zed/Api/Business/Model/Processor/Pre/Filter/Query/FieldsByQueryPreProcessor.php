@@ -22,7 +22,7 @@ class FieldsByQueryPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         if (empty($queryStrings[static::FIELDS])) {
@@ -32,7 +32,7 @@ class FieldsByQueryPreProcessor implements PreProcessorInterface
         $fieldString = (string)$queryStrings[static::FIELDS];
         $fields = explode(',', $fieldString);
 
-        $apiRequestTransfer->getFilter()->setFields($fields);
+        $apiRequestTransfer->getFilterOrFail()->setFields($fields);
 
         return $apiRequestTransfer;
     }

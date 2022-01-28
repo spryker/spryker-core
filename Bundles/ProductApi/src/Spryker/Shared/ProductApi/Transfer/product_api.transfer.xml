@@ -37,10 +37,13 @@
 
     <transfer name="ApiItem">
         <property name="data" type="array" singular="data"/>
+        <property name="statusCode" type="int"/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
     </transfer>
 
     <transfer name="ApiRequest">
         <property name="filter" type="ApiFilter"/>
+        <property name="apiData" type="ApiData"/>
     </transfer>
 
     <transfer name="ApiPagination">
@@ -68,6 +71,14 @@
     </transfer>
 
     <transfer name="Locale">
+    </transfer>
+
+    <transfer name="ApiValidationError">
+        <property name="field" type="string"/>
+        <property name="messages" type="array" singular="messages"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderCriteria">
     </transfer>
 
 </transfers>

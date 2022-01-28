@@ -19,7 +19,7 @@ interface ApiQueryBuilderToUtilEncodingInterface
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null);
+    public function encodeJson($value, $options = null, $depth = null): ?string;
 
     /**
      * @param string $jsonValue
@@ -29,5 +29,5 @@ interface ApiQueryBuilderToUtilEncodingInterface
      *
      * @return array<mixed>|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null): ?array;
 }

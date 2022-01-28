@@ -78,10 +78,12 @@ class ProductListWriter implements ProductListWriterInterface
             $merchantRelationshipTransfer->getProductListIds(),
         );
 
-        $this->merchantRelationshipProductListEntityManager->assignProductListsToMerchantRelationship(
+        $productListTransfers = $this->merchantRelationshipProductListEntityManager->assignProductListsToMerchantRelationship(
             $productListIds,
             $merchantRelationshipTransfer->getIdMerchantRelationship(),
         );
+
+        $merchantRelationshipTransfer->setProductLists($productListTransfers);
 
         return $merchantRelationshipTransfer;
     }

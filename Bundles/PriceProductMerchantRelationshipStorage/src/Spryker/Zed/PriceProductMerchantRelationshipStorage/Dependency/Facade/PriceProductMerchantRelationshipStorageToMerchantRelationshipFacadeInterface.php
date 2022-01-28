@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 
 interface PriceProductMerchantRelationshipStorageToMerchantRelationshipFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|array<int, \Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array;
+    public function getMerchantRelationshipCollection(
+        ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,
+        ?MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer = null
+    );
 }

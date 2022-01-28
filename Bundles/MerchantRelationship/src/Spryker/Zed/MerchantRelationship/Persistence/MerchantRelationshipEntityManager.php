@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnit;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -58,44 +60,61 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
      */
     public function saveMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        $spyMerchantRelationship = $this->getFactory()
+        $merchantRelationshipEntity = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
             ->findOneOrCreate();
 
-        $spyMerchantRelationship = $this->getFactory()
+        $merchantRelationshipEntity = $this->getFactory()
             ->createPropelMerchantRelationshipMapper()
-            ->mapMerchantRelationshipTransferToEntity($merchantRelationshipTransfer, $spyMerchantRelationship);
+            ->mapMerchantRelationshipTransferToEntity($merchantRelationshipTransfer, $merchantRelationshipEntity);
 
-        $spyMerchantRelationship->save();
+        $merchantRelationshipEntity->save();
 
-        $merchantRelationshipTransfer->setIdMerchantRelationship($spyMerchantRelationship->getIdMerchantRelationship());
-
-        return $merchantRelationshipTransfer;
+        return $this->getFactory()
+            ->createPropelMerchantRelationshipMapper()
+            ->mapMerchantRelationshipEntityToMerchantRelationshipTransfer($merchantRelationshipEntity, $merchantRelationshipTransfer);
     }
 
     /**
      * {@inheritDoc}
      *
+     * @module CompanyBusinessUnit
+     *
      * @param array<int> $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void
+    public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): CompanyBusinessUnitCollectionTransfer
     {
-        $entityCollection = new ObjectCollection();
-        $entityCollection->setModel(SpyMerchantRelationshipToCompanyBusinessUnit::class);
+        $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
+        $merchantRelationshipToCompanyBusinessUnitEntityCollection = new ObjectCollection();
+        $merchantRelationshipToCompanyBusinessUnitEntityCollection->setModel(SpyMerchantRelationshipToCompanyBusinessUnit::class);
+
+        $companyBusinessUnitEntityCollection = $this->getFactory()
+            ->getCompanyBusinessUnitPropelQuery()
+            ->filterByIdCompanyBusinessUnit_In($assignedCompanyBusinessUnitIds)
+            ->find();
+
         foreach ($assignedCompanyBusinessUnitIds as $idAssignedCompanyBusinessUnit) {
-            $spyMerchantRelationshipToCompanyBusinessUnit = new SpyMerchantRelationshipToCompanyBusinessUnit();
-            $spyMerchantRelationshipToCompanyBusinessUnit
+            $merchantRelationshipToCompanyBusinessUnitEntity = new SpyMerchantRelationshipToCompanyBusinessUnit();
+            $merchantRelationshipToCompanyBusinessUnitEntity
                 ->setFkCompanyBusinessUnit($idAssignedCompanyBusinessUnit)
                 ->setFkMerchantRelationship($idMerchantRelationship);
 
-            $entityCollection->append($spyMerchantRelationshipToCompanyBusinessUnit);
+            $merchantRelationshipToCompanyBusinessUnitEntityCollection->append($merchantRelationshipToCompanyBusinessUnitEntity);
+
+            $companyBusinessUnitCollectionTransfer = $this->addCompanyBusinessUnitTransferToCompanyBusinessUnitCollectionTransfer(
+                $companyBusinessUnitEntityCollection,
+                $idAssignedCompanyBusinessUnit,
+                $companyBusinessUnitCollectionTransfer,
+            );
         }
 
-        $entityCollection->save();
+        $merchantRelationshipToCompanyBusinessUnitEntityCollection->save();
+
+        return $companyBusinessUnitCollectionTransfer;
     }
 
     /**
@@ -121,5 +140,28 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
         foreach ($entities as $entity) {
             $entity->delete();
         }
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\CompanyBusinessUnit\Persistence\Base\SpyCompanyBusinessUnit> $companyBusinessUnitEntityCollection
+     * @param int $idAssignedCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
+     */
+    protected function addCompanyBusinessUnitTransferToCompanyBusinessUnitCollectionTransfer(
+        ObjectCollection $companyBusinessUnitEntityCollection,
+        int $idAssignedCompanyBusinessUnit,
+        CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
+        foreach ($companyBusinessUnitEntityCollection as $companyBusinessUnitEntity) {
+            if ($companyBusinessUnitEntity->getIdCompanyBusinessUnit() === $idAssignedCompanyBusinessUnit) {
+                return $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
+                    (new CompanyBusinessUnitTransfer())->fromArray($companyBusinessUnitEntity->toArray(), true),
+                );
+            }
+        }
+
+        return $companyBusinessUnitCollectionTransfer;
     }
 }

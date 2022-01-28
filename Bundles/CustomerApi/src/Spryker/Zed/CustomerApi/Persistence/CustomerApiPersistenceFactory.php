@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CustomerApi\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Spryker\Zed\CustomerApi\CustomerApiDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -23,13 +22,5 @@ class CustomerApiPersistenceFactory extends AbstractPersistenceFactory
     public function createCustomerQuery()
     {
         return SpyCustomerQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface
-     */
-    public function getApiQueryContainer()
-    {
-        return $this->getProvidedDependency(CustomerApiDependencyProvider::QUERY_CONTAINER_API);
     }
 }

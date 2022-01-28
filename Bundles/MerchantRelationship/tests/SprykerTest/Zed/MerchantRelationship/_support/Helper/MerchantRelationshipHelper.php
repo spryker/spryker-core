@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\MerchantRelationship\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -44,26 +46,31 @@ class MerchantRelationshipHelper extends Module
      */
     protected function createOrUpdateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        $foundMerchantRelationshipTransfer = $this->getLocator()
-            ->merchantRelationship()
-            ->facade()
+        $foundMerchantRelationshipTransfer = $this->getMerchantRelationshipFacade()
             ->findMerchantRelationshipByKey($merchantRelationshipTransfer);
+
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())
+            ->setMerchantRelationship($merchantRelationshipTransfer);
 
         if ($foundMerchantRelationshipTransfer) {
             $merchantRelationshipTransfer->setIdMerchantRelationship(
                 $foundMerchantRelationshipTransfer->getIdMerchantRelationship(),
             );
 
-            return $this->getLocator()
-                ->merchantRelationship()
-                ->facade()
-                ->updateMerchantRelationship($merchantRelationshipTransfer);
+            $merchantRelationshipResponseTransfer = $this->getMerchantRelationshipFacade()->updateMerchantRelationship(
+                $merchantRelationshipTransfer,
+                $merchantRelationshipRequestTransfer,
+            );
+
+            return $merchantRelationshipResponseTransfer->getMerchantRelationshipOrFail();
         }
 
-        return $this->getLocator()
-            ->merchantRelationship()
-            ->facade()
-            ->createMerchantRelationship($merchantRelationshipTransfer);
+        $merchantRelationshipResponseTransfer = $this->getMerchantRelationshipFacade()->createMerchantRelationship(
+            $merchantRelationshipTransfer,
+            $merchantRelationshipRequestTransfer,
+        );
+
+        return $merchantRelationshipResponseTransfer->getMerchantRelationshipOrFail();
     }
 
     /**
@@ -76,9 +83,20 @@ class MerchantRelationshipHelper extends Module
     ): void {
         $this->debug(sprintf('Deleting Merchant Relationship: %d', $merchantRelationshipTransfer->getIdMerchantRelationship()));
 
-        $this->getLocator()
-            ->merchantRelationship()
-            ->facade()
-            ->deleteMerchantRelationship($merchantRelationshipTransfer);
+        $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())
+            ->setMerchantRelationship($merchantRelationshipTransfer);
+
+        $this->getMerchantRelationshipFacade()->deleteMerchantRelationship(
+            $merchantRelationshipTransfer,
+            $merchantRelationshipRequestTransfer,
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface
+     */
+    protected function getMerchantRelationshipFacade(): MerchantRelationshipFacadeInterface
+    {
+        return $this->getLocator()->merchantRelationship()->facade();
     }
 }

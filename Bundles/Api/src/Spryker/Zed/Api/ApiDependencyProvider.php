@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api;
 
+use Spryker\Zed\Api\Dependency\Service\ApiToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -40,12 +41,42 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addApiResourcePlugins($container);
+        $container = $this->addApiValidatorPlugins($container);
+        $container = $this->addApiRequestTransferFilterPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
         $container->set(static::SERVICE_ENCODING, function (Container $container) {
-            return $container->getLocator()->utilEncoding()->service();
+            return new ApiToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service(),
+            );
         });
 
         return $container;
@@ -56,37 +87,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    protected function addApiResourcePlugins(Container $container)
     {
-        $container = parent::provideBusinessLayerDependencies($container);
-
-        $container = $this->provideApiPlugins($container);
-        $container = $this->provideApiValidatorPlugins($container);
-        $container = $this->provideApiRequestTransferFilterPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function provideApiPlugins(Container $container)
-    {
-        $container->set(static::PLUGINS_API, function (Container $container) {
+        $container->set(static::PLUGINS_API, function () {
             return $this->getApiResourcePluginCollection();
         });
 
@@ -98,9 +101,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideApiValidatorPlugins(Container $container)
+    protected function addApiValidatorPlugins(Container $container)
     {
-        $container->set(static::PLUGINS_API_VALIDATOR, function (Container $container) {
+        $container->set(static::PLUGINS_API_VALIDATOR, function () {
             return $this->getApiValidatorPluginCollection();
         });
 
@@ -116,7 +119,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface>
+     * @return array<\Spryker\Zed\ApiExtension\Dependency\Plugin\ApiValidatorPluginInterface>
      */
     protected function getApiValidatorPluginCollection()
     {
@@ -128,12 +131,12 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideApiRequestTransferFilterPlugins(Container $container): Container
+    protected function addApiRequestTransferFilterPlugins(Container $container): Container
     {
         /**
          * @return array<\Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface>
          */
-        $container->set(static::PLUGINS_API_REQUEST_TRANSFER_FILTER, function (Container $container): array {
+        $container->set(static::PLUGINS_API_REQUEST_TRANSFER_FILTER, function (): array {
             return $this->getApiRequestTransferFilterPluginCollection();
         });
 

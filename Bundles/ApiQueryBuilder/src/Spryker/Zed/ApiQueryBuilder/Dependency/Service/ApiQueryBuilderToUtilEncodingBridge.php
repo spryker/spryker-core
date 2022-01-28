@@ -32,7 +32,7 @@ class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodi
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null)
+    public function encodeJson($value, $options = null, $depth = null): ?string
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
@@ -45,7 +45,7 @@ class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodi
      *
      * @return array<mixed>|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null): ?array
     {
         if ($assoc === false) {
             trigger_error('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.', E_USER_DEPRECATED);

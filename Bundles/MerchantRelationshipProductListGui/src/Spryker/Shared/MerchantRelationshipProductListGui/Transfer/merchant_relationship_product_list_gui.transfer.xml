@@ -66,4 +66,21 @@
         <property name="actionButtons" type="ButtonCollection"/>
     </transfer>
 
+    <transfer name="MerchantRelationshipCriteria">
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipConditions">
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="merchantRelationshipCollection" type="MerchantRelationshipCollection"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
 </transfers>

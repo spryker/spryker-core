@@ -102,14 +102,14 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    public function validate(ApiDataTransfer $apiDataTransfer)
+    public function validate(ApiRequestTransfer $apiRequestTransfer): array
     {
         return $this->getFactory()
             ->createCustomerApiValidator()
-            ->validate($apiDataTransfer);
+            ->validate($apiRequestTransfer);
     }
 }

@@ -42,10 +42,13 @@
 
     <transfer name="ApiItem">
         <property name="data" type="array" singular="data"/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+        <property name="statusCode" type="int"/>
     </transfer>
 
     <transfer name="ApiRequest">
         <property name="filter" type="ApiFilter"/>
+        <property name="apiData" type="ApiData"/>
     </transfer>
 
     <transfer name="ApiPagination">
@@ -66,6 +69,7 @@
 
     <transfer name="CustomerResponse">
         <property name="customerTransfer" type="Customer"/>
+        <property name="isSuccess" type="bool"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
     </transfer>
 
@@ -76,6 +80,11 @@
 
     <transfer name="CustomerError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="ApiValidationError">
+        <property name="field" type="string"/>
+        <property name="messages" type="array" singular="messages"/>
     </transfer>
 
 </transfers>

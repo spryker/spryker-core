@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer;
 
 use Generated\Shared\Transfer\PropelQueryBuilderCriteriaTransfer;
+use Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ApiQueryBuilderToPropelQueryBuilderBridge implements ApiQueryBuilderToPropelQueryBuilderInterface
@@ -31,7 +32,7 @@ class ApiQueryBuilderToPropelQueryBuilderBridge implements ApiQueryBuilderToProp
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
+    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer): ModelCriteria
     {
         return $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
     }
@@ -41,7 +42,7 @@ class ApiQueryBuilderToPropelQueryBuilderBridge implements ApiQueryBuilderToProp
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer
      */
-    public function createPropelQueryBuilderCriteriaFromJson($json)
+    public function createPropelQueryBuilderCriteriaFromJson($json): PropelQueryBuilderRuleSetTransfer
     {
         return $this->propelQueryBuilderQueryContainer->createPropelQueryBuilderCriteriaFromJson($json);
     }

@@ -36,7 +36,7 @@ class AddActionPostProcessor implements PostProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer): ApiResponseTransfer
     {
         $action = $apiRequestTransfer->getResourceAction();
         if ($action !== ApiConfig::ACTION_CREATE) {
@@ -48,10 +48,29 @@ class AddActionPostProcessor implements PostProcessorInterface
 
         $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_CREATED);
 
-        $resourceId = $apiResponseTransfer->getMeta()->getResourceId();
-        $baseUri = $this->apiConfig->getBaseUri();
-        $apiResponseTransfer->getMeta()->setSelf($baseUri . $apiRequestTransfer->getResource() . '/' . $resourceId);
+        $apiMetaTransfer = $apiResponseTransfer->getMeta();
+        if ($apiMetaTransfer === null) {
+            return $apiResponseTransfer;
+        }
 
-        return $apiResponseTransfer;
+        $apiMetaTransfer->setSelf($this->createSelfLink(
+            $this->apiConfig->getBaseUri(),
+            $apiRequestTransfer->getResourceOrFail(),
+            $apiMetaTransfer->getResourceIdOrFail(),
+        ));
+
+        return $apiResponseTransfer->setMeta($apiMetaTransfer);
+    }
+
+    /**
+     * @param string $baseUri
+     * @param string $resource
+     * @param string $resourceId
+     *
+     * @return string
+     */
+    protected function createSelfLink(string $baseUri, string $resource, string $resourceId): string
+    {
+        return sprintf('%s%s/%s', $baseUri, $resource, $resourceId);
     }
 }

@@ -23,7 +23,7 @@ class UpdateActionPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         $method = $apiRequestTransfer->getResourceAction();
         if ($method !== ApiConfig::ACTION_UPDATE) {

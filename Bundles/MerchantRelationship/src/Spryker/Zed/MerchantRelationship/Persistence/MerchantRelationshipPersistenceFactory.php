@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\MerchantRelationship\MerchantRelationshipDependencyProvider;
 use Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapper;
-use Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
@@ -37,10 +38,18 @@ class MerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapperInterface
+     * @return \Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapper
      */
-    public function createPropelMerchantRelationshipMapper(): MerchantRelationshipMapperInterface
+    public function createPropelMerchantRelationshipMapper(): MerchantRelationshipMapper
     {
         return new MerchantRelationshipMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
+     */
+    public function getCompanyBusinessUnitPropelQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
     }
 }

@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="merchantRelationshipKey" type="string"/>
+        <property name="name" type="string"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int" description="ID of Business Unit Owner"/>
+        <property name="merchant" type="Merchant"/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="assigneeCompanyBusinessUnits" type="CompanyBusinessUnitCollection"/>
+        <property name="productLists" type="ProductList[]" singular="productList"/>
+        <property name="productListIds" type="int[]" singular="productListId"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+        <property name="name" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="company" type="Company"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="ApiItem">
+        <property name="id" type="string"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="statusCode" type="int"/>
+        <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ApiValidationError">
+        <property name="field" type="string"/>
+        <property name="messages" type="array" singular="messages"/>
+    </transfer>
+
+    <transfer name="ApiRequest">
+        <property name="filter" type="ApiFilter"/>
+        <property name="apiData" type="ApiData"/>
+        <property name="requestType" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipFilter">
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+    </transfer>
+
+    <transfer name="ApiPagination">
+        <property name="page" type="int"/>
+        <property name="pageTotal" type="int"/>
+        <property name="itemsPerPage" type="int"/>
+        <property name="total" type="int"/>
+        <property name="prev" type="string"/>
+        <property name="next" type="string"/>
+        <property name="first" type="string"/>
+        <property name="last" type="string"/>
+    </transfer>
+
+    <transfer name="ApiCollection">
+        <property name="statusCode" type="int"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="pagination" type="ApiPagination"/>
+    </transfer>
+
+    <transfer name="ApiData">
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="ApiFilter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="criteriaJson" type="string"/>
+        <property name="sort" type="array" singular="sort"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="pagination" type="Pagination"/>
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipBusinessUnitApi">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipProductListApi">
+        <property name="idProductList" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipApi">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="merchantName" type="string"/>
+        <property name="idCompany" type="int"/>
+        <property name="companyName" type="string"/>
+        <property name="idBusinessUnitOwner" type="int"/>
+        <property name="businessUnitOwnerName" type="string"/>
+        <property name="assignedBusinessUnits" type="MerchantRelationshipBusinessUnitApi[]" singular="assignedBusinessUnit"/>
+        <property name="assignedProductLists" type="MerchantRelationshipProductListApi[]" singular="assignedProductList"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="MerchantRelationshipError[]" singular="error"/>
+        <property name="merchantRelationship" type="MerchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipRequest">
+        <property name="merchantRelationship" type="MerchantRelationship"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipError">
+        <property name="field" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCriteria">
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="sortCollection" type="SortCollection"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipConditions">
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
+        <property name="companyIds" type="int[]" singular="idCompany"/>
+    </transfer>
+
+    <transfer name="SortCollection">
+        <property name="sorts" type="Sort[]" singular="sort"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+        <property name="title" type="string"/>
+    </transfer>
+
+</transfers>

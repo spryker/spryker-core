@@ -10,7 +10,8 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11
+            "shortcode": 11,
+            "other_references": null
         },
         {
             "severity": "error",
@@ -22,7 +23,8 @@
             "snippet": "        return $productListChoices;",
             "selected_text": "$productListChoices",
             "error_level": 6,
-            "shortcode": 128
+            "shortcode": 128,
+            "other_references": null
         },
         {
             "severity": "error",
@@ -34,7 +36,8 @@
             "snippet": "     * @return int[]",
             "selected_text": "int[]",
             "error_level": 6,
-            "shortcode": 11
+            "shortcode": 11,
+            "other_references": null
         },
         {
             "severity": "error",
@@ -46,57 +49,75 @@
             "snippet": "        return $assignedProductListIds;",
             "selected_text": "$assignedProductListIds",
             "error_level": 6,
-            "shortcode": 128
+            "shortcode": 128,
+            "other_references": null
         }
     ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantRelationshipTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
+            "snippet": "            $merchantRelationshipTransfers = $merchantRelationshipTransfers->getMerchantRelationships()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
             "snippet": "                $merchantRelationshipTransfer->getMerchant()->getName(),",
             "selected_text": "$merchantRelationshipTransfer->getMerchant()->getName()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
             "snippet": "                $merchantRelationshipTransfer->getMerchant()->getName(),",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
             "snippet": "                $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
             "selected_text": "$merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
             "snippet": "                $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -108,7 +129,8 @@
             "snippet": "        return sprintf('%s (%s)', $productListTransfer->getTitle(), $productListTransfer->getType());",
             "selected_text": "$productListTransfer->getTitle()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -120,43 +142,60 @@
             "snippet": "        return sprintf('%s (%s)', $productListTransfer->getTitle(), $productListTransfer->getType());",
             "selected_text": "$productListTransfer->getType()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireIdProductList on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
             "snippet": "        $productListUsedByTableTransfer->getProductList()->requireIdProductList();",
             "selected_text": "requireIdProductList",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 60,
+            "line_to": 60,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipProductListGui\\Communication\\Expander\\ProductListUsedByTableExpander::getMerchantRelationshipTransfers cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
             "snippet": "        $merchantRelationshipTransfers = $this->getMerchantRelationshipTransfers($productListUsedByTableTransfer->getProductList());",
             "selected_text": "$productListUsedByTableTransfer->getProductList()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
+            "line_from": 78,
+            "line_to": 78,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipProductListGui\\Dependency\\Facade\\MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface::getMerchantRelationshipIdsByProductListId cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
             "snippet": "            ->getMerchantRelationshipIdsByProductListId($productListTransfer->getIdProductList());",
             "selected_text": "$productListTransfer->getIdProductList()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantRelationshipTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
+            "snippet": "        return $merchantRelationshipCollectionTransfer->getMerchantRelationships()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113,
+            "other_references": null
         }
     ],
     "deprecation": [
@@ -170,7 +209,8 @@
             "snippet": "class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends AbstractPlugin implements ProductListOwnerTypeFormExpanderPluginInterface",
             "selected_text": "MerchantRelationshipProductListOwnerTypeFormExpanderPlugin",
             "error_level": 2,
-            "shortcode": 152
+            "shortcode": 152,
+            "other_references": null
         }
     ]
 }

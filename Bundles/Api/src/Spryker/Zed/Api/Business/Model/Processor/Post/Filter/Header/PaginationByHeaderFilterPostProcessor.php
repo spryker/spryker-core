@@ -29,7 +29,7 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer): ApiResponseTransfer
     {
         $headers = $apiRequestTransfer->getHeaderData();
         if (empty($headers['range'])) {
@@ -45,10 +45,10 @@ class PaginationByHeaderFilterPostProcessor implements PostProcessorInterface
             $headers = $apiResponseTransfer->getHeaders();
             $headers[static::HEADER_ACCEPT_RANGES] = $apiRequestTransfer->getResource();
 
-            $from = $pagination->getPage() * $pagination->getItemsPerPage() - 1;
-            $to = $from + $pagination->getItemsPerPage();
-            $total = $pagination->getTotal();
-            $headers[static::HEADER_CONTENT_RANGE] = $apiRequestTransfer->getResource() . ' ' . $from . '-' . $to . '/' . $total;
+            $from = $pagination->getPageOrFail() * $pagination->getItemsPerPageOrFail() - 1;
+            $to = $from + $pagination->getItemsPerPageOrFail();
+            $total = $pagination->getTotalOrFail();
+            $headers[static::HEADER_CONTENT_RANGE] = $apiRequestTransfer->getResourceOrFail() . ' ' . $from . '-' . $to . '/' . $total;
             $apiResponseTransfer->setHeaders($headers);
         }
 

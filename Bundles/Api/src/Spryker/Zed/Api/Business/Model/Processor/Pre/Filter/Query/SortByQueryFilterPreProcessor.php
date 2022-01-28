@@ -22,7 +22,7 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
         $queryStrings = $apiRequestTransfer->getQueryData();
         if (empty($queryStrings[static::SORT])) {
@@ -45,7 +45,7 @@ class SortByQueryFilterPreProcessor implements PreProcessorInterface
             $sort[$column] = $order;
         }
 
-        $apiRequestTransfer->getFilter()->setSort($sort);
+        $apiRequestTransfer->getFilterOrFail()->setSort($sort);
 
         return $apiRequestTransfer;
     }

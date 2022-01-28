@@ -8,24 +8,24 @@
 namespace Spryker\Zed\Api\Business\Model;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
-use Generated\Shared\Transfer\ApiMetaTransfer;
 use Generated\Shared\Transfer\ApiOptionsTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
+use Spryker\Zed\Api\Business\Executor\ResourcePluginExecutorInterface;
+use Spryker\Zed\Api\Business\Mapper\ApiResponseMapperInterface;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface;
 use Throwable;
 
 class Dispatcher implements DispatcherInterface
 {
     /**
-     * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
+     * @var \Spryker\Zed\Api\Business\Executor\ResourcePluginExecutorInterface
      */
-    protected $resourceHandler;
+    protected $resourcePluginExecutor;
 
     /**
      * @var \Spryker\Zed\Api\Business\Model\ProcessorInterface
@@ -35,21 +35,29 @@ class Dispatcher implements DispatcherInterface
     /**
      * @var \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface
      */
-    protected $validator;
+    protected $apiValidator;
 
     /**
-     * @param \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface $resourceHandler
+     * @var \Spryker\Zed\Api\Business\Mapper\ApiResponseMapperInterface
+     */
+    protected $apiResponseMapper;
+
+    /**
+     * @param \Spryker\Zed\Api\Business\Executor\ResourcePluginExecutorInterface $resourcePluginExecutor
      * @param \Spryker\Zed\Api\Business\Model\ProcessorInterface $processor
-     * @param \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface $validator
+     * @param \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface $apiValidator
+     * @param \Spryker\Zed\Api\Business\Mapper\ApiResponseMapperInterface $apiResponseMapper
      */
     public function __construct(
-        ResourceHandlerInterface $resourceHandler,
+        ResourcePluginExecutorInterface $resourcePluginExecutor,
         ProcessorInterface $processor,
-        ApiValidatorInterface $validator
+        ApiValidatorInterface $apiValidator,
+        ApiResponseMapperInterface $apiResponseMapper
     ) {
-        $this->resourceHandler = $resourceHandler;
+        $this->resourcePluginExecutor = $resourcePluginExecutor;
         $this->processor = $processor;
-        $this->validator = $validator;
+        $this->apiValidator = $apiValidator;
+        $this->apiResponseMapper = $apiResponseMapper;
     }
 
     /**
@@ -77,52 +85,37 @@ class Dispatcher implements DispatcherInterface
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    protected function dispatchToResource(ApiRequestTransfer $apiRequestTransfer)
+    protected function dispatchToResource(ApiRequestTransfer $apiRequestTransfer): ApiResponseTransfer
     {
-        $resource = $apiRequestTransfer->getResource();
-        $method = $apiRequestTransfer->getResourceAction();
-        $id = $apiRequestTransfer->getResourceId();
-        $params = $apiRequestTransfer->getResourceParameters();
-
         $apiResponseTransfer = new ApiResponseTransfer();
 
         try {
-            $errors = $this->getValidationErrors($apiRequestTransfer);
-
-            if ($errors) {
-                $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_VALIDATION_ERRORS);
-                $apiResponseTransfer->setMessage('Validation errors.');
-                $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
-            } else {
-                $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $id, $params);
-                $apiResponseTransfer->setType(get_class($apiPluginCallResponseTransfer));
-                $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
-
-                if ($apiPluginCallResponseTransfer instanceof ApiOptionsTransfer) {
-                    return $apiResponseTransfer;
-                }
-
-                $data = (array)$apiPluginCallResponseTransfer->getData();
-                $apiResponseTransfer->setData($data);
-
-                if ($apiPluginCallResponseTransfer instanceof ApiCollectionTransfer) {
-                    $apiResponseTransfer->setPagination($apiPluginCallResponseTransfer->getPagination());
-                    if (!$apiResponseTransfer->getMeta()) {
-                        $apiResponseTransfer->setMeta(new ApiMetaTransfer());
-                    }
-                } elseif ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
-                    if (!$apiResponseTransfer->getMeta()) {
-                        $apiResponseTransfer->setMeta(new ApiMetaTransfer());
-                    }
-                    $apiResponseTransfer->getMeta()->setResourceId($apiPluginCallResponseTransfer->getId());
-                }
+            $apiValidationErrorTransfers = $this->getValidationErrors($apiRequestTransfer);
+            if ($apiValidationErrorTransfers !== []) {
+                return $this->apiResponseMapper->mapValidationErrorTransfersToApiResponseTransfer(new ArrayObject($apiValidationErrorTransfers), $apiResponseTransfer);
             }
-        } catch (Exception $e) {
-            $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
-            $apiResponseTransfer->setMessage($e->getMessage());
-            $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
+
+            $apiPluginCallResponseTransfer = $this->resourcePluginExecutor->execute(
+                $apiRequestTransfer->getResourceOrFail(),
+                $apiRequestTransfer->getResourceActionOrFail(),
+                $apiRequestTransfer->getResourceId(),
+                $apiRequestTransfer->getResourceParameters(),
+            );
+            $apiResponseTransfer->setType(get_class($apiPluginCallResponseTransfer));
+
+            if ($apiPluginCallResponseTransfer instanceof ApiOptionsTransfer) {
+                return $apiResponseTransfer->setOptions($apiPluginCallResponseTransfer->getOptions());
+            }
+
+            if ($apiPluginCallResponseTransfer instanceof ApiCollectionTransfer) {
+                return $this->apiResponseMapper->mapApiCollectionTransferToApiResponseTransfer($apiPluginCallResponseTransfer, $apiResponseTransfer);
+            }
+
+            if ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
+                return $this->apiResponseMapper->mapApiItemTransferToApiResponseTransfer($apiPluginCallResponseTransfer, $apiResponseTransfer);
+            }
         } catch (Throwable $e) {
-            $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
+            $apiResponseTransfer->setCode($this->resolveStatusCode((int)$e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
         }
@@ -145,24 +138,11 @@ class Dispatcher implements DispatcherInterface
     }
 
     /**
-     * @param string $resource
-     * @param string $method
-     * @param int|null $id
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiOptionsTransfer
-     */
-    protected function callApiPlugin($resource, $method, $id, array $params)
-    {
-        return $this->resourceHandler->execute($resource, $method, $id, $params);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
      * @return array<\Generated\Shared\Transfer\ApiValidationErrorTransfer>
      */
-    protected function getValidationErrors(ApiRequestTransfer $apiRequestTransfer)
+    protected function getValidationErrors(ApiRequestTransfer $apiRequestTransfer): array
     {
         $resourceParameters = $apiRequestTransfer->getResourceParameters();
 
@@ -181,9 +161,8 @@ class Dispatcher implements DispatcherInterface
             return [];
         }
 
-        return $this->validator->validate(
-            $apiRequestTransfer->getResource(),
-            $apiDataTransfer,
-        );
+        $apiRequestTransfer->setApiData($apiDataTransfer);
+
+        return $this->apiValidator->validate($apiRequestTransfer);
     }
 }

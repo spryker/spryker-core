@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
-use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipRepositoryInterface
@@ -53,9 +54,11 @@ interface MerchantRelationshipRepositoryInterface
     public function getMaxMerchantRelationshipId(): int;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array;
+    public function getMerchantRelationshipCollection(
+        MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer
+    ): MerchantRelationshipCollectionTransfer;
 }

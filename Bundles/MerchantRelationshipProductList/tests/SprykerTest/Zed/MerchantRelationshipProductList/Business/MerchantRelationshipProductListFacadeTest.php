@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantRelationshipProductList\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantRelationshipValidationErrorCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 
@@ -212,5 +213,85 @@ class MerchantRelationshipProductListFacadeTest extends Unit
 
         // Assert
         $this->assertNull($updatedProductListTransfer->getFkMerchantRelationship());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantRelationshipProductListWillCreateErrorForEveryUnavailableProductListId(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
+
+        $merchantRelationshipTransfer->addProductListId(0);
+
+        // Act
+        $merchantRelationshipValidationErrorCollectionTransfer = $this->tester->getFacade()->validateMerchantRelationshipProductList(
+            $merchantRelationshipTransfer,
+            new MerchantRelationshipValidationErrorCollectionTransfer(),
+        );
+
+        // Assert
+        $this->assertCount(1, $merchantRelationshipValidationErrorCollectionTransfer->getErrors());
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipValidationErrorTransfer $merchantRelationshipValidationErrorTransfer */
+        $merchantRelationshipValidationErrorTransfer = $merchantRelationshipValidationErrorCollectionTransfer->getErrors()->offsetGet(0);
+        $this->assertSame('assignedProductLists', $merchantRelationshipValidationErrorTransfer->getField());
+        $this->assertSame('Product list can not be assigned by id `0`.', $merchantRelationshipValidationErrorTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantRelationshipProductListWillNotCreateErrorIfAllProductListsAreAvailable(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
+
+        // Act
+        $merchantRelationshipValidationErrorCollectionTransfer = $this->tester->getFacade()->validateMerchantRelationshipProductList(
+            $merchantRelationshipTransfer,
+            new MerchantRelationshipValidationErrorCollectionTransfer(),
+        );
+
+        // Assert
+        $this->assertCount(0, $merchantRelationshipValidationErrorCollectionTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantRelationshipWillExpandMerchantRelationshipTransferWithAssignedProductLists(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $productListTransfer = $this->tester->haveProductList([
+            ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationshipOrFail(),
+        ]);
+
+        // Act
+        $merchantRelationshipTransfer = $this->tester->getFacade()->expandMerchantRelationship($merchantRelationshipTransfer);
+
+        // Assert
+        $this->assertSame([$productListTransfer->getIdProductList()], $merchantRelationshipTransfer->getProductListIds());
+        $this->assertCount(1, $merchantRelationshipTransfer->getProductLists());
+        $this->assertSame($productListTransfer->getIdProductList(), $merchantRelationshipTransfer->getProductLists()->offsetGet(0)->getIdProductList());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantRelationshipWillNotExpandMerchantRelationshipTransferIfItDoesNotHaveProductListsAssigned(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+
+        // Act
+        $merchantRelationshipTransfer = $this->tester->getFacade()->expandMerchantRelationship($merchantRelationshipTransfer);
+
+        // Assert
+        $this->assertEmpty($merchantRelationshipTransfer->getProductListIds());
+        $this->assertCount(0, $merchantRelationshipTransfer->getProductLists());
     }
 }

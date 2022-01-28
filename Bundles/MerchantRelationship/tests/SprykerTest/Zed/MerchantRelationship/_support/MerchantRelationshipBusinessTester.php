@@ -10,10 +10,11 @@ namespace SprykerTest\Zed\MerchantRelationship;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
-use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
 
 /**
  * @method void wantToTest($text)
@@ -37,7 +38,31 @@ class MerchantRelationshipBusinessTester extends Actor
     /**
      * @param string $merchantRelationshipKey
      * @param string|null $companyBusinessUnitOwnerKey
-     * @param array $assigneeCompanyBusinessUnitKeys
+     * @param array<string> $assigneeCompanyBusinessUnitKeys
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer
+     */
+    public function createMerchantRelationshipRequest(
+        string $merchantRelationshipKey,
+        ?string $companyBusinessUnitOwnerKey = null,
+        array $assigneeCompanyBusinessUnitKeys = []
+    ): MerchantRelationshipRequestTransfer {
+        $merchantRelationship = $this->createMerchantRelationship(
+            $merchantRelationshipKey,
+            $companyBusinessUnitOwnerKey,
+            $assigneeCompanyBusinessUnitKeys,
+        );
+
+        $merchantRelationshipRequestTransfer = new MerchantRelationshipRequestTransfer();
+        $merchantRelationshipRequestTransfer->setMerchantRelationship($merchantRelationship);
+
+        return $merchantRelationshipRequestTransfer;
+    }
+
+    /**
+     * @param string $merchantRelationshipKey
+     * @param string|null $companyBusinessUnitOwnerKey
+     * @param array<string> $assigneeCompanyBusinessUnitKeys
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
@@ -46,42 +71,43 @@ class MerchantRelationshipBusinessTester extends Actor
         ?string $companyBusinessUnitOwnerKey = null,
         array $assigneeCompanyBusinessUnitKeys = []
     ): MerchantRelationshipTransfer {
-        $merchant = $this->haveMerchant();
+        $merchantTransfer = $this->haveMerchant();
+        $companyTransfer = $this->haveCompany();
 
         $companyBusinessUnitSeed = [
-            CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ];
 
         if ($companyBusinessUnitOwnerKey) {
             $companyBusinessUnitSeed[CompanyBusinessUnitTransfer::KEY] = $companyBusinessUnitOwnerKey;
         }
 
-        $companyBusinessUnitOwner = $this->haveCompanyBusinessUnit($companyBusinessUnitSeed);
+        $ownerCompanyBusinessUnitTransfer = $this->haveCompanyBusinessUnit($companyBusinessUnitSeed);
 
         $assigneeCompanyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         if ($assigneeCompanyBusinessUnitKeys) {
             foreach ($assigneeCompanyBusinessUnitKeys as $businessUnitKey) {
                 if ($companyBusinessUnitOwnerKey === $businessUnitKey) {
-                    $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitOwner);
+                    $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($ownerCompanyBusinessUnitTransfer);
 
                     continue;
                 }
 
-                $companyBusinessUnit = $this->haveCompanyBusinessUnit([
-                    CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+                $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([
+                    CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                     CompanyBusinessUnitTransfer::KEY => $businessUnitKey,
                 ]);
-                $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnit);
+                $assigneeCompanyBusinessUnitCollectionTransfer->addCompanyBusinessUnit($companyBusinessUnitTransfer);
             }
         }
 
         return $this->haveMerchantRelationship([
-            'fkMerchant' => $merchant->getIdMerchant(),
-            'merchant' => $merchant,
-            'fkCompanyBusinessUnit' => $companyBusinessUnitOwner->getIdCompanyBusinessUnit(),
-            'merchantRelationshipKey' => $merchantRelationshipKey,
-            'ownerCompanyBusinessUnit' => $companyBusinessUnitOwner,
-            'assigneeCompanyBusinessUnits' => $assigneeCompanyBusinessUnitCollectionTransfer,
+            MerchantRelationshipTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantRelationshipTransfer::MERCHANT => $merchantTransfer,
+            MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT => $ownerCompanyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            MerchantRelationshipTransfer::MERCHANT_RELATIONSHIP_KEY => $merchantRelationshipKey,
+            MerchantRelationshipTransfer::OWNER_COMPANY_BUSINESS_UNIT => $ownerCompanyBusinessUnitTransfer,
+            MerchantRelationshipTransfer::ASSIGNEE_COMPANY_BUSINESS_UNITS => $assigneeCompanyBusinessUnitCollectionTransfer,
         ]);
     }
 
@@ -90,7 +116,7 @@ class MerchantRelationshipBusinessTester extends Actor
      *
      * @return void
      */
-    public function assertMerchantRelationshipNotExists(int $idMerchantRelationship): void
+    public function assertMerchantRelationshipDoesNotExist(int $idMerchantRelationship): void
     {
         $merchantRelationshipQuery = $this->getMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($idMerchantRelationship);
@@ -99,19 +125,11 @@ class MerchantRelationshipBusinessTester extends Actor
     }
 
     /**
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
-     */
-    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
-    {
-        return SpyMerchantRelationshipQuery::create();
-    }
-
-    /**
      * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function assertMerchantRelationshipToCompanyBusinessUnitNotExists(int $idMerchantRelationship): void
+    public function assertMerchantRelationshipToCompanyBusinessUnitDoesNotExist(int $idMerchantRelationship): void
     {
         $merchantRelationshipToCompanyBusinessUnitQuery = $this->getMerchantRelationshipToCompanyBusinessUnitQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship);
@@ -120,21 +138,62 @@ class MerchantRelationshipBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
-     */
-    public function expandMecrhantRelationshipWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
-    {
-        return (new MerchantRelationshipExpander())->expandWithName($merchantRelationshipTransfer);
-    }
-
-    /**
      * @return int
      */
     public function getMerchantRelationsCount(): int
     {
         return SpyMerchantRelationshipQuery::create()->count();
+    }
+
+    /**
+     * @param int $amount
+     * @param string $direction
+     *
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     */
+    public function createMerchantRelationshipsForSorting(int $amount, string $direction = 'ASC'): array
+    {
+        $merchantRelationships = [];
+        for ($i = 1; $i <= $amount; $i++) {
+            $merchantTransfer = $this->haveMerchant([
+                MerchantTransfer::NAME => $direction === 'ASC' ? 'AAA-' . $i : 'ZZZ-' . $i,
+            ]);
+            $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([
+                CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+            ]);
+            $merchantRelationships[] = $this->haveMerchantRelationship([
+                MerchantRelationshipTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+                MerchantRelationshipTransfer::MERCHANT => $merchantTransfer,
+                MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+                MerchantRelationshipTransfer::MERCHANT_RELATIONSHIP_KEY => $direction === 'ASC' ? 'AAA-' . $i : 'ZZZ-' . $i,
+                MerchantRelationshipTransfer::OWNER_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer,
+            ]);
+        }
+
+        return $merchantRelationships;
+    }
+
+    /**
+     * @param int $amount
+     *
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     */
+    public function createMerchantRelationships(int $amount): array
+    {
+        $merchantRelationships = [];
+        for ($i = 1; $i <= $amount; $i++) {
+            $merchantRelationships[] = $this->createMerchantRelationship(uniqid('MR-'));
+        }
+
+        return $merchantRelationships;
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
+    {
+        return SpyMerchantRelationshipQuery::create();
     }
 
     /**

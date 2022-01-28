@@ -18,5 +18,5 @@ interface PostProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiResponseTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer);
+    public function process(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer): ApiResponseTransfer;
 }

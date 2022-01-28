@@ -20,5 +20,14 @@ interface TransformerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response);
+    public function transform(ApiRequestTransfer $apiRequestTransfer, ApiResponseTransfer $apiResponseTransfer, Response $response): Response;
+
+    /**
+     * @param \Generated\Shared\Transfer\ApiResponseTransfer $apiResponseTransfer
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param string $message
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function transformBadRequest(ApiResponseTransfer $apiResponseTransfer, Response $response, string $message): Response;
 }

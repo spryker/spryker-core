@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductApi;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToApiFacadeBridge;
 use Spryker\Zed\ProductApi\Dependency\Facade\ProductApiToProductBridge;
-use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiBridge;
 use Spryker\Zed\ProductApi\Dependency\QueryContainer\ProductApiToApiQueryBuilderBridge;
 
 /**
@@ -26,17 +26,17 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_API = 'QUERY_CONTAINER_API';
-
-    /**
-     * @var string
-     */
     public const QUERY_CONTAINER_API_QUERY_BUILDER = 'QUERY_CONTAINER_API_QUERY_BUILDER';
 
     /**
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_API = 'FACADE_API';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,9 +47,9 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->provideApiQueryContainer($container);
-        $container = $this->provideApiQueryBuilderQueryContainer($container);
-        $container = $this->provideProductFacade($container);
+        $container = $this->addApiQueryBuilderQueryContainer($container);
+        $container = $this->addProductFacade($container);
+        $container = $this->addApiFacade($container);
 
         return $container;
     }
@@ -63,8 +63,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->provideApiQueryContainer($container);
-        $container = $this->provideApiQueryBuilderQueryContainer($container);
+        $container = $this->addApiQueryBuilderQueryContainer($container);
 
         return $container;
     }
@@ -76,6 +75,8 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->provideDateFormatterService($container);
 
         return $container;
@@ -86,21 +87,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideApiQueryContainer(Container $container)
-    {
-        $container->set(static::QUERY_CONTAINER_API, function (Container $container) {
-            return new ProductApiToApiBridge($container->getLocator()->api()->queryContainer());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function provideApiQueryBuilderQueryContainer(Container $container)
+    protected function addApiQueryBuilderQueryContainer(Container $container)
     {
         $container->set(static::QUERY_CONTAINER_API_QUERY_BUILDER, function (Container $container) {
             return new ProductApiToApiQueryBuilderBridge($container->getLocator()->apiQueryBuilder()->queryContainer());
@@ -128,10 +115,24 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function provideProductFacade(Container $container)
+    protected function addProductFacade(Container $container)
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductApiToProductBridge($container->getLocator()->product()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApiFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_API, function (Container $container) {
+            return new ProductApiToApiFacadeBridge($container->getLocator()->api()->facade());
         });
 
         return $container;

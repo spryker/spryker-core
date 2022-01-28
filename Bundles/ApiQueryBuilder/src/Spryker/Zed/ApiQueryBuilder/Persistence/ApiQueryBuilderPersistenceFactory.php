@@ -29,14 +29,6 @@ class ApiQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer\ApiQueryBuilderToApiInterface
-     */
-    protected function getApiQueryContainer()
-    {
-        return $this->getProvidedDependency(ApiQueryBuilderDependencyProvider::QUERY_CONTAINER_API);
-    }
-
-    /**
      * @return \Spryker\Zed\ApiQueryBuilder\Dependency\QueryContainer\ApiQueryBuilderToPropelQueryBuilderInterface
      */
     protected function getPropelQueryBuilderQueryContainer()

@@ -44,4 +44,17 @@
     <transfer name="MerchantCriteriaFilter" deprecated="Not in use anymore, will be removed with next major">
     </transfer>
 
+    <transfer name="MerchantRelationshipRequest">
+        <property name="merchantRelationship" type="MerchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="MerchantRelationshipError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>

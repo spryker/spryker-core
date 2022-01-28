@@ -21,6 +21,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\FilterPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByHeaderPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Format\FormatTypeByPathPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceActionPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourcePreProcessor;
@@ -43,7 +44,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildFilterPreProcessor()
+    public function buildFilterPreProcessor(): PreProcessorInterface
     {
         return new FilterPreProcessor();
     }
@@ -51,7 +52,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildPathPreProcessor()
+    public function buildPathPreProcessor(): PreProcessorInterface
     {
         return new PathPreProcessor();
     }
@@ -59,7 +60,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildAddActionPreProcessor()
+    public function buildAddActionPreProcessor(): PreProcessorInterface
     {
         return new AddActionPreProcessor();
     }
@@ -67,7 +68,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildFindActionPreProcessor()
+    public function buildFindActionPreProcessor(): PreProcessorInterface
     {
         return new FindActionPreProcessor();
     }
@@ -75,7 +76,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildGetActionPreProcessor()
+    public function buildGetActionPreProcessor(): PreProcessorInterface
     {
         return new GetActionPreProcessor();
     }
@@ -83,7 +84,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildUpdateActionPreProcessor()
+    public function buildUpdateActionPreProcessor(): PreProcessorInterface
     {
         return new UpdateActionPreProcessor();
     }
@@ -91,7 +92,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildFieldsByQueryPreProcessor()
+    public function buildFieldsByQueryPreProcessor(): PreProcessorInterface
     {
         return new FieldsByQueryPreProcessor();
     }
@@ -99,7 +100,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildPaginationByHeaderFilterPreProcessor()
+    public function buildPaginationByHeaderFilterPreProcessor(): PreProcessorInterface
     {
         return new PaginationByHeaderFilterPreProcessor(
             $this->apiConfig,
@@ -109,7 +110,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildCriteriaByQueryFilterPreProcessor()
+    public function buildCriteriaByQueryFilterPreProcessor(): PreProcessorInterface
     {
         return new CriteriaByQueryFilterPreProcessor();
     }
@@ -117,7 +118,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildPaginationByQueryFilterPreProcessor()
+    public function buildPaginationByQueryFilterPreProcessor(): PreProcessorInterface
     {
         return new PaginationByQueryFilterPreProcessor(
             $this->apiConfig,
@@ -127,7 +128,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildSortByQueryFilterPreProcessor()
+    public function buildSortByQueryFilterPreProcessor(): PreProcessorInterface
     {
         return new SortByQueryFilterPreProcessor();
     }
@@ -135,7 +136,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildFormatTypeByHeaderPreProcessor()
+    public function buildFormatTypeByHeaderPreProcessor(): PreProcessorInterface
     {
         return new FormatTypeByHeaderPreProcessor();
     }
@@ -143,7 +144,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildFormatTypeByPathPreProcessor()
+    public function buildFormatTypeByPathPreProcessor(): PreProcessorInterface
     {
         return new FormatTypeByPathPreProcessor();
     }
@@ -151,7 +152,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildResourceActionPreProcessor()
+    public function buildResourceActionPreProcessor(): PreProcessorInterface
     {
         return new ResourceActionPreProcessor();
     }
@@ -159,7 +160,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildResourceParamametersPreProcessor()
+    public function buildResourceParamametersPreProcessor(): PreProcessorInterface
     {
         return new ResourceParametersPreProcessor();
     }
@@ -167,7 +168,7 @@ class PreProcessorProvider implements PreProcessorProviderInterface
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
-    public function buildResourcePreProcessor()
+    public function buildResourcePreProcessor(): PreProcessorInterface
     {
         return new ResourcePreProcessor();
     }

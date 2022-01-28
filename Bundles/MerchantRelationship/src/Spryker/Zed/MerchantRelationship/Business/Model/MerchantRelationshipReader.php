@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface;
+use Spryker\Zed\MerchantRelationship\Business\Mapper\MerchantRelationshipCriteriaMapperInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
 class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
@@ -18,7 +21,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @var \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRelationshipRepository;
 
     /**
      * @var \Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface
@@ -26,15 +29,31 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     protected $merchantRelationshipExpander;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
+     * @var \Spryker\Zed\MerchantRelationship\Business\Mapper\MerchantRelationshipCriteriaMapperInterface
+     */
+    protected $merchantRelationshipCriteriaMapper;
+
+    /**
+     * @var array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipExpanderPluginInterface>
+     */
+    protected $merchantRelationshipExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $merchantRelationshipRepository
      * @param \Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface $merchantRelationshipExpander
+     * @param \Spryker\Zed\MerchantRelationship\Business\Mapper\MerchantRelationshipCriteriaMapperInterface $merchantRelationshipCriteriaMapper
+     * @param array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipExpanderPluginInterface> $merchantRelationshipExpanderPlugins
      */
     public function __construct(
-        MerchantRelationshipRepositoryInterface $repository,
-        MerchantRelationshipExpanderInterface $merchantRelationshipExpander
+        MerchantRelationshipRepositoryInterface $merchantRelationshipRepository,
+        MerchantRelationshipExpanderInterface $merchantRelationshipExpander,
+        MerchantRelationshipCriteriaMapperInterface $merchantRelationshipCriteriaMapper,
+        array $merchantRelationshipExpanderPlugins
     ) {
-        $this->repository = $repository;
+        $this->merchantRelationshipRepository = $merchantRelationshipRepository;
         $this->merchantRelationshipExpander = $merchantRelationshipExpander;
+        $this->merchantRelationshipCriteriaMapper = $merchantRelationshipCriteriaMapper;
+        $this->merchantRelationshipExpanderPlugins = $merchantRelationshipExpanderPlugins;
     }
 
     /**
@@ -48,7 +67,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     {
         $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
-        $merchantRelationshipTransfer = $this->repository->getMerchantRelationshipById(
+        $merchantRelationshipTransfer = $this->merchantRelationshipRepository->getMerchantRelationshipById(
             $merchantRelationshipTransfer->getIdMerchantRelationship(),
         );
 
@@ -56,9 +75,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
             throw new MerchantRelationshipNotFoundException();
         }
 
-        $merchantRelationshipTransfer = $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
-
-        return $merchantRelationshipTransfer;
+        return $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
     }
 
     /**
@@ -70,7 +87,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     {
         $merchantRelationshipTransfer->requireMerchantRelationshipKey();
 
-        $merchantRelationshipTransfer = $this->repository->findMerchantRelationshipByKey(
+        $merchantRelationshipTransfer = $this->merchantRelationshipRepository->findMerchantRelationshipByKey(
             $merchantRelationshipTransfer->getMerchantRelationshipKey(),
         );
 
@@ -88,23 +105,43 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
      */
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array
     {
-        return $this->repository->getIdAssignedBusinessUnitsByMerchantRelationshipId($idMerchantRelationship);
+        return $this->merchantRelationshipRepository->getIdAssignedBusinessUnitsByMerchantRelationshipId($idMerchantRelationship);
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|\Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array
-    {
-        $merchantRelationships = $this->repository->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+    public function getMerchantRelationshipCollection(
+        ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,
+        ?MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer = null
+    ) {
+        $isMerchantRelationshipCriteriaTransferProvided = $merchantRelationshipCriteriaTransfer !== null;
+        $merchantRelationshipCriteriaTransfer = $this->getMerchantRelationshipCriteriaTransfer(
+            $merchantRelationshipFilterTransfer,
+            $merchantRelationshipCriteriaTransfer,
+        );
 
-        foreach ($merchantRelationships as $merchantRelationshipTransfer) {
-            $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
+        $merchantRelationshipCollectionTransfer = $this->merchantRelationshipRepository->getMerchantRelationshipCollection(
+            $merchantRelationshipCriteriaTransfer,
+        );
+
+        $merchantRelationshipTransfers = [];
+        foreach ($merchantRelationshipCollectionTransfer->getMerchantRelationships() as $merchantRelationshipTransfer) {
+            $merchantRelationshipTransfer = $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
+            $merchantRelationshipTransfer = $this->executeMerchantRelationshipExpanderPlugins($merchantRelationshipTransfer);
+            $merchantRelationshipTransfers[] = $merchantRelationshipTransfer;
         }
 
-        return $merchantRelationships;
+        if (!$isMerchantRelationshipCriteriaTransferProvided) {
+            return $merchantRelationshipTransfers;
+        }
+
+        return $merchantRelationshipCollectionTransfer->setMerchantRelationships(
+            new ArrayObject($merchantRelationshipTransfers),
+        );
     }
 
     /**
@@ -116,8 +153,44 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     {
         $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
-        return $this->repository->getMerchantRelationshipById(
+        return $this->merchantRelationshipRepository->getMerchantRelationshipById(
             $merchantRelationshipTransfer->getIdMerchantRelationship(),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function executeMerchantRelationshipExpanderPlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        foreach ($this->merchantRelationshipExpanderPlugins as $merchantRelationshipExpanderPlugin) {
+            $merchantRelationshipTransfer = $merchantRelationshipExpanderPlugin->expand($merchantRelationshipTransfer);
+        }
+
+        return $merchantRelationshipTransfer;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer
+     */
+    protected function getMerchantRelationshipCriteriaTransfer(
+        ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,
+        ?MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer = null
+    ): MerchantRelationshipCriteriaTransfer {
+        if ($merchantRelationshipFilterTransfer && !$merchantRelationshipCriteriaTransfer) {
+            return $this->merchantRelationshipCriteriaMapper->mapMerchantRelationshipFilterToMerchantRelationshipCriteria(
+                $merchantRelationshipFilterTransfer,
+                new MerchantRelationshipCriteriaTransfer(),
+            );
+        }
+
+        return $merchantRelationshipCriteriaTransfer ?? new MerchantRelationshipCriteriaTransfer();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
@@ -26,32 +27,41 @@ class MerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements Merch
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|\Generated\Shared\Transfer\MerchantRelationshipResponseTransfer
      */
-    public function createMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
-    {
-        return $this->merchantRelationshipFacade->createMerchantRelationship($merchantRelationshipTransfer);
+    public function createMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ) {
+        return $this->merchantRelationshipFacade->createMerchantRelationship($merchantRelationshipTransfer, $merchantRelationshipRequestTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|\Generated\Shared\Transfer\MerchantRelationshipResponseTransfer
      */
-    public function updateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
-    {
-        return $this->merchantRelationshipFacade->updateMerchantRelationship($merchantRelationshipTransfer);
+    public function updateMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ) {
+        return $this->merchantRelationshipFacade->updateMerchantRelationship($merchantRelationshipTransfer, $merchantRelationshipRequestTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
      * @return void
      */
-    public function deleteMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
-    {
-        $this->merchantRelationshipFacade->deleteMerchantRelationship($merchantRelationshipTransfer);
+    public function deleteMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ): void {
+        $this->merchantRelationshipFacade->deleteMerchantRelationship($merchantRelationshipTransfer, $merchantRelationshipRequestTransfer);
     }
 
     /**

@@ -13,106 +13,155 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ApiConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @var string
      */
     public const ROUTE_PREFIX_API_REST = '/api/rest/';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const FORMAT_TYPE = 'json';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const ACTION_CREATE = 'add';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const ACTION_READ = 'get';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const ACTION_UPDATE = 'update';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const ACTION_DELETE = 'remove';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const ACTION_INDEX = 'find';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const ACTION_OPTIONS = 'options';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const HTTP_METHOD_OPTIONS = 'OPTIONS';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const HTTP_METHOD_GET = 'GET';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const HTTP_METHOD_POST = 'POST';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const HTTP_METHOD_PATCH = 'PATCH';
 
     /**
+     * @api
+     *
      * @var string
      */
     public const HTTP_METHOD_DELETE = 'DELETE';
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_SUCCESS = 200;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_CREATED = 201;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_NO_CONTENT = 204;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_PARTIAL_CONTENT = 206;
 
     /**
+     * @api
+     *
+     * @var int
+     */
+    public const HTTP_CODE_BAD_REQUEST = 400;
+
+    /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_NOT_FOUND = 404;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_NOT_ALLOWED = 405;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_VALIDATION_ERRORS = 422;
 
     /**
+     * @api
+     *
      * @var int
      */
     public const HTTP_CODE_INTERNAL_ERROR = 500;
@@ -271,16 +320,6 @@ class ApiConfig extends AbstractBundleConfig
      */
     public function isApiDebugEnabled(): bool
     {
-        return $this->get(ApiConstants::ENABLE_API_DEBUG, $this->getApiDebugDefaultValue());
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return bool
-     */
-    protected function getApiDebugDefaultValue(): bool
-    {
-        return APPLICATION_ENV === 'development';
+        return $this->get(ApiConstants::ENABLE_API_DEBUG, false);
     }
 }

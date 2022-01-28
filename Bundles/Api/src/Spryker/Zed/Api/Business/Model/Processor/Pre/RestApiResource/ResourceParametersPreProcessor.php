@@ -23,9 +23,9 @@ class ResourceParametersPreProcessor implements PreProcessorInterface
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    public function process(ApiRequestTransfer $apiRequestTransfer)
+    public function process(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer
     {
-        $path = $apiRequestTransfer->getPath();
+        $path = $apiRequestTransfer->getPath() ?? '';
 
         $elements = [];
         if ($path !== '') {

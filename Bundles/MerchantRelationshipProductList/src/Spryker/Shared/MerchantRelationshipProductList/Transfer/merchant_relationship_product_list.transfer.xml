@@ -11,6 +11,7 @@
         <property name="idMerchantRelationship" type="int"/>
         <property name="productListIds" type="int[]" singular="productListId"/>
         <property name="name" type="string"/>
+        <property name="productLists" type="ProductList[]" singular="productList"/>
     </transfer>
 
     <transfer name="Customer">
@@ -56,6 +57,34 @@
     </transfer>
 
     <transfer name="Company">
+    </transfer>
+
+    <transfer name="MerchantRelationshipValidationErrorCollection">
+        <property name="errors" type="MerchantRelationshipError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipError">
+        <property name="field" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipRequest">
+    </transfer>
+
+    <transfer name="MerchantRelationshipResponse">
+        <property name="merchantRelationshipCollection" type="MerchantRelationshipCollection"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipConditions">
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCriteria">
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
     </transfer>
 
 </transfers>

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipRequestTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -23,15 +25,22 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer Deprecated: Use {@link \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer} instead.
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|\Generated\Shared\Transfer\MerchantRelationshipResponseTransfer
      */
-    public function createMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
-    {
+    public function createMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ) {
+        if ($merchantRelationshipRequestTransfer === null) {
+            trigger_error('[Spryker/MerchantRelationship] Pass the $merchantRelationshipRequestTransfer parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
-            ->createMerchantRelationshipWriter()
-            ->create($merchantRelationshipTransfer);
+            ->createMerchantRelationshipCreator()
+            ->create($merchantRelationshipTransfer, $merchantRelationshipRequestTransfer);
     }
 
     /**
@@ -39,15 +48,22 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer Deprecated: Use {@link \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer} instead.
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|\Generated\Shared\Transfer\MerchantRelationshipResponseTransfer
      */
-    public function updateMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
-    {
+    public function updateMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ) {
+        if ($merchantRelationshipRequestTransfer === null) {
+            trigger_error('[Spryker/MerchantRelationship] Pass the $merchantRelationshipRequestTransfer parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
-            ->createMerchantRelationshipWriter()
-            ->update($merchantRelationshipTransfer);
+            ->createMerchantRelationshipUpdater()
+            ->update($merchantRelationshipTransfer, $merchantRelationshipRequestTransfer);
     }
 
     /**
@@ -55,15 +71,22 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer Deprecated: Use {@link \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer} instead.
+     * @param \Generated\Shared\Transfer\MerchantRelationshipRequestTransfer|null $merchantRelationshipRequestTransfer
      *
      * @return void
      */
-    public function deleteMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
-    {
+    public function deleteMerchantRelationship(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer,
+        ?MerchantRelationshipRequestTransfer $merchantRelationshipRequestTransfer = null
+    ): void {
+        if ($merchantRelationshipRequestTransfer === null) {
+            trigger_error('[Spryker/MerchantRelationship] Pass the $merchantRelationshipRequestTransfer parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         $this->getFactory()
-            ->createMerchantRelationshipWriter()
-            ->delete($merchantRelationshipTransfer);
+            ->createMerchantRelationshipDeleter()
+            ->delete($merchantRelationshipTransfer, $merchantRelationshipRequestTransfer);
     }
 
     /**
@@ -103,15 +126,25 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer Deprecated: Use {@link \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer} instead.
+     * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|array<int, \Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array
-    {
+    public function getMerchantRelationshipCollection(
+        ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,
+        ?MerchantRelationshipCriteriaTransfer $merchantRelationshipCriteriaTransfer = null
+    ) {
+        if ($merchantRelationshipCriteriaTransfer === null) {
+            trigger_error('[Spryker/MerchantRelationship] Pass the $merchantRelationshipCriteriaTransfer parameter for the forward compatibility with next major version.', E_USER_DEPRECATED);
+        }
+
         return $this->getFactory()
             ->createMerchantRelationshipReader()
-            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+            ->getMerchantRelationshipCollection(
+                $merchantRelationshipFilterTransfer,
+                $merchantRelationshipCriteriaTransfer,
+            );
     }
 
     /**
