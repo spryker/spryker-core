@@ -107,7 +107,7 @@ abstract class AbstractDataBuilder
     }
 
     /**
-     * @param array|string $rules
+     * @param array<string>|string $rules
      *
      * @throws \Spryker\Shared\Testify\Exception\RuleNotDefinedException
      *

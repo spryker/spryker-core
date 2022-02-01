@@ -73,9 +73,10 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
     protected function getStorageData(int $idProductAbstract, string $storeName): ?array
     {
         if (ProductRelationStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\ProductRelation\ProductRelationClientInterface $productRelationClient */
-            $productRelationClient = $clientLocatorClassName::getInstance()->productRelation()->client();
+            $clientLocatorClass = Locator::class;
+            /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+            $locator = $clientLocatorClass::getInstance();
+            $productRelationClient = $locator->productRelation()->client();
 
             $collectorData = $productRelationClient->getProductRelationsByIdProductAbstract($idProductAbstract);
 

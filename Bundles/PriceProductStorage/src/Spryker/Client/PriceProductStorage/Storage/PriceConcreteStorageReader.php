@@ -109,9 +109,10 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected function findProductConcretePriceData(int $idProductConcrete): ?array
     {
         if (PriceProductStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $clientLocatorClass = Locator::class;
+            /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+            $locator = $clientLocatorClass::getInstance();
+            $productClient = $locator->product()->client();
             $collectorData = $productClient->getProductConcreteByIdForCurrentLocale($idProductConcrete);
             $priceData = [
                 'prices' => $collectorData['prices'],

@@ -170,9 +170,11 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
      */
     protected function getAvailabilityFromCollectorData($idProductAbstract): StorageAvailabilityTransfer
     {
-        $clientLocatorClassName = Locator::class;
-        /** @var \Spryker\Client\Availability\AvailabilityClientInterface $availabilityClient */
-        $availabilityClient = $clientLocatorClassName::getInstance()->availability()->client();
+        $clientLocatorClass = Locator::class;
+        /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = $clientLocatorClass::getInstance();
+        $availabilityClient = $locator->availability()->client();
+
         $availabilityData = $availabilityClient->findProductAvailabilityByIdProductAbstract($idProductAbstract);
 
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();

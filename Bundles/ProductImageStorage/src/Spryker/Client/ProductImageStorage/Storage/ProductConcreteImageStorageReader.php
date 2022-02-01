@@ -45,9 +45,10 @@ class ProductConcreteImageStorageReader implements ProductConcreteImageStorageRe
     public function findProductImageConcreteStorageTransfer($idProductConcrete, $locale)
     {
         if (ProductImageStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $clientLocatorClass = Locator::class;
+            /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+            $locator = $clientLocatorClass::getInstance();
+            $productClient = $locator->product()->client();
             $collectorData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $locale);
 
             $imageSets = $collectorData['imageSets'];

@@ -52,7 +52,7 @@ class RequestId implements RequestIdInterface
      */
     protected function generateRandomString($length = 32)
     {
-        $tokenLength = $length / 2;
+        $tokenLength = (int)($length / 2);
         $token = bin2hex(random_bytes($tokenLength));
 
         if (strlen($token) !== $length) {

@@ -158,10 +158,11 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     protected function getCollectorUrlData(string $url)
     {
-        $clientLocatorClassName = Locator::class;
-        /** @var \Spryker\Client\Url\UrlClientInterface $urlClient */
-        $urlClient = $clientLocatorClassName::getInstance()->url()->client();
-        $localeName = $clientLocatorClassName::getInstance()->locale()->client()->getCurrentLocale();
+        $clientLocatorClass = Locator::class;
+        /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = $clientLocatorClass::getInstance();
+        $urlClient = $locator->url()->client();
+        $localeName = $locator->locale()->client()->getCurrentLocale();
         $urlCollectorStorageTransfer = $urlClient->findUrl($url, $localeName);
 
         if (!$urlCollectorStorageTransfer) {

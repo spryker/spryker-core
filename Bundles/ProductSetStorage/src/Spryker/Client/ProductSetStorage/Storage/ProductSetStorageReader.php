@@ -73,9 +73,10 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
     protected function getStorageData(int $idProductSet, string $localeName): ?array
     {
         if (ProductSetStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\ProductSet\ProductSetClientInterface $productSetClient */
-            $productSetClient = $clientLocatorClassName::getInstance()->productSet()->client();
+            $clientLocatorClass = Locator::class;
+            /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+            $locator = $clientLocatorClass::getInstance();
+            $productSetClient = $locator->productSet()->client();
             $collectorData = $productSetClient->findProductSetByIdProductSet($idProductSet);
 
             $collectorData = $collectorData->toArray();

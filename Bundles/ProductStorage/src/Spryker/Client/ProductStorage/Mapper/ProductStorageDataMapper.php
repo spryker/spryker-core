@@ -121,9 +121,10 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         unset($productStorageData['prices'], $productStorageData['categories'], $productStorageData['imageSets']);
         $productStorageData = $this->changeKeys($productStorageData);
 
-        $clientLocatorClassName = Locator::class;
-        /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-        $productClient = $clientLocatorClassName::getInstance()->product()->client();
+        $clientLocatorClass = Locator::class;
+        /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = $clientLocatorClass::getInstance();
+        $productClient = $locator->product()->client();
 
         $attributeMap = $productClient->getAttributeMapByIdAndLocale($productStorageData['id_product_abstract'], $this->localeClient->getCurrentLocale());
         $attributeMap = $this->changeKeys($attributeMap);

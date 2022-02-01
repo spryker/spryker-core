@@ -1,2 +1,5 @@
 parameters:
     level: 8
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Parameter \#1 \$length of function random_bytes expects int<1, max>, int given.#'

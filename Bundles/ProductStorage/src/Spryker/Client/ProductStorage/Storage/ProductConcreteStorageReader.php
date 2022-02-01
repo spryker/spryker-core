@@ -227,9 +227,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         if (ProductStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $clientLocatorClass = Locator::class;
+            /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+            $locator = $clientLocatorClass::getInstance();
+            $productClient = $locator->product()->client();
             $collectorData = $productClient->getProductConcreteByIdAndLocale($idProductConcrete, $localeName);
 
             unset($collectorData['prices'], $collectorData['imageSets']);
@@ -569,9 +570,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     protected function getBulkProductConcreteStorageDataForCollectorCompatibilityMode(array $productConcreteIds, string $localeName): array
     {
-        $clientLocatorClassName = Locator::class;
-        /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-        $productClient = $clientLocatorClassName::getInstance()->product()->client();
+        $clientLocatorClass = Locator::class;
+        /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = $clientLocatorClass::getInstance();
+        $productClient = $locator->product()->client();
 
         $collectorData = [];
         foreach ($productConcreteIds as $idProductConcrete) {

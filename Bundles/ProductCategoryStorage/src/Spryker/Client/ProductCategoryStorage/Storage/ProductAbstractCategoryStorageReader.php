@@ -97,9 +97,10 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     protected function findStorageData(int $idProductAbstract, string $localeName, string $storeName): ?array
     {
         if (ProductCategoryStorageConfig::isCollectorCompatibilityMode()) {
-            $clientLocatorClassName = Locator::class;
-            /** @var \Spryker\Client\Product\ProductClientInterface $productClient */
-            $productClient = $clientLocatorClassName::getInstance()->product()->client();
+            $clientLocatorClass = Locator::class;
+            /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+            $locator = $clientLocatorClass::getInstance();
+            $productClient = $locator->product()->client();
             // TODO: $storeName should be used here too.
             $collectorData = $productClient->getProductAbstractFromStorageById($idProductAbstract, $localeName);
             $categories = [];

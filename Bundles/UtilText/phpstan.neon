@@ -1,5 +1,7 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Unsafe usage of new static\(\)#'
+        - '#Parameter \#1 \$length of function random_bytes expects int<1, max>, int given.#'
