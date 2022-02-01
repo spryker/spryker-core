@@ -114,7 +114,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     protected function saveDocument(DOMDocument $document, string $fileName): int
     {
-        return $document->save($this->getTargetDirectory() . DIRECTORY_SEPARATOR . $fileName);
+        return (int)$document->save($this->getTargetDirectory() . DIRECTORY_SEPARATOR . $fileName);
     }
 
     /**
