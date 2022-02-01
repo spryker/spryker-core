@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DiscountPromotion\Communication\Controller;
 
+use Generated\Shared\Transfer\DiscountPromotionConditionsTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,11 +34,31 @@ class DiscountViewBlockController extends AbstractController
     {
         $idDiscount = $this->castId($request->request->get(static::URL_PARAM_ID_DISCOUNT));
 
+        $discountPromotionCriteriaTransfer = $this->createDiscountPromotionCriteriaTransferWithIdDiscountCondition($idDiscount);
+
         $discountPromotionTransfer = $this->getFacade()
-            ->findDiscountPromotionByIdDiscount($idDiscount);
+            ->getDiscountPromotionCollection($discountPromotionCriteriaTransfer)
+            ->getDiscountPromotions()
+            ->getIterator()
+            ->current();
 
         return [
             'discountPromotion' => $discountPromotionTransfer,
+            'isAbstractSkusFieldExists' => $this->getRepository()->isAbstractSkusFieldExists(),
         ];
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer
+     */
+    protected function createDiscountPromotionCriteriaTransferWithIdDiscountCondition(int $idDiscount): DiscountPromotionCriteriaTransfer
+    {
+        $discountPromotionConditionsTransfer = (new DiscountPromotionConditionsTransfer())
+            ->addIdDiscount($idDiscount);
+
+        return (new DiscountPromotionCriteriaTransfer())
+            ->setDiscountPromotionConditions($discountPromotionConditionsTransfer);
     }
 }

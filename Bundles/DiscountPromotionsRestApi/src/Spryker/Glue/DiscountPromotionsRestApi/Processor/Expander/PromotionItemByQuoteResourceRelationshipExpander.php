@@ -51,6 +51,8 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
     {
         foreach ($resources as $resource) {
             $promotionItemTransfers = $this->getPromotionItemsFromPayload($resource);
+            $promotionItemTransfers = $this->filterDiscountPromotionDuplicates($promotionItemTransfers);
+
             foreach ($promotionItemTransfers as $promotionItemTransfer) {
                 $restPromotionalItemsAttributesTransfer = $this->promotionItemMapper
                     ->mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
@@ -67,6 +69,23 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
                 $resource->addRelationship($promotionalItemsResource);
             }
         }
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PromotionItemTransfer> $promotionItemTransfers
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PromotionItemTransfer>
+     */
+    protected function filterDiscountPromotionDuplicates(ArrayObject $promotionItemTransfers): ArrayObject
+    {
+        $filteredPromotionItemTransfers = [];
+        foreach ($promotionItemTransfers as $promotionItemTransfer) {
+            if (!isset($filteredPromotionItemTransfers[$promotionItemTransfer->getUuid()])) {
+                $filteredPromotionItemTransfers[$promotionItemTransfer->getUuid()] = $promotionItemTransfer;
+            }
+        }
+
+        return new ArrayObject(array_values($filteredPromotionItemTransfers));
     }
 
     /**
@@ -100,7 +119,7 @@ class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemB
 
         $discountTransfer = $promotionItemTransfer->getDiscount();
         if ($discountTransfer !== null && $discountTransfer->getDiscountPromotion() !== null) {
-            return $discountTransfer->getDiscountPromotion()
+            return $discountTransfer->getDiscountPromotionOrFail()
                 ->getUuid();
         }
 

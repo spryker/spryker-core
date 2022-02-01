@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\DiscountPromotionsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
@@ -24,9 +25,12 @@ class PromotionItemMapper implements PromotionItemMapperInterface
         PromotionItemTransfer $promotionItemTransfer,
         RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
     ): RestPromotionalItemsAttributesTransfer {
+        $discountPromotionTransfer = $promotionItemTransfer->getDiscountOrFail()->getDiscountPromotionOrFail();
+
         return $restPromotionalItemsAttributesTransfer
             ->fromArray($promotionItemTransfer->toArray(), true)
-            ->setSku($promotionItemTransfer->getAbstractSku())
+            ->setSku($this->getAbstractSku($discountPromotionTransfer))
+            ->setSkus($discountPromotionTransfer->getAbstractSkus())
             ->setQuantity($promotionItemTransfer->getMaxQuantity());
     }
 
@@ -49,5 +53,25 @@ class PromotionItemMapper implements PromotionItemMapperInterface
         return $restDiscountsAttributesTransfer
             ->setDiscountPromotionAbstractSku($discountPromotionTransfer->getAbstractSku())
             ->setDiscountPromotionQuantity($discountPromotionTransfer->getQuantity());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionTransfer $discountPromotionTransfer
+     *
+     * @return string|null
+     */
+    protected function getAbstractSku(DiscountPromotionTransfer $discountPromotionTransfer): ?string
+    {
+        $abstractSku = $discountPromotionTransfer->getAbstractSku();
+        if ($abstractSku) {
+            return $abstractSku;
+        }
+
+        $abstractSkus = $discountPromotionTransfer->getAbstractSkus();
+        if ($abstractSkus) {
+            return $abstractSkus[0];
+        }
+
+        return null;
     }
 }

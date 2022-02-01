@@ -8,6 +8,7 @@
     <transfer name="DiscountPromotion">
         <property name="abstractSku" dataBuilderRule="isbn10"/>
         <property name="quantity" dataBuilderRule="=1"/>
+        <property name="uuid" dataBuilderRule="word"/>
     </transfer>
 
     <transfer name="Item">

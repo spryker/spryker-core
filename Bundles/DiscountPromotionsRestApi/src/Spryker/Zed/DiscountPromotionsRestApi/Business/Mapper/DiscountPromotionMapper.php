@@ -8,6 +8,8 @@
 namespace Spryker\Zed\DiscountPromotionsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\DiscountPromotionConditionsTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface;
 
@@ -40,9 +42,16 @@ class DiscountPromotionMapper implements DiscountPromotionMapperInterface
             return $persistentCartChangeTransfer;
         }
 
-        $discountPromotionTransfer = $this->discountPromotionFacade->findDiscountPromotionByUuid(
-            $cartItemRequestTransfer->getDiscountPromotionUuid(),
-        );
+        $discountPromotionConditionsTransfer = (new DiscountPromotionConditionsTransfer())
+            ->addUuid($cartItemRequestTransfer->getDiscountPromotionUuidOrFail());
+        $discountPromotionCriteriaTransfer = (new DiscountPromotionCriteriaTransfer())
+            ->setDiscountPromotionConditions($discountPromotionConditionsTransfer);
+
+        $discountPromotionTransfer = $this->discountPromotionFacade
+            ->getDiscountPromotionCollection($discountPromotionCriteriaTransfer)
+            ->getDiscountPromotions()
+            ->getIterator()
+            ->current();
 
         if ($discountPromotionTransfer === null) {
             return $persistentCartChangeTransfer;

@@ -1,3 +1,7 @@
 "Abstract sku:","Abstrakte Sku:"
 "Discount promotion to product",Produktpromotion
 "Maximum Quantity:","Maximale Menge:"
+"Abstract Product SKU(S)","Abstrakte Produkt-SKU(S)"
+"Use a comma-separated list for multiple abstract SKUs","Verwenden Sie eine durch Kommas getrennte Liste für mehrere abstrakte SKUs"
+"Unknown SKU(s): %non_existing_skus%","Unbekannte(n) SKU(s): %non_existing_skus%"
+"Abstract SKUs","Abstrakte SKUs"

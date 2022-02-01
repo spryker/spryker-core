@@ -10,6 +10,8 @@ namespace Spryker\Zed\DiscountPromotion\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -18,9 +20,9 @@ interface DiscountPromotionFacadeInterface
 {
     /**
      * Specification:
-     *  - Collects discountable items when promotion discount is used.
-     *  - If item is not in quote then it adds it this quote::promotionItems, if its already there then it would return
-     *    this item to discount module for discount calculation
+     * - Collects discountable items for multiple abstract SKUs, if `spy_discount_promotion.abstract_skus` field is present at the DB.
+     * - Otherwise, collects discountable items for single abstract SKU.
+     * - If item(s) is not in quote, adds it to `QuoteTransfer::promotionItems`.
      *
      * @api
      *
@@ -73,6 +75,8 @@ interface DiscountPromotionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface::getDiscountPromotionCollection()} instead.
+     *
      * @param int $idDiscountPromotion
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
@@ -109,6 +113,8 @@ interface DiscountPromotionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface::getDiscountPromotionCollection()} instead.
+     *
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
@@ -120,6 +126,8 @@ interface DiscountPromotionFacadeInterface
      *  - Retrieves discount promotion from persistence by given UUID.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface::getDiscountPromotionCollection()} instead.
      *
      * @param string $uuid
      *
@@ -139,6 +147,20 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateCartDiscountPromotions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves discount promotions from persistence by criteria.
+     *
+     * @api
+     *
+     * {@internal DiscountPromotionCriteriaTransfer.discountPromotionConditions.uuids will work if uuid field exists in database table.}
+     *
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionCollectionTransfer
+     */
+    public function getDiscountPromotionCollection(DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer): DiscountPromotionCollectionTransfer;
 
     /**
      * Specification:

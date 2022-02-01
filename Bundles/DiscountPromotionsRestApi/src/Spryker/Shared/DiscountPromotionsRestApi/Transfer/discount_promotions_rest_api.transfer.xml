@@ -11,10 +11,11 @@
 
     <transfer name="DiscountPromotion">
         <property name="idDiscountPromotion" type="int"/>
-        <property name="abstractSku" type="string"/>
+        <property name="abstractSku" type="string" deprecated="Use `abstractSkus` (plural) instead and provide a comma separated list."/>
         <property name="quantity" type="int"/>
         <property name="fkDiscount" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="abstractSkus" type="string[]" singular="abstractSku"/>
     </transfer>
 
     <transfer name="Discount">
@@ -22,8 +23,9 @@
     </transfer>
 
     <transfer name="RestPromotionalItemsAttributes">
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" deprecated="Use `skus` (plural) instead and provide a comma separated list."/>
         <property name="quantity" type="int"/>
+        <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 
     <transfer name="Quote">
@@ -57,6 +59,18 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+    </transfer>
+
+    <transfer name="DiscountPromotionConditions">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="DiscountPromotionCriteria">
+        <property name="discountPromotionConditions" type="DiscountPromotionConditions"/>
+    </transfer>
+
+    <transfer name="DiscountPromotionCollection">
+        <property name="discountPromotions" type="DiscountPromotion[]" singular="discountPromotion"/>
     </transfer>
 
 </transfers>

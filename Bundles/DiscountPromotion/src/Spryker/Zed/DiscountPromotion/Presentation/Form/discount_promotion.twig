@@ -1,3 +1,19 @@
 <div id="collector-type-promotion" style="display:none;">
-    {{ form_row(child) }}
+    {% if child.abstractSku is defined %}
+        {{ form_row(child.abstractSku) }}
+    {% endif %}
+
+    {% if child.abstractSkus is defined %}
+        <div class="form-group {% if child.abstractSkus.vars.errors|length %}has-error{% endif %}">
+            {{ form_label(child.abstractSkus) }}
+            {{ form_widget(child.abstractSkus) }}
+            <div class="form-note">
+                <span class="glyphicon glyphicon-info-sign"></span>
+                {{ child.abstractSkus.vars.help }}
+            </div>
+            {{ form_errors(child.abstractSkus) }}
+        </div>
+    {% endif %}
+
+    {{ form_row(child.quantity) }}
 </div>

@@ -17,6 +17,13 @@ interface DiscountPromotionToProductInterface
     public function findProductAbstractIdBySku($sku): ?int;
 
     /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
+
+    /**
      * @param string $sku
      *
      * @return bool

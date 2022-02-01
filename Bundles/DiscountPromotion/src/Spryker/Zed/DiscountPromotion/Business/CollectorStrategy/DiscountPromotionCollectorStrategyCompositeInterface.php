@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
+namespace Spryker\Zed\DiscountPromotion\Business\CollectorStrategy;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface DiscountPromotionCollectorStrategyInterface
+interface DiscountPromotionCollectorStrategyCompositeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
@@ -18,5 +18,5 @@ interface DiscountPromotionCollectorStrategyInterface
      *
      * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
-    public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer);
+    public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer): array;
 }

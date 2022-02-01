@@ -1,13 +1,20 @@
 {% if discountPromotion %}
     <h4>{{ 'Discount promotion to product' | trans }}</h4>
     <table class="table">
-        <tr>
-            <td style="width: 150px;">{{ 'Abstract sku:' | trans }}</td>
-            <td>{{ discountPromotion.abstractSku }}</td>
-        </tr>
+        {% if isAbstractSkusFieldExists %}
+            <tr>
+                <td style="width: 150px;">{{ 'Abstract SKUs' | trans }}</td>
+                <td>{{ discountPromotion.abstractSkus|join(', ') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td style="width: 150px;">{{ 'Abstract sku:' | trans }}</td>
+                <td>{{ discountPromotion.abstractSku }}</td>
+            </tr>
+        {% endif %}
         <tr>
             <td>{{ 'Maximum Quantity:' | trans }}</td>
             <td>{{ discountPromotion.quantity }}</td>
         </tr>
-</table>
+    </table>
 {% endif %}

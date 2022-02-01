@@ -1,3 +1,7 @@
 "Abstract sku:","Abstract sku:"
 "Discount promotion to product","Promotional product"
 "Maximum Quantity:","Maximum Quantity:"
+"Abstract Product SKU(S)","Abstract Product SKU(S)"
+"Use a comma-separated list for multiple abstract SKUs","Use a comma-separated list for multiple abstract SKUs"
+"Unknown SKU(s): %non_existing_skus%","Unknown SKU(s): %non_existing_skus%"
+"Abstract SKUs","Abstract SKUs"

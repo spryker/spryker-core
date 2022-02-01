@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\DiscountPromotionsRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 
 interface DiscountPromotionsRestApiToDiscountPromotionFacadeInterface
 {
     /**
-     * @param string $uuid
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     * @return \Generated\Shared\Transfer\DiscountPromotionCollectionTransfer
      */
-    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer;
+    public function getDiscountPromotionCollection(DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer): DiscountPromotionCollectionTransfer;
 }

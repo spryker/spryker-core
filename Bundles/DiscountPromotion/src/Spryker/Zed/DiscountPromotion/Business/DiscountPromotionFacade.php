@@ -10,6 +10,8 @@ namespace Spryker\Zed\DiscountPromotion\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -35,7 +37,7 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()
-            ->createDiscountPromotionCollectorStrategy()
+            ->createDiscountPromotionCollectorStrategyComposite()
             ->collect($discountTransfer, $quoteTransfer);
     }
 
@@ -90,6 +92,8 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade::getDiscountPromotionCollection()} instead.
+     *
      * @param int $idDiscountPromotion
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
@@ -138,6 +142,8 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade::getDiscountPromotionCollection()} instead.
+     *
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
@@ -154,13 +160,16 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade::getDiscountPromotionCollection()} instead.
+     *
      * @param string $uuid
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
     {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createDiscountPromotionReader()
             ->findDiscountPromotionByUuid($uuid);
     }
 
@@ -178,6 +187,20 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
         return $this->getFactory()
             ->createCartValidator()
             ->validateCartDiscountPromotions($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionCollectionTransfer
+     */
+    public function getDiscountPromotionCollection(DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer): DiscountPromotionCollectionTransfer
+    {
+        return $this->getRepository()->getDiscountPromotionCollection($discountPromotionCriteriaTransfer);
     }
 
     /**

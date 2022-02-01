@@ -7,6 +7,8 @@
         <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="INTEGER" required="true"/>
 
+        <column name="abstract_skus" type="LONGVARCHAR" required="false"/>
+
         <foreign-key name="spy_discount_promotion-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountPromotion">
             <reference local="fk_discount" foreign="id_discount"/>
         </foreign-key>

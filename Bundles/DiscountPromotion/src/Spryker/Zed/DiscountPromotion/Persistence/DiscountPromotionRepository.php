@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\DiscountPromotion\Persistence;
 
+use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
+use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,22 +19,94 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class DiscountPromotionRepository extends AbstractRepository implements DiscountPromotionRepositoryInterface
 {
     /**
-     * @param string $uuid
+     * @deprecated Will be removed in next major release.
      *
-     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     * @return bool
      */
-    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
+    public function isAbstractSkusFieldExists(): bool
     {
-        $discountPromotionEntity = $this->getFactory()
-            ->createDiscountPromotionQuery()
-            ->findOneByUuid($uuid);
+        return $this->getFactory()
+            ->createDiscountPromotionFieldChecker()
+            ->isAbstractSkusFieldExists();
+    }
 
-        if ($discountPromotionEntity === null) {
-            return null;
-        }
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionCollectionTransfer
+     */
+    public function getDiscountPromotionCollection(DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer): DiscountPromotionCollectionTransfer
+    {
+        $discountPromotionQuery = $this->getFactory()->createDiscountPromotionQuery();
+
+        $discountPromotionQuery = $this->applyFilters($discountPromotionQuery, $discountPromotionCriteriaTransfer);
 
         return $this->getFactory()
             ->createDiscountPromotionMapper()
-            ->mapDiscountPromotionEntityToTransfer($discountPromotionEntity, new DiscountPromotionTransfer());
+            ->mapDiscountPromotionEntitiesToDiscountPromotionCollectionTransfer(
+                $discountPromotionQuery->find(),
+                new DiscountPromotionCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function hasDiscountPromotion(DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer): bool
+    {
+        $discountPromotionQuery = $this->getFactory()->createDiscountPromotionQuery();
+
+        $discountPromotionQuery = $this->applyFilters($discountPromotionQuery, $discountPromotionCriteriaTransfer);
+
+        return $discountPromotionQuery->exists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     */
+    public function findDiscountPromotionByCriteria(
+        DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+    ): ?DiscountPromotionTransfer {
+        return $this->getDiscountPromotionCollection($discountPromotionCriteriaTransfer)
+            ->getDiscountPromotions()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery $discountPromotionQuery
+     * @param \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+     *
+     * @return \Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery
+     */
+    protected function applyFilters(
+        SpyDiscountPromotionQuery $discountPromotionQuery,
+        DiscountPromotionCriteriaTransfer $discountPromotionCriteriaTransfer
+    ): SpyDiscountPromotionQuery {
+        $discountPromotionConditionsTransfer = $discountPromotionCriteriaTransfer->getDiscountPromotionConditions();
+        if (!$discountPromotionConditionsTransfer) {
+            return $discountPromotionQuery;
+        }
+
+        if (
+            $discountPromotionConditionsTransfer->getUuids()
+            && $this->getFactory()->createDiscountPromotionFieldChecker()->isUuidFieldExists()
+        ) {
+            $discountPromotionQuery->filterByUuid_In($discountPromotionConditionsTransfer->getUuids());
+        }
+
+        if ($discountPromotionConditionsTransfer->getDiscountIds()) {
+            $discountPromotionQuery->filterByFkDiscount_In($discountPromotionConditionsTransfer->getDiscountIds());
+        }
+
+        if ($discountPromotionConditionsTransfer->getDiscountPromotionIds()) {
+            $discountPromotionQuery->filterByIdDiscountPromotion_In($discountPromotionConditionsTransfer->getDiscountPromotionIds());
+        }
+
+        return $discountPromotionQuery;
     }
 }

@@ -41,4 +41,14 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
     {
         return $this->productFacade->hasProductAbstract($sku);
     }
+
+    /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
+    }
 }

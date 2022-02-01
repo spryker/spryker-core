@@ -7,8 +7,15 @@
 
 namespace Spryker\Zed\DiscountPromotion\Communication;
 
+use Spryker\Zed\DiscountPromotion\Communication\Form\Constraint\AbstractSkusExistConstraint;
 use Spryker\Zed\DiscountPromotion\Communication\Form\DiscountPromotionFormType;
+use Spryker\Zed\DiscountPromotion\Communication\Form\Transformer\AbstractSkusTransformer;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToTranslatorFacadeInterface;
+use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
@@ -27,5 +34,40 @@ class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
     public function createDiscountFormPromotionType()
     {
         return DiscountPromotionFormType::class;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createAbstractSkusTransformer(): DataTransformerInterface
+    {
+        return new AbstractSkusTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createAbstractSkusExistConstraint(): Constraint
+    {
+        return new AbstractSkusExistConstraint([
+            AbstractSkusExistConstraint::OPTION_PRODUCT_FACADE => $this->getProductFacade(),
+            AbstractSkusExistConstraint::OPTION_TRANSLATOR_FACADE => $this->getTranslatorFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface
+     */
+    public function getProductFacade(): DiscountPromotionToProductInterface
+    {
+        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): DiscountPromotionToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_TRANSLATOR);
     }
 }

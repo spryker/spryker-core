@@ -8,32 +8,25 @@
 namespace Spryker\Zed\DiscountPromotion\Business\Model;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Generated\Shared\Transfer\DiscountPromotionConditionsTransfer;
+use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
+use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Spryker\Shared\DiscountPromotion\DiscountPromotionConfig;
-use Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapperInterface;
-use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface;
+use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface;
 
 class DiscountPromotionReader implements DiscountPromotionReaderInterface
 {
     /**
-     * @var \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface
+     * @var \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface
      */
-    protected $discountPromotionQueryContainer;
+    protected $discountPromotionRepository;
 
     /**
-     * @var \Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapperInterface
+     * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface $discountPromotionRepository
      */
-    protected $discountPromotionMapper;
-
-    /**
-     * @param \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer
-     * @param \Spryker\Zed\DiscountPromotion\Business\Model\Mapper\DiscountPromotionMapperInterface $discountPromotionMapper
-     */
-    public function __construct(
-        DiscountPromotionQueryContainerInterface $discountPromotionQueryContainer,
-        DiscountPromotionMapperInterface $discountPromotionMapper
-    ) {
-        $this->discountPromotionQueryContainer = $discountPromotionQueryContainer;
-        $this->discountPromotionMapper = $discountPromotionMapper;
+    public function __construct(DiscountPromotionRepositoryInterface $discountPromotionRepository)
+    {
+        $this->discountPromotionRepository = $discountPromotionRepository;
     }
 
     /**
@@ -48,7 +41,11 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
 
         $idDiscount = $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount();
 
-        $discountPromotionTransfer = $this->findDiscountPromotionByIdDiscount($idDiscount);
+        $discountPromotionCriteriaTransfer = $this->createDiscountPromotionCriteriaTransferWithIdDiscountCondition($idDiscount);
+
+        $discountPromotionTransfer = $this->discountPromotionRepository
+            ->findDiscountPromotionByCriteria($discountPromotionCriteriaTransfer);
+
         if (!$discountPromotionTransfer) {
             return $discountConfiguratorTransfer;
         }
@@ -67,42 +64,70 @@ class DiscountPromotionReader implements DiscountPromotionReaderInterface
      */
     public function isDiscountWithPromotion($idDiscount)
     {
-        return $this->discountPromotionQueryContainer->queryDiscountPromotionByIdDiscount($idDiscount)->count() > 0;
+        $discountPromotionCriteriaTransfer = $this->createDiscountPromotionCriteriaTransferWithIdDiscountCondition($idDiscount);
+
+        return $this->discountPromotionRepository->hasDiscountPromotion($discountPromotionCriteriaTransfer);
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepository::getDiscountPromotionCollection()} instead.
+     *
      * @param int $idDiscountPromotion
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
     {
-        $discountPromotionEntity = $this->discountPromotionQueryContainer
-            ->queryDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
-            ->findOne();
+        $discountPromotionConditionsTransfer = (new DiscountPromotionConditionsTransfer())
+            ->addIdDiscountPromotion($idDiscountPromotion);
+        $discountPromotionCriteriaTransfer = (new DiscountPromotionCriteriaTransfer())
+            ->setDiscountPromotionConditions($discountPromotionConditionsTransfer);
 
-        if (!$discountPromotionEntity) {
-            return null;
-        }
-
-        return $this->discountPromotionMapper->mapTransfer($discountPromotionEntity);
+        return $this->discountPromotionRepository->findDiscountPromotionByCriteria($discountPromotionCriteriaTransfer);
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepository::getDiscountPromotionCollection()} instead.
+     *
      * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
      */
     public function findDiscountPromotionByIdDiscount($idDiscount)
     {
-        $discountPromotionEntity = $this->discountPromotionQueryContainer
-            ->queryDiscountPromotionByIdDiscount($idDiscount)
-            ->findOne();
+        $discountPromotionCriteriaTransfer = $this->createDiscountPromotionCriteriaTransferWithIdDiscountCondition($idDiscount);
 
-        if (!$discountPromotionEntity) {
-            return null;
-        }
+        return $this->discountPromotionRepository->findDiscountPromotionByCriteria($discountPromotionCriteriaTransfer);
+    }
 
-        return $this->discountPromotionMapper->mapTransfer($discountPromotionEntity);
+    /**
+     * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepository::getDiscountPromotionCollection()} instead.
+     *
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionTransfer|null
+     */
+    public function findDiscountPromotionByUuid(string $uuid): ?DiscountPromotionTransfer
+    {
+        $discountPromotionConditionsTransfer = (new DiscountPromotionConditionsTransfer())
+            ->addUuid($uuid);
+        $discountPromotionCriteriaTransfer = (new DiscountPromotionCriteriaTransfer())
+            ->setDiscountPromotionConditions($discountPromotionConditionsTransfer);
+
+        return $this->discountPromotionRepository->findDiscountPromotionByCriteria($discountPromotionCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer
+     */
+    protected function createDiscountPromotionCriteriaTransferWithIdDiscountCondition(int $idDiscount): DiscountPromotionCriteriaTransfer
+    {
+        $discountPromotionConditionsTransfer = (new DiscountPromotionConditionsTransfer())
+            ->addIdDiscount($idDiscount);
+
+        return (new DiscountPromotionCriteriaTransfer())
+            ->setDiscountPromotionConditions($discountPromotionConditionsTransfer);
     }
 }

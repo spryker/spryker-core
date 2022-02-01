@@ -52,7 +52,8 @@
 
     <transfer name="DiscountPromotion">
         <property name="idDiscountPromotion" type="int"/>
-        <property name="abstractSku" type="string"/>
+        <property name="abstractSku" type="string" deprecated="Use `abstractSkus` (plural) instead and provide a comma separated list."/>
+        <property name="abstractSkus" type="string[]" singular="abstractSku"/>
         <property name="quantity" type="int"/>
         <property name="fkDiscount" type="int"/>
         <property name="uuid" type="string"/>
@@ -116,4 +117,17 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="DiscountPromotionCriteria">
+        <property name="discountPromotionConditions" type="DiscountPromotionConditions"/>
+    </transfer>
+
+    <transfer name="DiscountPromotionCollection">
+        <property name="discountPromotions" type="DiscountPromotion[]" singular="discountPromotion"/>
+    </transfer>
+
+    <transfer name="DiscountPromotionConditions">
+        <property name="discountPromotionIds" type="int[]" singular="idDiscountPromotion"/>
+        <property name="discountIds" type="int[]" singular="idDiscount"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
 </transfers>

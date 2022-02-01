@@ -9,6 +9,7 @@ namespace Spryker\Zed\DiscountPromotion;
 
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityBridge;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductBridge;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToTranslatorFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -28,14 +29,36 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
     /**
+     * @var string
+     */
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addProductFacade($container);
         $container = $this->addAvailabilityFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addProductFacade($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -63,6 +86,22 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new DiscountPromotionToAvailabilityBridge($container->getLocator()->availability()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new DiscountPromotionToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade(),
+            );
         });
 
         return $container;

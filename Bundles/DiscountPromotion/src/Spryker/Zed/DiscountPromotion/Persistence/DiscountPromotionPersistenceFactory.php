@@ -8,6 +8,8 @@
 namespace Spryker\Zed\DiscountPromotion\Persistence;
 
 use Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotionQuery;
+use Spryker\Zed\DiscountPromotion\Persistence\Checker\DiscountPromotionFieldChecker;
+use Spryker\Zed\DiscountPromotion\Persistence\Checker\DiscountPromotionFieldCheckerInterface;
 use Spryker\Zed\DiscountPromotion\Persistence\Propel\Mapper\DiscountPromotionMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -32,6 +34,16 @@ class DiscountPromotionPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createDiscountPromotionMapper(): DiscountPromotionMapper
     {
-        return new DiscountPromotionMapper();
+        return new DiscountPromotionMapper(
+            $this->createDiscountPromotionFieldChecker(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Persistence\Checker\DiscountPromotionFieldCheckerInterface
+     */
+    public function createDiscountPromotionFieldChecker(): DiscountPromotionFieldCheckerInterface
+    {
+        return new DiscountPromotionFieldChecker();
     }
 }
