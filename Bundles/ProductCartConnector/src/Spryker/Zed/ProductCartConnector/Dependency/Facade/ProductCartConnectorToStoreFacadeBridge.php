@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductCartConnectorToStoreFacadeBridge implements ProductCartConnectorToStoreFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class ProductCartConnectorToStoreFacadeBridge implements ProductCartConnectorToS
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName($storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

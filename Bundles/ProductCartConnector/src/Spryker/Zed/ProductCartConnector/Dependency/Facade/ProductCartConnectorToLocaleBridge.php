@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductCartConnectorToLocaleBridge implements ProductCartConnectorToLocaleInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductCartConnectorToLocaleBridge implements ProductCartConnectorToLocale
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }

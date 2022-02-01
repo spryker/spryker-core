@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -78,5 +79,22 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
         return $this->getFactory()
             ->createProductUrlExpander()
             ->expandItemTransfersWithUrls($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCheckoutQuoteItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createProductValidator()
+            ->validateCheckoutQuoteItems($quoteTransfer, $checkoutResponseTransfer);
     }
 }
