@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ProductBundle;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -263,5 +265,22 @@ class ProductBundleBusinessTester extends Actor
                 ]))
                 ->setProductBundle($bundleItem2),
         ];
+    }
+
+    /**
+     * @param array $bundleItemSeeds
+     * @param array $orderSeed
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function buildOrderTransferWithBundleItems(array $bundleItemSeeds, array $orderSeed = []): OrderTransfer
+    {
+        $orderBuilder = new OrderBuilder($orderSeed);
+
+        foreach ($bundleItemSeeds as $bundleItemSeed) {
+            $orderBuilder->withAnotherBundleItem(new ItemBuilder($bundleItemSeed));
+        }
+
+        return $orderBuilder->build();
     }
 }

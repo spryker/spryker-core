@@ -3,5 +3,3 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
-    ignoreErrors:
-        - '#Variable \$calculatedOrderItems in isset\(\) is never defined.#'
