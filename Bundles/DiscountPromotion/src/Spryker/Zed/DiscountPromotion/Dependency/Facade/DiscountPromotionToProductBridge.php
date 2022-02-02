@@ -27,7 +27,7 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
      *
      * @return int|null
      */
-    public function findProductAbstractIdBySku($sku): ?int
+    public function findProductAbstractIdBySku(string $sku): ?int
     {
         return $this->productFacade->findProductAbstractIdBySku($sku);
     }
@@ -37,7 +37,7 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
      *
      * @return bool
      */
-    public function hasProductAbstract($sku): bool
+    public function hasProductAbstract(string $sku): bool
     {
         return $this->productFacade->hasProductAbstract($sku);
     }

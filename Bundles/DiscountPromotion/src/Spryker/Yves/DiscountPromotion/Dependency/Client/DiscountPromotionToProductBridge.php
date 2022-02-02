@@ -27,7 +27,7 @@ class DiscountPromotionToProductBridge implements DiscountPromotionToProductInte
      *
      * @return array
      */
-    public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract): array
+    public function getProductAbstractFromStorageByIdForCurrentLocale(int $idProductAbstract): array
     {
         return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
     }

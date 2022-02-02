@@ -488,6 +488,31 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testValidateCartDiscountPromotionsWithPromotionItemInQuote(): void
+    {
+        // Arrange
+        $discountPromotionTransfer = $this->tester->haveDiscountPromotion([
+            DiscountPromotionTransfer::FK_DISCOUNT => $this->tester->haveDiscount()->getIdDiscount(),
+        ]);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::TEST_ITEM_SKU)
+            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setOperation(static::CART_OPERATION_ADD)
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer())->addItem($itemTransfer));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartDiscountPromotions($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
     public function testDeletePromotionDiscountShouldDeleteAnyExistingPromotions(): void
     {
         // Arrange

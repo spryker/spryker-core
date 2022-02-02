@@ -14,5 +14,5 @@ interface DiscountPromotionToProductInterface
      *
      * @return array
      */
-    public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract): array;
+    public function getProductAbstractFromStorageByIdForCurrentLocale(int $idProductAbstract): array;
 }
