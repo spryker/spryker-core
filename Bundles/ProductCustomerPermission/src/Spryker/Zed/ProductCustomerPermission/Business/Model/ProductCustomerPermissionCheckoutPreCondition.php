@@ -53,7 +53,9 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
         $isPassed = $this->hasCustomerPermissions($quoteTransfer);
 
         if (!$isPassed) {
-            $checkoutResponseTransfer->addError($this->createCheckoutErrorTransfer($quoteTransfer));
+            $checkoutResponseTransfer
+                ->addError($this->createCheckoutErrorTransfer($quoteTransfer))
+                ->setIsSuccess(false);
         }
 
         return $isPassed;

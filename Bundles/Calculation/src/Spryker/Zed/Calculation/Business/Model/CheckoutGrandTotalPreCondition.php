@@ -45,10 +45,12 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
         if ($totalsBefore !== $totalsAfter) {
             $error = $this->createCheckoutErrorTransfer();
             $error
-                ->setErrorCode(CalculationConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
+                ->setErrorCode((int)CalculationConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
                 ->setMessage('Checkout grand total changed.');
 
-            $checkoutResponseTransfer->addError($error);
+            $checkoutResponseTransfer
+                ->addError($error)
+                ->setIsSuccess(false);
 
             return false;
         }
