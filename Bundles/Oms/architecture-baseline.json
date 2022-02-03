@@ -1,13 +1,6 @@
 [
     {
         "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
-        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::sumReservedProductQuantitiesForSku()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
-        "rule": "FacadeReturnValueRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Oms/Business/OmsFacade.php",
         "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Oms\\Business\\OmsFacade::getOmsReservedProductQuantityForSku()()` is using an invalid return type `\\Spryker\\DecimalObject\\Decimal` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",

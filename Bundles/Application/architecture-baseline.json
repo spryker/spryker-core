@@ -1,9 +1,1 @@
-[
-    {
-        "fileName": "src/Spryker/Shared/Application/ServiceProvider/DoubleSubmitProtectionServiceProvider.php",
-        "description": "Access: Class Spryker\\Shared\\Application\\ServiceProvider\\DoubleSubmitProtectionServiceProvider accesses Spryker\\Zed\\Kernel\\Communication\\AbstractPlugin which violates rule \"No call from Shared to Zed\"",
-        "rule": "LayerAccessRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    }
-]
+[]

@@ -75,40 +75,5 @@
         "rule": "FacadeNoLogicRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::legacyCreateUrl()()` is not public which violates rule \"A facade must only contain public methods.\"",
-        "rule": "AllMethodsPublicInFacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::hasUrl()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
-        "rule": "FacadeNoLogicRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::legacyHasUrl()()` is not public which violates rule \"A facade must only contain public methods.\"",
-        "rule": "AllMethodsPublicInFacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::deleteUrlRedirect()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
-        "rule": "FacadeNoLogicRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Url/Business/UrlFacade.php",
-        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\Url\\Business\\UrlFacade::legacyDeleteUrlRedirect()()` is not public which violates rule \"A facade must only contain public methods.\"",
-        "rule": "AllMethodsPublicInFacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
     }
 ]
