@@ -1,6 +1,6 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@product-attributes-selector-border-radius: 10px;
+@product-attributes-selector-border-radius: @border-radius-base;
 @product-attributes-selector-content-padding: 20px 12px;
 @product-attributes-selector-content-min-width: 400px;
 @product-attributes-selector-col-padding: 0 8px;
@@ -43,7 +43,7 @@
 
     &__label {
         color: @ink;
-        font-size: @font-size-sm;
+        font-size: @spy-font-size-sm;
         font-weight: @font-weight-medium;
         text-transform: uppercase;
         padding: @product-attributes-selector-col-padding;

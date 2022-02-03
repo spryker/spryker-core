@@ -1,8 +1,8 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @concrete-products-preview-class: mp-concrete-products-preview;
-@concrete-products-preview-main-border-radius: 10px;
-@concrete-products-preview-header-border-radius: 4px;
+@concrete-products-preview-main-border-radius: @border-radius-base;
+@concrete-products-preview-header-border-radius: @border-radius-small;
 @concrete-products-preview-header-padding: 12px 15px;
 @concrete-products-preview-header-margin-bottom: 5px;
 @concrete-products-preview-header-checkbox-padding: 3px 15px 3px 0;
@@ -56,7 +56,7 @@
 
         &-text {
             color: @gray-darker;
-            font-size: @font-size-lg;
+            font-size: @spy-font-size-lg;
             font-weight: @font-weight-semi-bold;
         }
     }
@@ -72,7 +72,7 @@
         }
 
         &-header {
-            font-size: @font-size-sm;
+            font-size: @spy-font-size-sm;
             font-weight: @font-weight-medium;
             text-transform: uppercase;
         }
@@ -91,7 +91,7 @@
             margin-bottom: @concrete-products-preview-table-row-margin-bottom;
             padding: @concrete-products-preview-table-row-padding;
             border-radius: @concrete-products-preview-main-border-radius;
-            background-color: @white;
+            background-color: @spy-white;
 
             &-item {
                 padding: @concrete-products-preview-table-row-item-padding;

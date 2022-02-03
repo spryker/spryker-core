@@ -26,3 +26,4 @@ export * from './app/content-toggle/content-toggle.component';
 export * from './app/content-toggle/content-toggle.module';
 export * from './app/url-html-renderer/url-html-renderer.component';
 export * from './app/url-html-renderer/url-html-renderer.module';
+export * from './icons';
