@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/PriceProductOfferDataImport/Business/PriceProductOfferDataImportBusinessFactory.php",
-        "description": "`PriceProductOfferDataImportBusinessFactory::createPriceProductOfferDataImport()()` in `Spryker\\Zed\\PriceProductOfferDataImport\\Business\\PriceProductOfferDataImportBusinessFactory::createPriceProductOfferDataImport()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "description": "`PriceProductOfferDataImportBusinessFactory::createPriceProductOfferDataImport()` in `Spryker\\Zed\\PriceProductOfferDataImport\\Business\\PriceProductOfferDataImportBusinessFactory::createPriceProductOfferDataImport()` contains 0 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"

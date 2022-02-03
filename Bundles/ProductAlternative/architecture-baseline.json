@@ -29,14 +29,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativePersistenceFactory.php",
-        "description": "`ProductAlternativePersistenceFactory::createProductPropelQuery()()` in `Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductPropelQuery()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "description": "`ProductAlternativePersistenceFactory::createProductPropelQuery()` in `Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductPropelQuery()` contains 0 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
     {
         "fileName": "src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativePersistenceFactory.php",
-        "description": "`ProductAlternativePersistenceFactory::createProductAbstractPropelQuery()()` in `Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductAbstractPropelQuery()` contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"",
+        "description": "`ProductAlternativePersistenceFactory::createProductAbstractPropelQuery()` in `Spryker\\Zed\\ProductAlternative\\Persistence\\ProductAlternativePersistenceFactory::createProductAbstractPropelQuery()` contains 0 new statements which violates rule \"A `create*()` method in factories must contain exactly 1 `new` statement for instantiation.\"",
         "rule": "FactoryCreateContainOneNewRule",
         "ruleset": "Spryker",
         "priority": "1"
