@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 177,
-            "line_to": 177,
+            "line_from": 175,
+            "line_to": 175,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 206,
-            "line_to": 206,
+            "line_from": 204,
+            "line_to": 204,
             "type": "PossiblyNullOperand",
             "message": "Left operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 206,
-            "line_to": 206,
+            "line_from": 204,
+            "line_to": 204,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
+            "line_from": 205,
+            "line_to": 205,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 215,
-            "line_to": 215,
+            "line_from": 213,
+            "line_to": 213,
             "type": "InvalidScalarArgument",
             "message": "Argument 1 of Generated\\Shared\\Transfer\\ApiPaginationTransfer::setPage expects int|null, float|int provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductApi/src/Spryker/Zed/ProductApi/Business/Model/ProductApi.php",

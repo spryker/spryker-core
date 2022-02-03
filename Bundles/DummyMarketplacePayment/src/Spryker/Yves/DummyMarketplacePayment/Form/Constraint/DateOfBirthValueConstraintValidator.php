@@ -14,14 +14,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class DateOfBirthValueConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $dateOfBirth
+     * @param mixed $value Date of birth that should be validated.
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Yves\DummyMarketplacePayment\Form\Constraint\DateOfBirthValueConstraint $constraint
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($dateOfBirth, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof DateOfBirthValueConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -31,11 +31,11 @@ class DateOfBirthValueConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if ($dateOfBirth === null) {
+        if ($value === null) {
             return;
         }
 
-        if ($this->isValidValue($dateOfBirth, $constraint->getMinimalDate())) {
+        if ($this->isValidValue($value, $constraint->getMinimalDate())) {
             return;
         }
 

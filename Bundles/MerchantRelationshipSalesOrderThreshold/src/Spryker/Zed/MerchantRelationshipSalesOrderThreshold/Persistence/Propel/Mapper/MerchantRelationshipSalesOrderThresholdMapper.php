@@ -18,35 +18,35 @@ use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelat
 class MerchantRelationshipSalesOrderThresholdMapper implements MerchantRelationshipSalesOrderThresholdMapperInterface
 {
     /**
-     * @param \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThreshold $merchantRelationshipSalesOrderThresholdEntity
+     * @param \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThreshold $salesOrderThresholdEntity
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
     public function mapMerchantRelationshipSalesOrderThresholdEntityToTransfer(
-        SpyMerchantRelationshipSalesOrderThreshold $merchantRelationshipSalesOrderThresholdEntity,
+        SpyMerchantRelationshipSalesOrderThreshold $salesOrderThresholdEntity,
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): MerchantRelationshipSalesOrderThresholdTransfer {
-        $salesOrderThresholdTypeEntity = $merchantRelationshipSalesOrderThresholdEntity->getSalesOrderThresholdType();
+        $salesOrderThresholdTypeEntity = $salesOrderThresholdEntity->getSalesOrderThresholdType();
         $merchantRelationshipSalesOrderThresholdTransfer->setSalesOrderThresholdValue(
             $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue() ?? (new SalesOrderThresholdValueTransfer()),
         );
 
-        $merchantRelationshipSalesOrderThresholdTransfer->fromArray($merchantRelationshipSalesOrderThresholdEntity->toArray(), true)
-            ->setIdMerchantRelationshipSalesOrderThreshold($merchantRelationshipSalesOrderThresholdEntity->getIdMerchantRelationshipSalesOrderThreshold())
+        $merchantRelationshipSalesOrderThresholdTransfer->fromArray($salesOrderThresholdEntity->toArray(), true)
+            ->setIdMerchantRelationshipSalesOrderThreshold($salesOrderThresholdEntity->getIdMerchantRelationshipSalesOrderThreshold())
             ->setSalesOrderThresholdValue(
-                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->fromArray($merchantRelationshipSalesOrderThresholdEntity->toArray(), true)
+                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->fromArray($salesOrderThresholdEntity->toArray(), true)
                     ->setSalesOrderThresholdType(
                         (new SalesOrderThresholdTypeTransfer())->fromArray($salesOrderThresholdTypeEntity->toArray(), true)
                             ->setIdSalesOrderThresholdType($salesOrderThresholdTypeEntity->getIdSalesOrderThresholdType()),
                     ),
             )->setStore(
-                (new StoreTransfer())->fromArray($merchantRelationshipSalesOrderThresholdEntity->getStore()->toArray(), true),
+                (new StoreTransfer())->fromArray($salesOrderThresholdEntity->getStore()->toArray(), true),
             )->setCurrency(
-                (new CurrencyTransfer())->fromArray($merchantRelationshipSalesOrderThresholdEntity->getCurrency()->toArray(), true),
+                (new CurrencyTransfer())->fromArray($salesOrderThresholdEntity->getCurrency()->toArray(), true),
             )->setMerchantRelationship(
                 (new MerchantRelationshipTransfer())
-                    ->fromArray($merchantRelationshipSalesOrderThresholdEntity->getMerchantRelationship()->toArray(), true),
+                    ->fromArray($salesOrderThresholdEntity->getMerchantRelationship()->toArray(), true),
             );
 
         return $merchantRelationshipSalesOrderThresholdTransfer;

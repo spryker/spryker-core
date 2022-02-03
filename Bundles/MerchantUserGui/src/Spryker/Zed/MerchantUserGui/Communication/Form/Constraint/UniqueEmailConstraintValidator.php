@@ -15,21 +15,21 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueEmailConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed|string $email
+     * @param mixed|string $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\MerchantUserGui\Communication\Form\Constraint\UniqueEmailConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($email, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueEmailConstraint) {
             throw new UnexpectedTypeException($constraint, UniqueEmailConstraint::class);
         }
 
         $userTransfer = $constraint->getMerchantUserFacade()->findUser(
-            (new UserCriteriaTransfer())->setEmail($email),
+            (new UserCriteriaTransfer())->setEmail($value),
         );
 
         if (!$userTransfer) {
@@ -41,7 +41,7 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
 
         if ($userTransfer->getIdUser() !== $formDataUserTransfer->getIdUser()) {
             $this->context->buildViolation($constraint->getMessage())
-                ->setParameter('{{ username }}', $email)
+                ->setParameter('{{ username }}', $value)
                 ->addViolation();
         }
     }

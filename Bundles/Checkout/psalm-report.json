@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Shared\\Checkout\\Plugin\\Permission\\PlaceOrderWithAmountUpToPermissionPlugin::can has wrong name $centAmount, expecting $context as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Shared/Checkout/Plugin/Permission/PlaceOrderWithAmountUpToPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $centAmount = null): bool",
-            "selected_text": "$centAmount",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 161,
             "line_to": 161,
             "type": "InvalidArrayOffset",
@@ -23,56 +11,20 @@
             "selected_text": "$choices[$paymentMethodSubForm->getProviderName()][$subFormName]",
             "error_level": 6,
             "shortcode": 115
-        },
-        {
-            "severity": "error",
-            "line_from": 162,
-            "line_to": 162,
-            "type": "InvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface::saveOrder expects Generated\\Shared\\Transfer\\SaveOrderTransfer, Generated\\Shared\\Transfer\\CheckoutResponseTransfer provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
-            "snippet": "                $orderSaver->saveOrder($quoteTransfer, $checkoutResponse);",
-            "selected_text": "$checkoutResponse",
-            "error_level": 6,
-            "shortcode": 4
         }
     ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 46,
+            "line_to": 46,
             "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Shared\\Checkout\\Plugin\\Permission\\PlaceOrderWithAmountUpToPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Shared/Checkout/Plugin/Permission/PlaceOrderWithAmountUpToPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $centAmount = null): bool",
-            "selected_text": "$centAmount",
+            "message": "Argument 2 of Spryker\\Yves\\Checkout\\Form\\Steps\\PaymentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/Form/Steps/PaymentForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
+            "selected_text": "$options",
             "error_level": 5,
             "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Yves\\Checkout\\Form\\Steps\\PaymentForm::getPaymentMethodChoices expects array<array-key, Spryker\\Yves\\StepEngine\\Dependency\\Form\\SubFormInterface>, possibly different type Spryker\\Yves\\StepEngine\\Dependency\\Plugin\\Form\\SubFormPluginCollection|array<array-key, Spryker\\Yves\\StepEngine\\Dependency\\Form\\SubFormInterface> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/Form/Steps/PaymentForm.php",
-            "snippet": "        $paymentMethodChoices = $this->getPaymentMethodChoices($paymentMethodSubForms);",
-            "selected_text": "$paymentMethodSubForms",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of Spryker\\Yves\\Checkout\\Form\\Steps\\PaymentForm::addPaymentMethodSubForms expects array<array-key, Spryker\\Yves\\StepEngine\\Dependency\\Form\\SubFormInterface>, possibly different type Spryker\\Yves\\StepEngine\\Dependency\\Plugin\\Form\\SubFormPluginCollection|array<array-key, Spryker\\Yves\\StepEngine\\Dependency\\Form\\SubFormInterface> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Yves/Checkout/Form/Steps/PaymentForm.php",
-            "snippet": "            ->addPaymentMethodSubForms($builder, $paymentMethodSubForms, $options);",
-            "selected_text": "$paymentMethodSubForms",
-            "error_level": 3,
-            "shortcode": 92
         },
         {
             "severity": "info",
@@ -121,6 +73,30 @@
             "selected_text": "$checkoutResponseTransfer->getSaveOrder()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "PossiblyInvalidOperand",
+            "message": "Cannot perform a numeric operation with non-numeric types true and bool",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
+            "snippet": "            $isPassed &= $preCondition->checkCondition($quoteTransfer, $checkoutResponse);",
+            "selected_text": "$isPassed",
+            "error_level": 3,
+            "shortcode": 163
+        },
+        {
+            "severity": "info",
+            "line_from": 131,
+            "line_to": 131,
+            "type": "InvalidOperand",
+            "message": "Cannot perform a numeric operation with a non-numeric type bool",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
+            "snippet": "            $isPassed &= $preCondition->checkCondition($quoteTransfer, $checkoutResponse);",
+            "selected_text": "$preCondition->checkCondition($quoteTransfer, $checkoutResponse)",
+            "error_level": 4,
+            "shortcode": 58
         },
         {
             "severity": "info",
@@ -215,8 +191,20 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
-            "snippet": "     * @var \\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface[]|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface[]",
-            "selected_text": "\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface[]|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface[]",
+            "snippet": "     * @var array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface>",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
+            "snippet": "     * @var array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -227,8 +215,20 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
-            "snippet": "     * @param \\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface[]|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface[] $saveOrderStack",
-            "selected_text": "\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface[]|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface[]",
+            "snippet": "     * @param array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface> $saveOrderStack",
+            "selected_text": "array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface|\\Spryker\\Zed\\CheckoutExtension\\Dependency\\Plugin\\CheckoutDoSaveOrderInterface>",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/Business/Workflow/CheckoutWorkflow.php",
+            "snippet": "     * @param array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface> $postSaveHookStack",
+            "selected_text": "array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -270,13 +270,25 @@
         },
         {
             "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
+            "line_from": 99,
+            "line_to": 99,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/CheckoutDependencyProvider.php",
-            "snippet": "     * @return \\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface[]",
-            "selected_text": "\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface[]",
+            "snippet": "     * @return array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface>",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Checkout/src/Spryker/Zed/Checkout/CheckoutDependencyProvider.php",
+            "snippet": "     * @return array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface>",
             "error_level": 2,
             "shortcode": 98
         }

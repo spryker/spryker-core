@@ -1,18 +1,42 @@
 {
-    "error": [
+    "error": [],
+    "warning": [
         {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationPersistentCart\\Plugin\\PersistentCart\\ProductConfigurationPersistentCartRequestExpanderPlugin::extend has wrong name $persistentCartChangeTransfer, expecting $cartChangeTransfer as defined by Spryker\\Client\\PersistentCartExtension\\Dependency\\Plugin\\PersistentCartChangeExpanderPluginInterface::extend",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationPersistentCart/src/Spryker/Client/ProductConfigurationPersistentCart/Plugin/PersistentCart/ProductConfigurationPersistentCartRequestExpanderPlugin.php",
-            "snippet": "    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer",
-            "selected_text": "$persistentCartChangeTransfer",
-            "error_level": 7,
-            "shortcode": 230
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationPersistentCart\\Expander\\ProductConfigurationInstanceCartChangeExpander::extractItemSkus expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationPersistentCart/src/Spryker/Client/ProductConfigurationPersistentCart/Expander/ProductConfigurationInstanceCartChangeExpander.php",
+            "snippet": "        $skus = $this->extractItemSkus($persistentCartChangeTransfer->getItems());",
+            "selected_text": "$persistentCartChangeTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Client\\ProductConfigurationPersistentCart\\Expander\\ProductConfigurationInstanceCartChangeExpander::expandItemsWithProductConfigurationInstance expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationPersistentCart/src/Spryker/Client/ProductConfigurationPersistentCart/Expander/ProductConfigurationInstanceCartChangeExpander.php",
+            "snippet": "            $persistentCartChangeTransfer->getItems(),",
+            "selected_text": "$persistentCartChangeTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConfigurationInstancesIndexedBySku using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationPersistentCart/src/Spryker/Client/ProductConfigurationPersistentCart/Expander/ProductConfigurationInstanceCartChangeExpander.php",
+            "snippet": "            $productConfigurationInstanceTransfer = $productConfigurationInstancesIndexedBySku[$itemTransfer->getSku()] ?? null;",
+            "selected_text": "$productConfigurationInstancesIndexedBySku",
+            "error_level": 3,
+            "shortcode": 125
         }
     ],
-    "warning": [],
     "deprecation": []
 }

@@ -25,11 +25,11 @@ class CacheWriterPhp implements CacheWriterInterface
     }
 
     /**
-     * @param array<string> $cacheEntries
+     * @param array<string> $cache
      *
      * @return void
      */
-    public function write(array $cacheEntries): void
+    public function write(array $cache): void
     {
         $resolvableCacheFilePath = $this->config->getResolvableCacheFilePath();
 
@@ -37,7 +37,7 @@ class CacheWriterPhp implements CacheWriterInterface
             mkdir(dirname($resolvableCacheFilePath), $this->config->getPermissionMode(), true);
         }
 
-        $fileContent = sprintf('<?php return %s;', var_export($cacheEntries, true));
+        $fileContent = sprintf('<?php return %s;', var_export($cache, true));
 
         file_put_contents($resolvableCacheFilePath, $fileContent);
     }

@@ -106,14 +106,14 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param array<int> $productConcreteIds
+     * @param array<int> $productIds
      *
      * @return void
      */
-    public function publish(array $productConcreteIds)
+    public function publish(array $productIds)
     {
-        $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productConcreteIds);
-        $productConcreteStorageEntities = $this->findProductConcreteStorageEntities($productConcreteIds);
+        $productConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
+        $productConcreteStorageEntities = $this->findProductConcreteStorageEntities($productIds);
 
         if (!$productConcreteLocalizedEntities) {
             $this->deleteProductConcreteStorageEntities($productConcreteStorageEntities);
@@ -125,13 +125,13 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     }
 
     /**
-     * @param array<int> $productConcreteIds
+     * @param array<int> $productIds
      *
      * @return void
      */
-    public function unpublish(array $productConcreteIds)
+    public function unpublish(array $productIds)
     {
-        $productConcreteStorageEntities = $this->findProductConcreteStorageEntities($productConcreteIds);
+        $productConcreteStorageEntities = $this->findProductConcreteStorageEntities($productIds);
 
         $this->deleteProductConcreteStorageEntities($productConcreteStorageEntities);
     }

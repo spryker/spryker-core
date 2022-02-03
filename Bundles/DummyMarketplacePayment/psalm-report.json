@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Yves\\DummyMarketplacePayment\\Form\\Constraint\\DateOfBirthValueConstraintValidator::validate has wrong name $dateOfBirth, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/Constraint/DateOfBirthValueConstraintValidator.php",
-            "snippet": "    public function validate($dateOfBirth, Constraint $constraint): void",
-            "selected_text": "$dateOfBirth",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Yves\\DummyMarketplacePayment\\Plugin\\StepEngine\\DummyMarketplacePaymentHandlerPlugin::addToDataClass has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Yves\\StepEngine\\Dependency\\Plugin\\Handler\\StepHandlerPluginInterface::addToDataClass",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Plugin/StepEngine/DummyMarketplacePaymentHandlerPlugin.php",
-            "snippet": "    public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -64,8 +39,32 @@
         },
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 85,
+            "line_to": 85,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Yves\\DummyMarketplacePayment\\Form\\InvoiceSubForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/InvoiceSubForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Zed/DummyMarketplacePayment/Business/Filter/PaymentMethodFilter.php",
+            "snippet": "        return $merchantItemsCount === $quoteTransfer->getItems()->count();",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPaymentProviderKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Zed/DummyMarketplacePayment/Business/Filter/PaymentMethodFilter.php",

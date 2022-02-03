@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\ProductSetCollector\\Business\\Map\\ProductSetPageMapBuilder::buildPageMap has wrong name $productSetData, expecting $data as defined by Spryker\\Zed\\Search\\Dependency\\Plugin\\PageMapInterface::buildPageMap",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
-            "snippet": "    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productSetData, LocaleTransfer $localeTransfer)",
-            "selected_text": "$productSetData",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -33,7 +20,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductSetCollector\\Business\\Image\\StorageProductImageReaderInterface::getProductSetImageSets cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Collector/Storage/ProductSetCollector.php",
-            "snippet": "            $this->locale->getIdLocale()",
+            "snippet": "            $this->locale->getIdLocale(),",
             "selected_text": "$this->locale->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
@@ -64,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 63,
+            "line_to": 63,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface::addIntegerSort cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
@@ -76,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 114,
+            "line_to": 114,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductSetCollector\\Business\\Image\\StorageProductImageReaderInterface::getProductSetImageSets cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
@@ -88,18 +75,42 @@
         },
         {
             "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductSetCollector\\Business\\Image\\StorageProductImageReaderInterface::getProductSetImageSets cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
-            "snippet": "            $localeTransfer->getIdLocale()",
+            "snippet": "            $localeTransfer->getIdLocale(),",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Collector/ProductSetCollectorRunner.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Collector/ProductSetCollectorRunnerInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
         {
             "severity": "info",
             "line_from": 25,
@@ -138,8 +149,8 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 48,
+            "line_to": 48,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
@@ -150,8 +161,8 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 125,
+            "line_to": 125,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/Map/ProductSetPageMapBuilder.php",
@@ -174,8 +185,8 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
+            "line_from": 66,
+            "line_to": 66,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/ProductSetCollectorFacade.php",
@@ -198,8 +209,8 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 56,
+            "line_to": 56,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/ProductSetCollectorFacadeInterface.php",

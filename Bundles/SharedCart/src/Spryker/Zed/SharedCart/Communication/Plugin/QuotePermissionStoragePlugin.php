@@ -23,12 +23,12 @@ class QuotePermissionStoragePlugin extends AbstractPlugin implements PermissionS
      *
      * @api
      *
-     * @param string|int $idCompanyUser
+     * @param string|int $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionCollection($idCompanyUser): PermissionCollectionTransfer
+    public function getPermissionCollection($identifier): PermissionCollectionTransfer
     {
-        return $this->getFacade()->findPermissionsByIdCompanyUser((int)$idCompanyUser);
+        return $this->getFacade()->findPermissionsByIdCompanyUser((int)$identifier);
     }
 }

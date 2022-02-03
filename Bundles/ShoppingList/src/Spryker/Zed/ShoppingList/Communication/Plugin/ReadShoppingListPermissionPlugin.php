@@ -39,17 +39,17 @@ class ReadShoppingListPermissionPlugin extends AbstractPlugin implements Executa
      * @api
      *
      * @param array $configuration
-     * @param int|null $idShoppingList
+     * @param int|null $context ID shopping list.
      *
      * @return bool
      */
-    public function can(array $configuration, $idShoppingList = null): bool
+    public function can(array $configuration, $context = null): bool
     {
-        if (!$idShoppingList) {
+        if (!$context) {
             return false;
         }
 
-        return in_array($idShoppingList, $configuration[ShoppingListConfig::PERMISSION_CONFIG_ID_SHOPPING_LIST_COLLECTION]);
+        return in_array($context, $configuration[ShoppingListConfig::PERMISSION_CONFIG_ID_SHOPPING_LIST_COLLECTION]);
     }
 
     /**

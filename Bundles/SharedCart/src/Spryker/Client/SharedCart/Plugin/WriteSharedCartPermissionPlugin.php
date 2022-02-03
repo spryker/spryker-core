@@ -37,17 +37,17 @@ class WriteSharedCartPermissionPlugin extends AbstractPlugin implements Executab
      * @api
      *
      * @param array $configuration
-     * @param int|null $idQuote
+     * @param int|null $context ID quote.
      *
      * @return bool
      */
-    public function can(array $configuration, $idQuote = null)
+    public function can(array $configuration, $context = null)
     {
-        if (!$idQuote) {
+        if (!$context) {
             return false;
         }
 
-        return in_array($idQuote, $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION]);
+        return in_array($context, $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION]);
     }
 
     /**

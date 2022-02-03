@@ -20,14 +20,14 @@ class ProductAbstractIdOwnedByMerchantConstraintValidator extends AbstractConstr
     /**
      * Checks if abstract product with provided ID owned by merchant.
      *
-     * @param int $idProductAbstract
+     * @param int $value ID product abstract
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractIdOwnedByMerchantConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($idProductAbstract, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ProductAbstractIdOwnedByMerchantConstraint) {
             throw new UnexpectedTypeException($constraint, ProductAbstractIdOwnedByMerchantConstraint::class);
@@ -35,7 +35,7 @@ class ProductAbstractIdOwnedByMerchantConstraintValidator extends AbstractConstr
 
         $merchantTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getMerchantOrFail();
         $isProductAbstractOwnedByMerchant = $this->getFactory()->getMerchantProductFacade()->isProductAbstractOwnedByMerchant(
-            (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract),
+            (new ProductAbstractTransfer())->setIdProductAbstract($value),
             $merchantTransfer,
         );
 

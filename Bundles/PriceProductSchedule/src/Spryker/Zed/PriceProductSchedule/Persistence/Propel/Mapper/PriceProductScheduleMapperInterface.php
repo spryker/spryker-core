@@ -14,13 +14,13 @@ interface PriceProductScheduleMapperInterface
 {
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
         SpyPriceProductSchedule $priceProductScheduleEntity,
-        PriceProductScheduleTransfer $priceProductTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleTransfer;
 
     /**

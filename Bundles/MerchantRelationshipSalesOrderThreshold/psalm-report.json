@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\MerchantRelationshipThreshold\\MerchantRelationshipThresholdReader::getCartMerchantRelationshipIds is incorrect, got 'array<int, int|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -29,10 +29,10 @@
             "line_from": 70,
             "line_to": 70,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\Translation\\MerchantRelationshipSalesOrderThresholdTranslationWriter::createTranslationsLocaleMap is incorrect, got 'array<int(0)|string, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\Translation\\MerchantRelationshipSalesOrderThresholdTranslationWriter::createTranslationsLocaleMap is incorrect, got 'array<0|string, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -41,36 +41,12 @@
             "line_from": 79,
             "line_to": 79,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int(0)|string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\Translation\\MerchantRelationshipSalesOrderThresholdTranslationWriter::createTranslationsLocaleMap",
+            "message": "The inferred type 'array<0|string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\Translation\\MerchantRelationshipSalesOrderThresholdTranslationWriter::createTranslationsLocaleMap",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
             "snippet": "        return $translationsByLocale;",
             "selected_text": "$translationsByLocale",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapper::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer has wrong name $merchantRelationshipSalesOrderThresholdEntity, expecting $salesOrderThresholdEntity as defined by Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapperInterface::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/Mapper/MerchantRelationshipSalesOrderThresholdMapper.php",
-            "snippet": "        SpyMerchantRelationshipSalesOrderThreshold $merchantRelationshipSalesOrderThresholdEntity,",
-            "selected_text": "$merchantRelationshipSalesOrderThresholdEntity",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapper::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer has wrong name $merchantRelationshipSalesOrderThresholdTransfer, expecting $salesOrderThresholdTransfer as defined by Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\Propel\\Mapper\\MerchantRelationshipSalesOrderThresholdMapperInterface::mapMerchantRelationshipSalesOrderThresholdEntityToTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/Mapper/MerchantRelationshipSalesOrderThresholdMapper.php",
-            "snippet": "        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer",
-            "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -357,7 +333,7 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $itemMerchantRelationshipSubTotals using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
-            "snippet": "                $itemMerchantRelationshipSubTotals[$merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship()]",
+            "snippet": "                $itemMerchantRelationshipSubTotals[$merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship()],",
             "selected_text": "$itemMerchantRelationshipSubTotals",
             "error_level": 3,
             "shortcode": 125
@@ -369,7 +345,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdReader.php",
-            "snippet": "                $itemMerchantRelationshipSubTotals[$merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship()]",
+            "snippet": "                $itemMerchantRelationshipSubTotals[$merchantRelationshipSalesOrderThresholdTransfer->getMerchantRelationship()->getIdMerchantRelationship()],",
             "selected_text": "getIdMerchantRelationship",
             "error_level": 3,
             "shortcode": 83
@@ -393,7 +369,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdToSalesOrderThresholdFacadeInterface::getSalesOrderThresholdTypeByKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdWriter.php",
-            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer\n                    ->getSalesOrderThresholdValue()\n                    ->getSalesOrderThresholdType()",
+            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer\n                    ->getSalesOrderThresholdValue()\n                    ->getSalesOrderThresholdType(),",
             "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer\n                    ->getSalesOrderThresholdValue()\n                    ->getSalesOrderThresholdType()",
             "error_level": 3,
             "shortcode": 78
@@ -405,7 +381,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSalesOrderThresholdType on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/MerchantRelationshipThreshold/MerchantRelationshipThresholdWriter.php",
-            "snippet": "                    ->getSalesOrderThresholdType()",
+            "snippet": "                    ->getSalesOrderThresholdType(),",
             "selected_text": "getSalesOrderThresholdType",
             "error_level": 3,
             "shortcode": 83
@@ -424,8 +400,8 @@
         },
         {
             "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
+            "line_from": 40,
+            "line_to": 40,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setMessageGlossaryKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -436,8 +412,8 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
+            "line_from": 55,
+            "line_to": 55,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -448,8 +424,8 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSalesOrderThresholdType on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -460,8 +436,8 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getThresholdGroup on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -472,8 +448,8 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -484,8 +460,8 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 63,
+            "line_to": 63,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -496,8 +472,8 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 64,
+            "line_to": 64,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\Translation\\MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator::getMerchantRelationshipIdentifier cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -508,8 +484,8 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 77,
+            "line_to": 77,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -520,8 +496,8 @@
         },
         {
             "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
+            "line_from": 88,
+            "line_to": 88,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireSalesOrderThresholdType on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -532,8 +508,8 @@
         },
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireThresholdGroup on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -544,8 +520,8 @@
         },
         {
             "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -556,8 +532,8 @@
         },
         {
             "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -568,8 +544,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 99,
+            "line_to": 99,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator.php",
@@ -640,12 +616,24 @@
         },
         {
             "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Business\\Translation\\MerchantRelationshipSalesOrderThresholdTranslationWriter::createTranslationsLocaleMap expects Traversable<mixed, Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
+            "snippet": "            $this->createTranslationsLocaleMap($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages()),",
+            "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 63,
             "line_to": 63,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdToGlossaryFacadeInterface::deleteKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
-            "snippet": "            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()",
+            "snippet": "            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),",
             "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()",
             "error_level": 3,
             "shortcode": 78
@@ -657,22 +645,10 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMessageGlossaryKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
-            "snippet": "            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()",
+            "snippet": "            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),",
             "selected_text": "getMessageGlossaryKey",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $salesOrderThresholdLocalizedMessageTransfers has wrong type 'Traversable|array<array-key, Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
-            "snippet": "     * @param \\Traversable|\\Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer[] $salesOrderThresholdLocalizedMessageTransfers",
-            "selected_text": "\\Traversable|\\Generated\\Shared\\Transfer\\SalesOrderThresholdLocalizedMessageTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -685,18 +661,6 @@
             "selected_text": "$translationsByLocale",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\KeyTranslationTransfer::setGlossaryKey expects int|null, null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Business/Translation/MerchantRelationshipSalesOrderThresholdTranslationWriter.php",
-            "snippet": "            ->setGlossaryKey($salesOrderThresholdValueTransfer->getMessageGlossaryKey())",
-            "selected_text": "$salesOrderThresholdValueTransfer->getMessageGlossaryKey()",
-            "error_level": 4,
-            "shortcode": 12
         },
         {
             "severity": "info",
@@ -789,7 +753,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\SalesOrderThreshold\\Persistence\\SpySalesOrderThreshold::setMessageGlossaryKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/MerchantRelationshipSalesOrderThresholdEntityManager.php",
-            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()",
+            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),",
             "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()",
             "error_level": 3,
             "shortcode": 78
@@ -801,7 +765,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMessageGlossaryKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/MerchantRelationshipSalesOrderThresholdEntityManager.php",
-            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey()",
+            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),",
             "selected_text": "getMessageGlossaryKey",
             "error_level": 3,
             "shortcode": 83
@@ -825,7 +789,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\SpyMerchantRelationshipSalesOrderThreshold::setFkMerchantRelationship cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/MerchantRelationshipSalesOrderThresholdEntityManager.php",
-            "snippet": "                $merchantRelationshipTransfer->getIdMerchantRelationship()",
+            "snippet": "                $merchantRelationshipTransfer->getIdMerchantRelationship(),",
             "selected_text": "$merchantRelationshipTransfer->getIdMerchantRelationship()",
             "error_level": 3,
             "shortcode": 78
@@ -849,7 +813,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\MerchantRelationshipSalesOrderThreshold\\Persistence\\SpyMerchantRelationshipSalesOrderThreshold::setFkSalesOrderThresholdType cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/MerchantRelationshipSalesOrderThresholdEntityManager.php",
-            "snippet": "                $salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType()",
+            "snippet": "                $salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType(),",
             "selected_text": "$salesOrderThresholdTypeTransfer->getIdSalesOrderThresholdType()",
             "error_level": 3,
             "shortcode": 78
@@ -873,7 +837,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of findOneByIdMerchantRelationshipSalesOrderThreshold cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/MerchantRelationshipSalesOrderThresholdEntityManager.php",
-            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()",
+            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold(),",
             "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()",
             "error_level": 3,
             "shortcode": 78
@@ -957,7 +921,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of findOneByIdMerchantRelationshipSalesOrderThreshold cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/MerchantRelationshipSalesOrderThresholdRepository.php",
-            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()",
+            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold(),",
             "selected_text": "$merchantRelationshipSalesOrderThresholdTransfer->getIdMerchantRelationshipSalesOrderThreshold()",
             "error_level": 3,
             "shortcode": 78
@@ -993,7 +957,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method fromArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThreshold/src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Persistence/Propel/Mapper/MerchantRelationshipSalesOrderThresholdMapper.php",
-            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->fromArray($merchantRelationshipSalesOrderThresholdEntity->toArray(), true)",
+            "snippet": "                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->fromArray($salesOrderThresholdEntity->toArray(), true)",
             "selected_text": "fromArray",
             "error_level": 3,
             "shortcode": 83

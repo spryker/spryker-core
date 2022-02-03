@@ -2,20 +2,20 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 89,
+            "line_to": 89,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesQuantity\\Business\\Cart\\Expander\\ItemExpander::getSkusFromCartChangeTransfer is incorrect, got 'list<mixed|null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Cart/Expander/ItemExpander.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 98,
+            "line_to": 98,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesQuantity\\Business\\Cart\\Expander\\ItemExpander::getSkusFromCartChangeTransfer",
             "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Cart/Expander/ItemExpander.php",
@@ -26,6 +26,18 @@
         }
     ],
     "warning": [
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedIsQuantitySplittableData using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Cart/Expander/ItemExpander.php",
+            "snippet": "            $isQuantitySplittable = $indexedIsQuantitySplittableData[$itemTransfer->getSku()] ?? false;",
+            "selected_text": "$indexedIsQuantitySplittableData",
+            "error_level": 3,
+            "shortcode": 125
+        },
         {
             "severity": "info",
             "line_from": 31,
@@ -133,25 +145,13 @@
             "selected_text": "append",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Persistence/SalesQuantityRepository.php",
-            "snippet": "            ->getArrayCopy();",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 47,
+            "line_to": 47,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/SalesQuantityBusinessFactory.php",
@@ -186,8 +186,8 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
+            "line_from": 42,
+            "line_to": 42,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SalesQuantity\\SalesQuantityDependencyProvider::addProductFacade has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/SalesQuantityDependencyProvider.php",
@@ -198,8 +198,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 58,
+            "line_to": 58,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeBridge is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/SalesQuantityDependencyProvider.php",

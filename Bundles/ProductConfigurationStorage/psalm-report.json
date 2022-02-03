@@ -2,54 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Client\\ProductConfigurationStorage\\Mapper\\ProductConfigurationStorageMapper::mapProductConfigurationStorageDataToProductConfigurationStorageTransfer has wrong name $productConfigurationStorageTransfer, expecting $configurationStorageTransfer as defined by Spryker\\Client\\ProductConfigurationStorage\\Mapper\\ProductConfigurationStorageMapperInterface::mapProductConfigurationStorageDataToProductConfigurationStorageTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Mapper/ProductConfigurationStorageMapper.php",
-            "snippet": "        ProductConfigurationStorageTransfer $productConfigurationStorageTransfer",
-            "selected_text": "$productConfigurationStorageTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationStorage\\Plugin\\PersistentCart\\ProductConfigurationPersistentCartRequestExpanderPlugin::extend has wrong name $persistentCartChangeTransfer, expecting $cartChangeTransfer as defined by Spryker\\Client\\PersistentCartExtension\\Dependency\\Plugin\\PersistentCartChangeExpanderPluginInterface::extend",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Plugin/PersistentCart/ProductConfigurationPersistentCartRequestExpanderPlugin.php",
-            "snippet": "    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer",
-            "selected_text": "$persistentCartChangeTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductConfigurationStorage\\Communication\\Plugin\\Publisher\\ProductConfiguration\\ProductConfigurationDeletePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/Communication/Plugin/Publisher/ProductConfiguration/ProductConfigurationDeletePublisherPlugin.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductConfigurationStorage\\Communication\\Plugin\\Publisher\\ProductConfiguration\\ProductConfigurationWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/Communication/Plugin/Publisher/ProductConfiguration/ProductConfigurationWritePublisherPlugin.php",
-            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
-            "selected_text": "$eventTransfers",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 35,
             "line_to": 37,
             "type": "InvalidReturnStatement",
@@ -64,75 +16,27 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationStorage\\Reader\\ProductConfigurationInstanceReaderInterface::findProductConfigurationInstanceBySku cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Expander/ProductConfigurationInstanceCartChangeExpander.php",
-            "snippet": "            $itemTransfer->getSku()",
-            "selected_text": "$itemTransfer->getSku()",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Expander/PriceProductFilterExpander.php",
+            "snippet": "        if (!$productConfigurationInstance || !$productConfigurationInstance->getPrices()->count()) {",
+            "selected_text": "count",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationStorage\\Reader\\ProductConfigurationInstanceReaderInterface::findProductConfigurationInstanceBySku cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Expander/ProductViewExpander.php",
-            "snippet": "            ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());",
-            "selected_text": "$productViewTransfer->getSku()",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConfigurationInstanceTransfers[$sku] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Mapper/ProductConfigurationInstanceMapper.php",
+            "snippet": "            $productConfigurationInstanceTransfers[$sku] = $this->mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer(",
+            "selected_text": "$productConfigurationInstanceTransfers",
             "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'bool' for Spryker\\Client\\ProductConfigurationStorage\\Reader\\ProductConfigurationAvailabilityReader::isProductConcreteAvailable is not nullable, but 'bool|null' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Reader/ProductConfigurationAvailabilityReader.php",
-            "snippet": "     * @return bool",
-            "selected_text": "bool",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'bool' for Spryker\\Client\\ProductConfigurationStorage\\Reader\\ProductConfigurationAvailabilityReader::isProductConcreteAvailable is not nullable, but the function returns 'bool|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Reader/ProductConfigurationAvailabilityReader.php",
-            "snippet": "            return $productViewTransfer->getAvailable();",
-            "selected_text": "$productViewTransfer->getAvailable()",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationStorage\\Reader\\ProductConfigurationInstanceReaderInterface::findProductConfigurationInstanceBySku cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Reader/ProductConfigurationAvailabilityReader.php",
-            "snippet": "            ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());",
-            "selected_text": "$productViewTransfer->getSku()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationStorage\\Reader\\ProductConfigurationInstanceReaderInterface::findProductConfigurationInstanceBySku cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Client/ProductConfigurationStorage/Reader/ProductConfigurationPriceReader.php",
-            "snippet": "            $productConcreteTransfer->getSku()",
-            "selected_text": "$productConcreteTransfer->getSku()",
-            "error_level": 3,
-            "shortcode": 78
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -148,20 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getProductConfigurationConfiguratorKey on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Service/ProductConfigurationStorage/Filter/PriceProductConfigurationFilter.php",
-            "snippet": "            return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() !== null;",
-            "selected_text": "getProductConfigurationConfiguratorKey",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductConfigurationTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/Communication/Plugin/Publisher/ProductConfigurationPublisherTriggerPlugin.php",
@@ -181,18 +73,6 @@
             "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductConfigurationStorage\\Persistence\\SpyProductConfigurationStorage[]",
             "error_level": 4,
             "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Orm\\Zed\\ProductConfigurationStorage\\Persistence\\SpyProductConfigurationStorage::setSku cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/Persistence/Propel/Mapper/ProductConfigurationStorageMapper.php",
-            "snippet": "        $productConfigurationStorageEntity->setSku($productConfigurationStorageTransfer->getSku());",
-            "selected_text": "$productConfigurationStorageTransfer->getSku()",
-            "error_level": 3,
-            "shortcode": 78
         }
     ],
     "deprecation": []

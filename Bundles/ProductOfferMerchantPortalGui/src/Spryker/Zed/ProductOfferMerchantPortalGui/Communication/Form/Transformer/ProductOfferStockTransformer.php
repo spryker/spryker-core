@@ -14,25 +14,25 @@ use Symfony\Component\Form\DataTransformerInterface;
 class ProductOfferStockTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $value
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function transform($productOfferStockTransfers): ProductOfferStockTransfer
+    public function transform($value): ProductOfferStockTransfer
     {
         /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
-        $productOfferStockTransfer = $productOfferStockTransfers[0];
+        $productOfferStockTransfer = $value[0];
 
         return $productOfferStockTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
-    public function reverseTransform($productOfferStockTransfer): ArrayObject
+    public function reverseTransform($value): ArrayObject
     {
-        return (new ArrayObject([$productOfferStockTransfer]));
+        return (new ArrayObject([$value]));
     }
 }

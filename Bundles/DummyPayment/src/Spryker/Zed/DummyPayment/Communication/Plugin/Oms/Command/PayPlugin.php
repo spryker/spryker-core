@@ -24,13 +24,13 @@ class PayPlugin extends AbstractPlugin implements CommandByOrderInterface
      *
      * @api
      *
-     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return array
      */
-    public function run(array $salesOrderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
+    public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         return [];
     }

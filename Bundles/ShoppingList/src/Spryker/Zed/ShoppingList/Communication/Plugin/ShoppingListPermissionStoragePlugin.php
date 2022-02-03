@@ -23,12 +23,12 @@ class ShoppingListPermissionStoragePlugin extends AbstractPlugin implements Perm
      *
      * @api
      *
-     * @param string|int $idCompanyUser
+     * @param string|int $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionCollection($idCompanyUser): PermissionCollectionTransfer
+    public function getPermissionCollection($identifier): PermissionCollectionTransfer
     {
-        return $this->getFacade()->findCompanyUserPermissions((int)$idCompanyUser);
+        return $this->getFacade()->findCompanyUserPermissions((int)$identifier);
     }
 }

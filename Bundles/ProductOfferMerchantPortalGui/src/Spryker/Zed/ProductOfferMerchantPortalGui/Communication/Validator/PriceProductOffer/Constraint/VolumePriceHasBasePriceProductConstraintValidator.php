@@ -29,27 +29,27 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\Constraint\VolumePriceHasBasePriceProductConstraint $volumePriceHasBasePriceProductConstraint
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $value
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\Constraint\VolumePriceHasBasePriceProductConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($priceProductOfferCollectionTransfer, Constraint $volumePriceHasBasePriceProductConstraint): void
+    public function validate($value, Constraint $constraint): void
     {
-        if (!$priceProductOfferCollectionTransfer instanceof PriceProductOfferCollectionTransfer) {
-            throw new UnexpectedTypeException($priceProductOfferCollectionTransfer, PriceProductOfferCollectionTransfer::class);
+        if (!$value instanceof PriceProductOfferCollectionTransfer) {
+            throw new UnexpectedTypeException($value, PriceProductOfferCollectionTransfer::class);
         }
 
-        if (!$volumePriceHasBasePriceProductConstraint instanceof VolumePriceHasBasePriceProductConstraint) {
-            throw new UnexpectedTypeException($volumePriceHasBasePriceProductConstraint, VolumePriceHasBasePriceProductConstraint::class);
+        if (!$constraint instanceof VolumePriceHasBasePriceProductConstraint) {
+            throw new UnexpectedTypeException($constraint, VolumePriceHasBasePriceProductConstraint::class);
         }
 
-        foreach ($priceProductOfferCollectionTransfer->getPriceProductOffers() as $priceProductOfferIndex => $priceProductOfferTransfer) {
+        foreach ($value->getPriceProductOffers() as $priceProductOfferIndex => $priceProductOfferTransfer) {
             $this->validatePriceProductOffer(
                 $priceProductOfferTransfer,
-                $volumePriceHasBasePriceProductConstraint,
+                $constraint,
                 $priceProductOfferIndex,
             );
         }

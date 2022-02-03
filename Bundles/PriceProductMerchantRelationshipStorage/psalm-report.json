@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "ParamNameMismatch",
-            "message": "Argument 2 of Spryker\\Client\\PriceProductMerchantRelationshipStorage\\Storage\\PriceProductMerchantRelationshipAbstractReader::findProductAbstractPrices has wrong name $idCompanyBusinessUnit, expecting $idCompanyCompanyBusinessUnit as defined by Spryker\\Client\\PriceProductMerchantRelationshipStorage\\Storage\\PriceProductMerchantRelationshipAbstractReaderInterface::findProductAbstractPrices",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Client/PriceProductMerchantRelationshipStorage/Storage/PriceProductMerchantRelationshipAbstractReader.php",
-            "snippet": "    public function findProductAbstractPrices(int $idProductAbstract, int $idCompanyBusinessUnit): array",
-            "selected_text": "$idCompanyBusinessUnit",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 45,
             "line_to": 45,
             "type": "InvalidArgument",
@@ -59,18 +47,6 @@
             "selected_text": "$companyBusinessUnitIds",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Persistence\\Mapper\\CompanyBusinessUnitPriceProductMapper::mapPriceProductMerchantRelationshipArrayToTransfers has wrong name $priceProductMerchantRelationshipsData, expecting $priceProductMerchantRelationships as defined by Spryker\\Zed\\PriceProductMerchantRelationshipStorage\\Persistence\\Mapper\\CompanyBusinessUnitPriceProductMapperInterface::mapPriceProductMerchantRelationshipArrayToTransfers",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipStorage/src/Spryker/Zed/PriceProductMerchantRelationshipStorage/Persistence/Mapper/CompanyBusinessUnitPriceProductMapper.php",
-            "snippet": "    public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipsData): array",
-            "selected_text": "$priceProductMerchantRelationshipsData",
-            "error_level": 7,
-            "shortcode": 230
         },
         {
             "severity": "error",

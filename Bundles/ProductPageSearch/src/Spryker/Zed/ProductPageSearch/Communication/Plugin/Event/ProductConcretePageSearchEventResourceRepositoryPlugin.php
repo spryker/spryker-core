@@ -41,13 +41,13 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
      *
      * @api
      *
-     * @param array<int> $productIds
+     * @param array<int> $ids Product IDs.
      *
      * @return array<\Generated\Shared\Transfer\SpyProductEntityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
-    public function getData(array $productIds = []): array
+    public function getData(array $ids = []): array
     {
-        return $this->getRepository()->getProductEntityTransfers($productIds);
+        return $this->getRepository()->getProductEntityTransfers($ids);
     }
 
     /**

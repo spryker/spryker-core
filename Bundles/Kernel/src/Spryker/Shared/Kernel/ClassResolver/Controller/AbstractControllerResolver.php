@@ -26,21 +26,21 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
     protected $bundleControllerAction;
 
     /**
-     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $callerClass
      *
      * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
      * @return object
      */
-    public function resolve($bundleControllerAction)
+    public function resolve($callerClass)
     {
-        $this->bundleControllerAction = $bundleControllerAction;
+        $this->bundleControllerAction = $callerClass;
 
         if ($this->canResolve()) {
             return $this->getResolvedClassInstance();
         }
 
-        throw new ControllerNotFoundException($bundleControllerAction);
+        throw new ControllerNotFoundException($callerClass);
     }
 
     /**

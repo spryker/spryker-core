@@ -87,11 +87,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int $orderId
+     * @param int $idOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
      */
-    public function querySalesExpensesByOrderId($orderId);
+    public function querySalesExpensesByOrderId($idOrder);
 
     /**
      * Specification:

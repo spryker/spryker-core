@@ -14,16 +14,16 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 class LessEqual implements ComparatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ClauseTransfer $compareWithValue
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
      *
      * @return bool
      */
-    public function compare(ClauseTransfer $compareWithValue, $withValue)
+    public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
         $this->isValidValue($withValue);
 
-        return $withValue <= $compareWithValue->getValue();
+        return $withValue <= $clauseTransfer->getValue();
     }
 
     /**

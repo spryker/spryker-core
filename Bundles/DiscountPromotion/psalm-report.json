@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Yves\\DiscountPromotion\\Mapper\\PromotionProductMapper::getSelectedAttributes cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Yves\\DiscountPromotion\\Dependency\\Client\\DiscountPromotionToProductInterface::getProductAbstractFromStorageByIdForCurrentLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null int|null",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPromotionItems on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/Cart/CartValidator.php",
@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 97,
+            "line_to": 97,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $groupedByIdAvailablePromotionItemTransfers[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/Cart/CartValidator.php",
@@ -80,7 +80,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Zed\\DiscountPromotion\\Business\\Model\\DiscountCollectorStrategy\\PromotionAvailabilityCalculatorInterface::getMaximumQuantityBasedOnAvailability cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/Model/DiscountCollectorStrategy/DiscountPromotionCollectorStrategy.php",
-            "snippet": "            $quoteTransfer->getStore()",
+            "snippet": "            $quoteTransfer->getStore(),",
             "selected_text": "$quoteTransfer->getStore()",
             "error_level": 3,
             "shortcode": 78
@@ -192,6 +192,18 @@
             "selected_text": "setCollectorStrategyType",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\DiscountPromotion\\Communication\\Form\\DiscountPromotionFormType::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Form/DiscountPromotionFormType.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -351,8 +363,8 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 38,
+            "line_to": 38,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getDiscountPromotion on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/PromotionCollectedDiscountGroupingStrategyPlugin.php",

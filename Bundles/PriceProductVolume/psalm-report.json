@@ -1,23 +1,34 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\PriceProductVolume\\PriceExtractor\\VolumePriceExtractor\\VolumePriceExtractor::extractProductPricesForProductConcrete has wrong name $idProductConcrete, expecting $idProductAbstract as defined by Spryker\\Client\\PriceProductVolume\\PriceExtractor\\VolumePriceExtractor\\VolumePriceExtractorInterface::extractProductPricesForProductConcrete",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
-            "snippet": "    public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array",
-            "selected_text": "$idProductConcrete",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
             "line_from": 95,
             "line_to": 95,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceDataByPriceType on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
+            "snippet": "        $priceDataByPriceType = $priceProductTransfer->getMoneyValue()->getPriceDataByPriceType();",
+            "selected_text": "getPriceDataByPriceType",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
+            "snippet": "            ->fromArray($priceProductTransfer->getMoneyValue()->toArray())",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 136,
+            "line_to": 136,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPriceData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -28,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 141,
+            "line_to": 141,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\PriceProductVolume\\Dependency\\Service\\PriceProductVolumeToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -40,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 141,
+            "line_to": 141,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPriceData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -52,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
+            "line_from": 170,
+            "line_to": 170,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -64,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
+            "line_from": 176,
+            "line_to": 176,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setGrossAmount on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -76,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
+            "line_from": 195,
+            "line_to": 195,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setPriceData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -93,10 +104,82 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Service\\PriceProductVolume\\Plugin\\PriceProductExtension\\PriceProductVolumeFilterPlugin::getMinPrice cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Service/PriceProductVolume/Plugin/PriceProductExtension/PriceProductVolumeFilterPlugin.php",
-            "snippet": "            $priceProductFilterTransfer->getQuantity()",
+            "snippet": "            $priceProductFilterTransfer->getQuantity(),",
             "selected_text": "$priceProductFilterTransfer->getQuantity()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Service\\PriceProductVolume\\Dependency\\Service\\PriceProductVolumeToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Service/PriceProductVolume/Reader/VolumePriceReader.php",
+            "snippet": "            $priceProductTransfer->getMoneyValueOrFail()->getPriceData(),",
+            "selected_text": "$priceProductTransfer->getMoneyValueOrFail()->getPriceData()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 146,
+            "line_to": 146,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Service\\PriceProductVolume\\Dependency\\Service\\PriceProductVolumeToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Service/PriceProductVolume/Updater/VolumePriceUpdater.php",
+            "snippet": "            $priceProductTransfer->getMoneyValueOrFail()->getPriceData(),",
+            "selected_text": "$priceProductTransfer->getMoneyValueOrFail()->getPriceData()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductVolume\\Business\\Validator\\Constraint\\DefaultPriceTypeConstraintValidator::validate has the more specific type 'Generated\\Shared\\Transfer\\PriceProductTransfer', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/Validator/Constraint/DefaultPriceTypeConstraintValidator.php",
+            "snippet": "    public function validate($value, Constraint $constraint)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductVolume\\Business\\Validator\\Constraint\\UniqueVolumePriceConstraintValidator::validate has the more specific type 'ArrayObject<int, Generated\\Shared\\Transfer\\PriceProductTransfer>', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/Validator/Constraint/UniqueVolumePriceConstraintValidator.php",
+            "snippet": "    public function validate($value, Constraint $constraint): void",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductVolume\\Business\\Validator\\Constraint\\ValidGrossNetPriceConstraintValidator::validate has the more specific type 'Generated\\Shared\\Transfer\\PriceProductTransfer', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/Validator/Constraint/ValidGrossNetPriceConstraintValidator.php",
+            "snippet": "    public function validate($value, Constraint $constraint): void",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductVolume\\Business\\Validator\\Constraint\\VolumePriceHasBasePriceProductConstraintValidator::validate has the more specific type 'ArrayObject<int, Generated\\Shared\\Transfer\\PriceProductTransfer>', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/Validator/Constraint/VolumePriceHasBasePriceProductConstraintValidator.php",
+            "snippet": "    public function validate($value, Constraint $constraint): void",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -186,8 +269,8 @@
         },
         {
             "severity": "info",
-            "line_from": 138,
-            "line_to": 138,
+            "line_from": 179,
+            "line_to": 179,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\PriceProductVolume\\PriceExtractor\\VolumePriceExtractor\\VolumePriceExtractor::setPriceData has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/PriceExtractor/VolumePriceExtractor/VolumePriceExtractor.php",

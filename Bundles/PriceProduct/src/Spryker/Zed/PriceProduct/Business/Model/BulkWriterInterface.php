@@ -19,11 +19,11 @@ interface BulkWriterInterface
     public function setPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
      * @return void

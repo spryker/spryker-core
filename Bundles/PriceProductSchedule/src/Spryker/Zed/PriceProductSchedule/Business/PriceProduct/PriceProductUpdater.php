@@ -38,27 +38,27 @@ class PriceProductUpdater implements PriceProductUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $fallbackPriceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $currentPriceType
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function updateCurrentPriceProduct(
-        PriceProductTransfer $fallbackPriceProductTransfer,
+        PriceProductTransfer $priceProductTransfer,
         PriceTypeTransfer $currentPriceType
     ): ?PriceProductTransfer {
-        $fallbackPriceProductTransfer->requireMoneyValue();
-        $fallbackMoneyValueTransfer = $fallbackPriceProductTransfer->getMoneyValue();
+        $priceProductTransfer->requireMoneyValue();
+        $fallbackMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setPriceTypeName($currentPriceType->getName())
             ->setCurrencyIsoCode($fallbackMoneyValueTransfer->getCurrency()->getCode());
 
-        if ($fallbackPriceProductTransfer->getSkuProductAbstract() !== null) {
-            $priceProductFilterTransfer->setSku($fallbackPriceProductTransfer->getSkuProductAbstract());
+        if ($priceProductTransfer->getSkuProductAbstract() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());
         }
 
-        if ($fallbackPriceProductTransfer->getSkuProduct() !== null) {
-            $priceProductFilterTransfer->setSku($fallbackPriceProductTransfer->getSkuProduct());
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProduct());
         }
 
         $priceProductTransferForUpdate = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);

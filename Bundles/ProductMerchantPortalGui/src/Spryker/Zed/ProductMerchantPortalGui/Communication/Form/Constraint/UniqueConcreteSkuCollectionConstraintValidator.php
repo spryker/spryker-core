@@ -15,26 +15,26 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueConcreteSkuCollectionConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @param array<mixed> $concreteProducts
+     * @param array<mixed> $value Concrete products that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($concreteProducts, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueConcreteSkuCollectionConstraint) {
             throw new UnexpectedTypeException($constraint, UniqueConcreteSkuCollectionConstraint::class);
         }
 
-        if (!is_array($concreteProducts)) {
-            throw new UnexpectedTypeException($concreteProducts, 'array');
+        if (!is_array($value)) {
+            throw new UnexpectedTypeException($value, 'array');
         }
 
         $skuCounts = [];
 
-        foreach ($concreteProducts as $concreteProduct) {
+        foreach ($value as $concreteProduct) {
             $sku = $concreteProduct[ProductConcreteTransfer::SKU];
 
             if (!isset($skuCounts[$sku])) {
@@ -44,7 +44,7 @@ class UniqueConcreteSkuCollectionConstraintValidator extends AbstractConstraintV
             $skuCounts[$sku] = ++$skuCounts[$sku];
         }
 
-        foreach ($concreteProducts as $index => $concreteProduct) {
+        foreach ($value as $index => $concreteProduct) {
             $sku = $concreteProduct[ProductConcreteTransfer::SKU];
 
             if ($skuCounts[$sku] > 1) {

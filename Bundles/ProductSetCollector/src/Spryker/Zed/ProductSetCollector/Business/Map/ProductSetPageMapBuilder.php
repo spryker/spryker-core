@@ -46,14 +46,14 @@ class ProductSetPageMapBuilder implements PageMapInterface
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $productSetData
+     * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productSetData, LocaleTransfer $localeTransfer)
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer)
     {
-        $productSetStorageTransfer = $this->mapProductSetStorageTransfer($productSetData, $localeTransfer);
+        $productSetStorageTransfer = $this->mapProductSetStorageTransfer($data, $localeTransfer);
 
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($this->storeFacade->getCurrentStore()->getNameOrFail())

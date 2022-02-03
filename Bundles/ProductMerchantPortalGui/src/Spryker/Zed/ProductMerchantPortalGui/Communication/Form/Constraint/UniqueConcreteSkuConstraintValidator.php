@@ -17,16 +17,16 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueConcreteSkuConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @param string $sku
+     * @param string $value Sku that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($sku, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
-        if (!$sku) {
+        if (!$value) {
             return;
         }
 
@@ -34,7 +34,7 @@ class UniqueConcreteSkuConstraintValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueConcreteSkuConstraint::class);
         }
 
-        if ($this->getFactory()->getProductFacade()->hasProductConcrete($sku)) {
+        if ($this->getFactory()->getProductFacade()->hasProductConcrete($value)) {
             $this->context->buildViolation($constraint->getMessage())->addViolation();
         }
     }

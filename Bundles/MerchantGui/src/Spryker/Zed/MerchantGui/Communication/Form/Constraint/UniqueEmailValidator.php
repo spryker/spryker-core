@@ -22,16 +22,16 @@ class UniqueEmailValidator extends ConstraintValidator
     /**
      * Checks if the passed email is unique.
      *
-     * @param string|null $email
+     * @param string|null $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($email, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
-        if (!$email) {
+        if (!$value) {
             return;
         }
 
@@ -40,7 +40,7 @@ class UniqueEmailValidator extends ConstraintValidator
         }
 
         $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
-        $merchantCriteriaTransfer->setEmail($email);
+        $merchantCriteriaTransfer->setEmail($value);
         $merchantTransfer = $constraint->getMerchantFacade()->findOne($merchantCriteriaTransfer);
         if ($merchantTransfer === null) {
             return;

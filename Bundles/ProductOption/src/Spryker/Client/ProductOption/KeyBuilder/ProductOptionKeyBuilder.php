@@ -15,13 +15,13 @@ class ProductOptionKeyBuilder implements KeyBuilderInterface
     use KeyBuilderTrait;
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $data
      *
      * @return string
      */
-    protected function buildKey($idAbstractProduct)
+    protected function buildKey($data)
     {
-        return 'product_option.' . $idAbstractProduct;
+        return 'product_option.' . $data;
     }
 
     /**

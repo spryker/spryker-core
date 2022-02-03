@@ -39,14 +39,14 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct ID product concrete.
      * @param string $localeName
      *
      * @return array|null
      */
-    protected function findProductStorageData(int $idProductConcrete, string $localeName): ?array
+    protected function findProductStorageData(int $idProduct, string $localeName): ?array
     {
-        return $this->productConcreteStorage->findProductConcreteStorageData($idProductConcrete, $localeName);
+        return $this->productConcreteStorage->findProductConcreteStorageData($idProduct, $localeName);
     }
 
     /**

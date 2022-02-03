@@ -28,26 +28,26 @@ class ReorderPersistentCartChangeExpanderPlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
+    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         if (!isset($params[static::PARAM_ORDER_REFERENCE])) {
-            return $cartChangeTransfer;
+            return $persistentCartChangeTransfer;
         }
 
         $quoteUpdateRequestAttributes = new QuoteUpdateRequestAttributesTransfer();
-        if ($cartChangeTransfer->getQuoteUpdateRequestAttributes()) {
-            $quoteUpdateRequestAttributes = $cartChangeTransfer->getQuoteUpdateRequestAttributes();
+        if ($persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()) {
+            $quoteUpdateRequestAttributes = $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes();
         }
         $quoteUpdateRequestAttributes->setName(
             sprintf($this->getFactory()->getMultiCartConfig()->getReorderQuoteName(), $params[static::PARAM_ORDER_REFERENCE]),
         );
-        $cartChangeTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
+        $persistentCartChangeTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
 
-        return $cartChangeTransfer;
+        return $persistentCartChangeTransfer;
     }
 }

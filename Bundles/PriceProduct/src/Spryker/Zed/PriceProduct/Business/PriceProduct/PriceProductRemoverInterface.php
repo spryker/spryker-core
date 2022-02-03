@@ -14,9 +14,9 @@ interface PriceProductRemoverInterface
     /**
      * @deprecated Please try to avoid removing price product store. Use \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover::removePriceProductDefaultsForPriceProduct.
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
-    public function removePriceProductStore(PriceProductTransfer $transferPriceProduct): void;
+    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void;
 }

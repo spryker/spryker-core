@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface PriceProductDefaultRemoverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
-    public function removePriceProductDefaultsForPriceProduct(PriceProductTransfer $transferPriceProduct): void;
+    public function removePriceProductDefaultsForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
 }

@@ -1,23 +1,10 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ContentBannerGui\\Communication\\Form\\Constraints\\ContentBannerConstraintValidator::validate has wrong name $bannerData, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/Constraints/ContentBannerConstraintValidator.php",
-            "snippet": "    public function validate($bannerData, Constraint $constraint): void",
-            "selected_text": "$bannerData",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 84,
+            "line_to": 84,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/BannerContentTermForm.php",
@@ -28,27 +15,27 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
+            "line_from": 122,
+            "line_to": 122,
             "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ContentBannerGui\\Communication\\Form\\Constraints\\ContentBannerConstraintValidator::validate has the more specific type 'string', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/Constraints/ContentBannerConstraintValidator.php",
-            "snippet": "    public function validate($bannerData, Constraint $constraint): void",
-            "selected_text": "$bannerData",
+            "message": "Argument 2 of Spryker\\Zed\\ContentBannerGui\\Communication\\Form\\BannerContentTermForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/BannerContentTermForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
             "error_level": 5,
             "shortcode": 140
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of strtr cannot be null, possibly null value provided",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\ContentBannerGui\\Communication\\Form\\Constraints\\ContentBannerConstraintValidator::validate has the more specific type 'null|string', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
             "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/Constraints/ContentBannerConstraintValidator.php",
-            "snippet": "            $text = strtr($messageTransfer->getValue(), $messageTransfer->getParameters());",
-            "selected_text": "$messageTransfer->getValue()",
-            "error_level": 3,
-            "shortcode": 78
+            "snippet": "    public function validate($value, Constraint $constraint): void",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -59,18 +46,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/Constraints/ContentBannerConstraintValidator.php",
             "snippet": "                ->atPath(sprintf('[%s]', $parameterMessageTransfer->getParameter()))",
             "selected_text": "$parameterMessageTransfer->getParameter()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 77,
-            "line_to": 77,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\ContentBannerTermTransfer::fromArray cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/Constraints/ContentBannerConstraintValidator.php",
-            "snippet": "            $contentBannerTermTransfer->fromArray($bannerData);",
-            "selected_text": "$bannerData",
             "error_level": 3,
             "shortcode": 78
         }

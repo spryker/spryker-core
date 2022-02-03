@@ -29,21 +29,21 @@ class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin i
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
+    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         if (!empty($params[static::PARAM_SEPARATE_PRODUCT])) {
-            $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteById($cartChangeTransfer->getIdQuote());
+            $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteById($persistentCartChangeTransfer->getIdQuote());
             if ($quoteTransfer) {
-                $this->addSeparatorToItems($cartChangeTransfer, $quoteTransfer);
+                $this->addSeparatorToItems($persistentCartChangeTransfer, $quoteTransfer);
             }
         }
 
-        return $cartChangeTransfer;
+        return $persistentCartChangeTransfer;
     }
 
     /**

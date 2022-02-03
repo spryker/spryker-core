@@ -17,14 +17,14 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContentFileListConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param array<int> $fileIds The value that should be validated
+     * @param array<int> $value File ids that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
      *
      * @return void
      */
-    public function validate($fileIds, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ContentFileListConstraint) {
             throw new InvalidArgumentException(sprintf(
@@ -35,7 +35,7 @@ class ContentFileListConstraintValidator extends ConstraintValidator
         }
 
         $contentFileListTermTransfer = new ContentFileListTermTransfer();
-        $contentFileListTermTransfer->setFileIds($fileIds);
+        $contentFileListTermTransfer->setFileIds($value);
 
         $contentValidationResponseTransfer = $constraint
             ->getContentFileFacade()

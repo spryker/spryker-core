@@ -23,17 +23,17 @@ class QuoteSelectorPersistentCartChangeExpanderPlugin implements PersistentCartC
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
+    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         if (isset($params[static::PARAM_ID_QUOTE])) {
-            $cartChangeTransfer->setIdQuote($params[static::PARAM_ID_QUOTE]);
+            $persistentCartChangeTransfer->setIdQuote($params[static::PARAM_ID_QUOTE]);
         }
 
-        return $cartChangeTransfer;
+        return $persistentCartChangeTransfer;
     }
 }

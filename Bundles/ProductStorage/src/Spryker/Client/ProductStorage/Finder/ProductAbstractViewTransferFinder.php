@@ -50,14 +50,14 @@ class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinde
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProduct ID product abstract.
      * @param string $localeName
      *
      * @return array|null
      */
-    protected function findProductStorageData(int $idProductAbstract, string $localeName): ?array
+    protected function findProductStorageData(int $idProduct, string $localeName): ?array
     {
-        return $this->productAbstractStorageReader->findProductAbstractStorageData($idProductAbstract, $localeName);
+        return $this->productAbstractStorageReader->findProductAbstractStorageData($idProduct, $localeName);
     }
 
     /**

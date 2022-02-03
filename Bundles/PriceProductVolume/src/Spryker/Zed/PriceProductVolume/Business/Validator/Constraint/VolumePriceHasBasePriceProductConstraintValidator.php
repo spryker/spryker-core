@@ -32,16 +32,16 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($priceProductTransfers, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
-        if (!$priceProductTransfers instanceof ArrayObject) {
+        if (!$value instanceof ArrayObject) {
             throw new UnexpectedTypeException($constraint, ArrayObject::class);
         }
 
@@ -49,7 +49,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends ConstraintValida
             throw new UnexpectedTypeException($constraint, VolumePriceHasBasePriceProductConstraint::class);
         }
 
-        foreach ($priceProductTransfers as $priceProductIndex => $priceProductTransfer) {
+        foreach ($value as $priceProductIndex => $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
             $volumePriceProductTransfers = $constraint->getVolumePriceExtractor()
                 ->extractPriceProductVolumeTransfersFromArray([$priceProductTransfer]);

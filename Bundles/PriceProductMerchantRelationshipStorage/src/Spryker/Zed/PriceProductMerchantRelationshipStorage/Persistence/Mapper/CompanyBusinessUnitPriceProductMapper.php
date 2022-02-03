@@ -18,14 +18,14 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
     protected const PRICE_KEY_SEPARATOR = ':';
 
     /**
-     * @param array $priceProductMerchantRelationshipsData
+     * @param array $priceProductMerchantRelationshipTransfers
      *
      * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
      */
-    public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipsData): array
+    public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipTransfers): array
     {
         $pricesByKey = [];
-        foreach ($priceProductMerchantRelationshipsData as $priceProductMerchantRelationshipData) {
+        foreach ($priceProductMerchantRelationshipTransfers as $priceProductMerchantRelationshipData) {
             $uniquePriceIndex = $this->createUniquePriceIndex($priceProductMerchantRelationshipData);
             if (!isset($pricesByKey[$uniquePriceIndex])) {
                 $pricesByKey[$uniquePriceIndex] = $this->createPriceProductMerchantRelationshipStorageTransfer(

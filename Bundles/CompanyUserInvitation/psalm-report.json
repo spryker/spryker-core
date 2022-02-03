@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 179,
-            "line_to": 179,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Persistence\\CompanyUserInvitationRepository::buildQueryFromCriteria has wrong name $criteria, expecting $modelCriteria as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::buildQueryFromCriteria",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Persistence/CompanyUserInvitationRepository.php",
-            "snippet": "    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria",
-            "selected_text": "$criteria",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -177,7 +164,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/Importer/InvitationImporter.php",
-            "snippet": "                        $companyUserInvitationCreateResponseTransfer->getError()",
+            "snippet": "                        $companyUserInvitationCreateResponseTransfer->getError(),",
             "selected_text": "$companyUserInvitationCreateResponseTransfer->getError()",
             "error_level": 3,
             "shortcode": 78
@@ -189,7 +176,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/Mailer/InvitationMailer.php",
-            "snippet": "            $companyUserInvitationTransfer->getHash()",
+            "snippet": "            $companyUserInvitationTransfer->getHash(),",
             "selected_text": "$companyUserInvitationTransfer->getHash()",
             "error_level": 3,
             "shortcode": 78
@@ -225,7 +212,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Persistence\\CompanyUserInvitationRepositoryInterface::getCompanyUserInvitationCollection cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/Reader/InvitationReader.php",
-            "snippet": "            $companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter()",
+            "snippet": "            $companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter(),",
             "selected_text": "$companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter()",
             "error_level": 3,
             "shortcode": 78
@@ -249,7 +236,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Business\\Model\\Reader\\InvitationReaderInterface::findCompanyUserInvitationById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/Sender/InvitationSender.php",
-            "snippet": "            $companyUserInvitationSendRequestTransfer->getCompanyUserInvitation()",
+            "snippet": "            $companyUserInvitationSendRequestTransfer->getCompanyUserInvitation(),",
             "selected_text": "$companyUserInvitationSendRequestTransfer->getCompanyUserInvitation()",
             "error_level": 3,
             "shortcode": 78
@@ -261,7 +248,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Business\\Model\\Sender\\InvitationSender::send cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/Sender/InvitationSender.php",
-            "snippet": "            $this->send($companyUserInvitationSendRequestTransfer->getIdCompanyUser(), $companyUserInvitationTransfer)",
+            "snippet": "            $this->send($companyUserInvitationSendRequestTransfer->getIdCompanyUser(), $companyUserInvitationTransfer),",
             "selected_text": "$companyUserInvitationSendRequestTransfer->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
@@ -357,7 +344,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Business\\Model\\Updater\\InvitationUpdater::getIdCompanyUserInvitationStatus cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/Updater/InvitationUpdater.php",
-            "snippet": "            $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey())",
+            "snippet": "            $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()),",
             "selected_text": "$companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()",
             "error_level": 3,
             "shortcode": 78
@@ -508,8 +495,8 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Mail\\Business\\Model\\Mail\\Builder\\MailBuilderInterface::addRecipient cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Communication/Plugin/Mail/CompanyUserInvitationMailTypePlugin.php",
@@ -520,8 +507,8 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getEmail on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Communication/Plugin/Mail/CompanyUserInvitationMailTypePlugin.php",
@@ -532,24 +519,24 @@
         },
         {
             "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Communication/Plugin/Mail/CompanyUserInvitationMailTypePlugin.php",
-            "snippet": "            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName())",
+            "snippet": "            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName()),",
             "selected_text": "$mailTransfer->getFirstName()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
+            "line_from": 125,
+            "line_to": 125,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Communication/Plugin/Mail/CompanyUserInvitationMailTypePlugin.php",
-            "snippet": "            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName())",
+            "snippet": "            sprintf('%s %s', $mailTransfer->getFirstName(), $mailTransfer->getLastName()),",
             "selected_text": "$mailTransfer->getLastName()",
             "error_level": 3,
             "shortcode": 78
@@ -597,7 +584,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Persistence/CompanyUserInvitationRepository.php",
-            "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()",
+            "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage(),",
             "selected_text": "$companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()",
             "error_level": 3,
             "shortcode": 78
@@ -609,7 +596,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireMaxPerPage on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Persistence/CompanyUserInvitationRepository.php",
-            "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()",
+            "snippet": "            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage(),",
             "selected_text": "requireMaxPerPage",
             "error_level": 3,
             "shortcode": 83
@@ -621,7 +608,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUserInvitation\\Persistence\\CompanyUserInvitationRepository::hydratePaginationTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Persistence/CompanyUserInvitationRepository.php",
-            "snippet": "            $this->hydratePaginationTransfer($companyUserInvitationCriteriaFilterTransfer->getPagination(), $pager)",
+            "snippet": "            $this->hydratePaginationTransfer($companyUserInvitationCriteriaFilterTransfer->getPagination(), $pager),",
             "selected_text": "$companyUserInvitationCriteriaFilterTransfer->getPagination()",
             "error_level": 3,
             "shortcode": 78

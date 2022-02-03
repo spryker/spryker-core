@@ -1,23 +1,10 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Form\\Constraint\\UniqueEmailConstraintValidator::validate has wrong name $email, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Form/Constraint/UniqueEmailConstraintValidator.php",
-            "snippet": "    public function validate($email, Constraint $constraint): void",
-            "selected_text": "$email",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\CreateMerchantUserController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/CreateMerchantUserController.php",
@@ -28,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 55,
+            "line_to": 55,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\DeleteMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/DeleteMerchantUserController.php",
@@ -40,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 87,
+            "line_to": 87,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\DeleteMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/DeleteMerchantUserController.php",
@@ -52,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
+            "line_from": 44,
+            "line_to": 44,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\MerchantUserGuiCommunicationFactory::getMerchantUserUpdateForm cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
@@ -64,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 54,
+            "line_to": 54,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\EditMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
@@ -76,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 68,
+            "line_to": 68,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\EditMerchantUserController::getMerchantUserListUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
@@ -88,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
+            "line_from": 83,
+            "line_to": 83,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\EditMerchantUserController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/EditMerchantUserController.php",
@@ -100,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setStatus on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/MerchantUserStatusController.php",
@@ -112,8 +99,20 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 58,
+            "line_to": 58,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\UserTransfer::setStatus expects null|string, non-empty-scalar provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/MerchantUserStatusController.php",
+            "snippet": "        $merchantUserTransfer->getUser()->setStatus($newMerchantUserStatus);",
+            "selected_text": "$newMerchantUserStatus",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantUserGui\\Communication\\Controller\\MerchantUserStatusController::getMerchantUserListUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Controller/MerchantUserStatusController.php",
@@ -121,6 +120,42 @@
             "selected_text": "$merchantUserTransfer->getIdMerchant()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantUserGui\\Communication\\Form\\MerchantUserCreateForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Form/MerchantUserCreateForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantUserGui\\Communication\\Form\\MerchantUserDeleteConfirmForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Form/MerchantUserDeleteConfirmForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantUserGui\\Communication\\Form\\MerchantUserUpdateForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserGui/src/Spryker/Zed/MerchantUserGui/Communication/Form/MerchantUserUpdateForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
         }
     ],
     "deprecation": []

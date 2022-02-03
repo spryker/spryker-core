@@ -8,7 +8,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Client/MultiCart/CartOperation/CartCreator.php",
-            "snippet": "                sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s')))",
+            "snippet": "                sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), $this->dateTimeService->formatDateTime(date('Y-m-d H:i:s'))),",
             "selected_text": "$quoteTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -87,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 46,
+            "line_to": 46,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Client/MultiCart/Plugin/QuickOrderQuoteNameExpanderPlugin.php",
@@ -99,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 46,
+            "line_to": 46,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Client/MultiCart/Plugin/ReorderPersistentCartChangeExpanderPlugin.php",
@@ -123,8 +123,8 @@
         },
         {
             "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MultiCart\\Dependency\\Facade\\MultiCartToQuoteFacadeInterface::findQuoteById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Activator/QuoteActivator.php",
@@ -135,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Activator/QuoteActivator.php",
@@ -147,8 +147,8 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MultiCart\\Business\\Activator\\QuoteActivator::addSuccessMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Activator/QuoteActivator.php",
@@ -159,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MultiCart\\Persistence\\MultiCartRepositoryInterface::isQuoteDefault cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Messenger/MultiCartMessenger.php",
@@ -171,24 +171,24 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\MultiCart\\Persistence\\MultiCartRepositoryInterface::isQuoteDefault cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Messenger/MultiCartMessenger.php",
-            "snippet": "            $quoteTransfer->getCustomer()->getCustomerReference()",
+            "snippet": "            $quoteTransfer->getCustomer()->getCustomerReference(),",
             "selected_text": "$quoteTransfer->getCustomer()->getCustomerReference()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Messenger/MultiCartMessenger.php",
-            "snippet": "            $quoteTransfer->getCustomer()->getCustomerReference()",
+            "snippet": "            $quoteTransfer->getCustomer()->getCustomerReference(),",
             "selected_text": "getCustomerReference",
             "error_level": 3,
             "shortcode": 83
@@ -327,18 +327,6 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Quote\\Persistence\\SpyQuote> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Persistence/MultiCartRepository.php",
-            "snippet": "        return $quoteQuery->find()->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 51,
             "line_to": 51,
             "type": "PossiblyNullReference",
@@ -348,18 +336,6 @@
             "selected_text": "getCustomerReference",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Quote\\Persistence\\SpyQuote> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Persistence/MultiCartRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [

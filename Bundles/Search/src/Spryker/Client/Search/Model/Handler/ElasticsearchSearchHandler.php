@@ -32,15 +32,15 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryCriteria
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array<mixed> $requestParameters
      *
      * @return \Elastica\ResultSet|array<string, mixed>
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = [])
     {
-        $rawSearchResult = $this->executeQuery($searchQuery);
+        $rawSearchResult = $this->executeQuery($queryCriteria);
 
         if (!$resultFormatters) {
             return $rawSearchResult;

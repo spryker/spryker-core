@@ -23,12 +23,12 @@ class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements Persist
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
+    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         $idDiscountPromotion = null;
         if (isset($params[static::URL_PARAM_ID_DISCOUNT_PROMOTION])) {
@@ -36,11 +36,11 @@ class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements Persist
         }
 
         if ($idDiscountPromotion !== null) {
-            foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
                 $itemTransfer->setIdDiscountPromotion($idDiscountPromotion);
             }
         }
 
-        return $cartChangeTransfer;
+        return $persistentCartChangeTransfer;
     }
 }

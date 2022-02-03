@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface WriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $transferPriceProduct
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
-    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
+    public function setPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer

@@ -22,16 +22,16 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer $productOptionValueTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $value $productOptionValueTransfer
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($productOptionValueTransfer, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
-        if (in_array($productOptionValueTransfer->getSku(), $this->validatedSkus)) {
+        if (in_array($value->getSku(), $this->validatedSkus)) {
             $this->addUniqueViolationMessage();
         }
 
@@ -39,15 +39,15 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueOptionValueSku');
         }
 
-        if (!$this->isSkuChanged($productOptionValueTransfer->getSku(), $constraint, $productOptionValueTransfer->getIdProductOptionValue())) {
+        if (!$this->isSkuChanged($value->getSku(), $constraint, $value->getIdProductOptionValue())) {
             return;
         }
 
-        if (!$this->isUniqueSku($productOptionValueTransfer->getSku(), $constraint)) {
+        if (!$this->isUniqueSku($value->getSku(), $constraint)) {
             $this->addUniqueViolationMessage();
         }
 
-        $this->validatedSkus[] = $productOptionValueTransfer->getSku();
+        $this->validatedSkus[] = $value->getSku();
     }
 
     /**

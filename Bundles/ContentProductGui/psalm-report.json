@@ -1,31 +1,6 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ContentProductGui\\Communication\\Form\\Constraints\\ContentProductAbstractListConstraintValidator::validate has wrong name $abstractProductIds, expecting $value as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/Constraints/ContentProductAbstractListConstraintValidator.php",
-            "snippet": "    public function validate($abstractProductIds, Constraint $constraint): void",
-            "selected_text": "$abstractProductIds",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ContentProductGui\\Communication\\ContentProductGuiCommunicationFactory::createProductAbstractSelectedTable expects array<array-key, mixed>, possibly different type array<empty, empty>|non-empty-string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Controller/ProductAbstractController.php",
-            "snippet": "            $this->getFactory()->createProductAbstractSelectedTable($idProductAbstracts)->fetchData()",
-            "selected_text": "$idProductAbstracts",
-            "error_level": 3,
-            "shortcode": 92
-        },
         {
             "severity": "info",
             "line_from": 60,
@@ -40,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
+            "line_from": 52,
+            "line_to": 52,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/ProductAbstractListContentTermForm.php",
@@ -52,44 +27,68 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 77,
+            "line_to": 77,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 3 of Spryker\\Zed\\ContentProductGui\\Communication\\Form\\ProductAbstractListContentTermForm::buildView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildView",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/ProductAbstractListContentTermForm.php",
+            "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullPropertyFetch",
             "message": "Cannot get property on possibly null variable $view->parent of type Symfony\\Component\\Form\\FormView|null",
             "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/ProductAbstractListContentTermForm.php",
-            "snippet": "            $view->parent->vars['name']",
+            "snippet": "            $view->parent->vars['name'],",
             "selected_text": "$view->parent->vars",
             "error_level": 3,
             "shortcode": 82
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullArrayAccess",
             "message": "Cannot access array value on possibly null variable $view->parent->vars of type mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/ProductAbstractListContentTermForm.php",
-            "snippet": "            $view->parent->vars['name']",
+            "snippet": "            $view->parent->vars['name'],",
             "selected_text": "$view->parent->vars['name']",
             "error_level": 3,
             "shortcode": 79
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
+            "line_from": 84,
+            "line_to": 84,
             "type": "PossiblyNullArrayAccess",
             "message": "Cannot access array value on possibly null variable $view->parent->vars of type mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/ProductAbstractListContentTermForm.php",
-            "snippet": "            $view->parent->vars['name']",
+            "snippet": "            $view->parent->vars['name'],",
             "selected_text": "$view->parent->vars['name']",
             "error_level": 3,
             "shortcode": 79
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 103,
+            "line_to": 103,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\ContentProductGui\\Communication\\Form\\ProductAbstractListContentTermForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Form/ProductAbstractListContentTermForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ContentProductGui\\Communication\\Table\\AbstractProductAbstractTable::generateLabel cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Table/AbstractProductAbstractTable.php",
@@ -97,54 +96,6 @@
             "selected_text": "$productAbstractStoreEntity->getSpyStore()->getName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Table/ProductAbstractSelectedTable.php",
-            "snippet": "            static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),",
-            "selected_text": "getFirst",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Table/ProductAbstractSelectedTable.php",
-            "snippet": "            static::COL_STORES => $this->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Table/ProductAbstractViewTable.php",
-            "snippet": "            static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),",
-            "selected_text": "getFirst",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentProductGui/src/Spryker/Zed/ContentProductGui/Communication/Table/ProductAbstractViewTable.php",
-            "snippet": "            static::COL_STORES => $this->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": []
