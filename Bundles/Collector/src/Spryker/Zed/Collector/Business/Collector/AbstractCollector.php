@@ -283,6 +283,7 @@ abstract class AbstractCollector
 
         $statement->execute($sqlParams);
 
+        /** @phpstan-var array<\Orm\Zed\Touch\Persistence\SpyTouch> */
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 

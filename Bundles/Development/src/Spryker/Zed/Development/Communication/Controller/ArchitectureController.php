@@ -64,7 +64,7 @@ class ArchitectureController extends AbstractController
         $bundle = $request->query->get('bundle');
         $namespace = $request->query->get('namespace');
         $application = $request->query->get('application');
-        $directory = $request->query->get('directory');
+        $directory = (string)$request->query->get('directory');
 
         $fileViolations = $this->getFacade()->runArchitectureSniffer($directory);
 

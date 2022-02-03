@@ -77,7 +77,9 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
         $normalizedDefinitions = [];
         $filter = new UnderscoreToCamelCase();
         foreach ($transferDefinitions as $transferDefinition) {
-            $transferName = $filter->filter($transferDefinition[static::KEY_NAME]) . static::KEY_ENTITY;
+            /** @var string $camelCaseName */
+            $camelCaseName = $filter->filter($transferDefinition[static::KEY_NAME]);
+            $transferName = $camelCaseName . static::KEY_ENTITY;
             $properties = $this->normalizeAttributes($transferDefinition[static::KEY_COLUMN], $transferDefinition[static::KEY_BUNDLE]);
             if (isset($transferDefinition[static::KEY_FOREIGN_KEY])) {
                 $properties = $this->normalizeForeignKeys($transferDefinition[static::KEY_FOREIGN_KEY], $properties, $transferDefinition[static::KEY_BUNDLE]);
@@ -128,7 +130,9 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     {
         $filter = new UnderscoreToCamelCase();
         foreach ($attributes as &$attribute) {
-            $attribute[static::KEY_NAME] = lcfirst($filter->filter($attribute[static::KEY_NAME]));
+            /** @var string $camelCaseName */
+            $camelCaseName = $filter->filter($attribute[static::KEY_NAME]);
+            $attribute[static::KEY_NAME] = lcfirst($camelCaseName);
             $attribute[static::KEY_TYPE] = $this->getTransferType($attribute[static::KEY_TYPE]);
         }
 
@@ -180,12 +184,16 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
             if (isset($foreignKey[static::KEY_PHP_NAME])) {
                 $propertyName = lcfirst($foreignKey[static::KEY_PHP_NAME]);
             } else {
-                $propertyName = lcfirst($filter->filter($foreignKey[static::FOREIGN_TABLE]));
+                /** @var string $camelCaseName */
+                $camelCaseName = $filter->filter($foreignKey[static::FOREIGN_TABLE]);
+                $propertyName = lcfirst($camelCaseName);
             }
 
+            /** @var string $camelCaseName */
+            $camelCaseName = $filter->filter($foreignKey[static::FOREIGN_TABLE]);
             $properties[] = [
                 static::KEY_NAME => $propertyName,
-                static::KEY_TYPE => $filter->filter($foreignKey[static::FOREIGN_TABLE]) . static::KEY_ENTITY,
+                static::KEY_TYPE => $camelCaseName . static::KEY_ENTITY,
                 static::KEY_BUNDLE => [$module],
                 static::KEY_BUNDLES => [$module],
             ];

@@ -66,6 +66,7 @@ class MerchantProductAbstractMapper
         $groupedProductAbstractMerchantData = [];
 
         foreach ($merchantData as $productAbstractMerchant) {
+            /** @var int $idProductAbstract */
             $idProductAbstract = $productAbstractMerchant[static::KEY_PRODUCT_ABSTRACT_ID];
             $merchantName = $productAbstractMerchant[static::KEY_MERCHANT_NAME];
             $storeName = $productAbstractMerchant[static::KEY_STORE_NAME];

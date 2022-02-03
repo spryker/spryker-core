@@ -135,6 +135,7 @@ class NavigationQueryContainer extends AbstractQueryContainer implements Navigat
      */
     public function queryNavigationNodeByFkUrl($fkUrl)
     {
+        /** @phpstan-var \Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery */
         return $this->queryNavigationNode()
         ->useSpyNavigationNodeLocalizedAttributesQuery()
             ->filterByFkUrl($fkUrl)

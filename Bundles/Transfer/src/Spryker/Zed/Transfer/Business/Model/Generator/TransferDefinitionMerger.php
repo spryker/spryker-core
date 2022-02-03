@@ -33,6 +33,7 @@ class TransferDefinitionMerger implements MergerInterface
     {
         $this->mergedTransferDefinitions = [];
 
+        /** @var array<string, string> $transferDefinition */
         foreach ($transferDefinitions as $transferDefinition) {
             if (array_key_exists($transferDefinition['name'], $this->mergedTransferDefinitions)) {
                 $this->mergedTransferDefinitions[$transferDefinition['name']] = $this->mergeDefinitions(
@@ -92,8 +93,8 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array<array> $existingProperties
-     * @param array<array> $propertiesToMerge
+     * @param array<array<string, mixed>> $existingProperties
+     * @param array<array<string, mixed>> $propertiesToMerge
      * @param string $transferName
      *
      * @return array<string, array>
@@ -102,10 +103,12 @@ class TransferDefinitionMerger implements MergerInterface
     {
         $mergedProperties = [];
 
+        /** @var array<string, string> $property */
         foreach ($existingProperties as $property) {
             $mergedProperties[$property['name']] = $property;
         }
 
+        /** @var array<string, string> $propertyToMerge */
         foreach ($propertiesToMerge as $propertyToMerge) {
             if (!array_key_exists($propertyToMerge['name'], $mergedProperties)) {
                 $mergedProperties[$propertyToMerge['name']] = $propertyToMerge;

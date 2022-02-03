@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#1 \$idLocale of method .+LocaleTransfer::setIdLocale\(\) expects int\|null, string given.#'

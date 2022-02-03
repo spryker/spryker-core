@@ -47,7 +47,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $baseRedirectUrl = urldecode($request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT));
+        $baseRedirectUrl = urldecode((string)$request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT));
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
 
         $form = $this->getFactory()

@@ -106,7 +106,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             $session = $this->getSession($container);
 
             if ($cookies->has($session->getName())) {
-                $session->setId($cookies->get($session->getName()));
+                $session->setId((string)$cookies->get($session->getName()));
             } else {
                 $session->migrate(false);
             }

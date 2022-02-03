@@ -336,7 +336,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function createRequestTransfer(?TransferInterface $transferObject = null, array $metaTransfers = [])
     {
         $request = $this->getRequest();
-        $request->setSessionId(session_id());
+        $request->setSessionId((string)session_id());
         $request->setTime((string)time());
         $request->setHost($this->utilNetworkService->getHostName() ?: 'n/a');
 

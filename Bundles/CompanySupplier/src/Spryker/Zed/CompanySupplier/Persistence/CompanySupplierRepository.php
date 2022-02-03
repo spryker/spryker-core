@@ -63,6 +63,7 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
      */
     public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer
     {
+        /** @var \Orm\Zed\Company\Persistence\SpyCompanyQuery $query */
         $query = $this->getFactory()->createCompanyQuery()
             ->leftJoinSpyCompanySupplierToProduct()
             ->useSpyCompanySupplierToProductQuery()

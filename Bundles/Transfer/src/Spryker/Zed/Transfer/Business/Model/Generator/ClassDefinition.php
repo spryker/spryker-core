@@ -265,6 +265,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function setPropertyNameMap(array $properties): void
     {
+        /** @var array<string, string> $property */
         foreach ($properties as $property) {
             $nameCamelCase = $this->getPropertyName($property);
             $this->propertyNameMap[$property['name_underscore']] = $nameCamelCase;
@@ -626,8 +627,10 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getPropertyConstantName(array $property): string
     {
         $filter = new CamelCaseToUnderscore();
+        /** @var string $value */
+        $value = $filter->filter($property['name']);
 
-        return mb_strtoupper($filter->filter($property['name']));
+        return mb_strtoupper($value);
     }
 
     /**
@@ -638,8 +641,10 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getPropertyName(array $property): string
     {
         $filter = new UnderscoreToCamelCase();
+        /** @var string $value */
+        $value = $filter->filter($property['name']);
 
-        return lcfirst($filter->filter($property['name']));
+        return lcfirst($value);
     }
 
     /**
@@ -1151,7 +1156,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getShortClassName(string $fullyQualifiedClassName): string
     {
-        return substr(strrchr($fullyQualifiedClassName, '\\'), 1);
+        return substr((string)strrchr($fullyQualifiedClassName, '\\'), 1);
     }
 
     /**
@@ -1489,6 +1494,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getGetCollectionElementReturnType(array $property): string
     {
+        /** @var string $propertyReturnType */
         $propertyReturnType = str_replace('[]', '', $property['type']);
 
         if ($propertyReturnType === 'array') {

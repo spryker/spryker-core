@@ -53,6 +53,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     public function getProductOffers(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
+        /** @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferPropelQuery */
         $productOfferPropelQuery = $this->getFactory()
             ->getProductOfferPropelQuery()
             ->joinWithSpyProductOfferStore()

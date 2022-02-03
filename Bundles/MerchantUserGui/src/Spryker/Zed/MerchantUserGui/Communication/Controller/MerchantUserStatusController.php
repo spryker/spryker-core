@@ -39,6 +39,7 @@ class MerchantUserStatusController extends AbstractCrudMerchantUserController
     public function indexAction(Request $request): RedirectResponse
     {
         $idMerchantUser = $this->castId($request->query->get(static::PARAM_MERCHANT_USER_ID));
+        /** @var string|null $newMerchantUserStatus */
         $newMerchantUserStatus = $request->query->get('status');
 
         if (!$idMerchantUser || !$newMerchantUserStatus) {

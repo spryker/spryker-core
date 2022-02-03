@@ -66,7 +66,7 @@ class CustomersListDataProvider implements FormDataProviderInterface
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
 
         if (!$idCustomer && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
-            $idCustomer = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
+            $idCustomer = $this->request->query->getInt(CustomersListType::FIELD_CUSTOMER);
         }
 
         $quoteTransfer->getCustomer()->setIdCustomer($idCustomer);

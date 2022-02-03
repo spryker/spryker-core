@@ -1,3 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Parameter \#1 \$var of function count expects array\|Countable, iterable<Generated\\Shared\\Transfer\\ItemTransfer> given.#'

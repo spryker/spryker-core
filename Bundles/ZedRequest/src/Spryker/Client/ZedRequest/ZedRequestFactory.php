@@ -101,7 +101,7 @@ class ZedRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\Client\HttpClientInterface|\Spryker\Shared\ZedRequest\Client\HttpClientInterface
+     * @return \Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
     public function createHttpClient()
     {

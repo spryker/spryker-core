@@ -144,7 +144,9 @@ class DocumentTable extends AbstractTable
      */
     protected function getIndexName(): ?string
     {
-        return $this->request->query->get(MaintenanceController::URL_PARAM_INDEX);
+        $indexName = (string)$this->request->query->get(MaintenanceController::URL_PARAM_INDEX);
+
+        return $indexName === '' ? null : $indexName;
     }
 
     /**

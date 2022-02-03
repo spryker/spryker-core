@@ -103,7 +103,7 @@ class IndexController extends AbstractController
         $idProduct = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_PRODUCT));
         $idStore = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_STORE));
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
-        $sku = $request->query->get(AvailabilityTable::URL_PARAM_SKU);
+        $sku = (string)$request->query->get(AvailabilityTable::URL_PARAM_SKU);
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getStoreById($idStore);
 

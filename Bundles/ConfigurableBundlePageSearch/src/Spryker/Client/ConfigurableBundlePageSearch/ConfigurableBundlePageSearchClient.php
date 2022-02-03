@@ -40,6 +40,7 @@ class ConfigurableBundlePageSearchClient extends AbstractClient implements Confi
 
         $resultFormatters = $this->getFactory()->getConfigurableBundleTemplateResultFormatterPlugins();
 
+        /** @phpstan-var array */
         return $this->getFactory()
             ->getSearchClient()
             ->search($searchQuery, $resultFormatters, $requestParameters);

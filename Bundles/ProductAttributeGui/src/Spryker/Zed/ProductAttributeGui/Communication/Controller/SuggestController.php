@@ -27,7 +27,7 @@ class SuggestController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $searchTerm = $request->query->get(static::PARAM_SEARCH_TEXT);
+        $searchTerm = (string)$request->query->get(static::PARAM_SEARCH_TEXT);
 
         $keys = $this->getFactory()
             ->getProductAttributeFacade()

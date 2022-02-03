@@ -1,6 +1,7 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Method .+ should return .+Query but returns .+Criteria#'
+        - '#Call to an undefined method .+SpyProductImageQuery\|.+SpyProductImageSetQuery::filterByFkLocale\(\)#'

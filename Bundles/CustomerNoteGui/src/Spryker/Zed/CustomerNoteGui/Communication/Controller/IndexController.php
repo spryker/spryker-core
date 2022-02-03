@@ -71,7 +71,9 @@ class IndexController extends AbstractController
             return $this->redirectResponse($request->headers->get(static::REFERER_HEADER));
         }
 
-        foreach ($form->getErrors(true) as $error) {
+        /** @var array<\Symfony\Component\Form\FormError> $errors */
+        $errors = $form->getErrors(true);
+        foreach ($errors as $error) {
             $this->addErrorMessage($error->getMessage());
         }
 

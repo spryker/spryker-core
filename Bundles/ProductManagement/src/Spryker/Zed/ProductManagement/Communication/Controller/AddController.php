@@ -49,7 +49,7 @@ class AddController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createProductFormAddDataProvider();
 
-        $type = $request->query->get('type');
+        $type = (string)$request->query->get('type');
 
         /** @var array|null $priceDimension */
         $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);

@@ -118,7 +118,7 @@ class PaymentType extends AbstractType
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
             $builder->add(
                 $paymentMethodSubForm[static::KEY_PLUGIN]->getName(),
-                get_class($paymentMethodSubForm[static::KEY_SUBFORM]),
+                get_class($paymentMethodSubForm[static::KEY_SUBFORM]) ?: null,
                 [
                     'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm[static::KEY_PLUGIN]->getPropertyPath(),
                     'error_bubbling' => true,

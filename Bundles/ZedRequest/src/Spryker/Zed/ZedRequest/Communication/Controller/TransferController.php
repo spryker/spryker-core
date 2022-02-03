@@ -34,7 +34,8 @@ class TransferController extends AbstractController
             throw new NotAllowedActionException('This action is not allowed to execute repeated Zed requests.');
         }
 
-        $repeatData = $this->getFacade()->getRepeatData($request->query->get('mvc', null));
+        $mvc = (string)$request->query->get('mvc') ?: null;
+        $repeatData = $this->getFacade()->getRepeatData($mvc);
 
         if (!is_array($repeatData) || !$repeatData) {
             return new Response('No request to repeat.');

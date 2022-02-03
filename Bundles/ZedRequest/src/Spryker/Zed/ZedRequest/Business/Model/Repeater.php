@@ -40,7 +40,7 @@ class Repeater implements RepeaterInterface
     /**
      * @param string|null $moduleControllerAction
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getRepeatData($moduleControllerAction = null)
     {
@@ -91,7 +91,7 @@ class Repeater implements RepeaterInterface
     }
 
     /**
-     * @param array $repeatData
+     * @param array<string, mixed> $repeatData
      * @param string $fileName
      *
      * @return void
@@ -112,7 +112,7 @@ class Repeater implements RepeaterInterface
     /**
      * @param string $fileName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getFlashInFile($fileName)
     {

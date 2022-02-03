@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     dynamicConstantNames:
         - APPLICATION
@@ -9,3 +9,4 @@ parameters:
         - '#Unsafe usage of new static\(\)#'
         - { message: '#Unreachable statement - code above always terminates#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractHttpClient.php' }
         - '#Dead catch \- GuzzleHttp\\Exception\\RequestException is never thrown in the try block.#'
+        - '#Parameter \#3 \$requestOptions of method .+\\AbstractZedClientInterface::call\(\) expects array\|null, array\|int\|null given.#'

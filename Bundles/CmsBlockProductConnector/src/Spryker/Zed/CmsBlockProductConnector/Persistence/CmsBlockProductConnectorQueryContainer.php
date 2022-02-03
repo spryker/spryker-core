@@ -56,6 +56,7 @@ class CmsBlockProductConnectorQueryContainer extends AbstractQueryContainer impl
      */
     public function queryCmsBlockProductConnectorWithNameByIdCmsBlock($idCmsBlock, $idLocale)
     {
+        /** @phpstan-var \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery */
         return $this->queryCmsBlockProductConnectorByIdCmsBlock($idCmsBlock)
             ->joinProductAbstract()
             ->useProductAbstractQuery()

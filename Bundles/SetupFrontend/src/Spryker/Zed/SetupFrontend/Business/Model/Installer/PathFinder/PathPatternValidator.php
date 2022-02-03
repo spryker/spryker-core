@@ -21,6 +21,7 @@ class PathPatternValidator implements PathPatternValidatorInterface
     public function validatePathPatterns(array $pathPatterns): void
     {
         foreach ($pathPatterns as $pathPattern) {
+            /** @var array $directoryCollection */
             $directoryCollection = glob($pathPattern);
 
             if (count($directoryCollection) === 0) {

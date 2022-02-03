@@ -126,6 +126,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
      */
     protected function buildCmsBlockWithSlotRelationQuery(array $cmsBlockIds): SpyCmsBlockQuery
     {
+        /** @phpstan-var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery */
         return $this->getFactory()
             ->getCmsBlockQuery()
             ->filterByIdCmsBlock_In($cmsBlockIds)

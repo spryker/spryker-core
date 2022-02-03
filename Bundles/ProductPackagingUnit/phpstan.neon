@@ -1,4 +1,6 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method Orm\\.+\\SpySalesOrderItemQuery::innerJoinProcess\(\).#'

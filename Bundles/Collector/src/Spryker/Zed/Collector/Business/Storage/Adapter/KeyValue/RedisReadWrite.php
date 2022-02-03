@@ -35,7 +35,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
     }
 
     /**
-     * @param array $items
+     * @param array<string, mixed> $items
      * @param string $prefix
      *
      * @throws \Exception
@@ -88,10 +88,10 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
     }
 
     /**
-     * @param array $keys
+     * @param array<string, mixed> $keys
      * @param string $prefix
      *
-     * @return void
+     * @return bool
      */
     public function deleteMulti(array $keys, $prefix = self::KV_PREFIX)
     {
@@ -101,8 +101,10 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
             $items[] = $dataKey;
         }
 
-        $this->getResource()->del($items);
+        $result = (bool)$this->getResource()->del($items);
         $this->addMultiDeleteAccessStats($items);
+
+        return $result;
     }
 
     /**

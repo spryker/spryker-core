@@ -41,7 +41,7 @@ class GlobalController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $storeCurrencyRequestParam = $request->query->get(static::PARAM_STORE_CURRENCY_REQUEST);
+        $storeCurrencyRequestParam = (string)$request->query->get(static::PARAM_STORE_CURRENCY_REQUEST) ?: null;
 
         $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
         $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);

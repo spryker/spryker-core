@@ -88,7 +88,9 @@ class TransferDefinitionLoader implements LoaderInterface
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
             $bundle = $this->getBundleFromPathName($xmlTransferDefinition->getFilename());
             $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
-            $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
+            /** @var \Laminas\Config\Config $configObject */
+            $configObject = Factory::fromFile($xmlTransferDefinition->getPathname(), true);
+            $definition = $configObject->toArray();
             $this->addDefinition($definition, $bundle, $containingBundle);
         }
     }

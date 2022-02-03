@@ -31,7 +31,7 @@ class AjaxController extends AbstractController
      */
     public function keysAction(Request $request)
     {
-        $term = $request->query->get(static::SEARCH_TERM);
+        $term = (string)$request->query->get(static::SEARCH_TERM);
         $keys = $this->getFacade()->getKeySuggestions($term);
 
         return new JsonResponse($keys);
