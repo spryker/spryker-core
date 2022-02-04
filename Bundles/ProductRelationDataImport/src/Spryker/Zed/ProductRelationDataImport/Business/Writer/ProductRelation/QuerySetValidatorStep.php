@@ -42,6 +42,7 @@ class QuerySetValidatorStep implements DataImportStepInterface
     {
         $querySet = $dataSet[ProductRelationDataSetInterface::COL_RULE];
         $querySetDecoded = $this->utilEncodingService->decodeJson($querySet, true);
+        /** @var array<\Orm\Zed\ProductRelation\Persistence\Base\SpyProductRelation> $productRelationEntities */
         $productRelationEntities = SpyProductRelationQuery::create()
             ->filterByFkProductAbstract($dataSet[ProductRelationDataSetInterface::COL_ID_PRODUCT_ABSTRACT])
             ->filterByProductRelationKey($dataSet[ProductRelationDataSetInterface::COL_PRODUCT_RELATION_KEY], Criteria::NOT_EQUAL)

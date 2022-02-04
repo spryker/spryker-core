@@ -114,7 +114,10 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
      */
     protected function getRequest(Application $application)
     {
-        return $application['request_stack']->getCurrentRequest();
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = $application['request_stack'];
+
+        return $requestStack->getCurrentRequest();
     }
 
     /**

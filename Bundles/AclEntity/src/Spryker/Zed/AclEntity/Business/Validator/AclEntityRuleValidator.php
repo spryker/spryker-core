@@ -78,17 +78,19 @@ class AclEntityRuleValidator implements AclEntityRuleValidatorInterface
      */
     public function validateScope(string $scope, string $entity): void
     {
-        if ($scope === AclEntityConstants::SCOPE_INHERITED) {
-            $aclEntityMetadataCollection = $this->aclEntityMetadataConfigReader
-                ->getAclEntityMetadataConfig(true)
-                ->getAclEntityMetadataCollection();
-            if (
-                !$aclEntityMetadataCollection
-                || !array_key_exists($entity, $aclEntityMetadataCollection->getCollection())
-                || !$aclEntityMetadataCollection->getCollection()[$entity]->getParent()
-            ) {
-                throw new InheritedScopeCanNotBeAssignedException($entity);
-            }
+        if ($scope !== AclEntityConstants::SCOPE_INHERITED) {
+            return;
+        }
+
+        $aclEntityMetadataCollection = $this->aclEntityMetadataConfigReader
+            ->getAclEntityMetadataConfig(true)
+            ->getAclEntityMetadataCollection();
+        if (
+            !$aclEntityMetadataCollection
+            || !array_key_exists($entity, $aclEntityMetadataCollection->getCollection())
+            || !$this->hasParent($aclEntityMetadataCollection->getCollection(), $entity)
+        ) {
+            throw new InheritedScopeCanNotBeAssignedException($entity);
         }
     }
 
@@ -118,5 +120,20 @@ class AclEntityRuleValidator implements AclEntityRuleValidatorInterface
                 $aclEntityRuleTransfer->getIdAclRoleOrFail(),
             );
         }
+    }
+
+    /**
+     * @param array<string, \Generated\Shared\Transfer\AclEntityMetadataTransfer> $entityCollection
+     * @param string $entity
+     *
+     * @return bool
+     */
+    protected function hasParent(array $entityCollection, string $entity): bool
+    {
+        if (empty($entityCollection[$entity])) {
+            return false;
+        }
+
+        return (bool)$entityCollection[$entity]->getParent();
     }
 }

@@ -166,7 +166,10 @@ class AclEntityBehavior extends Behavior
      */
     protected function getAclEntityFacade(): AclEntityFacadeInterface
     {
-        return Locator::getInstance()->aclEntity()->facade();
+        /** @var \Generated\Zed\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = Locator::getInstance();
+
+        return $locator->aclEntity()->facade();
     }
 
     /**
