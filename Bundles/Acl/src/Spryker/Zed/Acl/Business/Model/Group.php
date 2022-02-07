@@ -174,6 +174,7 @@ class Group implements GroupInterface
      */
     public function getUserGroups($idUser)
     {
+        /** @var array<\Orm\Zed\Acl\Persistence\SpyAclGroup> $groupEntities */
         $groupEntities = $this->queryContainer->queryUserGroupByIdUser($idUser)->find();
 
         $groupsTransfer = new GroupsTransfer();
@@ -234,6 +235,7 @@ class Group implements GroupInterface
      */
     public function removeRolesFromGroup($idAclGroup)
     {
+        /** @var array<\Orm\Zed\Acl\Persistence\SpyAclRole> $groupRoles */
         $groupRoles = $this->queryContainer->queryGroupHasRole($idAclGroup)->find();
 
         foreach ($groupRoles as $role) {
@@ -289,6 +291,7 @@ class Group implements GroupInterface
     {
         $groupTransferCollection = new GroupsTransfer();
 
+        /** @var array<\Orm\Zed\Acl\Persistence\SpyAclGroup> $groupCollection */
         $groupCollection = $this->queryContainer
             ->queryGroup()
             ->find();
@@ -382,6 +385,7 @@ class Group implements GroupInterface
      */
     public function getRoles($idGroup)
     {
+        /** @var array<\Orm\Zed\Acl\Persistence\SpyAclRole> $roleCollection */
         $roleCollection = $this->queryContainer
             ->queryGroupRoles($idGroup)
             ->find();

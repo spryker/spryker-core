@@ -90,6 +90,7 @@ class SegmentAclModelScope implements AclModelScopeInterface
             throw new InvalidArgumentException(sprintf('Expected a valid callable, %s given.', gettype($callable)));
         }
 
+        /** @var \Orm\Zed\AclEntity\Persistence\SpyAclEntityRule $aclEntitySegment */
         foreach (call_user_func($callable) as $aclEntitySegment) {
             if (in_array($aclEntitySegment->getFkAclEntitySegment(), $aclEntitySegmentIds)) {
                 return true;

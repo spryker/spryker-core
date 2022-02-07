@@ -98,7 +98,10 @@ class ErrorHandlerFactory
      */
     protected function getUtilSanitizeService(): UtilSanitizeServiceInterface
     {
-        return Locator::getInstance()->utilSanitize()->service();
+        /** @var \Generated\Service\Ide\AutoCompletion&\Spryker\Shared\Kernel\LocatorLocatorInterface $locator */
+        $locator = Locator::getInstance();
+
+        return $locator->utilSanitize()->service();
     }
 
     /**

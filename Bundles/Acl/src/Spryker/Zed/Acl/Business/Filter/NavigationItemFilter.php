@@ -48,6 +48,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
         }
 
         $userTransfer = $this->userFacade->getCurrentUser();
+        /** @var array<\Generated\Shared\Transfer\NavigationItemTransfer> $navigationItemTransfers */
         $navigationItemTransfers = $navigationItemCollectionTransfer->getNavigationItems()->getArrayCopy();
 
         foreach ($navigationItemTransfers as $navigationItemKey => $navigationItemTransfer) {

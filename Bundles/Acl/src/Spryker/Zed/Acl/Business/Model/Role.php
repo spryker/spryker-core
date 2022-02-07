@@ -182,6 +182,7 @@ class Role implements RoleInterface
      */
     public function getGroupRoles($idGroup)
     {
+        /** @var array<\Orm\Zed\Acl\Persistence\SpyAclRole> $aclRoleEntities */
         $aclRoleEntities = $this->queryContainer->queryGroupRoles($idGroup)->find();
 
         $rolesTransfer = new RolesTransfer();

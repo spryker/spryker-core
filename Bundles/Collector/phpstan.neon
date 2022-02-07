@@ -2,7 +2,6 @@ parameters:
     level: 6
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method .+Locator::store\(\).#'
         - '#Method .+Type::addDocuments\(\) invoked with 2 parameters, 1 required.#'
         - '#Property .*TypelessMappingAdapter::\$elasticaMapping has unknown class Elastica\\Mapping as its type.#'
         - '#Instantiated class Elastica\\Mapping not found.#'
