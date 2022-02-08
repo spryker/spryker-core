@@ -44,6 +44,7 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
         $dataProvider = $this->getFactory()
             ->createCategoryDataProvider();
 
+        /** @var \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer */
         $categoryTransfer = $builder->getData();
         $dataProvider->getData($categoryTransfer);
 

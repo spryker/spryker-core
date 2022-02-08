@@ -1,3 +1,7 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method .+\\SpyShoppingListCompanyUserQuery::orderByIdQuoteRequest\(\)#'
+        - '#Call to an undefined method .+\\SpyShoppingListCompanyUserQuery::useSpyQuoteRequestVersionQuery\(\)#'
+        - '#Cannot call method format\(\) on DateTime\|string.#'

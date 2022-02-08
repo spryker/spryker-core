@@ -153,8 +153,8 @@ class GiftCardReader implements GiftCardReaderInterface
     protected function hydrateGiftCardTransfer(SpyGiftCard $giftCardEntity, GiftCardTransfer $giftCardTransfer)
     {
         $giftCardData = $giftCardEntity->toArray();
+        /** @var array|null $attributes */
         $attributes = $this->encodingService->decodeJson($giftCardData[static::ATTRIBUTES], true);
-
         if (!$attributes) {
             $attributes = [];
         }
@@ -314,7 +314,7 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param array<\Orm\Zed\GiftCard\Persistence\SpyGiftCard> $giftCardCodes
+     * @param array<string> $giftCardCodes
      *
      * @return array
      */
@@ -327,9 +327,9 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
-     * @param array $giftCardPayments
+     * @param array<\Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard> $giftCardPayments
      *
-     * @return array
+     * @return array<string>
      */
     protected function extractGiftCardCodesFromGiftCardPaymentEntities(array $giftCardPayments)
     {

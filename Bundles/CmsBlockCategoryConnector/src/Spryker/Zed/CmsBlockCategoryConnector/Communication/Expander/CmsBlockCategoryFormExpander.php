@@ -42,6 +42,7 @@ class CmsBlockCategoryFormExpander implements CmsBlockCategoryFormExpanderInterf
      */
     public function buildForm(FormBuilderInterface $builder): void
     {
+        /** @var \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer */
         $categoryTransfer = $builder->getData();
         $this->categoryDataProvider->getData($categoryTransfer);
 

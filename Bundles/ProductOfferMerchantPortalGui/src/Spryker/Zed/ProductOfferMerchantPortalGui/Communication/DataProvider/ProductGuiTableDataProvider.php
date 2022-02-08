@@ -162,10 +162,12 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
             return null;
         }
 
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer */
         $productImageSetTransfer = $productConcreteTransfer->getImageSets()[0];
+        $productImages = $productImageSetTransfer->getProductImages();
 
-        return isset($productImageSetTransfer->getProductImages()[0])
-            ? $productImageSetTransfer->getProductImages()[0]->getExternalUrlSmall()
+        return isset($productImages[0])
+            ? $productImages[0]->getExternalUrlSmall()
             : null;
     }
 }

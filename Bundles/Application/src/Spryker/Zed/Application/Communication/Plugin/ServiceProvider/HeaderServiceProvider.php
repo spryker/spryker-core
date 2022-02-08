@@ -39,7 +39,9 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], 0);
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher */
+        $eventDispatcher = $app['dispatcher'];
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], 0);
     }
 
     /**

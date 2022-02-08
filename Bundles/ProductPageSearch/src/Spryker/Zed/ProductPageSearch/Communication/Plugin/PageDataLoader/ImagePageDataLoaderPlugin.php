@@ -41,7 +41,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      * @param array<int> $productAbstractIds
      * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer>
      */
     protected function setProductImages(array $productAbstractIds, array $payloadTransfers): array
     {

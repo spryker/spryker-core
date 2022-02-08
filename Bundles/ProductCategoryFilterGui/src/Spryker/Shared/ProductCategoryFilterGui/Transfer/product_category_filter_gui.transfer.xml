@@ -37,6 +37,7 @@
     </transfer>
 
     <transfer name="Node">
+        <property name="childrenNodes" type="NodeCollection"/>
     </transfer>
 
 </transfers>

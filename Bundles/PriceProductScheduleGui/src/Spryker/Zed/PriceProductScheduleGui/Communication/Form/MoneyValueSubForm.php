@@ -116,6 +116,7 @@ class MoneyValueSubForm extends AbstractType
      */
     public function onPostSubmit(FormEvent $event): void
     {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $event->getData();
         $storeTransfer = $moneyValueTransfer->getStore();
         $currencyTransfer = $moneyValueTransfer->getCurrency();

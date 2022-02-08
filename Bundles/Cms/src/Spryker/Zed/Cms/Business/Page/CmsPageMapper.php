@@ -47,7 +47,9 @@ class CmsPageMapper implements CmsPageMapperInterface
     public function mapCmsPageUrlLocale(SpyCmsPage $cmsPageEntity): array
     {
         $urlLocaleMap = [];
-        foreach ($cmsPageEntity->getSpyUrls() as $urlEntity) {
+        /** @var array<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities */
+        $urlEntities = $cmsPageEntity->getSpyUrls();
+        foreach ($urlEntities as $urlEntity) {
             $urlLocaleMap[$urlEntity->getFkLocale()] = $urlEntity->getUrl();
         }
 

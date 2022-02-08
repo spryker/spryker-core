@@ -120,6 +120,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
      */
     protected function createVersion(Request $request): ?VersionInterface
     {
+        /** @var \Generated\Shared\Transfer\RestVersionTransfer|null $versionTransfer */
         $versionTransfer = $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION, '');
 
         if (!$versionTransfer) {

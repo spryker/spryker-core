@@ -43,6 +43,7 @@ class TranslatorPreparator implements TranslatorPreparatorInterface
     public function prepareTranslatorService(): void
     {
         $translator = $this->translator;
+        /** @var \Twig\Environment $twig */
         $twig = $this->application->get('twig');
 
         $this->application->remove('twig');

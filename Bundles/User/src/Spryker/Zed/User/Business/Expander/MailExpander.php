@@ -47,9 +47,9 @@ class MailExpander implements MailExpanderInterface
      */
     protected function getEmailFromMailTransfer(MailTransfer $mailTransfer): string
     {
+        /** @var \Generated\Shared\Transfer\MailRecipientTransfer $mailRecipientTransfer */
         $mailRecipientTransfer = $mailTransfer->requireRecipients()->getRecipients()[0];
-        $mailRecipientTransfer->requireEmail();
 
-        return $mailRecipientTransfer->getEmail();
+        return $mailRecipientTransfer->getEmailOrFail();
     }
 }

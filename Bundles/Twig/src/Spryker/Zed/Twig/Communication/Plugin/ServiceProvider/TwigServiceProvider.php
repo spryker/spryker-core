@@ -117,7 +117,9 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::VIEW, [$this, 'onKernelView']);
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher */
+        $eventDispatcher = $app['dispatcher'];
+        $eventDispatcher->addListener(KernelEvents::VIEW, [$this, 'onKernelView']);
     }
 
     /**

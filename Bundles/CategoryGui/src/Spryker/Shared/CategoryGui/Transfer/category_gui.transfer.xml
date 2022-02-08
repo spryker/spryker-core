@@ -34,6 +34,7 @@
         <property name="fkParentCategoryNode" type="int"/>
         <property name="isRoot" type="bool"/>
         <property name="fkCategory" type="int"/>
+        <property name="childrenNodes" type="NodeCollection"/>
     </transfer>
 
     <transfer name="TabItem">

@@ -66,6 +66,7 @@ class EditMerchantUserController extends AbstractCrudMerchantUserController
         FormInterface $merchantUserUpdateForm
     ): RedirectResponse {
         $redirectUrl = $this->getMerchantUserListUrl($merchantUserTransfer->getIdMerchant());
+        /** @var \Generated\Shared\Transfer\UserTransfer $userTransfer */
         $userTransfer = $merchantUserUpdateForm->getData();
         $merchantUserTransfer->setUser($userTransfer);
 

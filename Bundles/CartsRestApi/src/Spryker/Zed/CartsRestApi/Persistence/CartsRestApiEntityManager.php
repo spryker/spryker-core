@@ -28,6 +28,7 @@ class CartsRestApiEntityManager extends AbstractEntityManager implements CartsRe
         $quoteQuery = $this->getFactory()->getQuoteQuery();
 
         do {
+            /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Quote\Persistence\SpyQuote[] $quotes */
             $quotes = $quoteQuery
                 ->filterByUuid(null, Criteria::ISNULL)
                 ->limit(static::BATCH_SIZE)

@@ -78,6 +78,7 @@ class EditMerchantRelationshipController extends AbstractController
     protected function updateMerchantRelationship(Request $request, FormInterface $merchantRelationshipForm)
     {
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer */
         $merchantRelationshipTransfer = $merchantRelationshipForm->getData();
         $merchantRelationshipRequestTransfer = (new MerchantRelationshipRequestTransfer())->setMerchantRelationship($merchantRelationshipTransfer);
 

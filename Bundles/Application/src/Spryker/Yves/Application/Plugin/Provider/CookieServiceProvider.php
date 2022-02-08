@@ -60,6 +60,8 @@ class CookieServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], -255);
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher */
+        $eventDispatcher = $app['dispatcher'];
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], -255);
     }
 }

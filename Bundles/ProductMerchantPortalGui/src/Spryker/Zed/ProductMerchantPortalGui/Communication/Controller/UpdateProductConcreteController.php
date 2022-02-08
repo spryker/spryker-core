@@ -100,6 +100,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         }
 
         $formOptions = $productConcreteEditFormDataProvider->getOptions();
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $formData[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE];
 
         $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData, $formOptions);

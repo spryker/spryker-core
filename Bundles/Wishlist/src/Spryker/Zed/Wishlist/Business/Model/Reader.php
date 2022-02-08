@@ -336,6 +336,7 @@ class Reader implements ReaderInterface
      */
     protected function createWishlistItemMetaCollection($idWishlist)
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[] $wishlistItemEntities */
         $wishlistItemEntities = $this->queryContainer
             ->queryItemsByWishlistId($idWishlist)
             ->find();

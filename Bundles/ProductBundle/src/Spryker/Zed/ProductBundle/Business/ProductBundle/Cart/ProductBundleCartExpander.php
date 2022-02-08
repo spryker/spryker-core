@@ -233,7 +233,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      * @param string $bundleItemIdentifier
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function createBundledItemsTransferCollection(array $productForBundleTransfers, $bundleItemIdentifier, QuoteTransfer $quoteTransfer)
     {

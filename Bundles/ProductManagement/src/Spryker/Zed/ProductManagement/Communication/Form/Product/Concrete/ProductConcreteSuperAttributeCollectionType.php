@@ -119,7 +119,10 @@ class ProductConcreteSuperAttributeCollectionType extends AbstractType
      */
     protected function addAssignProductConcreteOptionsSuperAttributes(FormBuilderInterface $builder, array $options)
     {
-        foreach ($options[static::OPTION_SUPER_ATTRIBUTES] as $productManagementAttributeTransfer) {
+        /** @var array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers */
+        $productManagementAttributeTransfers = $options[static::OPTION_SUPER_ATTRIBUTES];
+
+        foreach ($productManagementAttributeTransfers as $productManagementAttributeTransfer) {
             $builder
                 ->get(static::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES)
                 ->add(

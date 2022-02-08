@@ -177,7 +177,9 @@ class TaxSetForm extends AbstractType
 
                 /** @var \Symfony\Component\Form\Form $form */
                 $form = $context->getObject();
-                $idTaxSet = $form->getParent()->getData()->getIdTaxSet();
+                /** @var \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer */
+                $taxSetTransfer = $form->getParent()->getData();
+                $idTaxSet = $taxSetTransfer->getIdTaxSet();
                 if (
                     !$idTaxSet && $this->getFacade()->taxSetWithSameNameExists($name) ||
                     $idTaxSet && $this->getFacade()->taxSetWithSameNameAndIdExists($name, $idTaxSet)

@@ -295,6 +295,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         $criteriaFilterTransfer->setIsDefault(true);
         $permissionGroupTransferCollection = $this->sharedCartRepository->findQuotePermissionGroupList($criteriaFilterTransfer);
 
+        /** @phpstan-var \Generated\Shared\Transfer\QuotePermissionGroupTransfer */
         return reset($permissionGroupTransferCollection);
     }
 

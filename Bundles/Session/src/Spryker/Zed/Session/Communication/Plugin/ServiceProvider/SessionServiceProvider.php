@@ -70,7 +70,9 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
         $session = $this->getSession($application);
         $this->getSessionClient()->setContainer($session);
-        $application['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'extendCookieLifetime'], -128);
+        /** @var \Spryker\Shared\EventDispatcher\EventDispatcherInterface $dispatcher */
+        $dispatcher = $application['dispatcher'];
+        $dispatcher->addListener(KernelEvents::RESPONSE, [$this, 'extendCookieLifetime'], -128);
     }
 
     /**

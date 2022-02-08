@@ -67,7 +67,7 @@ class PropelSchema implements PropelSchemaInterface
     }
 
     /**
-     * @param array $groupedSchemas
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $groupedSchemas
      *
      * @return string
      */

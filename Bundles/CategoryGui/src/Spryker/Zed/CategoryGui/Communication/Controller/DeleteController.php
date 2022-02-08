@@ -133,7 +133,10 @@ class DeleteController extends CategoryAbstractController
             return new NodeCollectionTransfer();
         }
 
-        return $categoryNodeCollectionTransfer->getNodes()->offsetGet(0)->getChildrenNodes() ?? new NodeCollectionTransfer();
+        /** @var \Generated\Shared\Transfer\NodeTransfer $nodeTransfer */
+        $nodeTransfer = $categoryNodeCollectionTransfer->getNodes()->offsetGet(0);
+
+        return $nodeTransfer->getChildrenNodes() ?? new NodeCollectionTransfer();
     }
 
     /**

@@ -115,6 +115,7 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
             $productOptionGroupStorageTransfers[] = $productAbstractOptionStorageTransfer->getProductOptionGroups()
                 ->getArrayCopy();
         }
+        /** @var array<\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer> $productOptionGroupStorageTransfers */
         $productOptionGroupStorageTransfers = array_merge(...$productOptionGroupStorageTransfers);
 
         $productOptionValueStorageTransfers = [];
@@ -123,6 +124,7 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
             $productOptionValueStorageTransfers[] = $productOptionGroupStorageTransfer->getProductOptionValues()
                 ->getArrayCopy();
         }
+        /** @var array<\Generated\Shared\Transfer\ProductOptionValueStorageTransfer> $productOptionValueStorageTransfers */
         $productOptionValueStorageTransfers = array_merge(...$productOptionValueStorageTransfers);
 
         foreach ($productOptionValueStorageTransfers as $productOptionValueStorageTransfer) {

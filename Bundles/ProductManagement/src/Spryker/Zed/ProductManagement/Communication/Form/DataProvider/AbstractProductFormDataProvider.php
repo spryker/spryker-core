@@ -686,7 +686,7 @@ class AbstractProductFormDataProvider
             }
         }
 
-        /** @var array<string, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productAttributeValues */
+        /** @var array<string> $productAttributeValues */
         $productAttributeValues = [];
 
         $values = [];
@@ -703,6 +703,7 @@ class AbstractProductFormDataProvider
 
             if ($isDefined) {
                 $isProductSpecificAttribute = false;
+                /** @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer */
                 $attributeTransfer = $this->attributeTransferCollection->get($type);
                 $id = $attributeTransfer->getIdProductManagementAttribute();
                 $inputType = $attributeTransfer->getInputType();
@@ -797,6 +798,7 @@ class AbstractProductFormDataProvider
         $values = [];
         foreach ($productAttributes as $key => $value) {
             $id = null;
+            /** @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null $attributeTransfer */
             $attributeTransfer = $this->attributeTransferCollection->get($key);
             if ($attributeTransfer) {
                 $id = $attributeTransfer->getIdProductManagementAttribute();
@@ -825,9 +827,10 @@ class AbstractProductFormDataProvider
             return $keyToLocalize;
         }
 
-        $transfer = $this->attributeTransferCollection->get($keyToLocalize);
+        /** @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null $attributeTransfer */
+        $attributeTransfer = $this->attributeTransferCollection->get($keyToLocalize);
 
-        return $transfer->getKey();
+        return $attributeTransfer->getKey();
     }
 
     /**

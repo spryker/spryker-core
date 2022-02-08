@@ -80,6 +80,7 @@ HELPTEXT;
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $sessionId */
         $sessionId = $this->input->getArgument(static::ARGUMENT_SESSION_ID);
 
         $isYves = $this->input->getOption(static::OPTION_APPLICATION_YVES);

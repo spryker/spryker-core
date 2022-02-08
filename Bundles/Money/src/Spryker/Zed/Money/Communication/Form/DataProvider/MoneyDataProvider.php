@@ -36,9 +36,9 @@ class MoneyDataProvider
     }
 
     /**
-     * @param mixed $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
-     * @return mixed
+     * @return array<string, mixed>
      */
     public function getMoneyCurrencyOptionsFor($moneyValueTransfer)
     {

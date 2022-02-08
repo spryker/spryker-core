@@ -54,6 +54,7 @@ class CreateMerchantUserController extends AbstractCrudMerchantUserController
      */
     protected function createMerchantUser(int $idMerchant, FormInterface $merchantUserForm)
     {
+        /** @var \Generated\Shared\Transfer\UserTransfer|null $userTransfer */
         $userTransfer = $merchantUserForm->getData();
 
         $merchantUserResponseTransfer = $this->getFactory()->getMerchantUserFacade()->createMerchantUser(

@@ -77,7 +77,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     /**
      * @param array $data
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
+     * @return array
      */
     protected function getPriceProductVolumeItemArray(array $data): array
     {
@@ -85,6 +85,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
             return [];
         }
 
+        /** @var array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer> $rawPriceProductVolumeItemTransfers */
         $rawPriceProductVolumeItemTransfers = $data[PriceVolumeCollectionFormType::FIELD_VOLUMES];
         $priceProductVolumeItemArray = [];
         $nonFilteredPriceProductVolumeItemArray = [];

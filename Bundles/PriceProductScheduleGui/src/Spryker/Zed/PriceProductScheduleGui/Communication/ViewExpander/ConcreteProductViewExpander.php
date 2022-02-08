@@ -128,7 +128,10 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
             return $tabsViewTransfer;
         }
 
-        $defaultActiveTabName = $tabsViewTransfer->getTabs()[0]->getName();
+        /** @var \Generated\Shared\Transfer\TabItemTransfer $tabItemTransfer */
+        $tabItemTransfer = $tabsViewTransfer->getTabs()[0];
+
+        $defaultActiveTabName = $tabItemTransfer->getName();
         $tabsViewTransfer->setActiveTabName($defaultActiveTabName);
 
         return $tabsViewTransfer;

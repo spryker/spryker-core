@@ -41,6 +41,7 @@ class RateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer */
             $taxRateTransfer = $form->getData();
 
             $rowCount = $this->getQueryContainer()
@@ -78,6 +79,7 @@ class RateController extends AbstractController
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
         $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
+        /** @var \Generated\Shared\Transfer\TaxRateTransfer|null $taxRateTransfer */
         $taxRateTransfer = $taxRateFormDataProvider->getData($idTaxRate);
 
         if ($taxRateTransfer === null) {
@@ -90,6 +92,7 @@ class RateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer */
             $taxRateTransfer = $form->getData();
             $taxRateTransfer->setIdTaxRate($idTaxRate);
 

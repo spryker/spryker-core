@@ -91,7 +91,7 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return array<string, \Generated\Shared\Transfer\MerchantTransfer>
      */
     protected function getMerchantTransfersGroupedByMerchantReference(CartChangeTransfer $cartChangeTransfer)
     {

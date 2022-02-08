@@ -158,7 +158,9 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
         QuoteRequestFilterTransfer $quoteRequestFilterTransfer
     ): SpyQuoteRequestQuery {
         if ($quoteRequestFilterTransfer->getExcludedStatuses()) {
-            $quoteRequestQuery->filterByStatus($quoteRequestFilterTransfer->getExcludedStatuses(), Criteria::NOT_IN);
+            /** @var array<string> $xcludedStatuses */
+            $xcludedStatuses = $quoteRequestFilterTransfer->getExcludedStatuses();
+            $quoteRequestQuery->filterByStatus($xcludedStatuses, Criteria::NOT_IN);
         }
 
         if ($quoteRequestFilterTransfer->getCompanyUser() && $quoteRequestFilterTransfer->getCompanyUser()->getIdCompanyUser()) {

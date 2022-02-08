@@ -111,6 +111,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
             $attributes = $localizedAttributesTransfer->getAttributes();
             foreach ($attributes as $key => $value) {
                 $id = null;
+                /** @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null $attributeTransfer */
                 $attributeTransfer = $this->attributeTransferCollection->get($key);
                 if ($attributeTransfer) {
                     $id = $attributeTransfer->getIdProductManagementAttribute();
@@ -127,6 +128,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
         foreach ($attributes as $key => $value) {
             $id = null;
+            /** @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null $attributeTransfer */
             $attributeTransfer = $this->attributeTransferCollection->get($key);
             if ($attributeTransfer) {
                 $id = $attributeTransfer->getIdProductManagementAttribute();

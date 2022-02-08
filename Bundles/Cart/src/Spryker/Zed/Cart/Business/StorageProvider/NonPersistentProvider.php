@@ -159,6 +159,7 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     protected function decreaseExistingItem(Traversable $existingItems, ItemTransfer $itemTransfer, int $itemIndex): void
     {
+        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItemTransfer */
         $existingItemTransfer = $existingItems[$itemIndex];
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
 

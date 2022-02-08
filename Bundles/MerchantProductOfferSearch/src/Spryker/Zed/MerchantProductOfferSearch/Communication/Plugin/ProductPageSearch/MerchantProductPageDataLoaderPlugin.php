@@ -53,6 +53,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
     ): ProductPageLoadTransfer {
         $updatedPayLoadTransfers = [];
 
+        /** @var \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer */
         foreach ($productPageLoadTransfer->getPayloadTransfers() as $payloadTransfer) {
             $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);
         }

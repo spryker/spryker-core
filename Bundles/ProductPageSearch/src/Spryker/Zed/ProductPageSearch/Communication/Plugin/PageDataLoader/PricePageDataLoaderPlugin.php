@@ -89,7 +89,7 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      * @param array $pricesByStoreList
      *
-     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer> updated payload transfers
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer> Updated payload transfers
      */
     protected function updatePayloadTransfers(array $payloadTransfers, array $pricesByStoreList): array
     {

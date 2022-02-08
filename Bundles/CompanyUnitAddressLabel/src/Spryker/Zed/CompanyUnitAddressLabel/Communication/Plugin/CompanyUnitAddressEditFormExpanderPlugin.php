@@ -35,6 +35,7 @@ class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements
         $dataProvider = $this->getFactory()
             ->createCompanyUnitAddressLabelChoiceFormDataProvider();
 
+        /** @var \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer */
         $companyUnitAddressTransfer = $builder->getData();
         $dataProvider->getData($companyUnitAddressTransfer);
 

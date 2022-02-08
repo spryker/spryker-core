@@ -387,6 +387,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      */
     protected function loadSuperAttributes()
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAttributeKey[] $superAttributes */
         $superAttributes = $this->queryContainer
             ->queryProductAttributeKey()
             ->find();

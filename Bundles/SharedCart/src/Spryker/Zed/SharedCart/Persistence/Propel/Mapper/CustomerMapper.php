@@ -14,7 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CustomerMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $customerEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerEntityCollection
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer

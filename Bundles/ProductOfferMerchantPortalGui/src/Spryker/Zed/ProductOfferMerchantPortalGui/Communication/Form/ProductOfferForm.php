@@ -316,7 +316,9 @@ class ProductOfferForm extends AbstractType
             'label' => false,
         ]);
 
-        $idProductOffer = $options['data']->getIdProductOffer();
+        /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
+        $productOfferTransfer = $options['data'];
+        $idProductOffer = $productOfferTransfer->getIdProductOffer();
         $priceProductOfferTransformer = $this->getFactory()->createPriceProductOfferTransformer($idProductOffer);
 
         $builder->get(static::FIELD_PRODUCT_OFFER_PRICES)

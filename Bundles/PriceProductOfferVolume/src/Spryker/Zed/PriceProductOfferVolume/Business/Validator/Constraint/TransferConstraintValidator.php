@@ -40,7 +40,7 @@ class TransferConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param mixed $value
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

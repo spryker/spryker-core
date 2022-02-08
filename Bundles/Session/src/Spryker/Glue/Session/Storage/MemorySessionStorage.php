@@ -56,7 +56,7 @@ class MemorySessionStorage implements SessionStorageInterface
     protected static $metadataBag;
 
     /**
-     * @var array
+     * @var array<\Symfony\Component\HttpFoundation\Session\SessionBagInterface>
      */
     protected static $bags;
 
@@ -178,7 +178,6 @@ class MemorySessionStorage implements SessionStorageInterface
      */
     public function clear(): void
     {
-        // clear out the bags
         foreach (static::$bags as $bag) {
             $bag->clear();
         }

@@ -42,10 +42,11 @@ class CreateCompanyRoleController extends AbstractController
             ->handleRequest($request);
 
         if ($companyRoleForm->isSubmitted() && $companyRoleForm->isValid()) {
-            $companyRoleFormData = $companyRoleForm->getData();
+            /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer */
+            $companyRoleTransfer = $companyRoleForm->getData();
 
             $companyRoleResponseTransfer = $this->getFactory()
-                ->getCompanyRoleFacade()->create($companyRoleFormData);
+                ->getCompanyRoleFacade()->create($companyRoleTransfer);
 
             if ($companyRoleResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_ROLE_CREATE);

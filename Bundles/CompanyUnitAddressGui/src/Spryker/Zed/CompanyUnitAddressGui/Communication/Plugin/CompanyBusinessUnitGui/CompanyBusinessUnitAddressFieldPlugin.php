@@ -34,6 +34,7 @@ class CompanyBusinessUnitAddressFieldPlugin extends AbstractPlugin implements Co
         $dataProvider = $this->getFactory()
             ->createCompanyBusinessUnitAddressChoiceFormDataProvider();
 
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer */
         $companyBusinessUnitTransfer = $builder->getData();
         $dataProvider->getData($companyBusinessUnitTransfer);
 

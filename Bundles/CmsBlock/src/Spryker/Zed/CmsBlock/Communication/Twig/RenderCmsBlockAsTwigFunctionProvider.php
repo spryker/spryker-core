@@ -110,9 +110,10 @@ class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
         $placeholdersContent = [];
 
         foreach ($cmsBlockGlossaryTransfer->getGlossaryPlaceholders() as $glossaryPlaceholderTransfer) {
-            $placeholderTemplate = $glossaryPlaceholderTransfer->getTranslations()
-                ->offsetGet(0)
-                ->getTranslation();
+            /** @var \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer $translationTransfer */
+            $translationTransfer = $glossaryPlaceholderTransfer->getTranslations()
+                ->offsetGet(0);
+            $placeholderTemplate = $translationTransfer->getTranslation();
             $placeholdersContent[$glossaryPlaceholderTransfer->getPlaceholder()] = $environment
                 ->createTemplate($placeholderTemplate)
                 ->render($templateContext);

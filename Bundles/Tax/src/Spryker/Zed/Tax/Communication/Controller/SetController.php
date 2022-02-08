@@ -87,6 +87,7 @@ class SetController extends AbstractController
             $taxSetForm->handleRequest($request);
 
             if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
+                /** @var \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer */
                 $taxSetTransfer = $taxSetForm->getData();
                 $taxSetTransfer->setIdTaxSet($idTaxSet);
                 $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());

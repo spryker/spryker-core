@@ -42,7 +42,7 @@ class ProductAbstractUrlStorageListener extends AbstractPlugin implements EventB
     }
 
     /**
-     * @param array $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */

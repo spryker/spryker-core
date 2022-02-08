@@ -167,6 +167,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             return;
         }
 
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $guestQuoteTransfer */
         $guestQuoteTransfer = $guestQuoteTransfers[0];
         if (!$guestQuoteTransfer->getItems()->count()) {
             return;

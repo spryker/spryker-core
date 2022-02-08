@@ -178,6 +178,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
             return null;
         }
 
+        /** @var \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer */
         $productOfferStockTransfer = $productOfferTransfer->getProductOfferStocks()[0];
 
         $quantity = $productOfferStockTransfer->getQuantity();

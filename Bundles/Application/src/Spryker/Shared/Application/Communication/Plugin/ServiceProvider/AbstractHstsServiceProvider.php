@@ -67,7 +67,9 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], 0);
+        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $eventDispatcher */
+        $eventDispatcher = $app['dispatcher'];
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], 0);
     }
 
     /**

@@ -36,6 +36,7 @@ class CmsBlockCategoryFormPlugin extends AbstractPlugin implements CmsBlockFormP
         $dataProvider = $this->getFactory()
             ->createCmsBlockCategoryDataProvider();
 
+        /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
         $cmsBlockTransfer = $builder->getData();
         $dataProvider->getData($cmsBlockTransfer);
 
