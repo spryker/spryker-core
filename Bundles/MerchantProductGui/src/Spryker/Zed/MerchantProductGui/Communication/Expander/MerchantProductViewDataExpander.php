@@ -37,4 +37,18 @@ class MerchantProductViewDataExpander implements MerchantProductViewDataExpander
 
         return $viewData;
     }
+
+    /**
+     * @param array<string, mixed> $viewData
+     *
+     * @return array<string, mixed>
+     */
+    public function expandDataWithMerchant(array $viewData): array
+    {
+        if (!isset($viewData['currentProduct']['id_product_abstract'])) {
+            return $viewData;
+        }
+
+        return $this->expandDataWithMerchantByIdProductAbstract($viewData, (int)$viewData['currentProduct']['id_product_abstract']);
+    }
 }

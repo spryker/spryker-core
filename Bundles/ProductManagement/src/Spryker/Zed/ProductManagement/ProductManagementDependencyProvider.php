@@ -215,9 +215,26 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER';
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_BULK_EXPANDER} instead.
+     *
      * @var string
      */
     public const PLUGINS_PRODUCT_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_TABLE_DATA_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_TABLE_CONFIGURATION_EXPANDER = 'PLUGINS_PRODUCT_TABLE_CONFIGURATION_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_TABLE_DATA_BULK_EXPANDER = 'PLUGINS_PRODUCT_TABLE_DATA_BULK_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER = 'PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -381,6 +398,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductAbstractListActionViewDataExpanderPlugins($container);
         $container = $this->addProductAbstractViewActionViewDataExpanderPlugins($container);
         $container = $this->addProductTableDataExpanderPlugins($container);
+        $container = $this->addProductTableConfigurationExpanderPlugins($container);
+        $container = $this->addProductTableDataBulkExpanderPlugins($container);
+        $container = $this->addProductTableActionExpanderPlugins($container);
 
         return $container;
     }
@@ -792,6 +812,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::addProductTableDataBulkExpanderPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -806,9 +828,77 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductManagement\ProductManagementDependencyProvider::getProductTableDataBulkExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
      */
     protected function getProductTableDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductTableConfigurationExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_TABLE_CONFIGURATION_EXPANDER, function (): array {
+            return $this->getProductTableConfigurationExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface>
+     */
+    protected function getProductTableConfigurationExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductTableDataBulkExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_TABLE_DATA_BULK_EXPANDER, function (): array {
+            return $this->getProductTableDataBulkExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface>
+     */
+    protected function getProductTableDataBulkExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductTableActionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER, function (): array {
+            return $this->getProductTableActionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableActionExpanderPluginInterface>
+     */
+    protected function getProductTableActionExpanderPlugins(): array
     {
         return [];
     }

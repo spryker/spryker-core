@@ -1,6 +1,6 @@
 "Add Merchant","Verkäufer hinzufügen"
 approved,Genehmigt
-approved_button,Genehmigt
+approved_button,"Zugang genehmigen"
 "Back to Merchants","Zurück zu Verkäufern"
 "Contact person first name","Vorname des Ansprechpartners"
 "Contact person last name","Nachname des Ansprechpartners"
@@ -29,8 +29,8 @@ Name,Name
 "Registration number",Registrierungsnummer
 Save,Speichern
 "Is Active","Ist Aktiv"
-active,Aktiv
-inactive,Inaktiv
+Active,Aktiv
+Inactive,Inaktiv
 Activate,Aktivieren
 Deactivate,Deaktivieren
 merchant.activated,"Verkäuferprofil erfolgreich aktiviert."
@@ -39,3 +39,5 @@ Stores,Stores
 "Merchant Reference","Verkäufer Referenz"
 "Merchant URL",Verkäufer-URL
 "Create Merchant","Verkäufer Erstellen"
+Approval,Genehmigung
+Status,Status

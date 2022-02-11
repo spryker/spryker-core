@@ -20,6 +20,14 @@
     {%- endif -%}
 {% endmacro %}
 
+{% macro approvalStatusColor(status) -%}
+    {%- if status == 'denied' -%}red
+    {%- elseif status == 'waiting_for_approval' -%}yellow
+    {%- elseif status == 'draft' -%}gray
+    {%- else -%}green
+    {%- endif -%}
+{% endmacro %}
+
 {% import _self as macros %}
 
 {% block body %}
@@ -36,7 +44,21 @@
                     <span title>{{ 'Abstract Product' | trans }}</span>
                 {% endblock %}
 
+                {% block approvalStatus %}
+                    <web-spy-chips
+                        cloak
+                        approval-status
+                        max-width="100%"
+                        color="{{ macros.approvalStatusColor(productAbstract.approvalStatus) }}"
+                    >
+                        {{ productAbstract.approvalStatus | trans }}
+                    </web-spy-chips>
+                {% endblock %}
+
                 {% block action %}
+                    {%- if productAbstract.approvalStatus == 'draft' -%}
+                        <web-spy-button-link cloak variant="outline" size="lg" class="{{ mainClass }}__approval-status-button" url="{{ urlUpdateApprovalStatus }}" action>{{ 'Send for Approval' | trans }}</web-spy-button-link>
+                    {%- endif -%}
                     <web-spy-button cloak size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
                 {% endblock %}
 

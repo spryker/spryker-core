@@ -18,9 +18,10 @@ interface ProductPageSearchFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all productAbstract with the given productAbstractIds
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all productAbstract with the given productAbstractIds.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     * - Executes `ProductPageSearchCollectionFilterPluginInterface` stack of plugins.
      *
      * @api
      *
@@ -38,6 +39,7 @@ interface ProductPageSearchFacadeInterface
      * - $pageDataExpanderPluginNames param is optional and if it's empty
      *      it will call all provided plugins, otherwise only update necessary part
      *      of data which provide in plugin name.
+     * - Executes `ProductPageSearchCollectionFilterPluginInterface` stack of plugins.
      *
      * @api
      *
@@ -64,6 +66,7 @@ interface ProductPageSearchFacadeInterface
     /**
      * Specification:
      * - Publishes concrete products with given ids.
+     * - Executes `ProductConcreteCollectionFilterPluginInterface` stack of plugins.
      *
      * @api
      *
@@ -113,6 +116,7 @@ interface ProductPageSearchFacadeInterface
     /**
      * Specification:
      * - Publishes concrete products by given abstract product ids.
+     * - Executes `ProductConcreteCollectionFilterPluginInterface` stack of plugins.
      *
      * @api
      *

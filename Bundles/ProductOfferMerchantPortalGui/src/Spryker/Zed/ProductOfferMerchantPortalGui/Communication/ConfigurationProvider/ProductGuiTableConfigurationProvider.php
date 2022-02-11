@@ -88,15 +88,23 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
     protected $guiTableFactory;
 
     /**
+     * @var array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface>
+     */
+    protected $productTableExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
+     * @param array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface> $productTableExpanderPlugins
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
-        GuiTableFactoryInterface $guiTableFactory
+        GuiTableFactoryInterface $guiTableFactory,
+        array $productTableExpanderPlugins
     ) {
         $this->translatorFacade = $translatorFacade;
         $this->guiTableFactory = $guiTableFactory;
+        $this->productTableExpanderPlugins = $productTableExpanderPlugins;
     }
 
     /**
@@ -115,7 +123,10 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
             ->setDataSourceUrl(static::DATA_URL)
             ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER);
 
-        return $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableConfigurationTransfer = $this->executeProductTableExpanderPlugins($guiTableConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
     }
 
     /**
@@ -175,5 +186,20 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
         )->setRowClickAction('create-offer');
 
         return $guiTableConfigurationBuilder;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function executeProductTableExpanderPlugins(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        foreach ($this->productTableExpanderPlugins as $productTableExpanderPlugin) {
+            $guiTableConfigurationTransfer = $productTableExpanderPlugin->expandConfiguration($guiTableConfigurationTransfer);
+        }
+
+        return $guiTableConfigurationTransfer;
     }
 }

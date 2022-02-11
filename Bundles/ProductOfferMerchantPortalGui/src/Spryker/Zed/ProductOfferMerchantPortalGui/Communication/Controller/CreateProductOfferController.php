@@ -54,6 +54,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
         $productOfferCreateFormDataProvider = $this->getFactory()->createProductOfferCreateFormDataProvider();
+
         $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferCreateFormDataProvider->getData($productConcreteTransfer),
             $productOfferCreateFormDataProvider->getOptions($productAbstractTransfer),
@@ -146,6 +147,7 @@ class CreateProductOfferController extends AbstractProductOfferController
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
                 'form' => $productOfferForm->createView(),
                 'product' => $productConcreteTransfer,
+                'productAbstract' => $productAbstractTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,

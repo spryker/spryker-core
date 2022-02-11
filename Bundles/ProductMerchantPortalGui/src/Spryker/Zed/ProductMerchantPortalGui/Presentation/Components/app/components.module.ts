@@ -6,6 +6,7 @@ import { IconPlusModule } from '@spryker/icon/icons';
 import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule, IconNoDataModule } from '../icons';
 import { IconModule, IconComponent } from '@spryker/icon';
 import { RadioModule, RadioComponent, RadioGroupComponent } from '@spryker/radio';
+import { ButtonLinkComponent, ButtonLinkModule } from '@spryker/button';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
 import { CardModule, CardComponent } from '@spryker/card';
 import { ChipsModule, ChipsComponent } from '@spryker/chips';
@@ -64,6 +65,7 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
             RadioComponent,
             RadioGroupComponent,
             ImageSetsComponent,
+            ButtonLinkComponent,
             ButtonActionComponent,
             ContentToggleComponent,
             EditAbstractProductAttributesComponent,
@@ -97,6 +99,7 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
         IconNoDataModule,
         IconPlusModule,
         RadioModule,
+        ButtonLinkModule,
         ButtonActionModule,
         ContentToggleModule,
         ProductListModule,

@@ -88,6 +88,10 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\Pro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAbstractTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductConcreteAttributeTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Expander\ProductApprovalStatusProductTableConfigurationExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Expander\ProductApprovalStatusProductTableConfigurationExpanderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Expander\ProductApprovalStatusProductTableDataResponseExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Expander\ProductApprovalStatusProductTableDataResponseExpanderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\DefaultFieldSortingComparisonStrategy;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceFieldSortingComparisonStrategy;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface;
@@ -138,6 +142,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
@@ -1149,5 +1154,32 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new LocaleTransformer(
             $this->getLocaleFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Expander\ProductApprovalStatusProductTableConfigurationExpanderInterface
+     */
+    public function createProductApprovalStatusProductTableConfigurationExpander(): ProductApprovalStatusProductTableConfigurationExpanderInterface
+    {
+        return new ProductApprovalStatusProductTableConfigurationExpander($this->getTranslatorFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Expander\ProductApprovalStatusProductTableDataResponseExpanderInterface
+     */
+    public function createProductApprovalStatusProductTableDataResponseExpander(): ProductApprovalStatusProductTableDataResponseExpanderInterface
+    {
+        return new ProductApprovalStatusProductTableDataResponseExpander(
+            $this->getTranslatorFacade(),
+            $this->getProductFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeInterface
+     */
+    public function getProductApprovalFacade(): ProductMerchantPortalGuiToProductApprovalFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRODUCT_APPROVAL);
     }
 }

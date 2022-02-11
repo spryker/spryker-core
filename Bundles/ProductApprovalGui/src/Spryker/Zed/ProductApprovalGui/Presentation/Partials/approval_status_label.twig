@@ -1,0 +1,22 @@
+{% if product.approval_status is defined and product.approval_status is not empty %}
+    {% set approvalStatus = product.approval_status %}
+    {% set statusLabelClass = 'label-info' %}
+
+    {% if approvalStatus == 'denied' %}
+        {% set statusLabelClass = 'label-danger' %}
+    {% endif %}
+
+    {% if approvalStatus == 'waiting_for_approval' %}
+        {% set statusLabelClass = 'label-warning' %}
+    {% endif %}
+
+    {% if approvalStatus == 'draft' %}
+        {% set statusLabelClass = 'label-default' %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-xs-2"><strong>{{ 'Approval status' | trans }}</strong></div>
+        <div class="col-xs-10"><span class="label {{ statusLabelClass }}">{{ approvalStatus | trans }}</span></div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endif %}

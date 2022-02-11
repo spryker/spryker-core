@@ -80,7 +80,7 @@ class ProductOfferForm extends AbstractType
     /**
      * @var string
      */
-    protected const LABEL_IS_ACTIVE = 'Offer is online';
+    protected const LABEL_IS_ACTIVE = 'Offer is active';
 
     /**
      * @var string

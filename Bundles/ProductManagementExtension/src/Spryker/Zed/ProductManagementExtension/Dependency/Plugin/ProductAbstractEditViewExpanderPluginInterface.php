@@ -15,9 +15,9 @@ interface ProductAbstractEditViewExpanderPluginInterface
      *
      * @api
      *
-     * @param array $viewData
+     * @param array<string, mixed> $viewData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function expand(array $viewData): array;
 }

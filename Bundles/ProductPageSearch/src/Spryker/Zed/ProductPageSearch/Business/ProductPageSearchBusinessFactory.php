@@ -57,6 +57,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductPageDataExpanderPlugins(),
             $this->getProductPageDataLoaderPlugins(),
+            $this->getProductPageSearchCollectionFilterPlugins(),
             $this->createProductPageMapper(),
             $this->createProductPageWriter(),
             $this->getConfig(),
@@ -79,6 +80,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getConfig(),
             $this->getProductConcretePageDataExpanderPlugins(),
+            $this->getProductConcreteCollectionFilterPlugins(),
         );
     }
 
@@ -244,6 +246,22 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     protected function getProductPageDataLoaderPlugins()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchCollectionFilterPluginInterface>
+     */
+    public function getProductPageSearchCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_PAGE_SEARCH_COLLECTION_FILTER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface>
+     */
+    public function getProductConcreteCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_COLLECTION_FILTER);
     }
 
     /**

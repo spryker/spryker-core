@@ -24,5 +24,6 @@ Type,Typ
 "View Offer","Angebot anzeigen"
 Visibility,Sichtbarkeit
 "Volume Prices","Angebot ansehen"
+Approval,Genehmigung
+"Approval Status",Genehmigungsstatus
 "Waiting for Approval","Warten auf Genehmigung"
-waiting_for_approval,"Warten auf Genehmigung"

@@ -90,12 +90,18 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $productAbstractStorageExpanderPlugins = [];
 
     /**
+     * @var array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageCollectionFilterPluginInterface>
+     */
+    protected $productAbstractStorageCollectionFilterPlugins = [];
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface $attributeMap
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      * @param array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface> $productAbstractStorageExpanderPlugins
+     * @param array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageCollectionFilterPluginInterface> $productAbstractStorageCollectionFilterPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
@@ -103,7 +109,8 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         ProductStorageQueryContainerInterface $queryContainer,
         ProductStorageToStoreFacadeInterface $storeFacade,
         $isSendingToQueue,
-        array $productAbstractStorageExpanderPlugins
+        array $productAbstractStorageExpanderPlugins,
+        array $productAbstractStorageCollectionFilterPlugins
     ) {
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
@@ -111,6 +118,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
         $this->productAbstractStorageExpanderPlugins = $productAbstractStorageExpanderPlugins;
+        $this->productAbstractStorageCollectionFilterPlugins = $productAbstractStorageCollectionFilterPlugins;
     }
 
     /**
@@ -186,11 +194,24 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             array_column($productAbstractLocalizedEntities, static::COL_FK_LOCALE),
         );
 
+        $productAbstractStorageTransfers = $this->mapProductAbstractLocalizedEntitiesToProductAbstractStorageTransfers(
+            $productAbstractLocalizedEntities,
+            $attributeMapBulk,
+        );
+        $productAbstractStorageTransfers = $this->executeProductAbstractStorageFilterPlugins($productAbstractStorageTransfers);
+        $indexedProductAbstractStorageTransfers = $this->indexProductAbstractStorageTransfersByIdProductAbstract($productAbstractStorageTransfers);
+
         foreach ($pairedEntities as $pair) {
             $productAbstractLocalizedEntity = $pair[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
             $productAbstractStorageEntity = $pair[static::PRODUCT_ABSTRACT_STORAGE_ENTITY];
 
-            if ($productAbstractLocalizedEntity === null || !$this->isActive($productAbstractLocalizedEntity)) {
+            $productAbstractStorageTransfer = $indexedProductAbstractStorageTransfers[$productAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT]] ?? null;
+
+            if (
+                $productAbstractLocalizedEntity === null
+                || $productAbstractStorageTransfer === null
+                || !$this->isActive($productAbstractLocalizedEntity)
+            ) {
                 $this->deleteProductAbstractStorageEntity($productAbstractStorageEntity);
 
                 continue;
@@ -362,6 +383,29 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
+     * @param array $productAbstractLocalizedEntities
+     * @param array $attributeMapBulk
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractStorageTransfer>
+     */
+    protected function mapProductAbstractLocalizedEntitiesToProductAbstractStorageTransfers(
+        array $productAbstractLocalizedEntities,
+        array $attributeMapBulk = []
+    ): array {
+        $productAbstractStorageTransfers = [];
+
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            $productAbstractStorageTransfers[] = $this->mapToProductAbstractStorageTransfer(
+                $productAbstractLocalizedEntity,
+                new ProductAbstractStorageTransfer(),
+                $attributeMapBulk,
+            );
+        }
+
+        return $productAbstractStorageTransfers;
+    }
+
+    /**
      * @param array $productAbstractLocalizedEntity
      * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
      * @param array $attributeMapBulk
@@ -380,17 +424,16 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             $attributeMapBulk,
         );
         $productAbstractEntity = $productAbstractLocalizedEntity['SpyProductAbstract'];
+
         unset($productAbstractLocalizedEntity['attributes']);
         unset($productAbstractEntity['attributes']);
 
-        $productAbstractStorageTransfer
+        return $productAbstractStorageTransfer
             ->fromArray($productAbstractLocalizedEntity, true)
             ->fromArray($productAbstractEntity, true)
             ->setAttributes($attributes)
             ->setAttributeMap($attributeMap)
             ->setSuperAttributesDefinition($this->getSuperAttributeKeys($attributes));
-
-        return $productAbstractStorageTransfer;
     }
 
     /**
@@ -503,6 +546,24 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractStorageTransfer> $productAbstractStorageTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\ProductAbstractStorageTransfer>
+     */
+    protected function indexProductAbstractStorageTransfersByIdProductAbstract(array $productAbstractStorageTransfers): array
+    {
+        $indexedProductAbstractStorageTransfers = [];
+
+        foreach ($productAbstractStorageTransfers as $productAbstractStorageTransfer) {
+            $idProductAbstract = $productAbstractStorageTransfer->getIdProductAbstract();
+
+            $indexedProductAbstractStorageTransfers[$idProductAbstract] = $productAbstractStorageTransfer;
+        }
+
+        return $indexedProductAbstractStorageTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
@@ -515,5 +576,19 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         }
 
         return $productAbstractStorageTransfer;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractStorageTransfer> $productAbstractStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractStorageTransfer>
+     */
+    protected function executeProductAbstractStorageFilterPlugins(array $productAbstractStorageTransfers): array
+    {
+        foreach ($this->productAbstractStorageCollectionFilterPlugins as $productAbstractStorageFilterPlugin) {
+            $productAbstractStorageTransfers = $productAbstractStorageFilterPlugin->filter($productAbstractStorageTransfers);
+        }
+
+        return $productAbstractStorageTransfers;
     }
 }

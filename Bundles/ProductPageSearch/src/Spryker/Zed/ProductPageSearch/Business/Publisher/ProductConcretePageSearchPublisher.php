@@ -80,6 +80,11 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $pageDataExpanderPlugins;
 
     /**
+     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface>
+     */
+    protected $productConcreteCollectionFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface $productConcretePageSearchReader
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface $productFacade
@@ -88,6 +93,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig $productPageSearchConfig
      * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface> $pageDataExpanderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface> $productConcreteCollectionFilterPlugins
      */
     public function __construct(
         ProductConcretePageSearchReaderInterface $productConcretePageSearchReader,
@@ -97,7 +103,8 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         AbstractProductSearchDataMapper $productConcreteSearchDataMapper,
         ProductPageSearchToStoreFacadeInterface $storeFacade,
         ProductPageSearchConfig $productPageSearchConfig,
-        array $pageDataExpanderPlugins
+        array $pageDataExpanderPlugins,
+        array $productConcreteCollectionFilterPlugins
     ) {
         $this->productConcretePageSearchReader = $productConcretePageSearchReader;
         $this->productConcretePageSearchWriter = $productConcretePageSearchWriter;
@@ -107,6 +114,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         $this->productConcreteSearchDataMapper = $productConcreteSearchDataMapper;
         $this->utilEncoding = $utilEncoding;
         $this->storeFacade = $storeFacade;
+        $this->productConcreteCollectionFilterPlugins = $productConcreteCollectionFilterPlugins;
     }
 
     /**
@@ -197,12 +205,16 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     protected function executePublishTransaction(array $productConcreteTransfers, array $productConcretePageSearchTransfers): void
     {
+        $filteredProductConcreteTransfers = $this->executeProductConcreteCollectionFilterPlugins($productConcreteTransfers);
+        $filteredProductIds = $this->getProductIdsListFromProductConcreteTransfers($filteredProductConcreteTransfers);
+
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
                 $this->syncProductConcretePageSearchPerStore(
                     $productConcreteTransfer,
                     $storeTransfer,
                     $productConcretePageSearchTransfers[$productConcreteTransfer->getIdProductConcrete()][$storeTransfer->getName()] ?? [],
+                    $filteredProductIds,
                 );
             }
         }
@@ -224,13 +236,15 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer> $localizedProductConcretePageSearchTransfers
+     * @param array<int> $filteredProductIds
      *
      * @return void
      */
     protected function syncProductConcretePageSearchPerStore(
         ProductConcreteTransfer $productConcreteTransfer,
         StoreTransfer $storeTransfer,
-        array $localizedProductConcretePageSearchTransfers
+        array $localizedProductConcretePageSearchTransfers,
+        array $filteredProductIds
     ): void {
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $this->syncProductConcretePageSearchPerLocale(
@@ -238,6 +252,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
                 $storeTransfer,
                 $localizedProductConcretePageSearchTransfers[$localizedAttributesTransfer->getLocale()->getLocaleName()] ?? new ProductConcretePageSearchTransfer(),
                 $localizedAttributesTransfer,
+                $filteredProductIds,
             );
         }
     }
@@ -247,6 +262,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     * @param array<int> $filteredProductIds
      *
      * @return void
      */
@@ -254,8 +270,17 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         ProductConcreteTransfer $productConcreteTransfer,
         StoreTransfer $storeTransfer,
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer,
-        LocalizedAttributesTransfer $localizedAttributesTransfer
+        LocalizedAttributesTransfer $localizedAttributesTransfer,
+        array $filteredProductIds
     ): void {
+        if (!in_array($productConcreteTransfer->getIdProductConcrete(), $filteredProductIds)) {
+            if ($productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
+                $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
+            }
+
+            return;
+        }
+
         if (!$productConcreteTransfer->getIsActive() && $productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
             $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
 
@@ -412,5 +437,19 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected function isValidStoreLocale(string $storeName, string $localeName): bool
     {
         return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function executeProductConcreteCollectionFilterPlugins(array $productConcreteTransfers): array
+    {
+        foreach ($this->productConcreteCollectionFilterPlugins as $productConcreteCollectionFilterPlugin) {
+            $productConcreteTransfers = $productConcreteCollectionFilterPlugin->filter($productConcreteTransfers);
+        }
+
+        return $productConcreteTransfers;
     }
 }

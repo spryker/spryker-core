@@ -10,4 +10,7 @@
     <transfer name="QueryCriteria">
     </transfer>
 
+    <transfer name="ButtonCollection">
+    </transfer>
+
 </transfers>

@@ -70,7 +70,7 @@ class AddController extends AbstractController
                     ->buildProductAbstractTransfer($form, null);
 
                 $concreteProductCollection = $this->createProductConcreteCollection(
-                    $type,
+                    (string)$type,
                     $productAbstractTransfer,
                     $form,
                 );

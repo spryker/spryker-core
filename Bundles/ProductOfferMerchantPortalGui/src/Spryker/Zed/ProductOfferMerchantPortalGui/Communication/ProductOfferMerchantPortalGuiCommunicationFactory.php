@@ -112,6 +112,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new ProductGuiTableConfigurationProvider(
             $this->getTranslatorFacade(),
             $this->getGuiTableFactory(),
+            $this->getProductTableExpanderPlugins(),
         );
     }
 
@@ -166,6 +167,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->createProductNameBuilder(),
             $this->getMerchantUserFacade(),
             $this->getLocaleFacade(),
+            $this->getProductTableExpanderPlugins(),
         );
     }
 
@@ -731,5 +733,13 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function getMoneyFacade(): ProductOfferMerchantPortalGuiToMoneyFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface>
+     */
+    public function getProductTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_TABLE_EXPANDER);
     }
 }

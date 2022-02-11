@@ -1,5 +1,20 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General Information' } %}
     {% block widget_content %}
+        {% if merchant is defined and merchant is not empty %}
+            <div class="row">
+                <div class="col-xs-2"><strong>{{ 'Merchant' | trans }}</strong></div>
+                <div class="col-xs-10">
+                    <a target="_blank" href="/merchant-gui/edit-merchant?id-merchant={{ merchant.idMerchant}}">
+                        {{ merchant.name }}
+                    </a>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        {% endif %}
+
+        {% include '@ProductApprovalGui/Partials/approval_status_label.twig' ignore missing with {
+            product: currentProduct,
+        } only %}
 
         {% if relatedStoreNames is defined %}
             <div class="row">
@@ -9,14 +24,6 @@
                         <span class="label label-info">{{ storeName }}</span>
                     {% endfor %}
                 </div>
-            </div>
-            <div class="hr-line-dashed"></div>
-        {% endif %}
-
-        {% if merchant is defined and merchant is not empty %}
-            <div class="row">
-                <div class="col-xs-2"><strong>{{ 'Merchant' | trans }}</strong></div>
-                <div class="col-xs-10">{{ merchant.name }}</div>
             </div>
             <div class="hr-line-dashed"></div>
         {% endif %}

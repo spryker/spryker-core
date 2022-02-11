@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface} instead
+ *
  * Use this plugin to extend product table rows with additional data.
  */
 interface ProductTableDataExpanderPluginInterface

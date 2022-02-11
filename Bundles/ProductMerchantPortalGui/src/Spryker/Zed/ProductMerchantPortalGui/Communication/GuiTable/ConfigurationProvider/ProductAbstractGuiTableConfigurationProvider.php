@@ -58,12 +58,45 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
     /**
      * @var string
      */
-    public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
+    public const COL_KEY_APPROVAL = 'approval';
 
     /**
      * @var string
      */
-    public const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
+    public const COLUMN_DATA_VISIBILITY_ONLINE = 'Active';
+
+    /**
+     * @var string
+     */
+    public const COLUMN_DATA_VISIBILITY_OFFLINE = 'Inactive';
+
+    /**
+     * @uses \Spryker\Shared\ProductApproval\ProductApprovalConfig::STATUS_WAITING_FOR_APPROVAL
+     *
+     * @var string
+     */
+    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
+    /**
+     * @uses \Spryker\Shared\ProductApproval\ProductApprovalConfig::STATUS_APPROVED
+     *
+     * @var string
+     */
+    protected const STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Shared\ProductApproval\ProductApprovalConfig::STATUS_DENIED
+     *
+     * @var string
+     */
+    protected const STATUS_DENIED = 'denied';
+
+    /**
+     * @uses \Spryker\Shared\ProductApproval\ProductApprovalConfig::STATUS_DRAFT
+     *
+     * @var string
+     */
+    protected const STATUS_DRAFT = 'draft';
 
     /**
      * @var string
@@ -160,8 +193,14 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             ->addColumnChip(static::COL_KEY_VARIANTS, 'Variants', true, true, 'gray')
             ->addColumnListChip(static::COL_KEY_CATEGORIES, 'Categories', false, true, 2, 'gray')
             ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'gray')
-            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'gray', [
+            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Status', true, true, 'gray', [
                 $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',
+            ])
+            ->addColumnChip(static::COL_KEY_APPROVAL, 'Approval Status', true, true, 'gray', [
+                $this->translatorFacade->trans(static::STATUS_WAITING_FOR_APPROVAL) => 'yellow',
+                $this->translatorFacade->trans(static::STATUS_DENIED) => 'red',
+                $this->translatorFacade->trans(static::STATUS_APPROVED) => 'green',
+                $this->translatorFacade->trans(static::STATUS_DRAFT) => 'orange',
             ]);
 
         return $guiTableConfigurationBuilder;
@@ -180,11 +219,17 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
             true,
             $this->categoryFilterOptionsProvider->getCategoryFilterOptionsTree(),
         )
-        ->addFilterSelect('isVisible', 'Visibility', false, [
+        ->addFilterSelect('isVisible', 'Status', false, [
             '1' => static::COLUMN_DATA_VISIBILITY_ONLINE,
             '0' => static::COLUMN_DATA_VISIBILITY_OFFLINE,
         ])
-        ->addFilterSelect('inStores', 'Stores', true, $this->storeFilterOptionsProvider->getStoreOptions());
+        ->addFilterSelect('inStores', 'Stores', true, $this->storeFilterOptionsProvider->getStoreOptions())
+        ->addFilterSelect('inApprovalStatuses', 'Approval Status', true, [
+            static::STATUS_APPROVED => static::STATUS_APPROVED,
+            static::STATUS_DENIED => static::STATUS_DENIED,
+            static::STATUS_WAITING_FOR_APPROVAL => static::STATUS_WAITING_FOR_APPROVAL,
+            static::STATUS_DRAFT => static::STATUS_DRAFT,
+        ]);
 
         return $guiTableConfigurationBuilder;
     }

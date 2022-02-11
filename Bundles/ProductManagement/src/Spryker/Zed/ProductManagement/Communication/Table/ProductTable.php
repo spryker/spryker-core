@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Table;
 
+use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -99,27 +100,51 @@ class ProductTable extends AbstractProductTable
     protected $productFacade;
 
     /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface>
+     */
+    protected $productTableConfigurationExpanderPlugins;
+
+    /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface>
+     */
+    protected $productTableDataBulkExpanderPlugins;
+
+    /**
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableActionExpanderPluginInterface>
+     */
+    protected $productTableActionExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
-     * @param array $productTableDataExpanderPlugins
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface> $productTableDataExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface> $productTableConfigurationExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface> $productTableDataBulkExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableActionExpanderPluginInterface> $productTableActionExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         LocaleTransfer $localeTransfer,
         ProductTypeHelperInterface $productTypeHelper,
         ProductManagementRepositoryInterface $productManagementRepository,
+        ProductManagementToProductInterface $productFacade,
         array $productTableDataExpanderPlugins,
-        ProductManagementToProductInterface $productFacade
+        array $productTableConfigurationExpanderPlugins,
+        array $productTableDataBulkExpanderPlugins,
+        array $productTableActionExpanderPlugins
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->productTypeHelper = $productTypeHelper;
         $this->productManagementRepository = $productManagementRepository;
-        $this->productTableDataExpanderPlugins = $productTableDataExpanderPlugins;
         $this->productFacade = $productFacade;
+        $this->productTableDataExpanderPlugins = $productTableDataExpanderPlugins;
+        $this->productTableConfigurationExpanderPlugins = $productTableConfigurationExpanderPlugins;
+        $this->productTableDataBulkExpanderPlugins = $productTableDataBulkExpanderPlugins;
+        $this->productTableActionExpanderPlugins = $productTableActionExpanderPlugins;
     }
 
     /**
@@ -170,6 +195,22 @@ class ProductTable extends AbstractProductTable
 
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
+        $config = $this->executeProductTableConfigurationExpanderPlugins($config);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function executeProductTableConfigurationExpanderPlugins(TableConfiguration $config): TableConfiguration
+    {
+        foreach ($this->productTableConfigurationExpanderPlugins as $productTableConfigurationExpanderPlugin) {
+            $config = $productTableConfigurationExpanderPlugin->expandTableConfiguration($config);
+        }
+
         return $config;
     }
 
@@ -191,6 +232,7 @@ class ProductTable extends AbstractProductTable
 
         $query = $this->expandPropelQuery($query);
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $queryResults */
         $queryResults = $this->runQuery($query, $config, true);
 
         $productAbstractIdsWithEmptyName = [];
@@ -208,6 +250,28 @@ class ProductTable extends AbstractProductTable
         $productAbstractCollection = [];
         foreach ($queryResults as $productAbstractEntity) {
             $productAbstractCollection[] = $this->generateItem($productAbstractEntity, $productAbstractLocalizedAttributeNames);
+        }
+
+        $productData = $this->getProductData($queryResults->getData());
+
+        return $this->executeProductTableDataBulkExpanderPlugins($productAbstractCollection, $productData);
+    }
+
+    /**
+     * @param array<array<string, mixed>> $productAbstractCollection
+     * @param array<array<string, mixed>> $productData
+     *
+     * @return array<array<string, mixed>>
+     */
+    protected function executeProductTableDataBulkExpanderPlugins(
+        array $productAbstractCollection,
+        array $productData
+    ): array {
+        foreach ($this->productTableDataBulkExpanderPlugins as $productTableDataBulkExpanderPlugin) {
+            $productAbstractCollection = $productTableDataBulkExpanderPlugin->expandTableData(
+                $productAbstractCollection,
+                $productData,
+            );
         }
 
         return $productAbstractCollection;
@@ -237,6 +301,8 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductManagement\Communication\Table\ProductTable::executeProductTableDataBulkExpanderPlugins()} instead.
+     *
      * @param array $item
      *
      * @return array
@@ -329,7 +395,49 @@ class ProductTable extends AbstractProductTable
             'Manage Attributes',
         );
 
+        return $this->getActionUrls($urls, $item->toArray());
+    }
+
+    /**
+     * @param array<string> $urls
+     * @param array<mixed> $productData
+     *
+     * @return array<string>
+     */
+    protected function getActionUrls(array $urls, array $productData): array
+    {
+        $buttonCollectionTransfer = $this->executeProductTableActionExpanderPlugins(
+            new ButtonCollectionTransfer(),
+            $productData,
+        );
+
+        foreach ($buttonCollectionTransfer->getButtons() as $button) {
+            $urls[] = $this->generateButton(
+                $button->getUrl(),
+                $button->getTitle(),
+                $button->getDefaultOptions(),
+                $button->getCustomOptions(),
+            );
+        }
+
         return $urls;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ButtonCollectionTransfer $buttonCollectionTransfer
+     * @param array<mixed> $productData
+     *
+     * @return \Generated\Shared\Transfer\ButtonCollectionTransfer
+     */
+    protected function executeProductTableActionExpanderPlugins(
+        ButtonCollectionTransfer $buttonCollectionTransfer,
+        array $productData
+    ): ButtonCollectionTransfer {
+        foreach ($this->productTableActionExpanderPlugins as $productTableActionExpanderPlugin) {
+            $buttonCollectionTransfer = $productTableActionExpanderPlugin->execute($productData, $buttonCollectionTransfer);
+        }
+
+        return $buttonCollectionTransfer;
     }
 
     /**
@@ -391,5 +499,20 @@ class ProductTable extends AbstractProductTable
         }
 
         return $productAbstractLocalizedAttributeNames[$productAbstractEntity->getIdProductAbstract()] ?? null;
+    }
+
+    /**
+     * @param array<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     *
+     * @return array<array<string, mixed>>
+     */
+    protected function getProductData(array $productAbstractEntities): array
+    {
+        $productData = [];
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productData[] = $productAbstractEntity->toArray();
+        }
+
+        return $productData;
     }
 }

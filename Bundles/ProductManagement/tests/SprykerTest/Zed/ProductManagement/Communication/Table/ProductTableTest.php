@@ -236,8 +236,11 @@ class ProductTableTest extends Unit
             $localeTransfer,
             $productTypeHelper,
             $productManagementRepository,
-            [],
             $productManagementToProductBridge,
+            [],
+            [],
+            [],
+            [],
         );
     }
 

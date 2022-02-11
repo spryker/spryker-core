@@ -24,5 +24,6 @@ Type,Type
 "View Offer","View Offer"
 Visibility,Visibility
 "Volume Prices","Volume Prices"
+Approval,Approval
+"Approval Status","Approval Status"
 "Waiting for Approval","Waiting for Approval"
-waiting_for_approval,"Waiting for approval"

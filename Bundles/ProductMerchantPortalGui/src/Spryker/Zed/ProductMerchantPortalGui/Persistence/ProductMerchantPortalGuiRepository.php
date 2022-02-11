@@ -166,6 +166,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ProductAbstractTransfer::CATEGORY_NAMES,
                 ProductAbstractTransfer::STORE_NAMES,
                 ProductAbstractTransfer::IS_ACTIVE,
+                ProductAbstractTransfer::APPROVAL_STATUS,
             ]);
 
         $merchantProductAbstractPropelQuery->addAsColumn(ProductAbstractTransfer::ID_PRODUCT_ABSTRACT, SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT)
@@ -177,6 +178,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             ->addAsColumn(ProductAbstractTransfer::CATEGORY_NAMES, sprintf('(%s)', $this->createProductAbstractCategoriesSubquery($idLocale)))
             ->addAsColumn(ProductAbstractTransfer::STORE_NAMES, sprintf('(%s)', $this->createProductAbstractStoresSubquery()))
             ->addAsColumn(ProductAbstractTransfer::IS_ACTIVE, sprintf('(%s) > 0', $this->createActiveProductsCountSubquery()))
+            ->addAsColumn(ProductAbstractTransfer::APPROVAL_STATUS, SpyProductAbstractTableMap::COL_APPROVAL_STATUS)
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK);
 
         return $merchantProductAbstractPropelQuery;
@@ -459,6 +461,11 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             $merchantProductTableCriteriaTransfer,
         );
 
+        $merchantProductAbstractQuery = $this->addInApprovalStatusesProductAbstractFilter(
+            $merchantProductAbstractQuery,
+            $merchantProductTableCriteriaTransfer,
+        );
+
         return $merchantProductAbstractQuery;
     }
 
@@ -543,6 +550,31 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ->useSpyProductCategoryQuery()
                     ->filterByFkCategory_In($merchantProductTableCriteriaTransfer->getFilterInCategories())
                 ->endUse()
+            ->endUse();
+
+        return $merchantProductAbstractQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
+     *
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     */
+    protected function addInApprovalStatusesProductAbstractFilter(
+        SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
+        MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
+    ): SpyMerchantProductAbstractQuery {
+        if (!$merchantProductTableCriteriaTransfer->getFilterInApprovalStatuses()) {
+            return $merchantProductAbstractQuery;
+        }
+
+        $merchantProductAbstractQuery->useProductAbstractQuery()
+            ->filterByApprovalStatus_In($merchantProductTableCriteriaTransfer->getFilterInApprovalStatuses())
             ->endUse();
 
         return $merchantProductAbstractQuery;

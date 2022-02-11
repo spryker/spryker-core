@@ -49,24 +49,32 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $localeFacade;
 
     /**
+     * @var array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface>
+     */
+    protected $productTableExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
+     * @param array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface> $productTableExpanderPlugins
      */
     public function __construct(
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         ProductNameBuilderInterface $productNameBuilder,
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
+        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
+        array $productTableExpanderPlugins
     ) {
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->translatorFacade = $translatorFacade;
         $this->productNameBuilder = $productNameBuilder;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->localeFacade = $localeFacade;
+        $this->productTableExpanderPlugins = $productTableExpanderPlugins;
     }
 
     /**
@@ -96,6 +104,7 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $responseData = [
                 ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
+                ProductConcreteTransfer::ABSTRACT_SKU => $productConcreteTransfer->getAbstractSku(),
                 ProductGuiTableConfigurationProvider::COL_KEY_SKU => $productConcreteTransfer->getSku(),
                 ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),
@@ -111,11 +120,14 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
 
         /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
         $paginationTransfer = $productConcreteCollectionTransfer->requirePagination()->getPagination();
-
-        return $guiTableDataResponseTransfer
+        $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->requirePage()->getPage())
             ->setPageSize($paginationTransfer->requireMaxPerPage()->getMaxPerPage())
             ->setTotal($paginationTransfer->requireNbResults()->getNbResults());
+
+        $guiTableDataResponseTransfer = $this->executeProductTableExpanderPlugins($guiTableDataResponseTransfer);
+
+        return $guiTableDataResponseTransfer;
     }
 
     /**
@@ -169,5 +181,20 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
         return isset($productImages[0])
             ? $productImages[0]->getExternalUrlSmall()
             : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
+     */
+    protected function executeProductTableExpanderPlugins(
+        GuiTableDataResponseTransfer $guiTableDataResponseTransfer
+    ): GuiTableDataResponseTransfer {
+        foreach ($this->productTableExpanderPlugins as $productTableExpanderPlugin) {
+            $guiTableDataResponseTransfer = $productTableExpanderPlugin->expandDataResponse($guiTableDataResponseTransfer);
+        }
+
+        return $guiTableDataResponseTransfer;
     }
 }

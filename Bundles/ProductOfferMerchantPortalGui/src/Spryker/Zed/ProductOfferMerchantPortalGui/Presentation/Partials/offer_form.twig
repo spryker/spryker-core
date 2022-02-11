@@ -42,6 +42,14 @@
     </web-spy-card>
 {% endmacro %}
 
+{% macro approvalStatusColor(status) -%}
+    {%- if status == 'denied' -%}red
+    {%- elseif status == 'waiting_for_approval' -%}yellow
+    {%- elseif status == 'draft' -%}gray
+    {%- else -%}green
+    {%- endif -%}
+{% endmacro %}
+
 {% import _self as macros %}
 
 {% block body %}
@@ -70,7 +78,7 @@
             {% block approvalStatus %}
                 <span approval-status>
                     {% if approvalStatus is defined %}
-                        <web-spy-chips color="{{ approvalStatusChipColors[approvalStatus] ?? 'green' }}">
+                        <web-spy-chips cloak color="{{ approvalStatusChipColors[approvalStatus] ?? 'green' }}">
                             {{ approvalStatus | trans }}
                         </web-spy-chips>
                     {% endif %}
@@ -85,12 +93,26 @@
             {% endblock %}
 
             {% block productStatus %}
-                <web-spy-chips
-                    product-status
-                    color="{{ product.isActive ? 'green' : 'gray' }}"
-                >
-                    {{ (product.isActive ? 'Online' : 'Offline') | trans }}
-                </web-spy-chips>
+                <div product-status>
+                    <web-spy-chips
+                        cloak
+                        color="{{ product.isActive ? 'green' : 'gray' }}"
+                        class="{{ mainClass }}__product-label"
+                    >
+                        {{ (product.isActive ? 'Active' : 'Inactive') | trans }}
+                    </web-spy-chips>
+
+                    {% if productAbstract.approvalStatus is defined %}
+                        <web-spy-chips
+                            cloak
+                            max-width="100%"
+                            color="{{ macros.approvalStatusColor(productAbstract.approvalStatus) }}"
+                            class="{{ mainClass }}__product-label"
+                        >
+                            {{ productAbstract.approvalStatus | trans }}
+                        </web-spy-chips>
+                    {% endif %}
+                </div>
             {% endblock %}
 
             {% block productDetails %}
@@ -125,7 +147,7 @@
                             class="{{ mainClass }}__card {{ mainClass }}__status"
                         >
                             {{ form_row(form.children.isActive, {
-                                label: 'Offer is online' | trans,
+                                label: 'Offer is active' | trans,
                                 row_attr: { 'no-spaces': 'true', 'no-label': 'true' },
                             }) }}
                         </web-spy-card>

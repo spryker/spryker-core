@@ -95,6 +95,8 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
         $localeTransfer = $criteriaTransfer->getLocaleOrFail();
 
         foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstractTransfer) {
+            $approvalStatus = $productAbstractTransfer->getApprovalStatus();
+
             $responseData = [
                 ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU => $productAbstractTransfer->getSku(),
@@ -105,6 +107,7 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES => $productAbstractTransfer->getCategoryNames(),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES => $productAbstractTransfer->getStoreNames(),
                 ProductAbstractGuiTableConfigurationProvider::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productAbstractTransfer),
+                ProductAbstractGuiTableConfigurationProvider::COL_KEY_APPROVAL => $approvalStatus ? $this->translatorFacade->trans($approvalStatus) : $approvalStatus,
             ];
 
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));

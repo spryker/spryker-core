@@ -1,6 +1,7 @@
 Active,Aktiv
 "Add Offer","Angebot hinzufügen"
 Approved,Genehmigt
+approved,Genehmigt
 "Always in stock","Immer auf Lager"
 Created,Erstellt
 "Created from","Erstellt von"
@@ -8,6 +9,8 @@ Created,Erstellt
 "At least one store must be selected.","Es muss mindestens ein Store ausgewählt sein."
 "Create Offer","Angebot erstellen"
 Denied,Abgelehnt
+denied,Abgelehnt
+waiting_for_approval,"Warten auf Genehmigung"
 "Expiring in %daysNumber% days","Läuft in %daysNumber% Tagen ab"
 From,Von
 "Has stock","Auf Lager"
@@ -20,7 +23,7 @@ Inactive,Inaktiv
 "Merchant SKU",Verkäufer-SKU
 Name,Name
 "Never out of stock","Immer auf Lager"
-"Offer is online","Angebot ist online"
+"Offer is active","Angebot ist aktiv"
 Offers,Angebote
 Offline,Offline
 "On Marketplace","Auf dem Marktplatz"

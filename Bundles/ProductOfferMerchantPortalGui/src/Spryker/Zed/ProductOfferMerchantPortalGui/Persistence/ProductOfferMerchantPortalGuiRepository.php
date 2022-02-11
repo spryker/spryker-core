@@ -113,6 +113,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     }
 
     /**
+     * @module Product
      * @module ProductOffer
      * @module ProductImage
      * @module ProductValidity
@@ -131,6 +132,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
         $productConcreteQuery->leftJoinSpyProductValidity()
+            ->joinSpyProductAbstract()
             ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
             ->addAsColumn(ProductConcreteTransfer::ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
@@ -142,6 +144,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductConcreteTransfer::NUMBER_OF_OFFERS, sprintf('(%s)', $this->createProductOffersCountSubquery($merchantReference)))
             ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
             ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
+            ->addAsColumn(ProductConcreteTransfer::ABSTRACT_SKU, SpyProductAbstractTableMap::COL_SKU)
             ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
@@ -372,7 +375,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         ProductTableCriteriaTransfer $productTableCriteriaTransfer
     ): SpyProductQuery {
         $filterValue = $productTableCriteriaTransfer->getFilterIsActive();
-        if ($filterValue !== null) {
+        if ($filterValue === null) {
             return $productConcreteQuery;
         }
 

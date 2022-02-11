@@ -53,6 +53,16 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ABSTRACT_STORAGE_COLLECTION_FILTER = 'PLUGINS_PRODUCT_ABSTRACT_STORAGE_COLLECTION_FILTER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_FILTER = 'PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_FILTER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -75,6 +85,8 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addProductAbstractStorageExpanderPlugins($container);
         $container = $this->addProductConcreteStorageCollectionExpanderPlugins($container);
+        $container = $this->addProductAbstractStorageCollectionFilterPlugins($container);
+        $container = $this->addProductConcreteStorageCollectionFilterPlugins($container);
 
         return $container;
     }
@@ -175,6 +187,50 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface>
      */
     protected function getProductConcreteStorageCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractStorageCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_STORAGE_COLLECTION_FILTER, function () {
+            return $this->getProductAbstractStorageCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageCollectionFilterPluginInterface>
+     */
+    protected function getProductAbstractStorageCollectionFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteStorageCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_FILTER, function () {
+            return $this->getProductConcreteStorageCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionFilterPluginInterface>
+     */
+    protected function getProductConcreteStorageCollectionFilterPlugins(): array
     {
         return [];
     }

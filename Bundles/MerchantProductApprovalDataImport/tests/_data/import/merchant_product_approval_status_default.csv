@@ -1,0 +1,5 @@
+merchant_reference,approval_status
+MER-1,approved
+MER-2,waiting_for_approval
+MER-3,denied
+MER-4,draft

@@ -16,4 +16,11 @@ interface MerchantProductViewDataExpanderInterface
      * @return array<string, mixed>
      */
     public function expandDataWithMerchantByIdProductAbstract(array $viewData, int $idProductAbstract): array;
+
+    /**
+     * @param array<string, mixed> $viewData
+     *
+     * @return array<string, mixed>
+     */
+    public function expandDataWithMerchant(array $viewData): array;
 }

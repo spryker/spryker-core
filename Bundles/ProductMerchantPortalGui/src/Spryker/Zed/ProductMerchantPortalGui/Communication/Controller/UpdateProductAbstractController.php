@@ -32,6 +32,13 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
 
     /**
+     * @uses \Spryker\Shared\ProductApproval\ProductApprovalConfig::STATUS_WAITING_FOR_APPROVAL
+     *
+     * @var string
+     */
+    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
+    /**
      * @var array
      */
     protected const DEFAULT_INITIAL_DATA = [
@@ -300,6 +307,9 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                         ->createProductAbstractFormDataProvider()
                         ->getProductCategoryTree(),
                     'urlAddProductConcrete' => static::URL_ADD_PRODUCT_CONCRETE,
+                    'urlUpdateApprovalStatus' => $this->getFactory()
+                        ->createCreateProductUrlGenerator()
+                        ->getUpdateProductAbstractApprovalStatusUrl(static::STATUS_WAITING_FOR_APPROVAL, $productAbstractTransfer->getIdProductAbstractOrFail()),
                 ],
             )->getContent(),
         ];

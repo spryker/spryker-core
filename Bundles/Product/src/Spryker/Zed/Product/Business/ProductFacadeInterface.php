@@ -29,6 +29,7 @@ interface ProductFacadeInterface
      * - Triggers "before" and "after" CREATE plugins.
      * - Returns the ID of the newly created abstract product.
      * - Does not activate or touche created abstract and concrete products.
+     * - Executes `ProductAbstractPreCreatePluginInterface` stack of plugins.
      *
      * @api
      *
@@ -74,6 +75,7 @@ interface ProductFacadeInterface
      * - Throws exception if an abstract product with the same SKU exists.
      * - Returns the ID of the newly created abstract product.
      * - Does not activate or touche created abstract product.
+     * - Executes `ProductAbstractPreCreatePluginInterface` stack of plugins.
      *
      * @api
      *

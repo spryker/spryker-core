@@ -87,6 +87,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductTransferMapper(),
             $this->createProductAbstractStoreRelationReader(),
             $this->createProductAbstractStoreRelationWriter(),
+            $this->getProductAbstractPreCreatePlugins(),
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
@@ -610,5 +611,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createProductConcreteAssertion(),
         );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface>
+     */
+    public function getProductAbstractPreCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE);
     }
 }

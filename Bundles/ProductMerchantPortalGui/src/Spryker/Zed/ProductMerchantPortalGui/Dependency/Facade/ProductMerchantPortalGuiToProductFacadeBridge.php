@@ -148,4 +148,14 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     ): void {
         $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
     }
+
+    /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
+    }
 }

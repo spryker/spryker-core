@@ -26,6 +26,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductApprovalFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge;
@@ -119,6 +120,11 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      * @var string
      */
     public const FACADE_MERCHANT_STOCK = 'FACADE_MERCHANT_STOCK';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_APPROVAL = 'FACADE_PRODUCT_APPROVAL';
 
     /**
      * @var string
@@ -228,6 +234,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductAbstractFormExpanderPlugins($container);
         $container = $this->addProductConcreteTableExpanderPlugins($container);
         $container = $this->addProductAttributeFacade($container);
+        $container = $this->addProductApprovalFacade($container);
 
         $container = $this->addValidationAdapter($container);
 
@@ -525,6 +532,22 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::FACADE_MERCHANT_STOCK, function (Container $container) {
             return new ProductMerchantPortalGuiToMerchantStockFacadeBridge(
                 $container->getLocator()->merchantStock()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductApprovalFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_APPROVAL, function (Container $container) {
+            return new ProductMerchantPortalGuiToProductApprovalFacadeBridge(
+                $container->getLocator()->productApproval()->facade(),
             );
         });
 

@@ -13,6 +13,7 @@
         "spryker/laminas": "^1.0.0",
         "spryker/locale": "^3.0.0",
         "spryker/merchant-product": "^1.0.0",
+        "spryker/merchant-product-approval": "^1.0.0",
         "spryker/merchant-stock": "^1.0.0",
         "spryker/merchant-user": "^1.0.0",
         "spryker/money": "^1.0.0 || ^2.0.0",
@@ -20,10 +21,12 @@
         "spryker/price-product": "^4.31.0",
         "spryker/price-product-volume": "^3.3.0",
         "spryker/product": "^6.25.0",
+        "spryker/product-approval": "^1.0.0",
         "spryker/product-attribute": "^1.8.0",
         "spryker/product-category": "^4.6.0",
         "spryker/product-image": "^3.0.0",
         "spryker/product-merchant-portal-gui-extension": "^1.0.0",
+        "spryker/product-offer-merchant-portal-gui-extension": "^1.0.0",
         "spryker/product-validity": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/store": "^1.1.0",
@@ -55,7 +58,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

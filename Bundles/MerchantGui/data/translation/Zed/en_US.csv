@@ -29,8 +29,8 @@ Name,Name
 "Registration number","Registration Number"
 Save,Save
 "Is Active","Is Active"
-active,Active
-inactive,Inactive
+Active,Active
+Inactive,Inactive
 Activate,Activate
 Deactivate,Deactivate
 merchant.activated,"Merchant Profile successfully activated."
@@ -39,3 +39,5 @@ Stores,Stores
 "Merchant Reference","Merchant Reference"
 "Merchant URL","Merchant URL"
 "Create Merchant","Create Merchant"
+Approval,Approval
+Status,Status

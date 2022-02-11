@@ -1,0 +1,16 @@
+"Abstract product was not found","Abstract product was not found"
+"Approval status","Approval status"
+approved,Approved
+denied,Denied
+approval_status_action.approved,Approve
+approval_status_action.denied,Deny
+approval_status_action.draft,"Back to Draft"
+approval_status_action.waiting_for_approval,"Send for Approval"
+active,Active
+inactive,Inactive
+"The approval status was updated.","The approval status was updated."
+"The approval status was not updated.","The approval status was not updated."
+"Abstract product was not found.","Abstract product was not found."
+waiting_for_approval,"Waiting for Approval"
+status,Status
+Approval,Approval

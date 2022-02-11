@@ -15,4 +15,12 @@ interface ProductConfigurationTableDataExpanderInterface
      * @return array
      */
     public function expandProductItemWithProductConfigurationType(array $item): array;
+
+    /**
+     * @param array<array<string, mixed>> $items
+     * @param array<array<string, mixed>> $productData
+     *
+     * @return array<array<string, mixed>>
+     */
+    public function expandProductItemsWithProductData(array $items, array $productData): array;
 }

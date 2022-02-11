@@ -33,7 +33,9 @@ class ProductAbstractQueryExpander implements ProductAbstractQueryExpanderInterf
      */
     public function expandQuery(ModelCriteria $query): ModelCriteria
     {
-        $this->addJoin($query, $this->buildQueryCriteriaTransfer());
+        $queryCriteriaTransfer = $this->buildQueryCriteriaTransfer();
+        $query = $this->addJoin($query, $queryCriteriaTransfer);
+        $query = $this->addWithColumns($query, $queryCriteriaTransfer);
 
         return $query;
     }
@@ -74,6 +76,32 @@ class ProductAbstractQueryExpander implements ProductAbstractQueryExpanderInterf
                 continue;
             }
             $query->addJoin($queryJoinTransfer->getLeft(), $queryJoinTransfer->getRight(), $joinType);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function addWithColumns(
+        ModelCriteria $query,
+        QueryCriteriaTransfer $queryCriteriaTransfer
+    ): ModelCriteria {
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
+            if (is_array($value)) {
+                $field = array_key_first($value);
+                if (!is_string($field)) {
+                    continue;
+                }
+                $query->withColumn($field, $value[$field]);
+
+                continue;
+            }
+            $query->withColumn($field, $value);
         }
 
         return $query;

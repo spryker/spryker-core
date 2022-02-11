@@ -157,12 +157,15 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
     {
-        return $this
+        /** @var \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery $productManagementAttributeValueTranslationQuery */
+        $productManagementAttributeValueTranslationQuery = $this
             ->queryProductManagementAttributeValueTranslation()
             ->joinSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()
                 ->filterByFkProductManagementAttribute($idProductManagementAttribute)
             ->endUse();
+
+        return $productManagementAttributeValueTranslationQuery;
     }
 
     /**
@@ -174,11 +177,14 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryUnusedProductAttributeKeys()
     {
-        return $this
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $productAttributeKeyQuery */
+        $productAttributeKeyQuery = $this
             ->queryProductAttributeKey()
             ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
             ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByIdProductManagementAttribute(null)
             ->endUse();
+
+        return $productAttributeKeyQuery;
     }
 }

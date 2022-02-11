@@ -13,6 +13,8 @@
 @edit-abstract-product-table-padding-inside-card: 3px 5px;
 @edit-abstract-product-stores-field-max-width: 420px;
 @edit-abstract-product-form-item-width: 130px;
+@edit-abstract-product-approval-status-margin-left: 20px;
+@edit-abstract-product-approval-status-button-margin-right: 8px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -49,10 +51,20 @@
     }
 
     &__sub-title {
+        display: flex;
+        align-items: center;
         font-size: @spy-font-size-lg;
         font-weight: @font-weight-semi-bold;
         letter-spacing: @letter-spacing-base;
         margin: @edit-abstract-product-sub-title-margin;
+    }
+
+    &__approval-status {
+        margin-left: @edit-abstract-product-approval-status-margin-left;
+
+        &-button {
+            margin-right: @edit-abstract-product-approval-status-button-margin-right;
+        }
     }
 
     &__content {

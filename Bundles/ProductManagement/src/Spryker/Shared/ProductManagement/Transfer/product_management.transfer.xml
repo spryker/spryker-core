@@ -174,6 +174,7 @@
 
     <transfer name="QueryCriteria">
         <property name="joins" type="QueryJoin[]" singular="join"/>
+        <property name="withColumns" type="array" singular="withColumn"/>
     </transfer>
 
     <transfer name="QueryJoin">
@@ -190,5 +191,16 @@
 
     <transfer name="ProductManagementAttributeCollection">
         <property name="productManagementAttributes" type="ProductManagementAttribute[]" singular="productManagementAttribute"/>
+    </transfer>
+
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+        <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 </transfers>

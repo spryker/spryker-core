@@ -365,8 +365,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade()->getCurrentLocale(),
             $this->createProductTypeHelper(),
             $this->getRepository(),
-            $this->getProductTableDataExpanderPlugins(),
             $this->getProductFacade(),
+            $this->getProductTableDataExpanderPlugins(),
+            $this->getProductTableConfigurationExpanderPlugins(),
+            $this->getProductTableDataBulkExpanderPlugins(),
+            $this->getProductTableActionExpanderPlugins(),
         );
     }
 
@@ -522,6 +525,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use {@link Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory::getProductTableDataBulkExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
      */
     protected function getProductTableDataExpanderPlugins(): array
@@ -686,5 +691,29 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductAbstractViewActionViewDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigurationExpanderPluginInterface>
+     */
+    public function getProductTableConfigurationExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_CONFIGURATION_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBulkExpanderPluginInterface>
+     */
+    public function getProductTableDataBulkExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_BULK_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableActionExpanderPluginInterface>
+     */
+    public function getProductTableActionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_ACTION_EXPANDER);
     }
 }

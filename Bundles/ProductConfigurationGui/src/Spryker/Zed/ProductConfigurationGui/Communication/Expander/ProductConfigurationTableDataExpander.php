@@ -82,4 +82,19 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
 
         return $item;
     }
+
+    /**
+     * @param array<array<string, mixed>> $items
+     * @param array<array<string, mixed>> $productData
+     *
+     * @return array<array<string, mixed>>
+     */
+    public function expandProductItemsWithProductData(array $items, array $productData): array
+    {
+        foreach ($items as $key => $item) {
+            $items[$key] = $this->expandProductItemWithProductConfigurationType($item);
+        }
+
+        return $items;
+    }
 }

@@ -180,8 +180,8 @@ class ProductOfferTable extends AbstractTable
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => 'Reference',
             SpyProductOfferTableMap::COL_CONCRETE_SKU => 'SKU',
             static::COL_PRODUCT_NAME => 'Name',
-            SpyProductOfferTableMap::COL_APPROVAL_STATUS => 'Status',
-            SpyProductOfferTableMap::COL_IS_ACTIVE => 'Visibility',
+            SpyProductOfferTableMap::COL_APPROVAL_STATUS => 'Approval',
+            SpyProductOfferTableMap::COL_IS_ACTIVE => 'Status',
             SpyProductOfferStoreTableMap::COL_FK_STORE => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ];

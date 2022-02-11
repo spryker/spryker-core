@@ -3,7 +3,12 @@
         <div class="mp-edit-abstract-product__title">
             <ng-content select="[title]"></ng-content>
         </div>
-        <h3 class="mp-edit-abstract-product__sub-title">{{ product.sku }}, {{ product.name }}</h3>
+        <h3 class="mp-edit-abstract-product__sub-title">
+            {{ product.sku }}, {{ product.name }}
+            <span class="mp-edit-abstract-product__approval-status">
+                <ng-content select="[approval-status]"></ng-content>
+            </span>
+        </h3>
         <ng-content actions select="[action]"></ng-content>
     </spy-headline>
 </div>

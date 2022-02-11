@@ -73,6 +73,11 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected $productAbstractStoreRelationWriter;
 
     /**
+     * @var array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface>
+     */
+    protected $productAbstractPreCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -82,6 +87,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
      * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
      * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter
+     * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface> $productAbstractPreCreatePlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -92,7 +98,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         AttributeEncoderInterface $attributeEncoder,
         ProductTransferMapperInterface $productTransferMapper,
         ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader,
-        ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter
+        ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter,
+        array $productAbstractPreCreatePlugins
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -103,6 +110,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $this->productTransferMapper = $productTransferMapper;
         $this->productAbstractStoreRelationReader = $productAbstractStoreRelationReader;
         $this->productAbstractStoreRelationWriter = $productAbstractStoreRelationWriter;
+        $this->productAbstractPreCreatePlugins = $productAbstractPreCreatePlugins;
     }
 
     /**
@@ -255,6 +263,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $productAbstractTransfer = $this->notifyBeforeCreateObservers($productAbstractTransfer);
 
+        $productAbstractTransfer = $this->executeProductAbstractPreCreatePlugins($productAbstractTransfer);
+
         $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
 
         $idProductAbstract = $productAbstractEntity->getPrimaryKey();
@@ -395,5 +405,19 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
             $localizedProductAttributesEntity->save();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function executeProductAbstractPreCreatePlugins(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        foreach ($this->productAbstractPreCreatePlugins as $productAbstractPreCreatePlugin) {
+            $productAbstractTransfer = $productAbstractPreCreatePlugin->preCreate($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
     }
 }

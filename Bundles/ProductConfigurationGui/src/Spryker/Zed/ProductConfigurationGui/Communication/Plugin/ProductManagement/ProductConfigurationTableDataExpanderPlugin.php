@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductConfigurationGui\Communication\Plugin\ProductManagement\ProductConfigurationProductTableDataBulkExpanderPlugin} instead
  * @method \Spryker\Zed\ProductConfigurationGui\Communication\ProductConfigurationGuiCommunicationFactory getFactory()
  */
 class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin implements ProductTableDataExpanderPluginInterface

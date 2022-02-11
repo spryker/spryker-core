@@ -1,0 +1,16 @@
+"Abstract product was not found","Abstract product was not found"
+"Approval status",Genehmigungsstatus
+approved,Genehmigt
+denied,Abgelehnt
+approval_status_action.approved,Genehmigen
+approval_status_action.denied,Ablehnen
+approval_status_action.draft,"Zurück zum Entwurf"
+approval_status_action.waiting_for_approval,"Zur Genehmigung senden"
+active,Aktiv
+inactive,Inaktiv
+"The approval status was updated.","Der Genehmigungsstatus wurde aktualisiert."
+"The approval status was not updated.","Der Genehmigungsstatus wurde nicht aktualisiert."
+"Abstract product was not found.","Abstraktes Produkt wurde nicht gefunden."
+waiting_for_approval,"Warten auf Genehmigung"
+status,Status
+Approval,Genehmigung

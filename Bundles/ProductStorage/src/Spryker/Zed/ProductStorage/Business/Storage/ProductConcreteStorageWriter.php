@@ -88,21 +88,29 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $productConcreteStorageCollectionExpanderPlugins;
 
     /**
+     * @var array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionFilterPluginInterface>
+     */
+    protected $productConcreteStorageCollectionFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      * @param array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionExpanderPluginInterface> $productConcreteStorageCollectionExpanderPlugins
+     * @param array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionFilterPluginInterface> $productConcreteStorageCollectionFilterPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
         ProductStorageQueryContainerInterface $queryContainer,
         $isSendingToQueue,
-        array $productConcreteStorageCollectionExpanderPlugins
+        array $productConcreteStorageCollectionExpanderPlugins,
+        array $productConcreteStorageCollectionFilterPlugins
     ) {
         $this->productFacade = $productFacade;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
         $this->productConcreteStorageCollectionExpanderPlugins = $productConcreteStorageCollectionExpanderPlugins;
+        $this->productConcreteStorageCollectionFilterPlugins = $productConcreteStorageCollectionFilterPlugins;
     }
 
     /**
@@ -174,14 +182,25 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         );
 
         $productConcreteStorageTransfers = $this->getProductConcreteStorageTransfers($pairedEntities);
+        $productConcreteStorageTransfers = $this->expandProductConcreteStorageCollection($productConcreteStorageTransfers);
 
-        $this->expandProductConcreteStorageCollection($productConcreteStorageTransfers);
+        $filteredProductConcreteStorageTransfers = $this->executeProductConcreteStorageCollectionFilterPlugins(
+            $productConcreteStorageTransfers,
+        );
+        $productConcreteStorageTransfersIndexedByIdProductConcrete = $this->getProductConcreteStorageTransfersIndexedByIdProductConcrete(
+            $filteredProductConcreteStorageTransfers,
+        );
 
         foreach ($pairedEntities as $index => $pair) {
             $productConcreteLocalizedEntity = $pair[static::PRODUCT_CONCRETE_LOCALIZED_ENTITY];
             $productConcreteStorageEntity = $pair[static::PRODUCT_CONCRETE_STORAGE_ENTITY];
+            $productConcreteStorageTransfer = $productConcreteStorageTransfersIndexedByIdProductConcrete[$productConcreteLocalizedEntity[static::COL_FK_PRODUCT]] ?? null;
 
-            if ($productConcreteLocalizedEntity === null || !$this->isActive($productConcreteLocalizedEntity)) {
+            if (
+                $productConcreteLocalizedEntity === null
+                || $productConcreteStorageTransfer === null
+                || !$this->isActive($productConcreteLocalizedEntity)
+            ) {
                 $this->deletedProductConcreteSorageEntity($productConcreteStorageEntity);
 
                 continue;
@@ -482,5 +501,36 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         }
 
         return $productConcreteStorageCollection;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer> $productConcreteStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    protected function executeProductConcreteStorageCollectionFilterPlugins(array $productConcreteStorageTransfers): array
+    {
+        foreach ($this->productConcreteStorageCollectionFilterPlugins as $productConcreteStorageCollectionFilterPlugin) {
+            $productConcreteStorageTransfers = $productConcreteStorageCollectionFilterPlugin->filter($productConcreteStorageTransfers);
+        }
+
+        return $productConcreteStorageTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer> $productConcreteStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
+     */
+    protected function getProductConcreteStorageTransfersIndexedByIdProductConcrete(
+        array $productConcreteStorageTransfers
+    ): array {
+        $indexedProductConcreteStorageTransfers = [];
+        foreach ($productConcreteStorageTransfers as $productConcreteStorageTransfer) {
+            $idProductConcrete = $productConcreteStorageTransfer->getIdProductConcreteOrFail();
+            $indexedProductConcreteStorageTransfers[$idProductConcrete] = $productConcreteStorageTransfer;
+        }
+
+        return $indexedProductConcreteStorageTransfers;
     }
 }

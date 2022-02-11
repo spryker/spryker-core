@@ -1,6 +1,7 @@
 Active,Active
 "Add Offer","Add Offer"
 Approved,Approved
+approved,Approved
 "Always in stock","Always in stock"
 Created,Created
 "Created from","Created from"
@@ -8,6 +9,8 @@ Created,Created
 "At least one store must be selected.","At least one store must be selected."
 "Create Offer","Create Offer"
 Denied,Denied
+denied,Denied
+waiting_for_approval,"Waiting for Approval"
 "Expiring in %daysNumber% days","Expiring in %daysNumber% days"
 From,From
 "Has stock","Has stock"
@@ -20,7 +23,7 @@ Inactive,Inactive
 "Merchant SKU","Merchant SKU"
 Name,Name
 "Never out of stock","Never out of stock"
-"Offer is online","Offer is online"
+"Offer is active","Offer is active"
 Offers,Offers
 Offline,Offline
 "On Marketplace","On Marketplace"

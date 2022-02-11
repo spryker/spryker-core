@@ -24,4 +24,12 @@ interface CreateProductUrlGeneratorInterface
      * @return string
      */
     public function getCreateProductAbstractUrl(string $sku, string $name): string;
+
+    /**
+     * @param string $status
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    public function getUpdateProductAbstractApprovalStatusUrl(string $status, int $idProductAbstract): string;
 }

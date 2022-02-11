@@ -4,6 +4,19 @@
     <transfer name="GuiTableConfiguration">
         <property name="editable" type="GuiTableEditableConfiguration"/>
         <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
+    </transfer>
+
+    <transfer name="GuiTableColumnConfiguration">
+        <property name="id" type="string"/>
+        <property name="title" type="string"/>
+        <property name="width" type="string"/>
+        <property name="sortable" type="bool"/>
+        <property name="hideable" type="bool"/>
+        <property name="type" type="string"/>
+        <property name="typeChildren" type="string"/>
+        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+        <property name="typeOptionsMappings" type="array" singular="typeOptionMapping" associative="true"/>
     </transfer>
 
     <transfer name="GuiTableEditableConfiguration">
@@ -48,6 +61,7 @@
         <property name="filterIsVisible" type="bool"/>
         <property name="filterInStores" type="int[]" singular="inStore"/>
         <property name="filterInCategories" type="int[]" singular="inCategory"/>
+        <property name="filterInApprovalStatuses" type="int[]" singular="inApprovalStatus"/>
     </transfer>
 
     <transfer name="MerchantUser">
@@ -70,6 +84,7 @@
         <property name="idMerchant" type="int"/>
         <property name="sku" type="string"/>
         <property name="name" type="string"/>
+        <property name="approvalStatus" type="string"/>
         <property name="concreteProductCount" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="categoryNames" type="string[]" singular="categoryName"/>
@@ -328,6 +343,7 @@
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="attributes" type="array" singular="attribute"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="name" type="string"/>
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
         <property name="isActive" type="bool"/>

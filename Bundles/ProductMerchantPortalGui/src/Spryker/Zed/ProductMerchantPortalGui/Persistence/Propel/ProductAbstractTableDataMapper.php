@@ -75,6 +75,13 @@ class ProductAbstractTableDataMapper
     protected const COL_KEY_VISIBILITY = 'visibility';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_APPROVAL
+     *
+     * @var string
+     */
+    protected const COL_KEY_APPROVAL = 'approval';
+
+    /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::COL_NAME_FALLBACK
      *
      * @var string
@@ -98,6 +105,7 @@ class ProductAbstractTableDataMapper
         self::COL_KEY_CATEGORIES => ProductAbstractTransfer::CATEGORY_NAMES,
         self::COL_KEY_STORES => ProductAbstractTransfer::STORE_NAMES,
         self::COL_KEY_VISIBILITY => ProductAbstractTransfer::IS_ACTIVE,
+        self::COL_KEY_APPROVAL => SpyProductAbstractTableMap::COL_APPROVAL_STATUS,
     ];
 
     /**

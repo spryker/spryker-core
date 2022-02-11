@@ -34,6 +34,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue(),
             $this->getProductAbstractStorageExpanderPlugins(),
+            $this->getProductAbstractStorageCollectionFilterPlugins(),
         );
     }
 
@@ -47,6 +48,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue(),
             $this->getProductConcreteStorageCollectionExpanderPlugins(),
+            $this->getProductConcreteStorageCollectionFilterPlugins(),
         );
     }
 
@@ -101,5 +103,21 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     public function getProductConcreteStorageCollectionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageCollectionFilterPluginInterface>
+     */
+    public function getProductAbstractStorageCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_STORAGE_COLLECTION_FILTER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductConcreteStorageCollectionFilterPluginInterface>
+     */
+    public function getProductConcreteStorageCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_CONCRETE_STORAGE_COLLECTION_FILTER);
     }
 }

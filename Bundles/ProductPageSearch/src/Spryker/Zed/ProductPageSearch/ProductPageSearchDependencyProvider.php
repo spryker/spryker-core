@@ -222,6 +222,16 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PROPEL_QUERY_PRICE_PRODUCT = 'PROPEL_QUERY_PRICE_PRODUCT';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_PAGE_SEARCH_COLLECTION_FILTER = 'PLUGINS_PRODUCT_PAGE_SEARCH_COLLECTION_FILTER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_CONCRETE_COLLECTION_FILTER = 'PLUGINS_PRODUCT_CONCRETE_COLLECTION_FILTER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -323,6 +333,8 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductFacade($container);
         $container = $this->addProductAbstractAddToCartPlugins($container);
         $container = $this->addProductPageRefreshPlugins($container);
+        $container = $this->addProductConcreteCollectionFilterPlugins($container);
+        $container = $this->addProductPageSearchCollectionFilterPlugins($container);
 
         return $container;
     }
@@ -640,6 +652,50 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface>
      */
     protected function getProductPageRefreshPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_COLLECTION_FILTER, function () {
+            return $this->getProductConcreteCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface>
+     */
+    protected function getProductConcreteCollectionFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPageSearchCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_PAGE_SEARCH_COLLECTION_FILTER, function () {
+            return $this->getProductPageSearchCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageSearchCollectionFilterPluginInterface>
+     */
+    protected function getProductPageSearchCollectionFilterPlugins(): array
     {
         return [];
     }

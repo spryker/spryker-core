@@ -110,7 +110,7 @@ class EditController extends AddController
 
         $variantTable = $this
             ->getFactory()
-            ->createVariantTable($idProductAbstract, $type);
+            ->createVariantTable($idProductAbstract, (string)$type);
 
         $viewData = [
             'form' => $form->createView(),
@@ -125,6 +125,7 @@ class EditController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'priceDimension' => $request->get(static::PARAM_PRICE_DIMENSION, []),
             'productFormEditTabs' => $this->getFactory()->createProductFormEditTabs()->createView(),
+            'actions' => [],
         ];
 
         $viewData = $this->getFactory()

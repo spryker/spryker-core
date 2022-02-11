@@ -187,8 +187,8 @@ class MerchantTable extends AbstractTable
         $baseData = [
             SpyMerchantTableMap::COL_ID_MERCHANT => 'Merchant Id',
             SpyMerchantTableMap::COL_NAME => 'Name',
-            SpyMerchantTableMap::COL_STATUS => 'Status',
-            SpyMerchantTableMap::COL_IS_ACTIVE => 'active',
+            SpyMerchantTableMap::COL_STATUS => 'Approval',
+            SpyMerchantTableMap::COL_IS_ACTIVE => 'Status',
             SpyMerchantStoreTableMap::COL_FK_STORE => 'Stores',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();

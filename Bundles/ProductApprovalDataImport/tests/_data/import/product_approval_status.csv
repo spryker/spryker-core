@@ -1,0 +1,5 @@
+sku,approval_status
+SKU-1,approved
+SKU-2,waiting_for_approval
+SKU-3,denied
+SKU-4,draft

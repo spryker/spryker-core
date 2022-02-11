@@ -107,4 +107,11 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
     public function createProductConcreteCollection(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void;
+
+    /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

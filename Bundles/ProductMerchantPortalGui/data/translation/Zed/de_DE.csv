@@ -11,6 +11,11 @@ Images,Bilder
 Name,Name
 Offline,Offline
 Online,Online
+"Approval Status",Genehmigungsstatus
+waiting_for_approval,"Warten auf Genehmigung"
+approved,Genehmigt
+denied,Abgelehnt
+draft,Entwurf
 "Product successfully created!","Artikel erfolgreich hinzugefügt."
 "Please resolve all errors.","Bitte alle Fehler beheben."
 Price,Preis
@@ -64,8 +69,6 @@ Quantity,Menge
 "Always in stock","Immer auf lager"
 "Enter quantity","Anzahl eingeben"
 "Reserved Stock","Reservierter Bestand"
-"Variant is offline","Variante ist offline"
-"Variant is online","Variante ist online"
 "This concrete product is not owned by this merchant.","Diese Variante gehört nicht diesem Händler."
 "Create Abstract Product","Abstraktes Produkt erstellen"
 English,Englisch
@@ -111,8 +114,8 @@ Values,Values
 "Provide meta title","Meta-Titel angeben"
 "Provide meta keywords","Meta-Keywords angeben"
 "Provide meta description","Meta-Beschreibung angeben"
-"Concrete Product","Concrete Product"
-"Concrete Product is online","Concrete Product is online"
+"Concrete Product",Variante
+"Concrete Product is active","Variante is aktiv"
 "Use Abstract Product name for all locales","Use Abstract Product name for all locales"
 "Use Abstract Product description for all locales","Use Abstract Product description for all locales"
 "Use Abstract Product price for all locales","Use Abstract Product price for all locales"
@@ -128,3 +131,7 @@ Create,Create
 "This value already exists.","Dieser Wert existiert bereits."
 "Success! %d Concrete Products are saved.","Änderungen gespeichert! %d Varianten sind gespeichert."
 "Success! %d Concrete Product is saved.","Änderungen gespeichert! %d Variante ist gespeichert."
+"The approval status was updated.","Der Genehmigungsstatus wurde aktualisiert"
+"The approval status was not updated.","Der Genehmigungsstatus wurde nicht aktualisiert."
+"Abstract product was not found.","Abstraktes Produkt wurde nicht gefunden."
+"Send for Approval","Zur Genehmigung senden"

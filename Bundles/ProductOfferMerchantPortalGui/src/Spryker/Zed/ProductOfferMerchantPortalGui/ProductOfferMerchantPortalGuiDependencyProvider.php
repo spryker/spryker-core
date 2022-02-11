@@ -176,6 +176,11 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PROPEL_QUERY_PRICE_PRODUCT_STORE = 'PROPEL_QUERY_PRICE_PRODUCT_STORE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_TABLE_EXPANDER = 'PLUGINS_PRODUCT_TABLE_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -203,6 +208,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addMoneyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addPriceProductVolumeService($container);
+        $container = $this->addProductTableExpanderPlugins($container);
 
         return $container;
     }
@@ -617,5 +623,27 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductTableExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_TABLE_EXPANDER, function (Container $container) {
+            return $this->getProductTableExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface>
+     */
+    protected function getProductTableExpanderPlugins(): array
+    {
+        return [];
     }
 }
