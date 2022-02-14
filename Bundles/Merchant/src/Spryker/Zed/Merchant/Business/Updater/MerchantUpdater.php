@@ -237,7 +237,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
         foreach ($this->merchantPostUpdatePlugins as $merchantPostUpdatePlugin) {
             $merchantResponseTransfer = $merchantPostUpdatePlugin->postUpdate($merchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {
-                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
+                throw new MerchantNotSavedException($merchantResponseTransfer->getErrors());
             }
         }
 

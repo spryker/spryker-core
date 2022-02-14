@@ -161,7 +161,7 @@ class MerchantCreator implements MerchantCreatorInterface
         foreach ($this->merchantPostCreatePlugins as $merchantPostCreatePlugin) {
             $merchantResponseTransfer = $merchantPostCreatePlugin->postCreate($merchantTransfer);
             if (!$merchantResponseTransfer->getIsSuccess()) {
-                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));
+                throw new MerchantNotSavedException($merchantResponseTransfer->getErrors());
             }
         }
 
