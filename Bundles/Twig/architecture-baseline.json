@@ -1,5 +1,40 @@
 [
     {
+        "fileName": "src/Spryker/Shared/Twig/Dependency/Service/TwigToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `string` in method `Spryker\\Shared\\Twig\\Dependency\\Service\\TwigToUtilTextServiceBridge::camelCaseToDash()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Twig/Dependency/Service/TwigToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `separator` in method `Spryker\\Shared\\Twig\\Dependency\\Service\\TwigToUtilTextServiceBridge::camelCaseToDash()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Twig/Dependency/Service/TwigToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `string` in method `Spryker\\Shared\\Twig\\Dependency\\Service\\TwigToUtilTextServiceBridge::dashToCamelCase()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Twig/Dependency/Service/TwigToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `separator` in method `Spryker\\Shared\\Twig\\Dependency\\Service\\TwigToUtilTextServiceBridge::dashToCamelCase()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Twig/Dependency/Service/TwigToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `upperCaseFirst` in method `Spryker\\Shared\\Twig\\Dependency\\Service\\TwigToUtilTextServiceBridge::dashToCamelCase()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Shared/Twig/Dependency/Service/TwigToUtilTextServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `camelCaseToDash()`. Parameter `separator` does not exist in bridged method Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

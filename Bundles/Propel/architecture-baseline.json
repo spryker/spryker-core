@@ -12,5 +12,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Propel/Dependency/Service/PropelToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `length` in method `Spryker\\Zed\\Propel\\Dependency\\Service\\PropelToUtilTextServiceBridge::generateRandomString()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

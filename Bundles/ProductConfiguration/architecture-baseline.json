@@ -35,6 +35,34 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Client\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Client\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Client\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Client\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -42,9 +70,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Service/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Service\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Service\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Service\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Service/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/ProductConfiguration/Dependency/Service/ProductConfigurationToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `algorithm` in method `Spryker\\Service\\ProductConfiguration\\Dependency\\Service\\ProductConfigurationToUtilTextServiceBridge::hashValue()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

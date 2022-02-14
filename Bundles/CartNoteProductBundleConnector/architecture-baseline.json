@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/CartNoteProductBundleConnector/Dependency/Client/CartNoteProductBundleConnectorToProductBundleClientBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Client\\CartNoteProductBundleConnector\\Dependency\\Client\\CartNoteProductBundleConnectorToProductBundleClientBridge::findBundleItemsInQuote()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/CartNoteProductBundleConnector/Dependency/Client/CartNoteProductBundleConnectorToProductBundleClientBridge.php",
+        "description": "Bridges: Type should be defined for param `groupKey` in method `Spryker\\Client\\CartNoteProductBundleConnector\\Dependency\\Client\\CartNoteProductBundleConnectorToProductBundleClientBridge::findBundleItemsInQuote()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartNoteProductBundleConnector/Dependency/Facade/CartNoteProductBundleConnectorToProductBundleFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\CartNoteProductBundleConnector\\Dependency\\Facade\\CartNoteProductBundleConnectorToProductBundleFacadeBridge::findBundleItemsInQuote()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartNoteProductBundleConnector/Dependency/Facade/CartNoteProductBundleConnectorToProductBundleFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `groupKey` in method `Spryker\\Zed\\CartNoteProductBundleConnector\\Dependency\\Facade\\CartNoteProductBundleConnectorToProductBundleFacadeBridge::findBundleItemsInQuote()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

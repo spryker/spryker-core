@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Client/ProductAlternativeStorage/Dependency/Client/ProductAlternativeStorageToProductStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Client\\ProductAlternativeStorage\\Dependency\\Client\\ProductAlternativeStorageToProductStorageClientBridge::findProductAbstractStorageData()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductAlternativeStorage/Dependency/Client/ProductAlternativeStorageToProductStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Client\\ProductAlternativeStorage\\Dependency\\Client\\ProductAlternativeStorageToProductStorageClientBridge::findProductAbstractStorageData()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductAlternativeStorage/Dependency/Client/ProductAlternativeStorageToProductStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractStorageData()`. Got `$idProductAbstract` but expected to be `int $idProductAbstract`. Got `$localeName` but expected to be `string $localeName`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

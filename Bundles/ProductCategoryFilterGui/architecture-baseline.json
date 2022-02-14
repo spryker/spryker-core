@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Client/ProductCategoryFilterGuiToCatalogClientBridge.php",
+        "description": "Bridges: Type should be defined for param `searchString` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Client\\ProductCategoryFilterGuiToCatalogClientBridge::catalogSearch()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Client/ProductCategoryFilterGuiToCatalogClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `catalogSearch()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +24,20 @@
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `categoryId` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Facade\\ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge::deleteProductCategoryFilterByCategoryId()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `categoryId` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Facade\\ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge::findProductCategoryFilterByCategoryId()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -56,6 +77,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `productIds` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Facade\\ProductCategoryFilterGuiToProductFacadeBridge::getCombinedAbstractAttributeKeysForProductIds()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCombinedAbstractAttributeKeysForProductIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -63,9 +91,30 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductSearchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `searchText` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Facade\\ProductCategoryFilterGuiToProductSearchFacadeBridge::suggestProductSearchAttributeKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductSearchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `limit` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Facade\\ProductCategoryFilterGuiToProductSearchFacadeBridge::suggestProductSearchAttributeKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductSearchFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `suggestProductSearchAttributeKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/QueryContainer/ProductCategoryFilterGuiToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idNode` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\QueryContainer\\ProductCategoryFilterGuiToCategoryQueryContainerBridge::queryAttributeByCategoryId()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -87,6 +136,55 @@
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/QueryContainer/ProductCategoryFilterGuiToProductCategoryQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryProductCategoryMappings()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Service/ProductCategoryFilterGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Service\\ProductCategoryFilterGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

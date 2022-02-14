@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductList/Dependency/Service/ProductListToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductList\\Dependency\\Service\\ProductListToUtilTextServiceBridge::generateSlug()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

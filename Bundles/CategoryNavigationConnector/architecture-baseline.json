@@ -7,9 +7,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CategoryNavigationConnector/Dependency/QueryContainer/CategoryNavigationConnectorToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idCategoryNode` in method `Spryker\\Zed\\CategoryNavigationConnector\\Dependency\\QueryContainer\\CategoryNavigationConnectorToCategoryQueryContainerBridge::queryResourceUrlByCategoryNodeId()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CategoryNavigationConnector/Dependency/QueryContainer/CategoryNavigationConnectorToCategoryQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryResourceUrlByCategoryNodeId()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CategoryNavigationConnector/Dependency/QueryContainer/CategoryNavigationConnectorToNavigationQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `fkUrl` in method `Spryker\\Zed\\CategoryNavigationConnector\\Dependency\\QueryContainer\\CategoryNavigationConnectorToNavigationQueryContainerBridge::queryNavigationNodeByFkUrl()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -5,5 +5,26 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\CompanySupplierGui\\Dependency\\Facade\\CompanySupplierGuiToCurrencyFacadeBridge::getByIdCurrency()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\CompanySupplierGui\\Dependency\\Facade\\CompanySupplierGuiToMoneyFacadeBridge::convertIntegerToDecimal()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idStore` in method `Spryker\\Zed\\CompanySupplierGui\\Dependency\\Facade\\CompanySupplierGuiToStoreFacadeBridge::getStoreById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

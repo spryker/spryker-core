@@ -7,6 +7,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToProductLabelStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `labelName` in method `Spryker\\Client\\ProductNew\\Dependency\\Client\\ProductNewToProductLabelStorageClientBridge::findLabelByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToProductLabelStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Client\\ProductNew\\Dependency\\Client\\ProductNewToProductLabelStorageClientBridge::findLabelByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToProductLabelStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findLabelByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -38,6 +52,20 @@
         "fileName": "src/Spryker/Zed/ProductNew/Dependency/QueryContainer/ProductNewToProductInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductNew/Dependency/QueryContainer/ProductNewToProductLabelBridge.php",
+        "description": "Bridges: Type should be defined for param `labelName` in method `Spryker\\Zed\\ProductNew\\Dependency\\QueryContainer\\ProductNewToProductLabelBridge::queryProductLabelByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductNew/Dependency/QueryContainer/ProductNewToProductLabelBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductLabel` in method `Spryker\\Zed\\ProductNew\\Dependency\\QueryContainer\\ProductNewToProductLabelBridge::queryProductAbstractRelationsByIdProductLabel()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

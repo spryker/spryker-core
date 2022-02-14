@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Shared/SessionRedis/Dependency/Client/SessionRedisToRedisClientBridge.php",
+        "description": "Bridges: Type should be defined for param `keysOrArgs` in method `Spryker\\Shared\\SessionRedis\\Dependency\\Client\\SessionRedisToRedisClientBridge::eval()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -1,8 +1,29 @@
 [
     {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToCustomerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `customerReference` in method `Spryker\\Zed\\GiftCardMailConnector\\Dependency\\Facade\\GiftCardMailConnectorToCustomerFacadeBridge::findByReference()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findByReference()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToGiftCardFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idSalesOrderItem` in method `Spryker\\Zed\\GiftCardMailConnector\\Dependency\\Facade\\GiftCardMailConnectorToGiftCardFacadeBridge::findGiftCardByIdSalesOrderItem()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToGiftCardFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idGiftCard` in method `Spryker\\Zed\\GiftCardMailConnector\\Dependency\\Facade\\GiftCardMailConnectorToGiftCardFacadeBridge::findById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -24,6 +45,13 @@
         "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToMailFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `handleMail()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToSalesFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idSalesOrderItem` in method `Spryker\\Zed\\GiftCardMailConnector\\Dependency\\Facade\\GiftCardMailConnectorToSalesFacadeBridge::findOrderByIdSalesOrderItem()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

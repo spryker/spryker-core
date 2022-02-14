@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/CompanyUnitAddress/Dependency/Client/CompanyUnitAddressToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\CompanyUnitAddress\\Dependency\\Client\\CompanyUnitAddressToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/CompanyUnitAddress/Dependency/Client/CompanyUnitAddressToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `requestOptions` in method `Spryker\\Client\\CompanyUnitAddress\\Dependency\\Client\\CompanyUnitAddressToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyUnitAddress/Dependency/Facade/CompanyUnitAddressToCountryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `iso2Code` in method `Spryker\\Zed\\CompanyUnitAddress\\Dependency\\Facade\\CompanyUnitAddressToCountryFacadeBridge::getCountryByIso2Code()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

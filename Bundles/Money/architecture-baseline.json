@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Client/Money/Dependency/Client/MoneyToCurrencyClientBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Client\\Money\\Dependency\\Client\\MoneyToCurrencyClientBridge::fromIsoCode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/Money/Dependency/Client/MoneyToCurrencyClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -21,8 +28,22 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Shared/Money/Dependency/Parser/MoneyToParserBridge.php",
+        "description": "Bridges: Type should be defined for param `money` in method `Spryker\\Shared\\Money\\Dependency\\Parser\\MoneyToParserBridge::parse()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Money/Dependency/Parser/MoneyToParserBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Shared\\Money\\Dependency\\Parser\\MoneyToParserBridge::parse()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Shared/Money/Dependency/Parser/MoneyToParserInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `parse()`. 1 params expexted but got 2. Got `$isoCode` but expected to be `$forceCurrency`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `parse()`. 1 params expected but got 2. Got `$isoCode` but expected to be `$forceCurrency`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -31,6 +52,13 @@
         "fileName": "src/Spryker/Yves/Money/Dependency/Client/MoneyToLocaleClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToCurrencyBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\Money\\Dependency\\Facade\\MoneyToCurrencyBridge::fromIsoCode()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -66,6 +94,13 @@
         "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToStoreBridge.php",
+        "description": "Bridges: Type should be defined for param `idStore` in method `Spryker\\Zed\\Money\\Dependency\\Facade\\MoneyToStoreBridge::getStoreById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

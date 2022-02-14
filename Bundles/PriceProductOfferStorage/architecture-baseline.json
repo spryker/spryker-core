@@ -1,8 +1,8 @@
 [
     {
-        "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Client/PriceProductOfferStorageToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Client/PriceProductOfferStorageToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\PriceProductOfferStorage\\Dependency\\Client\\PriceProductOfferStorageToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -14,9 +14,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Service/PriceProductOfferStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\PriceProductOfferStorage\\Dependency\\Service\\PriceProductOfferStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Service/PriceProductOfferStorageToSynchronizationServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\PriceProductOfferStorage\\Dependency\\Facade\\PriceProductOfferStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -38,6 +52,13 @@
         "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventBehaviorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransfersByModifiedColumns()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\PriceProductOfferStorage\\Dependency\\Facade\\PriceProductOfferStorageToEventFacadeBridge::trigger()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -1,8 +1,29 @@
 [
     {
+        "fileName": "src/Spryker/Client/ShoppingList/Dependency/Client/ShoppingListToCustomerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `idCustomer` in method `Spryker\\Client\\ShoppingList\\Dependency\\Client\\ShoppingListToCustomerClientBridge::getCustomerById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ShoppingList/Dependency/Client/ShoppingListToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\ShoppingList\\Dependency\\Client\\ShoppingListToMessengerClientBridge::addErrorMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ShoppingList/Dependency/Client/ShoppingListToMessengerClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ShoppingList/Dependency/Client/ShoppingListToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\ShoppingList\\Dependency\\Client\\ShoppingListToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -28,6 +49,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToEventFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\ShoppingList\\Dependency\\Facade\\ShoppingListToEventFacadeBridge::trigger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToEventFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -45,6 +73,13 @@
         "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToMessengerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ShoppingList\\Dependency\\Facade\\ShoppingListToProductFacadeBridge::hasProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

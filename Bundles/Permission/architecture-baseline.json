@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/Permission/Dependency/Client/PermissionToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\Permission\\Dependency\\Client\\PermissionToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Permission/Dependency/Client/PermissionToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `requestOptions` in method `Spryker\\Client\\Permission\\Dependency\\Client\\PermissionToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

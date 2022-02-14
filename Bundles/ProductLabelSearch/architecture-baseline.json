@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductLabelSearch\\Dependency\\Facade\\ProductLabelSearchToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToEventBehaviorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -14,9 +21,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToProductLabelBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductLabelSearch\\Dependency\\Facade\\ProductLabelSearchToProductLabelBridge::findLabelIdsByIdProductAbstract()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToProductLabelInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findLabelIdsByIdProductAbstract()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToProductPageSearchBridge.php",
+        "description": "Bridges: Type should be defined for param `pageDataExpanderPluginNames` in method `Spryker\\Zed\\ProductLabelSearch\\Dependency\\Facade\\ProductLabelSearchToProductPageSearchBridge::refresh()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

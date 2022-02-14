@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\PersistentCart\\Dependency\\Client\\PersistentCartToMessengerClientBridge::addSuccessMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\PersistentCart\\Dependency\\Client\\PersistentCartToMessengerClientBridge::addInfoMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\PersistentCart\\Dependency\\Client\\PersistentCartToMessengerClientBridge::addErrorMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToMessengerClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +38,20 @@
         "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToMessengerClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\PersistentCart\\Dependency\\Client\\PersistentCartToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/PersistentCart/Dependency/Client/PersistentCartToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `requestOptions` in method `Spryker\\Client\\PersistentCart\\Dependency\\Client\\PersistentCartToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -73,6 +108,13 @@
         "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToMessengerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToQuoteFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeBridge::findQuoteById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -5,5 +5,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartPermissionConnector/Dependency/Facade/CartPermissionConnectorToPermissionFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `permissionKey` in method `Spryker\\Zed\\CartPermissionConnector\\Dependency\\Facade\\CartPermissionConnectorToPermissionFacadeBridge::can()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

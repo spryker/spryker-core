@@ -14,6 +14,13 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyBridge.php",
+        "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToCurrencyBridge::getByIdCurrency()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStoreWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -56,6 +63,34 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToMoneyBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToMoneyBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToMoneyBridge::convertDecimalToInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToMoneyBridge::convertIntegerToDecimal()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToMoneyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `fromInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -91,9 +126,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `domain` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `locale` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

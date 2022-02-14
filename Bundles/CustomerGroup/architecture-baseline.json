@@ -7,6 +7,55 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +66,27 @@
         "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilEncodingInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/Service/CustomerGroupToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\CustomerGroup\\Dependency\\Service\\CustomerGroupToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

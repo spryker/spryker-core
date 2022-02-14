@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Client/ProductSearchConfigStorage/Dependency/Client/ProductSearchConfigStorageToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\ProductSearchConfigStorage\\Dependency\\Client\\ProductSearchConfigStorageToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductSearchConfigStorage/Dependency/Client/ProductSearchConfigStorageToStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -7,9 +14,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductSearchConfigStorage/Dependency/Service/ProductSearchConfigStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\ProductSearchConfigStorage\\Dependency\\Service\\ProductSearchConfigStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductSearchConfigStorage/Dependency/Service/ProductSearchConfigStorageToSynchronizationServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearchConfigStorage/Dependency/Facade/ProductSearchConfigStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductSearchConfigStorage\\Dependency\\Facade\\ProductSearchConfigStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

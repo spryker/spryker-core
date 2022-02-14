@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Service/DataExport/Dependency/Service/DataExportToUtilDataReaderServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `fileName` in method `Spryker\\Service\\DataExport\\Dependency\\Service\\DataExportToUtilDataReaderServiceBridge::getYamlBatchIterator()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/DataExport/Dependency/Service/DataExportToUtilDataReaderServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `chunkSize` in method `Spryker\\Service\\DataExport\\Dependency\\Service\\DataExportToUtilDataReaderServiceBridge::getYamlBatchIterator()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Service/DataExport/Dependency/Service/DataExportToUtilDataReaderServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getYamlBatchIterator()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

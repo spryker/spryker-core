@@ -1,5 +1,54 @@
 [
     {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idFile` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFile()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idFileInfo` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFileInfo()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idFileDirectory` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFileDirectory()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idFile` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findFileByIdFile()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idFileInfo` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findFileByIdFileInfo()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idFileDirectory` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findFileDirectory()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idMimeType` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findMimeType()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `saveFile()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

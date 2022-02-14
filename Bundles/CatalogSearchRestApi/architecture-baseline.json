@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Glue/CatalogSearchRestApi/Dependency/Client/CatalogSearchRestApiToCatalogClientBridge.php",
+        "description": "Bridges: Type should be defined for param `searchString` in method `Spryker\\Glue\\CatalogSearchRestApi\\Dependency\\Client\\CatalogSearchRestApiToCatalogClientBridge::catalogSearch()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CatalogSearchRestApi/Dependency/Client/CatalogSearchRestApiToCatalogClientBridge.php",
+        "description": "Bridges: Type should be defined for param `searchString` in method `Spryker\\Glue\\CatalogSearchRestApi\\Dependency\\Client\\CatalogSearchRestApiToCatalogClientBridge::catalogSuggestSearch()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Glue/CatalogSearchRestApi/Dependency/Client/CatalogSearchRestApiToCatalogClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `catalogSearch()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +31,20 @@
         "fileName": "src/Spryker/Glue/CatalogSearchRestApi/Dependency/Client/CatalogSearchRestApiToCurrencyClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CatalogSearchRestApi/Dependency/Client/CatalogSearchRestApiToGlossaryStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Glue\\CatalogSearchRestApi\\Dependency\\Client\\CatalogSearchRestApiToGlossaryStorageClientBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/CatalogSearchRestApi/Dependency/Client/CatalogSearchRestApiToGlossaryStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Glue\\CatalogSearchRestApi\\Dependency\\Client\\CatalogSearchRestApiToGlossaryStorageClientBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

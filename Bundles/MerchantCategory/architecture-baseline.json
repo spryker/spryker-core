@@ -5,5 +5,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantCategory/Dependency/Facade/MerchantCategoryToEventFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\MerchantCategory\\Dependency\\Facade\\MerchantCategoryToEventFacadeBridge::triggerBulk()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

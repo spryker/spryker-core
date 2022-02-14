@@ -7,9 +7,16 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Client/Availability/Dependency/Client/AvailabilityToStorageInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/Availability/Dependency/Client/AvailabilityToStorageBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\Availability\\Dependency\\Client\\AvailabilityToStorageBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Availability/Dependency/Client/AvailabilityToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\Availability\\Dependency\\Client\\AvailabilityToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -28,9 +35,30 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToEventFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToEventFacadeBridge::trigger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToEventFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToProductFacadeBridge::hasProductAbstract()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToProductFacadeBridge::hasProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -49,6 +77,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStockFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToStockFacadeBridge::isNeverOutOfStockForStore()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStockFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `isNeverOutOfStockForStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -59,6 +94,20 @@
         "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStockFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoreToWarehouseMapping()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idStore` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToStoreFacadeBridge::getStoreById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -80,6 +129,27 @@
         "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Availability/Dependency/Facade/AvailabilityToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyChange` in method `Spryker\\Zed\\Availability\\Dependency\\Facade\\AvailabilityToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

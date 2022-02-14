@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ContentProductDataImport/Dependency/Service/ContentProductDataImportToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ContentProductDataImport\\Dependency\\Service\\ContentProductDataImportToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentProductDataImport/Dependency/Service/ContentProductDataImportToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ContentProductDataImport\\Dependency\\Service\\ContentProductDataImportToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentProductDataImport/Dependency/Service/ContentProductDataImportToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ContentProductDataImport\\Dependency\\Service\\ContentProductDataImportToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ContentProductDataImport/Dependency/Service/ContentProductDataImportToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

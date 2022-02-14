@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Client/ShoppingListSession/Dependency/Client/ShoppingListSessionToSessionClientBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Client\\ShoppingListSession\\Dependency\\Client\\ShoppingListSessionToSessionClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ShoppingListSession/Dependency/Client/ShoppingListSessionToSessionClientBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Client\\ShoppingListSession\\Dependency\\Client\\ShoppingListSessionToSessionClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ShoppingListSession/Dependency/Client/ShoppingListSessionToSessionClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -8,14 +22,7 @@
     },
     {
         "fileName": "src/Spryker/Client/ShoppingListSession/Dependency/Client/ShoppingListSessionToSessionClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/ShoppingListSession/Dependency/Client/ShoppingListSessionToSessionClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `remove()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Got `$name` but expected to be `string $name`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -1,8 +1,15 @@
 [
     {
-        "fileName": "src/Spryker/Client/CompanyUserStorage/Dependency/Client/CompanyUserStorageToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/CompanyUserStorage/Dependency/Client/CompanyUserStorageToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\CompanyUserStorage\\Dependency\\Client\\CompanyUserStorageToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/CompanyUserStorage/Dependency/Service/CompanyUserStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\CompanyUserStorage\\Dependency\\Service\\CompanyUserStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

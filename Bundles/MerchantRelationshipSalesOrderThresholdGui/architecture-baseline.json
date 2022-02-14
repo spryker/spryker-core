@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThresholdGui\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge::fromIsoCode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAllStoresWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -28,6 +35,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThresholdGui\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeBridge::convertIntegerToDecimal()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThresholdGui\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeBridge::convertDecimalToInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `convertIntegerToDecimal()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -38,6 +59,13 @@
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `convertDecimalToInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThresholdGui\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `customerReference` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Facade\\MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge::findByReference()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findByReference()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -10,6 +17,20 @@
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Facade\\MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Facade\\MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -45,6 +66,27 @@
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `formatDateTime()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Service\\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Service\\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Service\\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

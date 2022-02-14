@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Client/OfferGuiToSessionClientBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Zed\\OfferGui\\Dependency\\Client\\OfferGuiToSessionClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Client/OfferGuiToSessionClientBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Zed\\OfferGui\\Dependency\\Client\\OfferGuiToSessionClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Client/OfferGuiToSessionClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -42,6 +56,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `customerReference` in method `Spryker\\Zed\\OfferGui\\Dependency\\Facade\\OfferGuiToCustomerFacadeBridge::findCustomerByReference()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findCustomerByReference()`. Got `$customerReference` but expected to be `string $customerReference`. Invalid return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -77,6 +98,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\OfferGui\\Dependency\\Facade\\OfferGuiToMoneyFacadeBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\OfferGui\\Dependency\\Facade\\OfferGuiToMoneyFacadeBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToOmsFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getManualEventsByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -98,6 +133,55 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -108,6 +192,27 @@
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

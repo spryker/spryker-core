@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CmsSlotGui/Dependency/Facade/CmsSlotGuiToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\CmsSlotGui\\Dependency\\Facade\\CmsSlotGuiToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsSlotGui/Dependency/Facade/CmsSlotGuiToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `domain` in method `Spryker\\Zed\\CmsSlotGui\\Dependency\\Facade\\CmsSlotGuiToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsSlotGui/Dependency/Facade/CmsSlotGuiToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `locale` in method `Spryker\\Zed\\CmsSlotGui\\Dependency\\Facade\\CmsSlotGuiToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CmsSlotGui/Dependency/Facade/CmsSlotGuiToTranslatorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `?string $domain`. Got `$locale` but expected to be `?string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

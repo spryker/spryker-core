@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `identifier` in method `Spryker\\Zed\\MerchantOms\\Dependency\\Facade\\MerchantOmsToStateMachineFacadeBridge::triggerForNewStateMachineItem()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\MerchantOms\\Dependency\\Facade\\MerchantOmsToStateMachineFacadeBridge::triggerEventForItems()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `triggerForNewStateMachineItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

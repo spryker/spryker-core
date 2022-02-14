@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/SalesQuantity/Dependency/Facade/SalesQuantityToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeBridge::getProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

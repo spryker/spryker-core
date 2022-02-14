@@ -1,5 +1,47 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::findCmsBlockById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::activateById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::deactivateById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Type should be defined for param `templatePath` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::syncTemplate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::findGlossary()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Type should be defined for param `idCmsBlockTemplate` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::hasTemplateFileById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findCmsBlockById()`. Got `$idCmsBlock` but expected to be `int $idCmsBlock`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -52,6 +94,20 @@
         "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/QueryContainer/CmsBlockGuiToCmsBlockQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\QueryContainer\\CmsBlockGuiToCmsBlockQueryContainerBridge::queryCmsBlockByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/QueryContainer/CmsBlockGuiToCmsBlockQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\QueryContainer\\CmsBlockGuiToCmsBlockQueryContainerBridge::queryCmsBlockStoreWithStoreByFkCmsBlock()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

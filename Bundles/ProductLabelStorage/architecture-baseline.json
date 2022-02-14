@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Client/ProductLabelStorageToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\ProductLabelStorage\\Dependency\\Client\\ProductLabelStorageToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Client/ProductLabelStorageToStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -28,6 +35,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\ProductLabelStorage\\Dependency\\Service\\ProductLabelStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToSynchronizationServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -35,9 +49,44 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Client\\ProductLabelStorage\\Dependency\\Service\\ProductLabelStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Client\\ProductLabelStorage\\Dependency\\Service\\ProductLabelStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Client\\ProductLabelStorage\\Dependency\\Service\\ProductLabelStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Client\\ProductLabelStorage\\Dependency\\Service\\ProductLabelStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductLabelStorage/Dependency/Service/ProductLabelStorageToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelStorage/Dependency/Facade/ProductLabelStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductLabelStorage\\Dependency\\Facade\\ProductLabelStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

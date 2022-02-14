@@ -1,8 +1,43 @@
 [
     {
+        "fileName": "src/Spryker/Service/Customer/Dependency/Service/CustomerToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Service\\Customer\\Dependency\\Service\\CustomerToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/Customer/Dependency/Service/CustomerToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Service\\Customer\\Dependency\\Service\\CustomerToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Service/Customer/Dependency/Service/CustomerToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Service\\Customer\\Dependency\\Service\\CustomerToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Service/Customer/Dependency/Service/CustomerToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
+        "description": "Bridges: Type should be defined for param `countryName` in method `Spryker\\Zed\\Customer\\Dependency\\Facade\\CustomerToCountryBridge::getPreferredCountryByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
+        "description": "Bridges: Type should be defined for param `iso2Code` in method `Spryker\\Zed\\Customer\\Dependency\\Facade\\CustomerToCountryBridge::getCountryByIso2Code()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -24,6 +59,13 @@
         "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCountryByIso2Code()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToLocaleBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\Customer\\Dependency\\Facade\\CustomerToLocaleBridge::getLocaleById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -91,9 +133,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Service/CustomerToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\Customer\\Dependency\\Service\\CustomerToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Service/CustomerToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\Customer\\Dependency\\Service\\CustomerToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Service/CustomerToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\Customer\\Dependency\\Service\\CustomerToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Customer/Dependency/Service/CustomerToUtilSanitizeServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `escapeHtml()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Service/CustomerToUtilValidateServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `email` in method `Spryker\\Zed\\Customer\\Dependency\\Service\\CustomerToUtilValidateServiceBridge::isEmailFormatValid()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Client/CmsBlockStorageToStorageBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\CmsBlockStorage\\Dependency\\Client\\CmsBlockStorageToStorageBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Client/CmsBlockStorageToStorageInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -14,6 +21,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\CmsBlockStorage\\Dependency\\Service\\CmsBlockStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToSynchronizationServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -21,9 +35,44 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Client\\CmsBlockStorage\\Dependency\\Service\\CmsBlockStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Client\\CmsBlockStorage\\Dependency\\Service\\CmsBlockStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Client\\CmsBlockStorage\\Dependency\\Service\\CmsBlockStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Client\\CmsBlockStorage\\Dependency\\Service\\CmsBlockStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/CmsBlockStorage/Dependency/Service/CmsBlockStorageToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockStorage/Dependency/Facade/CmsBlockStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\CmsBlockStorage\\Dependency\\Facade\\CmsBlockStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

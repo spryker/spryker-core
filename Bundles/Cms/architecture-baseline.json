@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Client/Cms/Dependency/Client/CmsToZedRequestBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\Cms\\Dependency\\Client\\CmsToZedRequestBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/Cms/Dependency/Client/CmsToZedRequestBridge.php",
+        "description": "Bridges: Type should be defined for param `timeoutInSeconds` in method `Spryker\\Client\\Cms\\Dependency\\Client\\CmsToZedRequestBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/Cms/Dependency/Client/CmsToZedRequestInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `call()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -12,6 +26,118 @@
         "rule": "ExistsPostfixRule",
         "ruleset": "Spryker",
         "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idKey` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::translateByKeyId()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslationForCurrentLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslationForCurrentLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslationForCurrentLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createAndTouchTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createAndTouchTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createAndTouchTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::hasKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::getKeyIdentifier()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idKey` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::touchCurrentTranslationForKeyId()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::getOrCreateKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idKey` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::touchTranslationForKeyId()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeInterface.php",
@@ -105,6 +231,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToLocaleFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToLocaleFacadeBridge::getLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -126,6 +259,55 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyChange` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchInactive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchInactive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToTouchFacadeBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `touchActive()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -143,6 +325,20 @@
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToTouchFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `touchDeleted()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceType` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToUrlFacadeBridge::createUrl()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idResource` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToUrlFacadeBridge::createUrl()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -206,6 +402,55 @@
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `validateUrlRedirect()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Service/CmsToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\Cms\\Dependency\\Service\\CmsToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge::hasTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge::getTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge::deleteKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `hasTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -24,6 +45,13 @@
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `saveGlossaryKeyTranslations()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThreshold\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

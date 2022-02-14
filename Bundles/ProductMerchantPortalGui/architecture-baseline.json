@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToCurrencyFacadeBridge::getByIdCurrency()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToCurrencyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAllStoresWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -10,6 +17,20 @@
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToCurrencyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToLocaleFacadeBridge::getLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToLocaleFacadeBridge::getLocaleById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -49,6 +70,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToMoneyFacadeBridge::convertIntegerToDecimal()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToMoneyFacadeBridge::convertDecimalToInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToMoneyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `convertIntegerToDecimal()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -84,6 +119,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductCategoryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idCategory` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductCategoryFacadeBridge::createProductCategoryMappings()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductCategoryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idCategory` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductCategoryFacadeBridge::removeProductCategoryMappings()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductCategoryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `createProductCategoryMappings()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -94,6 +143,48 @@
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductCategoryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `removeProductCategoryMappings()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductFacadeBridge::activateProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductFacadeBridge::deactivateProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductFacadeBridge::hasProductAbstract()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductFacadeBridge::hasProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductFacadeBridge::findProductAbstractById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductFacadeBridge::findProductConcreteById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -175,9 +266,79 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `domain` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToTranslatorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `locale` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToTranslatorFacadeBridge::trans()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToTranslatorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `?string $domain`. Got `$locale` but expected to be `?string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Service/ProductMerchantPortalGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Service\\ProductMerchantPortalGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

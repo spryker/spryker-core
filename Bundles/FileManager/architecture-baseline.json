@@ -8,13 +8,6 @@
     },
     {
         "fileName": "src/Spryker/Service/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `readStream()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Service/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getMimeType()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
@@ -121,13 +114,6 @@
     {
         "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `write()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManager/Dependency/Service/FileManagerToFileSystemServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `readStream()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -1,8 +1,15 @@
 [
     {
-        "fileName": "src/Spryker/Client/TaxProductStorage/Dependency/Client/TaxProductStorageToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/TaxProductStorage/Dependency/Client/TaxProductStorageToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\TaxProductStorage\\Dependency\\Client\\TaxProductStorageToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/TaxProductStorage/Dependency/Service/TaxProductStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\TaxProductStorage\\Dependency\\Service\\TaxProductStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

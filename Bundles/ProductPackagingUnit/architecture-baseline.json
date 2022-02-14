@@ -1,8 +1,106 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToAvailabilityFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToAvailabilityFacadeBridge::updateAvailabilityForStore()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToAvailabilityFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `updateAvailabilityForStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::hasTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::getTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `localeTransfer` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::hasKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::createKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::deleteKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToGlossaryFacadeBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -63,6 +161,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToLocaleFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `localeCode` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToLocaleFacadeBridge::getLocaleByCode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -73,6 +178,20 @@
         "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleByCode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToProductFacadeBridge::findProductConcreteById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToProductFacadeBridge::findProductConcreteIdBySku()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -98,6 +217,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Facade\\ProductPackagingUnitToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -108,6 +234,13 @@
         "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPackagingUnit/Dependency/Service/ProductPackagingUnitToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductPackagingUnit\\Dependency\\Service\\ProductPackagingUnitToUtilTextServiceBridge::generateSlug()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

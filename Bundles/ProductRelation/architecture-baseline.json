@@ -14,6 +14,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductRelation/Dependency/Client/ProductRelationToStorageBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\ProductRelation\\Dependency\\Client\\ProductRelationToStorageBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductRelation/Dependency/Client/ProductRelationToStorageInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -24,6 +31,55 @@
         "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `keyChange` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchInactive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchInactive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Facade/ProductRelationToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Facade\\ProductRelationToTouchBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -66,6 +122,55 @@
         "fileName": "src/Spryker/Zed/ProductRelation/Dependency/QueryContainer/ProductRelationToPropelQueryBuilderInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `createQuery()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductRelation/Dependency/Service/ProductRelationToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductRelation\\Dependency\\Service\\ProductRelationToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

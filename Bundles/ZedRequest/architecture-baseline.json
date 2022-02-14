@@ -42,6 +42,27 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Shared/ZedRequest/Dependency/Service/ZedRequestToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Shared\\ZedRequest\\Dependency\\Service\\ZedRequestToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/ZedRequest/Dependency/Service/ZedRequestToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Shared\\ZedRequest\\Dependency\\Service\\ZedRequestToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Shared/ZedRequest/Dependency/Service/ZedRequestToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Shared\\ZedRequest\\Dependency\\Service\\ZedRequestToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Shared/ZedRequest/Dependency/Service/ZedRequestToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -59,6 +80,20 @@
         "fileName": "src/Spryker/Zed/ZedRequest/Dependency/Facade/ZedRequestToMessengerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoredMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ZedRequest/Dependency/Facade/ZedRequestToStoreBridge.php",
+        "description": "Bridges: Type should be defined for param `currencyIsoCode` in method `Spryker\\Zed\\ZedRequest\\Dependency\\Facade\\ZedRequestToStoreBridge::setCurrencyIsoCode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ZedRequest/Dependency/Facade/ZedRequestToStoreBridge.php",
+        "description": "Bridges: Type should be defined for param `currentLocale` in method `Spryker\\Zed\\ZedRequest\\Dependency\\Facade\\ZedRequestToStoreBridge::setCurrentLocale()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

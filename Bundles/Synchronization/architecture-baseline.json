@@ -1,8 +1,57 @@
 [
     {
-        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `read()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToQueueClientBridge.php",
+        "description": "Bridges: Type should be defined for param `queueName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToQueueClientBridge::sendMessages()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::read()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `typeName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::read()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `indexName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::read()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `typeName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::write()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `indexName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::write()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `typeName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::delete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientBridge.php",
+        "description": "Bridges: Type should be defined for param `indexName` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToSearchClientBridge::delete()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -17,6 +66,41 @@
         "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToSearchClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `delete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToStorageClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToStorageClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `ttl` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToStorageClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Zed\\Synchronization\\Dependency\\Client\\SynchronizationToStorageClientBridge::delete()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -52,6 +136,55 @@
         "fileName": "src/Spryker/Zed/Synchronization/Dependency/Client/SynchronizationToStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `deleteMulti()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Synchronization/Dependency/Service/SynchronizationToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\Synchronization\\Dependency\\Service\\SynchronizationToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

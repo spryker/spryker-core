@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Glue/ProductOptionsRestApi/Dependency/Client/ProductOptionsRestApiToProductOptionStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `idAbstractProduct` in method `Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductOptionStorageClientBridge::getProductOptionsForCurrentStore()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Glue/ProductOptionsRestApi/Dependency/Client/ProductOptionsRestApiToProductOptionStorageClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getProductOptionsForCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

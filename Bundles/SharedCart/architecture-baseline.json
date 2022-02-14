@@ -14,6 +14,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\SharedCart\\Dependency\\Client\\SharedCartToMessengerClientBridge::addErrorMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToMessengerClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -38,6 +45,13 @@
         "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToMessengerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToQuoteFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\SharedCart\\Dependency\\Facade\\SharedCartToQuoteFacadeBridge::findQuoteById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

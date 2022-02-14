@@ -42,9 +42,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToSalesBridge.php",
+        "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Oms\\Dependency\\Facade\\OmsToSalesBridge::getOrderByIdSalesOrder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToSalesInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Facade/OmsToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\Oms\\Dependency\\Facade\\OmsToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -77,6 +91,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/QueryContainer/OmsToSalesBridge.php",
+        "description": "Bridges: Type should be defined for param `idOrder` in method `Spryker\\Zed\\Oms\\Dependency\\QueryContainer\\OmsToSalesBridge::querySalesOrderItemsByIdSalesOrder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Oms/Dependency/QueryContainer/OmsToSalesInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `querySalesOrderItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -105,9 +126,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilSanitizeBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\Oms\\Dependency\\Service\\OmsToUtilSanitizeBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilSanitizeBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\Oms\\Dependency\\Service\\OmsToUtilSanitizeBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilSanitizeBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\Oms\\Dependency\\Service\\OmsToUtilSanitizeBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilSanitizeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `escapeHtml()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oms/Dependency/Service/OmsToUtilTextBridge.php",
+        "description": "Bridges: Type should be defined for param `length` in method `Spryker\\Zed\\Oms\\Dependency\\Service\\OmsToUtilTextBridge::generateRandomString()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

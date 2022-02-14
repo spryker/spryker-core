@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/QueryContainer/CustomerUserConnectorGuiToCustomerQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\QueryContainer\\CustomerUserConnectorGuiToCustomerQueryContainerBridge::queryCustomerById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/QueryContainer/CustomerUserConnectorGuiToCustomerQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryCustomerById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -21,9 +28,65 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/QueryContainer/CustomerUserConnectorGuiToUserQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\QueryContainer\\CustomerUserConnectorGuiToUserQueryContainerBridge::queryUserById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/QueryContainer/CustomerUserConnectorGuiToUserQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryUserById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -38,6 +101,27 @@
         "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerUserConnectorGui/Dependency/Service/CustomerUserConnectorGuiToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\CustomerUserConnectorGui\\Dependency\\Service\\CustomerUserConnectorGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

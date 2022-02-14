@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Client/Cart/Dependency/Client/CartToMessengerClientBridge.php",
+        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\Cart\\Dependency\\Client\\CartToMessengerClientBridge::addErrorMessage()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/Cart/Dependency/Client/CartToMessengerClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

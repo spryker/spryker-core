@@ -1,8 +1,36 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Client/ProductPageSearchToCatalogPriceProductConnectorClientBridge.php",
+        "description": "Bridges: Type should be defined for param `priceType` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Client\\ProductPageSearchToCatalogPriceProductConnectorClientBridge::buildPricedIdentifierFor()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Client/ProductPageSearchToCatalogPriceProductConnectorClientBridge.php",
+        "description": "Bridges: Type should be defined for param `currencyIsoCode` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Client\\ProductPageSearchToCatalogPriceProductConnectorClientBridge::buildPricedIdentifierFor()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Client/ProductPageSearchToCatalogPriceProductConnectorClientBridge.php",
+        "description": "Bridges: Type should be defined for param `priceMode` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Client\\ProductPageSearchToCatalogPriceProductConnectorClientBridge::buildPricedIdentifierFor()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Client/ProductPageSearchToCatalogPriceProductConnectorClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `buildPricedIdentifierFor()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Facade\\ProductPageSearchToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -63,6 +91,27 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToProductBridge.php",
+        "description": "Bridges: Type should be defined for param `attributes` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Facade\\ProductPageSearchToProductBridge::decodeProductAttributes()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToProductBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Facade\\ProductPageSearchToProductBridge::generateAttributePermutations()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToProductImageFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Facade\\ProductPageSearchToProductImageFacadeBridge::getProductImagesSetCollectionByProductId()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToProductImageFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getProductImagesSetCollectionByProductId()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -105,9 +154,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToSearchBridge.php",
+        "description": "Bridges: Type should be defined for param `mapperName` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Facade\\ProductPageSearchToSearchBridge::transformPageMapToDocumentByMapperName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToSearchInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `transformPageMapToDocumentByMapperName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Facade\\ProductPageSearchToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -122,6 +185,48 @@
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Facade/ProductPageSearchToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoreByName()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToCategoryQueryContainerBridge::queryCategoryNode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idNode` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToCategoryQueryContainerBridge::queryPath()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToCategoryQueryContainerBridge::queryPath()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `excludeRootNode` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToCategoryQueryContainerBridge::queryPath()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `onlyParents` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToCategoryQueryContainerBridge::queryPath()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idNode` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToCategoryQueryContainerBridge::queryClosureTableByNodeId()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -161,6 +266,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToProductCategoryQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToProductCategoryQueryContainerBridge::queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToProductCategoryQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -171,6 +283,13 @@
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToProductCategoryQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryProductCategoryMappings()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageSearchToProductImageQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductImageSet` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\QueryContainer\\ProductPageSearchToProductImageQueryContainerBridge::queryImagesByIdProductImageSet()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -227,6 +346,55 @@
         "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/QueryContainer/ProductPageToPriceProductQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryPriceProduct()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductPageSearch/Dependency/Service/ProductPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductPageSearch\\Dependency\\Service\\ProductPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

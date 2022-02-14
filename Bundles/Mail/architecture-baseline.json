@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToGlossaryBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Mail\\Dependency\\Facade\\MailToGlossaryBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToGlossaryBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Mail\\Dependency\\Facade\\MailToGlossaryBridge::hasTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToGlossaryInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +31,55 @@
         "fileName": "src/Spryker/Zed/Mail/Dependency/Facade/MailToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `subject` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::setSubject()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `email` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::setFrom()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::setFrom()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `email` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::addTo()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::addTo()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `content` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::setHtmlContent()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
+        "description": "Bridges: Type should be defined for param `content` in method `Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::setTextContent()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -70,8 +133,15 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Mail/Dependency/Renderer/MailToRendererBridge.php",
+        "description": "Bridges: Type should be defined for param `template` in method `Spryker\\Zed\\Mail\\Dependency\\Renderer\\MailToRendererBridge::render()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Mail/Dependency/Renderer/MailToRendererInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `render()`. 1 params expexted but got 2. Got `array $options` but expected to be `array $context`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `render()`. 1 params expected but got 2. Got `array $options` but expected to be `array $context`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

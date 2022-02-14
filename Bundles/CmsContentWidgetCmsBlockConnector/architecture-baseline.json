@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Dependency/Client/CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `blockNames` in method `Spryker\\Yves\\CmsContentWidgetCmsBlockConnector\\Dependency\\Client\\CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge::findBlocksByNames()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Dependency/Client/CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Yves\\CmsContentWidgetCmsBlockConnector\\Dependency\\Client\\CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge::findBlocksByNames()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Dependency/Client/CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Yves\\CmsContentWidgetCmsBlockConnector\\Dependency\\Client\\CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge::findBlocksByNames()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

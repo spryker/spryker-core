@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -10,6 +10,13 @@
         "fileName": "src/Spryker/Client/CmsPageSearch/Dependency/Client/CmsPageSearchToSearchBridgeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `expandQuery()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToCmsBridge.php",
+        "description": "Bridges: Type should be defined for param `cmsPageData` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Facade\\CmsPageSearchToCmsBridge::extractCmsVersionDataTransfer()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -24,6 +31,13 @@
         "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToCmsInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `extractLocaleCmsPageDataTransfer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Facade/CmsPageSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Facade\\CmsPageSearchToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -73,6 +87,55 @@
         "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/QueryContainer/CmsPageSearchToLocaleQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryLocales()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsPageSearch/Dependency/Service/CmsPageSearchToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CmsPageSearch\\Dependency\\Service\\CmsPageSearchToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

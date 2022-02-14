@@ -14,6 +14,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductOptionValue` in method `Spryker\\Zed\\ProductOptionCartConnector\\Dependency\\Facade\\ProductOptionCartConnectorToProductOptionFacadeBridge::getProductOptionValue()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductOptionValue` in method `Spryker\\Zed\\ProductOptionCartConnector\\Dependency\\Facade\\ProductOptionCartConnectorToProductOptionFacadeBridge::getProductOptionValueById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getProductOptionValue()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

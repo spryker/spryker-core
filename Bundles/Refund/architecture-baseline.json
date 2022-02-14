@@ -7,6 +7,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\Refund\\Dependency\\Facade\\RefundToMoneyBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\Refund\\Dependency\\Facade\\RefundToMoneyBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToMoneyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `fromInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -24,6 +38,20 @@
         "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToMoneyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `formatWithoutSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToSalesBridge.php",
+        "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Refund\\Dependency\\Facade\\RefundToSalesBridge::getOrderByIdSalesOrder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToSalesBridge.php",
+        "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Refund\\Dependency\\Facade\\RefundToSalesBridge::updateOrder()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

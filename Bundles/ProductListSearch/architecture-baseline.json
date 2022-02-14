@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductListSearch/Dependency/Facade/ProductListSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductListSearch\\Dependency\\Facade\\ProductListSearchToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

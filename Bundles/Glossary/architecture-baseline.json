@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToLocaleBridge::getLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToLocaleBridge::createLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -31,6 +45,34 @@
         "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToMessengerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToTouchBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToTouchBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToTouchBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToTouchBridge.php",
+        "description": "Bridges: Type should be defined for param `idItem` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToTouchBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

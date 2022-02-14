@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToProductBridge.php",
+        "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\ProductCartConnector\\Dependency\\Facade\\ProductCartConnectorToProductBridge::getProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToProductBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductCartConnector\\Dependency\\Facade\\ProductCartConnectorToProductBridge::hasProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToProductBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductCartConnector\\Dependency\\Facade\\ProductCartConnectorToProductBridge::hasProductAbstract()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\ProductCartConnector\\Dependency\\Facade\\ProductCartConnectorToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -1,8 +1,99 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToEventFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToEventFacadeBridge::trigger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToEventFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::createTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `localeTransfer` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::updateTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::createKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::hasKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::hasTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::getTranslation()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -73,6 +164,13 @@
         "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToProductImageFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `deleteProductImageSet()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Service/ConfigurableBundleToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Service\\ConfigurableBundleToUtilTextServiceBridge::generateSlug()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Client/QuoteRequestsRestApi/Dependency/Client/QuoteRequestsRestApiToZedRequestClientBridge.php",
+        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\QuoteRequestsRestApi\\Dependency\\Client\\QuoteRequestsRestApiToZedRequestClientBridge::call()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

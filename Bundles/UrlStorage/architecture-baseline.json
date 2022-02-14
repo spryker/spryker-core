@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/UrlStorage/Dependency/Client/UrlStorageToStorageBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\UrlStorage\\Dependency\\Client\\UrlStorageToStorageBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/UrlStorage/Dependency/Client/UrlStorageToStorageInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -28,6 +35,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\UrlStorage\\Dependency\\Service\\UrlStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToSynchronizationServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -35,9 +49,44 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Client\\UrlStorage\\Dependency\\Service\\UrlStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Client\\UrlStorage\\Dependency\\Service\\UrlStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Client\\UrlStorage\\Dependency\\Service\\UrlStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Client\\UrlStorage\\Dependency\\Service\\UrlStorageToUtilEncodingServiceBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/UrlStorage/Dependency/Service/UrlStorageToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/UrlStorage/Dependency/Facade/UrlStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\UrlStorage\\Dependency\\Facade\\UrlStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -66,6 +115,13 @@
         "fileName": "src/Spryker/Zed/UrlStorage/Dependency/Facade/UrlStorageToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoresWithSharedPersistence()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/UrlStorage/Dependency/QueryContainer/UrlStorageToUrlQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceType` in method `Spryker\\Zed\\UrlStorage\\Dependency\\QueryContainer\\UrlStorageToUrlQueryContainerBridge::queryUrlsByResourceTypeAndIds()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

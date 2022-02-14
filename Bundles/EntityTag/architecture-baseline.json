@@ -1,15 +1,29 @@
 [
     {
-        "fileName": "src/Spryker/Client/EntityTag/Dependency/Client/EntityTagToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Client/EntityTagToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\EntityTag\\Dependency\\Client\\EntityTagToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Client/EntityTag/Dependency/Client/EntityTagToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Client/EntityTagToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\EntityTag\\Dependency\\Client\\EntityTagToStorageClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Client/EntityTagToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `ttl` in method `Spryker\\Client\\EntityTag\\Dependency\\Client\\EntityTagToStorageClientBridge::set()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Service/EntityTagToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\EntityTag\\Dependency\\Service\\EntityTagToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -21,9 +35,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Service/EntityTagToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Client\\EntityTag\\Dependency\\Service\\EntityTagToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Service/EntityTagToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Client\\EntityTag\\Dependency\\Service\\EntityTagToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Service/EntityTagToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Client\\EntityTag\\Dependency\\Service\\EntityTagToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/EntityTag/Dependency/Service/EntityTagToUtilEncodingServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Client/EntityTag/Dependency/Service/EntityTagToUtilTextServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `algorithm` in method `Spryker\\Client\\EntityTag\\Dependency\\Service\\EntityTagToUtilTextServiceBridge::hashValue()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

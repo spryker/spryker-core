@@ -1,8 +1,50 @@
 [
     {
-        "fileName": "src/Spryker/Client/ProductCustomerPermission/Dependency/Client/ProductCustomerPermissionToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Client/ProductCustomerPermission/Dependency/Client/ProductCustomerPermissionToStorageClientBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\ProductCustomerPermission\\Dependency\\Client\\ProductCustomerPermissionToStorageClientBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCustomerPermission/Dependency/Facade/ProductCustomerPermissionToGlossaryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductCustomerPermission\\Dependency\\Facade\\ProductCustomerPermissionToGlossaryFacadeBridge::translate()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCustomerPermission/Dependency/Facade/ProductCustomerPermissionToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\ProductCustomerPermission\\Dependency\\Facade\\ProductCustomerPermissionToProductFacadeBridge::getProductAbstractIdByConcreteSku()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCustomerPermission/Dependency/Facade/ProductCustomerPermissionToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\ProductCustomerPermission\\Dependency\\Facade\\ProductCustomerPermissionToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCustomerPermission/Dependency/Facade/ProductCustomerPermissionToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemId` in method `Spryker\\Zed\\ProductCustomerPermission\\Dependency\\Facade\\ProductCustomerPermissionToTouchFacadeBridge::touchActive()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCustomerPermission/Dependency/Facade/ProductCustomerPermissionToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\ProductCustomerPermission\\Dependency\\Facade\\ProductCustomerPermissionToTouchFacadeBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCustomerPermission/Dependency/Facade/ProductCustomerPermissionToTouchFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `itemId` in method `Spryker\\Zed\\ProductCustomerPermission\\Dependency\\Facade\\ProductCustomerPermissionToTouchFacadeBridge::touchDeleted()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

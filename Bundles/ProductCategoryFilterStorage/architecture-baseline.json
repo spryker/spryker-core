@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Client/ProductCategoryFilterStorage/Dependency/Client/ProductCategoryFilterStorageToStorageBridge.php",
+        "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Client\\ProductCategoryFilterStorage\\Dependency\\Client\\ProductCategoryFilterStorageToStorageBridge::get()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductCategoryFilterStorage/Dependency/Client/ProductCategoryFilterStorageToStorageInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -7,9 +14,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToSynchronizationServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Client/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToSynchronizationServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Facade/ProductCategoryFilterStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Facade\\ProductCategoryFilterStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -38,6 +59,55 @@
         "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/QueryContainer/ProductCategoryFilterStorageToProductCategoryFilterQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryProductCategoryFilter()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterStorage/Dependency/Service/ProductCategoryFilterStorageToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ProductCategoryFilterStorage\\Dependency\\Service\\ProductCategoryFilterStorageToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

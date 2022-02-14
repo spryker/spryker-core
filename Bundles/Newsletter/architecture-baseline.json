@@ -14,6 +14,20 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/Newsletter/Dependency/Facade/NewsletterToGlossaryBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Newsletter\\Dependency\\Facade\\NewsletterToGlossaryBridge::hasTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Newsletter/Dependency/Facade/NewsletterToGlossaryBridge.php",
+        "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Newsletter\\Dependency\\Facade\\NewsletterToGlossaryBridge::getTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Newsletter/Dependency/Facade/NewsletterToGlossaryInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `hasTranslation()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -28,9 +42,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/Newsletter/Dependency/Facade/NewsletterToMailInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `handleMail()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Zed/Newsletter/Dependency/Service/NewsletterToUtilValidateServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `email` in method `Spryker\\Zed\\Newsletter\\Dependency\\Service\\NewsletterToUtilValidateServiceBridge::isEmailFormatValid()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

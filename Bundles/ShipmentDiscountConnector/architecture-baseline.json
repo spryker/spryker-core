@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToDiscountBridge.php",
+        "description": "Bridges: Type should be defined for param `compareWith` in method `Spryker\\Zed\\ShipmentDiscountConnector\\Dependency\\Facade\\ShipmentDiscountConnectorToDiscountBridge::queryStringCompare()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToDiscountInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryStringCompare()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -7,9 +14,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToMoneyBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ShipmentDiscountConnector\\Dependency\\Facade\\ShipmentDiscountConnectorToMoneyBridge::convertIntegerToDecimal()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToMoneyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `convertIntegerToDecimal()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToShipmentBridge.php",
+        "description": "Bridges: Type should be defined for param `idShipmentMethod` in method `Spryker\\Zed\\ShipmentDiscountConnector\\Dependency\\Facade\\ShipmentDiscountConnectorToShipmentBridge::findMethodById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

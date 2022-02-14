@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/CustomerOfferConnector/Dependency/Facade/CustomerOfferConnectorToCustomerFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `customerReference` in method `Spryker\\Zed\\CustomerOfferConnector\\Dependency\\Facade\\CustomerOfferConnectorToCustomerFacadeBridge::findByReference()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

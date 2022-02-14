@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToLocaleBridge::getLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToLocaleBridge::hasLocale()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToLocaleBridge::getLocaleById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -31,6 +52,146 @@
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getProductAbstractAttributes()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getProductAttributeValues()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getMetaAttributesForProductAbstract()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getMetaAttributesForProduct()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `searchText` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::suggestKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `limit` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::suggestKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::saveAbstractAttributes()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::saveConcreteAttributes()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductManagementAttribute` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestionsCount()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestionsCount()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `searchText` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestionsCount()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductManagementAttribute` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestions()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestions()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `searchText` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestions()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `offset` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestions()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `limit` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestions()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductManagementAttribute` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getProductManagementAttribute()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `attributeKey` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::findAttributeTranslationByKey()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `searchText` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::suggestUnusedAttributeKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Type should be defined for param `limit` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::suggestUnusedAttributeKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -157,6 +318,48 @@
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `updateProductManagementAttribute()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/QueryContainer/ProductAttributeGuiToProductAttributeQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `keys` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\QueryContainer\\ProductAttributeGuiToProductAttributeQueryContainerBridge::queryProductAttributeKeyByKeys()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/QueryContainer/ProductAttributeGuiToProductAttributeQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductManagementAttribute` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\QueryContainer\\ProductAttributeGuiToProductAttributeQueryContainerBridge::queryProductManagementAttributeValueWithTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/QueryContainer/ProductAttributeGuiToProductAttributeQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\QueryContainer\\ProductAttributeGuiToProductAttributeQueryContainerBridge::queryProductManagementAttributeValueWithTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/QueryContainer/ProductAttributeGuiToProductAttributeQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `searchText` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\QueryContainer\\ProductAttributeGuiToProductAttributeQueryContainerBridge::queryProductManagementAttributeValueWithTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/QueryContainer/ProductAttributeGuiToProductAttributeQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `offset` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\QueryContainer\\ProductAttributeGuiToProductAttributeQueryContainerBridge::queryProductManagementAttributeValueWithTranslation()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/QueryContainer/ProductAttributeGuiToProductAttributeQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `limit` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\QueryContainer\\ProductAttributeGuiToProductAttributeQueryContainerBridge::queryProductManagementAttributeValueWithTranslation()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

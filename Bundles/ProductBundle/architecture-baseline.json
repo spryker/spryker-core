@@ -28,6 +28,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\ProductBundle\\Dependency\\Facade\\ProductBundleToProductFacadeBridge::getProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\ProductBundle\\Dependency\\Facade\\ProductBundleToProductFacadeBridge::deactivateProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addProduct()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -56,9 +70,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductImageFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\ProductBundle\\Dependency\\Facade\\ProductBundleToProductImageFacadeBridge::getCombinedConcreteImageSets()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductImageFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductBundle\\Dependency\\Facade\\ProductBundleToProductImageFacadeBridge::getCombinedConcreteImageSets()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductImageFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductBundle\\Dependency\\Facade\\ProductBundleToProductImageFacadeBridge::getCombinedConcreteImageSets()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToProductImageFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCombinedConcreteImageSets()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/Facade/ProductBundleToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\ProductBundle\\Dependency\\Facade\\ProductBundleToStoreFacadeBridge::getStoreByName()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -84,6 +126,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/QueryContainer/ProductBundleToProductQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ProductBundle\\Dependency\\QueryContainer\\ProductBundleToProductQueryContainerBridge::queryProductConcreteBySku()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductBundle/Dependency/QueryContainer/ProductBundleToProductQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryProductConcreteBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -94,6 +143,13 @@
         "fileName": "src/Spryker/Zed/ProductBundle/Dependency/QueryContainer/ProductBundleToSalesQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `querySalesOrderItem()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductBundle/Dependency/QueryContainer/ProductBundleToStockQueryContainerBridge.php",
+        "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductBundle\\Dependency\\QueryContainer\\ProductBundleToStockQueryContainerBridge::queryStockByProducts()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

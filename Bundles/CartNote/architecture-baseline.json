@@ -19,5 +19,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartNote/Dependency/Facade/CartNoteToQuoteFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\CartNote\\Dependency\\Facade\\CartNoteToQuoteFacadeBridge::findQuoteById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

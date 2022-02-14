@@ -21,6 +21,27 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/Storage/Dependency/Service/StorageToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\Storage\\Dependency\\Service\\StorageToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Storage/Dependency/Service/StorageToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\Storage\\Dependency\\Service\\StorageToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Storage/Dependency/Service/StorageToUtilSanitizeServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\Storage\\Dependency\\Service\\StorageToUtilSanitizeServiceBridge::escapeHtml()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Storage/Dependency/Service/StorageToUtilSanitizeServiceInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `escapeHtml()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

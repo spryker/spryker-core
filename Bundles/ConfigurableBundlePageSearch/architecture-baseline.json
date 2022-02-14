@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Client/ConfigurableBundlePageSearch/Dependency/Client/ConfigurableBundlePageSearchToSearchClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `search()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -10,6 +10,13 @@
         "fileName": "src/Spryker/Client/ConfigurableBundlePageSearch/Dependency/Client/ConfigurableBundlePageSearchToSearchClientInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `expandQuery()`. Got `Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery` but expected to be `Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundlePageSearch/Dependency/Facade/ConfigurableBundlePageSearchToEvenBehaviorFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ConfigurableBundlePageSearch\\Dependency\\Facade\\ConfigurableBundlePageSearchToEvenBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -24,6 +31,27 @@
         "fileName": "src/Spryker/Zed/ConfigurableBundlePageSearch/Dependency/Facade/ConfigurableBundlePageSearchToEventBehaviorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundlePageSearch/Dependency/Service/ConfigurableBundlePageSearchToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ConfigurableBundlePageSearch\\Dependency\\Service\\ConfigurableBundlePageSearchToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundlePageSearch/Dependency/Service/ConfigurableBundlePageSearchToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ConfigurableBundlePageSearch\\Dependency\\Service\\ConfigurableBundlePageSearchToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundlePageSearch/Dependency/Service/ConfigurableBundlePageSearchToUtilEncodingServiceBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ConfigurableBundlePageSearch\\Dependency\\Service\\ConfigurableBundlePageSearchToUtilEncodingServiceBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

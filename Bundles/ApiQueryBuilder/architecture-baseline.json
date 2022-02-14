@@ -1,1 +1,58 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/QueryContainer/ApiQueryBuilderToPropelQueryBuilderBridge.php",
+        "description": "Bridges: Type should be defined for param `json` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\QueryContainer\\ApiQueryBuilderToPropelQueryBuilderBridge::createPropelQueryBuilderCriteriaFromJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

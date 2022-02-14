@@ -70,6 +70,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToManualOrderEntryFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idOrderSource` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToManualOrderEntryFacadeBridge::getOrderSourceById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToManualOrderEntryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getOrderSourceById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -108,6 +115,62 @@
         "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMessengerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getStoredMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::fromInteger()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::fromString()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::fromString()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::fromFloat()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::fromFloat()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::convertIntegerToDecimal()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToMoneyFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToMoneyFacadeBridge::convertDecimalToInteger()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -175,6 +238,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToProductFacadeBridge::hasProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToProductFacadeBridge::getProductConcrete()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `hasProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -185,6 +262,13 @@
         "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ManualOrderEntryGui/Dependency/Facade/ManualOrderEntryGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idShipmentMethod` in method `Spryker\\Zed\\ManualOrderEntryGui\\Dependency\\Facade\\ManualOrderEntryGuiToShipmentFacadeBridge::findAvailableMethodById()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
