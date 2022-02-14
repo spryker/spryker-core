@@ -555,7 +555,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $indexedProductAbstractStorageTransfers = [];
 
         foreach ($productAbstractStorageTransfers as $productAbstractStorageTransfer) {
-            $idProductAbstract = $productAbstractStorageTransfer->getIdProductAbstract();
+            $idProductAbstract = $productAbstractStorageTransfer->getIdProductAbstractOrFail();
 
             $indexedProductAbstractStorageTransfers[$idProductAbstract] = $productAbstractStorageTransfer;
         }
