@@ -112,17 +112,18 @@ class PriceProductMapper
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity */
         $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
             ->getSpyProductAbstract();
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct[] $concreateProductEntities */
         $concreateProductEntities = $abstractProductEntity->getSpyProducts();
 
-        foreach ($concreateProductEntities as $concreateProductEntitity) {
+        foreach ($concreateProductEntities as $concreateProductEntity) {
             // Added due to propel entity cache system
-            if (!in_array($concreateProductEntitity->getSku(), $allowedProductSkus)) {
+            if (!in_array($concreateProductEntity->getSku(), $allowedProductSkus)) {
                 continue;
             }
 
             $priceProductTransfers[] = (new PriceProductTransfer())
                 ->fromArray($priceProductTransfer->toArray())
-                ->setSkuProduct($concreateProductEntitity->getSku());
+                ->setSkuProduct($concreateProductEntity->getSku());
         }
 
         return $priceProductTransfers;
