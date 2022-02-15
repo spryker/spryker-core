@@ -27,7 +27,7 @@ class IntegerMoneyConstraint extends LessThan
     protected const MESSAGE_PATTERN = 'This value should be less than %.2f';
 
     /**
-     * @inheritDoc
+     * @param array<string, mixed>|null $options
      */
     public function __construct($options = null)
     {

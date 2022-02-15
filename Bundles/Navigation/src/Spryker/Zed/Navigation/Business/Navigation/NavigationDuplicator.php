@@ -143,6 +143,7 @@ class NavigationDuplicator implements NavigationDuplicatorInterface
         }
 
         foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
+            /** @var \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer */
             $navigationNodeTransfer = $navigationTreeNodeTransfer->getNavigationNode();
             $newNavigationNodeLocalizedAttributesTransfers = $this->duplicateNavigationNodeLocalizedAttributesTransfers(
                 $navigationNodeTransfer->getNavigationNodeLocalizedAttributes(),
