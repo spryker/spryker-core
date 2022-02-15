@@ -13,8 +13,12 @@ use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinder;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder;
 use Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilderInterface;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProvider;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface;
 
 /**
  * @method \Spryker\Shared\Kernel\KernelConfig getSharedConfig()
@@ -53,6 +57,25 @@ class KernelSharedFactory extends AbstractSharedFactory
      */
     public function createModuleNameCandidatesBuilder(): ModuleNameCandidatesBuilderInterface
     {
-        return new ModuleNameCandidatesBuilder($this->getSharedConfig());
+        return new ModuleNameCandidatesBuilder($this->createModuleNamePostfixProvider());
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface
+     */
+    public function createModuleNamePostfixProvider(): ModuleNamePostfixProviderInterface
+    {
+        return new ModuleNamePostfixProvider(
+            $this->getSharedConfig(),
+            $this->createCodeBucketConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
+     */
+    public function createCodeBucketConfig(): CodeBucketConfigInterface
+    {
+        return new CodeBucketConfig();
     }
 }

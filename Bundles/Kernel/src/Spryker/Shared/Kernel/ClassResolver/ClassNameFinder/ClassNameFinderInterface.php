@@ -13,8 +13,14 @@ interface ClassNameFinderInterface
      * @param string $moduleName
      * @param string $classNamePattern
      * @param bool $throwException
+     * @param string|null $moduleNamePostfix
      *
      * @return string|null
      */
-    public function findClassName(string $moduleName, string $classNamePattern, bool $throwException = true): ?string;
+    public function findClassName(
+        string $moduleName,
+        string $classNamePattern,
+        bool $throwException = true,
+        ?string $moduleNamePostfix = null
+    ): ?string;
 }

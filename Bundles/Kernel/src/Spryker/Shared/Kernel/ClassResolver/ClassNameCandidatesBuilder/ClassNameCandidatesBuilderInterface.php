@@ -12,8 +12,9 @@ interface ClassNameCandidatesBuilderInterface
     /**
      * @param string $module
      * @param string $classNamePattern
+     * @param string|null $moduleNamePostfix
      *
      * @return array<string>
      */
-    public function buildClassNames(string $module, string $classNamePattern): array;
+    public function buildClassNames(string $module, string $classNamePattern, ?string $moduleNamePostfix = null): array;
 }

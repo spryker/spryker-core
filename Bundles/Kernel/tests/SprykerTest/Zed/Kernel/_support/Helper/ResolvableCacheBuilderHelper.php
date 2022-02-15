@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\Kernel\Helper;
 
 use Codeception\Module;
+use Codeception\Stub;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProvider;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface;
 use Spryker\Zed\Kernel\Business\KernelBusinessFactory;
 use SprykerTest\Shared\Testify\Helper\ClassHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
@@ -23,27 +28,17 @@ class ResolvableCacheBuilderHelper extends Module
     /**
      * @var string
      */
-    protected const CLASS_KEY_STORE = 'store';
+    protected const CODE_BUCKET_CB1 = 'CB1';
 
     /**
      * @var string
      */
-    protected const CLASS_KEY_PROJECT = 'project';
+    protected const CODE_BUCKET_CB2 = 'CB2';
 
     /**
      * @var string
      */
-    protected const CLASS_KEY_CORE = 'core';
-
-    /**
-     * @var string
-     */
-    protected const CACHE_KEY = 'KernelZedFacade';
-
-    /**
-     * @var string
-     */
-    protected const CURRENT_STORE = 'DE';
+    protected const DEFAULT_MODULE_NAME_POSTFIX_VALUE = '';
 
     /**
      * @var string
@@ -53,7 +48,7 @@ class ResolvableCacheBuilderHelper extends Module
     /**
      * @var string
      */
-    protected const PATH_TO_CACHE_FILE = 'vfs://root/directory/cacheFile.php';
+    protected const PATH_TO_CACHE_FILE = 'vfs://root/directory/cacheFile%s.php';
 
     /**
      * @var array<string>
@@ -84,10 +79,9 @@ class ResolvableCacheBuilderHelper extends Module
             ],
         ];
 
-        $this->getConfigHelper()->mockSharedConfigMethod('getResolvableCacheFilePath', static::PATH_TO_CACHE_FILE);
+        $this->getConfigHelper()->mockSharedConfigMethod('getResolvableCacheFilePathPattern', static::PATH_TO_CACHE_FILE);
         $this->getConfigHelper()->mockSharedConfigMethod('getProjectOrganizations', $this->projectOrganizations);
         $this->getConfigHelper()->mockSharedConfigMethod('getCoreOrganizations', $this->coreOrganizations);
-        $this->getConfigHelper()->mockSharedConfigMethod('getCurrentStoreName', static::CURRENT_STORE);
 
         $virtualDirectory = $this->getVirtualFilesystemHelper()->getVirtualDirectory($structure);
         $path = sprintf('%ssrc/Organization/Application/', $virtualDirectory);
@@ -97,11 +91,13 @@ class ResolvableCacheBuilderHelper extends Module
     }
 
     /**
+     * @param string $codeBucket
+     *
      * @return string
      */
-    public function getStoreClassName(): string
+    public function getAutoloadableCodeBucketClassName(string $codeBucket): string
     {
-        $moduleNameCandidate = sprintf('%s%s', static::MODULE_NAME, static::CURRENT_STORE);
+        $moduleNameCandidate = sprintf('%s%s', static::MODULE_NAME, $codeBucket);
 
         return sprintf('\\Pyz\\Zed\\%s\\Business\\%sFacade', $moduleNameCandidate, static::MODULE_NAME);
     }
@@ -109,7 +105,7 @@ class ResolvableCacheBuilderHelper extends Module
     /**
      * @return string
      */
-    public function getProjectClassName(): string
+    public function getAutoloadableProjectClassName(): string
     {
         return sprintf('\\Pyz\\Zed\\%s\\Business\\%sFacade', static::MODULE_NAME, static::MODULE_NAME);
     }
@@ -117,7 +113,7 @@ class ResolvableCacheBuilderHelper extends Module
     /**
      * @return string
      */
-    public function getCoreClassName(): string
+    public function getAutoloadableCoreClassName(): string
     {
         return sprintf('\\Spryker\\Zed\\%s\\Business\\%sFacade', static::MODULE_NAME, static::MODULE_NAME);
     }
@@ -125,13 +121,19 @@ class ResolvableCacheBuilderHelper extends Module
     /**
      * @return void
      */
-    public function arrangeStoreClassCacheBuilderTest(): void
+    public function arrangeCodeBucketClassCacheBuilderTest(): void
     {
         $this->arrangeCacheBuilderTest();
 
-        $this->getClassHelper()->createAutoloadableClass($this->getStoreClassName());
-        $this->getClassHelper()->createAutoloadableClass($this->getProjectClassName());
-        $this->getClassHelper()->createAutoloadableClass($this->getCoreClassName());
+        $this->getBusinessHelper()->mockSharedFactoryMethod(
+            'createModuleNamePostfixProvider',
+            $this->getModuleNamePostfixProviderStub(true),
+        );
+
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableCodeBucketClassName(static::CODE_BUCKET_CB1));
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableCodeBucketClassName(static::CODE_BUCKET_CB2));
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableProjectClassName());
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableCoreClassName());
     }
 
     /**
@@ -141,8 +143,8 @@ class ResolvableCacheBuilderHelper extends Module
     {
         $this->arrangeCacheBuilderTest();
 
-        $this->getClassHelper()->createAutoloadableClass($this->getProjectClassName());
-        $this->getClassHelper()->createAutoloadableClass($this->getCoreClassName());
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableProjectClassName());
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableCoreClassName());
     }
 
     /**
@@ -152,7 +154,7 @@ class ResolvableCacheBuilderHelper extends Module
     {
         $this->arrangeCacheBuilderTest();
 
-        $this->getClassHelper()->createAutoloadableClass($this->getCoreClassName());
+        $this->getClassHelper()->createAutoloadableClass($this->getAutoloadableCoreClassName());
     }
 
     /**
@@ -226,73 +228,53 @@ class ResolvableCacheBuilderHelper extends Module
     }
 
     /**
-     * @return void
-     */
-    public function assertCacheHasStoreClass(): void
-    {
-        $this->assertCacheHasExpectedValue($this->getStoreClassName());
-    }
-
-    /**
-     * @return void
-     */
-    public function assertCacheHasProjectClass(): void
-    {
-        $this->assertCacheHasExpectedValue($this->getProjectClassName());
-    }
-
-    /**
-     * @return void
-     */
-    public function assertCacheHasCoreClass(): void
-    {
-        $this->assertCacheHasExpectedValue($this->getCoreClassName());
-    }
-
-    /**
-     * @param string $expectedCacheValue
+     * @param string $cacheFileNamePostfix
      *
-     * @return void
-     */
-    protected function assertCacheHasExpectedValue(string $expectedCacheValue): void
-    {
-        $this->assertTrue(file_exists(static::PATH_TO_CACHE_FILE), 'Cache file does not exists.');
-
-        $cachedData = $this->getCacheData();
-
-        $cacheKey = $this->getCacheKey();
-
-        $this->assertTrue(count($cachedData) > 0, 'At least one cache entry expected but cache is empty.');
-        $this->assertTrue(isset($cachedData[$cacheKey]), sprintf('Cache key "%s" not found. Found cache keys: %s', $cacheKey, implode(', ', array_keys($cachedData))));
-
-        $currentCacheValue = $cachedData[$cacheKey];
-
-        $this->assertSame(
-            $expectedCacheValue,
-            $currentCacheValue,
-            sprintf('Expected "%s" but found "%s" for cache key "%s" given.', $expectedCacheValue, $currentCacheValue, $cacheKey),
-        );
-    }
-
-    /**
      * @return array
      */
-    public function getCacheData(): array
+    public function getCacheData(string $cacheFileNamePostfix): array
     {
-        $fileContent = file_get_contents(static::PATH_TO_CACHE_FILE);
-
-        return include(static::PATH_TO_CACHE_FILE);
+        return include($this->getPathToCacheFile($cacheFileNamePostfix));
     }
 
     /**
      * @return \Spryker\Zed\Kernel\Business\KernelBusinessFactory
      */
-    protected function getBusinessFactory(): KernelBusinessFactory
+    public function getBusinessFactory(): KernelBusinessFactory
     {
         /** @var \Spryker\Zed\Kernel\Business\KernelBusinessFactory $businessFactory */
         $businessFactory = $this->getBusinessHelper()->getFactory();
 
         return $businessFactory;
+    }
+
+    /**
+     * @param string $cacheFileNamePostfix
+     *
+     * @return string
+     */
+    public function getPathToCacheFile(string $cacheFileNamePostfix): string
+    {
+        return sprintf(static::PATH_TO_CACHE_FILE, $cacheFileNamePostfix);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getCodeBuckets(): array
+    {
+        return [
+            static::CODE_BUCKET_CB1,
+            static::CODE_BUCKET_CB2,
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultModuleNamePostfixValue(): string
+    {
+        return static::DEFAULT_MODULE_NAME_POSTFIX_VALUE;
     }
 
     /**
@@ -304,5 +286,36 @@ class ResolvableCacheBuilderHelper extends Module
         $businessHelper = $this->getModule('\\' . BusinessHelper::class);
 
         return $businessHelper;
+    }
+
+    /**
+     * @param bool $isApplicationCodeBucketDefined
+     *
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface
+     */
+    protected function getModuleNamePostfixProviderStub(bool $isApplicationCodeBucketDefined = false): ModuleNamePostfixProviderInterface
+    {
+        $constructorParams = [
+            $this->getConfigHelper()->getSharedModuleConfig(),
+            $this->getCodeBucketConfigStub(),
+        ];
+
+        return Stub::construct(ModuleNamePostfixProvider::class, $constructorParams, [
+            'isApplicationCodeBucketDefined' => function () use ($isApplicationCodeBucketDefined) {
+                return $isApplicationCodeBucketDefined;
+            },
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfigInterface
+     */
+    protected function getCodeBucketConfigStub(): CodeBucketConfigInterface
+    {
+        return Stub::make(CodeBucketConfig::class, [
+            'getCodeBuckets' => function () {
+                return $this->getCodeBuckets();
+            },
+        ]);
     }
 }

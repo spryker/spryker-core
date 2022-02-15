@@ -37,12 +37,17 @@ class ClassNameFinder implements ClassNameFinderInterface
      * @param string $moduleName
      * @param string $classNamePattern
      * @param bool $throwException
+     * @param string|null $moduleNamePostfix
      *
      * @return string|null
      */
-    public function findClassName(string $moduleName, string $classNamePattern, bool $throwException = true): ?string
-    {
-        $classNameCandidates = $this->classNameCandidatesBuilder->buildClassNames($moduleName, $classNamePattern);
+    public function findClassName(
+        string $moduleName,
+        string $classNamePattern,
+        bool $throwException = true,
+        ?string $moduleNamePostfix = null
+    ): ?string {
+        $classNameCandidates = $this->classNameCandidatesBuilder->buildClassNames($moduleName, $classNamePattern, $moduleNamePostfix);
 
         foreach ($classNameCandidates as $classNameCandidate) {
             $className = $this->tryClassName($classNameCandidate, $throwException);

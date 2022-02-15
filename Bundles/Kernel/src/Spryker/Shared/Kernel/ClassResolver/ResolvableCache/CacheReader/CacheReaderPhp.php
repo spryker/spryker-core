@@ -29,12 +29,15 @@ class CacheReaderPhp implements CacheReaderInterface
      */
     public function read(): array
     {
-        if (!file_exists($this->config->getResolvableCacheFilePath())) {
+        $resolvableCacheFilePathPattern = $this->config->getResolvableCacheFilePathPattern();
+        $resolvableCacheFilePath = sprintf($resolvableCacheFilePathPattern, APPLICATION_CODE_BUCKET);
+
+        if (!file_exists($resolvableCacheFilePath)) {
             trigger_error(sprintf('The resolvable class cache is enabled but was not generated.'), E_USER_DEPRECATED);
 
             return [];
         }
 
-        return include_once($this->config->getResolvableCacheFilePath());
+        return include_once($resolvableCacheFilePath);
     }
 }

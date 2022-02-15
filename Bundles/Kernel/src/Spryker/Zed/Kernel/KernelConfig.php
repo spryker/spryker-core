@@ -101,6 +101,8 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Kernel\KernelConfig::getResolvableCacheFilePathPattern()} instead.
+     *
      * @return string
      */
     public function getResolvableCacheFilePath(): string
@@ -116,5 +118,15 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     public function getPermissionMode(): int
     {
         return $this->get(KernelConstants::DIRECTORY_PERMISSION, 0777);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getResolvableCacheFilePathPattern(): string
+    {
+        return $this->getSharedConfig()->getResolvableCacheFilePathPattern();
     }
 }

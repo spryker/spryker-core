@@ -27,6 +27,8 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConfig::getResolvableCacheFilePathPattern()} instead.
+     *
      * @return string
      */
     public function getResolvableCacheFilePath(): string
@@ -133,5 +135,17 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
             'ZedEntityManager' => '\\%s\\Zed\\%s\\Persistence\\%sEntityManager',
             'ZedRepository' => '\\%s\\Zed\\%s\\Persistence\\%sRepository',
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getResolvableCacheFilePathPattern(): string
+    {
+        $projectNamespaces = implode('/', $this->getProjectOrganizations());
+
+        return APPLICATION_ROOT_DIR . '/src/Generated/Shared/Kernel/' . $projectNamespaces . '/resolvableClassCache%s.php';
     }
 }

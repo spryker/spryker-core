@@ -26,12 +26,15 @@ class CacheWriterPhp implements CacheWriterInterface
 
     /**
      * @param array<string> $cache
+     * @param string $cacheFileNamePostfix
      *
      * @return void
      */
-    public function write(array $cache): void
+    public function write(array $cache, string $cacheFileNamePostfix): void
     {
-        $resolvableCacheFilePath = $this->config->getResolvableCacheFilePath();
+        $resolvableCacheFilePathPattern = $this->config->getResolvableCacheFilePathPattern();
+
+        $resolvableCacheFilePath = sprintf($resolvableCacheFilePathPattern, $cacheFileNamePostfix);
 
         if (!is_dir(dirname($resolvableCacheFilePath))) {
             mkdir(dirname($resolvableCacheFilePath), $this->config->getPermissionMode(), true);

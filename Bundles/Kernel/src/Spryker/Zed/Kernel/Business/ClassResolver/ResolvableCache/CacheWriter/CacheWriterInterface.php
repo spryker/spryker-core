@@ -11,8 +11,9 @@ interface CacheWriterInterface
 {
     /**
      * @param array<string> $cache
+     * @param string $cacheFileNamePostfix
      *
      * @return void
      */
-    public function write(array $cache): void;
+    public function write(array $cache, string $cacheFileNamePostfix): void;
 }

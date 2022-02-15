@@ -11,8 +11,9 @@ interface ModuleNameCandidatesBuilderInterface
 {
     /**
      * @param string $moduleName
+     * @param string|null $moduleNamePostfix
      *
      * @return array<string>
      */
-    public function buildModuleNameCandidates(string $moduleName): array;
+    public function buildModuleNameCandidates(string $moduleName, ?string $moduleNamePostfix = null): array;
 }

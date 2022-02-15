@@ -34,9 +34,13 @@ class CacheBuilderTest extends Unit
     {
         $this->tester->arrangeCoreClassCacheBuilderTest();
 
-        $this->tester->getFactory()->createCacheBuilder()->build();
+        $this->tester->getBusinessFactory()->createCacheBuilder()->build();
 
-        $this->tester->assertCacheHasCoreClass();
+        $this->assertCacheHasExpectedValue(
+            $this->tester->getCacheKey(),
+            $this->tester->getDefaultModuleNamePostfixValue(),
+            $this->tester->getAutoloadableCoreClassName(),
+        );
     }
 
     /**
@@ -46,20 +50,61 @@ class CacheBuilderTest extends Unit
     {
         $this->tester->arrangeProjectClassCacheBuilderTest();
 
-        $this->tester->getFactory()->createCacheBuilder()->build();
+        $this->tester->getBusinessFactory()->createCacheBuilder()->build();
 
-        $this->tester->assertCacheHasProjectClass();
+        $this->assertCacheHasExpectedValue(
+            $this->tester->getCacheKey(),
+            $this->tester->getDefaultModuleNamePostfixValue(),
+            $this->tester->getAutoloadableProjectClassName(),
+        );
     }
 
     /**
      * @return void
      */
-    public function testBuildBuildsResolvableCacheForStoreClass(): void
+    public function testBuildBuildsResolvableCacheForCodeBucketClass(): void
     {
-        $this->tester->arrangeStoreClassCacheBuilderTest();
+        $this->tester->arrangeCodeBucketClassCacheBuilderTest();
 
-        $this->tester->getFactory()->createCacheBuilder()->build();
+        $this->tester->getBusinessFactory()->createCacheBuilder()->build();
 
-        $this->tester->assertCacheHasStoreClass();
+        $this->assertCacheHasExpectedValue(
+            $this->tester->getCacheKey(),
+            $this->tester->getDefaultModuleNamePostfixValue(),
+            $this->tester->getAutoloadableProjectClassName(),
+        );
+
+        foreach ($this->tester->getCodeBuckets() as $codeBucket) {
+            $this->assertCacheHasExpectedValue(
+                $this->tester->getCacheKey(),
+                $codeBucket,
+                $this->tester->getAutoloadableCodeBucketClassName($codeBucket),
+            );
+        }
+    }
+
+    /**
+     * @param string $cacheKey
+     * @param string $cacheFileNamePostfix
+     * @param string $expectedCacheValue
+     *
+     * @return void
+     */
+    protected function assertCacheHasExpectedValue(string $cacheKey, string $cacheFileNamePostfix, string $expectedCacheValue): void
+    {
+        $this->assertFileExists($this->tester->getPathToCacheFile($cacheFileNamePostfix), 'Cache file does not exists.');
+
+        $cachedData = $this->tester->getCacheData($cacheFileNamePostfix);
+
+        $this->assertgreaterthan(0, $cachedData, 'At least one cache entry expected but cache is empty.');
+        $this->assertArrayHasKey($cacheKey, $cachedData, sprintf('Cache key "%s" not found. Found cache keys: %s', $cacheKey, implode(', ', array_keys($cachedData))));
+
+        $currentCacheValue = $cachedData[$cacheKey];
+
+        $this->assertSame(
+            $expectedCacheValue,
+            $currentCacheValue,
+            sprintf('Expected "%s" but found "%s" for cache key "%s" given.', $expectedCacheValue, $currentCacheValue, $cacheKey),
+        );
     }
 }

@@ -15,6 +15,7 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder\ClassNameCandidatesBuilder;
 use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinder;
 use Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProvider;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 use Spryker\Shared\Kernel\KernelConfig;
 use SprykerTest\Shared\Testify\Helper\ClassHelperTrait;
@@ -62,7 +63,8 @@ class ClassResolverHelper extends Module
         $resolverStub = Stub::make($resolverClassName, [
             'getClassNameFinder' => function () use ($resolverClassName, $codeBucket) {
                 $sharedConfig = $this->getConfigStub($resolverClassName);
-                $moduleNameCandidatesBuilder = $this->getModuleNameCandidatesBuilderStub($sharedConfig, $codeBucket);
+                $moduleNamePostfixProvider = $this->getModuleNamePostfixProviderStub($sharedConfig, $codeBucket);
+                $moduleNameCandidatesBuilder = new ModuleNameCandidatesBuilder($moduleNamePostfixProvider);
                 $classNameCandidatesBuilder = new ClassNameCandidatesBuilder($moduleNameCandidatesBuilder, $sharedConfig);
                 $resolverCacheManager = new ResolverCacheManager();
 
@@ -268,19 +270,19 @@ class ClassResolverHelper extends Module
      * @param \Spryker\Shared\Kernel\KernelConfig $config
      * @param string $codeBucket
      *
-     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProvider
      */
-    protected function getModuleNameCandidatesBuilderStub(KernelConfig $config, string $codeBucket = ''): ModuleNameCandidatesBuilder
+    protected function getModuleNamePostfixProviderStub(KernelConfig $config, string $codeBucket = ''): ModuleNamePostfixProvider
     {
         $methodMocks = [
-            'getApplicationCodeBucket' => function () use ($codeBucket) {
+            'getCurrentApplicationsCodeBucket' => function () use ($codeBucket) {
                 return $codeBucket;
             },
         ];
 
         $methodMocks = $this->addGetCurrentStoreMethodMock($methodMocks, $config);
 
-        return Stub::make(ModuleNameCandidatesBuilder::class, $methodMocks);
+        return Stub::make(ModuleNamePostfixProvider::class, $methodMocks);
     }
 
     /**

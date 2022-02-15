@@ -34,14 +34,15 @@ class ClassNameCandidatesBuilder implements ClassNameCandidatesBuilderInterface
     /**
      * @param string $module
      * @param string $classNamePattern
+     * @param string|null $moduleNamePostfix
      *
      * @return array<string>
      */
-    public function buildClassNames(string $module, string $classNamePattern): array
+    public function buildClassNames(string $module, string $classNamePattern, ?string $moduleNamePostfix = null): array
     {
         $classNames = [];
 
-        $classNames = $this->addProjectClassNames($module, $classNames, $classNamePattern);
+        $classNames = $this->addProjectClassNames($module, $classNames, $classNamePattern, $moduleNamePostfix);
         $classNames = $this->addCoreClassNames($module, $classNames, $classNamePattern);
 
         return $classNames;
@@ -51,12 +52,13 @@ class ClassNameCandidatesBuilder implements ClassNameCandidatesBuilderInterface
      * @param string $moduleName
      * @param array<string> $classNames
      * @param string $classNamePattern
+     * @param string|null $moduleNamePostfix
      *
      * @return array<string>
      */
-    protected function addProjectClassNames(string $moduleName, array $classNames, string $classNamePattern): array
+    protected function addProjectClassNames(string $moduleName, array $classNames, string $classNamePattern, ?string $moduleNamePostfix = null): array
     {
-        foreach ($this->moduleNameCandidatesBuilder->buildModuleNameCandidates($moduleName) as $moduleNameCandidate) {
+        foreach ($this->moduleNameCandidatesBuilder->buildModuleNameCandidates($moduleName, $moduleNamePostfix) as $moduleNameCandidate) {
             foreach ($this->config->getProjectOrganizations() as $projectOrganization) {
                 $classNames[] = $this->buildClassNameCandidate($projectOrganization, $moduleName, $moduleNameCandidate, $classNamePattern);
             }

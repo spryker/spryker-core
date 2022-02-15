@@ -7,51 +7,38 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder;
 
+use Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface;
+
 class ModuleNameCandidatesBuilder implements ModuleNameCandidatesBuilderInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilderConfigInterface
+     * @var \Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface
      */
-    protected $config;
+    protected $moduleNamePostfixProvider;
 
     /**
-     * @param \Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilderConfigInterface $config
+     * @param \Spryker\Shared\Kernel\ClassResolver\ModuleNamePostfixProvider\ModuleNamePostfixProviderInterface $moduleNamePostfixProvider
      */
-    public function __construct(ModuleNameCandidatesBuilderConfigInterface $config)
+    public function __construct(ModuleNamePostfixProviderInterface $moduleNamePostfixProvider)
     {
-        $this->config = $config;
+        $this->moduleNamePostfixProvider = $moduleNamePostfixProvider;
     }
 
     /**
      * @param string $moduleName
+     * @param string|null $moduleNamePostfix
      *
      * @return array<string>
      */
-    public function buildModuleNameCandidates(string $moduleName): array
+    public function buildModuleNameCandidates(string $moduleName, ?string $moduleNamePostfix = null): array
     {
-        $moduleNamePostfix = $this->getApplicationCodeBucket() ?: $this->getCurrentStoreName();
+        if ($moduleNamePostfix === null) {
+            $moduleNamePostfix = $this->moduleNamePostfixProvider->getCurrentModuleNamePostfix();
+        }
 
         return [
             $moduleName . $moduleNamePostfix,
             $moduleName,
         ];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getApplicationCodeBucket(): string
-    {
-        return defined('APPLICATION_CODE_BUCKET') ? APPLICATION_CODE_BUCKET : '';
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return string
-     */
-    protected function getCurrentStoreName(): string
-    {
-        return $this->config->getCurrentStoreName();
     }
 }
