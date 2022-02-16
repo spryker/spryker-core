@@ -9,7 +9,7 @@
             {{ form_widget(child.abstractSkus) }}
             <div class="form-note">
                 <span class="glyphicon glyphicon-info-sign"></span>
-                {{ child.abstractSkus.vars.help }}
+                {{ child.abstractSkus.vars.help | trans }}
             </div>
             {{ form_errors(child.abstractSkus) }}
         </div>
