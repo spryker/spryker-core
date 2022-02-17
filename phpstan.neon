@@ -11,3 +11,9 @@ parameters:
         processTimeout: 300.0
     featureToggles:
         bleedingEdge: true
+
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
+        - APPLICATION_CODE_BUCKET
