@@ -10,7 +10,7 @@ namespace Spryker\Zed\Log\Dependency\Facade;
 interface LogToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocaleName(): string;
 }

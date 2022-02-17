@@ -64,7 +64,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     public function createEnvironmentProcessorPublic()
     {
         return new EnvironmentProcessor(
-            $this->getLocaleFacade()->getCurrentLocale()->getLocaleNameOrFail(),
+            $this->getLocaleFacade()->getCurrentLocaleName(),
         );
     }
 

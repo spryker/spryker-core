@@ -12,5 +12,5 @@ interface LogToLocaleClientInterface
     /**
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 }

@@ -8,10 +8,12 @@
 namespace Spryker\Shared\Log;
 
 use Monolog\Logger as MonologLogger;
+use Psr\Log\LoggerInterface;
 use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoader;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderDefault;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderGlue;
+use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderYves;
 use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed;
 
@@ -32,7 +34,7 @@ class LoggerFactory
      *
      * @return \Psr\Log\LoggerInterface
      */
-    public static function getInstance(?LoggerConfigInterface $loggerConfig = null)
+    public static function getInstance(?LoggerConfigInterface $loggerConfig = null): LoggerInterface
     {
         if ($loggerConfig === null) {
             if (!static::$loggerConfig) {
@@ -50,7 +52,7 @@ class LoggerFactory
      *
      * @return \Psr\Log\LoggerInterface
      */
-    protected static function createInstanceIfNotExists(LoggerConfigInterface $loggerConfig)
+    protected static function createInstanceIfNotExists(LoggerConfigInterface $loggerConfig): LoggerInterface
     {
         $channelName = $loggerConfig->getChannelName();
 
@@ -66,7 +68,7 @@ class LoggerFactory
     /**
      * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
      */
-    protected static function createLoggerConfig()
+    protected static function createLoggerConfig(): LoggerConfigInterface
     {
         $loggerConfigLoader = new LoggerConfigLoader([
             static::createLoggerConfigLoaderYves(),
@@ -81,7 +83,7 @@ class LoggerFactory
     /**
      * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderYves
      */
-    protected static function createLoggerConfigLoaderYves()
+    protected static function createLoggerConfigLoaderYves(): LoggerConfigLoaderInterface
     {
         return new LoggerConfigLoaderYves();
     }
@@ -89,7 +91,7 @@ class LoggerFactory
     /**
      * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed
      */
-    protected static function createLoggerConfigLoaderZed()
+    protected static function createLoggerConfigLoaderZed(): LoggerConfigLoaderInterface
     {
         return new LoggerConfigLoaderZed();
     }
@@ -97,7 +99,7 @@ class LoggerFactory
     /**
      * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderGlue
      */
-    protected static function createLoggerConfigLoaderGlue()
+    protected static function createLoggerConfigLoaderGlue(): LoggerConfigLoaderInterface
     {
         return new LoggerConfigLoaderGlue();
     }
@@ -105,7 +107,7 @@ class LoggerFactory
     /**
      * @return \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface|\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderDefault
      */
-    protected static function createLoggerConfigLoaderDefault()
+    protected static function createLoggerConfigLoaderDefault(): LoggerConfigLoaderInterface
     {
         return new LoggerConfigLoaderDefault();
     }

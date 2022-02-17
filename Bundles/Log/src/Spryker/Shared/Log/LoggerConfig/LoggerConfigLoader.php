@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Log\LoggerConfig;
 
+use Spryker\Shared\Log\Config\LoggerConfigInterface;
 use Spryker\Shared\Log\Exception\LoggerLoaderException;
 
 class LoggerConfigLoader
@@ -29,7 +30,7 @@ class LoggerConfigLoader
      *
      * @return \Spryker\Shared\Log\Config\LoggerConfigInterface
      */
-    public function getLoggerConfig()
+    public function getLoggerConfig(): LoggerConfigInterface
     {
         foreach ($this->loggerLoader as $loggerLoader) {
             if ($loggerLoader->accept()) {

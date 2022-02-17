@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Log\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 class LogToLocaleFacadeBridge implements LogToLocaleFacadeInterface
 {
     /**
@@ -25,10 +23,10 @@ class LogToLocaleFacadeBridge implements LogToLocaleFacadeInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return string
      */
-    public function getCurrentLocale(): LocaleTransfer
+    public function getCurrentLocaleName(): string
     {
-        return $this->localeFacade->getCurrentLocale();
+        return $this->localeFacade->getCurrentLocaleName();
     }
 }
