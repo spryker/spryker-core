@@ -1,5 +1,6 @@
 {
     "include": {
+        "spryker/merchant-product-approval": "Makes sure the connection between Merchant and ProductApproval exist.",
         "spryker/zed-ui": "Zed UI provides layout templates and frontend infrastructure.",
         "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
     }

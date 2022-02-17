@@ -295,7 +295,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         foreach ($composerDependencyCollectionTransfer->getComposerDependencies() as $composerDependency) {
             if (
                 $composerDependency->getName() && $composerDependency->getIsDev() === false &&
-                !in_array($composerDependency->getName(), $overwrittenRequiredDependencies)
+                in_array($composerDependency->getName(), $overwrittenRequiredDependencies)
             ) {
                 $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $composerDependency->getName());
             }

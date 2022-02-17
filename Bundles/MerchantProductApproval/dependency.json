@@ -1,5 +1,7 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "spryker/merchant": "Provides Merchant entity.",
+        "spryker/product-approval": "Provides ProductApproval functionality."
     }
 }
