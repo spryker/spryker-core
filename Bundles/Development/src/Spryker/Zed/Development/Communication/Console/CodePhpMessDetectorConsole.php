@@ -68,6 +68,7 @@ class CodePhpMessDetectorConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var string|null $module */
         $module = $this->input->getOption(static::OPTION_MODULE);
 
         $message = 'Run PHPMD in PROJECT level';

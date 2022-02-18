@@ -30,6 +30,7 @@ class ContentProductSetDataImportPlugin extends AbstractPlugin implements DataIm
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
+        /** @phpstan-var \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer */
         return $this->getFacade()->importProductSetTerm($dataImporterConfigurationTransfer);
     }
 

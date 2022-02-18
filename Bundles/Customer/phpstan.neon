@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
@@ -7,3 +7,4 @@ parameters:
         - '#Instantiated class .+BCryptPasswordEncoder not found.#'
         - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'
         - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'
+        - '#Cannot call method format\(\) on DateTime\|string.#'

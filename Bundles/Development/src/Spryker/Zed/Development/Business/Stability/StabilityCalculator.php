@@ -44,7 +44,9 @@ class StabilityCalculator implements StabilityCalculatorInterface
      */
     public function calculateStability()
     {
-        $bundlesDependencies = json_decode(file_get_contents(APPLICATION_ROOT_DIR . '/data/dependencyTree.json'), true);
+        /** @var string $dependencyTreeContent */
+        $dependencyTreeContent = file_get_contents(APPLICATION_ROOT_DIR . '/data/dependencyTree.json');
+        $bundlesDependencies = json_decode($dependencyTreeContent, true);
 
         $this->bundlesDependencies = $this->filter($bundlesDependencies);
 

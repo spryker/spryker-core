@@ -15,6 +15,8 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig getConfig()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class CompanyUnitAddressDataImportBusinessFactory extends DataImportBusinessFactory
 {

@@ -335,8 +335,11 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
      */
     public function createImportDumper(): ImporterDumperInterface
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface $importer */
+        $importer = $this->getImporter();
+
         return new ImporterDumper(
-            $this->getImporter(),
+            $importer,
             $this,
             $this->getDataImporterPlugins(),
         );

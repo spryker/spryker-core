@@ -132,6 +132,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     public function run(InputInterface $input, OutputInterface $output)
     {
+        /** @var string|null $module */
         $module = $input->getOption(static::OPTION_MODULE);
 
         $message = 'Run PHPStan in PROJECT level';
@@ -267,6 +268,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function getLevel(InputInterface $input, string $path, string $configFilePath): int
     {
         $defaultLevel = $this->getDefaultLevel($path, $configFilePath);
+        /** @var string $level */
         $level = $input->getOption(static::OPTION_LEVEL);
 
         if (preg_match('/^([+])(\d)$/', $level, $matches)) {
@@ -285,7 +287,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getPathsToAnalyze($module): array
     {
-        if ($module) {
+        if (is_string($module) && $module) {
             $paths = $this->getPaths($module);
 
             if (!$paths) {
@@ -544,6 +546,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return $neonLevel ?: $configLevel;
         }
 
+        /** @var string $content */
         $content = file_get_contents($configFile);
         $json = json_decode($content, true);
         if (!isset($json[static::DEFAULT_LEVEL])) {
@@ -587,7 +590,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function skip(int $count, InputInterface $input): bool
     {
         $limit = null;
-        $offset = (string)$input->getOption(static::OPTION_OFFSET) ?: null;
+        /** @var string|null $offset */
+        $offset = $input->getOption(static::OPTION_OFFSET);
         if ($offset && strpos($offset, ',') !== false) {
             [$offset, $limit] = explode(',', $offset);
         }
@@ -619,6 +623,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return null;
         }
 
+        /** @var string $content */
         $content = file_get_contents($file);
         preg_match('/\blevel:\s*(\d)\b/', $content, $matches);
         if (!$matches) {

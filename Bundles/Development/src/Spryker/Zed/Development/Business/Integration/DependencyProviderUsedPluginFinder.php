@@ -137,12 +137,19 @@ class DependencyProviderUsedPluginFinder implements DependencyProviderUsedPlugin
     }
 
     /**
+     * @phpstan-return \Closure
+     *
      * @return callable
      */
     protected function getFilenameSortCallback(): callable
     {
         return function (SplFileInfo $splFileInfoOne, SplFileInfo $splFileInfoTwo) {
-            return strcmp($splFileInfoOne->getRealPath(), $splFileInfoTwo->getRealPath());
+            /** @var string $firstRealPath */
+            $firstRealPath = $splFileInfoOne->getRealPath();
+            /** @var string $secondRealPath */
+            $secondRealPath = $splFileInfoTwo->getRealPath();
+
+            return strcmp($firstRealPath, $secondRealPath);
         };
     }
 

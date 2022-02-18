@@ -69,6 +69,7 @@ class CodeFixturesConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string|null $module */
         $module = $this->input->getOption(static::OPTION_MODULE);
         $this->displayRunInfo($module);
 

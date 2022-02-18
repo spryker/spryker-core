@@ -42,6 +42,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
      */
     public function getDocument($id, array $options = []): Document
     {
+        /** @phpstan-var string $id */
         return $this->getType()->getDocument($id, $options);
     }
 

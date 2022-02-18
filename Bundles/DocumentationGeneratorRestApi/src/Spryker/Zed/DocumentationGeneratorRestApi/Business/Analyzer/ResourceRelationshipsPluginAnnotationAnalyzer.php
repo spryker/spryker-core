@@ -70,6 +70,7 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
     {
         $reflectionClass = new ReflectionClass(get_class($plugin));
 
+        /** @phpstan-var string */
         return $reflectionClass->getFileName();
     }
 
@@ -80,6 +81,7 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
      */
     protected function getParsedPhpTokens(string $pluginFileName): array
     {
+        /** @var string $pluginContents */
         $pluginContents = file_get_contents($pluginFileName);
 
         $tokens = token_get_all($pluginContents);

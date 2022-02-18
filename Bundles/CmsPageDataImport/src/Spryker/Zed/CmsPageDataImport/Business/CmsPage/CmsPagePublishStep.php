@@ -38,6 +38,8 @@ class CmsPagePublishStep extends PublishAwareStep implements DataImportStepInter
     {
         $cmsVersionTransfer = $this->cmsFacade->publishWithVersion($dataSet[CmsPageStoreDataSet::ID_CMS_PAGE]);
 
-        $this->addPublishEvents(CmsEvents::CMS_VERSION_PUBLISH, $cmsVersionTransfer->getFkCmsPage());
+        /** @var int $fkCmsPage */
+        $fkCmsPage = $cmsVersionTransfer->getFkCmsPage();
+        $this->addPublishEvents(CmsEvents::CMS_VERSION_PUBLISH, $fkCmsPage);
     }
 }

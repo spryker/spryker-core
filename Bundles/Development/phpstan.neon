@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     reportUnmatchedIgnoredErrors: false
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
@@ -11,3 +11,4 @@ parameters:
         - '#Call to function method_exists\(\) with Symfony\\Component\\Console\\Helper\\ProgressBar and ''maxSecondsBetweenRe…'' will always evaluate to false.#'
         - '#Call to an undefined method ReflectionType::isBuiltin\(\)#'
         - '#Comparison operation ">" between int<2, max> and 1 is always true.#'
+        - '#Parameter \#1 \$[a-zA-Z]* of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given.#'

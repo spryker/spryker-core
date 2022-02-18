@@ -273,7 +273,10 @@ class PathMethodRenderer implements PathMethodRendererInterface
      */
     protected function getPathParameterDescription(string $parameter): string
     {
-        $parameterSplitted = array_slice(preg_split(static::PATTERN_REGEX_WORD_SLICE, $parameter), 0, -1);
+        /** @var array<string> $pieces */
+        $pieces = preg_split(static::PATTERN_REGEX_WORD_SLICE, $parameter);
+
+        $parameterSplitted = array_slice($pieces, 0, -1);
         $parameterSplitted = array_map('lcfirst', $parameterSplitted);
 
         return sprintf(static::PATTERN_DESCRIPTION_PATH_PARAMETER, implode(' ', $parameterSplitted));

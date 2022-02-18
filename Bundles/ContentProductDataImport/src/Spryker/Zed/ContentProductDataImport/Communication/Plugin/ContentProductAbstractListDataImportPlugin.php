@@ -30,6 +30,7 @@ class ContentProductAbstractListDataImportPlugin extends AbstractPlugin implemen
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
+        /** @phpstan-var \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer */
         return $this->getFacade()->importProductAbstractListTerm($dataImporterConfigurationTransfer);
     }
 

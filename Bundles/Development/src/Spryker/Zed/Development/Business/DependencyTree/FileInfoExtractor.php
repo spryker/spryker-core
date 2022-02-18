@@ -81,8 +81,10 @@ class FileInfoExtractor
     {
         $classNameParts = $this->getClassNameParts($fileInfo);
         $filter = new CamelCaseToDash();
+        /** @var string $camelCasedClassName */
+        $camelCasedClassName = $filter->filter($classNameParts[0]);
 
-        return strtolower($filter->filter($classNameParts[0]));
+        return strtolower($camelCasedClassName);
     }
 
     /**

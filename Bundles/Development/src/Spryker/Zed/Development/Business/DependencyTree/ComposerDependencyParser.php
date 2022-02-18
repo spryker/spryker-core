@@ -319,6 +319,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             return [];
         }
 
+        /** @var string $content */
         $content = file_get_contents($dependencyJsonFilePath);
         $content = json_decode($content, true);
 
@@ -355,6 +356,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             return $composerDependencies;
         }
 
+        /** @var string $content */
         $content = file_get_contents($composerJsonFilePath);
         $content = json_decode($content, true);
 
@@ -448,7 +450,9 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     {
         $name = substr($package, strpos($package, '/') + 1);
         $filter = new SeparatorToCamelCase('-');
-        $name = ucfirst($filter->filter($name));
+        /** @var string $camelCasedName */
+        $camelCasedName = $filter->filter($name);
+        $name = ucfirst($camelCasedName);
 
         return $name;
     }

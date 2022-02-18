@@ -93,17 +93,18 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function getActiveCompanyUsersByCustomerReference(string $customerReference): CompanyUserCollectionTransfer
     {
+        /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser */
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
             ->filterByIsActive(true)
+            ->joinWithCustomer()
             ->useCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
-            ->joinWithCustomer()
+            ->joinWithCompany()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
-            ->endUse()
-            ->joinWithCompany();
+            ->endUse();
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser)->find();
 
@@ -123,6 +124,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserCollectionTransfer
     {
+        /** @var \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery $queryCompanyUser */
         $queryCompanyUser = $this->getFactory()
             ->createCompanyUserQuery()
             ->joinWithCustomer()
@@ -221,14 +223,14 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
+            ->filterByIsActive(true)
+            ->filterByUuid($uuidCompanyUser)
             ->joinWithCustomer()
             ->joinWithCompany()
             ->useCompanyQuery()
                 ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
                 ->filterByIsActive(true)
-            ->endUse()
-            ->filterByIsActive(true)
-            ->filterByUuid($uuidCompanyUser);
+            ->endUse();
 
         $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
         if ($companyUserEntityTransfer !== null) {

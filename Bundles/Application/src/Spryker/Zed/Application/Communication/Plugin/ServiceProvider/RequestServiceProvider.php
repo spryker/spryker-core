@@ -118,6 +118,7 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     protected function parseRequestData(Request $request)
     {
+        /** @var string $requestUriWithoutParameters */
         $requestUriWithoutParameters = strtok($request->server->get('REQUEST_URI'), '?');
         $requestUriWithoutParameters = trim($requestUriWithoutParameters, '/');
         $requestUriWithoutParameters = str_replace('//', '/', $requestUriWithoutParameters);

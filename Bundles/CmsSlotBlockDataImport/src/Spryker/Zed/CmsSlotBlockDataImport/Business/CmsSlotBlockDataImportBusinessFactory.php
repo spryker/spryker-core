@@ -25,6 +25,8 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockDataImport\CmsSlotBlockDataImportConfig getConfig()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
 {

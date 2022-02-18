@@ -95,6 +95,7 @@ class CmsPageReader implements CmsPageReaderInterface
      */
     public function searchCmsPages(RestRequestInterface $restRequest): RestResponseInterface
     {
+        /** @var string $searchString */
         $searchString = $restRequest->getHttpRequest()->query->get(CmsPagesRestApiConfig::QUERY_STRING_PARAMETER, '');
 
         $requestParameters = $this->getAllRequestParameters($restRequest);
@@ -122,6 +123,7 @@ class CmsPageReader implements CmsPageReaderInterface
      */
     public function getCmsPageById(RestRequestInterface $restRequest): RestResponseInterface
     {
+        /** @var string $cmsPageUuid */
         $cmsPageUuid = $restRequest->getResource()->getId();
 
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(

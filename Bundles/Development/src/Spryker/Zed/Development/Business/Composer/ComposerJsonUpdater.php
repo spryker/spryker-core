@@ -154,6 +154,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
             'config',
         ];
 
+        /** @phpstan-var callable((int|string), (int|string)): int */
         $callable = function ($a, $b) use ($map) {
             $keyA = in_array($a, $map) ? array_search($a, $map) : 999;
             $keyB = in_array($b, $map) ? array_search($b, $map) : 999;
@@ -181,7 +182,9 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     protected function assertCorrectName(string $composerName, SplFileInfo $composerJsonFile)
     {
         $filter = new CamelCaseToDash();
-        $moduleName = mb_strtolower($filter->filter(basename($composerJsonFile->getPath())));
+        /** @var string $camelCasedModule */
+        $camelCasedModule = $filter->filter(basename($composerJsonFile->getPath()));
+        $moduleName = mb_strtolower($camelCasedModule);
         $organization = $this->getOrganizationFromComposerJsonFile($composerJsonFile);
         $expected = $organization . '/' . $moduleName;
 
@@ -199,17 +202,20 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     protected function getOrganizationFromComposerJsonFile(SplFileInfo $composerJsonFile)
     {
-        if (preg_match('/vendor\/spryker\/([a-z_-]+)\/Bundles\/\w+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
+        /** @var string $realPath */
+        $realPath = $composerJsonFile->getRealPath();
+
+        if (preg_match('/vendor\/spryker\/([a-z_-]+)\/Bundles\/\w+\/composer.json$/', $realPath, $matches)) {
             return $matches[1];
         }
 
-        if (preg_match('/vendor\/([a-z_-]+)\/[a-z_-]+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
+        if (preg_match('/vendor\/([a-z_-]+)\/[a-z_-]+\/composer.json$/', $realPath, $matches)) {
             return $matches[1];
         }
 
         throw new InvalidComposerJsonException(sprintf(
             'Unable to locate organization name from %s.',
-            $composerJsonFile->getRealPath(),
+            $realPath,
         ));
     }
 }

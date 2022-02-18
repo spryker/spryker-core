@@ -310,6 +310,7 @@ class DataImportConsole extends Console
     protected function getImporterType(?InputInterface $input = null): string
     {
         if ($input && $input->getArgument(static::ARGUMENT_IMPORTER)) {
+            /** @phpstan-var string */
             return $input->getArgument(static::ARGUMENT_IMPORTER);
         }
 
@@ -403,6 +404,7 @@ class DataImportConsole extends Console
     protected function getYamlConfigPath(InputInterface $input): ?string
     {
         if ($input->hasParameterOption('--' . static::OPTION_CONFIG) || $input->hasParameterOption('-' . static::OPTION_CONFIG_SHORT)) {
+            /** @phpstan-var string|null */
             return $input->getOption(static::OPTION_CONFIG);
         }
 

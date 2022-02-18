@@ -141,12 +141,13 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
      */
     protected function buildModuleFilterTransfer(): ?ModuleFilterTransfer
     {
-        if (!$this->input->getArgument(static::ARGUMENT_MODULE)) {
+        /** @var string|null $moduleArgument */
+        $moduleArgument = $this->input->getArgument(static::ARGUMENT_MODULE);
+        if (!$moduleArgument) {
             return null;
         }
 
         $moduleFilterTransfer = new ModuleFilterTransfer();
-        $moduleArgument = $this->input->getArgument(static::ARGUMENT_MODULE);
 
         if (strpos($moduleArgument, '.') === false) {
             $moduleTransfer = new ModuleTransfer();
@@ -303,6 +304,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     protected function isModuleNameValid(array $modulesToValidate): bool
     {
         $moduleTransferCollection = $this->getModuleTransferCollection();
+        /** @var \Generated\Shared\Transfer\ModuleTransfer $currentModuleTransfer */
         $currentModuleTransfer = current($modulesToValidate);
 
         if (!isset($moduleTransferCollection[$this->buildModuleKey($currentModuleTransfer)])) {

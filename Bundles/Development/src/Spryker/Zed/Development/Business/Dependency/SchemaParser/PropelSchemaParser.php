@@ -52,11 +52,13 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     {
         $foreignReferenceColumnNames = [];
 
+        /** @var \SimpleXMLElement $simpleXmlElement */
         $simpleXmlElement = simplexml_load_file($fileInfo->getPathname());
         $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
         if ($hasNamespace) {
             $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
+        /** @var iterable $foreignReferences */
         $foreignReferences = $simpleXmlElement->xpath($hasNamespace ? '//s:table/s:foreign-key/s:reference' : '//table/foreign-key/reference');
         foreach ($foreignReferences as $foreignReference) {
             $parentNode = $foreignReference->xpath('parent::*')[0];
@@ -168,6 +170,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function getIdColumnNames(SplFileInfo $splFileInfo): array
     {
+        /** @var \SimpleXMLElement $simpleXmlElement */
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
         $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
@@ -177,7 +180,9 @@ class PropelSchemaParser implements PropelSchemaParserInterface
 
         $idColumnNames = [];
 
-        foreach ($simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table') as $simpleXmlTableElement) {
+        /** @var iterable $simpleXmlTableElements */
+        $simpleXmlTableElements = $simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table');
+        foreach ($simpleXmlTableElements as $simpleXmlTableElement) {
             $tableName = (string)$simpleXmlTableElement['name'];
             if ($hasNamespace) {
                 $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
@@ -203,6 +208,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function getUniqueColumnNames(SplFileInfo $splFileInfo): array
     {
+        /** @var \SimpleXMLElement $simpleXmlElement */
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
         $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
@@ -212,7 +218,9 @@ class PropelSchemaParser implements PropelSchemaParserInterface
 
         $uniqueColumnNames = [];
 
-        foreach ($simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table') as $simpleXmlTableElement) {
+        /** @var iterable $simpleXmlTableElements */
+        $simpleXmlTableElements = $simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table');
+        foreach ($simpleXmlTableElements as $simpleXmlTableElement) {
             $tableName = (string)$simpleXmlTableElement['name'];
             if ($hasNamespace) {
                 $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
@@ -238,6 +246,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function getRequiredColumnNames(SplFileInfo $splFileInfo): array
     {
+        /** @var \SimpleXMLElement $simpleXmlElement */
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
         $requiredColumnNames = [];

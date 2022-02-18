@@ -71,8 +71,10 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
         }
 
         $this->replaceNodes($replaceableNodes);
+        /** @var string $html */
+        $html = $this->domDocument->saveHTML();
 
-        return $this->getHtmlFromDomDocumentSaving($this->domDocument->saveHTML());
+        return $this->getHtmlFromDomDocumentSaving($html);
     }
 
     /**
@@ -105,6 +107,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
     {
         $replacements = [];
         $domXpath = $this->createDOMXPath();
+        /** @var iterable $widgets */
         $widgets = $domXpath->query($this->contentGuiConfig->getWidgetXpathQuery());
 
         foreach ($widgets as $widget) {

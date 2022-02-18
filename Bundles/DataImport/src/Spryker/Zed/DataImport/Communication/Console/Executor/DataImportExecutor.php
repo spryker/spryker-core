@@ -106,9 +106,11 @@ class DataImportExecutor implements DataImportExecutorInterface
     protected function buildDataImportConfiguration(InputInterface $input, ?string $importerType): DataImporterConfigurationTransfer
     {
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
+        /** @var string|null $importGroup */
+        $importGroup = $input->getOption(DataImportConsole::OPTION_IMPORT_GROUP);
         $dataImporterConfigurationTransfer
             ->setImportType($importerType)
-            ->setImportGroup($input->getOption(DataImportConsole::OPTION_IMPORT_GROUP))
+            ->setImportGroup($importGroup)
             ->setThrowException(false);
 
         if ($input->hasParameterOption('--' . DataImportConsole::OPTION_THROW_EXCEPTION) || $input->hasParameterOption('-' . DataImportConsole::OPTION_THROW_EXCEPTION_SHORT)) {
@@ -128,14 +130,29 @@ class DataImportExecutor implements DataImportExecutorInterface
     protected function buildReaderConfiguration(InputInterface $input)
     {
         $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
+        /** @var string|null $fileName */
+        $fileName = $input->getOption(DataImportConsole::OPTION_FILE_NAME);
+        /** @var int|null $offset */
+        $offset = $input->getOption(DataImportConsole::OPTION_OFFSET);
+        /** @var int|null $limit */
+        $limit = $input->getOption(DataImportConsole::OPTION_LIMIT);
+        /** @var string|null $csvDelimiter */
+        $csvDelimiter = $input->getOption(DataImportConsole::OPTION_CSV_DELIMITER);
+        /** @var string|null $csvEnclosure */
+        $csvEnclosure = $input->getOption(DataImportConsole::OPTION_CSV_ENCLOSURE);
+        /** @var string|null $csvEscape */
+        $csvEscape = $input->getOption(DataImportConsole::OPTION_CSV_ESCAPE);
+        /** @var bool|null $csvHasHeader */
+        $csvHasHeader = $input->getOption(DataImportConsole::OPTION_CSV_HAS_HEADER);
+
         $dataImporterReaderConfiguration
-            ->setFileName($input->getOption(DataImportConsole::OPTION_FILE_NAME))
-            ->setOffset($input->getOption(DataImportConsole::OPTION_OFFSET))
-            ->setLimit($input->getOption(DataImportConsole::OPTION_LIMIT))
-            ->setCsvDelimiter($input->getOption(DataImportConsole::OPTION_CSV_DELIMITER))
-            ->setCsvEnclosure($input->getOption(DataImportConsole::OPTION_CSV_ENCLOSURE))
-            ->setCsvEscape($input->getOption(DataImportConsole::OPTION_CSV_ESCAPE))
-            ->setCsvHasHeader($input->getOption(DataImportConsole::OPTION_CSV_HAS_HEADER));
+            ->setFileName($fileName)
+            ->setOffset($offset)
+            ->setLimit($limit)
+            ->setCsvDelimiter($csvDelimiter)
+            ->setCsvEnclosure($csvEnclosure)
+            ->setCsvEscape($csvEscape)
+            ->setCsvHasHeader($csvHasHeader);
 
         return $dataImporterReaderConfiguration;
     }

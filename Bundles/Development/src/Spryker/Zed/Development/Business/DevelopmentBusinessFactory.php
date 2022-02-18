@@ -1241,7 +1241,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $treeFilter->addFilter($this->createDependencyTreeBundleToViewFilter($bundleToView));
         }
 
-        $composerLock = json_decode(file_get_contents(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.lock'), true);
+        /** @var string $composerContent */
+        $composerContent = file_get_contents(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'composer.lock');
+        $composerLock = json_decode($composerContent, true);
         $packageVersionHydrator = new PackageVersionHydrator(array_merge($composerLock['packages'], $composerLock['packages-dev']));
 
         $treeHydrator = new DependencyHydrator();
@@ -1468,8 +1470,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function getEngineBundleList()
     {
-        $bundleList = json_decode(file_get_contents($this->getConfig()->getPathToBundleConfig()), true);
+        /** @var string $bundleContent */
+        $bundleContent = file_get_contents($this->getConfig()->getPathToBundleConfig());
+        $bundleList = json_decode($bundleContent, true);
 
+        /** @phpstan-var array<string> */
         return array_keys($bundleList);
     }
 

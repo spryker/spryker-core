@@ -104,6 +104,7 @@ class CmsRedirectTable extends AbstractTable
      */
     protected function getUrlCollection(TableConfiguration $config)
     {
+        /** @phpstan-var array<\Orm\Zed\Url\Persistence\SpyUrl> */
         return $this->runQuery($this->urlQuery, $config, true);
     }
 

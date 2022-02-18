@@ -44,6 +44,7 @@ class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterf
      */
     public function execute(DataSetInterface $dataSet)
     {
+        /** @var \Orm\Zed\Cms\Persistence\SpyCmsTemplate $templateEntity */
         $templateEntity = SpyCmsTemplateQuery::create()
             ->findOneByTemplateName($dataSet[CmsPageDataSet::KEY_TEMPLATE_NAME]);
 

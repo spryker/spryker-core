@@ -19,7 +19,7 @@ use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositor
 class CompanyUserCreator implements CompanyUserCreatorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface|\Spryker\Zed\Kernel\Persistence\AbstractRepository
+     * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
     protected $repository;
 

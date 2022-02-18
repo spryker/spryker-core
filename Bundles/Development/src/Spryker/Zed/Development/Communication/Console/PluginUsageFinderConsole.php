@@ -96,6 +96,7 @@ class PluginUsageFinderConsole extends Console
         }
 
         $moduleFilterTransfer = new ModuleFilterTransfer();
+        /** @var string $moduleArgument */
         $moduleArgument = $this->input->getArgument(static::ARGUMENT_MODULE);
 
         if (strpos($moduleArgument, '.') === false) {

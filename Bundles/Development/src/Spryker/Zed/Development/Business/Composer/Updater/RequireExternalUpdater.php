@@ -84,7 +84,9 @@ class RequireExternalUpdater implements UpdaterInterface
                 continue;
             }
             $filter = new CamelCaseToDash();
-            $dependentModule = strtolower($filter->filter($dependentModule));
+            /** @var string $camelCasedDependentModule */
+            $camelCasedDependentModule = $filter->filter($dependentModule);
+            $dependentModule = strtolower($camelCasedDependentModule);
 
             $composerJson[static::KEY_REQUIRE][$dependentModule] = static::RELEASE_OPERATOR . $composerRequireVersion;
         }
@@ -103,7 +105,10 @@ class RequireExternalUpdater implements UpdaterInterface
         $moduleName = array_pop($nameParts);
         $filter = new DashToCamelCase();
 
-        return (string)$filter->filter($moduleName);
+        /** @var string $camelCasedModuleName */
+        $camelCasedModuleName = $filter->filter($moduleName);
+
+        return (string)$camelCasedModuleName;
     }
 
     /**

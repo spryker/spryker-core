@@ -60,7 +60,10 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
      */
     public function read($key, $type = '')
     {
-        return $this->getIndex()->getDocument($key);
+        /** @var \Spryker\Zed\Collector\Business\Index\IndexAdapterInterface $index */
+        $index = $this->getIndex();
+
+        return $index->getDocument($key);
     }
 
     /**

@@ -32,6 +32,7 @@ class PackageNameHydrator implements DependencyHydratorInterface
     {
         try {
             $reflection = new ReflectionClass($dependency[DependencyTree::META_FOREIGN_CLASS_NAME]);
+            /** @var string $filePath */
             $filePath = $reflection->getFileName();
 
             $this->cleanAutoloader();
@@ -47,7 +48,9 @@ class PackageNameHydrator implements DependencyHydratorInterface
 
                 $composerPath = $path . 'composer.json';
                 if (file_exists($composerPath)) {
-                    $composerConfig = json_decode(file_get_contents($composerPath));
+                    /** @var string $composerConfigContent */
+                    $composerConfigContent = file_get_contents($composerPath);
+                    $composerConfig = json_decode($composerConfigContent);
 
                     return $composerConfig->name;
                 }
@@ -65,6 +68,7 @@ class PackageNameHydrator implements DependencyHydratorInterface
      */
     private function cleanAutoloader()
     {
+        /** @var iterable $autoloadFunctions */
         $autoloadFunctions = spl_autoload_functions();
         $codeSnifferAutoloadFunction = false;
 

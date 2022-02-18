@@ -128,7 +128,7 @@ class ShortVariable extends PHPMDShortVariable
      */
     protected function isChildOf(AbstractNode $node, $type)
     {
-        /** @var object|null $parent */
+        /** @var \PHPMD\Node\ASTNode|null $parent */
         $parent = $node->getParent();
         while (is_object($parent)) {
             if ($parent->isInstanceOf($type)) {

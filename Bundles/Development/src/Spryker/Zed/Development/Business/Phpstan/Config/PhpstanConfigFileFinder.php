@@ -57,6 +57,7 @@ class PhpstanConfigFileFinder implements PhpstanConfigFileFinderInterface
 
         $finderAsArray = iterator_to_array($this->finder, false);
 
+        /** @phpstan-var \SplFileInfo */
         return reset($finderAsArray);
     }
 

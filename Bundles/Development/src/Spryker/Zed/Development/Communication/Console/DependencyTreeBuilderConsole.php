@@ -68,6 +68,7 @@ class DependencyTreeBuilderConsole extends Console
         $module = '*';
 
         if ($this->input->getOption(static::OPTION_MODULE)) {
+            /** @var string $module */
             $module = $this->input->getOption(static::OPTION_MODULE);
         }
 

@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Method .+Type::addDocuments\(\) invoked with 2 parameters, 1 required.#'
@@ -20,4 +20,9 @@ parameters:
         - { message: '#Return typehint of method Spryker\\Zed\\Collector\\Business\\Exporter\\Writer\\Search\\ElasticsearchMarkerWriter::getMapping\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php' }
         - '#Method .+\(\) has invalid return type Elastica\\Type\\Mapping.#'
         - '#Method .+TypeAwareIndexAdapter::getType\(\) has invalid return type Elastica\\Type.#'
+        - '#Call to an undefined method .+IndexAdapterInterface::updateDocuments\(\).#'
+        - '#Call to an undefined method .+IndexAdapterInterface::deleteDocuments\(\).#'
+        - '#Call to an undefined method .+IndexAdapterInterface::refresh\(\).#'
+        - '#Call to an undefined method .+IndexAdapterInterface::flush\(\).#'
+        - '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, .+ given.#'
     reportUnmatchedIgnoredErrors: false

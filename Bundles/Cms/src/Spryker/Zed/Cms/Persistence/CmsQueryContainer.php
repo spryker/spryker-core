@@ -486,6 +486,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->endUse()
             ->endUse();
 
+        /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery */
         return $query;
     }
 
@@ -558,6 +559,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryPageWithTemplatesAndUrlByIdPage(int $idCmsPage): SpyCmsPageQuery
     {
+        /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->queryPages()
             ->filterByIdCmsPage($idCmsPage)
             ->leftJoinCmsTemplate()
@@ -625,6 +627,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, static::LABEL)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::VALUE);
 
+        /** @phpstan-var \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery */
         return $query;
     }
 
@@ -658,6 +661,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryNodeByCategoryName(string $categoryName, int $idLocale): SpyCategoryNodeQuery
     {
+        /** @phpstan-var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery */
         return $this->getCategoryQueryContainer()
             ->queryCategoryNode($idLocale)
             ->useCategoryQuery()
@@ -784,6 +788,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryCmsPageWithAllRelationsByIdPage(int $idPage): SpyCmsPageQuery
     {
+        /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->getFactory()->createCmsPageQuery()
             ->filterByIdCmsPage($idPage)
             ->innerJoinCmsTemplate(static::ALIAS_CMS_PAGE_TEMPLATE)

@@ -76,7 +76,9 @@ class GlueAnnotationAnalyzer implements GlueAnnotationAnalyzerInterface
         $pathAnnotationsTransfer = new PathAnnotationsTransfer();
         $parameters = [];
         foreach ($glueControllerFiles as $file) {
-            $tokens = token_get_all(file_get_contents($file));
+            /** @var string $rawFileInput */
+            $rawFileInput = file_get_contents($file);
+            $tokens = token_get_all($rawFileInput);
             $parameters[] = $this->parsePhpTokens($tokens);
         }
 

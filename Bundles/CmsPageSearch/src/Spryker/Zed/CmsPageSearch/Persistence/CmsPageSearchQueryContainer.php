@@ -45,6 +45,7 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
      */
     public function queryCmsPageVersionByIds(array $cmsPageIds)
     {
+        /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->getFactory()
             ->getCmsQueryContainer()
             ->queryPages()

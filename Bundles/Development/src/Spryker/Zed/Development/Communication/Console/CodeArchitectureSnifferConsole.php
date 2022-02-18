@@ -111,6 +111,7 @@ class CodeArchitectureSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var string $module */
         $module = $this->input->getOption(static::OPTION_MODULE);
         $isCore = strpos($module, '.') !== false;
         $message = sprintf('Run Architecture Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
@@ -120,6 +121,7 @@ class CodeArchitectureSnifferConsole extends Console
             $message .= ' in ' . $module . ' module';
         }
 
+        /** @var string|null $path */
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
 
         if ($path) {
@@ -398,6 +400,7 @@ class CodeArchitectureSnifferConsole extends Console
     protected function normalizeModuleName($module)
     {
         $filter = new UnderscoreToCamelCase();
+        /** @var string $normalized */
         $normalized = $filter->filter(str_replace('-', '_', $module));
         $normalized = ucfirst($normalized);
 

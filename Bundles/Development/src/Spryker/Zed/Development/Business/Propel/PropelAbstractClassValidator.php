@@ -275,6 +275,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
         if ($this->hasNamespaceInSchema($simpleXmlElement)) {
             $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
 
+            /** @phpstan-var array<\SimpleXMLElement> */
             return $simpleXmlElement->xpath('//s:table');
         }
 

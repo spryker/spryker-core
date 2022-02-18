@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapper::mapCompanyUserEntityToCompanyUserTransfer has wrong name $companyUserEntity, expecting $companyUser as defined by Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapperInterface::mapCompanyUserEntityToCompanyUserTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/Mapper/CompanyUserMapper.php",
+            "snippet": "        SpyCompanyUser $companyUserEntity",
+            "selected_text": "$companyUserEntity",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -44,7 +57,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserRepositoryInterface::getCompanyUserById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
-            "snippet": "                $companyUserTransfer->getIdCompanyUser()",
+            "snippet": "                $companyUserTransfer->getIdCompanyUser(),",
             "selected_text": "$companyUserTransfer->getIdCompanyUser()",
             "error_level": 3,
             "shortcode": 78
@@ -159,6 +172,18 @@
         },
         {
             "severity": "info",
+            "line_from": 300,
+            "line_to": 300,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CompanyUser\\Business\\Model\\CompanyUser::addErrorsToResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\CustomerErrorTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CustomerErrorTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
+            "snippet": "            $customerResponseTransfer->getErrors(),",
+            "selected_text": "$customerResponseTransfer->getErrors()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 314,
             "line_to": 314,
             "type": "PossiblyNullReference",
@@ -200,7 +225,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
-            "snippet": "                    ->getIdCustomer()",
+            "snippet": "                    ->getIdCustomer(),",
             "selected_text": "getIdCustomer",
             "error_level": 3,
             "shortcode": 83
@@ -212,10 +237,22 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getValue on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
-            "snippet": "                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue())",
+            "snippet": "                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue()),",
             "selected_text": "getValue",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 347,
+            "line_to": 347,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CompanyUser\\Business\\Model\\CompanyUser::addErrorsToResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\CustomerErrorTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CustomerErrorTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
+            "snippet": "            $customerResponseTransfer->getErrors(),",
+            "selected_text": "$customerResponseTransfer->getErrors()",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -267,6 +304,18 @@
         },
         {
             "severity": "info",
+            "line_from": 370,
+            "line_to": 370,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Business\\Model\\CompanyUser::addMessagesToCompanyResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\ResponseMessageTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ResponseMessageTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
+            "snippet": "        $this->addMessagesToCompanyResponse($companyUserResponseTransfer->getMessages(), $companyResponseTransfer);",
+            "selected_text": "$companyUserResponseTransfer->getMessages()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 383,
             "line_to": 383,
             "type": "PossiblyNullArgument",
@@ -276,30 +325,6 @@
             "selected_text": "$companyUserTransfer->getUuid()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 392,
-            "line_to": 392,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $messages has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ResponseMessageTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[] $messages",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 410,
-            "line_to": 410,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $errors has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CustomerErrorTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Business/Model/CompanyUser.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\CustomerErrorTransfer[] $errors",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CustomerErrorTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -342,10 +367,10 @@
             "line_from": 32,
             "line_to": 32,
             "type": "PossiblyNullReference",
-            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "message": "Cannot call method getUuid on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Communication/Plugin/Customer/CompanyUserReloadCustomerTransferExpanderPlugin.php",
-            "snippet": "        if (!$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {",
-            "selected_text": "getIdCompanyUser",
+            "snippet": "        if (!$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getUuid()) {",
+            "selected_text": "getUuid",
             "error_level": 3,
             "shortcode": 83
         },
@@ -353,42 +378,30 @@
             "severity": "info",
             "line_from": 36,
             "line_to": 36,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getIdCompanyUser on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Communication/Plugin/Customer/CompanyUserReloadCustomerTransferExpanderPlugin.php",
-            "snippet": "        $idCompanyUser = $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();",
-            "selected_text": "getIdCompanyUser",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Business\\CompanyUserFacadeInterface::getCompanyUserById cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Business\\CompanyUserFacadeInterface::findActiveCompanyUserByUuid cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Communication/Plugin/Customer/CompanyUserReloadCustomerTransferExpanderPlugin.php",
-            "snippet": "        $companyUserTransfer = $this->getFacade()->getCompanyUserById($idCompanyUser);",
-            "selected_text": "$idCompanyUser",
+            "snippet": "        $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByUuid($customerTransfer->getCompanyUserTransfer());",
+            "selected_text": "$customerTransfer->getCompanyUserTransfer()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 13,
-            "line_to": 17,
+            "line_from": 15,
+            "line_to": 15,
             "type": "MoreSpecificImplementedParamType",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserEntityManager::save has the more specific type 'Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer', expecting 'Spryker\\Shared\\Kernel\\Transfer\\EntityTransferInterface' as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserEntityManager.php",
-            "snippet": "/**\n * @method \\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)\n */\nclass CompanyUserEntityManager extends AbstractEntityManager implements CompanyUserEntityManagerInterface",
-            "selected_text": "/**\n * @method \\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)\n */\nc",
+            "snippet": "/**\n * @method \\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)\n */",
+            "selected_text": "\\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()",
             "error_level": 5,
             "shortcode": 140
         },
         {
             "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 113,
+            "line_to": 113,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapperInterface::mapCompanyUserCollection expects array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
@@ -399,32 +412,8 @@
         },
         {
             "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserRepository::applyFilters expects Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery, possibly different type Orm\\Zed\\Comment\\Persistence\\SpyCommentQuery|Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUserQuery|Orm\\Zed\\CustomerGroup\\Persistence\\SpyCustomerGroupToCustomerQuery|Orm\\Zed\\CustomerNote\\Persistence\\SpyCustomerNoteQuery|Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddressQuery|Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriberQuery|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermissionQuery|Orm\\Zed\\User\\Persistence\\SpyUserQuery|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistQuery provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
-            "snippet": "        $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);",
-            "selected_text": "$queryCompanyUser",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 185,
-            "line_to": 185,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 258,
-            "line_to": 258,
+            "line_from": 262,
+            "line_to": 262,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
@@ -435,8 +424,8 @@
         },
         {
             "severity": "info",
-            "line_from": 258,
-            "line_to": 258,
+            "line_from": 262,
+            "line_to": 262,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
@@ -447,20 +436,8 @@
         },
         {
             "severity": "info",
-            "line_from": 420,
-            "line_to": 420,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Comment\\Persistence\\SpyComment|Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|Orm\\Zed\\CustomerGroup\\Persistence\\SpyCustomerGroupToCustomer|Orm\\Zed\\CustomerNote\\Persistence\\SpyCustomerNote|Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddress|Orm\\Zed\\Locale\\Persistence\\SpyLocale|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriber|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\User\\Persistence\\SpyUser|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
-            "snippet": "        return $query->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 433,
-            "line_to": 433,
+            "line_from": 437,
+            "line_to": 437,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
@@ -471,8 +448,8 @@
         },
         {
             "severity": "info",
-            "line_from": 449,
-            "line_to": 449,
+            "line_from": 453,
+            "line_to": 453,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\Customer\\Persistence\\SpyCustomerAddressQuery::limit cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
@@ -483,8 +460,8 @@
         },
         {
             "severity": "info",
-            "line_from": 456,
-            "line_to": 456,
+            "line_from": 460,
+            "line_to": 460,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapperInterface::mapCompanyUserCollection expects array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",

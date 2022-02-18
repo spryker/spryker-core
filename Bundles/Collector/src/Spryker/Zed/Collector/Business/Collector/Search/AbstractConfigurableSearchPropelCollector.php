@@ -78,6 +78,7 @@ abstract class AbstractConfigurableSearchPropelCollector extends AbstractSearchP
             return $storeReader;
         }
 
+        /** @var \Spryker\Zed\Collector\Business\Exporter\Reader\Search\ConfigurableSearchReaderInterface $configurableSearchReader */
         $configurableSearchReader = $this->cloneReader($storeReader);
         $configurableSearchReader->setSearchCollectorConfiguration($this->getCollectorConfiguration());
 

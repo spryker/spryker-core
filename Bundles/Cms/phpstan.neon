@@ -1,4 +1,13 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method Orm\\.+Redirect::getFkResourceRedirect\(\).#'
+        - '#Call to an undefined method Orm\\.+Redirect::getUrl\(\).#'
+        - '#Call to an undefined method Orm\\.+Redirect::getToUrl\(\).#'
+        - '#Call to an undefined method Orm\\.+Redirect::getStatus\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::innerJoinCmsTemplate\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::useSpyUrlQuery\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::useSpyCmsPageLocalizedAttributesQuery\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::useSpyCmsPageStoreQuery\(\).#'

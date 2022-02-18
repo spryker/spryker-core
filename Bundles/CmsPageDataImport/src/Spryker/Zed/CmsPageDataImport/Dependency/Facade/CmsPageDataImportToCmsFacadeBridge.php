@@ -167,6 +167,7 @@ class CmsPageDataImportToCmsFacadeBridge implements CmsPageDataImportToCmsFacade
      */
     public function findLatestCmsVersionByIdCmsPage(int $idCmsPage): CmsVersionTransfer
     {
+        /** @phpstan-var \Generated\Shared\Transfer\CmsVersionTransfer */
         return $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);
     }
 
@@ -188,6 +189,7 @@ class CmsPageDataImportToCmsFacadeBridge implements CmsPageDataImportToCmsFacade
      */
     public function findCmsVersionByIdCmsPageAndVersion(int $idCmsPage, int $version): CmsVersionTransfer
     {
+        /** @phpstan-var \Generated\Shared\Transfer\CmsVersionTransfer */
         return $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
     }
 

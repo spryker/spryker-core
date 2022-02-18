@@ -61,6 +61,7 @@ class AssignmentCustomerQueryBuilder implements AssignmentCustomerQueryBuilderIn
                     ->filterByFkCustomerGroup($idCustomerGroup)
                 ->endUse();
 
+        /** @phpstan-var \Orm\Zed\Customer\Persistence\SpyCustomerQuery */
         return $query;
     }
 }

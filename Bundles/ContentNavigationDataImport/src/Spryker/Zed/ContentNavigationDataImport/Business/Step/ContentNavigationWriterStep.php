@@ -96,9 +96,9 @@ class ContentNavigationWriterStep extends PublishAwareStep implements DataImport
                 ->filterByFkContent($idContentNavigationTerm)
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
-            $localizedContentNavigationEntity->setParameters(
-                $this->getEncodedParameters($localizedNavigationTerm),
-            );
+            /** @var string $parameters */
+            $parameters = $this->getEncodedParameters($localizedNavigationTerm);
+            $localizedContentNavigationEntity->setParameters($parameters);
 
             $localizedContentNavigationEntity->save();
         }

@@ -48,6 +48,7 @@ class Helper
         } else {
             throw new LogicException('Cannot parse destination');
         }
+        /** @phpstan-var string $controllerNamespaceName */
         [$namespace, $application, $bundle, $layer, $controllerName] = explode('\\', $controllerNamespaceName);
 
         $bundle = str_replace(APPLICATION_CODE_BUCKET, '', $bundle);

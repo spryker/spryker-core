@@ -51,8 +51,10 @@ class CmsPageUrlResolver implements CmsPageUrlResolverInterface
             return null;
         }
 
+        /** @var array<int> $cmsPageIds */
+        $cmsPageIds = [$urlStorageTransfer->getFkResourcePage()];
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByIds(
-            [$urlStorageTransfer->getFkResourcePage()],
+            $cmsPageIds,
             $localeName,
             $this->cmsStoreClient->getCurrentStore()->getName(),
         );

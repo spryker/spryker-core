@@ -1,3 +1,5 @@
 parameters:
-    level: 6
+    level: 8
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Parameter \#2 \$size of function array_chunk expects int<1, max>, int given.#'

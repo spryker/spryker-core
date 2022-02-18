@@ -71,6 +71,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      */
     public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation(int $idCmsBlock): SpyCmsBlockQuery
     {
+        /** @phpstan-var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery */
         return $this->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
             ->leftJoinWithSpyCmsBlockStore()
             ->useSpyCmsBlockStoreQuery(null, Criteria::LEFT_JOIN)
@@ -246,6 +247,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      */
     public function queryCmsBlockWithStoreRelationByFkCmsBlock(int $idCmsBlock): SpyCmsBlockQuery
     {
+        /** @phpstan-var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery */
         return $this
             ->queryCmsBlock()
             ->filterByIdCmsBlock($idCmsBlock)

@@ -245,6 +245,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     {
         $transferClassNameExploded = $this->getTransferClassNameExploded($transferClassName);
 
+        /** @phpstan-var string */
         return end($transferClassNameExploded);
     }
 

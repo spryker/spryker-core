@@ -69,6 +69,7 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
      */
     public function queryCustomerGroupByFkCustomer($idCustomer)
     {
+        /** @phpstan-var \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery */
         return $this->getFactory()
             ->createCustomerGroupQuery()
             ->useSpyCustomerGroupToCustomerQuery()

@@ -138,8 +138,10 @@ class ExternalDependency extends AbstractDependencyFinder
             if (strpos($className, $namespace) !== false) {
                 $foreignBundle = substr($internalComposerBundleName, 8);
                 $filter = new SeparatorToCamelCase('-');
+                /** @var string $camelCasedForeignBundle */
+                $camelCasedForeignBundle = $filter->filter($foreignBundle);
 
-                return ucfirst($filter->filter($foreignBundle));
+                return ucfirst($camelCasedForeignBundle);
             }
         }
 
@@ -166,6 +168,7 @@ class ExternalDependency extends AbstractDependencyFinder
      */
     private function cleanAutoloader()
     {
+        /** @var iterable $autoloadFunctions */
         $autoloadFunctions = spl_autoload_functions();
         $codeSnifferAutoloadFunction = false;
 

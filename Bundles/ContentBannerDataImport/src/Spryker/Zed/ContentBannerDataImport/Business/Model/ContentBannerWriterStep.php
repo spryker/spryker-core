@@ -96,9 +96,9 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
                 ->filterByFkContent($idContentBannerTerm)
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
-            $localizedContentBannerEntity->setParameters(
-                $this->getEncodedParameters($localizedBannerTerm),
-            );
+            /** @var string $parameters */
+            $parameters = $this->getEncodedParameters($localizedBannerTerm);
+            $localizedContentBannerEntity->setParameters($parameters);
 
             $localizedContentBannerEntity->save();
         }

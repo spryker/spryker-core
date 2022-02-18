@@ -142,7 +142,7 @@ class ViewController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $blockUrl
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|string
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|string|false
      */
     protected function handleSubRequest(Request $request, $blockUrl)
     {

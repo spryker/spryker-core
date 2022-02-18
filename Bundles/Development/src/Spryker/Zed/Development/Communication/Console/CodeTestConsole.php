@@ -75,6 +75,7 @@ class CodeTestConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string|null $module */
         $module = $this->input->getOption(static::OPTION_MODULE);
         $this->displayRunInfo($input, $module);
 

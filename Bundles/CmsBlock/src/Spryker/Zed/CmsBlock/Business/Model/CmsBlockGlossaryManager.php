@@ -130,6 +130,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      */
     protected function readTemplateContents(string $templateFile): string
     {
+        /** @phpstan-var string */
         return file_get_contents($templateFile);
     }
 

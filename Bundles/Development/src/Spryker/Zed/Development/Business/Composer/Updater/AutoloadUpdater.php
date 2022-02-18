@@ -312,7 +312,9 @@ class AutoloadUpdater implements UpdaterInterface
 
         $directories = [];
         foreach ($files as $file) {
-            $directoryName = dirname(str_replace('//', '/', $file));
+            /** @var string $name */
+            $name = str_replace('//', '/', $file);
+            $directoryName = dirname($name);
             if (!in_array($directoryName, $directories, true)) {
                 $directories[] = $directoryName;
             }

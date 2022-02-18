@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery' for Spryker\\Zed\\CmsStorage\\Persistence\\CmsStorageQueryContainer::queryCmsPageVersionByIds is incorrect, got 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Persistence/CmsStorageQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery",
-            "selected_text": "\\Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 49,
-            "line_to": 60,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery' does not match the declared return type 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery' for Spryker\\Zed\\CmsStorage\\Persistence\\CmsStorageQueryContainer::queryCmsPageVersionByIds",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Persistence/CmsStorageQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->getCmsQueryContainer()\n            ->queryPages()\n            ->filterByIdCmsPage_In($cmsPageIds)\n            ->joinWithSpyUrl()\n            ->joinWith('SpyUrl.SpyLocale')\n            ->joinWithSpyCmsVersion()\n            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))\n            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)\n            ->useSpyCmsPageStoreQuery()\n                ->joinWithSpyStore()\n            ->endUse();",
-            "selected_text": "$this->getFactory()\n            ->getCmsQueryContainer()\n            ->queryPages()\n            ->filterByIdCmsPage_In($cmsPageIds)\n            ->joinWithSpyUrl()\n            ->joinWith('SpyUrl.SpyLocale')\n            ->joinWithSpyCmsVersion()\n            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))\n            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)\n            ->useSpyCmsPageStoreQuery()\n                ->joinWithSpyStore()\n            ->endUse()",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -40,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 94,
+            "line_to": 94,
             "type": "MoreSpecificImplementedParamType",
             "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::publish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriterInterface::publish",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
@@ -52,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 107,
+            "line_to": 107,
             "type": "MoreSpecificImplementedParamType",
             "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::unpublish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriterInterface::unpublish",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
@@ -64,104 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 176,
-            "line_to": 176,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Cms\\Persistence\\SpyCmsPage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "        return $this->queryContainer->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 189,
-            "line_to": 189,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $cmsPageStorageEntitiesByIdAndLocale[int|mixed][mixed|string][mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "            $cmsPageStorageEntitiesByIdAndLocale[$entity->getFkCmsPage()][$entity->getLocale()][$entity->getStore()] = $entity;",
-            "selected_text": "$cmsPageStorageEntitiesByIdAndLocale[$entity->getFkCmsPage()][$entity->getLocale()]",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 221,
-            "line_to": 221,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "            ->getData(), $localeName);",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Cms\\Persistence\\SpyCmsVersion> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "            ->extractCmsVersionDataTransfer($cmsPageEntity->getSpyCmsVersions()->getFirst()->getData());",
-            "selected_text": "getFirst",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 231,
-            "line_to": 231,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::convertDateTimeToString expects DateTime|null, possibly different type DateTime|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "        $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));",
-            "selected_text": "$cmsPageEntity->getValidFrom()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 232,
-            "line_to": 232,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::convertDateTimeToString expects DateTime|null, possibly different type DateTime|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "        $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));",
-            "selected_text": "$cmsPageEntity->getValidTo()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 337,
-            "line_to": 337,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $localeNameMap using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "            $localeNames = $localeNameMap[$storeName];",
-            "selected_text": "$localeNameMap",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 351,
-            "line_to": 351,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $cmsPageStorageEntities[$idCmsPage][$localeName] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "                unset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]);",
-            "selected_text": "$cmsPageStorageEntities[$idCmsPage][$localeName]",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 388,
-            "line_to": 388,
+            "line_from": 399,
+            "line_to": 399,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $localeNameMapByStoreName[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
@@ -169,18 +48,6 @@
             "selected_text": "$localeNameMapByStoreName",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Communication\\Plugin\\Event\\CmsEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/CmsEventResourceQueryContainerPlugin.php",
-            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
-            "selected_text": "$ids",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [
@@ -191,15 +58,15 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\CmsStorage\\CmsStorageConfig::isSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/CmsStorageBusinessFactory.php",
-            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "snippet": "            $this->getConfig()->isSendingToQueue(),",
             "selected_text": "isSendingToQueue",
             "error_level": 2,
             "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 85,
+            "line_to": 85,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
@@ -210,8 +77,8 @@
         },
         {
             "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
+            "line_from": 177,
+            "line_to": 177,
             "type": "DeprecatedMethod",
             "message": "The method Orm\\Zed\\CmsStorage\\Persistence\\Base\\SpyCmsPageStorage::setIsSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
@@ -219,6 +86,18 @@
             "selected_text": "setIsSendingToQueue",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 177,
+            "line_to": 177,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
+            "snippet": "        $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
         },
         {
             "severity": "info",

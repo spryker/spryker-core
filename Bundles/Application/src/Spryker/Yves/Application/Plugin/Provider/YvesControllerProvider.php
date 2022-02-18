@@ -190,7 +190,9 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
         $controller->before(function (Request $request) {
             $isJson = (strpos($request->headers->get('Content-Type'), 'application/json') === 0);
             if ($isJson) {
-                $data = json_decode($request->getContent(), true);
+                /** @var string $json */
+                $json = $request->getContent();
+                $data = json_decode($json, true);
                 $request->request->replace(is_array($data) ? $data : []);
             }
         });

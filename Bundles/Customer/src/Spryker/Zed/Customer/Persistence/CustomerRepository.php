@@ -73,6 +73,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      */
     public function findAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
     {
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerAddress|null $addressEntity */
         $addressEntity = $this->getFactory()
             ->createSpyCustomerAddressQuery()
             ->filterByFkCustomer($addressTransfer->getFkCustomer())

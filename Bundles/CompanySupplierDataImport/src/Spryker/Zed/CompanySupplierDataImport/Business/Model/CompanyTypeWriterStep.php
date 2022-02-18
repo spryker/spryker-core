@@ -27,6 +27,7 @@ class CompanyTypeWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
         $companyTypeEntity->save();
 
+        /** @var \Orm\Zed\Company\Persistence\SpyCompany $companyEntity */
         $companyEntity = SpyCompanyQuery::create()
             ->findOneByIdCompany($dataSet[CompanySupplierDataSet::COMPANY_ID]);
         $companyEntity->setFkCompanyType($companyTypeEntity->getIdCompanyType());

@@ -35,6 +35,9 @@ class JsonDependencyTreeReader implements DependencyTreeReaderInterface
             throw new RuntimeException('You need to run "vendor/bin/console dev:dependency:build-tree" before being able to use the dependency tree.');
         }
 
-        return json_decode(file_get_contents($this->pathToJson), true);
+        /** @var string $json */
+        $json = file_get_contents($this->pathToJson);
+
+        return json_decode($json, true);
     }
 }

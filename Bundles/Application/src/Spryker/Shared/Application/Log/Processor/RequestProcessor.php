@@ -109,6 +109,7 @@ class RequestProcessor
             static::REQUEST_PARAMS => $this->getRequestParams(),
         ];
 
+        /** @var \Symfony\Component\HttpFoundation\Request|null $request */
         $request = $this->findRequest((array)$record[static::RECORD_CONTEXT]);
         if ($request && $request->getSession() !== null) {
             $sessionId = $request->getSession()->getId();

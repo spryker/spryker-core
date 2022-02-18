@@ -69,6 +69,7 @@ class GlossaryController extends AbstractController
         $idForm = (int)$request->get(static::ID_FORM);
         $type = CmsConstants::RESOURCE_TYPE_PAGE;
 
+        /** @var \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity */
         $cmsPageEntity = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getLocaleTransfer($cmsPageEntity);
 
@@ -159,6 +160,7 @@ class GlossaryController extends AbstractController
         $placeholderValuePattern = $this->getFactory()->getConfig()->getPlaceholderValuePattern();
 
         if (file_exists($tempFile)) {
+            /** @var string $fileContent */
             $fileContent = file_get_contents($tempFile);
 
             preg_match_all($placeholderPattern, $fileContent, $cmsPlaceholderLine);
@@ -177,13 +179,16 @@ class GlossaryController extends AbstractController
      */
     public function searchAction(Request $request): JsonResponse
     {
+        /** @var string|null $value */
         $value = $request->query->get('value');
+        /** @var string|null $key */
         $key = $request->query->get('key');
         $localeId = $this->castId($request->query->get('localeId'));
 
         $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key, $localeId);
 
         $result = [];
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation $trans */
         foreach ($searchedItems as $trans) {
             $result[] = [
                 'key' => $trans->getLabel(),
@@ -214,6 +219,7 @@ class GlossaryController extends AbstractController
             return $searchedItems;
         }
         if ($key !== null) {
+            /** @var array<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $searchedItems */
             $searchedItems = $this->getQueryContainer()
                 ->queryKeyWithTranslationByKeyAndLocale($key, $localeId)
                 ->limit(static::SEARCH_LIMIT)

@@ -159,11 +159,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     {
         return $this->getFactory()
             ->createCompanyBusinessUnitQuery()
+            ->select(static::COL_CUSTOMER_REFERENCE)
+            ->filterByIdCompanyBusinessUnit_In($companyBusinessUnitIds)
             ->useCompanyUserQuery()
                 ->joinCustomer()
             ->endUse()
-            ->filterByIdCompanyBusinessUnit_In($companyBusinessUnitIds)
-            ->select(static::COL_CUSTOMER_REFERENCE)
             ->find()
             ->toArray();
     }

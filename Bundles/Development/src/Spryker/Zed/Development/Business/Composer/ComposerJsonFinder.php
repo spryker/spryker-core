@@ -50,6 +50,7 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
 
         $finderAsArray = iterator_to_array($currentFinderInstance, false);
 
+        /** @phpstan-var \Symfony\Component\Finder\SplFileInfo|null */
         return reset($finderAsArray);
     }
 

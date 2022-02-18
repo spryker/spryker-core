@@ -69,7 +69,9 @@ class AddController extends AbstractController
     {
         $filePathTransfer = new DatasetFilePathTransfer();
         if ($file instanceof UploadedFile) {
-            $filePathTransfer->setFilePath($file->getRealPath());
+            /** @var string $realPath */
+            $realPath = $file->getRealPath();
+            $filePathTransfer->setFilePath($realPath);
         }
 
         return $filePathTransfer;

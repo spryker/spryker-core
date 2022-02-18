@@ -88,7 +88,9 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var string|null $module */
         $module = $this->input->getOption(static::OPTION_MODULE);
+        /** @var string|null $path */
         $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
 
         $this->info($this->buildMessage($module, $path));
@@ -129,6 +131,7 @@ class CodeStyleSnifferConsole extends Console
     protected function normalizeModuleName($module)
     {
         $filter = new UnderscoreToCamelCase();
+        /** @var string $normalized */
         $normalized = $filter->filter(str_replace('-', '_', $module));
         $normalized = ucfirst($normalized);
 

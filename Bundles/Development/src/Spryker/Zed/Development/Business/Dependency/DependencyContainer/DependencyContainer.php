@@ -136,8 +136,10 @@ class DependencyContainer implements DependencyContainerInterface
         [$organizationName, $moduleName] = explode('/', $composerName);
 
         $filter = new DashToCamelCase();
+        /** @var string $camelCasedModuleName */
+        $camelCasedModuleName = $filter->filter($moduleName);
 
-        return ucfirst($filter->filter($moduleName));
+        return ucfirst($camelCasedModuleName);
     }
 
     /**

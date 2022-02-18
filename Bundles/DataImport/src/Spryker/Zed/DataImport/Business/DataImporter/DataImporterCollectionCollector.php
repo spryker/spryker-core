@@ -50,6 +50,7 @@ class DataImporterCollectionCollector implements DataImporterCollectionCollector
             $dataImporterCollection->addDataImporter($dataImporter);
         }
 
+        /** @phpstan-var \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface */
         return $dataImporterCollection;
     }
 }

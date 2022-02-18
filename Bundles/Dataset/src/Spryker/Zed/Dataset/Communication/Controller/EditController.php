@@ -77,7 +77,9 @@ class EditController extends AbstractController
     {
         if ($file instanceof UploadedFile) {
             $filePathTransfer = new DatasetFilePathTransfer();
-            $filePathTransfer->setFilePath($file->getRealPath());
+            /** @var string $realPath */
+            $realPath = $file->getRealPath();
+            $filePathTransfer->setFilePath($realPath);
             $this->getFacade()->save($datasetTransfer, $filePathTransfer);
 
             return;

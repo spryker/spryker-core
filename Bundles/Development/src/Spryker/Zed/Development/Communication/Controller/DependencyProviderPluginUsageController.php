@@ -73,6 +73,7 @@ class DependencyProviderPluginUsageController extends AbstractController
         $dependencyProviderPluginUsages = $this->getFacade()->getInProjectDependencyProviderUsedPlugins();
 
         $streamCsv = function () use ($dependencyProviderPluginUsages) {
+            /** @var resource $resource */
             $resource = fopen('php://output', 'w');
             $header = ['organization', 'module', 'dependency_provider_class_name', 'plugin_organization', 'plugin_application', 'plugin_module', 'plugin_class_name'];
             fputcsv($resource, $header);

@@ -64,7 +64,7 @@ class GuzzleBodyProcessor
      */
     protected function prepareBody($body)
     {
-        if ($this->isJson($body)) {
+        if (is_string($body) && $this->isJson($body)) {
             $jsonUtil = new Json();
             $body = $jsonUtil->decode($body, true);
         }

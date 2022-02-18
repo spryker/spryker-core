@@ -21,7 +21,9 @@ class EngineBundleFilter implements DependencyFilterInterface
      */
     public function __construct($pathToBundleConfig)
     {
-        $bundleList = json_decode(file_get_contents($pathToBundleConfig), true);
+        /** @var string $bundles */
+        $bundles = file_get_contents($pathToBundleConfig);
+        $bundleList = json_decode($bundles, true);
         $this->filterBundles = array_keys($bundleList);
     }
 

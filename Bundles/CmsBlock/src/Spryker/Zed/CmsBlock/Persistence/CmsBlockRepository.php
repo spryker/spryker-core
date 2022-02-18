@@ -38,6 +38,7 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
      */
     public function findMaxIdCmsBlock(): int
     {
+        /** @var int|null $maxIdCmsBlock */
         $maxIdCmsBlock = $this->getFactory()->createCmsBlockQuery()
             ->orderByIdCmsBlock(Criteria::DESC)
             ->select(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
@@ -75,6 +76,7 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
         string $storeName,
         string $localeName
     ): ?CmsBlockTransfer {
+        /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $cmsBlockStorageQuery */
         $cmsBlockStorageQuery = $this->getFactory()->createCmsBlockQuery()
             ->filterByName($cmsBlockName)
             ->joinWithCmsBlockTemplate()

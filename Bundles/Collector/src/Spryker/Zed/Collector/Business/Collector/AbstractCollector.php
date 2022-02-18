@@ -273,6 +273,7 @@ abstract class AbstractCollector
         $params = [];
         $sql = $deleteQuery->createSelectSql($params);
         $params = $this->getTouchQueryParameters($deleteQuery);
+        /** @var \Propel\Runtime\Connection\StatementInterface $statement */
         $statement = $this->touchQueryContainer->getConnection()->prepare($sql);
 
         $sqlParams = [];

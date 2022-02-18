@@ -110,6 +110,7 @@ class GiftCardBalanceTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customersCollection */
         $customersCollection = $this->runQuery($query, $config, true);
 
         if ($customersCollection->count() < 1) {

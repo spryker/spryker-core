@@ -236,7 +236,9 @@ class ExternalDependencyFinder extends AbstractFileDependencyFinder
     {
         $dependentModule = substr($package, 8);
         $filter = new SeparatorToCamelCase('-');
+        /** @var string $camelCasedDependentModule */
+        $camelCasedDependentModule = $filter->filter($dependentModule);
 
-        return ucfirst($filter->filter($dependentModule));
+        return ucfirst($camelCasedDependentModule);
     }
 }

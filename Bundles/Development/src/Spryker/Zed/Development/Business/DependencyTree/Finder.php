@@ -69,6 +69,7 @@ class Finder
         }
 
         $finder = new SymfonyFinder();
+        /** @phpstan-var array<string> $directories */
         $finder->files()->in($directories);
 
         if ($this->name !== null) {

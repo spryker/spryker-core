@@ -84,8 +84,10 @@ class PhpMdRunner
     protected function convertToCamelCase(string $value): string
     {
         $filter = new UnderscoreToCamelCase();
+        /** @var string $camelCasedValue */
+        $camelCasedValue = $filter->filter($value);
 
-        return ucfirst($filter->filter($value));
+        return ucfirst($camelCasedValue);
     }
 
     /**

@@ -183,18 +183,6 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository::getCompanyUserInvitationByHash does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserInvitation/src/Spryker/Zed/CompanyUserInvitation/Business/Model/PostRegistration/CompanyUserCreator.php",
-            "snippet": "        return $this->repository->getCompanyUserInvitationByHash($companyUserInvitationTransfer);",
-            "selected_text": "getCompanyUserInvitationByHash",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
             "line_from": 43,
             "line_to": 43,
             "type": "PossiblyNullArgument",

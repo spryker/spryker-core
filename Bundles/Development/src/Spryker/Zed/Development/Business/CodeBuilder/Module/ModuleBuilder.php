@@ -113,6 +113,7 @@ class ModuleBuilder
     {
         $moduleDirectory = $this->getDirectoryName($namespace);
 
+        /** @var iterable $moduleDirectories */
         $moduleDirectories = glob($moduleDirectory . '*', GLOB_NOSORT);
 
         $modules = [];
@@ -157,6 +158,7 @@ class ModuleBuilder
      */
     protected function getTemplateContent($templateName)
     {
+        /** @phpstan-var string */
         return file_get_contents(
             __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl',
         );
@@ -205,7 +207,9 @@ class ModuleBuilder
     {
         $filter = new CamelCaseToDash();
 
-        $module = strtolower($filter->filter($module));
+        /** @var string $camelCasedModule */
+        $camelCasedModule = $filter->filter($module);
+        $module = strtolower($camelCasedModule);
 
         return $module;
     }

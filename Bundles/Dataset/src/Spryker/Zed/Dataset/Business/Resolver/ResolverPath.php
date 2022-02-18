@@ -23,7 +23,11 @@ class ResolverPath implements ResolverPathInterface
      */
     public function getFilenameByDatasetName(DatasetFilenameTransfer $datasetFilenameTransfer): DatasetFilenameTransfer
     {
-        $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $datasetFilenameTransfer->requireFilename()->getFilename());
+        /** @var string $filename */
+        $filename = $datasetFilenameTransfer->requireFilename()->getFilename();
+        /** @var string $filename */
+        $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $filename);
+        /** @var string $filename */
         $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
         $filename = preg_replace("/\s+/", ' ', $filename);
         $filename = trim($filename);

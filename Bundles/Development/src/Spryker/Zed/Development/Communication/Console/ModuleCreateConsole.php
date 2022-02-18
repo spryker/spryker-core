@@ -65,6 +65,7 @@ class ModuleCreateConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var string $module */
         $module = $this->input->getArgument(static::ARGUMENT_MODULE);
 
         if ($module !== 'all') {

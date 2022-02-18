@@ -227,6 +227,7 @@ class BridgeBuilder
      */
     protected function getTemplateContent(string $templateName): string
     {
+        /** @phpstan-var string */
         return file_get_contents(
             __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl',
         );
@@ -563,7 +564,9 @@ class BridgeBuilder
             }
             $method = $reflectionClass->getMethod($methodName);
 
-            $docComment = $this->cleanMethodDocBlock($method->getDocComment());
+            /** @var string $docComment */
+            $docComment = $method->getDocComment();
+            $docComment = $this->cleanMethodDocBlock($docComment);
             $methodReturnType = $this->getMethodReturnTypeFromDocComment($docComment);
 
             $returnStatementReplacement = static::FUNCTION_RETURN;

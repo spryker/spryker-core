@@ -98,6 +98,7 @@ class PackageFinder implements PackageFinderInterface
     protected function getComposerJsonAsArray(string $path): array
     {
         $pathToComposerJson = sprintf('%s/composer.json', $path);
+        /** @var string $fileContent */
         $fileContent = file_get_contents($pathToComposerJson);
         $composerJsonAsArray = json_decode($fileContent, true);
 

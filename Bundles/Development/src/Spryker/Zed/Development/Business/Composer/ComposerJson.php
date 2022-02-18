@@ -63,8 +63,10 @@ class ComposerJson implements ComposerJsonInterface
     protected function getComposerJsonAsArray(ModuleTransfer $moduleTransfer): array
     {
         $composerJsonFilePath = $this->getComposerJsonFilePath($moduleTransfer);
+        /** @var string $fileContent */
+        $fileContent = file_get_contents($composerJsonFilePath);
 
-        return json_decode(file_get_contents($composerJsonFilePath), true);
+        return json_decode($fileContent, true);
     }
 
     /**

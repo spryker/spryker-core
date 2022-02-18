@@ -32,6 +32,8 @@ class JsonDependencyTreeWriter implements DependencyTreeWriterInterface
     public function write(array $dependencyTree)
     {
         $filesystem = new Filesystem();
-        $filesystem->dumpFile($this->pathToFile, json_encode($dependencyTree, JSON_PRETTY_PRINT));
+        /** @var string $content */
+        $content = json_encode($dependencyTree, JSON_PRETTY_PRINT);
+        $filesystem->dumpFile($this->pathToFile, $content);
     }
 }

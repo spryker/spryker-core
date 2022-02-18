@@ -83,30 +83,6 @@
             "selected_text": "$searchQuery",
             "error_level": 7,
             "shortcode": 42
-        },
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery' for Spryker\\Zed\\CmsPageSearch\\Persistence\\CmsPageSearchQueryContainer::queryCmsPageVersionByIds is incorrect, got 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Zed/CmsPageSearch/Persistence/CmsPageSearchQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery",
-            "selected_text": "\\Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 48,
-            "line_to": 59,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery' does not match the declared return type 'Orm\\Zed\\Cms\\Persistence\\SpyCmsPageQuery' for Spryker\\Zed\\CmsPageSearch\\Persistence\\CmsPageSearchQueryContainer::queryCmsPageVersionByIds",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Zed/CmsPageSearch/Persistence/CmsPageSearchQueryContainer.php",
-            "snippet": "        return $this->getFactory()\n            ->getCmsQueryContainer()\n            ->queryPages()\n            ->filterByIdCmsPage_In($cmsPageIds)\n            ->joinWithSpyUrl()\n            ->joinWith('SpyUrl.SpyLocale')\n            ->joinWithSpyCmsVersion()\n            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))\n            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)\n            ->useSpyCmsPageStoreQuery()\n                ->joinWithSpyStore()\n            ->endUse();",
-            "selected_text": "$this->getFactory()\n            ->getCmsQueryContainer()\n            ->queryPages()\n            ->filterByIdCmsPage_In($cmsPageIds)\n            ->joinWithSpyUrl()\n            ->joinWith('SpyUrl.SpyLocale')\n            ->joinWithSpyCmsVersion()\n            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))\n            ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)\n            ->useSpyCmsPageStoreQuery()\n                ->joinWithSpyStore()\n            ->endUse()",
-            "error_level": 6,
-            "shortcode": 128
         }
     ],
     "warning": [

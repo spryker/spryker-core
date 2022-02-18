@@ -343,6 +343,7 @@ class ModuleFinder implements ModuleFinderInterface
         if (!is_file($pathToComposerJson)) {
             return [];
         }
+        /** @var string $fileContent */
         $fileContent = file_get_contents($pathToComposerJson);
         $composerJsonAsArray = json_decode($fileContent, true);
 
@@ -369,7 +370,9 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getOrganizationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        /** @var string $realPath */
+        $realPath = $directoryInfo->getRealPath();
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $realPath);
         $vendorPosition = array_search('vendor', $pathFragments);
 
         $organizationName = $pathFragments[$vendorPosition + 1];
@@ -384,7 +387,9 @@ class ModuleFinder implements ModuleFinderInterface
      */
     protected function getApplicationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        /** @var string $realPath */
+        $realPath = $directoryInfo->getRealPath();
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $realPath);
         $vendorPosition = array_search('vendor', $pathFragments);
 
         $applicationName = $pathFragments[$vendorPosition + 2];

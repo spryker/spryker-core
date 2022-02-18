@@ -52,7 +52,9 @@ class ExternalDependencyParser implements ExternalDependencyParserInterface
             return null;
         }
 
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $reflectionClass->getFileName());
+        /** @var string $fileName */
+        $fileName = $reflectionClass->getFileName();
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $fileName);
         $vendorPosition = array_search('vendor', $pathFragments);
 
         if ($vendorPosition === false) {

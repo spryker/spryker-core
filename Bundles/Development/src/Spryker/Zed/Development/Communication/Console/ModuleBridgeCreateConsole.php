@@ -76,9 +76,13 @@ class ModuleBridgeCreateConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var string $module */
         $module = $this->input->getArgument(static::OPTION_MODULE);
+        /** @var string $toModule */
         $toModule = $this->input->getArgument(static::OPTION_TO_MODULE);
-        $methods = explode(',', $this->input->getOption(static::OPTION_METHODS));
+        /** @var string $methods */
+        $methods = $this->input->getOption(static::OPTION_METHODS);
+        $methods = explode(',', $methods);
 
         $message = 'Create bridge in ' . $module;
 

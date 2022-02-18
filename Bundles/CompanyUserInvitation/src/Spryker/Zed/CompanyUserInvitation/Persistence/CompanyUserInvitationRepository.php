@@ -154,17 +154,17 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
         }
 
         if ($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn()) {
-            $queryCompanyUserInvitation->useSpyCompanyUserInvitationStatusQuery()->filterByStatusKey(
-                $companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn(),
-                Criteria::IN,
-            )->endUse();
+            $queryCompanyUserInvitation
+                ->useSpyCompanyUserInvitationStatusQuery()
+                    ->filterByStatusKey_In($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn())
+                ->endUse();
         }
 
         if ($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn()) {
-            $queryCompanyUserInvitation->useSpyCompanyUserInvitationStatusQuery()->filterByStatusKey(
-                $companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn(),
-                Criteria::NOT_IN,
-            )->endUse();
+            $queryCompanyUserInvitation
+                ->useSpyCompanyUserInvitationStatusQuery()
+                    ->filterByStatusKey($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn(), Criteria::NOT_IN)
+                ->endUse();
         }
 
         return $queryCompanyUserInvitation;

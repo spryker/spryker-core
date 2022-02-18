@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "UndefinedMethod",
-            "message": "Method DOMNode::getAttribute does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/HtmlToTwigExpressionsConverter.php",
-            "snippet": "            $twigExpression = $this->domDocument->createTextNode($widget->getAttribute('data-twig-expression'));",
-            "selected_text": "getAttribute",
-            "error_level": 6,
-            "shortcode": 22
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -40,8 +27,20 @@
         },
         {
             "severity": "info",
-            "line_from": 157,
-            "line_to": 157,
+            "line_from": 64,
+            "line_to": 64,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of DOMDocument::loadHTML expects non-empty-string, parent type string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/HtmlToTwigExpressionsConverter.php",
+            "snippet": "            $this->getHtmlForDomDocumentLoading($html),",
+            "selected_text": "$this->getHtmlForDomDocumentLoading($html)",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 171,
+            "line_to": 171,
             "type": "InvalidOperand",
             "message": "Cannot perform a numeric operation with a non-numeric type array-key",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/HtmlToTwigExpressionsConverter.php",
@@ -52,20 +51,20 @@
         },
         {
             "severity": "info",
-            "line_from": 189,
-            "line_to": 189,
+            "line_from": 192,
+            "line_to": 192,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Dependency\\Facade\\ContentGuiToTranslatorFacadeInterface::trans cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
-            "snippet": "                    $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName())",
+            "snippet": "                    $this->translatorFacade->trans($contentWidgetTemplateTransfer->getName()),",
             "selected_text": "$contentWidgetTemplateTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 218,
-            "line_to": 218,
+            "line_from": 221,
+            "line_to": 221,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $replacements[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -76,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 232,
-            "line_to": 232,
+            "line_from": 235,
+            "line_to": 235,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdContent on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -88,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
+            "line_from": 236,
+            "line_to": 236,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -100,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 234,
-            "line_to": 234,
+            "line_from": 237,
+            "line_to": 237,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getContentTypeKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -112,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 235,
-            "line_to": 235,
+            "line_from": 238,
+            "line_to": 238,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Dependency\\Facade\\ContentGuiToTranslatorFacadeInterface::trans cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -124,8 +123,8 @@
         },
         {
             "severity": "info",
-            "line_from": 235,
-            "line_to": 235,
+            "line_from": 238,
+            "line_to": 238,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getContentTypeKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -136,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 236,
-            "line_to": 236,
+            "line_from": 239,
+            "line_to": 239,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -148,8 +147,8 @@
         },
         {
             "severity": "info",
-            "line_from": 238,
-            "line_to": 238,
+            "line_from": 241,
+            "line_to": 241,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdentifier on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -160,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 239,
-            "line_to": 239,
+            "line_from": 242,
+            "line_to": 242,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Business/Converter/TwigExpressionsToHtmlConverter.php",
@@ -172,32 +171,8 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 56,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Communication\\Controller\\CreateContentController::redirectResponse cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Controller/CreateContentController.php",
-            "snippet": "                $request->query->get(\n                    static::PARAM_REDIRECT_URL,\n                    static::URL_REDIRECT_CONTENT_LIST_PAGE\n                )",
-            "selected_text": "$request->query->get(\n                    static::PARAM_REDIRECT_URL,\n                    static::URL_REDIRECT_CONTENT_LIST_PAGE\n                )",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Communication\\Controller\\EditContentController::redirectResponse cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Controller/EditContentController.php",
-            "snippet": "                $request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE)",
-            "selected_text": "$request->query->get(static::PARAM_REDIRECT_URL, static::URL_REDIRECT_CONTENT_LIST_PAGE)",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
+            "line_from": 48,
+            "line_to": 48,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Communication\\ContentGuiCommunicationFactory::createContentByTypeTable cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Controller/ListContentByTypeController.php",
@@ -208,8 +183,8 @@
         },
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
+            "line_from": 74,
+            "line_to": 74,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Communication\\ContentGuiCommunicationFactory::createContentByTypeTable cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Controller/ListContentByTypeController.php",
@@ -217,6 +192,18 @@
             "selected_text": "$contentType",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\ContentGui\\Communication\\Form\\ContentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/ContentForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -232,6 +219,18 @@
         },
         {
             "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ContentGui\\Communication\\Form\\DataProvider\\ContentFormDataProvider::getLocalizedContentList expects ArrayObject<int, Generated\\Shared\\Transfer\\LocalizedContentTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\LocalizedContentTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/DataProvider/ContentFormDataProvider.php",
+            "snippet": "        $localizedContents = $this->getLocalizedContentList($contentTransfer->getLocalizedContents());",
+            "selected_text": "$contentTransfer->getLocalizedContents()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 111,
             "line_to": 111,
             "type": "PossiblyNullArrayOffset",
@@ -244,22 +243,10 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $localizedContents has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\LocalizedContentTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/DataProvider/ContentFormDataProvider.php",
-            "snippet": "         * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\LocalizedContentTransfer[] $localizedContents",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\LocalizedContentTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
             "line_from": 131,
             "line_to": 131,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $indexLocalizedContents[int|mixed|null] using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $indexLocalizedContents[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/DataProvider/ContentFormDataProvider.php",
             "snippet": "            $indexLocalizedContents[$localizedContent->getFkLocale()] = $localizedContent;",
             "selected_text": "$indexLocalizedContents",
@@ -280,8 +267,20 @@
         },
         {
             "severity": "info",
-            "line_from": 130,
-            "line_to": 130,
+            "line_from": 71,
+            "line_to": 71,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\ContentGui\\Communication\\Form\\LocalizedContentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/LocalizedContentForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Table/ContentByTypeTable.php",

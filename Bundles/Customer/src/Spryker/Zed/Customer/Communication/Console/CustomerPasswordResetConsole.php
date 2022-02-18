@@ -62,7 +62,9 @@ class CustomerPasswordResetConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($input->getOption(static::OPTION_NO_TOKEN));
+        /** @var bool $noToken */
+        $noToken = $input->getOption(static::OPTION_NO_TOKEN);
+        $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($noToken);
         $customerCollection = $this->getFacade()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
 
         if (!$input->getOption(static::OPTION_FORCE)) {

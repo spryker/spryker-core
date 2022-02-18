@@ -43,6 +43,7 @@ class CreateContentController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        /** @var string|null $termKey */
         $termKey = $request->query->get(static::PARAM_TERM_KEY);
         if (!$termKey) {
             return $this->redirectResponse(static::URL_REDIRECT_CONTENT_LIST_PAGE);

@@ -39,8 +39,11 @@ class ListContentByTypeController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
+        /** @var string|null $contentType */
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
+        /** @var string|null $contentKey */
         $contentKey = $request->query->get(static::PARAM_CONTENT_KEY);
+        /** @var string|null $selectedTemplateIdentifier */
         $selectedTemplateIdentifier = $request->query->get(static::PARAM_CONTENT_TEMPLATE);
         $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);
         $contentTypeTemplates = $this->getFactory()->createContentEditorPluginsResolver()->getTemplatesByType($contentType);
@@ -64,7 +67,9 @@ class ListContentByTypeController extends AbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
+        /** @var string|null $contentType */
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
+        /** @var string|null $contentKey */
         $contentKey = $request->query->get(static::PARAM_CONTENT_KEY);
         $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);
 

@@ -110,12 +110,19 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
     }
 
     /**
+     * @phpstan-return \Closure
+     *
      * @return callable
      */
     protected function getFilenameSortCallback(): callable
     {
         return function (SplFileInfo $fileOne, SplFileInfo $fileTwo) {
-            return strcmp($fileOne->getRealpath(), $fileTwo->getRealpath());
+            /** @var string $firstRealPath */
+            $firstRealPath = $fileOne->getRealpath();
+            /** @var string $secondRealPath */
+            $secondRealPath = $fileTwo->getRealpath();
+
+            return strcmp($firstRealPath, $secondRealPath);
         };
     }
 
@@ -185,7 +192,9 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
      */
     protected function getOrganizationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        /** @var string $realPath */
+        $realPath = $directoryInfo->getRealPath();
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $realPath);
         $srcPosition = array_search('src', $pathFragments);
 
         $organizationName = $pathFragments[$srcPosition + 1];
@@ -200,7 +209,9 @@ class ProjectModuleFinder implements ProjectModuleFinderInterface
      */
     protected function getApplicationNameFromDirectory(SplFileInfo $directoryInfo): string
     {
-        $pathFragments = explode(DIRECTORY_SEPARATOR, $directoryInfo->getRealPath());
+        /** @var string $realPath */
+        $realPath = $directoryInfo->getRealPath();
+        $pathFragments = explode(DIRECTORY_SEPARATOR, $realPath);
         $srcPosition = array_search('src', $pathFragments);
 
         $organizationName = $pathFragments[$srcPosition + 2];
