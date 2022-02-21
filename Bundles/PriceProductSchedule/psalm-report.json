@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 200,
-            "line_to": 200,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery' for Spryker\\Zed\\PriceProductSchedule\\Persistence\\Enable\\PriceProductScheduleEnableFinder::setConditionsForPriceProductScheduleQuery is incorrect, got 'Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\User\\Persistence\\SpyUserQuery'",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductSchedule/src/Spryker/Zed/PriceProductSchedule/Persistence/Enable/PriceProductScheduleEnableFinder.php",
-            "snippet": "     * @return \\Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery",
-            "selected_text": "\\Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 206,
-            "line_to": 212,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery|Orm\\Zed\\User\\Persistence\\SpyUserQuery' does not match the declared return type 'Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductScheduleQuery' for Spryker\\Zed\\PriceProductSchedule\\Persistence\\Enable\\PriceProductScheduleEnableFinder::setConditionsForPriceProductScheduleQuery",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductSchedule/src/Spryker/Zed/PriceProductSchedule/Persistence/Enable/PriceProductScheduleEnableFinder.php",
-            "snippet": "        return $priceProductScheduleQuery\n            ->filterByFkStore($storeTransfer->getIdStore())\n            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))\n            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))\n            ->usePriceProductScheduleListQuery()\n                ->filterByIsActive(true)\n            ->endUse();",
-            "selected_text": "$priceProductScheduleQuery\n            ->filterByFkStore($storeTransfer->getIdStore())\n            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))\n            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))\n            ->usePriceProductScheduleListQuery()\n                ->filterByIsActive(true)\n            ->endUse()",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -448,8 +423,8 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 69,
+            "line_to": 69,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setIdentifier on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductSchedule/src/Spryker/Zed/PriceProductSchedule/Business/PriceProductSchedule/PriceProductScheduleCsvReader.php",
@@ -736,8 +711,8 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
+            "line_from": 79,
+            "line_to": 79,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductSchedule/src/Spryker/Zed/PriceProductSchedule/Persistence/Finder/PriceProductScheduleFinder.php",
@@ -748,8 +723,8 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductSchedule/src/Spryker/Zed/PriceProductSchedule/Persistence/Finder/PriceProductScheduleFinder.php",
@@ -760,8 +735,8 @@
         },
         {
             "severity": "info",
-            "line_from": 120,
-            "line_to": 120,
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireMoneyValue on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductSchedule/src/Spryker/Zed/PriceProductSchedule/Persistence/Finder/PriceProductScheduleFinder.php",

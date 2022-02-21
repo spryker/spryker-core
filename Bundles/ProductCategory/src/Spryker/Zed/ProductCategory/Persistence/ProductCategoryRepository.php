@@ -50,18 +50,22 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
      */
     protected function queryCategoriesByIdProductAbstract(int $idProductAbstract, int $idLocale): SpyProductCategoryQuery
     {
-        return $this->getFactory()->createProductCategoryQuery()
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
+        $productCategoryQuery = $this->getFactory()
+            ->createProductCategoryQuery()
             ->innerJoinWithSpyCategory()
             ->useSpyCategoryQuery()
-            ->joinAttribute()
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale,
-                Criteria::EQUAL,
-            )
-            ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME)
-            ->endUse()
+                ->joinAttribute()
+                ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+                ->addAnd(
+                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                    $idLocale,
+                    Criteria::EQUAL,
+                )
+                ->addAscendingOrderByColumn(SpyCategoryAttributeTableMap::COL_NAME)
+            ->endUse();
+
+        return $productCategoryQuery
             ->addAnd(
                 SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
                 $idProductAbstract,
@@ -101,6 +105,7 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
      */
     public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer
     {
+        /** @var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery */
         $productCategoryQuery = $this->getFactory()
             ->createProductCategoryQuery()
             ->joinWithSpyCategory()
@@ -109,8 +114,9 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
                 ->useAttributeQuery()
                     ->joinWithLocale()
                 ->endUse()
-            ->endUse()
-            ->groupByIdProductCategory();
+            ->endUse();
+
+        $productCategoryQuery = $productCategoryQuery->groupByIdProductCategory();
 
         $productCategoryQuery = $this->applyProductCategoryFilters($productCategoryQuery, $productCategoryCriteriaTransfer);
 

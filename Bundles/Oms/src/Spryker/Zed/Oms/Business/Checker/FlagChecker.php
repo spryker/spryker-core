@@ -32,7 +32,10 @@ class FlagChecker implements FlagCheckerInterface
      */
     public function hasOrderItemsFlag(array $itemTransfers, string $flag): bool
     {
-        $processName = end($itemTransfers)->getProcess();
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = end($itemTransfers);
+
+        $processName = $itemTransfer->getProcess();
 
         if (!$processName) {
             return false;

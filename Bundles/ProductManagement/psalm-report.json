@@ -1,45 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 539,
-            "line_to": 539,
-            "type": "UndefinedVariable",
-            "message": "Cannot find referenced variable $attributes",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "            $attributeValue = $attributes[$type] ?? null;",
-            "selected_text": "$attributes",
-            "error_level": -1,
-            "shortcode": 24,
-            "other_references": null
-        },
-        {
-            "severity": "error",
-            "line_from": 572,
-            "line_to": 572,
-            "type": "UndefinedVariable",
-            "message": "Cannot find referenced variable $productAttributeValues",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "            $value = $productAttributeValues[$type] ?? null;",
-            "selected_text": "$productAttributeValues",
-            "error_level": -1,
-            "shortcode": 24,
-            "other_references": null
-        },
-        {
-            "severity": "error",
-            "line_from": 376,
-            "line_to": 376,
-            "type": "ParadoxicalCondition",
-            "message": "Found a paradox when evaluating $hasValue of type non-empty-mixed and trying to reconcile it with a empty assertion",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Transfer/ProductFormTransferMapper.php",
-            "snippet": "        if (empty($hasValue)) {",
-            "selected_text": "empty($hasValue)",
-            "error_level": -1,
-            "shortcode": 89,
-            "other_references": null
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -51,21 +11,7 @@
             "snippet": "        $useTextArea = mb_strlen($value) > 255;",
             "selected_text": "$value",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Controller\\AddController::createProductConcreteCollection expects string, null|scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/AddController.php",
-            "snippet": "                    $type,",
-            "selected_text": "$type",
-            "error_level": 4,
-            "shortcode": 12,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -77,8 +23,7 @@
             "snippet": "            $productConcreteTransfer->addPrice(clone $price);",
             "selected_text": "clone $price",
             "error_level": 1,
-            "shortcode": 227,
-            "other_references": null
+            "shortcode": 227
         },
         {
             "severity": "info",
@@ -90,8 +35,7 @@
             "snippet": "                ->touchProductConcrete($productConcreteTransfer->getIdProductConcrete());",
             "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -103,21 +47,7 @@
             "snippet": "            return $this->createRedirectResponseAfterAdd($productConcreteTransfer->getIdProductConcrete(), $type, $request);",
             "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\ProductManagementCommunicationFactory::createVariantTable expects string, null|scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/EditController.php",
-            "snippet": "            ->createVariantTable($idProductAbstract, $type);",
-            "selected_text": "$type",
-            "error_level": 4,
-            "shortcode": 12,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -129,8 +59,7 @@
             "snippet": "            ->findProductAbstractById($productTransfer->getFkProductAbstract());",
             "selected_text": "$productTransfer->getFkProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -142,8 +71,7 @@
             "snippet": "                $dataProvider->getData($productAbstractTransfer, $idProduct, $priceDimension),",
             "selected_text": "$productAbstractTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -155,8 +83,7 @@
             "snippet": "            $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();",
             "selected_text": "$attributes",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -168,8 +95,7 @@
             "snippet": "            $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -181,8 +107,7 @@
             "snippet": "            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());",
             "selected_text": "$productAbstractTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -194,8 +119,7 @@
             "snippet": "        $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());",
             "selected_text": "$productAbstractTransfer->getStoreRelation()->getStores()",
             "error_level": 3,
-            "shortcode": 92,
-            "other_references": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -207,8 +131,7 @@
             "snippet": "        $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());",
             "selected_text": "getStores",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -220,8 +143,7 @@
             "snippet": "            $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();",
             "selected_text": "$attributes",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -233,8 +155,7 @@
             "snippet": "            $attributes[$localizedAttributesTransfer->getLocale()->getLocaleName()] = $localizedAttributesTransfer->getAttributes();",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -246,8 +167,7 @@
             "snippet": "            ->getProductImagesSetCollectionByProductId($productTransfer->getIdProductConcrete());",
             "selected_text": "$productTransfer->getIdProductConcrete()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -259,8 +179,7 @@
             "snippet": "                    $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);",
             "selected_text": "$defaults",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -272,8 +191,7 @@
             "snippet": "                $fkLocale = (int)$imageSetTransfer->getLocale()->getIdLocale();",
             "selected_text": "getIdLocale",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -285,8 +203,7 @@
             "snippet": "                $data[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);",
             "selected_text": "$data",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -298,8 +215,7 @@
             "snippet": "            $result[$localeTransfer->getLocaleName()] = array_values($data);",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -311,8 +227,7 @@
             "snippet": "            ->getTaxSet($productAbstractTransfer->getIdTaxSet());",
             "selected_text": "$productAbstractTransfer->getIdTaxSet()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -324,359 +239,307 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
-            "line_from": 244,
-            "line_to": 244,
+            "line_from": 240,
+            "line_to": 240,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $localizedAttributeOptions[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);",
             "selected_text": "$localizedAttributeOptions",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 345,
-            "line_to": 345,
+            "line_from": 337,
+            "line_to": 337,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $defaults[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                    $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);",
             "selected_text": "$defaults",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 350,
-            "line_to": 350,
+            "line_from": 342,
+            "line_to": 342,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdLocale on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                $fkLocale = (int)$imageSetTransfer->getLocale()->getIdLocale();",
             "selected_text": "getIdLocale",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 355,
-            "line_to": 355,
+            "line_from": 347,
+            "line_to": 347,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $data[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                $data[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);",
             "selected_text": "$data",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 358,
-            "line_to": 358,
+            "line_from": 350,
+            "line_to": 350,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getImagesFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $formName = ProductFormAdd::getImagesFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 400,
-            "line_to": 400,
+            "line_from": 392,
+            "line_to": 392,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getGeneralFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $key = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 419,
-            "line_to": 419,
+            "line_from": 411,
+            "line_to": 411,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getSeoFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $key = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 447,
-            "line_to": 447,
+            "line_from": 439,
+            "line_to": 439,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getAbstractAttributeFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $key = ProductFormAdd::getAbstractAttributeFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 467,
-            "line_to": 467,
+            "line_from": 459,
+            "line_to": 459,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getImagesFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $key = ProductFormAdd::getImagesFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 595,
-            "line_to": 595,
+            "line_from": 588,
+            "line_to": 588,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                    if ($localizedAttributeTransfer->getLocale()->getLocaleName() === $localeTransfer->getLocaleName()) {",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 607,
-            "line_to": 607,
+            "line_from": 600,
+            "line_to": 600,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $isDefined = $this->attributeTransferCollection->has($type);",
             "selected_text": "has",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 618,
-            "line_to": 618,
+            "line_from": 611,
+            "line_to": 611,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of mb_strlen cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $shouldBeTextArea = mb_strlen($value) > 255;",
             "selected_text": "$value",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 699,
-            "line_to": 699,
+            "line_from": 694,
+            "line_to": 694,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $isDefined = $this->attributeTransferCollection->has($type);",
             "selected_text": "has",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 711,
-            "line_to": 711,
+            "line_from": 707,
+            "line_to": 707,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                $attributeTransfer = $this->attributeTransferCollection->get($type);",
             "selected_text": "get",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 712,
-            "line_to": 712,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getIdProductManagementAttribute on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "                $id = $attributeTransfer->getIdProductManagementAttribute();",
-            "selected_text": "getIdProductManagementAttribute",
-            "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 713,
-            "line_to": 713,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getInputType on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "                $inputType = $attributeTransfer->getInputType();",
-            "selected_text": "getInputType",
-            "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 714,
-            "line_to": 714,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getAllowInput on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "                $allowInput = $attributeTransfer->getAllowInput();",
-            "selected_text": "getAllowInput",
-            "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 715,
-            "line_to": 715,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getIsSuper on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "                $isSuper = $attributeTransfer->getIsSuper();",
-            "selected_text": "getIsSuper",
-            "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 805,
-            "line_to": 805,
+            "line_from": 802,
+            "line_to": 802,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $attributeTransfer = $this->attributeTransferCollection->get($key);",
             "selected_text": "get",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 829,
-            "line_to": 829,
+            "line_from": 822,
+            "line_to": 822,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductManagement\\Communication\\Form\\DataProvider\\AbstractProductFormDataProvider::getLocalizedAttributeMetadataKey is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 826,
+            "line_to": 826,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "        if (!$this->attributeTransferCollection->has($keyToLocalize)) {",
             "selected_text": "has",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 831,
+            "line_to": 831,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
+            "snippet": "        $attributeTransfer = $this->attributeTransferCollection->get($keyToLocalize);",
+            "selected_text": "get",
+            "error_level": 3,
+            "shortcode": 113
         },
         {
             "severity": "info",
             "line_from": 833,
             "line_to": 833,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductManagement\\Communication\\Form\\DataProvider\\AbstractProductFormDataProvider::getLocalizedAttributeMetadataKey is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "        $transfer = $this->attributeTransferCollection->get($keyToLocalize);",
-            "selected_text": "get",
-            "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "snippet": "        return $attributeTransfer->getKey();",
+            "selected_text": "$attributeTransfer->getKey()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
-            "line_from": 835,
-            "line_to": 835,
+            "line_from": 833,
+            "line_to": 833,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
-            "snippet": "        return $transfer->getKey();",
+            "snippet": "        return $attributeTransfer->getKey();",
             "selected_text": "getKey",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 868,
-            "line_to": 868,
+            "line_from": 866,
+            "line_to": 866,
             "type": "PossiblyNullReference",
             "message": "Cannot call method fromArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);",
             "selected_text": "fromArray",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 872,
-            "line_to": 872,
+            "line_from": 870,
+            "line_to": 870,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Dependency\\Facade\\ProductManagementToPriceProductInterface::findProductAbstractPricesWithoutPriceExtraction cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $productAbstractTransfer->getIdProductAbstract(),",
             "selected_text": "$productAbstractTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 897,
-            "line_to": 897,
+            "line_from": 895,
+            "line_to": 895,
             "type": "PossiblyNullReference",
             "message": "Cannot call method fromArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);",
             "selected_text": "fromArray",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 901,
-            "line_to": 901,
+            "line_from": 899,
+            "line_to": 899,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Dependency\\Facade\\ProductManagementToPriceProductInterface::findProductConcretePricesWithoutPriceExtraction cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $productTransfer->getIdProductConcrete(),",
             "selected_text": "$productTransfer->getIdProductConcrete()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 902,
-            "line_to": 902,
+            "line_from": 900,
+            "line_to": 900,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Dependency\\Facade\\ProductManagementToPriceProductInterface::findProductConcretePricesWithoutPriceExtraction cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/AbstractProductFormDataProvider.php",
             "snippet": "            $productAbstractTransfer->getIdProductAbstract(),",
             "selected_text": "$productAbstractTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -688,8 +551,7 @@
             "snippet": "                        $storeWithCurrencyTransfer->getStore(),",
             "selected_text": "$storeWithCurrencyTransfer->getStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -701,8 +563,7 @@
             "snippet": "                $moneyValueTransfer->getFkStore(),",
             "selected_text": "$moneyValueTransfer->getFkStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -714,8 +575,7 @@
             "snippet": "                $moneyValueTransfer->getFkStore(),",
             "selected_text": "getFkStore",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -727,8 +587,7 @@
             "snippet": "                $priceProductTransfer->getPriceType(),",
             "selected_text": "$priceProductTransfer->getPriceType()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -740,8 +599,7 @@
             "snippet": "                $moneyValueTransfer->getCurrency(),",
             "selected_text": "$moneyValueTransfer->getCurrency()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -753,8 +611,7 @@
             "snippet": "                        $storeTransfer->getIdStore(),",
             "selected_text": "$storeTransfer->getIdStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -766,8 +623,7 @@
             "snippet": "                        $storeTransfer->getIdStore(),",
             "selected_text": "getIdStore",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -779,8 +635,7 @@
             "snippet": "                    $currentFormMoneyValueCollection[$identifier] = $this->mapProductMoneyValueTransfer(",
             "selected_text": "$identifier",
             "error_level": 4,
-            "shortcode": 12,
-            "other_references": null
+            "shortcode": 12
         },
         {
             "severity": "info",
@@ -792,8 +647,7 @@
             "snippet": "                $moneyValueTransfer->getFkStore(),",
             "selected_text": "$moneyValueTransfer->getFkStore()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -805,8 +659,7 @@
             "snippet": "                $moneyValueTransfer->getFkStore(),",
             "selected_text": "getFkStore",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -818,8 +671,7 @@
             "snippet": "                $priceProductTransfer->getPriceType(),",
             "selected_text": "$priceProductTransfer->getPriceType()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -831,255 +683,235 @@
             "snippet": "                $moneyValueTransfer->getCurrency(),",
             "selected_text": "$moneyValueTransfer->getCurrency()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 177,
-            "line_to": 177,
+            "line_from": 168,
+            "line_to": 168,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $localizedAttributeOptions[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "            $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);",
             "selected_text": "$localizedAttributeOptions",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 249,
-            "line_to": 249,
+            "line_from": 237,
+            "line_to": 237,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Dependency\\Facade\\ProductManagementToProductInterface::getConcreteProductsByAbstractProductId cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "        $productConcreteTransfers = $this->productFacade->getConcreteProductsByAbstractProductId($productAbstractTransfer->getIdProductAbstract());",
             "selected_text": "$productAbstractTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 263,
-            "line_to": 263,
+            "line_from": 251,
+            "line_to": 251,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductConcreteFormAdd::getGeneralFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "            $key = ProductConcreteFormAdd::getGeneralFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 282,
-            "line_to": 282,
+            "line_from": 270,
+            "line_to": 270,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductConcreteFormAdd::getSeoFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "            $key = ProductConcreteFormAdd::getSeoFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 303,
-            "line_to": 303,
+            "line_from": 291,
+            "line_to": 291,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductConcreteFormAdd::getImagesFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "            $key = ProductConcreteFormAdd::getImagesFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 358,
-            "line_to": 358,
+            "line_from": 346,
+            "line_to": 346,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "                if ($localizedAttributeTransfer->getLocale()->getLocaleName() !== $localeTransfer->getLocaleName()) {",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 380,
-            "line_to": 380,
+            "line_from": 368,
+            "line_to": 368,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "        if (!$this->attributeTransferCollection->has($keyToLocalize)) {",
             "selected_text": "has",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 384,
-            "line_to": 384,
+            "line_from": 372,
+            "line_to": 372,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "        return $this->attributeTransferCollection->get($keyToLocalize)->getKey();",
             "selected_text": "get",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 384,
-            "line_to": 384,
+            "line_from": 372,
+            "line_to": 372,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "        return $this->attributeTransferCollection->get($keyToLocalize)->getKey();",
             "selected_text": "getKey",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 422,
-            "line_to": 422,
+            "line_from": 410,
+            "line_to": 410,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "            $isDefined = $this->attributeTransferCollection->has($type);",
             "selected_text": "has",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 430,
-            "line_to": 430,
+            "line_from": 418,
+            "line_to": 418,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of mb_strlen cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormAddDataProvider.php",
             "snippet": "            $shouldBeTextArea = mb_strlen($value) > 255;",
             "selected_text": "$value",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
+            "line_from": 162,
+            "line_to": 162,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdProductConcrete on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "        $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = $productTransfer->getIdProductConcrete();",
             "selected_text": "getIdProductConcrete",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 201,
-            "line_to": 201,
+            "line_from": 197,
+            "line_to": 197,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "            $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 202,
-            "line_to": 202,
+            "line_from": 198,
+            "line_to": 198,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getGeneralFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "            $generalFormName = ProductFormAdd::getGeneralFormName($localeCode);",
             "selected_text": "$localeCode",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 251,
-            "line_to": 251,
+            "line_from": 247,
+            "line_to": 247,
             "type": "PossiblyNullReference",
             "message": "Cannot call method trim on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "            $stock[StockForm::FIELD_QUANTITY] = $stockTransfer->getQuantity()->trim();",
             "selected_text": "trim",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 271,
-            "line_to": 271,
+            "line_from": 267,
+            "line_to": 267,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getBundledProducts on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "        $bundledProducts = $productTransfer->getProductBundle()->getBundledProducts();",
             "selected_text": "getBundledProducts",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 300,
-            "line_to": 300,
+            "line_from": 296,
+            "line_to": 296,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "            $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 301,
-            "line_to": 301,
+            "line_from": 297,
+            "line_to": 297,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getAbstractAttributeFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "            $formName = ProductFormAdd::getAbstractAttributeFormName($localeCode);",
             "selected_text": "$localeCode",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 339,
-            "line_to": 339,
+            "line_from": 335,
+            "line_to": 335,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\DataProvider\\ProductConcreteFormEditDataProvider::getProductImagesForConcreteProduct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductConcreteFormEditDataProvider.php",
             "snippet": "            $this->getProductImagesForConcreteProduct($productTransfer->getIdProductConcrete()),",
             "selected_text": "$productTransfer->getIdProductConcrete()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1091,8 +923,7 @@
             "snippet": "            $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1104,8 +935,7 @@
             "snippet": "            $generalFormName = ProductFormAdd::getGeneralFormName($localeCode);",
             "selected_text": "$localeCode",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1117,8 +947,7 @@
             "snippet": "            $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();",
             "selected_text": "getLocaleName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1130,47 +959,43 @@
             "snippet": "            $formName = ProductFormAdd::getAbstractAttributeFormName($localeCode);",
             "selected_text": "$localeCode",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductFormEditDataProvider.php",
             "snippet": "                $attributeTransfer = $this->attributeTransferCollection->get($key);",
             "selected_text": "get",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 130,
-            "line_to": 130,
+            "line_from": 132,
+            "line_to": 132,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeTransfer> variable $this->attributeTransferCollection",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductFormEditDataProvider.php",
             "snippet": "            $attributeTransfer = $this->attributeTransferCollection->get($key);",
             "selected_text": "get",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
+            "line_from": 153,
+            "line_to": 153,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\DataProvider\\ProductFormEditDataProvider::getProductImagesForAbstractProduct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/DataProvider/ProductFormEditDataProvider.php",
             "snippet": "        $imageData = $this->getProductImagesForAbstractProduct($productAbstractTransfer->getIdProductAbstract());",
             "selected_text": "$productAbstractTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1182,8 +1007,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options = [])",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1195,8 +1019,7 @@
             "snippet": "        $input = $inputManager->getSymfonyInputType($inputType, $value);",
             "selected_text": "$inputType",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1208,8 +1031,7 @@
             "snippet": "                        $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),",
             "selected_text": "$attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID)",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1221,8 +1043,7 @@
             "snippet": "                        $idLocale,",
             "selected_text": "$idLocale",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1234,8 +1055,7 @@
             "snippet": "                $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));",
             "selected_text": "$idLocale",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1247,8 +1067,7 @@
             "snippet": "                $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),",
             "selected_text": "$attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID)",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1260,8 +1079,7 @@
             "snippet": "                $idLocale,",
             "selected_text": "$idLocale",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1273,8 +1091,7 @@
             "snippet": "        $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));",
             "selected_text": "$idLocale",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1286,8 +1103,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1299,8 +1115,19 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 129,
+            "line_to": 129,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Form\\FormBuilderInterface::add cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/ProductConcreteSuperAttributeCollectionType.php",
+            "snippet": "                    $productManagementAttributeTransfer->getKey(),",
+            "selected_text": "$productManagementAttributeTransfer->getKey()",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1312,21 +1139,19 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
+            "line_from": 146,
+            "line_to": 146,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeValueTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/ProductConcreteSuperAttributeForm.php",
             "snippet": "        }, $productManagementAttributeTransfer->getValues()->getArrayCopy());",
             "selected_text": "getArrayCopy",
             "error_level": 3,
-            "shortcode": 113,
-            "other_references": null
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -1338,8 +1163,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1351,8 +1175,7 @@
             "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1364,8 +1187,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1377,8 +1199,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1390,8 +1211,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options = [])",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1403,8 +1223,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1416,8 +1235,7 @@
             "snippet": "    public function finishView(FormView $view, FormInterface $form, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1429,8 +1247,7 @@
             "snippet": "            $currencies[$currencyTransfer->getCode()] = $currencyTransfer;",
             "selected_text": "$currencies",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1439,11 +1256,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Dependency\\Service\\ProductManagementToUtilEncodingInterface::decodeJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Price/ProductMoneyCollectionType.php",
-            "snippet": "        $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData());",
+            "snippet": "        $priceData = $utilEncodingService->decodeJson($moneyValueTransfer->getPriceData(), true);",
             "selected_text": "$moneyValueTransfer->getPriceData()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1455,8 +1271,7 @@
             "snippet": "        $priceTypeName = $priceProductTransfer->getPriceType()->getName();",
             "selected_text": "getName",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1468,8 +1283,7 @@
             "snippet": "            $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(",
             "selected_text": "$volumePrices[$storeName]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1481,8 +1295,7 @@
             "snippet": "                sprintf('Edit Volume Price: %s', $priceTypeName),",
             "selected_text": "$priceTypeName",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1494,8 +1307,7 @@
             "snippet": "        $volumePrices[$storeName][$currencyIsoCode][$priceTypeName] = $this->buildVolumePriceData(",
             "selected_text": "$volumePrices[$storeName]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1507,8 +1319,7 @@
             "snippet": "            sprintf('Add Volume Price: %s', $priceTypeName),",
             "selected_text": "$priceTypeName",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1520,8 +1331,7 @@
             "snippet": "            || (!$moneyValueTransfer->getGrossAmount() && !$moneyValueTransfer->getNetAmount())",
             "selected_text": "getGrossAmount",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1533,8 +1343,7 @@
             "snippet": "            $priceTypes[$netPriceModeIdentifier][$priceType] = $priceTypeTransfer;",
             "selected_text": "$priceTypes[$netPriceModeIdentifier]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1546,8 +1355,7 @@
             "snippet": "            $priceTypes[$grossPriceModeIdentifier][$priceType] = $priceTypeTransfer;",
             "selected_text": "$priceTypes[$grossPriceModeIdentifier]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1559,8 +1367,7 @@
             "snippet": "            $priceTypes[$priceModeConfiguration][$priceType] = $priceTypeTransfer;",
             "selected_text": "$priceTypes",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1572,8 +1379,7 @@
             "snippet": "            $priceTable[$storeName][$currencyIsoCode][$netPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;",
             "selected_text": "$priceTable[$storeName]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1585,8 +1391,7 @@
             "snippet": "            $priceTable[$storeName][$currencyIsoCode][$grossPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;",
             "selected_text": "$priceTable[$storeName]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1598,8 +1403,7 @@
             "snippet": "            $priceTable[$storeName][$currencyIsoCode][$priceModeConfiguration][$priceType] = $productMoneyTypeFormView;",
             "selected_text": "$priceTable[$storeName]",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1611,8 +1415,7 @@
             "snippet": "     * @return \\Generated\\Shared\\Transfer\\CurrencyTransfer",
             "selected_text": "\\Generated\\Shared\\Transfer\\CurrencyTransfer",
             "error_level": 5,
-            "shortcode": 144,
-            "other_references": null
+            "shortcode": 144
         },
         {
             "severity": "info",
@@ -1624,8 +1427,7 @@
             "snippet": "        return $this->extractMoneyValueTransfer($moneyValueFormView)->getCurrency();",
             "selected_text": "$this->extractMoneyValueTransfer($moneyValueFormView)->getCurrency()",
             "error_level": 5,
-            "shortcode": 139,
-            "other_references": null
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -1637,8 +1439,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1650,8 +1451,7 @@
             "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1663,21 +1463,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 253,
-            "line_to": 253,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 2 of number_format expects int, float|int provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/PriceForm.php",
-            "snippet": "            $this->getDivisor($currencyTransfer),",
-            "selected_text": "$this->getDivisor($currencyTransfer)",
-            "error_level": 4,
-            "shortcode": 12,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1689,8 +1475,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1702,8 +1487,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1715,8 +1499,7 @@
             "snippet": "        return $this->getFactory()->getProductFacade()->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);",
             "selected_text": "$productAbstractTransfer",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1728,47 +1511,31 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 440,
-            "line_to": 440,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getAttributes on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductConcreteFormEdit.php",
-            "snippet": "        $productConcreteAttributes = $productConcreteTransfer->getAttributes();",
-            "selected_text": "getAttributes",
-            "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 446,
-            "line_to": 446,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $productConcreteAttributes using possibly null offset null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductConcreteFormEdit.php",
-            "snippet": "            if ($productConcreteAttributes[$attributeKey] !== null) {",
-            "selected_text": "$productConcreteAttributes",
-            "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
             "line_from": 447,
             "line_to": 447,
             "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteAttributes using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductConcreteFormEdit.php",
+            "snippet": "            if ($productConcreteAttributes[$attributeKey] !== null) {",
+            "selected_text": "$productConcreteAttributes",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 448,
+            "line_to": 448,
+            "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $superAttributes[$attributeKey] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductConcreteFormEdit.php",
             "snippet": "                $superAttributes[$attributeKey] = $productConcreteAttributes[$attributeKey];",
             "selected_text": "$superAttributes",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1780,8 +1547,7 @@
             "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
             "selected_text": "$options",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1793,8 +1559,7 @@
             "snippet": "            $name = static::getGeneralFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1806,8 +1571,7 @@
             "snippet": "            $name = static::getSeoFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1819,8 +1583,7 @@
             "snippet": "            $name = static::getAbstractAttributeFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1832,8 +1595,7 @@
             "snippet": "            $localeTransfer = $this->getFactory()->createLocaleProvider()->getLocaleTransfer($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1845,8 +1607,7 @@
             "snippet": "            $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeTransfer->getLocaleName()]);",
             "selected_text": "$options",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1858,8 +1619,7 @@
             "snippet": "            $name = static::getImagesFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1868,11 +1628,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of array_key_exists cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductFormAdd.php",
-            "snippet": "                        if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {",
+            "snippet": "                        if (!$selectedAttributes && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {",
             "selected_text": "$context->getGroup()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -1884,8 +1643,7 @@
             "snippet": "                            GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;",
             "selected_text": "GeneralForm::$errorFieldsDisplayed",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -1897,8 +1655,7 @@
             "snippet": "    public function validate($value, Constraint $constraint)",
             "selected_text": "$constraint",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1910,8 +1667,7 @@
             "snippet": "    public function validate($value, Constraint $constraint)",
             "selected_text": "$constraint",
             "error_level": 5,
-            "shortcode": 140,
-            "other_references": null
+            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1923,8 +1679,7 @@
             "snippet": "            if ($moneyValueTransfer->getGrossAmount() !== null || $moneyValueTransfer->getNetAmount() !== null) {",
             "selected_text": "getGrossAmount",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1936,8 +1691,7 @@
             "snippet": "                $stockProductTransfer->getQuantity()->trim(),",
             "selected_text": "trim",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1949,8 +1703,7 @@
             "snippet": "        if ($productConcreteTransfer->getProductBundle() !== null && $productConcreteTransfer->getProductBundle()->getAvailability() !== null) {",
             "selected_text": "getAvailability",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1962,8 +1715,7 @@
             "snippet": "            $productConcreteTransfer->getProductBundle()->setAvailability(",
             "selected_text": "setAvailability",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1975,8 +1727,7 @@
             "snippet": "                $productConcreteTransfer->getProductBundle()->getAvailability()->trim(),",
             "selected_text": "getAvailability",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -1988,8 +1739,7 @@
             "snippet": "                $productConcreteTransfer->getProductBundle()->getAvailability()->trim(),",
             "selected_text": "trim",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -2001,8 +1751,7 @@
             "snippet": "        $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer->getSku());",
             "selected_text": "$productAbstractTransfer->getSku()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2014,8 +1763,7 @@
             "snippet": "        $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer->getSku());",
             "selected_text": "$productAbstractTransfer->getSku()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2027,8 +1775,7 @@
             "snippet": "        $validTo = new DateTime($productTransfer->getValidTo());",
             "selected_text": "$productTransfer->getValidTo()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2040,8 +1787,7 @@
             "snippet": "        $validFrom = new DateTime($productTransfer->getValidFrom());",
             "selected_text": "$productTransfer->getValidFrom()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2053,21 +1799,19 @@
             "snippet": "        $validTo = new DateTime($productTransfer->getValidTo());",
             "selected_text": "$productTransfer->getValidTo()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 320,
-            "line_to": 320,
+            "line_from": 316,
+            "line_to": 316,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $result[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/ProductManagementCommunicationFactory.php",
             "snippet": "            $result[$tax->getIdTaxSet()] = $tax->getName();",
             "selected_text": "$result",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -2079,8 +1823,7 @@
             "snippet": "            $productManagementAttributeCollectionTransfer->getProductManagementAttributes(),",
             "selected_text": "$productManagementAttributeCollectionTransfer->getProductManagementAttributes()",
             "error_level": 3,
-            "shortcode": 92,
-            "other_references": null
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -2092,8 +1835,7 @@
             "snippet": "            $mappedProductManagementAttributeTransfers[$productManagementAttributeTransfer->getKey()] = $productManagementAttributeTransfer;",
             "selected_text": "$mappedProductManagementAttributeTransfers",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -2105,8 +1847,19 @@
             "snippet": "        $this->idProductConcrete = $idProductConcrete;",
             "selected_text": "$idProductConcrete",
             "error_level": 3,
-            "shortcode": 148,
-            "other_references": null
+            "shortcode": 148
+        },
+        {
+            "severity": "info",
+            "line_from": 295,
+            "line_to": 295,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/BundledProductTable.php",
+            "snippet": "            $this->utilEncodingService->encodeJson($productConcreteEntity->toArray()),",
+            "selected_text": "$this->utilEncodingService->encodeJson($productConcreteEntity->toArray())",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2118,8 +1871,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2131,8 +1883,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2144,8 +1895,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2157,8 +1907,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2170,8 +1919,7 @@
             "snippet": "                $productAbstractStoreEntity->getSpyStore()->getName(),",
             "selected_text": "$productAbstractStoreEntity->getSpyStore()->getName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2183,8 +1931,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2196,8 +1943,7 @@
             "snippet": "     * @return mixed",
             "selected_text": "mixed",
             "error_level": 5,
-            "shortcode": 166,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2209,8 +1955,7 @@
             "snippet": "            $generalFormName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2222,8 +1967,7 @@
             "snippet": "            $seoFormName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2235,8 +1979,7 @@
             "snippet": "            $localizedData[$localeTransfer->getLocaleName()] = array_merge($formData[$generalFormName], $formData[$seoFormName]);",
             "selected_text": "$localizedData",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -2248,8 +1991,7 @@
             "snippet": "            $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2261,8 +2003,7 @@
             "snippet": "            $localizedAttributesTransfer = $this->createConcreteLocalizedAttributesTransfer($form->get($formName), $localeTransfer, $idProduct);",
             "selected_text": "$idProduct",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2274,8 +2015,7 @@
             "snippet": "        $formName = ProductFormAdd::getGeneralFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2287,8 +2027,7 @@
             "snippet": "        $attributes = $this->getAbstractLocalizedAttributes($idProductAbstract, $localeTransfer->getIdLocale());",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2300,8 +2039,7 @@
             "snippet": "        $formName = ProductFormAdd::getSeoFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2313,8 +2051,7 @@
             "snippet": "        $localizedAttributes = $this->getConcreteLocalizedAttributes($idProduct, $localeTransfer->getIdLocale());",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2326,8 +2063,7 @@
             "snippet": "            $formName = ProductFormAdd::getAbstractAttributeFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2339,112 +2075,79 @@
             "snippet": "                $attributes[$localeTransfer->getLocaleName()][$type] = $values['value'];",
             "selected_text": "$attributes",
             "error_level": 3,
-            "shortcode": 125,
-            "other_references": null
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 394,
-            "line_to": 394,
+            "line_from": 390,
+            "line_to": 390,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::getImagesFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Transfer/ProductFormTransferMapper.php",
             "snippet": "            $formName = ProductFormAdd::getImagesFormName($localeTransfer->getLocaleName());",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 402,
-            "line_to": 402,
+            "line_from": 398,
+            "line_to": 398,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Dependency\\Facade\\ProductManagementToLocaleInterface::hasLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Transfer/ProductFormTransferMapper.php",
             "snippet": "                if ($this->localeFacade->hasLocale($localeTransfer->getLocaleName())) {",
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 501,
-            "line_to": 501,
+            "line_from": 497,
+            "line_to": 497,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductQueryContainerInterface::queryProductAbstractLocalizedAttributes cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Transfer/ProductFormTransferMapper.php",
             "snippet": "            ->queryProductAbstractLocalizedAttributes($idProductAbstract)",
             "selected_text": "$idProductAbstract",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 609,
-            "line_to": 609,
+            "line_from": 605,
+            "line_to": 605,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setBundlesToRemove on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Transfer/ProductFormTransferMapper.php",
             "snippet": "            ->setBundlesToRemove($form->getData()[ProductConcreteFormEdit::BUNDLED_PRODUCTS_TO_BE_REMOVED]);",
             "selected_text": "setBundlesToRemove",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 648,
-            "line_to": 648,
+            "line_from": 644,
+            "line_to": 644,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getType on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Transfer/ProductFormTransferMapper.php",
             "snippet": "            ->setType($abstractProductPriceProductTransfer->getPriceDimension()->getType());",
             "selected_text": "getType",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\ProductManagement\\Dependency\\Service\\ProductManagementToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, mixed>|null' for Spryker\\Zed\\ProductManagement\\Dependency\\Service\\ProductManagementToUtilEncodingInterface::decodeJson is more specific than the implemented return type for Spryker\\Zed\\ProductManagement\\Dependency\\Service\\ProductManagementToUtilEncodingBridge::decodejson 'array<array-key, mixed>|null'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Dependency/Service/ProductManagementToUtilEncodingBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
+            "snippet": "     * @return array<mixed>|null",
+            "selected_text": "array<mixed>|null",
             "error_level": 5,
-            "shortcode": 144,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\ProductManagement\\Dependency\\Service\\ProductManagementToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Dependency/Service/ProductManagementToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\ProductManagement\\Dependency\\Service\\ProductManagementToUtilEncodingBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Dependency/Service/ProductManagementToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
-            "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
-            "error_level": 5,
-            "shortcode": 139,
-            "other_references": null
+            "shortcode": 166
         },
         {
             "severity": "info",
@@ -2456,8 +2159,7 @@
             "snippet": "                $query->join($queryJoinTransfer->getRelation(), $joinType);",
             "selected_text": "$queryJoinTransfer->getRelation()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2469,8 +2171,7 @@
             "snippet": "                    $query->addJoinCondition($queryJoinTransfer->getRelation(), $queryJoinTransfer->getCondition());",
             "selected_text": "$queryJoinTransfer->getRelation()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -2482,8 +2183,7 @@
             "snippet": "                    $query->addJoinCondition($queryJoinTransfer->getRelation(), $queryJoinTransfer->getCondition());",
             "selected_text": "$queryJoinTransfer->getCondition()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         }
     ],
     "deprecation": [
@@ -2497,8 +2197,7 @@
             "snippet": "        $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);",
             "selected_text": "setDefaultSortDirection",
             "error_level": 2,
-            "shortcode": 1,
-            "other_references": null
+            "shortcode": 1
         }
     ]
 }

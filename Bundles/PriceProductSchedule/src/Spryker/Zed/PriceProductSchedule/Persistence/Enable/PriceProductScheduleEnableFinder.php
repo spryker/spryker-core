@@ -203,6 +203,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         SpyPriceProductScheduleQuery $priceProductScheduleQuery,
         StoreTransfer $storeTransfer
     ): SpyPriceProductScheduleQuery {
+        /** @phpstan-var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery */
         return $priceProductScheduleQuery
             ->filterByFkStore($storeTransfer->getIdStore())
             ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))

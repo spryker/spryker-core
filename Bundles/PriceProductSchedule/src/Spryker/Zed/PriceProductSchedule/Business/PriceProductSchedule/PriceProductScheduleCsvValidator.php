@@ -51,6 +51,8 @@ class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidat
         $priceProductScheduleCsvValidationResultTransfer = (new PriceProductScheduleCsvValidationResultTransfer())
             ->setIsSuccess(false);
         $importItems = $this->csvService->readUploadedFile($uploadedFile);
+
+        /** @var array $headers */
         $headers = current($importItems);
 
         $expectedHeaders = $this->priceProductScheduleConfig->getFieldsList();

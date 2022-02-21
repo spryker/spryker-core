@@ -1,54 +1,18 @@
 {
-    "error": [],
-    "warning": [
+    "error": [
         {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\PriceProductMerchantRelationshipDataImport\\Business\\PriceProductMerchantRelationshipDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/PriceProductMerchantRelationshipDataImportBusinessFactory.php",
-            "snippet": "            ->addStep($this->createMerchantRelationshipKeyToIdBusinessUnitStep())",
-            "selected_text": "addStep",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/PriceProductMerchantRelationshipDataImportBusinessFactory.php",
-            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
-            "selected_text": "addDataSetStepBroker",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/PriceProductMerchantRelationshipDataImportBusinessFactory.php",
-            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
-            "selected_text": "$dataSetStepBroker",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipDataImport/src/Spryker/Zed/PriceProductMerchantRelationshipDataImport/Business/PriceProductMerchantRelationshipDataImportFacade.php",
-            "snippet": "        return $this->getFactory()->createPriceProductMerchantRelationshipDataImport()->import($dataImporterConfigurationTransfer);",
-            "selected_text": "import",
-            "error_level": 3,
-            "shortcode": 108
+            "snippet": "class PriceProductMerchantRelationshipDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "PriceProductMerchantRelationshipDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
         }
     ],
+    "warning": [],
     "deprecation": []
 }

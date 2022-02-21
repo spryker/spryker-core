@@ -90,13 +90,16 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         $userIdentifier = (string)$accessTokenEntity->getUserIdentifier();
         $userIdentifier = $this->filterUserIdentifier($userIdentifier);
 
+        /** @var string $encodedScopes */
+        $encodedScopes = json_encode($accessTokenEntity->getScopes());
+
         $spyAccessTokenEntityTransfer = new SpyOauthAccessTokenEntityTransfer();
         $spyAccessTokenEntityTransfer
             ->setIdentifier($accessTokenEntity->getIdentifier())
             ->setUserIdentifier($userIdentifier)
             ->setExpirityDate($accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setFkOauthClient($accessTokenEntity->getClient()->getIdentifier())
-            ->setScopes(json_encode($accessTokenEntity->getScopes()));
+            ->setScopes($encodedScopes);
 
         $this->oauthEntityManager->saveAccessToken($spyAccessTokenEntityTransfer);
     }

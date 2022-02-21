@@ -199,14 +199,15 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      */
     public function queryProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery
     {
+        /** @phpstan-var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery */
         return $this->getFactory()
             ->getPriceProductQueryContainer()
             ->queryPriceProduct()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL)
             ->usePriceProductStoreQuery()
                 ->filterByIdPriceProductStore_In($priceProductStoreIds)
-            ->endUse()
-            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
+            ->endUse();
     }
 
     /**
@@ -220,13 +221,14 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      */
     public function queryProductConcreteIdsByPriceProductStoreIds(array $priceProductStoreIds): SpyPriceProductQuery
     {
+        /** @phpstan-var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery */
         return $this->getFactory()
             ->getPriceProductQueryContainer()
             ->queryPriceProduct()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT])
+            ->filterByFkProduct(null, Criteria::ISNOTNULL)
             ->usePriceProductStoreQuery()
                 ->filterByIdPriceProductStore_In($priceProductStoreIds)
-            ->endUse()
-            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT])
-            ->filterByFkProduct(null, Criteria::ISNOTNULL);
+            ->endUse();
     }
 }

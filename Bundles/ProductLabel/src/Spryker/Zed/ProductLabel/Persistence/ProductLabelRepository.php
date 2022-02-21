@@ -94,11 +94,11 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     {
         $productLabelEntities = $this->getFactory()
             ->createProductLabelQuery()
+            ->leftJoinWithProductLabelStore()
+            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->useSpyProductLabelProductAbstractQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
-            ->leftJoinWithProductLabelStore()
-            ->leftJoinWithSpyProductLabelLocalizedAttributes()
             ->find();
 
         return $this->getFactory()
@@ -133,11 +133,14 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->endUse();
         }
 
-        $productLabelEntities = $productLabelQuery->joinWithSpyProductLabelLocalizedAttributes(Criteria::LEFT_JOIN)
+        /** @var \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $productLabelQuery */
+        $productLabelQuery = $productLabelQuery->joinWithSpyProductLabelLocalizedAttributes(Criteria::LEFT_JOIN)
             ->useSpyProductLabelLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
                 ->joinSpyLocale()
             ->endUse()
-            ->filterByIsActive(true)
+            ->filterByIsActive(true);
+
+        $productLabelEntities = $productLabelQuery
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->_or()
             ->filterByValidFrom(null, Criteria::ISNULL)

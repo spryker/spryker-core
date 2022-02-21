@@ -25,11 +25,14 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
      */
     public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities */
-        $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $glossaryTranslationQuery */
+        $glossaryTranslationQuery = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()
                 ->filterByKey($glossaryKey)
-            ->endUse()
+            ->endUse();
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities */
+        $glossaryTranslationEntities = $glossaryTranslationQuery
             ->useLocaleQuery()
                 ->filterByLocaleName_In($localeIsoCodes)
             ->endUse()
@@ -50,11 +53,14 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
      */
     public function getTranslationsByGlossaryKeysAndLocaleIsoCodes(array $glossaryKeys, array $localeIsoCodes): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities */
-        $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $glossaryTranslationQuery */
+        $glossaryTranslationQuery = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()
                 ->filterByKey_In($glossaryKeys)
-            ->endUse()
+            ->endUse();
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities */
+        $glossaryTranslationEntities = $glossaryTranslationQuery
             ->useLocaleQuery()
                 ->filterByLocaleName_In($localeIsoCodes)
             ->endUse()

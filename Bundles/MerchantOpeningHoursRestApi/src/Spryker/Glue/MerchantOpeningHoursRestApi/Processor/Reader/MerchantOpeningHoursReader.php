@@ -78,8 +78,11 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
             return $this->merchantOpeningHoursRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
 
+        /** @var int $idMerchant */
+        $idMerchant = $merchantStorageTransfer->getIdMerchant();
+
         $merchantOpeningHoursStorageTransfers = $this->merchantOpeningHoursStorageClient
-            ->getMerchantOpeningHoursByMerchantIds([$merchantStorageTransfer->getIdMerchant()]);
+            ->getMerchantOpeningHoursByMerchantIds([$idMerchant]);
 
         if (!$merchantOpeningHoursStorageTransfers) {
             return $this->merchantOpeningHoursRestResponseBuilder->createEmptyMerchantOpeningHoursRestResponse();
@@ -91,8 +94,11 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
                 $restRequest->getMetadata()->getLocale(),
             );
 
+        /** @var \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer $merchantOpeningHoursStorageTransfer */
+        $merchantOpeningHoursStorageTransfer = reset($merchantOpeningHoursStorageTransfers);
+
         return $this->merchantOpeningHoursRestResponseBuilder->createMerchantOpeningHoursRestResponse(
-            reset($merchantOpeningHoursStorageTransfers),
+            $merchantOpeningHoursStorageTransfer,
             $merchantReference,
         );
     }

@@ -219,6 +219,7 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
             return null;
         }
 
+        /** @phpstan-var string */
         return json_encode([
             'id_sales_order_items' => $orderItemIds,
         ]);

@@ -26,6 +26,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
      */
     public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName)
     {
+        /** @var \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery $subscriptionQuery */
         $subscriptionQuery = $this->querySubscription()
             ->joinSpyNewsletterType()
             ->useSpyNewsletterTypeQuery()
@@ -52,6 +53,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
      */
     public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName)
     {
+        /** @var \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery $subscriptionQuery */
         $subscriptionQuery = $this->querySubscription()
             ->joinSpyNewsletterType()
             ->useSpyNewsletterTypeQuery()
@@ -77,6 +79,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer implements Newslet
      */
     public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName)
     {
+        /** @var \Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriptionQuery $subscriptionQuery */
         $subscriptionQuery = $this->querySubscription()
             ->joinSpyNewsletterType()
             ->useSpyNewsletterTypeQuery()

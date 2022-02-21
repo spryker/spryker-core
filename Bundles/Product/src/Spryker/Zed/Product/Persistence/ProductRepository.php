@@ -304,6 +304,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             return [];
         }
 
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $query */
         $query = $this->getFactory()
             ->createProductQuery()
             ->filterByIdProduct_In($productIds)
@@ -311,7 +312,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->joinWithSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
                 ->joinWithLocale()
-            ->endUse()
+            ->endUse();
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $query */
+        $query = $query
             ->useSpyProductAbstractQuery()
                 ->joinSpyProductAbstractStore()
                 ->useSpyProductAbstractStoreQuery()
@@ -454,10 +458,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->createProductQuery()
             ->joinWithSpyProductAbstract()
             ->joinWithSpyProductLocalizedAttributes()
+            ->filterBySku_In($productConcreteSkus)
             ->useSpyProductLocalizedAttributesQuery()
                 ->joinWithLocale()
             ->endUse()
-            ->filterBySku_In($productConcreteSkus)
             ->find();
 
         if ($productConcreteEntities->count() === 0) {
@@ -654,6 +658,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $productAbstractLocalizedAttributeNames = [];
         foreach ($productAbstractLocalizedAttributesDataCollection as $productAbstractLocalizedAttributesData) {
+            /** @var int $idProductAbstract */
             $idProductAbstract = $productAbstractLocalizedAttributesData[SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT];
             $name = $productAbstractLocalizedAttributesData[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME];
 

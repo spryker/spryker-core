@@ -21,6 +21,9 @@ class BearerTokenResponse extends LeagueBearerTokenResponse
      */
     protected function getExtraParams(AccessTokenEntityInterface $accessToken): array
     {
-        return json_decode($accessToken->getUserIdentifier(), true);
+        /** @var string $userIdentifier */
+        $userIdentifier = $accessToken->getUserIdentifier();
+
+        return json_decode($userIdentifier, true);
     }
 }

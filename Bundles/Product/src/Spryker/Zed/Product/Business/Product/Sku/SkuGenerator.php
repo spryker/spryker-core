@@ -97,6 +97,7 @@ class SkuGenerator implements SkuGeneratorInterface
     protected function sanitizeSku($sku)
     {
         if (function_exists('iconv')) {
+            /** @var string $sku */
             $sku = iconv('UTF-8', 'ASCII//TRANSLIT', $sku);
         }
 

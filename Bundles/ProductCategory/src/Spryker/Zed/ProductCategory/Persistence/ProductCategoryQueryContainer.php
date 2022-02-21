@@ -263,6 +263,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode)
     {
+        /** @phpstan-var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery */
         return $this
             ->getFactory()
             ->createProductCategoryQuery()
@@ -289,6 +290,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $idProductAbstract,
         array $idsCategoryNode
     ) {
+        /** @phpstan-var \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery */
         return $this
             ->queryProductCategoryMappings()
             ->filterByFkProductAbstract($idProductAbstract)

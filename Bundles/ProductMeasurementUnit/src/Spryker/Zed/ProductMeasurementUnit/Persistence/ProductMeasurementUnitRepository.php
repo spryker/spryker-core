@@ -446,11 +446,15 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     {
         $productMeasurementSalesUnitQuery = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery();
-        $productMeasurementSalesUnitQuery
+
+        /** @var \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery $productMeasurementSalesUnitQuery */
+        $productMeasurementSalesUnitQuery = $productMeasurementSalesUnitQuery
             ->filterByIsDefault(true)
             ->useProductQuery()
                 ->filterBySku_In($productConcreteSkus)
-            ->endUse()
+            ->endUse();
+
+        $productMeasurementSalesUnitQuery = $productMeasurementSalesUnitQuery
             ->useSpyProductMeasurementSalesUnitStoreQuery()
                 ->filterByFkStore($idStore)
             ->endUse()
@@ -471,12 +475,16 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {
         $indexedProductMeasurementSalesUnitIds = [];
-        /** @var array $productMeasurementSalesUnitIdCollection */
-        $productMeasurementSalesUnitIdCollection = $this->getFactory()
+
+        /** @var \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery $queryProductMeasurementSalesUnit */
+        $queryProductMeasurementSalesUnit = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->useProductQuery()
                 ->filterBySku_In($productConcreteSkus)
-            ->endUse()
+            ->endUse();
+
+        /** @var array $productMeasurementSalesUnitIdCollection */
+        $productMeasurementSalesUnitIdCollection = $queryProductMeasurementSalesUnit
             ->useSpyProductMeasurementSalesUnitStoreQuery()
                 ->filterByFkStore($idStore)
             ->endUse()

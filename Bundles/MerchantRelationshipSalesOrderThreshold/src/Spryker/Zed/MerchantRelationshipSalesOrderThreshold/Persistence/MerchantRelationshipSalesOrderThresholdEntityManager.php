@@ -33,6 +33,7 @@ class MerchantRelationshipSalesOrderThresholdEntityManager extends AbstractEntit
         $storeTransfer = $merchantRelationshipSalesOrderThresholdTransfer->getStore();
         $currencyTransfer = $merchantRelationshipSalesOrderThresholdTransfer->getCurrency();
 
+        /** @var \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThreshold|null $merchantRelationshipSalesOrderThresholdEntity */
         $merchantRelationshipSalesOrderThresholdEntity = $this->getFactory()
             ->createMerchantRelationshipSalesOrderThresholdQuery()
             ->filterByFkStore($storeTransfer->getIdStore())

@@ -41,6 +41,7 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryBundleProductBySku($sku)
     {
+        /** @phpstan-var \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery */
         return $this->getFactory()
             ->createProductBundleQuery()
             ->useSpyProductRelatedByFkProductQuery()
@@ -59,6 +60,7 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryBundledProductBySku($sku)
     {
+        /** @phpstan-var \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery */
         return $this->getFactory()
             ->createProductBundleQuery()
             ->useSpyProductRelatedByFkBundledProductQuery()

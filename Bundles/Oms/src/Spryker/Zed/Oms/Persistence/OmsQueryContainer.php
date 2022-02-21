@@ -447,10 +447,11 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             $stateNames[] = $state->getName();
         }
 
-        $salesOrderItemQuery->useStateQuery()
-            ->filterByName($stateNames, Criteria::IN)
-            ->endUse()
-            ->filterBySku($sku);
+        $salesOrderItemQuery
+            ->filterBySku($sku)
+            ->useStateQuery()
+                ->filterByName($stateNames, Criteria::IN)
+            ->endUse();
 
         return $salesOrderItemQuery;
     }
@@ -477,6 +478,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $storeName,
         $returnTest = true
     ) {
+        /** @phpstan-var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery */
         return $this->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
             ->useOrderQuery()
             ->filterByStore($storeName)

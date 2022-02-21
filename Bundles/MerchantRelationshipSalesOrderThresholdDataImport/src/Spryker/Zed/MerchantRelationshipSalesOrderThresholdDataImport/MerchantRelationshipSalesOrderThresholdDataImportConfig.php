@@ -47,6 +47,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportConfig extends DataImport
      */
     protected function getModuleRoot(): string
     {
+        /** @phpstan-var string */
         return realpath(implode(DIRECTORY_SEPARATOR, [
             __DIR__,
             '..',

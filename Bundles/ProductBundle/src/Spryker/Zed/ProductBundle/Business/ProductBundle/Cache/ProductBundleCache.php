@@ -17,7 +17,7 @@ class ProductBundleCache implements ProductBundleCacheInterface
     protected const ERROR_MESSAGE_CACHE_NOT_FOUND = 'Cache value for ProductForBundleTransfer by provided sku wasn\'t found';
 
     /**
-     * @var array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>|null
+     * @var array<array<\Generated\Shared\Transfer\ProductForBundleTransfer>>
      */
     protected static $groupedBySkuProductForBundleTransfers = [];
 

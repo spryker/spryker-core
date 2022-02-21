@@ -89,6 +89,7 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
      */
     public function queryProductsLabelByIdProductAbstract($idProductAbstract)
     {
+        /** @phpstan-var \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery */
         return $this
             ->getFactory()
             ->createProductLabelQuery()

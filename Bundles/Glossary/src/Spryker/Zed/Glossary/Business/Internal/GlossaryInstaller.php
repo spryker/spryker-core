@@ -72,7 +72,10 @@ class GlossaryInstaller implements GlossaryInstallerInterface
     {
         $yamlParser = new Yaml();
 
-        return $yamlParser->parse(file_get_contents($filePath));
+        /** @var string $fileContent */
+        $fileContent = file_get_contents($filePath);
+
+        return $yamlParser->parse($fileContent);
     }
 
     /**

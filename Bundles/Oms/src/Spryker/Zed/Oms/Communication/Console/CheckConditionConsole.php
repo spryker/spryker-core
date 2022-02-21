@@ -100,8 +100,11 @@ class CheckConditionConsole extends Console
     {
         $omsCheckConditionQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
 
-        if ($input->getOption(static::OPTION_STORE_NAME)) {
-            $omsCheckConditionQueryCriteriaTransfer->setStoreName($input->getOption(static::OPTION_STORE_NAME));
+        /** @var string|null $storeName */
+        $storeName = $input->getOption(static::OPTION_STORE_NAME);
+
+        if ($storeName) {
+            $omsCheckConditionQueryCriteriaTransfer->setStoreName($storeName);
         }
 
         if ($input->getOption(static::OPTION_LIMIT)) {
@@ -124,11 +127,13 @@ class CheckConditionConsole extends Console
      */
     protected function getOmsProcessorIdentifiers(InputInterface $input): array
     {
-        if (!$input->getOption(static::OPTION_PROCESSOR_ID)) {
+        /** @var string|null $processorIdentifiers */
+        $processorIdentifiers = $input->getOption(static::OPTION_PROCESSOR_ID);
+        if (!$processorIdentifiers) {
             return [];
         }
 
-        $omsProcessorIdentifiers = explode(',', $input->getOption(static::OPTION_PROCESSOR_ID));
+        $omsProcessorIdentifiers = explode(',', $processorIdentifiers);
 
         return array_map('intval', $omsProcessorIdentifiers);
     }

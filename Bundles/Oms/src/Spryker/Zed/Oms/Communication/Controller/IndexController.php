@@ -55,13 +55,17 @@ class IndexController extends AbstractController
      */
     public function drawAction(Request $request)
     {
+        /** @var string|null $processName */
         $processName = $request->query->get('process');
         if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
 
+        /** @var string|null $format */
         $format = $request->query->get('format');
         $fontSize = $request->query->getInt('font');
+
+        /** @var string|null $highlightState */
         $highlightState = $request->query->get('state');
 
         $reload = false;
@@ -96,6 +100,7 @@ class IndexController extends AbstractController
     {
         $id = $this->castId($request->query->get('id'));
 
+        /** @var string $format */
         $format = $request->query->get('format', static::DEFAULT_FORMAT);
         $fontSize = $request->query->getInt('font', static::DEFAULT_FONT_SIZE);
 

@@ -50,24 +50,31 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
     public function findCountPriceProductScheduleByCriteriaFilter(
         PriceProductScheduleCriteriaFilterTransfer $priceProductScheduleCriteriaFilterTransfer
     ): int {
+        /** @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $query */
         $query = $this->priceProductScheduleQuery
             ->joinWithCurrency()
             ->useCurrencyQuery()
-            ->filterByCode($priceProductScheduleCriteriaFilterTransfer->getCurrencyCode())
-            ->endUse()
+                ->filterByCode($priceProductScheduleCriteriaFilterTransfer->getCurrencyCode())
+            ->endUse();
+
+        /** @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $query */
+        $query = $query
             ->joinWithPriceType()
             ->usePriceTypeQuery()
-            ->filterByName($priceProductScheduleCriteriaFilterTransfer->getPriceTypeName())
-            ->endUse()
-            ->joinWithStore()
-            ->useStoreQuery()
-            ->filterByName($priceProductScheduleCriteriaFilterTransfer->getStoreName())
-            ->endUse()
-            ->joinWithPriceProductScheduleList()
+                ->filterByName($priceProductScheduleCriteriaFilterTransfer->getPriceTypeName())
+            ->endUse();
+
+        /** @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $query */
+        $query = $query
             ->filterByNetPrice($priceProductScheduleCriteriaFilterTransfer->getNetAmount())
             ->filterByGrossPrice($priceProductScheduleCriteriaFilterTransfer->getGrossAmount())
             ->filterByActiveFrom(new DateTime($priceProductScheduleCriteriaFilterTransfer->getActiveFrom()))
-            ->filterByActiveTo(new DateTime($priceProductScheduleCriteriaFilterTransfer->getActiveTo()));
+            ->filterByActiveTo(new DateTime($priceProductScheduleCriteriaFilterTransfer->getActiveTo()))
+            ->joinWithPriceProductScheduleList()
+            ->joinWithStore()
+            ->useStoreQuery()
+                ->filterByName($priceProductScheduleCriteriaFilterTransfer->getStoreName())
+            ->endUse();
 
         if ($priceProductScheduleCriteriaFilterTransfer->getSkuProductAbstract() !== null) {
             $query

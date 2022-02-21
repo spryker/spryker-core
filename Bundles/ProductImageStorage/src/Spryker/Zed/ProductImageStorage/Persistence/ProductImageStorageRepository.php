@@ -46,14 +46,15 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
      */
     public function getProductImageSetsByFkProductIn(array $productFks): array
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetsQuery */
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyProductImageSetToProductImage()
+            ->filterByFkProduct_In($productFks)
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
-            ->endUse()
-            ->filterByFkProduct_In($productFks);
+            ->endUse();
 
         $productImageSetsQuery = $this->sortProductImageSetToProductImageQuery($productImageSetsQuery);
 
@@ -67,14 +68,15 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
      */
     public function getDefaultConcreteProductImageSetsByFkProductIn(array $productIds): array
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetsQuery */
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->innerJoinWithSpyProductImageSetToProductImage()
+            ->filterByFkProduct_In($productIds)
+            ->filterByFkLocale(null, Criteria::ISNULL)
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
-            ->endUse()
-            ->filterByFkProduct_In($productIds)
-            ->filterByFkLocale(null, Criteria::ISNULL);
+            ->endUse();
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
     }
@@ -86,14 +88,15 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
      */
     public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetsQuery */
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->innerJoinWithSpyLocale()
             ->innerJoinWithSpyProductImageSetToProductImage()
+            ->filterByFkProductAbstract_In($productAbstractFks)
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
-            ->endUse()
-            ->filterByFkProductAbstract_In($productAbstractFks);
+            ->endUse();
 
         $productImageSetsQuery = $this->sortProductImageSetToProductImageQuery($productImageSetsQuery);
 
@@ -107,14 +110,15 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
      */
     public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetsQuery */
         $productImageSetsQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->innerJoinWithSpyProductImageSetToProductImage()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->filterByFkLocale(null, Criteria::ISNULL)
             ->useSpyProductImageSetToProductImageQuery()
                 ->innerJoinWithSpyProductImage()
-            ->endUse()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->filterByFkLocale(null, Criteria::ISNULL);
+            ->endUse();
 
         return $this->buildQueryFromCriteria($productImageSetsQuery)->find();
     }

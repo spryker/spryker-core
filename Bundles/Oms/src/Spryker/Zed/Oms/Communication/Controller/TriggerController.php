@@ -69,6 +69,7 @@ class TriggerController extends AbstractController
      */
     public function submitTriggerEventForOrderItemsAction(Request $request)
     {
+        /** @var string $redirect */
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
         if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
@@ -81,6 +82,7 @@ class TriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
+        /** @var string $event */
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
         $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
         $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
@@ -95,6 +97,7 @@ class TriggerController extends AbstractController
      */
     public function submitTriggerEventForOrderAction(Request $request)
     {
+        /** @var string $redirect */
         $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
         if (!$this->isValidPostRequest($request)) {
@@ -104,8 +107,13 @@ class TriggerController extends AbstractController
         }
 
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
+
+        /** @var string $event */
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+
+        /** @var string $redirect */
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
+
         /** @var array $itemsList */
         $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 

@@ -228,6 +228,7 @@ class Builder implements BuilderInterface
     {
         $finder = $this->buildFinder($fileName);
 
+        /** @phpstan-var \Symfony\Component\Finder\SplFileInfo */
         return current(iterator_to_array($finder->getIterator()));
     }
 

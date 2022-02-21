@@ -436,6 +436,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         $superAttributes = [];
 
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
         $productConcreteAttributes = $productConcreteTransfer->getAttributes();
         $superAttributesTransfers = $this->getFactory()->getProductAttributeFacade()->getUniqueSuperAttributesFromConcreteProducts([$productConcreteTransfer]);

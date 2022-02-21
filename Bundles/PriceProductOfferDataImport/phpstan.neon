@@ -1,3 +1,6 @@
 parameters:
-    level: 6
+    level: 8
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::[a-zA-Z]*\(\)#'
+        - '#Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep\(\)#'

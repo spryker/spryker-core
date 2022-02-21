@@ -35,30 +35,6 @@
             "selected_text": "array_map(function (StoreTransfer $storeTransfer) {\n            return $storeTransfer->getIdStore();\n        }, $storeTransferCollection->getArrayCopy())",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 232,
-            "line_to": 232,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\Product\\Persistence\\ProductQueryContainer::queryProductAbstractWithName is incorrect, got 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static'",
-            "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
-            "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 236,
-            "line_to": 240,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\Product\\Persistence\\ProductQueryContainer::queryProductAbstractWithName",
-            "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductQueryContainer.php",
-            "snippet": "        return $this->queryProductAbstract()\n            ->useSpyProductAbstractLocalizedAttributesQuery()\n                ->filterByFkLocale($idLocale)\n                ->endUse()\n            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');",
-            "selected_text": "$this->queryProductAbstract()\n            ->useSpyProductAbstractLocalizedAttributesQuery()\n                ->filterByFkLocale($idLocale)\n                ->endUse()\n            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name')",
-            "error_level": 6,
-            "shortcode": 128
         }
     ],
     "warning": [
@@ -1192,8 +1168,8 @@
         },
         {
             "severity": "info",
-            "line_from": 386,
-            "line_to": 386,
+            "line_from": 390,
+            "line_to": 390,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::getProductAbstractTransfersMappedFromProductAbstractEntities expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1204,8 +1180,8 @@
         },
         {
             "severity": "info",
-            "line_from": 402,
-            "line_to": 402,
+            "line_from": 406,
+            "line_to": 406,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::getProductConcreteTransfersMappedFromProductConcreteEntities expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1216,8 +1192,8 @@
         },
         {
             "severity": "info",
-            "line_from": 524,
-            "line_to": 524,
+            "line_from": 528,
+            "line_to": 528,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $productConcreteEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1228,8 +1204,8 @@
         },
         {
             "severity": "info",
-            "line_from": 732,
-            "line_to": 732,
+            "line_from": 737,
+            "line_to": 737,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $productAbstractEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",

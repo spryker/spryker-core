@@ -85,6 +85,7 @@ class TransitionLogTable extends AbstractTable
 
         $query = $this->omsQueryContainer->queryLogByIdOrder($idOrder, false);
 
+        /** @var array<int, mixed> $result */
         $result = $this->runQuery($query, $config);
 
         foreach ($result as $i => $row) {

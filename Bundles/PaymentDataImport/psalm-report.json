@@ -1,102 +1,18 @@
 {
-    "error": [],
-    "warning": [
+    "error": [
         {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "severity": "error",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\PaymentDataImport\\Business\\PaymentDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
             "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportBusinessFactory.php",
-            "snippet": "            ->addStep($this->createPaymentProviderWriterStep())",
-            "selected_text": "addStep",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportBusinessFactory.php",
-            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
-            "selected_text": "addDataSetStepBroker",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportBusinessFactory.php",
-            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
-            "selected_text": "$dataSetStepBroker",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportBusinessFactory.php",
-            "snippet": "            ->addStep($this->createStoreNameToIdStoreStep())",
-            "selected_text": "addStep",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportBusinessFactory.php",
-            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
-            "selected_text": "addDataSetStepBroker",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportBusinessFactory.php",
-            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
-            "selected_text": "$dataSetStepBroker",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportFacade.php",
-            "snippet": "            ->import($dataImporterConfigurationTransfer);",
-            "selected_text": "import",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/PaymentDataImport/src/Spryker/Zed/PaymentDataImport/Business/PaymentDataImportFacade.php",
-            "snippet": "            ->import($dataImporterConfigurationTransfer);",
-            "selected_text": "import",
-            "error_level": 3,
-            "shortcode": 108
+            "snippet": "class PaymentDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "PaymentDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
         }
     ],
+    "warning": [],
     "deprecation": []
 }

@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
@@ -9,3 +9,4 @@ parameters:
         - '#Parameter \#1 \$v of method .+SpyOmsProductReservationLastExportedVersion::setVersion\(\) expects string, int given.#'
         - '#Parameter \#1 \$string of method .+ConnectionInterface::quote\(\) expects string, int given.#'
         - '#SimpleXMLElement.+does not accept string.#'
+        - '#Argument of an invalid type array\|.+CommandCollectionInterface supplied for foreach, only iterables are supported.#'

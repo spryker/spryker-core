@@ -58,13 +58,17 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      */
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer = null): array
     {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery */
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
             ->filterBySku($sku)
             ->useStateQuery()
                 ->filterByName_In($stateNames)
-            ->endUse()
+            ->endUse();
+
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery */
+        $salesOrderItemQuery = $salesOrderItemQuery
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()

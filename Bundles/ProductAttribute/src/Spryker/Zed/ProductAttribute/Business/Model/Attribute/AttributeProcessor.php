@@ -204,6 +204,7 @@ class AttributeProcessor implements AttributeProcessorInterface
         $mergedAttributes += $this->getAbstractAttributes();
         $mergedAttributes += $this->getConcreteAttributes();
 
+        /** @phpstan-var array */
         return array_combine(
             array_keys($mergedAttributes),
             array_fill(0, count($mergedAttributes), null),

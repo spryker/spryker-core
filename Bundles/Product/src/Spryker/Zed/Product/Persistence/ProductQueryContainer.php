@@ -29,11 +29,14 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     {
         $query = $this->getFactory()->createProductQuery();
 
-        $query->filterBySku($concreteSku)
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $query */
+        $query = $query->filterBySku($concreteSku)
             ->useSpyProductLocalizedAttributesQuery()
             ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->useSpyProductAbstractQuery()
+            ->endUse();
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $query */
+        $query = $query->useSpyProductAbstractQuery()
             ->endUse();
 
         return $query;
@@ -233,6 +236,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryProductAbstractWithName($idLocale)
     {
+        /** @phpstan-var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery */
         return $this->queryProductAbstract()
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)

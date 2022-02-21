@@ -161,6 +161,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function querySuggestKeys($searchText, $limit = 10)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query */
         $query = $this->queryProductAttributeKey()
             ->filterByIsSuper(false)
             ->useSpyProductManagementAttributeQuery()
@@ -241,6 +242,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryUnusedProductAttributeKeys($searchText = '', $limit = 10)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query */
         $query = $this->queryProductAttributeKey()
             ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
             ->useSpyProductManagementAttributeQuery(null, Criteria::LEFT_JOIN)
@@ -268,6 +270,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     public function queryProductManagementAttributeValueTranslationById($idProductManagementAttribute)
     {
+        /** @phpstan-var \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery */
         return $this->queryProductManagementAttributeValueTranslation()
             ->joinSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()

@@ -47,6 +47,7 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
+        /** @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface $optInHandler */
         $optInHandler = $this->getFactory()->createDoubleOptInHandler();
 
         $subscriptionResponse = $this->getFactory()

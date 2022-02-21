@@ -1,6 +1,8 @@
 parameters:
-    level: 6
+    level: 8
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Negated boolean expression is always false.#'
+        - '#Parameter \#2 \$size of function array_chunk expects int<1, max>, int given.#'
+        - '#Parameter \#2 \$levels of function dirname expects int<1, max>, int given.#'

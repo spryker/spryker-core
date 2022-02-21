@@ -303,7 +303,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     protected function queryPriceProductMerchantRelationship(array $filterByCompanyBusinessUnitIds = []): SpyPriceProductMerchantRelationshipQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $queryPriceProductMerchantRelationship */
+        $queryPriceProductMerchantRelationship = $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()
             ->usePriceProductStoreQuery()
                 ->innerJoinStore()
@@ -311,7 +312,10 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
                 ->usePriceProductQuery()
                     ->innerJoinPriceType()
                 ->endUse()
-            ->endUse()
+            ->endUse();
+
+        /** @phpstan-var \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery */
+        return $queryPriceProductMerchantRelationship
             ->useMerchantRelationshipQuery()
                 ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
                     ->_if((bool)$filterByCompanyBusinessUnitIds)

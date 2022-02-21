@@ -50,6 +50,7 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
+        /** @phpstan-var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface */
         return $dataImporter;
     }
 

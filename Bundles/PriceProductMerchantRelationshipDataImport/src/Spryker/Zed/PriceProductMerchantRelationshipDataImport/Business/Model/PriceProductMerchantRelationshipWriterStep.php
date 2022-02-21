@@ -66,13 +66,14 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
      */
     protected function findExistingPriceProductStoreEntity(DataSetInterface $dataSet): ?SpyPriceProductMerchantRelationship
     {
+        /** @var \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery $query */
         $query = SpyPriceProductMerchantRelationshipQuery::create()
+            ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP])
             ->usePriceProductStoreQuery()
                 ->filterByFkStore($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE])
                 ->filterByFkCurrency($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_CURRENCY])
                 ->filterByFkPriceProduct($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRICE_PRODUCT])
-            ->endUse()
-            ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP]);
+            ->endUse();
 
         if (!empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT])) {
             $query->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT]);

@@ -137,12 +137,15 @@ class ProductGroupTable extends AbstractProductTable
      */
     protected function prepareData(TableConfiguration $config)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
         $query = $this
             ->productQueryContainer
             ->queryProductAbstract()
             ->useSpyProductAbstractGroupQuery()
                 ->filterByFkProductGroup_In($this->getIdProductGroups())
-            ->endUse()
+            ->endUse();
+
+        $query = $query
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse()

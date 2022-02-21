@@ -47,6 +47,8 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
         PriceProductScheduledListImportRequestTransfer $productScheduledListImportRequestTransfer
     ): PriceProductScheduledListImportRequestTransfer {
         $importData = $this->csvService->readUploadedFile($uploadedFile);
+
+        /** @var array $headers */
         $headers = current($importData);
         $importData = $this->removeHeadersFromImportData($importData);
 
@@ -55,9 +57,12 @@ class PriceProductScheduleCsvReader implements PriceProductScheduleCsvReaderInte
                 continue;
             }
 
+            /** @var array $combinedImportData */
+            $combinedImportData = array_combine($headers, $rowData);
+
             $priceProductScheduleImportTransfer = $this->priceProductScheduleImportMapper
                 ->mapPriceProductScheduleRowToPriceProductScheduleImportTransfer(
-                    array_combine($headers, $rowData),
+                    $combinedImportData,
                     new PriceProductScheduleImportTransfer(),
                 );
             $priceProductScheduleImportTransfer->requireMetaData();

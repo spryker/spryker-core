@@ -165,6 +165,7 @@ class ProductAbstractJoinQuery implements ProductAbstractJoinQueryInterface
             return $abstractProductQuery;
         }
 
+        /** @phpstan-var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery */
         return $abstractProductQuery->useSpyProductQuery()
             ->useStockProductQuery()
                 ->useStockQuery()

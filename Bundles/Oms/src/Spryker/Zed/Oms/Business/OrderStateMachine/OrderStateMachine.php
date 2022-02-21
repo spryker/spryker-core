@@ -538,7 +538,10 @@ class OrderStateMachine implements OrderStateMachineInterface
     {
         $processedOrderItems = [];
 
-        $orderEntity = current($orderItems)->getOrder();
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $currentOrderItemEntity */
+        $currentOrderItemEntity = current($orderItems);
+        $orderEntity = $currentOrderItemEntity->getOrder();
+
         foreach ($orderItems as $orderItemEntity) {
             $stateId = $orderItemEntity->getState()->getName();
             $processId = $orderItemEntity->getProcess()->getName();

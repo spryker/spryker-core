@@ -47,6 +47,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     {
         $timeRangeCriteria = $this->createValidTimeRangeCriteria(true);
 
+        /** @phpstan-var \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery */
         return $this->getFactory()
             ->getProductLabelQueryContainer()
             ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
@@ -74,6 +75,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     {
         $timeRangeCriteria = $this->createValidTimeRangeCriteria(false);
 
+        /** @phpstan-var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery */
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()

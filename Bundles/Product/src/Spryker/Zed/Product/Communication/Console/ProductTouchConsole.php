@@ -115,7 +115,10 @@ class ProductTouchConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $idProductAbstract = (int)$input->getArgument(static::ARGUMENT_ID_ABSTRACT_PRODUCT);
-        $action = strtolower($input->getArgument(static::ARGUMENT_TOUCH_ACTION));
+
+        /** @var string $argumentTouchAction */
+        $argumentTouchAction = $input->getArgument(static::ARGUMENT_TOUCH_ACTION);
+        $action = strtolower($argumentTouchAction);
 
         switch ($action) {
             case static::ACTION_ACTIVATE:

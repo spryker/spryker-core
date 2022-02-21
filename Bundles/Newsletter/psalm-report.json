@@ -1,78 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName is incorrect, got 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery&static'",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "selected_text": "\\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery&static|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery&static' does not match the declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "        return $subscriptionQuery;",
-            "selected_text": "$subscriptionQuery",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionBySubscriberKeyAndNewsletterTypeName is incorrect, got 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery'",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "selected_text": "\\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' does not match the declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionBySubscriberKeyAndNewsletterTypeName",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "        return $subscriptionQuery;",
-            "selected_text": "$subscriptionQuery",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByIdCustomerAndNewsletterTypeName is incorrect, got 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery'",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "     * @return \\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "selected_text": "\\Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomerQuery|Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' does not match the declared return type 'Orm\\Zed\\Newsletter\\Persistence\\SpyNewsletterSubscriptionQuery' for Spryker\\Zed\\Newsletter\\Persistence\\NewsletterQueryContainer::querySubscriptionByIdCustomerAndNewsletterTypeName",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Persistence/NewsletterQueryContainer.php",
-            "snippet": "        return $subscriptionQuery;",
-            "selected_text": "$subscriptionQuery",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -100,20 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\Newsletter\\Business\\Subscription\\SubscriptionRequestHandler::processNewsletterSubscriptions expects Spryker\\Zed\\Newsletter\\Business\\Subscription\\SubscriberOptInHandlerInterface, possibly different type Spryker\\Zed\\Newsletter\\Business\\Subscription\\DoubleOptInHandlerInterface|Spryker\\Zed\\Newsletter\\Business\\Subscription\\SubscriberOptInHandlerInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Business/NewsletterFacade.php",
-            "snippet": "            ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler);",
-            "selected_text": "$optInHandler",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\Newsletter\\Business\\Subscription\\SubscriberOptInHandlerInterface::approveSubscriberByKey does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Business/NewsletterFacade.php",
@@ -129,7 +44,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Business/Subscription/DoubleOptInHandler.php",
-            "snippet": "                $subscriberTransfer->getIdNewsletterSubscriber()",
+            "snippet": "                $subscriberTransfer->getIdNewsletterSubscriber(),",
             "selected_text": "$subscriberTransfer->getIdNewsletterSubscriber()",
             "error_level": 3,
             "shortcode": 78
@@ -153,7 +68,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Business/Subscription/SingleOptInHandler.php",
-            "snippet": "                $subscriberTransfer->getIdNewsletterSubscriber()",
+            "snippet": "                $subscriberTransfer->getIdNewsletterSubscriber(),",
             "selected_text": "$subscriberTransfer->getIdNewsletterSubscriber()",
             "error_level": 3,
             "shortcode": 78
@@ -405,7 +320,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Newsletter\\NewsletterConfig::getDoubleOptInApproveTokenUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/DoubleOptInSubscriptionSender.php",
-            "snippet": "            $config->getDoubleOptInApproveTokenUrl($newsletterSubscriber->getSubscriberKey())",
+            "snippet": "            $config->getDoubleOptInApproveTokenUrl($newsletterSubscriber->getSubscriberKey()),",
             "selected_text": "$newsletterSubscriber->getSubscriberKey()",
             "error_level": 3,
             "shortcode": 78
@@ -448,8 +363,8 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Mail\\Business\\Model\\Mail\\Builder\\MailBuilderInterface::addRecipient cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/Mail/NewsletterSubscribedMailTypePlugin.php",
@@ -460,8 +375,8 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getEmail on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/Mail/NewsletterSubscribedMailTypePlugin.php",
@@ -472,8 +387,8 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Mail\\Business\\Model\\Mail\\Builder\\MailBuilderInterface::addRecipient cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/Mail/NewsletterUnsubscribedMailTypePlugin.php",
@@ -484,8 +399,8 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
+            "line_from": 103,
+            "line_to": 103,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getEmail on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/Mail/NewsletterUnsubscribedMailTypePlugin.php",

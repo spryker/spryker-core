@@ -78,7 +78,8 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
     public function findPriceProductScheduleListById(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): ?PriceProductScheduleListTransfer {
-        $priceProductScheduleListEntity = $this->priceProductScheduleListQuery
+        /** @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery $priceProductScheduleListQuery */
+        $priceProductScheduleListQuery = $this->priceProductScheduleListQuery
             ->filterByIdPriceProductScheduleList($priceProductScheduleListTransfer->getIdPriceProductScheduleList())
             ->usePriceProductScheduleQuery()
             ->addAsColumn(
@@ -96,7 +97,9 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
                     static::COL_FK_PRODUCT_ABSTRACT,
                 ),
             )
-            ->endUse()
+            ->endUse();
+
+        $priceProductScheduleListEntity = $priceProductScheduleListQuery
             ->groupByIdPriceProductScheduleList()
             ->findOne();
 

@@ -69,7 +69,7 @@ class LabelDictionary implements LabelDictionaryInterface
     public function getDictionary($localeName)
     {
         /**
-         * @var array<\Generated\Shared\Transfer\StorageProductLabelTransfer> $labelDictionary
+         * @var array<array<\Generated\Shared\Transfer\StorageProductLabelTransfer>> $labelDictionary
          */
         static $labelDictionary = [];
 

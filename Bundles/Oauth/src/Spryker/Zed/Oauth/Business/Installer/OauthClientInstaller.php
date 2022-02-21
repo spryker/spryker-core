@@ -56,8 +56,11 @@ class OauthClientInstaller implements OauthClientInstallerInterface
             return;
         }
 
+        /** @var string $secret */
+        $secret = password_hash($this->oauthConfig->getClientSecret(), PASSWORD_BCRYPT);
+
         $oauthClientTransfer
-            ->setSecret(password_hash($this->oauthConfig->getClientSecret(), PASSWORD_BCRYPT))
+            ->setSecret($secret)
             ->setIsConfidential(true)
             ->setName('Customer client');
 

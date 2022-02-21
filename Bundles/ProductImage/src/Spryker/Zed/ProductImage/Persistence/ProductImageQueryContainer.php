@@ -84,6 +84,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
      */
     public function queryImageCollectionByProductAbstractId($idProductAbstract)
     {
+        /** @phpstan-var \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery */
         return $this->getFactory()
             ->createProductImageQuery()
                 ->useSpyProductImageSetToProductImageQuery()
@@ -105,6 +106,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
      */
     public function queryImageCollectionByProductId($idProduct)
     {
+        /** @phpstan-var \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery */
         return $this->getFactory()
             ->createProductImageQuery()
             ->useSpyProductImageSetToProductImageQuery()
@@ -248,6 +250,7 @@ class ProductImageQueryContainer extends AbstractQueryContainer implements Produ
      */
     public function queryImageSetById($idProductImageSet)
     {
+        /** @phpstan-var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery */
         return $this->getFactory()
             ->createProductImageSetQuery()
             ->filterByIdProductImageSet($idProductImageSet)

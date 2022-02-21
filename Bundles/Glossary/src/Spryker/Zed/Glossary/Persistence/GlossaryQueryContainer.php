@@ -117,14 +117,16 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryTranslationByNames($keyName, $localeName)
     {
-        $query = $this->queryTranslations();
-        $query
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query */
+        $query = $this->queryTranslations()
             ->useGlossaryKeyQuery()
-            ->filterByKey($keyName)
-            ->endUse()
+                ->filterByKey($keyName)
+            ->endUse();
 
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query */
+        $query = $query
             ->useLocaleQuery()
-            ->filterByLocaleName($localeName)
+                ->filterByLocaleName($localeName)
             ->endUse();
 
         return $query;

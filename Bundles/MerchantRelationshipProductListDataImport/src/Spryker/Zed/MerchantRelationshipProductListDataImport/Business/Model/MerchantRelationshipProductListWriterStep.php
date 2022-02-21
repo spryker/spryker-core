@@ -21,8 +21,11 @@ class MerchantRelationshipProductListWriterStep implements DataImportStepInterfa
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        SpyProductListQuery::create()
-            ->findOneByIdProductList($dataSet[MerchantRelationshipProductListDataSetInterface::ID_PRODUCT_LIST])
+        /** @var \Orm\Zed\ProductList\Persistence\SpyProductList $productListEntity */
+        $productListEntity = SpyProductListQuery::create()
+            ->findOneByIdProductList($dataSet[MerchantRelationshipProductListDataSetInterface::ID_PRODUCT_LIST]);
+
+        $productListEntity
             ->setFkMerchantRelationship($dataSet[MerchantRelationshipProductListDataSetInterface::ID_MERCHANT_RELATIONSHIP])
             ->save();
     }
