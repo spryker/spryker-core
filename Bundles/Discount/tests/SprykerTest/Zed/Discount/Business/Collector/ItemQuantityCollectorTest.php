@@ -31,9 +31,9 @@ class ItemQuantityCollectorTest extends BaseRuleTester
     public function testItemQuantityCollectorShouldReturnAllItemsMatchingQuantity(): void
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->expects($this->exactly(2))
+        $comparatorMock->expects($this->exactly(3))
             ->method('compare')
-            ->willReturnOnConsecutiveCalls(true, false);
+            ->willReturnOnConsecutiveCalls(true, false, false);
 
         $itemPriceCollector = $this->createItemQuantityCollector($comparatorMock);
 

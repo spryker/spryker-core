@@ -63,6 +63,7 @@
         <property name="idSalesOrderItem" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="unitPrice" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="DiscountableItem">

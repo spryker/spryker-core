@@ -916,6 +916,18 @@
         },
         {
             "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Business/Collector/ItemQuantityCollector.php",
+            "snippet": "                $quantity += $itemTransfer->getQuantity();",
+            "selected_text": "$itemTransfer->getQuantity()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "PossiblyNullReference",

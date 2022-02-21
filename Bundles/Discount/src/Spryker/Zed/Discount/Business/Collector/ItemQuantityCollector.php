@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Collector;
 
 use Generated\Shared\Transfer\ClauseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
@@ -36,7 +37,10 @@ class ItemQuantityCollector extends BaseCollector implements CollectorInterface
     {
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($this->comparators->compare($clauseTransfer, $itemTransfer->getQuantity()) === false) {
+            if (
+                !$this->comparators->compare($clauseTransfer, $itemTransfer->getQuantity()) &&
+                !$this->comparators->compare($clauseTransfer, $this->calculateItemsQuantityByGroupKey($quoteTransfer, $itemTransfer))
+            ) {
                 continue;
             }
 
@@ -44,5 +48,24 @@ class ItemQuantityCollector extends BaseCollector implements CollectorInterface
         }
 
         return $discountableItems;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $comparedItemTransfer
+     *
+     * @return int
+     */
+    protected function calculateItemsQuantityByGroupKey(QuoteTransfer $quoteTransfer, ItemTransfer $comparedItemTransfer): int
+    {
+        $quantity = 0;
+        $groupKey = $comparedItemTransfer->getGroupKey();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getGroupKey() && $itemTransfer->getGroupKey() === $groupKey) {
+                $quantity += $itemTransfer->getQuantity() ?? 0;
+            }
+        }
+
+        return $quantity;
     }
 }
