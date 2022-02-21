@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSetConnector/src/Spryker/Zed/CmsContentWidgetProductSetConnector/Business/Mapper/CmsProductSetKeyParameterMapper.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }

@@ -220,30 +220,6 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CmsPageSearch\\Business\\Search\\CmsPageSearchWriter::publish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsPageSearch\\Business\\Search\\CmsPageSearchWriterInterface::publish",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Zed/CmsPageSearch/Business/Search/CmsPageSearchWriter.php",
-            "snippet": "    public function publish(array $cmsPageIds): void",
-            "selected_text": "$cmsPageIds",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CmsPageSearch\\Business\\Search\\CmsPageSearchWriter::unpublish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsPageSearch\\Business\\Search\\CmsPageSearchWriterInterface::unpublish",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsPageSearch/src/Spryker/Zed/CmsPageSearch/Business/Search/CmsPageSearchWriter.php",
-            "snippet": "    public function unpublish(array $cmsPageIds): void",
-            "selected_text": "$cmsPageIds",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 202,
             "line_to": 202,
             "type": "PossiblyNullArgument",
@@ -253,18 +229,6 @@
             "selected_text": "$this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray())",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\Search\\Plugin\\Elasticsearch\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
-            "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
-            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
-            "selected_text": "$searchResult",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [

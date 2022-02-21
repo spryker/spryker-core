@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'Generated\\Shared\\Transfer\\NavigationNodeTransfer' for Spryker\\Zed\\CategoryNavigationConnector\\Business\\Model\\NavigationNodeReader::getNavigationNodesFromCategoryNodeId is incorrect, got 'list<Generated\\Shared\\Transfer\\NavigationNodeTransfer>'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/Model/NavigationNodeReader.php",
-            "snippet": "     * @return \\Generated\\Shared\\Transfer\\NavigationNodeTransfer []",
-            "selected_text": "\\Generated\\Shared\\Transfer\\NavigationNodeTransfer",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'list<Generated\\Shared\\Transfer\\NavigationNodeTransfer>' does not match the declared return type 'Generated\\Shared\\Transfer\\NavigationNodeTransfer' for Spryker\\Zed\\CategoryNavigationConnector\\Business\\Model\\NavigationNodeReader::getNavigationNodesFromCategoryNodeId",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/Model/NavigationNodeReader.php",
-            "snippet": "        return $navigationNodes;",
-            "selected_text": "$navigationNodes",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -63,5 +38,18 @@
             "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Category\\Dependency\\Plugin\\CategoryRelationUpdatePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Communication/Plugin/UpdateNavigationRelationPlugin.php",
+            "snippet": "class UpdateNavigationRelationPlugin extends AbstractPlugin implements CategoryRelationUpdatePluginInterface",
+            "selected_text": "UpdateNavigationRelationPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

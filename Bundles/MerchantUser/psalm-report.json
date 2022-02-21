@@ -1,18 +1,5 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantUser\\Persistence\\Propel\\Mapper\\MerchantUserMapper::mapMerchantUserEntitiesToMerchantUserTransfers expects Propel\\Runtime\\Collection\\Collection<Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantUser\\Persistence\\SpyMerchantUser> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Persistence/MerchantUserRepository.php",
-            "snippet": "            ->mapMerchantUserEntitiesToMerchantUserTransfers($merchantUserEntities);",
-            "selected_text": "$merchantUserEntities",
-            "error_level": 3,
-            "shortcode": 92
-        }
-    ],
+    "warning": [],
     "deprecation": []
 }
