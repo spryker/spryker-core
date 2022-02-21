@@ -336,6 +336,7 @@ class IndexInstaller implements SearchInstallerInterface
     {
         end($settingPathArray);
 
+        /** @phpstan-var int */
         return key($settingPathArray);
     }
 }

@@ -49,6 +49,7 @@ class SearchDelegator implements SearchDelegatorInterface
     {
         $searchContextTransfer = $this->getSearchContext($query);
         $searchContextTransfer = $this->expandSearchContext($searchContextTransfer);
+        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query */
         $query = $this->setSearchContext($query, $searchContextTransfer);
 
         return $this->getSearchAdapter($searchContextTransfer)

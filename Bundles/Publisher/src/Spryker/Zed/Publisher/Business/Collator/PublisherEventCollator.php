@@ -58,6 +58,7 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
 
         foreach ($this->publisherPlugins as $queueName => $publisherData) {
             if (is_object($publisherData)) {
+                /** @phpstan-var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface $publisherData */
                 $eventCollection = $this->registerSubscribedEventsByPublisher($eventCollection, $publisherData->getSubscribedEvents(), get_class($publisherData));
 
                 continue;

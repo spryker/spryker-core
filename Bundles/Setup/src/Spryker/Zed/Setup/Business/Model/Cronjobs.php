@@ -347,6 +347,7 @@ class Cronjobs
         }
         curl_close($ch);
 
+        /** @phpstan-var string */
         return $curlResponse;
     }
 

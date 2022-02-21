@@ -25,6 +25,7 @@ class MappingTypeAwareMappingBuilder implements MappingBuilderInterface
     {
         $mappingTypeName = array_key_first($mappings);
         $mappingData = $mappingTypeName !== null ? $mappings[$mappingTypeName] : [];
+        /** @phpstan-var string $mappingTypeName */
         $mappingType = $index->getType($mappingTypeName);
         $mapping = new Mapping($mappingType);
 

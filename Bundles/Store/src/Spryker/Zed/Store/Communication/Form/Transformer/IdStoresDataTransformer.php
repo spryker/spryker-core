@@ -18,6 +18,7 @@ class IdStoresDataTransformer implements DataTransformerInterface
      */
     public function transform($idStoresArray)
     {
+        /** @phpstan-var string */
         return json_encode($idStoresArray);
     }
 

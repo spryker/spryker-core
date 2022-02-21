@@ -45,13 +45,17 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
     public function build()
     {
         $templatePathMap = [];
-        foreach ($this->getFinder() as $file) {
-            $templateName = $this->templateNameBuilder->buildTemplateName($file->getRealPath());
-            $templatePathMap[$templateName] = $file->getRealPath();
+        /** @var array<\Symfony\Component\Finder\SplFileInfo> $files */
+        $files = $this->getFinder();
+        foreach ($files as $file) {
+            /** @var string $realPath */
+            $realPath = $file->getRealPath();
+            $templateName = $this->templateNameBuilder->buildTemplateName($realPath);
+            $templatePathMap[$templateName] = $realPath;
 
             if ($this->templateNameBuilder instanceof NamespacedTemplateNameBuilderInterface) {
-                $namespacedTemplateName = $this->templateNameBuilder->buildNamespacedTemplateName($file->getRealPath());
-                $templatePathMap[$namespacedTemplateName] = $file->getRealPath();
+                $namespacedTemplateName = $this->templateNameBuilder->buildNamespacedTemplateName($realPath);
+                $templatePathMap[$namespacedTemplateName] = $realPath;
             }
         }
 

@@ -65,6 +65,7 @@ class ProductPackagingUnitDataImportConfig extends DataImportConfig
      */
     protected function getModuleRoot(): string
     {
+        /** @phpstan-var string */
         return realpath(implode(DIRECTORY_SEPARATOR, [
             __DIR__,
             '..',

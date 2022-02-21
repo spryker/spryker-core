@@ -76,7 +76,9 @@ class CsvMeta implements CsvMetaInterface
     {
         if ($this->columns === null) {
             $this->csvFile->fseek(0);
-            $this->columns = $this->csvFile->fgetcsv();
+            /** @var array<string> $columns */
+            $columns = $this->csvFile->fgetcsv();
+            $this->columns = $columns;
         }
 
         return $this->columns;
@@ -105,6 +107,7 @@ class CsvMeta implements CsvMetaInterface
             $lines = 0;
             $string = '';
             while (!$this->csvFile->eof()) {
+                /** @var string $string */
                 $string = $this->csvFile->fread(8192);
                 $lines += substr_count($string, $this->lineSeparator);
             }

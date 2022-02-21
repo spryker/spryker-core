@@ -57,6 +57,7 @@ class ConnectionProvider implements ConnectionProviderInterface
             $this->establishConnection();
         }
 
+        /** @phpstan-var \Propel\Runtime\Connection\ConnectionInterface */
         return static::$connection;
     }
 

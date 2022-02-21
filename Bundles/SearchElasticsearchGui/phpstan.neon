@@ -1,5 +1,7 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
         - { message: '#Negated boolean expression is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php' }
+        - '#Parameter \#1 \$searchQuery of method .+SearchElasticsearchGuiToSearchElasticsearchClientInterface::search\(\) expects .+SearchContextAwareQueryInterface given.#'
+        - '#Call to an undefined method .+SearchContextAwareQueryInterface::setSearchContext\(\).#'

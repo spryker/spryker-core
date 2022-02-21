@@ -101,6 +101,7 @@ abstract class Descriptor implements DescriptorInterface
             return $value;
         }
 
+        /** @phpstan-var string */
         return preg_replace("/\n\s*/s", '', var_export($value, true));
     }
 }

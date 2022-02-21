@@ -73,7 +73,9 @@ class CheckConditionConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string|null $optionStateMachineName */
         $optionStateMachineName = $this->input->getOption(static::OPTION_STATE_MACHINE_NAME);
+        /** @var string|null $argumentStateMachineName */
         $argumentStateMachineName = $this->input->getArgument(static::ARGUMENT_STATE_MACHINE_NAME);
 
         $isValidArgument = $this->validateStateMachineNameArgument($argumentStateMachineName);

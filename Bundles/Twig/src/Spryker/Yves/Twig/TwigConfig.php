@@ -173,9 +173,11 @@ class TwigConfig extends AbstractBundleConfig
     public function getFormTemplateDirectories(): array
     {
         $reflectedFormExtension = new ReflectionClass(FormExtension::class);
+        /** @var string $fileName */
+        $fileName = $reflectedFormExtension->getFileName();
 
         return [
-            dirname($reflectedFormExtension->getFileName()) . '/../Resources/views/Form',
+            dirname($fileName) . '/../Resources/views/Form',
         ];
     }
 }

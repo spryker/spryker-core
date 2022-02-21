@@ -67,6 +67,7 @@ abstract class AbstractRouterDebugConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        /** @var string|null $name */
         $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
         $helper = new DescriptorHelper();
 

@@ -82,6 +82,7 @@ class FuzzyQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     {
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
+            /** @phpstan-var object $boolQuery */
             throw new InvalidArgumentException(sprintf(
                 'Fuzzy query expander available only with  %s, got: %s',
                 BoolQuery::class,

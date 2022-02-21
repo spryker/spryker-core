@@ -1,5 +1,8 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
+        - '#Call to an undefined method Orm.+\\SpyProductAbstractQuery::leftJoinSpyProductCategory\(\).#'
+        - '#Call to an undefined method Orm.+\\SpyUserQuery::joinSpyProductRelationType\(\).#'
+        - '#Call to an undefined method Orm.+\\SpyProductRelationTypeQuery::useSpyProductAbstractQuery\(\).#'

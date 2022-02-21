@@ -262,6 +262,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     {
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
+            /** @phpstan-var object $boolQuery */
             throw new InvalidArgumentException(sprintf('Facet filters available only with %s, got: %s', BoolQuery::class, get_class($boolQuery)));
         }
 

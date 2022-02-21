@@ -92,6 +92,10 @@ class MySqlStorageReader extends AbstractStorageReader
 
         foreach ($queryDataPerTable as $tableName => $tableQueryData) {
             foreach ($tableQueryData as $dataSet) {
+                /**
+                 * @var string $keyPlaceholder
+                 * @var string $aliasKeyPlaceholder
+                 */
                 [$keyPlaceholder, $aliasKeyPlaceholder] = array_keys($dataSet);
                 $selectFragments[] = $this->buildSelectQuerySql($tableName, $keyPlaceholder, $aliasKeyPlaceholder);
             }

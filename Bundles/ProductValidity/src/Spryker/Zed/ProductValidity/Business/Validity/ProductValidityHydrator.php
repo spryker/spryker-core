@@ -38,10 +38,10 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
      */
     public function hydrate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
         $productValidityEntity = $this->productValidityQueryContainer
-            ->queryProductValidityByIdProductConcrete(
-                $productConcreteTransfer->getIdProductConcrete(),
-            )
+            ->queryProductValidityByIdProductConcrete($idProductConcrete)
             ->findOne();
 
         if (!$productValidityEntity) {

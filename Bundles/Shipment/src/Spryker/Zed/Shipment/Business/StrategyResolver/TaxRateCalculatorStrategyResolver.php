@@ -46,6 +46,7 @@ class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyReso
      */
     public function resolve(iterable $itemTransfers): CalculatorInterface
     {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         if (count($itemTransfers) === 0) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 

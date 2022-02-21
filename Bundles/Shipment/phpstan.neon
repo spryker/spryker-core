@@ -1,4 +1,9 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method Orm\\.+Query::filterByName\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::filterByIdShipmentMethod\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::filterByPricePlugin\(\).#'
+        - '#Call to an undefined method Orm\\.+SpyWishlist::getTaxSet\(\).#'

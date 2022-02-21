@@ -73,6 +73,7 @@ class PropelSchema implements PropelSchemaInterface
      */
     private function getCurrentSchemaContent(array $groupedSchemas)
     {
+        /** @var \Symfony\Component\Finder\SplFileInfo $schemaFile */
         $schemaFile = current($groupedSchemas);
 
         return $schemaFile->getContents();

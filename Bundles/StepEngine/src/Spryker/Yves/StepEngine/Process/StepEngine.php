@@ -115,6 +115,7 @@ class StepEngine implements StepEngineInterface
         }
 
         if ($formCollection->hasSubmittedForm($request, $quoteTransfer)) {
+            /** @var \Symfony\Component\Form\FormInterface $form */
             $form = $formCollection->handleRequest($request, $quoteTransfer);
             if ($form->isSubmitted() && $form->isValid()) {
                 $quoteTransfer = $this->executeWithFormInput($currentStep, $request, $quoteTransfer, $form->getData());

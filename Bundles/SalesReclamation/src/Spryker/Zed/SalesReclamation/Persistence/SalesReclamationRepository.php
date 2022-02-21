@@ -28,12 +28,12 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
 
         $reclamationEntities = $this->getFactory()
             ->createSalesReclamationQuery()
+            ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation())
             ->leftJoinWithOrder()
             ->leftJoinWithSpySalesReclamationItem()
                 ->useSpySalesReclamationItemQuery()
                 ->leftJoinWithOrderItem()
             ->endUse()
-            ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation())
             ->find();
 
         if (!$reclamationEntities->count()) {

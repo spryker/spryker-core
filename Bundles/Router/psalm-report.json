@@ -76,30 +76,6 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Yves\\Router\\Router\\Router::setRouterEnhancerPluginsToMatcher expects Symfony\\Component\\Routing\\Matcher\\UrlMatcherInterface, possibly different type Symfony\\Component\\Routing\\Matcher\\RequestMatcherInterface|Symfony\\Component\\Routing\\Matcher\\UrlMatcherInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Yves/Router/Router/Router.php",
-            "snippet": "        $this->matcher = $this->setRouterEnhancerPluginsToMatcher(parent::getMatcher());",
-            "selected_text": "parent::getMatcher()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Router\\Business\\Router\\Router::setRouterEnhancerPluginsToMatcher expects Symfony\\Component\\Routing\\Matcher\\UrlMatcherInterface, possibly different type Symfony\\Component\\Routing\\Matcher\\RequestMatcherInterface|Symfony\\Component\\Routing\\Matcher\\UrlMatcherInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/Router/Router.php",
-            "snippet": "        $this->matcher = $this->setRouterEnhancerPluginsToMatcher(parent::getMatcher());",
-            "selected_text": "parent::getMatcher()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
             "line_from": 144,
             "line_to": 144,
             "type": "PossiblyFalseOperand",

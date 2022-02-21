@@ -158,9 +158,14 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getZedDirectoryPathPattern()
     {
+        /** @var array<int, string> $vendorPresentations */
+        $vendorPresentations = glob('vendor/*/*/src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT);
+        /** @var array<int, string> $projectPresentations */
+        $projectPresentations = glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT);
+
         $directories = array_merge(
-            glob('vendor/*/*/src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
-            glob('src/*/Zed/*/Presentation', GLOB_ONLYDIR | GLOB_NOSORT),
+            $vendorPresentations,
+            $projectPresentations,
         );
 
         return $directories;
@@ -192,10 +197,17 @@ class TwigConfig extends AbstractBundleConfig
             $themeName = $themeNameDefault;
         }
 
+        /** @var array<int, string> $vendorThemeNames */
+        $vendorThemeNames = glob('vendor/*/*/src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT);
+        /** @var array<int, string> $projectDefaultThemeNames */
+        $projectDefaultThemeNames = glob('src/*/Yves/*/Theme/' . $themeNameDefault, GLOB_ONLYDIR | GLOB_NOSORT);
+        /** @var array<int, string> $projectThemeNames */
+        $projectThemeNames = glob('src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT);
+
         $directories = array_merge(
-            glob('vendor/*/*/src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT),
-            glob('src/*/Yves/*/Theme/' . $themeNameDefault, GLOB_ONLYDIR | GLOB_NOSORT),
-            glob('src/*/Yves/*/Theme/' . $themeName, GLOB_ONLYDIR | GLOB_NOSORT),
+            $vendorThemeNames,
+            $projectDefaultThemeNames,
+            $projectThemeNames,
         );
 
         return $directories;
@@ -232,9 +244,11 @@ class TwigConfig extends AbstractBundleConfig
     public function getFormTemplateDirectories(): array
     {
         $reflectedFormExtension = new ReflectionClass(FormExtension::class);
+        /** @var string $fileName */
+        $fileName = $reflectedFormExtension->getFileName();
 
         return [
-            dirname($reflectedFormExtension->getFileName()) . '/../Resources/views/Form',
+            dirname($fileName) . '/../Resources/views/Form',
         ];
     }
 }

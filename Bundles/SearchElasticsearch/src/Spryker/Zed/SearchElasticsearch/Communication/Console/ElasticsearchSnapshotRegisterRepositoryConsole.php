@@ -59,6 +59,7 @@ class ElasticsearchSnapshotRegisterRepositoryConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $snapshotRepository */
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
 
         if ($this->getFacade()->existsSnapshotRepository($snapshotRepository)) {

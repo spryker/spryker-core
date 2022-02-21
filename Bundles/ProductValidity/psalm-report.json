@@ -1,127 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'Traversable|array<array-key, Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/ProductConcrete/ProductConcreteSwitcher.php",
-            "snippet": "     * @return \\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "selected_text": "\\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'Traversable|array<array-key, Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/ProductConcrete/ProductConcreteSwitcher.php",
-            "snippet": "     * @return \\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "selected_text": "\\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productsBecomingActive has wrong type 'Traversable|array<array-key, Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/ProductConcrete/ProductConcreteSwitcher.php",
-            "snippet": "     * @param \\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable $productsBecomingActive",
-            "selected_text": "\\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productsBecomingInactive has wrong type 'Traversable|array<array-key, Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/ProductConcrete/ProductConcreteSwitcher.php",
-            "snippet": "     * @param \\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable $productsBecomingInactive",
-            "selected_text": "\\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productValidityEntities has wrong type 'Traversable|array<array-key, Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/ProductConcrete/ProductConcreteSwitcher.php",
-            "snippet": "     * @param \\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable $productValidityEntities",
-            "selected_text": "\\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productValidityEntities has wrong type 'Traversable|array<array-key, Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/ProductConcrete/ProductConcreteSwitcher.php",
-            "snippet": "     * @param \\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable $productValidityEntities",
-            "selected_text": "\\Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity[]|\\Traversable",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductValidity\\Persistence\\ProductValidityQueryContainerInterface::queryProductValidityByIdProductConcrete cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/Validity/ProductValidityHydrator.php",
-            "snippet": "                $productConcreteTransfer->getIdProductConcrete()",
-            "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductValidity\\Business\\Validity\\ProductValidityHydrator::formatDateTime expects DateTime|null, possibly different type DateTime|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/Validity/ProductValidityHydrator.php",
-            "snippet": "            $this->formatDateTime($productValidityEntity->getValidFrom())",
-            "selected_text": "$productValidityEntity->getValidFrom()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductValidity\\Business\\Validity\\ProductValidityHydrator::formatDateTime expects DateTime|null, possibly different type DateTime|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/Validity/ProductValidityHydrator.php",
-            "snippet": "            $this->formatDateTime($productValidityEntity->getValidTo())",
-            "selected_text": "$productValidityEntity->getValidTo()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductValidity\\Persistence\\ProductValidityQueryContainerInterface::queryProductValidityByIdProductConcrete cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Business/Validity/ProductValidityUpdater.php",
-            "snippet": "            ->queryProductValidityByIdProductConcrete($productConcreteTransfer->getIdProductConcrete())",
-            "selected_text": "$productConcreteTransfer->getIdProductConcrete()",
-            "error_level": 3,
-            "shortcode": 78
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",
@@ -134,6 +13,18 @@
             "selected_text": "DatabaseTransactionHandlerTrait",
             "error_level": 2,
             "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Product\\Dependency\\Plugin\\ProductConcretePluginCreateInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Communication/Plugin/ProductValidityCreatePlugin.php",
+            "snippet": "class ProductValidityCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface",
+            "selected_text": "ProductValidityCreatePlugin",
+            "error_level": 2,
+            "shortcode": 152
         }
     ]
 }

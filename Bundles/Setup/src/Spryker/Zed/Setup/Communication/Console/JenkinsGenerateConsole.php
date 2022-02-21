@@ -56,9 +56,9 @@ class JenkinsGenerateConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $result = $this->getFacade()->generateCronjobs(
-            $input->getOption('role'),
-        );
+        /** @var array $roles */
+        $roles = $input->getOption('role');
+        $result = $this->getFacade()->generateCronjobs($roles);
 
         $output->writeln($result);
 

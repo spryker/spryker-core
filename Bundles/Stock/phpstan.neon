@@ -1,4 +1,7 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Call to an undefined method Orm\\.+Query::useStockQuery\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::useSpyProductQuery\(\).#'

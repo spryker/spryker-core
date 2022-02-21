@@ -182,6 +182,7 @@ class IndexSettingsUpdater implements InstallerInterface
     {
         end($settingPathArray);
 
+        /** @phpstan-var int */
         return key($settingPathArray);
     }
 

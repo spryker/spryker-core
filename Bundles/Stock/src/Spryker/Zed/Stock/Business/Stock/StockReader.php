@@ -92,9 +92,11 @@ class StockReader implements StockReaderInterface
     {
         $storeTransfer->requireName();
 
+        /** @var string $storeName */
+        $storeName = $storeTransfer->getName();
         $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())
             ->setIsActive(true)
-            ->setStoreNames([$storeTransfer->getName()]);
+            ->setStoreNames([$storeName]);
 
         $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
 

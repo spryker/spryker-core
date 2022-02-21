@@ -91,6 +91,7 @@ abstract class AbstractStorageReader implements StorageReaderInterface
             throw new StatementNotPreparedException('Failed to prepare statement object for selecting storage data.');
         }
 
+        /** @phpstan-var \Propel\Runtime\Connection\StatementInterface */
         return $statement;
     }
 

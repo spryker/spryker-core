@@ -356,10 +356,10 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->leftJoinWithSpyShoppingListItem()
             ->useSpyShoppingListCompanyUserQuery()
-            ->filterByFkCompanyUser($idCompanyUser)
-            ->endUse()
-            ->leftJoinWithSpyShoppingListItem();
+                ->filterByFkCompanyUser($idCompanyUser)
+            ->endUse();
 
         $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsQuery)->find();
 
@@ -382,10 +382,10 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
+            ->leftJoinWithSpyShoppingListItem()
             ->useSpyShoppingListCompanyBusinessUnitQuery()
-            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->endUse()
-            ->leftJoinWithSpyShoppingListItem();
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->endUse();
 
         $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
 
@@ -430,12 +430,12 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         $shoppingListsCompanyUsers = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
-                ->useSpyCompanyUserQuery()
-                    ->useCustomerQuery()
-                        ->filterByAnonymizedAt(null)
-                    ->endUse()
-                ->endUse()
             ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->useSpyCompanyUserQuery()
+                ->useCustomerQuery()
+                    ->filterByAnonymizedAt(null)
+                ->endUse()
+            ->endUse()
             ->find();
 
         $shoppingListCompanyUserCollection = new ShoppingListCompanyUserCollectionTransfer();

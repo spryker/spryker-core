@@ -63,6 +63,7 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
     {
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
+            /** @phpstan-var object $boolQuery */
             throw new InvalidArgumentException(sprintf(
                 'Is Active query expander available only with %s, got: %s',
                 BoolQuery::class,

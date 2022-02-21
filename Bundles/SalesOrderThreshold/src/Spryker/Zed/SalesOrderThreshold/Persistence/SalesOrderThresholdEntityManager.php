@@ -60,6 +60,7 @@ class SalesOrderThresholdEntityManager extends AbstractEntityManager implements 
         $storeTransfer = $salesOrderThresholdTransfer->getStore();
         $currencyTransfer = $salesOrderThresholdTransfer->getCurrency();
 
+        /** @var \Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThreshold|null $salesOrderThresholdEntity */
         $salesOrderThresholdEntity = $this->getFactory()
             ->createSalesOrderThresholdQuery()
             ->filterByFkStore($storeTransfer->getIdStore())

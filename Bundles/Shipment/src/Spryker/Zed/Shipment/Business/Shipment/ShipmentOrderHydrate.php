@@ -75,6 +75,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function isMultiShipmentOrder(iterable $shipmentTransfers): bool
     {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers */
         return count($shipmentTransfers) > 1;
     }
 
@@ -251,6 +252,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         OrderTransfer $orderTransfer,
         iterable $shipmentTransfers
     ): ?ShipmentTransfer {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers */
         if (count($shipmentTransfers) === 0) {
             return null;
         }

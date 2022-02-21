@@ -23,11 +23,11 @@ class ProductAbstractSearchReader extends AbstractProductSearchReader implements
 
         $searchableCount = $this->productSearchQueryContainer
             ->queryProductSearch()
+            ->filterByIsSearchable(true)
+            ->filterByFkLocale($idLocale)
             ->useSpyProductQuery()
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
-            ->filterByIsSearchable(true)
-            ->filterByFkLocale($idLocale)
             ->count();
 
         return ($searchableCount > 0);

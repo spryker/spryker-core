@@ -360,6 +360,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
      */
     public function queryActiveProductRelationProductAbstract()
     {
+        /** @phpstan-var \Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery */
         return $this->getFactory()
             ->createProductRelationProductAbstractQuery()
             ->joinSpyProductAbstract()

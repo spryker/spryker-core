@@ -46,6 +46,7 @@ class ShipmentExpenseFilterStrategyResolver implements ShipmentExpenseFilterStra
      */
     public function resolve(iterable $itemTransfers): MultiShipmentExpenseFilterInterface
     {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         if (count($itemTransfers) === 0) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 

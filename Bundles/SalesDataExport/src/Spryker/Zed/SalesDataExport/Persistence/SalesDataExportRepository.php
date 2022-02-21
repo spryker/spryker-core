@@ -147,6 +147,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
             ->setFields($selectedFields)
             ->setData([]);
 
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery */
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemPropelQuery()
             ->joinOrder()

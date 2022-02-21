@@ -49,7 +49,9 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
             return $this->matcher;
         }
 
-        $this->matcher = $this->setRouterEnhancerPluginsToMatcher(parent::getMatcher());
+        /** @var \Symfony\Component\Routing\Matcher\UrlMatcherInterface $urlMatcher */
+        $urlMatcher = parent::getMatcher();
+        $this->matcher = $this->setRouterEnhancerPluginsToMatcher($urlMatcher);
 
         return $this->matcher;
     }

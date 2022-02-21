@@ -87,6 +87,7 @@ class PdoBatchIterator implements CountableIteratorInterface
 
         $sqlPart = $this->criteriaBuilder->toSqlPart();
 
+        /** @var \Propel\Runtime\Connection\StatementInterface $st */
         $st = $this->queryContainer
             ->getConnection()
             ->prepare($sqlPart->getSql());
@@ -155,6 +156,7 @@ class PdoBatchIterator implements CountableIteratorInterface
         $sqlPart = $this->criteriaBuilder->toSqlPart();
 
         $countSql = 'SELECT COUNT(*) cnt FROM (' . $sqlPart->getSql() . ') AS v';
+        /** @var \Propel\Runtime\Connection\StatementInterface $st */
         $st = $this->queryContainer->getConnection()->prepare($countSql);
         $st->execute($sqlPart->getParameters());
         /** @var int $count */

@@ -66,7 +66,9 @@ class ElasticsearchSnapshotCreateConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $snapshotRepository */
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
+        /** @var string $snapshotName */
         $snapshotName = $input->getArgument(static::ARGUMENT_SNAPSHOT_NAME);
 
         if ($this->getFacade()->createSnapshot($snapshotRepository, $snapshotName)) {

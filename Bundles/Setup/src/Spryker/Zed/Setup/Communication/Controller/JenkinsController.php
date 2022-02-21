@@ -205,6 +205,7 @@ $command</command>";
             'role::',
         ];
 
+        /** @var array<string, string> $options */
         $options = getopt($shortopts, $longopts);
         if (!array_key_exists('role', $options)) {
             return false;

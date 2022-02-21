@@ -49,7 +49,9 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         ReclamationTransfer $reclamationTransfer
     ): ReclamationTransfer {
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($reclamationEntity->getOrder()->toArray(), true);
+        /** @var array<string, mixed> $orderData */
+        $orderData = $reclamationEntity->getOrder()->toArray();
+        $orderTransfer->fromArray($orderData, true);
 
         $reclamationTransfer
             ->fromArray($reclamationEntity->toArray(), true)

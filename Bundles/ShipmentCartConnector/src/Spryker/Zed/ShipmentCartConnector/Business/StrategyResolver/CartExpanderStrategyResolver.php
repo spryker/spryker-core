@@ -46,6 +46,7 @@ class CartExpanderStrategyResolver implements CartExpanderStrategyResolverInterf
      */
     public function resolve(iterable $itemTransfers): ShipmentCartExpanderInterface
     {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         if (count($itemTransfers) === 0) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 

@@ -109,6 +109,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $normalized = trim($normalized, '_');
 
         $filter = new UnderscoreToCamelCase();
+        /** @var string $normalized */
         $normalized = $filter->filter($normalized);
         $normalized = ucfirst($normalized);
 

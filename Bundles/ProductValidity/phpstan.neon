@@ -1,3 +1,5 @@
 parameters:
-    level: 6
+    level: 8
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Parameter \#1 \$dateTime of method .+ProductValidityHydrator::formatDateTime\(\) expects DateTime\|null, .+null given.#'

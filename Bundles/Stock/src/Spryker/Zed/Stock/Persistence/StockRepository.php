@@ -81,6 +81,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      */
     public function getStocksWithRelatedStoresByCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): array
     {
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery */
         $stockQuery = $this->getFactory()
             ->createStockQuery()
             ->leftJoinWithStockStore()
@@ -237,6 +238,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      */
     protected function queryStockProductByProductAbstractSkuAndStore(string $abstractSku, StoreTransfer $storeTransfer): SpyStockProductQuery
     {
+        /** @phpstan-var \Orm\Zed\Stock\Persistence\SpyStockProductQuery */
         return $this->getFactory()
             ->createStockProductQuery()
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
@@ -262,6 +264,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      */
     protected function queryStockProductByProductConcreteSkuAndStore(string $concreteSku, StoreTransfer $storeTransfer): SpyStockProductQuery
     {
+        /** @phpstan-var \Orm\Zed\Stock\Persistence\SpyStockProductQuery */
         return $this->getFactory()
             ->createStockProductQuery()
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)

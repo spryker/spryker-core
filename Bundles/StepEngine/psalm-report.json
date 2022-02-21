@@ -3,8 +3,32 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 3 of Spryker\\Yves\\StepEngine\\Dependency\\Form\\AbstractSubFormType::buildView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildView",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Dependency/Form/AbstractSubFormType.php",
+            "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options)",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 136,
+            "line_to": 136,
+            "type": "PossiblyInvalidArrayOffset",
+            "message": "Cannot access value on variable $this->steps using a float|int offset, expecting array-key",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
+            "snippet": "                $nextStep = $this->steps[$position + 1];",
+            "selected_text": "$this->steps[$position + 1]",
+            "error_level": 3,
+            "shortcode": 116
+        },
+        {
+            "severity": "info",
+            "line_from": 136,
+            "line_to": 136,
             "type": "InvalidOperand",
             "message": "Cannot perform a numeric operation with a non-numeric type string",
             "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
@@ -15,20 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
-            "type": "InvalidOperand",
-            "message": "Cannot perform a numeric operation with a non-numeric type array-key",
-            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
-            "snippet": "                $previousStep = $this->steps[$position - 1];",
-            "selected_text": "$position",
-            "error_level": 4,
-            "shortcode": 58
-        },
-        {
-            "severity": "info",
-            "line_from": 214,
-            "line_to": 214,
+            "line_from": 219,
+            "line_to": 219,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Yves\\StepEngine\\Process\\StepCollection::getNextStepRoute is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
@@ -39,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 225,
-            "line_to": 225,
+            "line_from": 230,
+            "line_to": 230,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Yves\\StepEngine\\Process\\StepCollection::getNextStepRoute is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
@@ -48,18 +60,6 @@
             "selected_text": "$currentStep->getPostConditionErrorRoute()",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method isSubmitted on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepEngine.php",
-            "snippet": "            if ($form->isSubmitted() && $form->isValid()) {",
-            "selected_text": "isSubmitted",
-            "error_level": 3,
-            "shortcode": 83
         }
     ],
     "deprecation": []

@@ -58,6 +58,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
      */
     public function getSource($name)
     {
+        /** @phpstan-var string */
         return file_get_contents($this->findTemplate($name));
     }
 
@@ -112,6 +113,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
                 continue;
             }
 
+            /** @var array<int, string> $path */
             $path = glob($path, GLOB_ONLYDIR | GLOB_NOSORT);
             if (count($path) > 0) {
                 $paths[] = $path[0];

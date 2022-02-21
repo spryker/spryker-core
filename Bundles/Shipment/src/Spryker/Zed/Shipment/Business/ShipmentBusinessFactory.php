@@ -489,7 +489,10 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentMethodAvailabilityChecker(): MethodAvailabilityCheckerInterface
     {
-        return new MethodAvailabilityChecker($this->getAvailabilityPlugins());
+        /** @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface> $shipmentMethodAvailabilityPlugins */
+        $shipmentMethodAvailabilityPlugins = $this->getAvailabilityPlugins();
+
+        return new MethodAvailabilityChecker($shipmentMethodAvailabilityPlugins);
     }
 
     /**
@@ -497,8 +500,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentMethodPriceReader(): MethodPriceReaderInterface
     {
+        /** @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface> $shipmentMethodPricePlugins */
+        $shipmentMethodPricePlugins = $this->getPricePlugins();
+
         return new MethodPriceReader(
-            $this->getPricePlugins(),
+            $shipmentMethodPricePlugins,
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getCurrencyFacade(),
@@ -526,7 +532,10 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentMethodDeliveryTimeReader(): MethodDeliveryTimeReaderInterface
     {
-        return new MethodDeliveryTimeReader($this->getDeliveryTimePlugins());
+        /** @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface> $shipmentMethodDeliveryTimePlugins */
+        $shipmentMethodDeliveryTimePlugins = $this->getDeliveryTimePlugins();
+
+        return new MethodDeliveryTimeReader($shipmentMethodDeliveryTimePlugins);
     }
 
     /**

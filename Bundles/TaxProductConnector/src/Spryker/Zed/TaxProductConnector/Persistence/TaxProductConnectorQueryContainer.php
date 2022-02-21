@@ -49,6 +49,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function getAbstractAbstractIdsForTaxRate($idTaxRate)
     {
+        /** @phpstan-var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery */
         return $this->getFactory()->createProductAbstractQuery()
             ->select([
                 SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
@@ -114,6 +115,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function queryTaxSetForProductAbstract($idProductAbstract)
     {
+        /** @phpstan-var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery */
         return $this->getFactory()
             ->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
@@ -137,6 +139,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function queryTaxSetByIdProductAbstractAndCountryIso2Code(array $productAbstractIds, $countryIso2Code)
     {
+        /** @phpstan-var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery */
         return $this->getFactory()->createTaxSetQuery()
             ->useSpyProductAbstractQuery()
                 ->filterByIdProductAbstract($productAbstractIds, Criteria::IN)
@@ -170,6 +173,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      */
     public function queryTaxSetByIdProductAbstractAndCountryIso2Codes(array $productAbstractIds, array $countryIso2Codes): SpyTaxSetQuery
     {
+        /** @phpstan-var \Orm\Zed\Tax\Persistence\SpyTaxSetQuery */
         return $this->getFactory()
             ->createTaxSetQuery()
             ->useSpyProductAbstractQuery()

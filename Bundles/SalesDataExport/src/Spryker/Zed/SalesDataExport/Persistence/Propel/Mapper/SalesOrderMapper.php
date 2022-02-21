@@ -91,6 +91,7 @@ class SalesOrderMapper
 
         $mappedSalesOrders = [];
         foreach ($salesOrderRows as $salesOrderRow) {
+            /** @var array<string, array<\Generated\Shared\Transfer\CommentTransfer>> $mappedSalesOrderRow */
             $mappedSalesOrderRow = array_combine($selectedFields, $salesOrderRow);
 
             if (isset($mappedSalesOrderRow[static::KEY_ORDER_COMMENTS])) {

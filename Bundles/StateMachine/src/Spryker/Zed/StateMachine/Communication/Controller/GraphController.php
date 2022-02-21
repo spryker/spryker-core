@@ -118,11 +118,15 @@ class GraphController extends AbstractController
      */
     public function drawItemAction(Request $request)
     {
+        /** @var string|null $stateMachine */
         $stateMachine = $request->query->get(static::URL_PARAM_STATE_MACHINE);
+        /** @var string|null $processName */
         $processName = $request->query->get(static::URL_PARAM_PROCESS);
+        /** @var string|null $highlightState */
         $highlightState = $request->query->get(static::URL_PARAM_HIGHLIGHT_STATE);
 
         $stateMachineBundleConfig = $this->getFactory()->getConfig();
+        /** @var string $format */
         $format = $request->query->get(static::URL_PARAM_FORMAT, $stateMachineBundleConfig->getGraphDefaultFormat());
         $fontSize = $request->query->getInt(static::URL_PARAM_FONT_SIZE, $stateMachineBundleConfig->getGraphDefaultFontSize());
 

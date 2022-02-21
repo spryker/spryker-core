@@ -37,7 +37,9 @@ class RouteResolver
     protected function getCamelCaseToDash($incomingString)
     {
         $filter = new CamelCaseToDash();
+        /** @var string $camelCasedIncomingString */
+        $camelCasedIncomingString = $filter->filter($incomingString);
 
-        return strtolower($filter->filter($incomingString));
+        return strtolower($camelCasedIncomingString);
     }
 }

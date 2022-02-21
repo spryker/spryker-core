@@ -32,6 +32,7 @@ class TemplateNameExtractor implements TemplateNameExtractorInterface
     public function extractBundleName($name)
     {
         $nameWithoutPrefix = $this->getNameWithoutPrefix($name);
+        /** @var int $firstSeparatorPosition */
         $firstSeparatorPosition = $this->getFirstSeparatorPosition($nameWithoutPrefix);
         $bundleName = substr($nameWithoutPrefix, 0, $firstSeparatorPosition);
 

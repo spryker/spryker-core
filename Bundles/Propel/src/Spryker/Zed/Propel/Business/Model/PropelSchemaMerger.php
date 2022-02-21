@@ -234,16 +234,22 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
-        $dom->loadXML($xml->asXML());
+        /** @var string $source */
+        $source = $xml->asXML();
+        $dom->loadXML($source);
         $this->ensureElementHierarchy($dom);
 
         $callback = function ($matches) {
+            /** @var int $multiplier */
             $multiplier = (strlen($matches[1]) / 2) * 4;
 
             return str_repeat(' ', $multiplier) . '<';
         };
 
-        return preg_replace_callback('/^( +)</m', $callback, $dom->saveXML());
+        /** @var string $domTree */
+        $domTree = $dom->saveXML();
+
+        return preg_replace_callback('/^( +)</m', $callback, $domTree);
     }
 
     /**
@@ -392,7 +398,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     protected function removeChild(SimpleXMLElement $simpleXMLElement, string $childName): void
     {
+        /** @var \DOMNode $childNode */
         $childNode = dom_import_simplexml($simpleXMLElement->$childName);
+        /** @var \DOMElement $dom */
         $dom = dom_import_simplexml($simpleXMLElement);
         $dom->removeChild($childNode);
     }

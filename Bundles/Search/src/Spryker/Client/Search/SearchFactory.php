@@ -56,8 +56,11 @@ class SearchFactory extends AbstractFactory
      */
     public function createSearchDelegator(): SearchDelegatorInterface
     {
+        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface> $searchAdapterPlugins */
+        $searchAdapterPlugins = $this->getClientAdapterPlugins();
+
         return new SearchDelegator(
-            $this->getClientAdapterPlugins(),
+            $searchAdapterPlugins,
             $this->createSearchContextExpander(),
         );
     }
@@ -67,8 +70,11 @@ class SearchFactory extends AbstractFactory
      */
     public function createConnectionDelegator(): ConnectionDelegatorInterface
     {
+        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface> $connectionCheckerAdapterPlugins */
+        $connectionCheckerAdapterPlugins = $this->getClientAdapterPlugins();
+
         return new ConnectionDelegator(
-            $this->getClientAdapterPlugins(),
+            $connectionCheckerAdapterPlugins,
         );
     }
 

@@ -309,6 +309,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
             return $quoteTransfer->setShipment(null);
         }
 
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer $firstShipmentGroupTransfer */
         $firstShipmentGroupTransfer = current($shipmentGroupCollection);
         $firstShipmentGroupTransfer->requireShipment();
 

@@ -53,9 +53,14 @@ class DocumentReader implements DocumentReaderInterface
      */
     protected function mapElasticaDocumentToSearchDocumentTransfer(Document $document, SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
+        /** @var array $data */
+        $data = $document->getData();
+        /** @var string $id */
+        $id = $document->getId();
+
         return $searchDocumentTransfer
-            ->setId($document->getId())
-            ->setData($document->getData());
+            ->setId($id)
+            ->setData($data);
     }
 
     /**
@@ -67,6 +72,7 @@ class DocumentReader implements DocumentReaderInterface
      */
     protected function readMappingTypeNameFromElasticsearch(Index $elasticaIndex): string
     {
+        /** @phpstan-var string */
         return key($elasticaIndex->getMapping());
     }
 

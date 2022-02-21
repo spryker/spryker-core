@@ -226,6 +226,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrlRedirectBySourceUrl($sourceUrl)
     {
+        /** @phpstan-var \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery */
         return $this->getFactory()
             ->createUrlRedirectQuery()
             ->useSpyUrlQuery()
@@ -244,6 +245,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
      */
     public function queryUrlRedirectByIdUrl($idUrl)
     {
+        /** @phpstan-var \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery */
         return $this->getFactory()
             ->createUrlRedirectQuery()
             ->useSpyUrlQuery()

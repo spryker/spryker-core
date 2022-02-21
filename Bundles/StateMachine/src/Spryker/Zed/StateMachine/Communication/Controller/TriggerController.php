@@ -80,7 +80,9 @@ class TriggerController extends AbstractController
             E_USER_DEPRECATED,
         );
 
+        /** @var string $stateMachineName */
         $stateMachineName = $request->query->get(static::URL_PARAM_STATE_MACHINE_NAME);
+        /** @var string $processName */
         $processName = $request->query->get(static::URL_PARAM_PROCESS_NAME);
 
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($processName, $stateMachineName);
@@ -88,6 +90,7 @@ class TriggerController extends AbstractController
         $identifier = $this->castId($request->query->get(static::URL_PARAM_IDENTIFIER));
         $this->getFacade()->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
 
+        /** @var string $redirect */
         $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
         return $this->redirectResponse(htmlentities($redirect));
@@ -100,6 +103,7 @@ class TriggerController extends AbstractController
      */
     public function submitTriggerEventForNewItemAction(Request $request)
     {
+        /** @var string $redirect */
         $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
         if (!$this->isValidTriggerEventItemPostRequest($request)) {
@@ -108,7 +112,9 @@ class TriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
+        /** @var string $processName */
         $processName = $request->query->get(static::URL_PARAM_PROCESS_NAME);
+        /** @var string $stateMachineName */
         $stateMachineName = $request->query->get(static::URL_PARAM_STATE_MACHINE_NAME);
 
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer($processName, $stateMachineName);
@@ -138,9 +144,11 @@ class TriggerController extends AbstractController
 
         $stateMachineItemTransfer = $this->createStateMachineItemTransfer($identifier, $idState);
 
+        /** @var string $eventName */
         $eventName = $request->query->get(static::URL_PARAM_EVENT);
         $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
 
+        /** @var string $redirect */
         $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
         return $this->redirectResponse(htmlentities($redirect));
@@ -153,6 +161,7 @@ class TriggerController extends AbstractController
      */
     public function submitTriggerEventAction(Request $request)
     {
+        /** @var string $redirect */
         $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
         if (!$this->isValidTriggerEventPostRequest($request)) {
@@ -166,6 +175,7 @@ class TriggerController extends AbstractController
 
         $stateMachineItemTransfer = $this->createStateMachineItemTransfer($identifier, $idState);
 
+        /** @var string $eventName */
         $eventName = $request->query->get(static::URL_PARAM_EVENT);
         $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
 

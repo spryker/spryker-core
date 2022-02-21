@@ -57,8 +57,9 @@ class DatabaseExportConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->info(static::COMMAND_DESCRIPTION);
-
-        $this->getFacade()->exportDatabase($input->getArgument(static::ARGUMENT_BACKUP_PATH));
+        /** @var string $backupPath */
+        $backupPath = $input->getArgument(static::ARGUMENT_BACKUP_PATH);
+        $this->getFacade()->exportDatabase($backupPath);
 
         return static::CODE_SUCCESS;
     }

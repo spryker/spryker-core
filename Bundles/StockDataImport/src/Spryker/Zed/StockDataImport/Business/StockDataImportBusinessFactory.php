@@ -17,20 +17,20 @@ use Spryker\Zed\StockDataImport\Business\Writer\StockWriterStep;
 
 /**
  * @method \Spryker\Zed\StockDataImport\StockDataImportConfig getConfig()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class StockDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
     public function getStockDataImporter()
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getStockDataImporterConfiguration(),
         );
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createNameValidatorStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStockWriterStep());
@@ -41,16 +41,14 @@ class StockDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
     public function getStockStoreDataImporter()
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getStockStoreDataImporterConfiguration(),
         );
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStockNameToIdStockStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStoreNameToIdStoreStep());

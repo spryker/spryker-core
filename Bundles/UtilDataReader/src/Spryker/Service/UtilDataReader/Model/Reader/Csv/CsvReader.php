@@ -92,6 +92,7 @@ class CsvReader implements CsvReaderInterface
             return [];
         }
 
+        /** @phpstan-var array<string, mixed> */
         return array_combine(
             array_values($columns),
             array_values($data),
@@ -140,7 +141,9 @@ class CsvReader implements CsvReaderInterface
     public function getFile()
     {
         if ($this->csvFile === null) {
-            $this->csvFile = $this->createCsvFile($this->csvFilename);
+            /** @var string $csvFileName */
+            $csvFileName = $this->csvFilename;
+            $this->csvFile = $this->createCsvFile($csvFileName);
         }
 
         return $this->csvFile;
@@ -187,10 +190,12 @@ class CsvReader implements CsvReaderInterface
             ));
         }
 
+        /** @var string $fileName */
+        $fileName = $this->getFile()->getRealPath();
         $data = $this->composeAndValidateLine(
             $this->getCsvMeta()->getColumns(),
             $data,
-            $this->getFile()->getRealPath(),
+            $fileName,
             $this->readIndex + 1,
         );
 
@@ -238,10 +243,12 @@ class CsvReader implements CsvReaderInterface
                 break;
             }
 
+            /** @var string $fileName */
+            $fileName = $csvFile->getRealPath();
             $data[] = $this->composeAndValidateLine(
                 $csvMeta->getColumns(),
                 $line,
-                $csvFile->getRealPath(),
+                $fileName,
                 $currentLine++,
             );
         }

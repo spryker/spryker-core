@@ -97,6 +97,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected function validateQuantityIsPositiveNumber(string $sku, $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
         if ($quantity <= 0 || !ctype_digit((string)$quantity)) {
+            /** @phpstan-var int $quantity */
             $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
 
             return false;
@@ -176,6 +177,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             }
         }
 
+        /** @phpstan-var array<int> */
         return $cartQuantityMap;
     }
 

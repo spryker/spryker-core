@@ -157,6 +157,7 @@ class PageDataMapper implements PageDataMapperInterface
         $normalizedKey = $this->underscoreToDashFilter->filter($key);
 
         if (in_array($normalizedKey, $this->pageIndexMap->getProperties())) {
+            /** @phpstan-var string */
             return $normalizedKey;
         }
 

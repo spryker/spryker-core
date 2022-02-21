@@ -23,6 +23,7 @@ class System
             phpinfo();
         }
 
+        /** @phpstan-var string */
         return ob_get_clean();
     }
 }

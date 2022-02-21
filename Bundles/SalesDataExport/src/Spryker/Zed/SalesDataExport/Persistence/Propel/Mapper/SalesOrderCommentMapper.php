@@ -63,6 +63,7 @@ class SalesOrderCommentMapper
             ];
         }
 
+        /** @phpstan-var string */
         return $this->utilEncodingService->encodeJson($orderComments);
     }
 }

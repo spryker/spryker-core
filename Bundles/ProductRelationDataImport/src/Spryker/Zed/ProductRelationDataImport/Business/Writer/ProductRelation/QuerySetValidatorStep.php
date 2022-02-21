@@ -52,7 +52,9 @@ class QuerySetValidatorStep implements DataImportStepInterface
             ->find();
 
         foreach ($productRelationEntities as $productRelationEntity) {
-            $existingQuerySetDecoded = $this->utilEncodingService->decodeJson($productRelationEntity->getQuerySetData(), true);
+            /** @var string $jsonValue */
+            $jsonValue = $productRelationEntity->getQuerySetData();
+            $existingQuerySetDecoded = $this->utilEncodingService->decodeJson($jsonValue, true);
             if ($existingQuerySetDecoded == $querySetDecoded) {
                 throw new DuplicatedQuerySetDataException('This query set data is already in use for the same product and relation type');
             }

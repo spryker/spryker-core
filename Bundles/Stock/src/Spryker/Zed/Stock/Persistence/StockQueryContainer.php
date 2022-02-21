@@ -47,6 +47,7 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockByNeverOutOfStockAllTypesForStockNames($idProduct, array $stockNames)
     {
+        /** @phpstan-var \Orm\Zed\Stock\Persistence\SpyStockProductQuery */
         return $this
             ->queryStockByNeverOutOfStockAllTypes($idProduct)
             ->useStockQuery()
@@ -83,6 +84,7 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockByProductsForStockNames($idProduct, array $stockNames)
     {
+        /** @phpstan-var \Orm\Zed\Stock\Persistence\SpyStockProductQuery */
         return $this->queryStockByProducts($idProduct)
             ->useStockQuery()
                 ->filterByName($stockNames, Criteria::IN)
@@ -257,6 +259,7 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockByIdProduct($idProduct)
     {
+        /** @phpstan-var \Orm\Zed\Stock\Persistence\SpyStockProductQuery */
         return $this->queryStockByProducts($idProduct)
             ->useStockQuery()
                 ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
@@ -278,6 +281,7 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockByIdProductAndTypes($idProduct, array $types)
     {
+        /** @phpstan-var \Orm\Zed\Stock\Persistence\SpyStockProductQuery */
         return $this->queryStockByProducts($idProduct)
               ->useStockQuery()
                   ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')

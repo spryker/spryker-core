@@ -68,7 +68,9 @@ class ElasticsearchCopyIndexConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $sourceIndexName */
         $sourceIndexName = $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME);
+        /** @var string $targetIndexName */
         $targetIndexName = $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME);
         $sourceSearchContextTransfer = $this->buildSearchContextTransferFromIndexName($sourceIndexName);
         $targetSearchContextTransfer = $this->buildSearchContextTransferFromIndexName($targetIndexName);
@@ -91,10 +93,15 @@ class ElasticsearchCopyIndexConsole extends Console
      */
     protected function buildInfoMessageFromInput(InputInterface $input): string
     {
+        /** @var string $sourceIndexName */
+        $sourceIndexName = $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME);
+        /** @var string $targetIndexName */
+        $targetIndexName = $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME);
+
         return sprintf(
             'Search index "%s" is successfully copied to search index "%s".',
-            $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME),
-            $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME),
+            $sourceIndexName,
+            $targetIndexName,
         );
     }
 
@@ -105,10 +112,15 @@ class ElasticsearchCopyIndexConsole extends Console
      */
     protected function buildErrorMessageFromInput(InputInterface $input): string
     {
+        /** @var string $sourceIndexName */
+        $sourceIndexName = $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME);
+        /** @var string $targetIndexName */
+        $targetIndexName = $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME);
+
         return sprintf(
             'Could not copy search index "%s" to search index "%s".',
-            $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME),
-            $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME),
+            $sourceIndexName,
+            $targetIndexName,
         );
     }
 

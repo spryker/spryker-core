@@ -27,7 +27,7 @@ class PostgreSqlStorageReader extends AbstractStorageReader
     protected const SELECT_STATEMENT_PATTERN = '
       SELECT *
         FROM (
-          SELECT %1$s::VARCHAR as resource_key, (CASE WHEN key = %1$s THEN data WHEN alias_keys::JSONB -> %1$s IS NOT NULL THEN (alias_keys::JSONB -> %1$s)::TEXT END) AS resource_data 
+          SELECT %1$s::VARCHAR as resource_key, (CASE WHEN key = %1$s THEN data WHEN alias_keys::JSONB -> %1$s IS NOT NULL THEN (alias_keys::JSONB -> %1$s)::TEXT END) AS resource_data
             FROM %2$s
         ) as storage
         WHERE storage.resource_data IS NOT NULL
@@ -88,6 +88,10 @@ class PostgreSqlStorageReader extends AbstractStorageReader
     {
         $selectFragments = [];
 
+        /**
+         * @var string $tableName
+         * @var array<string> $tableQueryData
+         */
         foreach ($queryDataPerTable as $tableName => $tableQueryData) {
             foreach (array_keys($tableQueryData) as $keyPlaceholder) {
                 $selectFragments[] = $this->buildSelectQuerySql($tableName, $keyPlaceholder);

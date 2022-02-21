@@ -1,6 +1,7 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
+        - '#Call to an undefined method Orm\\.+Query::findByFkCompanyUser\(\).#'

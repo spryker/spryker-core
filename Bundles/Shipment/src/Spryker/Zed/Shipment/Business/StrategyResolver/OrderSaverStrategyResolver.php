@@ -46,6 +46,7 @@ class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
      */
     public function resolve(iterable $itemTransfers): ShipmentOrderSaverInterface
     {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         if (count($itemTransfers) === 0) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 

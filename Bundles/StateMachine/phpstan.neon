@@ -1,7 +1,9 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#If condition is always true.#'
         - '#SimpleXMLElement.+does not accept string.#'
+        - '#Parameter \#1 \$createdAt of method .+StateMachineItemTransfer::setCreatedAt\(\) expects string\|null, DateTime\|string\|null given.#'
+        - '#Call to an undefined method Orm\\.+Query::useStateHistoryQuery\(\).#'

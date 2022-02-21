@@ -87,11 +87,13 @@ class PublisherTriggerEventsConsole extends Console
         $resourcesIds = [];
 
         if ($input->getOption(static::RESOURCE_OPTION)) {
+            /** @var string $resourceString */
             $resourceString = $input->getOption(static::RESOURCE_OPTION);
             $resources = explode(',', $resourceString);
         }
 
         if ($input->getOption(static::RESOURCE_IDS_OPTION)) {
+            /** @var string $idsString */
             $idsString = $input->getOption(static::RESOURCE_IDS_OPTION);
             $resourcesIds = explode(',', $idsString);
         }

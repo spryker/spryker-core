@@ -28,12 +28,10 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function getShipmentMethodStoreDataImporter()
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getShipmentMethodStoreDataImporterConfiguration(),
         );
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createShipmentMethodKeyToIdShipmentMethodStep());
         $dataSetStepBroker = $dataSetStepBroker->addStep($this->createStoreNameToIdStoreStep());
@@ -48,7 +46,6 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function getShipmentDataImporter()
     {
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getShipmentDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(ShipmentMethodWriterStep::BULK_SIZE);
@@ -63,7 +60,7 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     public function getShipmentMethodPriceDataImporter()
     {

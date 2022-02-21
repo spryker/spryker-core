@@ -305,6 +305,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductAbstractByAttributeName(array $attributeNames)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
         $query = $this->getFactory()
             ->createProductAbstractQuery()
             ->leftJoinSpyProductAbstractLocalizedAttributes()

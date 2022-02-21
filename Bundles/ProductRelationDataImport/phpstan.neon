@@ -1,3 +1,5 @@
 parameters:
-    level: 6
+    level: 8
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Parameter \#2 \$levels of function dirname expects int<1, max>, int given.#'

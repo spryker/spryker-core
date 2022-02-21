@@ -26,6 +26,7 @@ abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string|null $indexName */
         $indexName = $input->getArgument(static::ARGUMENT_INDEX_NAME);
 
         if ($indexName) {

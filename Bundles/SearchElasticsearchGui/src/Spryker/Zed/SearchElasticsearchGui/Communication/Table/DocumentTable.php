@@ -99,6 +99,7 @@ class DocumentTable extends AbstractTable
         $this->setTotal($results->getTotalHits());
         $this->setFiltered($results->getTotalHits());
 
+        /** @var \Elastica\Result $result */
         foreach ($results as $result) {
             $tableData[] = [
                 static::COL_ID => sprintf(

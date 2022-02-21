@@ -34,8 +34,10 @@ class ProductValidityUpdater implements ProductValidityUpdaterInterface
     {
         $productConcreteTransfer->requireIdProductConcrete();
 
+        /** @var int $idProductConcrete */
+        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
         $productValidityEntity = $this->productValidityQueryContainer
-            ->queryProductValidityByIdProductConcrete($productConcreteTransfer->getIdProductConcrete())
+            ->queryProductValidityByIdProductConcrete($idProductConcrete)
             ->findOneOrCreate();
 
         $productValidityEntity->setValidFrom($productConcreteTransfer->getValidFrom());

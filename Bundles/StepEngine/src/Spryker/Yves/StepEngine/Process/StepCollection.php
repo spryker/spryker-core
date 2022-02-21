@@ -114,6 +114,7 @@ class StepCollection implements StepCollectionInterface
             $this->completedSteps[] = $step;
         }
 
+        /** @phpstan-var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface */
         return end($this->completedSteps);
     }
 
@@ -127,6 +128,7 @@ class StepCollection implements StepCollectionInterface
      */
     public function getNextStep(StepInterface $currentStep)
     {
+        /** @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $nextStep */
         $nextStep = end($this->steps);
 
         foreach ($this->steps as $position => $step) {
@@ -146,9 +148,11 @@ class StepCollection implements StepCollectionInterface
      */
     public function getPreviousStep(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null)
     {
+        /** @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $firstStep */
         $firstStep = reset($this->steps);
 
         $previousStep = null;
+        /** @var int $position */
         foreach ($this->steps as $position => $step) {
             if ($step->getStepRoute() === $currentStep->getStepRoute() && $position !== 0) {
                 $previousStep = $this->steps[$position - 1];

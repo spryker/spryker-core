@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
@@ -8,3 +8,5 @@ parameters:
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::setCustomer\(\)\.#'
+        - '#Parameter \#1 \$createdAt of method .+ItemStateTransfer::setCreatedAt\(\) expects string\|null, DateTime\|string\|null given.#'
+        - '#Call to an undefined method Orm\\.+Query::groupByIdSalesOrder\(\).#'

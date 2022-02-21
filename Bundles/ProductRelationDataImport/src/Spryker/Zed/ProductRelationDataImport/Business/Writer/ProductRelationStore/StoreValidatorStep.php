@@ -28,6 +28,7 @@ class StoreValidatorStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $productRelationKey = $dataSet[ProductRelationStoreDataSetInterface::COL_PRODUCT_RELATION_KEY];
+        /** @var \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity */
         $productRelationEntity = SpyProductRelationQuery::create()
             ->filterByProductRelationKey($productRelationKey)
             ->findOne();

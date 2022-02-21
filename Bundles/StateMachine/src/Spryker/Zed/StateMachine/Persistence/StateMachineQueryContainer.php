@@ -90,15 +90,16 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryItemHistoryByStateItemIdentifier($identifier, $idStateMachineProcess)
     {
+        /** @phpstan-var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery */
         return $this->getFactory()
             ->createStateMachineItemStateHistoryQuery()
-            ->useStateQuery()
-                ->filterByFkStateMachineProcess($idStateMachineProcess)
-            ->endUse()
-            ->joinState()
             ->filterByIdentifier($identifier)
             ->orderByCreatedAt()
-            ->orderByIdStateMachineItemStateHistory();
+            ->orderByIdStateMachineItemStateHistory()
+            ->joinState()
+            ->useStateQuery()
+                ->filterByFkStateMachineProcess($idStateMachineProcess)
+            ->endUse();
     }
 
     /**
@@ -135,15 +136,16 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
         $processName,
         array $states
     ) {
+        /** @phpstan-var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery */
         return $this->getFactory()
             ->createStateMachineItemStateQuery()
+            ->filterByName($states, Criteria::IN)
+            ->orderByIdStateMachineItemState()
+            ->joinProcess()
             ->useProcessQuery()
               ->filterByStateMachineName($stateMachineName)
               ->filterByName($processName)
-            ->endUse()
-            ->joinProcess()
-            ->filterByName($states, Criteria::IN)
-            ->orderByIdStateMachineItemState();
+            ->endUse();
     }
 
     /**
@@ -164,15 +166,16 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
         array $states,
         string $historySortDirection
     ) {
+        /** @phpstan-var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery */
         return $this->getFactory()
             ->createStateMachineItemStateQuery()
+            ->filterByName($states, Criteria::IN)
             ->innerJoinWithStateHistory()
+            ->joinProcess()
             ->useProcessQuery()
                 ->filterByStateMachineName($stateMachineName)
                 ->filterByName($processName)
             ->endUse()
-            ->joinProcess()
-            ->filterByName($states, Criteria::IN)
             ->useStateHistoryQuery()
                 ->orderByCreatedAt($historySortDirection)
                 ->orderByIdStateMachineItemStateHistory($historySortDirection)
@@ -295,13 +298,14 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryLastHistoryItem(StateMachineItemTransfer $stateMachineItemTransfer, $transitionToIdState)
     {
+        /** @phpstan-var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery */
         return $this->getFactory()->createStateMachineItemStateHistoryQuery()
-            ->useStateQuery()
-               ->filterByFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
-            ->endUse()
             ->filterByIdentifier($stateMachineItemTransfer->getIdentifier())
             ->orderByCreatedAt(Criteria::DESC)
             ->orderByIdStateMachineItemStateHistory(Criteria::DESC)
-            ->limit(1);
+            ->limit(1)
+            ->useStateQuery()
+               ->filterByFkStateMachineProcess($stateMachineItemTransfer->getIdStateMachineProcess())
+            ->endUse();
     }
 }

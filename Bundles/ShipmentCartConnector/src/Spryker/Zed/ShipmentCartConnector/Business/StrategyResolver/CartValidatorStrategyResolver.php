@@ -46,6 +46,7 @@ class CartValidatorStrategyResolver implements CartValidatorStrategyResolverInte
      */
     public function resolve(iterable $itemTransfers): ShipmentCartValidatorInterface
     {
+        /** @phpstan-var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
         if (count($itemTransfers) === 0) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 

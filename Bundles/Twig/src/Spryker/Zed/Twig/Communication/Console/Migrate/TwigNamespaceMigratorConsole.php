@@ -85,8 +85,10 @@ class TwigNamespaceMigratorConsole extends Console
             $changedFileContent = str_replace($search, $replace, $fileContent);
 
             if ($fileContent !== $changedFileContent) {
-                $this->output->writeln($splFileInfo->getRealPath());
-                file_put_contents($splFileInfo->getRealPath(), $changedFileContent);
+                /** @var string $realPath */
+                $realPath = $splFileInfo->getRealPath();
+                $this->output->writeln($realPath);
+                file_put_contents($realPath, $changedFileContent);
                 $changedFiles++;
             }
         }
@@ -150,6 +152,7 @@ class TwigNamespaceMigratorConsole extends Console
             }
         }
 
+        /** @phpstan-var array<string, string> */
         return $namespaceMap;
     }
 
@@ -160,7 +163,9 @@ class TwigNamespaceMigratorConsole extends Console
      */
     protected function getFinder(): Finder
     {
-        $directory = APPLICATION_ROOT_DIR . '/' . ltrim($this->input->getArgument(static::ARGUMENT_PATH), '/');
+        /** @var string $path */
+        $path = $this->input->getArgument(static::ARGUMENT_PATH);
+        $directory = APPLICATION_ROOT_DIR . '/' . ltrim($path, '/');
 
         if (!is_dir($directory)) {
             throw new InvalidArgumentException(sprintf('Given "%s" is not a directory', $directory));

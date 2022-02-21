@@ -66,13 +66,15 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
      */
     protected function getMaxPosition(ConnectionInterface $connection)
     {
-        $maxPosition = $connection
+        /** @var \Propel\Runtime\DataFetcher\DataFetcherInterface|\PDOStatement $query */
+        $query = $connection
             ->query(sprintf(
                 'SELECT MAX(%s) FROM %s',
                 SpyProductSearchAttributeTableMap::COL_POSITION,
                 SpyProductSearchAttributeTableMap::TABLE_NAME,
-            ))
-            ->fetchColumn();
+            ));
+
+        $maxPosition = $query->fetchColumn();
 
         return (int)$maxPosition;
     }

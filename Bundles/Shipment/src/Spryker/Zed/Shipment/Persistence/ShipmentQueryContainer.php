@@ -169,6 +169,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      */
     public function queryTaxSetByIdShipmentMethodAndCountryIso2Code($idShipmentMethod, $countryIso2Code)
     {
+        /** @phpstan-var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery */
         return $this->getFactory()->createShipmentMethodQuery()
             ->filterByIdShipmentMethod($idShipmentMethod)
             ->useTaxSetQuery()

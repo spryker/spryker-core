@@ -2,10 +2,10 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 157,
+            "line_to": 157,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'mixed|true' does not match the declared return type 'null|string' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Table\\DocumentTable::getSearchString",
+            "message": "The inferred type 'mixed|null|true' does not match the declared return type 'null|string' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Table\\DocumentTable::getSearchString",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
             "snippet": "        return !$this->getSearchTerm() ?: $this->getSearchTerm()['value'];",
             "selected_text": "!$this->getSearchTerm() ?: $this->getSearchTerm()['value']",
@@ -124,32 +124,32 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 77,
+            "line_to": 77,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
-            "snippet": "                $this->getIndexName()",
+            "snippet": "                $this->getIndexName(),",
             "selected_text": "$this->getIndexName()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\SearchElasticsearchGui\\Dependency\\Client\\SearchElasticsearchGuiToSearchElasticsearchClientInterface::search expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, possibly different type Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface provided",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
-            "snippet": "            $this->documentListQuery",
+            "snippet": "            $this->documentListQuery,",
             "selected_text": "$this->documentListQuery",
             "error_level": 3,
             "shortcode": 92
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 123,
+            "line_to": 123,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface::setSearchContext does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
@@ -157,6 +157,18 @@
             "selected_text": "setSearchContext",
             "error_level": 3,
             "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 157,
+            "line_to": 157,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable  of type mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "        return !$this->getSearchTerm() ?: $this->getSearchTerm()['value'];",
+            "selected_text": "$this->getSearchTerm()['value']",
+            "error_level": 3,
+            "shortcode": 79
         }
     ],
     "deprecation": [
@@ -174,8 +186,8 @@
         },
         {
             "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
+            "line_from": 40,
+            "line_to": 40,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
@@ -186,8 +198,8 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 46,
+            "line_to": 46,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
@@ -198,8 +210,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 123,
+            "line_to": 123,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface::setSearchContext has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",

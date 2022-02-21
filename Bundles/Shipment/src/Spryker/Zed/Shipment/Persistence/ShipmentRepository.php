@@ -210,6 +210,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     public function findShipmentMethodByIdAndIdStore(int $idShipmentMethod, int $idStore): ?ShipmentMethodTransfer
     {
+        /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null $salesShipmentMethodEntity */
         $salesShipmentMethodEntity = $this->queryMethods()
             ->useShipmentMethodStoreQuery()
                 ->filterByFkStore($idStore)
@@ -265,13 +266,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer
     {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesShipment|null $salesShipmentEntity */
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()
+            ->filterByIdSalesShipment($idShipmentMethod)
             ->leftJoinWithSpySalesOrderAddress()
             ->useSpySalesOrderAddressQuery()
                 ->leftJoinCountry()
             ->endUse()
-            ->filterByIdSalesShipment($idShipmentMethod)
             ->findOne();
 
         if ($salesShipmentEntity === null) {
@@ -534,13 +536,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     protected function queryMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
     {
+        /** @phpstan-var \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery */
         return $this->queryMethods()
+            ->leftJoinWithShipmentCarrier()
             ->joinWithShipmentMethodPrice()
-                ->useShipmentMethodPriceQuery()
-                    ->joinWithCurrency()
-                    ->joinWithStore()
-                ->endUse()
-            ->leftJoinWithShipmentCarrier();
+            ->useShipmentMethodPriceQuery()
+                ->joinWithCurrency()
+                ->joinWithStore()
+            ->endUse();
     }
 
     /**
@@ -569,6 +572,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $shipmentMethodEntities = $this->queryMethods()
             ->filterByIsActive(true)
+            ->groupByIdShipmentMethod()
             ->leftJoinWithShipmentCarrier()
             ->useShipmentMethodStoreQuery()
                 ->filterByFkStore($idStore)
@@ -578,7 +582,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->useShipmentMethodPriceQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkStore($idStore)
             ->endUse()
-            ->groupByIdShipmentMethod()
             ->find();
 
         if ($shipmentMethodEntities->count() === 0) {

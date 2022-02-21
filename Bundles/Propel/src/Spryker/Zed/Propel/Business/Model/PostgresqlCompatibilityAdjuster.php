@@ -88,6 +88,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     protected function adjustForNamedIndices(DOMDocument $dom)
     {
         $xpath = new DOMXPath($dom);
+        /** @var iterable $nodeList */
         $nodeList = $xpath->query('//index[@name]|//unique[@name]|//foreign-key[@name]');
         $domChanged = 0;
         /** @var \DOMElement $node */
@@ -107,11 +108,14 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     protected function adjustForIdMethodParameter(DOMDocument $dom)
     {
         $xpath = new DOMXPath($dom);
+        /** @var iterable $nodeList */
         $nodeList = $xpath->query("//column[@autoIncrement='true']");
         $domChanged = 0;
+        /** @var \DOMElement $column */
         foreach ($nodeList as $column) {
-            /** @var \DOMElement $column */
-            if ($xpath->query('id-method-parameter', $column->parentNode)->length > 0) {
+            /** @var \DOMNodeList $domNodeList */
+            $domNodeList = $xpath->query('id-method-parameter', $column->parentNode);
+            if ($domNodeList->length > 0) {
                 continue;
             }
             /** @var \DOMElement $tableName */

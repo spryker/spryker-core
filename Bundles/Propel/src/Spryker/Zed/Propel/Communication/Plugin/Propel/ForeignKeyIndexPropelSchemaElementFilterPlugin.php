@@ -154,7 +154,9 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
      */
     protected function isFkIndexInFkFieldNameList(string $nameAttribute, array $fkFieldNames): bool
     {
-        $fieldName = mb_substr($nameAttribute, strpos($nameAttribute, 'fk_'));
+        /** @var int $startPosition */
+        $startPosition = strpos($nameAttribute, 'fk_');
+        $fieldName = mb_substr($nameAttribute, $startPosition);
 
         return in_array($fieldName, $fkFieldNames, true);
     }
@@ -167,6 +169,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     protected function removeElements(array $elementsToRemove): void
     {
         foreach ($elementsToRemove as $element) {
+            /** @var \DOMElement $childNode */
             $childNode = dom_import_simplexml($element);
 
             $childNode->parentNode->removeChild($childNode);

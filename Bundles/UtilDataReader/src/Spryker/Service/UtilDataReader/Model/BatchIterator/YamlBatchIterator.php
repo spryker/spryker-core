@@ -65,9 +65,9 @@ class YamlBatchIterator implements CountableIteratorInterface
                     $this->yamlFilename,
                 ));
             }
-            $this->batchData = $this->yamlReader->parse(
-                file_get_contents($this->yamlFilename),
-            );
+            /** @var string $fileName */
+            $fileName = file_get_contents($this->yamlFilename);
+            $this->batchData = $this->yamlReader->parse($fileName);
         }
     }
 

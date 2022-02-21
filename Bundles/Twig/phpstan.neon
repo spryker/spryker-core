@@ -1,5 +1,5 @@
 parameters:
-    level: 6
+    level: 7
     checkMissingIterableValueType: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFilesystemLoader.php'
