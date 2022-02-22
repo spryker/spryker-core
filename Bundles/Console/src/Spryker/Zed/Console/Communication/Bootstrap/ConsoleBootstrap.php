@@ -19,6 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
  * @method \Spryker\Zed\Console\Communication\ConsoleCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Console\Business\ConsoleFacade getFacade()
  */
 class ConsoleBootstrap extends Application
 {

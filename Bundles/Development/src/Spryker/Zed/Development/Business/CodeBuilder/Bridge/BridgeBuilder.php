@@ -632,7 +632,9 @@ class BridgeBuilder
 
         foreach ($method->getParameters() as $parameter) {
             if ($parameter->hasType()) {
-                $finalOutput .= $this->getClassNameFromFqcn($parameter->getType()->getName()) . ' ';
+                /** @var \ReflectionNamedType $type */
+                $type = $parameter->getType();
+                $finalOutput .= $this->getClassNameFromFqcn($type->getName()) . ' ';
             }
 
             $finalOutput .= '$' . $parameter->getName();

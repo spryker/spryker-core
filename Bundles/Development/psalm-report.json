@@ -2,20 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 635,
-            "line_to": 635,
-            "type": "UndefinedMethod",
-            "message": "Method ReflectionType::getName does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/CodeBuilder/Bridge/BridgeBuilder.php",
-            "snippet": "                $finalOutput .= $this->getClassNameFromFqcn($parameter->getType()->getName()) . ' ';",
-            "selected_text": "getName",
-            "error_level": 6,
-            "shortcode": 22
-        },
-        {
-            "severity": "error",
-            "line_from": 696,
-            "line_to": 696,
+            "line_from": 698,
+            "line_to": 698,
             "type": "UndefinedMethod",
             "message": "Method ReflectionType::getName does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/CodeBuilder/Bridge/BridgeBuilder.php",
