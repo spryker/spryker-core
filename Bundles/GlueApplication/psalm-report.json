@@ -95,18 +95,6 @@
             "selected_text": "ceil($restResponse->getTotals() / $limit)",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "UndefinedThisPropertyFetch",
-            "message": "Instance property Spryker\\Glue\\GlueApplication\\Session\\Storage\\MockArraySessionStorage::$metadataBag is not defined",
-            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Session/Storage/MockArraySessionStorage.php",
-            "snippet": "        $this->metadataBag->stampNew($lifetime);",
-            "selected_text": "$this->metadataBag",
-            "error_level": 6,
-            "shortcode": 41
         }
     ],
     "warning": [
