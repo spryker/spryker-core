@@ -104,7 +104,7 @@ class MockArraySessionStorage implements SessionStorageInterface
             $this->start();
         }
 
-        $this->metadataBag->stampNew($lifetime);
+        static::$metadataBag->stampNew($lifetime);
         $this->id = $this->generateId();
 
         return true;
