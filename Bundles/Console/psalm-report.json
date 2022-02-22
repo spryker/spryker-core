@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 108,
-            "line_to": 108,
-            "type": "UndefinedMethod",
-            "message": "Method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::preRun does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
-            "snippet": "            $this->getFacade()->preRun($input, $output);",
-            "selected_text": "preRun",
-            "error_level": 6,
-            "shortcode": 22
-        },
-        {
-            "severity": "error",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "UndefinedMethod",
-            "message": "Method Spryker\\Zed\\Kernel\\Business\\AbstractFacade::postRun does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
-            "snippet": "            $this->getFacade()->postRun($input, $output);",
-            "selected_text": "postRun",
-            "error_level": 6,
-            "shortcode": 22
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -52,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 69,
+            "line_to": 69,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $commands[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Console/src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",

@@ -14,18 +14,6 @@
         },
         {
             "severity": "error",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "UndefinedMethod",
-            "message": "Method Silex\\Application::getTransferSession does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Yves/Application/Plugin/Provider/YvesControllerProvider.php",
-            "snippet": "        return $this->app->getTransferSession();",
-            "selected_text": "getTransferSession",
-            "error_level": 6,
-            "shortcode": 22
-        },
-        {
-            "severity": "error",
             "line_from": 39,
             "line_to": 39,
             "type": "InvalidArgument",
@@ -232,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
+            "line_from": 181,
+            "line_to": 181,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of strpos cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Yves/Application/Plugin/Provider/YvesControllerProvider.php",
@@ -1302,8 +1290,8 @@
         },
         {
             "severity": "info",
-            "line_from": 218,
-            "line_to": 218,
+            "line_from": 208,
+            "line_to": 208,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Application\\ApplicationConstants::YVES_SSL_EXCLUDED is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Yves/Application/Plugin/Provider/YvesControllerProvider.php",
@@ -1314,8 +1302,8 @@
         },
         {
             "severity": "info",
-            "line_from": 234,
-            "line_to": 234,
+            "line_from": 224,
+            "line_to": 224,
             "type": "DeprecatedClass",
             "message": "Spryker\\Shared\\Application\\Communication\\ControllerServiceBuilder is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Yves/Application/Plugin/Provider/YvesControllerProvider.php",

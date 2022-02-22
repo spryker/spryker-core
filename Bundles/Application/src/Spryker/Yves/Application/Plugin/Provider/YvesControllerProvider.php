@@ -74,16 +74,6 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     }
 
     /**
-     * @deprecated Not in use anymore. Will be removed with next major.
-     *
-     * @return mixed
-     */
-    public function getTransferSession()
-    {
-        return $this->app->getTransferSession();
-    }
-
-    /**
      * @return bool
      */
     protected function isSslEnabled()
