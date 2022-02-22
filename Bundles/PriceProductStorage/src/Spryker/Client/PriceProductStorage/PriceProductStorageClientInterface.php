@@ -80,9 +80,9 @@ interface PriceProductStorageClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemValidationTransfer $ItemValidationTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validateItemProductPrice(ItemValidationTransfer $ItemValidationTransfer): ItemValidationTransfer;
+    public function validateItemProductPrice(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }

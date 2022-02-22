@@ -116,7 +116,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdStore on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/OmsProductOfferReservation/src/Spryker/Zed/OmsProductOfferReservation/Persistence/OmsProductOfferReservationRepository.php",
-            "snippet": "                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore()",
+            "snippet": "                $omsProductOfferReservationCriteriaTransfer->getStore()->getIdStore(),",
             "selected_text": "getIdStore",
             "error_level": 3,
             "shortcode": 83

@@ -5,10 +5,10 @@
             "line_from": 28,
             "line_to": 28,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Label\\LabelProvider::findAllLabels is incorrect, got 'array<int(0)|string, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Label\\LabelProvider::findAllLabels is incorrect, got 'array<0|string, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Label/LabelProvider.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -17,7 +17,7 @@
             "line_from": 39,
             "line_to": 39,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int(0)|string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Label\\LabelProvider::findAllLabels",
+            "message": "The inferred type 'array<0|string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Label\\LabelProvider::findAllLabels",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Label/LabelProvider.php",
             "snippet": "        return $productLabelOptions;",
             "selected_text": "$productLabelOptions",
@@ -103,7 +103,7 @@
             "line_from": 55,
             "line_to": 55,
             "type": "LessSpecificImplementedReturnType",
-            "message": "The inherited return type 'array<array-key, string>' for Spryker\\Zed\\Discount\\Dependency\\Plugin\\CollectorPluginInterface::acceptedDataTypes is more specific than the implemented return type for Spryker\\Zed\\ProductLabelDiscountConnector\\Communication\\Plugin\\Collector\\ProductLabelCollectorPlugin::accepteddatatypes 'array<array-key, mixed>'",
+            "message": "The inherited return type 'array<array-key, string>' for Spryker\\Zed\\DiscountExtension\\Dependency\\Plugin\\DiscountableItemCollectorPluginInterface::acceptedDataTypes is more specific than the implemented return type for Spryker\\Zed\\ProductLabelDiscountConnector\\Communication\\Plugin\\Collector\\ProductLabelCollectorPlugin::accepteddatatypes 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/Collector/ProductLabelCollectorPlugin.php",
             "snippet": "     * @return array",
             "selected_text": "array",
@@ -115,7 +115,7 @@
             "line_from": 60,
             "line_to": 60,
             "type": "LessSpecificImplementedReturnType",
-            "message": "The inherited return type 'array<array-key, string>' for Spryker\\Zed\\Discount\\Dependency\\Plugin\\DecisionRulePluginInterface::acceptedDataTypes is more specific than the implemented return type for Spryker\\Zed\\ProductLabelDiscountConnector\\Communication\\Plugin\\DecisionRule\\ProductLabelDecisionRulePlugin::accepteddatatypes 'array<array-key, mixed>'",
+            "message": "The inherited return type 'array<array-key, string>' for Spryker\\Zed\\DiscountExtension\\Dependency\\Plugin\\DecisionRulePluginInterface::acceptedDataTypes is more specific than the implemented return type for Spryker\\Zed\\ProductLabelDiscountConnector\\Communication\\Plugin\\DecisionRule\\ProductLabelDecisionRulePlugin::accepteddatatypes 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/DecisionRule/ProductLabelDecisionRulePlugin.php",
             "snippet": "     * @return array",
             "selected_text": "array",
@@ -135,6 +135,30 @@
             "selected_text": "setUnitGrossPrice",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\CollectorPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/Collector/ProductLabelCollectorPlugin.php",
+            "snippet": "class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithValueOptionsPluginInterface",
+            "selected_text": "ProductLabelCollectorPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\DecisionRulePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/DecisionRule/ProductLabelDecisionRulePlugin.php",
+            "snippet": "class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface",
+            "selected_text": "ProductLabelDecisionRulePlugin",
+            "error_level": 2,
+            "shortcode": 152
         }
     ]
 }

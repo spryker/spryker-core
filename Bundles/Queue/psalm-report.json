@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 193,
+            "line_to": 193,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Symfony\\Component\\Process\\Process::__construct expects array<array-key, mixed>, string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Process/ProcessManager.php",
+            "snippet": "            return new Process($command);",
+            "selected_text": "$command",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -80,7 +93,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Queue\\Dependency\\Service\\QueueToUtilEncodingServiceInterface::encodeToFormat cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/QueueDumper/QueueDumper.php",
-            "snippet": "            $this->utilEncodingService->encodeToFormat($data, $format)",
+            "snippet": "            $this->utilEncodingService->encodeToFormat($data, $format),",
             "selected_text": "$format",
             "error_level": 3,
             "shortcode": 78
@@ -111,8 +124,20 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 89,
+            "line_to": 89,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of usleep expects 0|positive-int, parent type int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/SignalHandler/QueueWorkerSignalDispatcher.php",
+            "snippet": "            usleep((int)$this->queueConfig->getQueueWorkerInterval() * Worker::SECOND_TO_MILLISECONDS);",
+            "selected_text": "(int)$this->queueConfig->getQueueWorkerInterval() * Worker::SECOND_TO_MILLISECONDS",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Queue\\Business\\Task\\TaskManager::getQueueReceiverOptions is not nullable, but 'array<array-key, mixed>|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Task/TaskManager.php",
@@ -123,8 +148,8 @@
         },
         {
             "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 122,
+            "line_to": 122,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Queue\\Business\\Task\\TaskManager::getQueueReceiverOptions is not nullable, but the function returns 'array<array-key, mixed>|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Task/TaskManager.php",
@@ -135,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
+            "line_from": 188,
+            "line_to": 188,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Queue\\Business\\Process\\ProcessManagerInterface::isProcessRunning cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
@@ -147,8 +172,20 @@
         },
         {
             "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
+            "line_from": 246,
+            "line_to": 246,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of usleep expects 0|positive-int, parent type int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
+            "snippet": "                usleep((int)$this->queueConfig->getQueueProcessTriggerInterval());",
+            "selected_text": "(int)$this->queueConfig->getQueueProcessTriggerInterval()",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 131,
+            "line_to": 131,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Symfony\\Component\\Console\\Output\\OutputInterface::write cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Communication/Console/QueueDumpConsole.php",
@@ -156,61 +193,13 @@
             "selected_text": "$queueDumpResponseTransfer->getMessage()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\QueueDumpRequestTransfer::setQueueName expects null|string, possibly different type array<array-key, string>|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Communication/Console/QueueDumpConsole.php",
-            "snippet": "            ->setQueueName($queueName)",
-            "selected_text": "$queueName",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\QueueDumpRequestTransfer::setFormat expects null|string, possibly different type array<array-key, string>|bool|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Communication/Console/QueueDumpConsole.php",
-            "snippet": "            ->setFormat($format)",
-            "selected_text": "$format",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\QueueDumpRequestTransfer::setAcknowledge expects bool|null, possibly different type array<array-key, string>|bool|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Communication/Console/QueueDumpConsole.php",
-            "snippet": "            ->setAcknowledge($acknowledge);",
-            "selected_text": "$acknowledge",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Queue\\Business\\QueueFacadeInterface::startTask expects string, possibly different type array<array-key, string>|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Communication/Console/QueueTaskConsole.php",
-            "snippet": "        $this->getFacade()->startTask($input->getArgument('queue'), $options);",
-            "selected_text": "$input->getArgument('queue')",
-            "error_level": 3,
-            "shortcode": 92
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 303,
-            "line_to": 303,
+            "line_from": 326,
+            "line_to": 326,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Queue\\QueueConfig::getIsWorkerLoopEnabled has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
@@ -221,8 +210,8 @@
         },
         {
             "severity": "info",
-            "line_from": 192,
-            "line_to": 192,
+            "line_from": 215,
+            "line_to": 215,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Queue\\QueueConstants::QUEUE_WORKER_LOOP is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/QueueConfig.php",

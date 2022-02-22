@@ -408,13 +408,13 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $spyProductAbstractQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Propel\Runtime\Util\PropelModelPager
      */
     protected function getPaginationModelFromQuery(
-        SpyProductAbstractQuery $spyProductAbstractQuery,
+        SpyProductAbstractQuery $productAbstractQuery,
         PaginationTransfer $paginationTransfer
     ): PropelModelPager {
         $page = $paginationTransfer
@@ -425,7 +425,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->requireMaxPerPage()
             ->getMaxPerPage();
 
-        return $spyProductAbstractQuery->paginate($page, $maxPerPage);
+        return $productAbstractQuery->paginate($page, $maxPerPage);
     }
 
     /**

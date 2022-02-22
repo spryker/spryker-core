@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ItemValidationTransfer;
 interface PriceProductItemValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemValidationTransfer $itemValidationTransfer
      *
      * @return \Generated\Shared\Transfer\ItemValidationTransfer
      */
-    public function validate(ItemValidationTransfer $itemTransfer): ItemValidationTransfer;
+    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer;
 }

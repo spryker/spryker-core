@@ -93,20 +93,20 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $ShoppingListAddToCartRequestCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
     protected function getShoppingListRequestCollectionToCartDiff(
-        ShoppingListAddToCartRequestCollectionTransfer $ShoppingListAddToCartRequestCollectionTransfer,
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer,
         QuoteTransfer $quoteTransfer
     ): ShoppingListAddToCartRequestCollectionTransfer {
         $shoppingListRequestCollectionDiff = new ShoppingListAddToCartRequestCollectionTransfer();
 
         $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);
 
-        foreach ($ShoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
+        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
             if (isset($existingSkuIndex[$ShoppingListAddToCartRequestTransfer->getSku()])) {
                 continue;
             }

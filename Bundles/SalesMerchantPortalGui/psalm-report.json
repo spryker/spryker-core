@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 162,
-            "line_to": 162,
+            "line_from": 201,
+            "line_to": 201,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/ConfigurationProvider/MerchantOrderItemGuiTableConfigurationProvider.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 190,
-            "line_to": 190,
+            "line_from": 229,
+            "line_to": 229,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/ConfigurationProvider/MerchantOrderItemGuiTableConfigurationProvider.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 71,
+            "line_to": 71,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 2 of Spryker\\Zed\\SalesMerchantPortalGui\\Communication\\Controller\\TriggerMerchantOmsController::triggerEventFormMerchantOrderItems expects ArrayObject<int, Generated\\Shared\\Transfer\\MerchantOrderItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MerchantOrderItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/Controller/TriggerMerchantOmsController.php",
@@ -36,18 +36,6 @@
             "selected_text": "$merchantOrderTransfer->getMerchantOrderItems()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\SalesMerchantPortalGui\\Communication\\DataProvider\\MerchantOrderGuiTableDataProvider::fetchData has the more specific type 'Generated\\Shared\\Transfer\\MerchantOrderTableCriteriaTransfer', expecting 'Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer' as defined by Spryker\\Shared\\GuiTable\\DataProvider\\AbstractGuiTableDataProvider::fetchData",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/DataProvider/MerchantOrderGuiTableDataProvider.php",
-            "snippet": "    protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer",
-            "selected_text": "$criteriaTransfer",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -80,27 +68,15 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/DataProvider/MerchantOrderGuiTableDataProvider.php",
-            "snippet": "            $orderTransfer->getLastName()",
+            "snippet": "            $orderTransfer->getLastName(),",
             "selected_text": "$orderTransfer->getLastName()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\SalesMerchantPortalGui\\Communication\\DataProvider\\MerchantOrderItemGuiTableDataProvider::fetchData has the more specific type 'Generated\\Shared\\Transfer\\MerchantOrderItemTableCriteriaTransfer', expecting 'Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer' as defined by Spryker\\Shared\\GuiTable\\DataProvider\\AbstractGuiTableDataProvider::fetchData",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/DataProvider/MerchantOrderItemGuiTableDataProvider.php",
-            "snippet": "    protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer",
-            "selected_text": "$criteriaTransfer",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 195,
-            "line_to": 195,
+            "line_from": 198,
+            "line_to": 198,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $indexedItemTransfers[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Communication/DataProvider/MerchantOrderItemGuiTableDataProvider.php",
@@ -111,56 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesMerchantPortalGui\\Persistence\\SalesMerchantPortalGuiRepository::hydratePaginationTransfer expects Propel\\Runtime\\Util\\PropelModelPager, possibly different type Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrder> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
-            "snippet": "        $paginationTransfer = $this->hydratePaginationTransfer($propelPager);",
-            "selected_text": "$propelPager",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrder> variable $propelPager",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
-            "snippet": "                $propelPager->getResults()->getData(),",
-            "selected_text": "getResults",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesMerchantPortalGui\\Persistence\\SalesMerchantPortalGuiRepository::hydratePaginationTransfer expects Propel\\Runtime\\Util\\PropelModelPager, possibly different type Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderItem> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
-            "snippet": "        $paginationTransfer = $this->hydratePaginationTransfer($propelPager);",
-            "selected_text": "$propelPager",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderItem> variable $propelPager",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
-            "snippet": "                $propelPager->getResults()->getData(),",
-            "selected_text": "getResults",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 465,
-            "line_to": 465,
+            "line_from": 471,
+            "line_to": 471,
             "type": "MoreSpecificReturnType",
             "message": "The declared return type 'Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery' for Spryker\\Zed\\SalesMerchantPortalGui\\Persistence\\SalesMerchantPortalGuiRepository::addMerchantOrderSorting is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
@@ -171,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 487,
-            "line_to": 487,
+            "line_from": 493,
+            "line_to": 493,
             "type": "LessSpecificReturnStatement",
             "message": "The type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderQuery' for Spryker\\Zed\\SalesMerchantPortalGui\\Persistence\\SalesMerchantPortalGuiRepository::addMerchantOrderSorting",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
@@ -183,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 494,
-            "line_to": 494,
+            "line_from": 500,
+            "line_to": 500,
             "type": "MoreSpecificReturnType",
             "message": "The declared return type 'Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderItemQuery' for Spryker\\Zed\\SalesMerchantPortalGui\\Persistence\\SalesMerchantPortalGuiRepository::addMerchantOrderItemSorting is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
@@ -195,8 +123,8 @@
         },
         {
             "severity": "info",
-            "line_from": 515,
-            "line_to": 515,
+            "line_from": 521,
+            "line_to": 521,
             "type": "LessSpecificReturnStatement",
             "message": "The type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrderItemQuery' for Spryker\\Zed\\SalesMerchantPortalGui\\Persistence\\SalesMerchantPortalGuiRepository::addMerchantOrderItemSorting",
             "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
@@ -204,18 +132,6 @@
             "selected_text": "$merchantSalesOrderItemQuery",
             "error_level": 3,
             "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 709,
-            "line_to": 709,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\GiftCardBalance\\Persistence\\SpyGiftCardBalanceLog|Orm\\Zed\\Locale\\Persistence\\SpyLocale|Orm\\Zed\\ManualOrderEntry\\Persistence\\SpyOrderSource|Orm\\Zed\\MerchantSalesOrder\\Persistence\\SpyMerchantSalesOrder|Orm\\Zed\\Oms\\Persistence\\SpyOmsTransitionLog|Orm\\Zed\\Payment\\Persistence\\SpySalesPayment|Orm\\Zed\\Payone\\Persistence\\SpyPaymentPayone|Orm\\Zed\\Refund\\Persistence\\SpyRefund|Orm\\Zed\\SalesInvoice\\Persistence\\SpySalesOrderInvoice|Orm\\Zed\\SalesReclamation\\Persistence\\SpySalesReclamation|Orm\\Zed\\Sales\\Persistence\\SpySalesDiscount|Orm\\Zed\\Sales\\Persistence\\SpySalesExpense|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderAddress|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderComment|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderNote|Orm\\Zed\\Sales\\Persistence\\SpySalesOrderTotals|Orm\\Zed\\Sales\\Persistence\\SpySalesShipment> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesMerchantPortalGui/src/Spryker/Zed/SalesMerchantPortalGui/Persistence/SalesMerchantPortalGuiRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": []

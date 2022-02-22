@@ -107,13 +107,13 @@ class Translator implements TranslatorInterface
      *
      * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
-     * @param string $localeName
+     * @param string $locale
      *
      * @return $this
      */
-    public function setLocale($localeName)
+    public function setLocale($locale)
     {
-        $this->localeName = $localeName;
+        $this->localeName = $locale;
 
         return $this;
     }

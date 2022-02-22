@@ -45,7 +45,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdProductConcrete on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
-            "snippet": "            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()",
+            "snippet": "            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete(),",
             "selected_text": "getIdProductConcrete",
             "error_level": 3,
             "shortcode": 83
@@ -57,7 +57,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method multiply on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
-            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())",
+            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity()),",
             "selected_text": "multiply",
             "error_level": 3,
             "shortcode": 83
@@ -69,7 +69,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\DecimalObject\\Decimal::multiply cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
-            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())",
+            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity()),",
             "selected_text": "$itemTransfer->getQuantity()",
             "error_level": 3,
             "shortcode": 78

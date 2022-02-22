@@ -1,5 +1,126 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, array<array-key, mixed>>' for Twig\\Extension\\ExtensionInterface::getOperators is more specific than the implemented return type for Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getoperators 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Twig/src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+            "snippet": "     * @return array An array of operators",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addInfoNotification is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addinfonotification 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addSuccessNotification is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addsuccessnotification 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addWarningNotification is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addwarningnotification 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addErrorNotification is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::adderrornotification 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 204,
+            "line_to": 204,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addActionRedirect is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addactionredirect 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 218,
+            "line_to": 218,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addActionRefreshDrawer is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addactionrefreshdrawer 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 232,
+            "line_to": 232,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addActionCloseDrawer is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addactionclosedrawer 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 248,
+            "line_to": 248,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addActionRefreshTable is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addactionrefreshtable 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 267,
+            "line_to": 267,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface&static' for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface::addActionRefreshParentTable is more specific than the implemented return type for Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilder::addactionrefreshparenttable 'Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Shared/ZedUi/Configuration/ZedUiFormResponseBuilder.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\ZedUi\\Configuration\\ZedUiFormResponseBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
     "deprecation": []
 }

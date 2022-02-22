@@ -16,39 +16,39 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionTyp
 class ItemCollectionDataProvider implements FormDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
+        if ($transfer->getManualOrder() === null) {
+            $transfer->setManualOrder(new ManualOrderTransfer());
         }
 
         $items = new ArrayObject();
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($transfer->getItems() as $itemTransfer) {
             $newItemTransfer = new ItemTransfer();
             $newItemTransfer->fromArray($itemTransfer->toArray(), true);
 
             $items->append($newItemTransfer);
         }
-        $quoteTransfer->getManualOrder()->setItems($items);
+        $transfer->getManualOrder()->setItems($items);
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
             ItemCollectionType::OPTION_ITEM_CLASS_COLLECTION => ItemTransfer::class,
-            ItemCollectionType::OPTION_ISO_CODE => $quoteTransfer->getCurrency()->getCode(),
+            ItemCollectionType::OPTION_ISO_CODE => $transfer->getCurrency()->getCode(),
             'allow_extra_fields' => true,
             'csrf_protection' => false,
         ];

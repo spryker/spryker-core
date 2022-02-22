@@ -40,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSuperAttributes on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
@@ -52,8 +52,20 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getAttributeVariantMap on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        if ($productViewTransfer->getAttributeMap()->getAttributeVariantMap()) {",
+            "selected_text": "getAttributeVariantMap",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductDiscontinuedStorage\\ProductViewExpander\\DiscontinuedSuperAttributesProductViewExpander::prepareProductSuperAttributes cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
@@ -64,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getId on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/Validator/ProductDiscontinuedItemValidator.php",
@@ -76,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireSku on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/Validator/ProductDiscontinuedItemValidator.php",
@@ -88,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 64,
+            "line_to": 64,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductDiscontinuedStorage\\Storage\\ProductDiscontinuedStorageReaderInterface::findProductDiscontinuedStorage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/Validator/ProductDiscontinuedItemValidator.php",
@@ -100,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 64,
+            "line_to": 64,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSku on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/Validator/ProductDiscontinuedItemValidator.php",
@@ -117,7 +129,7 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $indexProductDiscontinuedStorageEntities using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Business/ProductDiscontinuedPublisher/ProductDiscontinuedPublisher.php",
-            "snippet": "                    $indexProductDiscontinuedStorageEntities[$productDiscontinuedTransfer->getIdProductDiscontinued()][$localeName]",
+            "snippet": "                    $indexProductDiscontinuedStorageEntities[$productDiscontinuedTransfer->getIdProductDiscontinued()][$localeName],",
             "selected_text": "$indexProductDiscontinuedStorageEntities",
             "error_level": 3,
             "shortcode": 125
@@ -157,18 +169,6 @@
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductDiscontinuedStorage\\Persistence\\SpyProductDiscontinuedStorage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Zed/ProductDiscontinuedStorage/Persistence/ProductDiscontinuedStorageRepository.php",
-            "snippet": "            ->getArrayCopy();",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -219,6 +219,66 @@
             "selected_text": "ProductViewDiscontinuedOptionsExpanderPlugin",
             "error_level": 2,
             "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\ProductDiscontinuedStorage\\ProductViewExpander\\DiscontinuedSuperAttributesProductViewExpander::prepareProductSuperAttributes has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        $this->prepareProductSuperAttributes($productViewTransfer->getAttributeMap(), $localeName);",
+            "selected_text": "prepareProductSuperAttributes",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\AttributeMapStorageTransfer::getAttributeVariants has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        $attributeVariants = $attributeMapStorageTransfer->getAttributeVariants();",
+            "selected_text": "getAttributeVariants",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\ProductDiscontinuedStorage\\ProductViewExpander\\DiscontinuedSuperAttributesProductViewExpander::findIdProductConcreteByAttributeValueKey has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "                $idProductConcrete = $this->findIdProductConcreteByAttributeValueKey(",
+            "selected_text": "findIdProductConcreteByAttributeValueKey",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\AttributeMapStorageTransfer::setAttributeVariants has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        $attributeMapStorageTransfer->setAttributeVariants($attributeVariants);",
+            "selected_text": "setAttributeVariants",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 203,
+            "line_to": 203,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\AttributeMapStorageTransfer::getAttributeVariants has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedStorage/src/Spryker/Client/ProductDiscontinuedStorage/ProductViewExpander/DiscontinuedSuperAttributesProductViewExpander.php",
+            "snippet": "        return $attributeMapStorageTransfer->getAttributeVariants()[$attributeValueKey][static::ID_PRODUCT_CONCRETE] ?? null;",
+            "selected_text": "getAttributeVariants",
+            "error_level": 2,
+            "shortcode": 1
         },
         {
             "severity": "info",

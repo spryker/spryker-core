@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "InvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Replacer\\CartItemReplacer::executeReplaceItem expects array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>, array{Generated\\Shared\\Transfer\\ItemTransfer|null} provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
-            "snippet": "        $quoteResponseTransfer = $this->executeReplaceItem($itemsToRemoval, $itemsToAdding, $quoteTransfer);",
-            "selected_text": "$itemsToAdding",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -25,18 +12,6 @@
             "selected_text": "getIdQuote",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 179,
-            "line_to": 179,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $itemTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Client/PersistentCart/Plugin/DatabaseQuoteStorageStrategy.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $itemTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -105,7 +80,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Locker/QuoteLocker.php",
-            "snippet": "            $quoteTransfer->getCustomer()",
+            "snippet": "            $quoteTransfer->getCustomer(),",
             "selected_text": "$quoteTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -189,7 +164,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeTransfer->getCustomer()",
+            "snippet": "            $persistentCartChangeTransfer->getCustomer(),",
             "selected_text": "$persistentCartChangeTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -213,7 +188,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeQuantityTransfer->getCustomer()",
+            "snippet": "            $persistentCartChangeQuantityTransfer->getCustomer(),",
             "selected_text": "$persistentCartChangeQuantityTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -273,7 +248,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeTransfer->getCustomer()",
+            "snippet": "            $persistentCartChangeTransfer->getCustomer(),",
             "selected_text": "$persistentCartChangeTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -357,7 +332,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeQuantityTransfer->getCustomer()",
+            "snippet": "            $persistentCartChangeQuantityTransfer->getCustomer(),",
             "selected_text": "$persistentCartChangeQuantityTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -405,7 +380,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeQuantityTransfer->getItem()->getQuantity()",
+            "snippet": "            $persistentCartChangeQuantityTransfer->getItem()->getQuantity(),",
             "selected_text": "getQuantity",
             "error_level": 3,
             "shortcode": 83
@@ -417,7 +392,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeQuantityTransfer->getCustomer()",
+            "snippet": "            $persistentCartChangeQuantityTransfer->getCustomer(),",
             "selected_text": "$persistentCartChangeQuantityTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -477,7 +452,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $persistentCartChangeQuantityTransfer->getItem()->getQuantity()",
+            "snippet": "            $persistentCartChangeQuantityTransfer->getItem()->getQuantity(),",
             "selected_text": "getQuantity",
             "error_level": 3,
             "shortcode": 83
@@ -489,7 +464,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $quoteTransfer->getCustomer()",
+            "snippet": "            $quoteTransfer->getCustomer(),",
             "selected_text": "$quoteTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -513,7 +488,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/CartOperation.php",
-            "snippet": "            $quoteTransfer->getCustomer()",
+            "snippet": "            $quoteTransfer->getCustomer(),",
             "selected_text": "$quoteTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -544,8 +519,8 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 75,
+            "line_to": 75,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteDeleter::isQuoteDeleteAllowed cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteDeleter.php",
@@ -556,8 +531,8 @@
         },
         {
             "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
+            "line_from": 138,
+            "line_to": 138,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdStore on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteDeleter.php",
@@ -568,8 +543,8 @@
         },
         {
             "severity": "info",
-            "line_from": 150,
-            "line_to": 150,
+            "line_from": 161,
+            "line_to": 161,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteDeleter::can cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteDeleter.php",
@@ -580,8 +555,8 @@
         },
         {
             "severity": "info",
-            "line_from": 150,
-            "line_to": 150,
+            "line_from": 161,
+            "line_to": 161,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteDeleter.php",
@@ -592,8 +567,8 @@
         },
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 86,
+            "line_to": 86,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteItemOperation::isQuoteWriteAllowed cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -604,8 +579,8 @@
         },
         {
             "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
+            "line_from": 94,
+            "line_to": 94,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::updateQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -616,8 +591,8 @@
         },
         {
             "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
+            "line_from": 111,
+            "line_to": 111,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteItemOperation::isQuoteWriteAllowed cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -628,8 +603,8 @@
         },
         {
             "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
+            "line_from": 132,
+            "line_to": 132,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteItemOperation::isQuoteWriteAllowed cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -640,8 +615,8 @@
         },
         {
             "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::updateQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -652,8 +627,8 @@
         },
         {
             "severity": "info",
-            "line_from": 161,
-            "line_to": 161,
+            "line_from": 164,
+            "line_to": 164,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::updateQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -664,8 +639,8 @@
         },
         {
             "severity": "info",
-            "line_from": 176,
-            "line_to": 176,
+            "line_from": 179,
+            "line_to": 179,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::updateQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -676,8 +651,8 @@
         },
         {
             "severity": "info",
-            "line_from": 192,
-            "line_to": 192,
+            "line_from": 195,
+            "line_to": 195,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteItemOperation::can cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -688,8 +663,8 @@
         },
         {
             "severity": "info",
-            "line_from": 192,
-            "line_to": 192,
+            "line_from": 195,
+            "line_to": 195,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteItemOperation.php",
@@ -724,6 +699,18 @@
         },
         {
             "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteMerger::createQuoteItemIndex expects Traversable<mixed, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteMerger.php",
+            "snippet": "        $cartIndex = $this->createQuoteItemIndex($existingItems);",
+            "selected_text": "$existingItems",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 83,
             "line_to": 83,
             "type": "PossiblyInvalidMethodCall",
@@ -733,18 +720,6 @@
             "selected_text": "append",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $cartItems has wrong type 'Traversable|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteMerger.php",
-            "snippet": "     * @param \\Traversable|\\Generated\\Shared\\Transfer\\ItemTransfer[] $cartItems",
-            "selected_text": "\\Traversable|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -796,8 +771,8 @@
         },
         {
             "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 113,
+            "line_to": 113,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolver::isQuoteReadAllowed cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
@@ -808,8 +783,8 @@
         },
         {
             "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
+            "line_from": 122,
+            "line_to": 122,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
@@ -820,8 +795,8 @@
         },
         {
             "severity": "info",
-            "line_from": 152,
-            "line_to": 152,
+            "line_from": 155,
+            "line_to": 155,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
@@ -832,8 +807,8 @@
         },
         {
             "severity": "info",
-            "line_from": 189,
-            "line_to": 189,
+            "line_from": 192,
+            "line_to": 192,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolver::isAnonymousCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
@@ -844,8 +819,8 @@
         },
         {
             "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
+            "line_from": 194,
+            "line_to": 194,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolver::can cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
@@ -856,8 +831,8 @@
         },
         {
             "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
+            "line_from": 194,
+            "line_to": 194,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteResolver.php",
@@ -957,7 +932,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteWriter.php",
-            "snippet": "            $quoteUpdateRequestTransfer->getCustomer()",
+            "snippet": "            $quoteUpdateRequestTransfer->getCustomer(),",
             "selected_text": "$quoteUpdateRequestTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -993,7 +968,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteWriter.php",
-            "snippet": "            $quoteUpdateRequestTransfer->getCustomer()",
+            "snippet": "            $quoteUpdateRequestTransfer->getCustomer(),",
             "selected_text": "$quoteUpdateRequestTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -1053,7 +1028,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::findQuoteByCustomerAndStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Model/QuoteWriter.php",
-            "snippet": "            $quoteTransfer->getStore()",
+            "snippet": "            $quoteTransfer->getStore(),",
             "selected_text": "$quoteTransfer->getStore()",
             "error_level": 3,
             "shortcode": 78
@@ -1101,7 +1076,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteResolverInterface::resolveCustomerQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
-            "snippet": "            $persistentItemReplaceTransfer->getCustomer()",
+            "snippet": "            $persistentItemReplaceTransfer->getCustomer(),",
             "selected_text": "$persistentItemReplaceTransfer->getCustomer()",
             "error_level": 3,
             "shortcode": 78
@@ -1120,8 +1095,8 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeInterface::updateQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
@@ -1132,8 +1107,8 @@
         },
         {
             "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
+            "line_from": 119,
+            "line_to": 119,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCart\\Business\\Model\\QuoteItemOperationInterface::addItems cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
@@ -1144,8 +1119,8 @@
         },
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 150,
+            "line_to": 150,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PersistentCart\\Business\\Replacer\\CartItemReplacer::findItemInQuote cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",
@@ -1156,8 +1131,8 @@
         },
         {
             "severity": "info",
-            "line_from": 162,
-            "line_to": 162,
+            "line_from": 163,
+            "line_to": 163,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\PersistentCartExtension\\Dependency\\Plugin\\QuoteItemFinderPluginInterface::findItem cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Business/Replacer/CartItemReplacer.php",

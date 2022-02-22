@@ -71,42 +71,6 @@
             "selected_text": "$isSearchableLocales",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Persistence\\Propel\\AbstractSpyProductSearchAttribute::preInsert has wrong name $connection, expecting $con as defined by Orm\\Zed\\ProductSearch\\Persistence\\Base\\SpyProductSearchAttribute::preInsert",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/Propel/AbstractSpyProductSearchAttribute.php",
-            "snippet": "    public function preInsert(?ConnectionInterface $connection = null)",
-            "selected_text": "$connection",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Persistence\\Propel\\AbstractSpyProductSearchAttribute::preUpdate has wrong name $connection, expecting $con as defined by Orm\\Zed\\ProductSearch\\Persistence\\Base\\SpyProductSearchAttribute::preUpdate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/Propel/AbstractSpyProductSearchAttribute.php",
-            "snippet": "    public function preUpdate(?ConnectionInterface $connection = null)",
-            "selected_text": "$connection",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Persistence\\Propel\\AbstractSpyProductSearchAttributeMap::preUpdate has wrong name $connection, expecting $con as defined by Orm\\Zed\\ProductSearch\\Persistence\\Base\\SpyProductSearchAttributeMap::preUpdate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/Propel/AbstractSpyProductSearchAttributeMap.php",
-            "snippet": "    public function preUpdate(?ConnectionInterface $connection = null)",
-            "selected_text": "$connection",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -568,18 +532,6 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductSearch\\Communication\\Form\\AttributeTranslationForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Communication/Form/AttributeTranslationForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 155,
             "line_to": 155,
             "type": "PossiblyNullArrayOffset",
@@ -589,30 +541,6 @@
             "selected_text": "$fields",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductSearch\\Communication\\Form\\FilterPreferencesForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Communication/Form/FilterPreferencesForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductSearch\\Communication\\Form\\SearchPreferencesForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Communication/Form/SearchPreferencesForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -633,8 +561,8 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductSearch\\Persistence\\Propel\\AbstractSpyProductSearchAttribute::presetPosition cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Persistence/Propel/AbstractSpyProductSearchAttribute.php",
-            "snippet": "        $this->presetPosition($connection);",
-            "selected_text": "$connection",
+            "snippet": "        $this->presetPosition($con);",
+            "selected_text": "$con",
             "error_level": 3,
             "shortcode": 78
         }

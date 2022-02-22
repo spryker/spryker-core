@@ -17,9 +17,9 @@ interface ItemExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function expandItem(WishlistItemTransfer $WishlistItemTransfer);
+    public function expandItem(WishlistItemTransfer $wishlistItemTransfer);
 }

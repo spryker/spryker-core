@@ -8,6 +8,7 @@
 namespace Spryker\Zed\StockDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\StockDataImport\Business\Writer\Step\NameValidatorStep;
 use Spryker\Zed\StockDataImport\Business\Writer\Step\StockNameToIdStockStep;
@@ -25,7 +26,7 @@ class StockDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getStockDataImporter()
+    public function getStockDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getStockDataImporterConfiguration(),
@@ -43,7 +44,7 @@ class StockDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getStockStoreDataImporter()
+    public function getStockStoreDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getStockStoreDataImporterConfiguration(),

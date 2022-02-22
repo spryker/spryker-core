@@ -26,18 +26,6 @@
         },
         {
             "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ProductAttribute\\Business\\Model\\Attribute\\AttributeTranslator::saveProductManagementAttributeTranslation has wrong name $attributeTransfer, expecting $productManagementAttributeTransfer as defined by Spryker\\Zed\\ProductAttribute\\Business\\Model\\Attribute\\AttributeTranslatorInterface::saveProductManagementAttributeTranslation",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAttribute/src/Spryker/Zed/ProductAttribute/Business/Model/Attribute/AttributeTranslator.php",
-            "snippet": "    public function saveProductManagementAttributeTranslation(ProductManagementAttributeTransfer $attributeTransfer)",
-            "selected_text": "$attributeTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 90,
             "line_to": 90,
             "type": "InvalidReturnType",
@@ -141,8 +129,8 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductAttribute\\Business\\Model\\Attribute\\AttributeTranslator::resetAttributeValueTranslations cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAttribute/src/Spryker/Zed/ProductAttribute/Business/Model/Attribute/AttributeTranslator.php",
-            "snippet": "        $this->resetAttributeValueTranslations($attributeTransfer->getIdProductManagementAttribute());",
-            "selected_text": "$attributeTransfer->getIdProductManagementAttribute()",
+            "snippet": "        $this->resetAttributeValueTranslations($productManagementAttributeTransfer->getIdProductManagementAttribute());",
+            "selected_text": "$productManagementAttributeTransfer->getIdProductManagementAttribute()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -153,8 +141,8 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductAttribute\\Business\\Model\\Attribute\\AttributeTranslator::saveAttributeValueTranslations expects ArrayObject<int, Generated\\Shared\\Transfer\\ProductManagementAttributeValueTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductManagementAttributeValueTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAttribute/src/Spryker/Zed/ProductAttribute/Business/Model/Attribute/AttributeTranslator.php",
-            "snippet": "        $this->saveAttributeValueTranslations($attributeTransfer->getValues());",
-            "selected_text": "$attributeTransfer->getValues()",
+            "snippet": "        $this->saveAttributeValueTranslations($productManagementAttributeTransfer->getValues());",
+            "selected_text": "$productManagementAttributeTransfer->getValues()",
             "error_level": 3,
             "shortcode": 92
         },

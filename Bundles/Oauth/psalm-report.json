@@ -54,7 +54,7 @@
             "line_from": 20,
             "line_to": 20,
             "type": "LessSpecificImplementedReturnType",
-            "message": "The inherited return type 'string' for League\\OAuth2\\Server\\Entities\\RefreshTokenEntityInterface::getIdentifier is more specific than the implemented return type for League\\OAuth2\\Server\\Entities\\Traits\\EntityTrait::getidentifier 'mixed'",
+            "message": "The inherited return type 'string' for League\\OAuth2\\Server\\Entities\\ScopeEntityInterface::getIdentifier is more specific than the implemented return type for League\\OAuth2\\Server\\Entities\\Traits\\EntityTrait::getidentifier 'mixed'",
             "file_name": "vendor/league/oauth2-server/src/Entities/Traits/EntityTrait.php",
             "snippet": "     * @return mixed",
             "selected_text": "mixed",

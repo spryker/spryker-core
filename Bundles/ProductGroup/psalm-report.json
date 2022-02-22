@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 43,
+            "line_to": 43,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, Twig\\TwigFunction>' for Twig\\Extension\\ExtensionInterface::getFunctions is more specific than the implemented return type for Spryker\\Yves\\ProductGroup\\Twig\\ProductGroupTwigExtension::getfunctions 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/Twig/ProductGroupTwigExtension.php",
@@ -12,18 +12,6 @@
             "selected_text": "array",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Zed/ProductGroup/Business/Model/ProductGroupDeleter.php",
-            "snippet": "        $productGroupEntity->getSpyProductAbstractGroups()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -44,7 +32,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Zed/ProductGroup/Business/Model/ProductGroupEntityReader.php",
-            "snippet": "                $productGroupTransfer->getIdProductGroup()",
+            "snippet": "                $productGroupTransfer->getIdProductGroup(),",
             "selected_text": "$productGroupTransfer->getIdProductGroup()",
             "error_level": 3,
             "shortcode": 78
@@ -60,30 +48,6 @@
             "selected_text": "$productGroupTransfer->getIdProductGroup()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup> variable $productAbstractGroupEntities",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Zed/ProductGroup/Business/Model/ProductGroupReader.php",
-            "snippet": "        if (!$productAbstractGroupEntities->count()) {",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Zed/ProductGroup/Business/Model/ProductGroupReducer.php",
-            "snippet": "        $productGroupEntity->getSpyProductAbstractGroups()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -120,18 +84,6 @@
             "selected_text": "$productGroupTransfer->getIdProductGroup()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Zed/ProductGroup/Business/Model/ProductGroupUpdater.php",
-            "snippet": "        $productGroupEntity->getSpyProductAbstractGroups()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -161,8 +113,8 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 39,
+            "line_to": 39,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Yves\\ProductGroup\\ProductGroupDependencyProvider::providePluginApplication has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupDependencyProvider.php",
@@ -173,8 +125,8 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 67,
+            "line_to": 67,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Yves\\ProductGroup\\ProductGroupDependencyProvider::PLUGIN_APPLICATION is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupDependencyProvider.php",
@@ -185,8 +137,8 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 68,
+            "line_to": 68,
             "type": "DeprecatedClass",
             "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroup/src/Spryker/Yves/ProductGroup/ProductGroupDependencyProvider.php",

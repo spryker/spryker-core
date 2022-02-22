@@ -1,30 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Quote\\Business\\Quote\\QuoteFieldsConfigurator::getQuoteFieldsAllowedForSaving is incorrect, got 'array<array-key, non-empty-array<array-key, string>|string>'",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Quote/QuoteFieldsConfigurator.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<array-key, non-empty-array<array-key, string>|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Quote\\Business\\Quote\\QuoteFieldsConfigurator::getQuoteFieldsAllowedForSaving",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Quote/QuoteFieldsConfigurator.php",
-            "snippet": "        return $quoteFields;",
-            "selected_text": "$quoteFields",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -40,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 143,
-            "line_to": 143,
+            "line_from": 146,
+            "line_to": 146,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/Session/QuoteSession.php",
@@ -52,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 147,
+            "line_to": 147,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\Quote\\Dependency\\Client\\QuoteToCurrencyClientInterface::setCurrentCurrencyIsoCode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/Session/QuoteSession.php",
@@ -64,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 147,
+            "line_to": 147,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/Session/QuoteSession.php",
@@ -76,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
+            "line_from": 79,
+            "line_to": 79,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/GuestQuote/GuestQuoteDeleter.php",
@@ -88,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Quote\\Persistence\\QuoteEntityManagerInterface::deleteQuoteById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/GuestQuote/GuestQuoteDeleter.php",
@@ -160,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Quote\\Persistence\\QuoteRepositoryInterface::findQuoteByCustomerReferenceAndIdStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteReader.php",
@@ -172,20 +147,20 @@
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 67,
+            "line_to": 67,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Quote\\Persistence\\QuoteRepositoryInterface::findQuoteByCustomerReferenceAndIdStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteReader.php",
-            "snippet": "            $this->storeFacade->getCurrentStore()->getIdStore()",
+            "snippet": "            $this->storeFacade->getCurrentStore()->getIdStore(),",
             "selected_text": "$this->storeFacade->getCurrentStore()->getIdStore()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 94,
+            "line_to": 94,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Quote\\Persistence\\QuoteRepositoryInterface::findQuoteByCustomerReferenceAndIdStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteReader.php",
@@ -196,37 +171,25 @@
         },
         {
             "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
+            "line_from": 95,
+            "line_to": 95,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Quote\\Persistence\\QuoteRepositoryInterface::findQuoteByCustomerReferenceAndIdStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteReader.php",
-            "snippet": "                $storeTransfer->getIdStore()",
+            "snippet": "                $storeTransfer->getIdStore(),",
             "selected_text": "$storeTransfer->getIdStore()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
+            "line_from": 159,
+            "line_to": 159,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Quote\\Persistence\\QuoteRepositoryInterface::findQuoteByUuid cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteReader.php",
             "snippet": "            ->findQuoteByUuid($quoteTransfer->getUuid());",
             "selected_text": "$quoteTransfer->getUuid()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\QuoteCollectionTransfer::addQuote cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Model/QuoteReader.php",
-            "snippet": "                $this->executeExpandQuotePlugins($quoteTransfer)",
-            "selected_text": "$this->executeExpandQuotePlugins($quoteTransfer)",
             "error_level": 3,
             "shortcode": 78
         },
@@ -277,42 +240,6 @@
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\Quote\\Dependency\\Service\\QuoteToUtilEncodingServiceBridge::encodeJson is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Dependency/Service/QuoteToUtilEncodingServiceBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\Quote\\Dependency\\Service\\QuoteToUtilEncodingServiceBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Dependency/Service/QuoteToUtilEncodingServiceBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Quote\\Dependency\\Service\\QuoteToUtilEncodingServiceBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Dependency/Service/QuoteToUtilEncodingServiceBridge.php",
-            "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
-            "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
-            "error_level": 5,
-            "shortcode": 139
         },
         {
             "severity": "info",
@@ -376,6 +303,30 @@
         },
         {
             "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Quote\\Persistence\\Propel\\Mapper\\QuoteMapper::decodeQuoteData is not nullable, but 'array<array-key, mixed>|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Persistence/Propel/Mapper/QuoteMapper.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\Quote\\Persistence\\Propel\\Mapper\\QuoteMapper::decodeQuoteData is not nullable, but the function returns 'array<array-key, mixed>|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Persistence/Propel/Mapper/QuoteMapper.php",
+            "snippet": "        return $this->encodingService->decodeJson($quoteEntityTransfer->getQuoteData(), true);",
+            "selected_text": "$this->encodingService->decodeJson($quoteEntityTransfer->getQuoteData(), true)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
             "line_from": 76,
             "line_to": 76,
             "type": "PossiblyNullArgument",
@@ -385,13 +336,37 @@
             "selected_text": "$quoteEntityTransfer->getQuoteData()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Quote\\Persistence\\Propel\\Mapper\\QuoteMapper::encodeQuoteData is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Persistence/Propel/Mapper/QuoteMapper.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Quote\\Persistence\\Propel\\Mapper\\QuoteMapper::encodeQuoteData is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Persistence/Propel/Mapper/QuoteMapper.php",
+            "snippet": "        return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);",
+            "selected_text": "$this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY)",
+            "error_level": 5,
+            "shortcode": 139
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 97,
+            "line_to": 97,
             "type": "DeprecatedClass",
             "message": "Spryker\\Client\\Currency\\Plugin\\CurrencyPlugin is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Client/Quote/QuoteDependencyProvider.php",

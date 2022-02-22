@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferShoppingList/src/Spryker/Zed/ProductOfferShoppingList/Business/Checker/ProductOfferShoppingListChecker.php",
+            "snippet": "            $shoppingListPreAddItemCheckResponseTransfer->getMessages()->count() === 0,",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": []
 }

@@ -29,11 +29,11 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -44,17 +44,17 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getOrderSource() === null) {
-            $quoteTransfer->setOrderSource(new OrderSourceTransfer());
+        if ($transfer->getOrderSource() === null) {
+            $transfer->setOrderSource(new OrderSourceTransfer());
         }
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**

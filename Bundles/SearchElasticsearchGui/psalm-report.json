@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 157,
-            "line_to": 157,
+            "line_from": 158,
+            "line_to": 158,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'mixed|null|true' does not match the declared return type 'null|string' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Table\\DocumentTable::getSearchString",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
@@ -148,8 +148,8 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface::setSearchContext does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
@@ -160,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 157,
-            "line_to": 157,
+            "line_from": 158,
+            "line_to": 158,
             "type": "PossiblyNullArrayAccess",
             "message": "Cannot access array value on possibly null variable  of type mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
@@ -210,8 +210,8 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 124,
+            "line_to": 124,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface::setSearchContext has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",

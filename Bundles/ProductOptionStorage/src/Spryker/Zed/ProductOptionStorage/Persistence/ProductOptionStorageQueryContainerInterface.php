@@ -78,9 +78,9 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
      *
      * @api
      *
-     * @param array $productOptionValuesIds
+     * @param array $productOptionValueIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
-    public function queryProductAbstractIdsByProductValueOptionByIds(array $productOptionValuesIds);
+    public function queryProductAbstractIdsByProductValueOptionByIds(array $productOptionValueIds);
 }

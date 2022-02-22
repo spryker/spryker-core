@@ -19,15 +19,16 @@ use Traversable;
 class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @param \Traversable<int, \Generated\Shared\Transfer\PriceProductOfferTransfer> $priceProductOfferTransfers
+     * @param \Traversable<int, \Generated\Shared\Transfer\PriceProductOfferTransfer> $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($priceProductOfferTransfers, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
+        $priceProductOfferTransfers = $value;
         if (!$priceProductOfferTransfers instanceof Traversable) {
             throw new UnexpectedTypeException($priceProductOfferTransfers, Traversable::class);
         }

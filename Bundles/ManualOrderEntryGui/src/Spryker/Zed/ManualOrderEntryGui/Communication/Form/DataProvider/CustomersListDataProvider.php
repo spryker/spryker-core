@@ -38,11 +38,11 @@ class CustomersListDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -53,25 +53,25 @@ class CustomersListDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getCustomer() === null) {
-            $quoteTransfer->setCustomer(new CustomerTransfer());
+        if ($transfer->getCustomer() === null) {
+            $transfer->setCustomer(new CustomerTransfer());
         }
 
-        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
+        $idCustomer = $transfer->getCustomer()->getIdCustomer();
 
         if (!$idCustomer && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
             $idCustomer = $this->request->query->getInt(CustomersListType::FIELD_CUSTOMER);
         }
 
-        $quoteTransfer->getCustomer()->setIdCustomer($idCustomer);
+        $transfer->getCustomer()->setIdCustomer($idCustomer);
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**

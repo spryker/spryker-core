@@ -148,30 +148,6 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Client\\ShoppingList\\Plugin\\ReadShoppingListPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/Plugin/ReadShoppingListPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null): bool",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Client\\ShoppingList\\Plugin\\WriteShoppingListPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Client/ShoppingList/Plugin/WriteShoppingListPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null): bool",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 65,
             "line_to": 65,
             "type": "PossiblyNullReference",
@@ -1156,18 +1132,6 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Communication\\Plugin\\ReadShoppingListPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Communication/Plugin/ReadShoppingListPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null): bool",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 35,
             "line_to": 35,
             "type": "PossiblyNullArgument",
@@ -1201,18 +1165,6 @@
             "selected_text": "addPermission",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ShoppingList\\Communication\\Plugin\\WriteShoppingListPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingList/src/Spryker/Zed/ShoppingList/Communication/Plugin/WriteShoppingListPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null): bool",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

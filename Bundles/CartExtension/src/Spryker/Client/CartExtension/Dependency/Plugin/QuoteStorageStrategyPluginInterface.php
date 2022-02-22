@@ -95,11 +95,11 @@ interface QuoteStorageStrategyPluginInterface
      *
      * @api
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(ArrayObject $items);
+    public function removeItems(ArrayObject $itemTransfers);
 
     /**
      * Specification:

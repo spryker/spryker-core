@@ -1,5 +1,115 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $formattedCategoriesByLocaleAndStoreAndNodeIds using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Builder/ProductCategoryTreeBuilder.php",
+            "snippet": "                $formattedCategoriesByLocaleAndStoreAndNodeIds[$storeTransfer->getName()][$localeTransfer->getIdLocale()][$idCategoryNode] ?? [],",
+            "selected_text": "$formattedCategoriesByLocaleAndStoreAndNodeIds",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryNames[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Builder/ProductCategoryTreeBuilder.php",
+            "snippet": "        $categoryNames[$localeTransfer->getIdLocale()] = [];",
+            "selected_text": "$categoryNames",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryNames[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Builder/ProductCategoryTreeBuilder.php",
+            "snippet": "            $categoryNames[$localeTransfer->getIdLocale()][$idCategoryNode] = $categoryName;",
+            "selected_text": "$categoryNames",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $mappedProductCategoryEntities using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Expander/ProductPageCategoryExpander.php",
+            "snippet": "            $categories = $mappedProductCategoryEntities[$payloadTransfer->getIdProductAbstract()];",
+            "selected_text": "$mappedProductCategoryEntities",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productCategoryEntities using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Expander/ProductPageDataExpander.php",
+            "snippet": "        $categoryNodeIds = $this->extractCategoryNodeIdsFromProductCategoryEntities($productCategoryEntities[$productAbstractPageSearchTransfer->getStore()] ?? []);",
+            "selected_text": "$productCategoryEntities",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryTreeNames using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Expander/ProductPageDataExpander.php",
+            "snippet": "            $categoryName = $categoryTreeNames[$localeTransfer->getIdLocale()][$idCategoryNode] ?? null;",
+            "selected_text": "$categoryTreeNames",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 233,
+            "line_to": 233,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryTreeNames using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Business/Expander/ProductPageDataExpander.php",
+            "snippet": "            $boostedName = $categoryTreeNames[$localeTransfer->getIdLocale()][$idCategoryNode] ?? null;",
+            "selected_text": "$categoryTreeNames",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $productCategoryEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Persistence/Propel/Mapper/ProductCategoryMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[] $productCategoryEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\ProductPageSearch\\Dependency\\Plugin\\ProductPageDataExpanderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategorySearch/src/Spryker/Zed/ProductCategorySearch/Communication/Plugin/ProductPageSearch/ProductCategoryPageDataExpanderPlugin.php",
+            "snippet": "class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface",
+            "selected_text": "ProductCategoryPageDataExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

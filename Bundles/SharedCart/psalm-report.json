@@ -50,8 +50,8 @@
         },
         {
             "severity": "error",
-            "line_from": 188,
-            "line_to": 188,
+            "line_from": 190,
+            "line_to": 190,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>' for Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::findShareInformationCustomer",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
@@ -256,18 +256,6 @@
         },
         {
             "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Client\\SharedCart\\Plugin\\ReadSharedCartPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Client/SharedCart/Plugin/ReadSharedCartPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null)",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 56,
             "line_to": 56,
             "type": "PossiblyNullReference",
@@ -337,18 +325,6 @@
             "selected_text": "getQuotes",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Client\\SharedCart\\Plugin\\WriteSharedCartPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Client/SharedCart/Plugin/WriteSharedCartPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null)",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -712,8 +688,8 @@
         },
         {
             "severity": "info",
-            "line_from": 342,
-            "line_to": 342,
+            "line_from": 343,
+            "line_to": 343,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShareDetailTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Business/Model/QuoteCompanyUserWriter.php",
@@ -724,8 +700,8 @@
         },
         {
             "severity": "info",
-            "line_from": 348,
-            "line_to": 348,
+            "line_from": 349,
+            "line_to": 349,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdQuotePermissionGroup on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Business/Model/QuoteCompanyUserWriter.php",
@@ -1648,18 +1624,6 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\SharedCart\\Communication\\Plugin\\ReadSharedCartPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Communication/Plugin/ReadSharedCartPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null)",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 80,
             "line_to": 80,
             "type": "PossiblyNullReference",
@@ -1696,15 +1660,15 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\SharedCart\\Communication\\Plugin\\WriteSharedCartPermissionPlugin::can has the more specific type 'int|null', expecting 'array<array-key, mixed>|int|null|string' as defined by Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface::can",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Communication/Plugin/WriteSharedCartPermissionPlugin.php",
-            "snippet": "    public function can(array $configuration, $context = null)",
-            "selected_text": "$context",
-            "error_level": 5,
-            "shortcode": 140
+            "line_from": 17,
+            "line_to": 17,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $customerEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/Propel/Mapper/CustomerMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Customer\\Persistence\\SpyCustomer[] $customerEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Customer\\Persistence\\SpyCustomer[]",
+            "error_level": 4,
+            "shortcode": 141
         },
         {
             "severity": "info",
@@ -1828,8 +1792,20 @@
         },
         {
             "severity": "info",
-            "line_from": 216,
-            "line_to": 216,
+            "line_from": 77,
+            "line_to": 77,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $permissionEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Permission\\Persistence\\SpyPermission>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Permission\\Persistence\\SpyPermission[] $permissionEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Permission\\Persistence\\SpyPermission[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 218,
+            "line_to": 218,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::mapQuotePermissionGroupList expects array<array-key, Generated\\Shared\\Transfer\\SpyQuotePermissionGroupEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|mixed|non-empty-array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> provided",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
@@ -1840,8 +1816,8 @@
         },
         {
             "severity": "info",
-            "line_from": 374,
-            "line_to": 374,
+            "line_from": 376,
+            "line_to": 376,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",

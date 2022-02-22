@@ -50,8 +50,32 @@
         },
         {
             "severity": "error",
-            "line_from": 138,
-            "line_to": 138,
+            "line_from": 108,
+            "line_to": 108,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Translator\\ProductOptionTranslator::getGlossaryStorageKeysFromProductAbstractOptionStorageTransfers is incorrect, got 'array<int, null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Translator\\ProductOptionTranslator::getGlossaryStorageKeysFromProductAbstractOptionStorageTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "        return array_unique($glossaryStorageKeys);",
+            "selected_text": "array_unique($glossaryStorageKeys)",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 140,
+            "line_to": 140,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Translator\\ProductOptionTranslator::getGlossaryStorageKeysFromItemTransfer is incorrect, got 'list<mixed|null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
@@ -62,8 +86,8 @@
         },
         {
             "severity": "error",
-            "line_from": 148,
-            "line_to": 148,
+            "line_from": 150,
+            "line_to": 150,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductOptionsRestApi\\Processor\\Translator\\ProductOptionTranslator::getGlossaryStorageKeysFromItemTransfer",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
@@ -85,18 +109,6 @@
             "selected_text": "array",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductStorageClientBridge::getBulkProductAbstractIdsByMapping has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Glue\\ProductOptionsRestApi\\Dependency\\Client\\ProductOptionsRestApiToProductStorageClientInterface::getBulkProductAbstractIdsByMapping",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Dependency/Client/ProductOptionsRestApiToProductStorageClientBridge.php",
-            "snippet": "        array $identifiers,",
-            "selected_text": "$identifiers",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -404,6 +416,18 @@
             "line_to": 116,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOptionGroupStorageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
+            "snippet": "                ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOptionValueStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionsRestApi/src/Spryker/Glue/ProductOptionsRestApi/Processor/Translator/ProductOptionTranslator.php",
             "snippet": "                ->getArrayCopy();",
             "selected_text": "getArrayCopy",

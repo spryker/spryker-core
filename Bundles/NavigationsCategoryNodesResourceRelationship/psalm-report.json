@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 49,
+            "line_to": 49,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationsCategoryNodesResourceRelationship/src/Spryker/Glue/NavigationsCategoryNodesResourceRelationship/Processor/Expander/CategoryNodeResourceExpander.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 69,
+            "line_to": 69,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestNavigationNodeTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationsCategoryNodesResourceRelationship/src/Spryker/Glue/NavigationsCategoryNodesResourceRelationship/Processor/Expander/CategoryNodeResourceExpander.php",

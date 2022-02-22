@@ -21,31 +21,31 @@ class ProductCollectionDataProvider implements FormDataProviderInterface
     protected const NUMBER_PRODUCT_ROWS = 3;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
+        if ($transfer->getManualOrder() === null) {
+            $transfer->setManualOrder(new ManualOrderTransfer());
         }
 
         $products = new ArrayObject();
         for ($i = 0; $i < static::NUMBER_PRODUCT_ROWS; $i++) {
             $products->append(new ItemTransfer());
         }
-        $quoteTransfer->getManualOrder()->setProducts($products);
+        $transfer->getManualOrder()->setProducts($products);
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,

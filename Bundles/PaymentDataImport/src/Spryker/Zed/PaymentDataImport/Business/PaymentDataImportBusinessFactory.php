@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PaymentDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\PaymentDataImport\Business\PaymentMethod\Writer\Step\PaymentMethodWriterStep;
 use Spryker\Zed\PaymentDataImport\Business\PaymentMethod\Writer\Step\PaymentProviderWriterStep;
@@ -25,7 +26,7 @@ class PaymentDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getPaymentMethodDataImporter()
+    public function getPaymentMethodDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getPaymentMethodDataImporterConfiguration());
 
@@ -42,7 +43,7 @@ class PaymentDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getPaymentMethodStoreDataImporter()
+    public function getPaymentMethodStoreDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getPaymentMethodStoreDataImporterConfiguration(),

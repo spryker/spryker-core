@@ -47,18 +47,6 @@
             "selected_text": "$translationsByLocale",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\SalesOrderThreshold\\Persistence\\SalesOrderThresholdRepository::findSalesOrderThreshold has wrong name $salesOrderThresholdTransfer, expecting $orderThresholdTypeTransfer as defined by Spryker\\Zed\\SalesOrderThreshold\\Persistence\\SalesOrderThresholdRepositoryInterface::findSalesOrderThreshold",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Persistence/SalesOrderThresholdRepository.php",
-            "snippet": "        SalesOrderThresholdTransfer $salesOrderThresholdTransfer",
-            "selected_text": "$salesOrderThresholdTransfer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [

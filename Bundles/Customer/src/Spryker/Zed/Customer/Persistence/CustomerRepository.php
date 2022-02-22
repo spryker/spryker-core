@@ -118,15 +118,15 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $spyCustomerQuery
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $customerQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function applyPagination(SpyCustomerQuery $spyCustomerQuery, ?PaginationTransfer $paginationTransfer = null): SpyCustomerQuery
+    protected function applyPagination(SpyCustomerQuery $customerQuery, ?PaginationTransfer $paginationTransfer = null): SpyCustomerQuery
     {
         if (!$paginationTransfer) {
-            return $spyCustomerQuery;
+            return $customerQuery;
         }
 
         $page = $paginationTransfer
@@ -137,7 +137,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
             ->requireMaxPerPage()
             ->getMaxPerPage();
 
-        $paginationModel = $spyCustomerQuery->paginate($page, $maxPerPage);
+        $paginationModel = $customerQuery->paginate($page, $maxPerPage);
 
         $paginationTransfer->setNbResults($paginationModel->getNbResults());
         $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
@@ -147,10 +147,10 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         $paginationTransfer->setNextPage($paginationModel->getNextPage());
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerQuery $customerQuery */
-        $customerQuery = $paginationModel->getQuery();
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerQuery $paginatedCustomerQuery */
+        $paginatedCustomerQuery = $paginationModel->getQuery();
 
-        return $customerQuery;
+        return $paginatedCustomerQuery;
     }
 
     /**

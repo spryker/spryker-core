@@ -3,15 +3,15 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of random_bytes expects int, float|int provided",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of random_bytes expects positive-int, parent type int provided",
             "file_name": "vendor/spryker/spryker/Bundles/UtilNetwork/src/Spryker/Service/UtilNetwork/Model/Request/RequestId.php",
             "snippet": "        $token = bin2hex(random_bytes($tokenLength));",
             "selected_text": "$tokenLength",
-            "error_level": 4,
-            "shortcode": 12
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": []

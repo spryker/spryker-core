@@ -100,18 +100,6 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\ProductLabel\\Storage\\Dictionary\\LabelDictionary::findLabel has the more specific type 'string', expecting 'int|string' as defined by Spryker\\Client\\ProductLabel\\Storage\\Dictionary\\LabelDictionaryInterface::findLabel",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabel/src/Spryker/Client/ProductLabel/Storage/Dictionary/LabelDictionary.php",
-            "snippet": "    public function findLabel($dictionaryKey, $localeName)",
-            "selected_text": "$dictionaryKey",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 48,
             "line_to": 48,
             "type": "LessSpecificImplementedReturnType",

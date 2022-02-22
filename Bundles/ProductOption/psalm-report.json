@@ -1252,18 +1252,6 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ProductOption\\Communication\\Form\\Constraint\\UniqueOptionValueSkuValidator::validate has the more specific type 'Generated\\Shared\\Transfer\\ProductOptionValueTransfer', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Form/Constraint/UniqueOptionValueSkuValidator.php",
-            "snippet": "    public function validate($value, Constraint $constraint)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "PossiblyNullArgument",
@@ -1369,42 +1357,6 @@
             "selected_text": "$taxSetList",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductOption\\Communication\\Form\\ProductOptionGroupForm::buildForm has the more specific type 'array<array-key, string>', expecting 'array<string, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Form/ProductOptionGroupForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductOption\\Communication\\Form\\ProductOptionTranslationForm::buildForm has the more specific type 'array<array-key, string>', expecting 'array<string, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Form/ProductOptionTranslationForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductOption\\Communication\\Form\\ProductOptionValueForm::buildForm has the more specific type 'array<array-key, string>', expecting 'array<string, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Communication/Form/ProductOptionValueForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

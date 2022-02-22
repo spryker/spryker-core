@@ -29,6 +29,18 @@
     "deprecation": [
         {
             "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Controller/AbstractController.php",
+            "snippet": "     * @var \\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "selected_text": "\\Spryker\\Yves\\Kernel\\Application|\\Spryker\\Service\\Container\\ContainerInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
             "line_from": 35,
             "line_to": 35,
             "type": "DeprecatedMethod",

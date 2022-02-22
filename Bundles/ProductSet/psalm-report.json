@@ -2,6 +2,42 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\Search\\SearchClientInterface::search expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetClient.php",
+            "snippet": "            ->search($searchQuery, $resultFormatters);",
+            "selected_text": "$searchQuery",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "InvalidArgument",
+            "message": "Argument 2 of Spryker\\Client\\Search\\SearchClientInterface::search expects array<array-key, Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface>, array<array-key, Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetClient.php",
+            "snippet": "            ->search($searchQuery, $resultFormatters);",
+            "selected_text": "$resultFormatters",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductSet\\ProductSetFactory::createProductSetListQuery is incorrect, got 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetFactory.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
             "line_from": 30,
             "line_to": 30,
             "type": "InvalidArgument",
@@ -14,13 +50,25 @@
         },
         {
             "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' does not match the declared return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductSet\\ProductSetFactory::createProductSetListQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetFactory.php",
+            "snippet": "        return $searchQuery;",
+            "selected_text": "$searchQuery",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
             "line_from": 40,
             "line_to": 40,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\ProductImageSetTransfer>' for Spryker\\Zed\\ProductSet\\Business\\Model\\Image\\ProductSetImageReader::findProductSetImageSets is incorrect, got 'list<Generated\\Shared\\Transfer\\ProductImageSetTransfer|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/Image/ProductSetImageReader.php",
-            "snippet": "     * @return \\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
-            "selected_text": "\\Generated\\Shared\\Transfer\\ProductImageSetTransfer[]",
+            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\ProductImageSetTransfer>",
+            "selected_text": "array<\\Generated\\Shared\\Transfer\\ProductImageSetTransfer>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -38,6 +86,30 @@
         }
     ],
     "warning": [
+        {
+            "severity": "info",
+            "line_from": 230,
+            "line_to": 230,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Elastica\\Query\\Match|Elastica\\Query\\MatchQuery' for Spryker\\Client\\ProductSet\\Plugin\\Elasticsearch\\Query\\ProductSetListQueryPlugin::getMatchQuery is more specific than the inferred return type 'object'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/Plugin/Elasticsearch/Query/ProductSetListQueryPlugin.php",
+            "snippet": "     * @return \\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "selected_text": "\\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 238,
+            "line_to": 238,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'object' is more general than the declared return type 'Elastica\\Query\\Match|Elastica\\Query\\MatchQuery' for Spryker\\Client\\ProductSet\\Plugin\\Elasticsearch\\Query\\ProductSetListQueryPlugin::getMatchQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/Plugin/Elasticsearch/Query/ProductSetListQueryPlugin.php",
+            "snippet": "        return new $matchQueryClassName();",
+            "selected_text": "new $matchQueryClassName()",
+            "error_level": 3,
+            "shortcode": 129
+        },
         {
             "severity": "info",
             "line_from": 58,
@@ -97,18 +169,6 @@
             "selected_text": "getIdLocale",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductSetData> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/Data/ProductSetDataDeleter.php",
-            "snippet": "        $productSetEntity->getSpyProductSetDatas()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -244,30 +304,6 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/Image/ProductSetImageSetCombiner.php",
-            "snippet": "            ->toKeyIndex('name');",
-            "selected_text": "toKeyIndex",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/Image/ProductSetImageSetCombiner.php",
-            "snippet": "            ->toKeyIndex('name');",
-            "selected_text": "toKeyIndex",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 107,
             "line_to": 107,
             "type": "InvalidNullableReturnType",
@@ -292,18 +328,6 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/ProductSetDeleter.php",
-            "snippet": "        $productSetEntity->getSpyProductAbstractSets()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 41,
             "line_to": 41,
             "type": "PossiblyNullArgument",
@@ -321,7 +345,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/ProductSetEntityReader.php",
-            "snippet": "                $productSetTransfer->getIdProductSet()",
+            "snippet": "                $productSetTransfer->getIdProductSet(),",
             "selected_text": "$productSetTransfer->getIdProductSet()",
             "error_level": 3,
             "shortcode": 78
@@ -349,30 +373,6 @@
             "selected_text": "$productSetTransfer->getIdProductSet()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/ProductSetReducer.php",
-            "snippet": "        $productSetEntity->getSpyProductAbstractSets()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Zed/ProductSet/Business/Model/ProductSetUpdater.php",
-            "snippet": "        $productSetEntity->getSpyProductAbstractSets()->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -414,6 +414,30 @@
         },
         {
             "severity": "info",
+            "line_from": 154,
+            "line_to": 154,
+            "type": "DeprecatedClass",
+            "message": "Class Elastica\\Query\\Match is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/Plugin/Elasticsearch/Query/ProductSetListQueryPlugin.php",
+            "snippet": "        $typeFilter = $this->getMatchQuery()->setField(PageIndexMap::TYPE, ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET);",
+            "selected_text": "$this->getMatchQuery()->setField(PageIndexMap::TYPE, ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET)",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 230,
+            "line_to": 230,
+            "type": "DeprecatedClass",
+            "message": "Class Elastica\\Query\\Match is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/Plugin/Elasticsearch/Query/ProductSetListQueryPlugin.php",
+            "snippet": "     * @return \\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "selected_text": "\\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
             "line_from": 17,
             "line_to": 17,
             "type": "DeprecatedClass",
@@ -431,8 +455,8 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSet/src/Spryker/Client/ProductSet/ProductSetFactory.php",
-            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
-            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "snippet": "     * @return array<\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },

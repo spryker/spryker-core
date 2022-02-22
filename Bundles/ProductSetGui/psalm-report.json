@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 60,
+            "line_to": 60,
             "type": "InvalidReturnType",
             "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSetGui\\Persistence\\ProductSetGuiQueryContainer::queryProductAbstract is incorrect, got 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Persistence/ProductSetGuiQueryContainer.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 72,
+            "line_to": 72,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSetGui\\Persistence\\ProductSetGuiQueryContainer::queryProductAbstract",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Persistence/ProductSetGuiQueryContainer.php",
@@ -26,8 +26,8 @@
         },
         {
             "severity": "error",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 110,
+            "line_to": 110,
             "type": "InvalidReturnType",
             "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSetGui\\Persistence\\ProductSetGuiQueryContainer::queryProductAbstractByIdProductSet is incorrect, got 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Persistence/ProductSetGuiQueryContainer.php",
@@ -38,8 +38,8 @@
         },
         {
             "severity": "error",
-            "line_from": 119,
-            "line_to": 119,
+            "line_from": 126,
+            "line_to": 126,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'Orm\\Zed\\Locale\\Persistence\\SpyLocaleQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static' does not match the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductSetGui\\Persistence\\ProductSetGuiQueryContainer::queryProductAbstractByIdProductSet",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Persistence/ProductSetGuiQueryContainer.php",
@@ -121,18 +121,6 @@
             "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductSet> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/Form/DataProvider/ReorderProductSetsFormDataProvider.php",
-            "snippet": "            ->toKeyValue('PrimaryKey', 'weight');",
-            "selected_text": "toKeyValue",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -268,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductSetGui\\Communication\\Form\\Images\\ImagesFormType::getImageSetFormName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/Form/Images/ImagesFormType.php",
@@ -285,15 +273,15 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/Table/Helper/ProductAbstractTableHelper.php",
-            "snippet": "            $this->getProductPreviewUrl($productAbstractEntity)",
+            "snippet": "            $this->getProductPreviewUrl($productAbstractEntity),",
             "selected_text": "$this->getProductPreviewUrl($productAbstractEntity)",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 156,
-            "line_to": 156,
+            "line_from": 170,
+            "line_to": 170,
             "type": "PossiblyNullArgument",
             "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/Table/ProductAbstractSetViewTable.php",

@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 256,
+            "line_to": 258,
+            "type": "InvalidArrayOffset",
+            "message": "Cannot create offset of type TKey:RecursiveIterator|null, expecting array-key",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductViewVariantRestrictionExpander/ProductViewVariantRestrictionExpander.php",
+            "snippet": "            $attributeVariantPath = [\n                $iterator->getSubIterator($i)->key() => $attributeVariantPath,\n            ];",
+            "selected_text": "[\n                $iterator->getSubIterator($i)->key() => $attributeVariantPath,\n            ]",
+            "error_level": 6,
+            "shortcode": 115
+        },
+        {
+            "severity": "error",
             "line_from": 190,
             "line_to": 190,
             "type": "InvalidReturnStatement",
@@ -76,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 56,
+            "line_to": 56,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'int' for Spryker\\Client\\ProductListStorage\\ProductRestrictionFilter\\ProductAbstractProductRestrictionFilter::getIdProduct is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductRestrictionFilter/ProductAbstractProductRestrictionFilter.php",
@@ -88,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 67,
+            "line_to": 67,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Client\\ProductListStorage\\ProductRestrictionFilter\\ProductAbstractProductRestrictionFilter::getIdProduct is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductRestrictionFilter/ProductAbstractProductRestrictionFilter.php",
@@ -100,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 55,
+            "line_to": 55,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'int' for Spryker\\Client\\ProductListStorage\\ProductRestrictionFilter\\ProductConcreteProductRestrictionFilter::getIdProduct is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductRestrictionFilter/ProductConcreteProductRestrictionFilter.php",
@@ -112,8 +124,8 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 66,
+            "line_to": 66,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Client\\ProductListStorage\\ProductRestrictionFilter\\ProductConcreteProductRestrictionFilter::getIdProduct is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductRestrictionFilter/ProductConcreteProductRestrictionFilter.php",
@@ -193,78 +205,6 @@
             "selected_text": "setProductConcreteIds",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
-            "snippet": "            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);",
-            "selected_text": "toKeyValue",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductListStorage\\Persistence\\SpyProductAbstractProductListStorage> variable $productAbstractProductListStorageCollection",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
-            "snippet": "        return $productAbstractProductListStorageCollection->getArrayCopy();",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductListStorage\\Persistence\\SpyProductConcreteProductListStorage> variable $productConcreteProductListStorageCollection",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
-            "snippet": "        return $productConcreteProductListStorageCollection->getArrayCopy();",
-            "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 152,
-            "line_to": 152,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Persistence/ProductListStorageRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -277,6 +217,30 @@
             "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/Plugin/ProductStorageExtension/ProductViewVariantRestrictionPlugin.php",
             "snippet": "            ->expandProductVariantData($productViewTransfer);",
             "selected_text": "expandProductVariantData",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\AttributeMapStorageTransfer::getAttributeVariants has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductViewVariantRestrictionExpander/ProductViewVariantRestrictionExpander.php",
+            "snippet": "        $attributeVariants = $this->filterAttributeVariants($productViewTransfer->getAttributeMap()->getAttributeVariants(), $restrictedProductConcreteIds);",
+            "selected_text": "getAttributeVariants",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\AttributeMapStorageTransfer::setAttributeVariants has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/ProductViewVariantRestrictionExpander/ProductViewVariantRestrictionExpander.php",
+            "snippet": "                ->setAttributeVariants($attributeVariants)",
+            "selected_text": "setAttributeVariants",
             "error_level": 2,
             "shortcode": 1
         },

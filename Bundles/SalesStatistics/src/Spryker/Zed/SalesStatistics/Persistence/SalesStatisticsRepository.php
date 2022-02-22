@@ -50,13 +50,13 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     public const ITEM_SKU = 'sku';
 
     /**
-     * @param int $day
+     * @param int $days
      *
      * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    public function getOrderCountStatisticByDays(int $day): ChartDataTraceTransfer
+    public function getOrderCountStatisticByDays(int $days): ChartDataTraceTransfer
     {
-        $date = date('Y-m-d H:i:s.u', (int)strtotime(sprintf('-%d days', $day)));
+        $date = date('Y-m-d H:i:s.u', (int)strtotime(sprintf('-%d days', $days)));
 
         $result = $this->getDataOrderCountStatisticByDays($date);
 

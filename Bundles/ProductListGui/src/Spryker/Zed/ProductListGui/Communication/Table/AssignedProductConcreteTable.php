@@ -18,17 +18,17 @@ class AssignedProductConcreteTable extends AbstractProductConcreteTable
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $spyProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function filterQuery(SpyProductQuery $spyProductQuery): SpyProductQuery
+    protected function filterQuery(SpyProductQuery $productQuery): SpyProductQuery
     {
-        $spyProductQuery
+        $productQuery
             ->useSpyProductListProductConcreteQuery()
                 ->filterByFkProductList($this->getIdProductList())
             ->endUse();
 
-        return $spyProductQuery;
+        return $productQuery;
     }
 }

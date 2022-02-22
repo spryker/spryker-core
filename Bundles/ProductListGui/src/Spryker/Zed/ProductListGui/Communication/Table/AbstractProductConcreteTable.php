@@ -51,14 +51,14 @@ abstract class AbstractProductConcreteTable extends AbstractTable
      * @module Product
      *
      * @param \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface $localeFacade
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $spyProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
      */
     public function __construct(
         ProductListGuiToLocaleFacadeInterface $localeFacade,
-        SpyProductQuery $spyProductQuery
+        SpyProductQuery $productQuery
     ) {
         $this->localeFacade = $localeFacade;
-        $this->spyProductQuery = $spyProductQuery;
+        $this->spyProductQuery = $productQuery;
         $this->defaultUrl = static::DEFAULT_URL;
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
     }
@@ -184,9 +184,9 @@ abstract class AbstractProductConcreteTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $spyProductQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    abstract protected function filterQuery(SpyProductQuery $spyProductQuery): SpyProductQuery;
+    abstract protected function filterQuery(SpyProductQuery $productQuery): SpyProductQuery;
 }

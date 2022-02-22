@@ -17,18 +17,6 @@
             "severity": "info",
             "line_from": 55,
             "line_to": 55,
-            "type": "RedundantCondition",
-            "message": "Found a redundant condition when evaluating $permissionPlugin and trying to reconcile type 'Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface' to Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface",
-            "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Client/Permission/PermissionFinder/PermissionFinder.php",
-            "snippet": "            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {",
-            "selected_text": "$permissionPlugin instanceof ExecutablePermissionPluginInterface",
-            "error_level": 4,
-            "shortcode": 122
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PermissionTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Zed/Permission/Business/PermissionExecutor/PermissionExecutor.php",
@@ -51,24 +39,12 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "RedundantCondition",
-            "message": "Found a redundant condition when evaluating $permissionPlugin and trying to reconcile type 'Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface' to Spryker\\Shared\\PermissionExtension\\Dependency\\Plugin\\ExecutablePermissionPluginInterface",
-            "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Zed/Permission/Business/PermissionFinder/PermissionFinder.php",
-            "snippet": "            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {",
-            "selected_text": "$permissionPlugin instanceof ExecutablePermissionPluginInterface",
-            "error_level": 4,
-            "shortcode": 122
-        },
-        {
-            "severity": "info",
             "line_from": 124,
             "line_to": 124,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PermissionTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Zed/Permission/Business/PermissionFinder/PermissionFinder.php",
-            "snippet": "            $this->permissionRepository->findAll()->getPermissions()->getArrayCopy()",
+            "snippet": "            $this->permissionRepository->findAll()->getPermissions()->getArrayCopy(),",
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
@@ -120,18 +96,6 @@
             "selected_text": "$indexedPermissions",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $permissionEntityCollection has wrong type 'Traversable|array<array-key, Orm\\Zed\\Permission\\Persistence\\SpyPermission>', should be 'Traversable'",
-            "file_name": "vendor/spryker/spryker/Bundles/Permission/src/Spryker/Zed/Permission/Persistence/Propel/Mapper/PermissionMapper.php",
-            "snippet": "     * @param \\Traversable|\\Orm\\Zed\\Permission\\Persistence\\SpyPermission[] $permissionEntityCollection",
-            "selected_text": "\\Traversable|\\Orm\\Zed\\Permission\\Persistence\\SpyPermission[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",

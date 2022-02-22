@@ -28,11 +28,11 @@ interface ProductDiscontinuedRepositoryInterface
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
-     * @param array<int> $productConcreteIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
-    public function isAnyProductConcreteDiscontinued(array $productConcreteIds): bool;
+    public function isAnyProductConcreteDiscontinued(array $productIds): bool;
 
     /**
      * @param int $batchSize

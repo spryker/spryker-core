@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 136,
-            "line_to": 136,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\QuoteRequest\\Dependency\\Facade\\QuoteRequestToCompanyUserFacadeInterface::getCustomerReferencesByCompanyUserIds expects array<array-key, int>, array{int|null} provided",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
-            "snippet": "            ->getCustomerReferencesByCompanyUserIds([$companyUserTransfer->getIdCompanyUser()]);",
-            "selected_text": "[$companyUserTransfer->getIdCompanyUser()]",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -148,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 72,
+            "line_to": 72,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteRequestTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -160,8 +147,8 @@
         },
         {
             "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
+            "line_from": 164,
+            "line_to": 164,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteRequestVersionTransfer> variable $quoteRequestVersionTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -172,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
+            "line_from": 167,
+            "line_to": 167,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteRequestVersionTransfer> variable $quoteRequestVersionTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -184,8 +171,8 @@
         },
         {
             "severity": "info",
-            "line_from": 167,
-            "line_to": 167,
+            "line_from": 168,
+            "line_to": 168,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteRequestVersionTransfer> variable $quoteRequestVersionTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -196,8 +183,8 @@
         },
         {
             "severity": "info",
-            "line_from": 187,
-            "line_to": 187,
+            "line_from": 188,
+            "line_to": 188,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteRequestTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -208,8 +195,8 @@
         },
         {
             "severity": "info",
-            "line_from": 194,
-            "line_to": 194,
+            "line_from": 195,
+            "line_to": 195,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -220,8 +207,8 @@
         },
         {
             "severity": "info",
-            "line_from": 195,
-            "line_to": 195,
+            "line_from": 196,
+            "line_to": 196,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -232,8 +219,8 @@
         },
         {
             "severity": "info",
-            "line_from": 202,
-            "line_to": 202,
+            "line_from": 203,
+            "line_to": 203,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CompanyUserTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -244,8 +231,8 @@
         },
         {
             "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
+            "line_from": 208,
+            "line_to": 208,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $companyUserTransfers using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -256,8 +243,8 @@
         },
         {
             "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
+            "line_from": 208,
+            "line_to": 208,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -268,8 +255,8 @@
         },
         {
             "severity": "info",
-            "line_from": 209,
-            "line_to": 209,
+            "line_from": 210,
+            "line_to": 210,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setCompanyBusinessUnit on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -280,8 +267,8 @@
         },
         {
             "severity": "info",
-            "line_from": 209,
-            "line_to": 209,
+            "line_from": 210,
+            "line_to": 210,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCompanyBusinessUnit on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -292,8 +279,8 @@
         },
         {
             "severity": "info",
-            "line_from": 225,
-            "line_to": 225,
+            "line_from": 226,
+            "line_to": 226,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $companyUserTransferMap[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Reader/QuoteRequestReader.php",
@@ -1228,42 +1215,6 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\QuoteRequest\\Dependency\\Service\\QuoteRequestToUtilEncodingServiceBridge::encodeJson is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Dependency/Service/QuoteRequestToUtilEncodingServiceBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\QuoteRequest\\Dependency\\Service\\QuoteRequestToUtilEncodingServiceBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Dependency/Service/QuoteRequestToUtilEncodingServiceBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\QuoteRequest\\Dependency\\Service\\QuoteRequestToUtilEncodingServiceBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Dependency/Service/QuoteRequestToUtilEncodingServiceBridge.php",
-            "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
-            "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyNullArgument",
@@ -1396,8 +1347,8 @@
         },
         {
             "severity": "info",
-            "line_from": 164,
-            "line_to": 164,
+            "line_from": 166,
+            "line_to": 166,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
@@ -1408,8 +1359,8 @@
         },
         {
             "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
+            "line_from": 167,
+            "line_to": 167,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
@@ -1420,8 +1371,8 @@
         },
         {
             "severity": "info",
-            "line_from": 181,
-            "line_to": 181,
+            "line_from": 183,
+            "line_to": 183,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\QuoteRequest\\Persistence\\QuoteRequestRepository::preparePagination cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
@@ -1432,8 +1383,8 @@
         },
         {
             "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
+            "line_from": 235,
+            "line_to": 235,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",
@@ -1444,8 +1395,8 @@
         },
         {
             "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
+            "line_from": 235,
+            "line_to": 235,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Persistence/QuoteRequestRepository.php",

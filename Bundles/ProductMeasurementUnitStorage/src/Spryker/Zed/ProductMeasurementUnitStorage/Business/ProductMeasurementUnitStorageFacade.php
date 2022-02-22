@@ -88,13 +88,13 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @param array<int> $salesUnitsIds
+     * @param array<int> $salesUnitIds
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
-    public function getSalesUnitsByIds(array $salesUnitsIds): array
+    public function getSalesUnitsByIds(array $salesUnitIds): array
     {
-        return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnitsByIds($salesUnitsIds);
+        return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnitsByIds($salesUnitIds);
     }
 
     /**

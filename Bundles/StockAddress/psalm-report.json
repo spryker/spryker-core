@@ -20,8 +20,8 @@
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $stockAddressEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/StockAddress/src/Spryker/Zed/StockAddress/Persistence/Propel/Mapper/StockAddressMapper.php",
-            "snippet": "     * @param \\Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress[]|\\Propel\\Runtime\\Collection\\ObjectCollection $stockAddressEntities",
-            "selected_text": "\\Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress[] $stockAddressEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\StockAddress\\Persistence\\SpyStockAddress[]",
             "error_level": 4,
             "shortcode": 141
         }

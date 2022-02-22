@@ -80,7 +80,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Vault\\Persistence\\Propel\\Mapper\\VaultDepositMapper::mapVaultDepositTransferToEntity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Persistence/VaultEntityManager.php",
-            "snippet": "                $vaultDepositEntity",
+            "snippet": "                $vaultDepositEntity,",
             "selected_text": "$vaultDepositEntity",
             "error_level": 3,
             "shortcode": 78

@@ -52,18 +52,6 @@
         },
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Yves\\Router\\Plugin\\Console\\Descriptor\\Descriptor::describe has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Console\\Descriptor\\DescriptorInterface::describe",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Yves/Router/Plugin/Console/Descriptor/Descriptor.php",
-            "snippet": "    public function describe(OutputInterface $output, $object, array $options = [])",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "RedundantCondition",
@@ -97,30 +85,6 @@
             "selected_text": "$srcPosition",
             "error_level": 3,
             "shortcode": 162
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Zed\\Router\\Communication\\Plugin\\Console\\Descriptor\\Descriptor::describe has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Console\\Descriptor\\DescriptorInterface::describe",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Communication/Plugin/Console/Descriptor/Descriptor.php",
-            "snippet": "    public function describe(OutputInterface $output, $object, array $options = [])",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Symfony\\Component\\Routing\\Loader\\ClosureLoader::load has the more specific type 'Closure', expecting 'mixed' as defined by Symfony\\Component\\Config\\Loader\\LoaderInterface::load",
-            "file_name": "vendor/symfony/routing/Loader/ClosureLoader.php",
-            "snippet": "    public function load($closure, string $type = null)",
-            "selected_text": "$closure",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [

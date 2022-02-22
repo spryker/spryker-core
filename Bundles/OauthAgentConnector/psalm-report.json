@@ -2,10 +2,10 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 41,
-            "line_to": 41,
+            "line_from": 44,
+            "line_to": 44,
             "type": "UndefinedClass",
-            "message": "Class or interface Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder does not exist",
+            "message": "Class, interface or enum named Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Adapter/PasswordEncoderAdapter.php",
             "snippet": "        return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);",
             "selected_text": "BCryptPasswordEncoder",
@@ -28,8 +28,20 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 41,
+            "line_to": 41,
+            "type": "NonInvariantDocblockPropertyType",
+            "message": "Property Spryker\\Zed\\OauthAgentConnector\\Business\\League\\Grant\\AgentCredentialsGrantType::$userRepository has type Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\UserRepositoryInterface, not invariant with League\\OAuth2\\Server\\Grant\\AbstractGrant::$userRepository of type League\\OAuth2\\Server\\Repositories\\UserRepositoryInterface",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
+            "snippet": "    protected $userRepository;",
+            "selected_text": "$userRepository",
+            "error_level": 3,
+            "shortcode": 267
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\OauthAgentConnector\\Business\\League\\Grant\\AgentCredentialsGrantType::validateScopes cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
@@ -40,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of League\\OAuth2\\Server\\ResponseTypes\\ResponseTypeInterface::setRefreshToken cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
@@ -49,18 +61,6 @@
             "selected_text": "$refreshToken",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\UserRepositoryInterface::getUserEntityByRequest expects array<array-key, mixed>, possibly different type array<array-key, mixed>|null|object provided",
-            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/League/Grant/AgentCredentialsGrantType.php",
-            "snippet": "        $user = $this->userRepository->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);",
-            "selected_text": "$request->getParsedBody()",
-            "error_level": 3,
-            "shortcode": 92
         },
         {
             "severity": "info",
@@ -135,5 +135,54 @@
             "shortcode": 113
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Adapter/PasswordEncoderAdapter.php",
+            "snippet": "     * @return \\Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface",
+            "selected_text": "\\Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Adapter/PasswordEncoderAdapter.php",
+            "snippet": "    protected function getPasswordEncoder(): PasswordEncoderInterface",
+            "selected_text": "PasswordEncoderInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Core\\Encoder\\NativePasswordEncoder is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Adapter/PasswordEncoderAdapter.php",
+            "snippet": "        if (class_exists(NativePasswordEncoder::class)) {",
+            "selected_text": "NativePasswordEncoder::class",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Encoder\\NativePasswordEncoder is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAgentConnector/src/Spryker/Zed/OauthAgentConnector/Business/Adapter/PasswordEncoderAdapter.php",
+            "snippet": "            return new NativePasswordEncoder();",
+            "selected_text": "new NativePasswordEncoder()",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
 }

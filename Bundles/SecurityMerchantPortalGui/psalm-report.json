@@ -1,5 +1,67 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 78,
+            "type": "TooManyArguments",
+            "message": "Too many arguments for Symfony\\Component\\Security\\Core\\Authentication\\Token\\UsernamePasswordToken::__construct - expecting 3 but saw 4",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Updater/SecurityTokenUpdater.php",
+            "snippet": "        return new UsernamePasswordToken(\n            $merchantUser,\n            $merchantUser->getPassword(),\n            static::SECURITY_FIREWALL_NAME,\n            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],\n        );",
+            "selected_text": "new UsernamePasswordToken(\n            $merchantUser,\n            $merchantUser->getPassword(),\n            static::SECURITY_FIREWALL_NAME,\n            [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],\n        )",
+            "error_level": 4,
+            "shortcode": 26
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "MissingReturnType",
+            "message": "Method Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait::saveTargetPath does not have a return type, expecting void",
+            "file_name": "vendor/symfony/security-http/Util/TargetPathTrait.php",
+            "snippet": "    private function saveTargetPath(SessionInterface $session, string $firewallName, string $uri)",
+            "selected_text": "saveTargetPath",
+            "error_level": 2,
+            "shortcode": 50
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "MissingReturnType",
+            "message": "Method Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait::removeTargetPath does not have a return type, expecting void",
+            "file_name": "vendor/symfony/security-http/Util/TargetPathTrait.php",
+            "snippet": "    private function removeTargetPath(SessionInterface $session, string $firewallName)",
+            "selected_text": "removeTargetPath",
+            "error_level": 2,
+            "shortcode": 50
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
 }

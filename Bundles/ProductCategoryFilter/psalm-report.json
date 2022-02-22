@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\ProductCategoryFilter\\FacetUpdater\\FacetUpdaterByProductCategoryFilters::updateFromTransfer has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\FacetSearchResultTransfer|Generated\\Shared\\Transfer\\RangeSearchResultTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\ProductCategoryFilter\\FacetUpdater\\FacetUpdaterInterface::updateFromTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/FacetUpdater/FacetUpdaterByProductCategoryFilters.php",
-            "snippet": "    public function updateFromTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)",
-            "selected_text": "$facets",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "PossiblyNullArrayOffset",
@@ -39,18 +27,6 @@
         },
         {
             "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\ProductCategoryFilter\\ProductCategoryFilterClient::updateFacetsByCategory has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\FacetSearchResultTransfer|Generated\\Shared\\Transfer\\RangeSearchResultTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\ProductCategoryFilter\\ProductCategoryFilterClientInterface::updateFacetsByCategory",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/ProductCategoryFilterClient.php",
-            "snippet": "    public function updateFacetsByCategory(array $facets, array $productCategoryFilters)",
-            "selected_text": "$facets",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 73,
             "line_to": 73,
             "type": "PossiblyNullReference",
@@ -60,18 +36,6 @@
             "selected_text": "delete",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilter> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterReader.php",
-            "snippet": "        $productCategoryFilters = $this->productCategoryFilterQueryContainer->queryProductCategoryFilter()->find()->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -120,18 +84,6 @@
             "selected_text": "fromArray",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\ProductCategoryFilter\\Dependency\\Service\\ProductCategoryFilterToUtilEncodingServiceBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Service/ProductCategoryFilterToUtilEncodingServiceBridge.php",
-            "snippet": "        return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);",
-            "selected_text": "$this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options)",
-            "error_level": 5,
-            "shortcode": 139
         }
     ],
     "deprecation": [

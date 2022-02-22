@@ -12,18 +12,6 @@
             "selected_text": "useDebug",
             "error_level": 5,
             "shortcode": 181
-        },
-        {
-            "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\StorageDatabase\\Storage\\StorageDatabase::getMulti has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\StorageDatabase\\Storage\\StorageDatabaseInterface::getMulti",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Storage/StorageDatabase.php",
-            "snippet": "    public function getMulti(array $keys): array",
-            "selected_text": "$keys",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": []

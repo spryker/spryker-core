@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabelDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\DataSet\ProductLabelDataSetInterface;
 use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabel\Hook\ProductLabelAfterImportPublishHook;
@@ -30,7 +31,7 @@ class ProductLabelDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getProductLabelImporter()
+    public function getProductLabelImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductLabelDataImporterConfiguration());
 
@@ -52,7 +53,7 @@ class ProductLabelDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getProductLabelStoreImporter()
+    public function getProductLabelStoreImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductLabelStoreImporterConfiguration());
 

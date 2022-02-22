@@ -22,45 +22,45 @@ class ProductRatingValueTransformer implements FacetSearchResultValueTransformer
     public const RATING_VALUE_TOLERANCE = 25;
 
     /**
-     * @param array $rangeValues
+     * @param array $value Range values.
      *
      * @return array
      */
-    public function transformForDisplay($rangeValues)
+    public function transformForDisplay($value)
     {
-        if (isset($rangeValues['min'])) {
-            $rangeValues['min'] = $this->normalizeRatingForDisplay($rangeValues['min']);
+        if (isset($value['min'])) {
+            $value['min'] = $this->normalizeRatingForDisplay($value['min']);
         }
 
-        if (isset($rangeValues['max'])) {
-            $rangeValues['max'] = $this->normalizeRatingForDisplay($rangeValues['max']);
+        if (isset($value['max'])) {
+            $value['max'] = $this->normalizeRatingForDisplay($value['max']);
         }
 
-        return $rangeValues;
+        return $value;
     }
 
     /**
-     * @param array $rangeValues
+     * @param array $value Range values.
      *
      * @return array
      */
-    public function transformFromDisplay($rangeValues)
+    public function transformFromDisplay($value)
     {
-        if (isset($rangeValues['min'])) {
-            $rangeValues['min'] =
+        if (isset($value['min'])) {
+            $value['min'] =
                 $this->adjustLowerThreshold(
-                    $this->normalizeRatingForFilter($rangeValues['min']),
+                    $this->normalizeRatingForFilter($value['min']),
                 );
         }
 
-        if (isset($rangeValues['max'])) {
-            $rangeValues['max'] =
+        if (isset($value['max'])) {
+            $value['max'] =
                 $this->adjustUpperThreshold(
-                    $this->normalizeRatingForFilter($rangeValues['max']),
+                    $this->normalizeRatingForFilter($value['max']),
                 );
         }
 
-        return $rangeValues;
+        return $value;
     }
 
     /**

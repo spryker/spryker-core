@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, array<array-key, int>>' for Spryker\\Zed\\ProductLabelSearch\\Business\\Mapper\\ProductLabelMapper::mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName is incorrect, got 'array<array-key, array<array-key, int|list<int|null>>>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/Mapper/ProductLabelMapper.php",
-            "snippet": "     * @return int[][]",
-            "selected_text": "int[][]",
+            "snippet": "     * @return array<array<int>>",
+            "selected_text": "array<array<int>>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -81,7 +81,7 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $productLabelIdsMappedByIdProductAbstract using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/PageData/ProductPageDataTransferExpander.php",
-            "snippet": "                $productLabelIdsMappedByIdProductAbstract[$payloadTransfer->getIdProductAbstract()]",
+            "snippet": "                $productLabelIdsMappedByIdProductAbstract[$payloadTransfer->getIdProductAbstract()],",
             "selected_text": "$productLabelIdsMappedByIdProductAbstract",
             "error_level": 3,
             "shortcode": 125
@@ -91,21 +91,9 @@
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
+            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Event/Listener/ProductLabelSearchListener.php",
             "snippet": "        $productAbstractIds = $this->getQueryContainer()->queryProductLabelByProductLabelIds($productLabelIds)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Persistence/ProductLabelSearchRepository.php",
-            "snippet": "            ->getData();",
             "selected_text": "getData",
             "error_level": 3,
             "shortcode": 113
@@ -255,6 +243,18 @@
             "selected_text": "new ProductLabelSearchListener()",
             "error_level": 2,
             "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\ProductPageSearch\\Dependency\\Plugin\\ProductPageDataExpanderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/PageDataExpander/ProductLabelDataLoaderExpanderPlugin.php",
+            "snippet": "class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface",
+            "selected_text": "ProductLabelDataLoaderExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
         }
     ]
 }

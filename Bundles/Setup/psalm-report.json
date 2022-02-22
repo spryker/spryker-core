@@ -593,12 +593,12 @@
         },
         {
             "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 61,
+            "line_to": 61,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Setup\\Business\\SetupFacadeInterface::generateCronjobs has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Setup/src/Spryker/Zed/Setup/Communication/Console/JenkinsGenerateConsole.php",
-            "snippet": "        $result = $this->getFacade()->generateCronjobs(",
+            "snippet": "        $result = $this->getFacade()->generateCronjobs($roles);",
             "selected_text": "generateCronjobs",
             "error_level": 2,
             "shortcode": 1

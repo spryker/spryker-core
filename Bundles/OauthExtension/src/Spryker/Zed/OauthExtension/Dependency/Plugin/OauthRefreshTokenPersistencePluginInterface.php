@@ -17,9 +17,9 @@ interface OauthRefreshTokenPersistencePluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $refreshTokenEntity
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $refreshTokenTransfer
      *
      * @return void
      */
-    public function saveRefreshToken(OauthRefreshTokenTransfer $refreshTokenEntity): void;
+    public function saveRefreshToken(OauthRefreshTokenTransfer $refreshTokenTransfer): void;
 }

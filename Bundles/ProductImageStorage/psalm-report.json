@@ -2,30 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "MissingTemplateParam",
-            "message": "ArrayObject has missing template params, expecting 2",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImageStorage/src/Spryker/Client/ProductImageStorage/Expander/ProductViewImageExpander.php",
-            "snippet": "     * @return \\ArrayObject<\\Generated\\Shared\\Transfer\\ProductImageStorageTransfer>|null",
-            "selected_text": "\\ArrayObject<\\Generated\\Shared\\Transfer\\ProductImageStorageTransfer>|null",
-            "error_level": -1,
-            "shortcode": 182
-        },
-        {
-            "severity": "error",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "MissingTemplateParam",
-            "message": "ArrayObject has missing template params, expecting 2",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImageStorage/src/Spryker/Client/ProductImageStorage/Expander/ProductViewImageExpander.php",
-            "snippet": "     * @return \\ArrayObject<\\Generated\\Shared\\Transfer\\ProductImageStorageTransfer>|null",
-            "selected_text": "\\ArrayObject<\\Generated\\Shared\\Transfer\\ProductImageStorageTransfer>|null",
-            "error_level": -1,
-            "shortcode": 182
-        },
-        {
-            "severity": "error",
             "line_from": 98,
             "line_to": 98,
             "type": "InvalidReturnType",
@@ -325,18 +301,6 @@
             "selected_text": "$productImageSetsIndexedByProductId",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ProductImageStorage\\Persistence\\ProductImageStorageQueryContainer::queryProductIdsByProductImageSetToProductImageIds has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\ProductImageStorage\\Persistence\\ProductImageStorageQueryContainerInterface::queryProductIdsByProductImageSetToProductImageIds",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImageStorage/src/Spryker/Zed/ProductImageStorage/Persistence/ProductImageStorageQueryContainer.php",
-            "snippet": "    public function queryProductIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds)",
-            "selected_text": "$productImageSetToProductImageIds",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [

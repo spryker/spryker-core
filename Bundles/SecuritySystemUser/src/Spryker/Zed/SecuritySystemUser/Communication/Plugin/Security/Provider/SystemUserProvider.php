@@ -22,13 +22,13 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class SystemUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
-     * @param string $token
+     * @param string $username Token.
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername($token)
+    public function loadUserByUsername($username)
     {
-        return $this->getUserByToken($token);
+        return $this->getUserByToken($username);
     }
 
     /**

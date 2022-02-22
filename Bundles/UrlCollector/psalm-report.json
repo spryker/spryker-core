@@ -2,20 +2,20 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 118,
-            "line_to": 118,
+            "line_from": 145,
+            "line_to": 145,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\UrlStorageTransfer>' for Spryker\\Zed\\UrlCollector\\Business\\Collector\\Storage\\UrlCollector::getLocaleUrlsForUrl is incorrect, got 'list<array<array-key, mixed>>'",
             "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
-            "snippet": "     * @return \\Generated\\Shared\\Transfer\\UrlStorageTransfer[]",
-            "selected_text": "\\Generated\\Shared\\Transfer\\UrlStorageTransfer[]",
+            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\UrlStorageTransfer>",
+            "selected_text": "array<\\Generated\\Shared\\Transfer\\UrlStorageTransfer>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 130,
-            "line_to": 130,
+            "line_from": 157,
+            "line_to": 157,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<array<array-key, mixed>>' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\UrlStorageTransfer>' for Spryker\\Zed\\UrlCollector\\Business\\Collector\\Storage\\UrlCollector::getLocaleUrlsForUrl",
             "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
@@ -28,20 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
-            "snippet": "                ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 142,
-            "line_to": 142,
+            "line_from": 169,
+            "line_to": 169,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\UrlCollector\\Business\\Collector\\Storage\\UrlCollector::generateResourceKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
@@ -52,20 +40,20 @@
         },
         {
             "severity": "info",
-            "line_from": 280,
-            "line_to": 280,
+            "line_from": 312,
+            "line_to": 312,
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of Spryker\\Zed\\UrlCollector\\Business\\Collector\\Storage\\UrlCollector::processUrlKeys cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
-            "snippet": "            $this->processUrlKeys($batch, $storeReader, $storeWriter, $locale->getLocaleName());",
-            "selected_text": "$locale->getLocaleName()",
+            "snippet": "            $this->processUrlKeys($batch, $storeReader, $storeWriter, $localeTransfer->getLocaleName());",
+            "selected_text": "$localeTransfer->getLocaleName()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 314,
-            "line_to": 314,
+            "line_from": 347,
+            "line_to": 347,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of strstr expects string, possibly different type array<array-key, mixed>|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
@@ -73,29 +61,41 @@
             "selected_text": "$touchKey",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 315,
-            "line_to": 315,
-            "type": "PossiblyFalseArgument",
-            "message": "Argument 1 of str_replace cannot be false, possibly false value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
-            "snippet": "            $urlKeyPointer = str_replace($url, $touchId, $touchKey);",
-            "selected_text": "$url",
-            "error_level": 3,
-            "shortcode": 104
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 254,
-            "line_to": 254,
+            "line_from": 286,
+            "line_to": 286,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/Storage/UrlCollector.php",
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $batchResult",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/UrlCollectorRunner.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UrlCollector/src/Spryker/Zed/UrlCollector/Business/Collector/UrlCollectorRunnerInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,
             "shortcode": 98

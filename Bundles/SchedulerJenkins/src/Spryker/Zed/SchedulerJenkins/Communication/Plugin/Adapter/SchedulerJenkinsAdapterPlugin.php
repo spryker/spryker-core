@@ -23,13 +23,13 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function setup(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function setup(SchedulerScheduleTransfer $schedulerScheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->setupJenkins($scheduleTransfer);
+        return $this->getFacade()->setupJenkins($schedulerScheduleTransfer);
     }
 
     /**
@@ -37,13 +37,13 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function clean(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function clean(SchedulerScheduleTransfer $schedulerScheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->cleanJenkins($scheduleTransfer);
+        return $this->getFacade()->cleanJenkins($schedulerScheduleTransfer);
     }
 
     /**
@@ -51,13 +51,13 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function suspend(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function suspend(SchedulerScheduleTransfer $schedulerScheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->suspendJenkins($scheduleTransfer);
+        return $this->getFacade()->suspendJenkins($schedulerScheduleTransfer);
     }
 
     /**
@@ -65,12 +65,12 @@ class SchedulerJenkinsAdapterPlugin extends AbstractPlugin implements SchedulerA
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $schedulerScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\SchedulerResponseTransfer
      */
-    public function resume(SchedulerScheduleTransfer $scheduleTransfer): SchedulerResponseTransfer
+    public function resume(SchedulerScheduleTransfer $schedulerScheduleTransfer): SchedulerResponseTransfer
     {
-        return $this->getFacade()->resumeJenkins($scheduleTransfer);
+        return $this->getFacade()->resumeJenkins($schedulerScheduleTransfer);
     }
 }

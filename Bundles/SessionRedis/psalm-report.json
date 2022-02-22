@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 128,
+            "line_to": 128,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Shared\\SessionRedis\\Handler\\Lock\\SessionSpinLockLocker::unlock cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 128,
+            "line_to": 128,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Shared\\SessionRedis\\Handler\\Lock\\SessionSpinLockLocker::unlock cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
@@ -51,8 +51,20 @@
         },
         {
             "severity": "info",
-            "line_from": 221,
-            "line_to": 221,
+            "line_from": 222,
+            "line_to": 222,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of usleep expects 0|positive-int, parent type int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
+            "snippet": "            usleep($this->retryDelayMicroseconds);",
+            "selected_text": "$this->retryDelayMicroseconds",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 243,
+            "line_to": 243,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Shared\\SessionRedis\\Handler\\Lock\\SessionSpinLockLocker::generateLockKey cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
@@ -63,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 225,
-            "line_to": 225,
+            "line_from": 247,
+            "line_to": 247,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Shared\\SessionRedis\\Redis\\SessionRedisWrapperInterface::set cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
@@ -72,6 +84,18 @@
             "selected_text": "$this->token",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 249,
+            "line_to": 249,
+            "type": "RedundantCast",
+            "message": "Redundant cast to bool",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Shared/SessionRedis/Handler/Lock/SessionSpinLockLocker.php",
+            "snippet": "        return (bool)$result;",
+            "selected_text": "(bool)$result",
+            "error_level": 4,
+            "shortcode": 262
         },
         {
             "severity": "info",
@@ -98,5 +122,78 @@
             "shortcode": 139
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\SessionRedis\\SessionRedisConfig::getScheme has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Yves/SessionRedis/SessionRedisConfig.php",
+            "snippet": "            ->setScheme($this->getScheme())",
+            "selected_text": "getScheme",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 143,
+            "line_to": 143,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\SessionRedis\\SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Yves/SessionRedis/SessionRedisConfig.php",
+            "snippet": "            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);",
+            "selected_text": "SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\SessionRedis\\SessionRedisConfig::getZedScheme has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/SessionRedisConfig.php",
+            "snippet": "            ->setScheme($this->getZedScheme())",
+            "selected_text": "getZedScheme",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 177,
+            "line_to": 177,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\SessionRedis\\SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/SessionRedisConfig.php",
+            "snippet": "            $this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL);",
+            "selected_text": "SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 202,
+            "line_to": 202,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\SessionRedis\\SessionRedisConfig::getYvesScheme has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/SessionRedisConfig.php",
+            "snippet": "            ->setScheme($this->getYvesScheme())",
+            "selected_text": "getYvesScheme",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 217,
+            "line_to": 217,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\SessionRedis\\SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/SessionRedisConfig.php",
+            "snippet": "            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);",
+            "selected_text": "SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ]
 }

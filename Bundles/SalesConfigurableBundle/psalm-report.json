@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\OrderItemExpander::getSalesOrderItemIds is incorrect, got 'list<int|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -31,8 +31,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\SalesOrderConfiguredBundleExpander::getSalesOrderItemIdsFromOrder is incorrect, got 'list<int|mixed|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -76,27 +76,15 @@
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $salesOrderConfiguredBundleTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\OrderItemExpander::translateConfigurableBundleTemplateNames expects ArrayObject<int, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
+            "snippet": "        $salesOrderConfiguredBundleTransfers = $this->translateConfigurableBundleTemplateNames($salesOrderConfiguredBundleTransfers);",
+            "selected_text": "$salesOrderConfiguredBundleTransfers",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -105,7 +93,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\SalesConfigurableBundle\\Dependency\\Facade\\SalesConfigurableBundleToGlossaryFacadeInterface::translate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
-            "snippet": "                            $salesOrderConfiguredBundleTransfer->getName()",
+            "snippet": "                            $salesOrderConfiguredBundleTransfer->getName(),",
             "selected_text": "$salesOrderConfiguredBundleTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -124,22 +112,10 @@
         },
         {
             "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $salesOrderConfiguredBundleTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
             "line_from": 154,
             "line_to": 154,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $indexedSalesOrderConfiguredBundleTransfers[int|mixed|null] using possibly null offset int|mixed|null",
+            "message": "Cannot access value on variable $indexedSalesOrderConfiguredBundleTransfers[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/OrderItemExpander.php",
             "snippet": "            $indexedSalesOrderConfiguredBundleTransfers[$salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle()] =",
             "selected_text": "$indexedSalesOrderConfiguredBundleTransfers",
@@ -148,27 +124,15 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $salesOrderConfiguredBundleTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\SalesOrderConfiguredBundleExpander::translateConfigurableBundleTemplateNames expects ArrayObject<int, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
+            "snippet": "        $salesOrderConfiguredBundleTransfers = $this->translateConfigurableBundleTemplateNames($salesOrderConfiguredBundleTransfers);",
+            "selected_text": "$salesOrderConfiguredBundleTransfers",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -177,22 +141,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\SalesConfigurableBundle\\Dependency\\Facade\\SalesConfigurableBundleToGlossaryFacadeInterface::translate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "                            $salesOrderConfiguredBundleTransfer->getName()",
+            "snippet": "                            $salesOrderConfiguredBundleTransfer->getName(),",
             "selected_text": "$salesOrderConfiguredBundleTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $salesOrderConfiguredBundleTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -213,22 +165,22 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $salesOrderConfiguredBundleItemTransfers using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "                    $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()]",
+            "snippet": "                    $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()],",
             "selected_text": "$salesOrderConfiguredBundleItemTransfers",
             "error_level": 3,
             "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $salesOrderConfiguredBundleTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer>', should be 'ArrayObject'",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $salesOrderConfiguredBundleItemTransfers[$idSalesOrderItem] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\SalesOrderConfiguredBundleTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "                $salesOrderConfiguredBundleItemTransfers[$idSalesOrderItem] = $salesOrderConfiguredBundleItemTransfer;",
+            "selected_text": "$salesOrderConfiguredBundleItemTransfers",
+            "error_level": 3,
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -309,7 +261,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\SalesConfigurableBundle\\Business\\Transformer\\ConfigurableBundleItemTransformer::copyProductOptionTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Transformer/ConfigurableBundleItemTransformer.php",
-            "snippet": "                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())",
+            "snippet": "                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()),",
             "selected_text": "$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()",
             "error_level": 3,
             "shortcode": 78
@@ -321,7 +273,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getQuantityPerSlot on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Transformer/ConfigurableBundleItemTransformer.php",
-            "snippet": "                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())",
+            "snippet": "                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()),",
             "selected_text": "getQuantityPerSlot",
             "error_level": 3,
             "shortcode": 83
@@ -457,18 +409,6 @@
             "selected_text": "$bundleItemTransfer->getIdSalesOrderItem()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesConfigurableBundle\\Persistence\\Propel\\Mapper\\SalesOrderConfiguredBundleMapper::mapBundleEntityCollectionToBundleTransferCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\SalesConfigurableBundle\\Persistence\\SpySalesOrderConfiguredBundle> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Persistence/SalesConfigurableBundleRepository.php",
-            "snippet": "            ->mapBundleEntityCollectionToBundleTransferCollection($salesOrderConfiguredBundleQuery->find());",
-            "selected_text": "$salesOrderConfiguredBundleQuery->find()",
-            "error_level": 3,
-            "shortcode": 92
         }
     ],
     "deprecation": [
@@ -527,8 +467,8 @@
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\SalesOrderConfiguredBundleExpander is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/SalesConfigurableBundleBusinessFactory.php",
-            "snippet": "        return new SalesOrderConfiguredBundleExpander(\n            $this->getRepository(),\n            $this->getGlossaryFacade()\n        );",
-            "selected_text": "new SalesOrderConfiguredBundleExpander(\n            $this->getRepository(),\n            $this->getGlossaryFacade()\n        )",
+            "snippet": "        return new SalesOrderConfiguredBundleExpander(\n            $this->getRepository(),\n            $this->getGlossaryFacade(),\n        );",
+            "selected_text": "new SalesOrderConfiguredBundleExpander(\n            $this->getRepository(),\n            $this->getGlossaryFacade(),\n        )",
             "error_level": 2,
             "shortcode": 98
         },

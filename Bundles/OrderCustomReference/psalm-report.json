@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 63,
+            "line_to": 63,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\OrderCustomReference\\Persistence\\OrderCustomReferenceEntityManagerInterface::saveOrderCustomReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReference/src/Spryker/Zed/OrderCustomReference/Business/Writer/OrderCustomReferenceWriter.php",
@@ -15,20 +15,20 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 64,
+            "line_to": 64,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\OrderCustomReference\\Persistence\\OrderCustomReferenceEntityManagerInterface::saveOrderCustomReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReference/src/Spryker/Zed/OrderCustomReference/Business/Writer/OrderCustomReferenceWriter.php",
-            "snippet": "                    $quoteTransfer->getOrderCustomReference()",
+            "snippet": "                    $quoteTransfer->getOrderCustomReference(),",
             "selected_text": "$quoteTransfer->getOrderCustomReference()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\OrderCustomReference\\Persistence\\OrderCustomReferenceEntityManagerInterface::saveOrderCustomReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReference/src/Spryker/Zed/OrderCustomReference/Business/Writer/OrderCustomReferenceWriter.php",

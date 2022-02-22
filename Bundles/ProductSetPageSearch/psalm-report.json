@@ -121,30 +121,6 @@
             "selected_text": "$this->getIdColumnName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductSetPageSearch\\Dependency\\Facade\\ProductSetPageSearchToEventBehaviorFacadeBridge::getEventTransfersByModifiedColumns has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\ProductSetPageSearch\\Dependency\\Facade\\ProductSetPageSearchToEventBehaviorFacadeInterface::getEventTransfersByModifiedColumns",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetPageSearch/src/Spryker/Zed/ProductSetPageSearch/Dependency/Facade/ProductSetPageSearchToEventBehaviorFacadeBridge.php",
-            "snippet": "    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns)",
-            "selected_text": "$columns",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\Search\\Plugin\\Elasticsearch\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
-            "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
-            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
-            "selected_text": "$searchResult",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [

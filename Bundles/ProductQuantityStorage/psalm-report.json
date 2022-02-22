@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SpyProductQuantityStorageEntityTransfer::setData expects null|string, array<array-key, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Business/Model/ProductQuantityStorageWriter.php",
-            "snippet": "            ->setData($this->getStorageEntityData($productQuantityTransfer));",
-            "selected_text": "$this->getStorageEntityData($productQuantityTransfer)",
-            "error_level": 6,
-            "shortcode": 4
-        },
-        {
-            "severity": "error",
             "line_from": 33,
             "line_to": 33,
             "type": "InvalidReturnStatement",
@@ -76,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 83,
+            "line_to": 83,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getId on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -88,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductQuantityStorage\\Storage\\ProductQuantityStorageReaderInterface::findProductQuantityStorage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -100,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getId on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -112,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -124,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -136,8 +124,8 @@
         },
         {
             "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
+            "line_from": 110,
+            "line_to": 110,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -148,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyNullOperand",
             "message": "Left operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -160,8 +148,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -172,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -184,8 +172,8 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 116,
+            "line_to": 116,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -196,8 +184,8 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 116,
+            "line_to": 116,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -208,8 +196,8 @@
         },
         {
             "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
+            "line_from": 124,
+            "line_to": 124,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -220,8 +208,8 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -232,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Client\\ProductQuantityStorage\\Resolver\\ProductQuantityResolverInterface::getNearestQuantity cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -244,8 +232,8 @@
         },
         {
             "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
+            "line_from": 138,
+            "line_to": 138,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setQuantity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Client/ProductQuantityStorage/Validator/ProductQuantityItemValidator.php",
@@ -301,18 +289,6 @@
             "selected_text": "$productQuantityStorageEntity->getIdProductQuantityStorage()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ProductQuantityStorage\\Communication\\Plugin\\Event\\ProductQuantityEventResourceRepositoryPlugin::getData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductQuantityStorage/src/Spryker/Zed/ProductQuantityStorage/Communication/Plugin/Event/ProductQuantityEventResourceRepositoryPlugin.php",
-            "snippet": "    public function getData(array $ids = []): array",
-            "selected_text": "$ids",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

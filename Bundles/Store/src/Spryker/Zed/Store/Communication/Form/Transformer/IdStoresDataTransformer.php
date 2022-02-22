@@ -12,23 +12,23 @@ use Symfony\Component\Form\DataTransformerInterface;
 class IdStoresDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param array|null $idStoresArray
+     * @param array|null $value Store IDs.
      *
      * @return string
      */
-    public function transform($idStoresArray)
+    public function transform($value)
     {
         /** @phpstan-var string */
-        return json_encode($idStoresArray);
+        return json_encode($value);
     }
 
     /**
-     * @param string $idStoresJson
+     * @param string $value JSON of Store IDs.
      *
-     * @return mixed
+     * @return array|null
      */
-    public function reverseTransform($idStoresJson)
+    public function reverseTransform($value)
     {
-        return json_decode($idStoresJson, true);
+        return json_decode($value, true);
     }
 }

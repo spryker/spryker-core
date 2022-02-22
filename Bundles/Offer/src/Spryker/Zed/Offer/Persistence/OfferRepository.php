@@ -64,12 +64,12 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
     }
 
     /**
-     * @param \Orm\Zed\Offer\Persistence\SpyOfferQuery $spyOfferQuery
+     * @param \Orm\Zed\Offer\Persistence\SpyOfferQuery $offerQuery
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
-    protected function applyFilterToQuery(SpyOfferQuery $spyOfferQuery, ?FilterTransfer $filterTransfer): SpyOfferQuery
+    protected function applyFilterToQuery(SpyOfferQuery $offerQuery, ?FilterTransfer $filterTransfer): SpyOfferQuery
     {
         $criteria = new Criteria();
         if ($filterTransfer !== null) {
@@ -77,21 +77,21 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
                 ->toCriteria();
         }
 
-        $spyOfferQuery->mergeWith($criteria);
+        $offerQuery->mergeWith($criteria);
 
-        return $spyOfferQuery;
+        return $offerQuery;
     }
 
     /**
-     * @param \Orm\Zed\Offer\Persistence\SpyOfferQuery $spyOfferQuery
+     * @param \Orm\Zed\Offer\Persistence\SpyOfferQuery $offerQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
      * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
-    protected function applyPagination(SpyOfferQuery $spyOfferQuery, ?PaginationTransfer $paginationTransfer = null): SpyOfferQuery
+    protected function applyPagination(SpyOfferQuery $offerQuery, ?PaginationTransfer $paginationTransfer = null): SpyOfferQuery
     {
         if (!$paginationTransfer) {
-            return $spyOfferQuery;
+            return $offerQuery;
         }
 
         $page = $paginationTransfer
@@ -102,7 +102,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
             ->requireMaxPerPage()
             ->getMaxPerPage();
 
-        $paginationModel = $spyOfferQuery->paginate($page, $maxPerPage);
+        $paginationModel = $offerQuery->paginate($page, $maxPerPage);
 
         $paginationTransfer->setNbResults($paginationModel->getNbResults());
         $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());

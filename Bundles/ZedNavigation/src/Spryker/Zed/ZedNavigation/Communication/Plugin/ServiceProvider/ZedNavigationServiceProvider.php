@@ -40,22 +40,22 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     protected $navigation;
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function register(Application $application)
+    public function register(Application $app)
     {
-        $application['twig'] = $application->share(
-            $application->extend('twig', function (Environment $twig) use ($application) {
-                $twig->addFunction($this->getNavigationFunction($application));
-                $twig->addFunction($this->getBreadcrumbFunction($application));
+        $app['twig'] = $app->share(
+            $app->extend('twig', function (Environment $twig) use ($app) {
+                $twig->addFunction($this->getNavigationFunction($app));
+                $twig->addFunction($this->getBreadcrumbFunction($app));
 
                 return $twig;
             }),
         );
 
-        $this->addBackwardCompatibility($application);
+        $this->addBackwardCompatibility($app);
     }
 
     /**
@@ -121,11 +121,11 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function boot(Application $application)
+    public function boot(Application $app)
     {
     }
 

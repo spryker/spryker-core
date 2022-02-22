@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $offerTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OfferTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/Model/Hydrator/OfferHydrator.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[] $offerTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OfferTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/Model/Hydrator/OfferHydrator.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyNullReference",
@@ -39,27 +15,15 @@
         },
         {
             "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $offerTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OfferTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/Model/Hydrator/OfferHydratorInterface.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[] $offerTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OfferTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/Model/Hydrator/OfferHydratorInterface.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\OfferTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\Offer\\Model\\Hydrator\\OfferHydratorInterface::hydrateQuoteWithCustomer expects ArrayObject<int, Generated\\Shared\\Transfer\\OfferTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\OfferTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Client/Offer/OfferClient.php",
+            "snippet": "                $offerListTransfer->getOffers(),",
+            "selected_text": "$offerListTransfer->getOffers()",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -116,7 +80,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Offer\\Dependency\\Facade\\OfferToCustomerFacadeInterface::findCustomerByReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Business/Model/Hydrator/OfferQuoteExpander.php",
-            "snippet": "                $offerTransfer->getCustomerReference()",
+            "snippet": "                $offerTransfer->getCustomerReference(),",
             "selected_text": "$offerTransfer->getCustomerReference()",
             "error_level": 3,
             "shortcode": 78
@@ -534,21 +498,9 @@
             "line_from": 67,
             "line_to": 67,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\QuoteTransfer::fromArray cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/Mapper/OfferMapper.php",
-            "snippet": "                    $this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData(), true),",
-            "selected_text": "$this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData(), true)",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Offer\\Dependency\\Service\\OfferToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/Mapper/OfferMapper.php",
-            "snippet": "                    $this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData(), true),",
+            "snippet": "                    $this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData(), true) ?: [],",
             "selected_text": "$offerEntityTransfer->getQuoteData()",
             "error_level": 3,
             "shortcode": 78
@@ -588,102 +540,6 @@
             "selected_text": "$offerEntityTransfers",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setNbResults($paginationModel->getNbResults());",
-            "selected_text": "getNbResults",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());",
-            "selected_text": "getFirstIndex",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 109,
-            "line_to": 109,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());",
-            "selected_text": "getLastIndex",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());",
-            "selected_text": "getFirstPage",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setLastPage($paginationModel->getLastPage());",
-            "selected_text": "getLastPage",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setNextPage($paginationModel->getNextPage());",
-            "selected_text": "getNextPage",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());",
-            "selected_text": "getPreviousPage",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 115,
-            "line_to": 115,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Offer\\Persistence\\SpyOffer> variable $paginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Persistence/OfferRepository.php",
-            "snippet": "        $query = $paginationModel->getQuery();",
-            "selected_text": "getQuery",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -710,6 +566,30 @@
             "selected_text": "OfferItemSubtotalAggregationPlugin",
             "error_level": 2,
             "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Communication/Plugin/Checkout/ConvertOfferToOrderPlugin.php",
+            "snippet": "class ConvertOfferToOrderPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface",
+            "selected_text": "ConvertOfferToOrderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Sales\\Business\\SalesFacadeInterface::getOrderByIdSalesOrder has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Offer/src/Spryker/Zed/Offer/Dependency/Facade/OfferToSalesFacadeBridge.php",
+            "snippet": "        return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);",
+            "selected_text": "getOrderByIdSalesOrder",
+            "error_level": 2,
+            "shortcode": 1
         }
     ]
 }

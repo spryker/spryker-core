@@ -25,14 +25,14 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function register(Application $application)
+    public function register(Application $app)
     {
-        $this->setSessionStorageOptions($application);
-        $this->setSessionStorageHandler($application);
+        $this->setSessionStorageOptions($app);
+        $this->setSessionStorageHandler($app);
     }
 
     /**
@@ -58,20 +58,20 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function boot(Application $application)
+    public function boot(Application $app)
     {
         if ($this->isCliOrPhpDbg()) {
             return;
         }
 
-        $session = $this->getSession($application);
+        $session = $this->getSession($app);
         $this->getSessionClient()->setContainer($session);
         /** @var \Spryker\Shared\EventDispatcher\EventDispatcherInterface $dispatcher */
-        $dispatcher = $application['dispatcher'];
+        $dispatcher = $app['dispatcher'];
         $dispatcher->addListener(KernelEvents::RESPONSE, [$this, 'extendCookieLifetime'], -128);
     }
 

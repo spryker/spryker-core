@@ -580,18 +580,6 @@
         },
         {
             "severity": "info",
-            "line_from": 312,
-            "line_to": 312,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Oms\\Business\\OrderStateMachine\\OrderStateMachine::triggerEventForNewOrderItems has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\Oms\\Business\\OrderStateMachine\\OrderStateMachineInterface::triggerEventForNewOrderItems",
-            "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OrderStateMachine/OrderStateMachine.php",
-            "snippet": "    public function triggerEventForNewOrderItems(array $orderItemIds, $data)",
-            "selected_text": "$orderItemIds",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 436,
             "line_to": 436,
             "type": "PossiblyNullReference",
@@ -769,18 +757,6 @@
             "selected_text": "$this->timeout",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 129,
-            "line_to": 129,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Oms\\Business\\Process\\Process::setName has the more specific type 'string', expecting 'mixed' as defined by Spryker\\Zed\\Oms\\Business\\Process\\ProcessInterface::setName",
-            "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/Process/Process.php",
-            "snippet": "    public function setName($name)",
-            "selected_text": "$name",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1237,18 +1213,6 @@
             "selected_text": "$orderItems",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Oms\\Communication\\Form\\OmsTriggerForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Form/OmsTriggerForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

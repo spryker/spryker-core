@@ -1,5 +1,91 @@
 {
-    "error": [],
-    "warning": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 143,
+            "line_to": 143,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductApproval\\Dependency\\Facade\\ProductApprovalToProductFacadeInterface::getRawProductConcreteTransfersByConcreteSkus expects array<array-key, string>, non-empty-list<mixed|null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/Validator/ProductApprovalCartChangeValidator.php",
+            "snippet": "        return $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($productSkus);",
+            "selected_text": "$productSkus",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductApproval\\Business\\Reader\\ProductReaderInterface::getProductAbstractTransfersIndexedByIdProductAbstract expects array<array-key, string>, non-empty-list<mixed|null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/Validator/ProductApprovalCheckoutValidator.php",
+            "snippet": "        return $this->productReader->getProductAbstractTransfersIndexedByIdProductAbstract($productAbstractSkus);",
+            "selected_text": "$productAbstractSkus",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productAbstractTransfersIndexedByIdProductAbstract using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/Filter/QuoteItemsFilter.php",
+            "snippet": "            $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()];",
+            "selected_text": "$productAbstractTransfersIndexedByIdProductAbstract",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/Filter/QuoteItemsFilter.php",
+            "snippet": "                $quoteTransfer->getItems()->offsetUnset($key);",
+            "selected_text": "offsetUnset",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/Filter/QuoteItemsFilter.php",
+            "snippet": "        if (!$quoteTransfer->getItems()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 136,
+            "line_to": 136,
+            "type": "InvalidDocblock",
+            "message": "Invalid type 'Spryker\\Zed\\ProductApproval\\Dependency\\Facade\\ProductApprovalToProductFacadeInterface;' in docblock for Spryker\\Zed\\ProductApproval\\Business\\ProductApprovalBusinessFactory::getProductFacade",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/ProductApprovalBusinessFactory.php",
+            "snippet": "    /**\n     * @return \\Spryker\\Zed\\ProductApproval\\Dependency\\Facade\\ProductApprovalToProductFacadeInterface;\n     */\n    public function getProductFacade(): ProductApprovalToProductFacadeInterface",
+            "selected_text": "public function getProductFacade(): ProductApprovalToProductFacadeInterface",
+            "error_level": 4,
+            "shortcode": 8
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productAbstractTransfersIndexedByIdProductAbstract using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApproval/src/Spryker/Zed/ProductApproval/Business/Validator/ProductApprovalCheckoutValidator.php",
+            "snippet": "            $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()];",
+            "selected_text": "$productAbstractTransfersIndexedByIdProductAbstract",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
     "deprecation": []
 }

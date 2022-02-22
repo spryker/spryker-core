@@ -10,16 +10,16 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 interface FormDataProviderInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($quoteTransfer);
+    public function getData($transfer);
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer);
+    public function getOptions($transfer);
 }

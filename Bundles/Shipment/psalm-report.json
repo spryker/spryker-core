@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Service\\Shipment\\Items\\ItemsGrouper::groupByShipment has wrong name $itemTransferCollection, expecting $itemTransfers as defined by Spryker\\Service\\Shipment\\Items\\ItemsGrouperInterface::groupByShipment",
-            "file_name": "vendor/spryker/spryker/Bundles/Shipment/src/Spryker/Service/Shipment/Items/ItemsGrouper.php",
-            "snippet": "    public function groupByShipment(iterable $itemTransferCollection): ArrayObject",
-            "selected_text": "$itemTransferCollection",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 167,
             "line_to": 167,
             "type": "InvalidPropertyAssignmentValue",

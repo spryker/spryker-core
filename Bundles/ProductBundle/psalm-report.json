@@ -122,34 +122,10 @@
         },
         {
             "severity": "error",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer>' for Spryker\\Zed\\ProductBundle\\Business\\ProductBundle\\Cache\\ProductBundleCache::getProductForBundleTransfersBySku is incorrect, got 'array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer|null>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundle/src/Spryker/Zed/ProductBundle/Business/ProductBundle/Cache/ProductBundleCache.php",
-            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\ProductForBundleTransfer>",
-            "selected_text": "array<\\Generated\\Shared\\Transfer\\ProductForBundleTransfer>",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer|null>' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer>' for Spryker\\Zed\\ProductBundle\\Business\\ProductBundle\\Cache\\ProductBundleCache::getProductForBundleTransfersBySku",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundle/src/Spryker/Zed/ProductBundle/Business/ProductBundle/Cache/ProductBundleCache.php",
-            "snippet": "        return static::$groupedBySkuProductForBundleTransfers[$sku];",
-            "selected_text": "static::$groupedBySkuProductForBundleTransfers[$sku]",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
             "line_from": 93,
             "line_to": 93,
             "type": "InvalidPropertyAssignmentValue",
-            "message": "Spryker\\Zed\\ProductBundle\\Business\\ProductBundle\\Cache\\ProductBundleCache::$groupedBySkuProductForBundleTransfers with declared type 'array<array-key, array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer|null>>' cannot be assigned type 'non-empty-array<array-key, array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer|null>|null>'",
+            "message": "Spryker\\Zed\\ProductBundle\\Business\\ProductBundle\\Cache\\ProductBundleCache::$groupedBySkuProductForBundleTransfers with declared type 'array<array-key, array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer>>' cannot be assigned type 'non-empty-array<array-key, array<array-key, Generated\\Shared\\Transfer\\ProductForBundleTransfer>|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductBundle/src/Spryker/Zed/ProductBundle/Business/ProductBundle/Cache/ProductBundleCache.php",
             "snippet": "            static::$groupedBySkuProductForBundleTransfers[$sku] = null;",
             "selected_text": "static::$groupedBySkuProductForBundleTransfers",
@@ -2437,30 +2413,6 @@
             "selected_text": "$productConcreteTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductBundle\\Communication\\Form\\ReturnCreateBundleForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundle/src/Spryker/Zed/ProductBundle/Communication/Form/ReturnCreateBundleForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): FormBuilderInterface",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductBundle\\Communication\\Form\\ReturnCreateBundleItemsSubForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundle/src/Spryker/Zed/ProductBundle/Communication/Form/ReturnCreateBundleItemsSubForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

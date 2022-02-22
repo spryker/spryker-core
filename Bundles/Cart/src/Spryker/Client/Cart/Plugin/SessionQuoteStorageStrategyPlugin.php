@@ -154,14 +154,14 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
      *
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(ArrayObject $items)
+    public function removeItems(ArrayObject $itemTransfers)
     {
         $cartChangeTransfer = $this->createCartChangeTransfer();
-        $cartChangeTransfer->setItems($items);
+        $cartChangeTransfer->setItems($itemTransfers);
         $cartChangeTransfer = $this->getFactory()
             ->createCartChangeRequestExpander()
             ->removeItemRequestExpand($cartChangeTransfer);

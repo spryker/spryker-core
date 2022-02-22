@@ -15,9 +15,9 @@ interface ProductConcreteRestrictionPluginInterface
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isRestricted(int $idProductAbstract): bool;
+    public function isRestricted(int $idProduct): bool;
 }

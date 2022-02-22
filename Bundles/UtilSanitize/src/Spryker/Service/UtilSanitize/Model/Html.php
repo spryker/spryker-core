@@ -10,16 +10,16 @@ namespace Spryker\Service\UtilSanitize\Model;
 class Html implements HtmInterface
 {
     /**
-     * Convenience method for htmlspecialchars to use UTF8 by default.
+     * {@inheritDoc}
      *
-     * @param object|array|string $text Text to wrap through htmlspecialchars. Also works with arrays, and objects.
+     * @param object|array|string|bool $text Text to wrap through htmlspecialchars. Also works with arrays, and objects.
      *   Arrays will be mapped and have all their elements escaped. Objects will be string cast if they
      *   implement a `__toString` method. Otherwise the class name will be used.
      * @param bool $double Encode existing html entities.
      * @param string|null $charset Character set to use when escaping. Defaults to config value in `mb_internal_encoding()`
      *   or 'UTF-8'.
      *
-     * @return array|string Wrapped text.
+     * @return array|string|bool Wrapped text.
      */
     public function escape($text, $double = true, $charset = null)
     {

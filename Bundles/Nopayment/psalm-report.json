@@ -3,8 +3,20 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceToPay on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Checkout/NopaymentCheckoutPreConditionChecker.php",
+            "snippet": "        if ($this->hasNopaymentPayments($quoteTransfer) && $quoteTransfer->getTotals()->getPriceToPay() > 0) {",
+            "selected_text": "getPriceToPay",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPriceToPay on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
@@ -27,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 45,
+            "line_to": 45,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPriceToPay on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Communication/Plugin/Checkout/NopaymentPreCheckPlugin.php",
@@ -50,6 +62,66 @@
             "selected_text": "setPayment",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "            if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getWhitelistMethods())) {",
+            "selected_text": "getMethodName",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "            if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getNopaymentMethods())) {",
+            "selected_text": "getMethodName",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "            if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getWhitelistMethods())) {",
+            "selected_text": "getMethodName",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "            if (!in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getNopaymentMethods())) {",
+            "selected_text": "getMethodName",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Payment\\Dependency\\Plugin\\Checkout\\CheckoutPreCheckPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Communication/Plugin/Checkout/NopaymentPreCheckPlugin.php",
+            "snippet": "class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface",
+            "selected_text": "NopaymentPreCheckPlugin",
+            "error_level": 2,
+            "shortcode": 152
         }
     ]
 }

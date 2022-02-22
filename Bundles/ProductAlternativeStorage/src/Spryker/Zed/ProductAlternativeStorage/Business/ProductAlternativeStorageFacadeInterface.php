@@ -17,11 +17,11 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @api
      *
-     * @param array<int> $idProduct
+     * @param array<int> $productIds
      *
      * @return void
      */
-    public function publishAlternative(array $idProduct): void;
+    public function publishAlternative(array $productIds): void;
 
     /**
      * Specification:

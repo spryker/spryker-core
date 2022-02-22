@@ -2,30 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\PriceProductStorage\\PriceProductStorageClient::validateItemProductPrice has wrong name $itemValidationTransfer, expecting $ItemValidationTransfer as defined by Spryker\\Client\\PriceProductStorage\\PriceProductStorageClientInterface::validateItemProductPrice",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductStorage/src/Spryker/Client/PriceProductStorage/PriceProductStorageClient.php",
-            "snippet": "    public function validateItemProductPrice(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer",
-            "selected_text": "$itemValidationTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\PriceProductStorage\\Validator\\PriceProductItemValidator::validate has wrong name $itemValidationTransfer, expecting $itemTransfer as defined by Spryker\\Client\\PriceProductStorage\\Validator\\PriceProductItemValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductStorage/src/Spryker/Client/PriceProductStorage/Validator/PriceProductItemValidator.php",
-            "snippet": "    public function validate(ItemValidationTransfer $itemValidationTransfer): ItemValidationTransfer",
-            "selected_text": "$itemValidationTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 315,
             "line_to": 315,
             "type": "InvalidPropertyAssignmentValue",

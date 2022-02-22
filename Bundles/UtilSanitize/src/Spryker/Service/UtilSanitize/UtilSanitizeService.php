@@ -27,6 +27,7 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
      */
     public function escapeHtml($text, $double = true, $charset = null)
     {
+        /** @phpstan-var string */
         return $this->getFactory()
             ->createHtml()
             ->escape($text, $double, $charset);

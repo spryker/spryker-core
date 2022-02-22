@@ -2,126 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\AddressCollectionDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\AddressCollectionDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\CustomerDataProvider::getOptions has wrong name $customerTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/CustomerDataProvider.php",
-            "snippet": "    public function getOptions($customerTransfer): array",
-            "selected_text": "$customerTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\CustomerDataProvider::getData has wrong name $customerTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/CustomerDataProvider.php",
-            "snippet": "    public function getData($customerTransfer)",
-            "selected_text": "$customerTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\CustomersListDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/CustomersListDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 60,
-            "line_to": 60,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\CustomersListDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/CustomersListDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\ItemCollectionDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ItemCollectionDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\ItemCollectionDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ItemCollectionDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\OrderSourceListDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/OrderSourceListDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\OrderSourceListDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/OrderSourceListDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 61,
             "line_to": 61,
             "type": "InvalidReturnType",
@@ -143,150 +23,6 @@
             "selected_text": "$orderSourceList",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\PaymentDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/PaymentDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\PaymentDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/PaymentDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\ProductCollectionDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ProductCollectionDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 48,
-            "line_to": 48,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\ProductCollectionDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ProductCollectionDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\ShipmentDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\ShipmentDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\StoreDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\StoreDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\SummaryDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/SummaryDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\SummaryDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/SummaryDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\VoucherDataProvider::getData has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getData",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/VoucherDataProvider.php",
-            "snippet": "    public function getData($quoteTransfer): QuoteTransfer",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\VoucherDataProvider::getOptions has wrong name $quoteTransfer, expecting $dataTransfer as defined by Spryker\\Zed\\ManualOrderEntryGui\\Communication\\Form\\DataProvider\\FormDataProviderInterface::getOptions",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/VoucherDataProvider.php",
-            "snippet": "    public function getOptions($quoteTransfer): array",
-            "selected_text": "$quoteTransfer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -345,8 +81,8 @@
             "type": "PossiblyNullPropertyAssignmentValue",
             "message": "$this->customerTransfer with non-nullable declared type 'Generated\\Shared\\Transfer\\CustomerTransfer' cannot be assigned nullable type 'Generated\\Shared\\Transfer\\CustomerTransfer|null'",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "        $this->customerTransfer = $quoteTransfer->getCustomer();",
-            "selected_text": "$quoteTransfer->getCustomer()",
+            "snippet": "        $this->customerTransfer = $transfer->getCustomer();",
+            "selected_text": "$transfer->getCustomer()",
             "error_level": 3,
             "shortcode": 148
         },
@@ -357,7 +93,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method toArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {",
+            "snippet": "        if ($transfer->getBillingAddress()->toArray() == $transfer->getShippingAddress()->toArray()) {",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 83
@@ -369,7 +105,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method toArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {",
+            "snippet": "        if ($transfer->getBillingAddress()->toArray() == $transfer->getShippingAddress()->toArray()) {",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 83
@@ -549,7 +285,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/CustomersListDataProvider.php",
-            "snippet": "        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();",
+            "snippet": "        $idCustomer = $transfer->getCustomer()->getIdCustomer();",
             "selected_text": "getIdCustomer",
             "error_level": 3,
             "shortcode": 83
@@ -561,7 +297,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method setIdCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/CustomersListDataProvider.php",
-            "snippet": "        $quoteTransfer->getCustomer()->setIdCustomer($idCustomer);",
+            "snippet": "        $transfer->getCustomer()->setIdCustomer($idCustomer);",
             "selected_text": "setIdCustomer",
             "error_level": 3,
             "shortcode": 83
@@ -597,7 +333,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method setItems on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ItemCollectionDataProvider.php",
-            "snippet": "        $quoteTransfer->getManualOrder()->setItems($items);",
+            "snippet": "        $transfer->getManualOrder()->setItems($items);",
             "selected_text": "setItems",
             "error_level": 3,
             "shortcode": 83
@@ -609,7 +345,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ItemCollectionDataProvider.php",
-            "snippet": "            ItemCollectionType::OPTION_ISO_CODE => $quoteTransfer->getCurrency()->getCode(),",
+            "snippet": "            ItemCollectionType::OPTION_ISO_CODE => $transfer->getCurrency()->getCode(),",
             "selected_text": "getCode",
             "error_level": 3,
             "shortcode": 83
@@ -633,7 +369,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method setProducts on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ProductCollectionDataProvider.php",
-            "snippet": "        $quoteTransfer->getManualOrder()->setProducts($products);",
+            "snippet": "        $transfer->getManualOrder()->setProducts($products);",
             "selected_text": "setProducts",
             "error_level": 3,
             "shortcode": 83
@@ -645,7 +381,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "        if ($quoteTransfer->getShipment()->getMethod() === null) {",
+            "snippet": "        if ($transfer->getShipment()->getMethod() === null) {",
             "selected_text": "getMethod",
             "error_level": 3,
             "shortcode": 83
@@ -657,7 +393,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method setMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "            $quoteTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());",
+            "snippet": "            $transfer->getShipment()->setMethod(new ShipmentMethodTransfer());",
             "selected_text": "setMethod",
             "error_level": 3,
             "shortcode": 83
@@ -705,7 +441,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "            $storeName = $quoteTransfer->getStore()->getName();",
+            "snippet": "            $storeName = $transfer->getStore()->getName();",
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
@@ -717,7 +453,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "            $currencyCode = $quoteTransfer->getCurrency()->getCode();",
+            "snippet": "            $currencyCode = $transfer->getCurrency()->getCode();",
             "selected_text": "getCode",
             "error_level": 3,
             "shortcode": 83
@@ -729,7 +465,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method setStoreCurrency on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "            $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);",
+            "snippet": "            $transfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);",
             "selected_text": "setStoreCurrency",
             "error_level": 3,
             "shortcode": 83
@@ -741,7 +477,7 @@
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "            $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);",
+            "snippet": "            $transfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);",
             "selected_text": "$storeName",
             "error_level": 1,
             "shortcode": 80
@@ -753,7 +489,7 @@
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/StoreDataProvider.php",
-            "snippet": "            $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);",
+            "snippet": "            $transfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);",
             "selected_text": "$currencyCode",
             "error_level": 1,
             "shortcode": 80
@@ -1271,7 +1007,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setShippingAddress has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "        $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));",
+            "snippet": "        $transfer->setShippingAddress($this->getShippingAddress($transfer));",
             "selected_text": "setShippingAddress",
             "error_level": 2,
             "shortcode": 1
@@ -1283,7 +1019,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShippingAddress has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/AddressCollectionDataProvider.php",
-            "snippet": "        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {",
+            "snippet": "        if ($transfer->getBillingAddress()->toArray() == $transfer->getShippingAddress()->toArray()) {",
             "selected_text": "getShippingAddress",
             "error_level": 2,
             "shortcode": 1
@@ -1331,7 +1067,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "        if ($quoteTransfer->getShipment() === null) {",
+            "snippet": "        if ($transfer->getShipment() === null) {",
             "selected_text": "getShipment",
             "error_level": 2,
             "shortcode": 1
@@ -1343,7 +1079,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "            $quoteTransfer->setShipment(new ShipmentTransfer());",
+            "snippet": "            $transfer->setShipment(new ShipmentTransfer());",
             "selected_text": "setShipment",
             "error_level": 2,
             "shortcode": 1
@@ -1355,7 +1091,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "        if ($quoteTransfer->getShipment()->getMethod() === null) {",
+            "snippet": "        if ($transfer->getShipment()->getMethod() === null) {",
             "selected_text": "getShipment",
             "error_level": 2,
             "shortcode": 1
@@ -1367,7 +1103,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "            $quoteTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());",
+            "snippet": "            $transfer->getShipment()->setMethod(new ShipmentMethodTransfer());",
             "selected_text": "getShipment",
             "error_level": 2,
             "shortcode": 1

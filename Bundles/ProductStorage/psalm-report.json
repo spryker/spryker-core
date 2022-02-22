@@ -112,18 +112,6 @@
         },
         {
             "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\ProductStorage\\Mapper\\ProductAbstractStorageDataMapper::filterProductStorageExpanderPlugins has the more specific type 'Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface', expecting 'Spryker\\Client\\ProductStorageExtension\\Dependency\\Plugin\\ProductViewExpanderPluginInterface' as defined by Spryker\\Client\\ProductStorage\\Mapper\\ProductStorageDataMapper::filterProductStorageExpanderPlugins",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Mapper/ProductAbstractStorageDataMapper.php",
-            "snippet": "    protected function filterProductStorageExpanderPlugins(ProductViewExpanderPluginInterface $storageProductExpanderPlugin): bool",
-            "selected_text": "$storageProductExpanderPlugin",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 105,
             "line_to": 105,
             "type": "PossiblyNullReference",
@@ -256,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 605,
-            "line_to": 605,
+            "line_from": 606,
+            "line_to": 606,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Client\\ProductStorage\\Storage\\ProductAbstractStorageReader::cacheProductAbstractDataByIdProductAbstractForLocaleNameAndStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Storage/ProductAbstractStorageReader.php",
@@ -268,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 674,
-            "line_to": 674,
+            "line_from": 676,
+            "line_to": 676,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Client\\ProductStorage\\Storage\\ProductAbstractStorageReader::getStoreName is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Storage/ProductAbstractStorageReader.php",
@@ -280,8 +268,8 @@
         },
         {
             "severity": "info",
-            "line_from": 682,
-            "line_to": 682,
+            "line_from": 684,
+            "line_to": 684,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Client\\ProductStorage\\Storage\\ProductAbstractStorageReader::getStoreName is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Storage/ProductAbstractStorageReader.php",
@@ -316,8 +304,8 @@
         },
         {
             "severity": "info",
-            "line_from": 555,
-            "line_to": 555,
+            "line_from": 556,
+            "line_to": 556,
             "type": "PossiblyNullArrayAccess",
             "message": "Cannot access array value on possibly null variable $productStorageData of type array<array-key, mixed>|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Storage/ProductConcreteStorageReader.php",
@@ -328,8 +316,8 @@
         },
         {
             "severity": "info",
-            "line_from": 556,
-            "line_to": 556,
+            "line_from": 557,
+            "line_to": 557,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $productConcreteStorageData[$idProductConcrete] using possibly null offset mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Storage/ProductConcreteStorageReader.php",
@@ -340,8 +328,8 @@
         },
         {
             "severity": "info",
-            "line_from": 558,
-            "line_to": 558,
+            "line_from": 559,
+            "line_to": 559,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\ProductStorage\\Storage\\ProductConcreteStorageReader::cacheProductConcreteDataByIdProductConcreteAndLocaleName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Client/ProductStorage/Storage/ProductConcreteStorageReader.php",
@@ -352,8 +340,20 @@
         },
         {
             "severity": "info",
-            "line_from": 302,
-            "line_to": 302,
+            "line_from": 490,
+            "line_to": 490,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKey> variable $superAttributes",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductAbstractStorageWriter.php",
+            "snippet": "        if ($superAttributes->getData() === []) {",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 321,
+            "line_to": 321,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\ProductStorage\\Persistence\\SpyProductConcreteStorage::setFkProduct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductConcreteStorageWriter.php",
@@ -361,6 +361,18 @@
             "selected_text": "$productConcreteStorageTransfer->getIdProductConcrete()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 414,
+            "line_to": 414,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKey> variable $superAttributes",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductConcreteStorageWriter.php",
+            "snippet": "        if (!$superAttributes->getData()) {",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -570,8 +582,8 @@
         },
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 49,
+            "line_to": 49,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ProductStorage\\ProductStorageConfig::isSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/ProductStorageBusinessFactory.php",
@@ -582,8 +594,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 119,
+            "line_to": 119,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\ProductStorage\\Business\\Storage\\ProductAbstractStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductAbstractStorageWriter.php",
@@ -594,8 +606,8 @@
         },
         {
             "severity": "info",
-            "line_from": 344,
-            "line_to": 344,
+            "line_from": 365,
+            "line_to": 365,
             "type": "DeprecatedMethod",
             "message": "The method Orm\\Zed\\ProductStorage\\Persistence\\Base\\SpyProductAbstractStorage::setIsSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductAbstractStorageWriter.php",
@@ -606,8 +618,8 @@
         },
         {
             "severity": "info",
-            "line_from": 344,
-            "line_to": 344,
+            "line_from": 365,
+            "line_to": 365,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\ProductStorage\\Business\\Storage\\ProductAbstractStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductAbstractStorageWriter.php",
@@ -618,8 +630,8 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 111,
+            "line_to": 111,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\ProductStorage\\Business\\Storage\\ProductConcreteStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductConcreteStorageWriter.php",
@@ -630,8 +642,8 @@
         },
         {
             "severity": "info",
-            "line_from": 305,
-            "line_to": 305,
+            "line_from": 324,
+            "line_to": 324,
             "type": "DeprecatedMethod",
             "message": "The method Orm\\Zed\\ProductStorage\\Persistence\\Base\\SpyProductConcreteStorage::setIsSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductConcreteStorageWriter.php",
@@ -642,8 +654,8 @@
         },
         {
             "severity": "info",
-            "line_from": 305,
-            "line_to": 305,
+            "line_from": 324,
+            "line_to": 324,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\ProductStorage\\Business\\Storage\\ProductConcreteStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductStorage/src/Spryker/Zed/ProductStorage/Business/Storage/ProductConcreteStorageWriter.php",

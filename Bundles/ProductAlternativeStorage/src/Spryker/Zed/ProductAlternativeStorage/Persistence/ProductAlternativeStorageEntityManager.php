@@ -43,27 +43,27 @@ class ProductAlternativeStorageEntityManager extends AbstractEntityManager imple
     }
 
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageEntity
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementForStorageEntity
      *
      * @return void
      */
     public function saveProductReplacementForStorage(
-        SpyProductReplacementForStorage $productReplacementStorageEntity
+        SpyProductReplacementForStorage $productReplacementForStorageEntity
     ): void {
-        $productReplacementStorageEntity->save();
+        $productReplacementForStorageEntity->save();
     }
 
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageEntity
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementForStorageEntity
      *
      * @return void
      */
     public function deleteProductReplacementForStorage(
-        SpyProductReplacementForStorage $productReplacementStorageEntity
+        SpyProductReplacementForStorage $productReplacementForStorageEntity
     ): void {
         $this->getFactory()
             ->createProductReplacementForStoragePropelQuery()
-            ->filterByIdProductReplacementForStorage($productReplacementStorageEntity->getIdProductReplacementForStorage())
+            ->filterByIdProductReplacementForStorage($productReplacementForStorageEntity->getIdProductReplacementForStorage())
             ->findOne()
             ->delete();
     }

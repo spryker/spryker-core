@@ -87,24 +87,12 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductAlternative\\Persistence\\Propel\\Mapper\\ProductAlternativeMapperInterface::mapProductAlternativeCollectionTransfer expects Propel\\Runtime\\Collection\\Collection|null, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativeRepository.php",
-            "snippet": "            ->mapProductAlternativeCollectionTransfer($productAlternativeEntities);",
-            "selected_text": "$productAlternativeEntities",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
             "line_from": 171,
             "line_to": 171,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativeRepository.php",
-            "snippet": "                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())",
+            "snippet": "                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
@@ -116,7 +104,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativeRepository.php",
-            "snippet": "                            sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())",
+            "snippet": "                            sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
@@ -128,7 +116,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativeRepository.php",
-            "snippet": "                sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())",
+            "snippet": "                sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
@@ -140,22 +128,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativeRepository.php",
-            "snippet": "                        sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())",
+            "snippet": "                        sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale()),",
             "selected_text": "$localeTransfer->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 267,
-            "line_to": 267,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanySupplier\\Persistence\\SpyCompanySupplierToProduct|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductConfigurationLink|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductBundle\\Persistence\\SpyProductBundle|Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfiguration|Orm\\Zed\\ProductDiscontinued\\Persistence\\SpyProductDiscontinued|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductList\\Persistence\\SpyProductListProductConcrete|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementSalesUnit|Orm\\Zed\\ProductPackagingUnit\\Persistence\\SpyProductPackagingUnit|Orm\\Zed\\ProductQuantity\\Persistence\\SpyProductQuantity|Orm\\Zed\\ProductSearch\\Persistence\\SpyProductSearch|Orm\\Zed\\ProductValidity\\Persistence\\SpyProductValidity|Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Orm\\Zed\\Product\\Persistence\\SpyProductLocalizedAttributes|Orm\\Zed\\Stock\\Persistence\\SpyStockProduct|Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternative/src/Spryker/Zed/ProductAlternative/Persistence/ProductAlternativeRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": []

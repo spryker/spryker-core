@@ -30,11 +30,11 @@ class StoreDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -45,27 +45,27 @@ class StoreDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
+        if ($transfer->getManualOrder() === null) {
+            $transfer->setManualOrder(new ManualOrderTransfer());
         }
 
         if (
-            $quoteTransfer->getStore() !== null
-            && $quoteTransfer->getCurrency() !== null
+            $transfer->getStore() !== null
+            && $transfer->getCurrency() !== null
         ) {
-            $storeName = $quoteTransfer->getStore()->getName();
-            $currencyCode = $quoteTransfer->getCurrency()->getCode();
+            $storeName = $transfer->getStore()->getName();
+            $currencyCode = $transfer->getCurrency()->getCode();
 
-            $quoteTransfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);
+            $transfer->getManualOrder()->setStoreCurrency($storeName . StoreFormHandler::STORE_CURRENCY_DELIMITER . $currencyCode);
         }
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**

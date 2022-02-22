@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 63,
+            "line_to": 63,
             "type": "RedundantCondition",
             "message": "int can never contain null",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductScheduleDataImport/src/Spryker/Zed/PriceProductScheduleDataImport/Business/Model/Step/PreparePriceDataStep.php",

@@ -33,30 +33,30 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        $this->customerTransfer = $quoteTransfer->getCustomer();
+        $this->customerTransfer = $transfer->getCustomer();
 
-        $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
-        $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
+        $transfer->setShippingAddress($this->getShippingAddress($transfer));
+        $transfer->setBillingAddress($this->getBillingAddress($transfer));
 
-        if ($quoteTransfer->getBillingAddress()->toArray() == $quoteTransfer->getShippingAddress()->toArray()) {
-            $quoteTransfer->setBillingSameAsShipping(true);
+        if ($transfer->getBillingAddress()->toArray() == $transfer->getShippingAddress()->toArray()) {
+            $transfer->setBillingSameAsShipping(true);
         }
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,

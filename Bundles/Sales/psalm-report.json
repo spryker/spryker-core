@@ -2224,42 +2224,6 @@
         },
         {
             "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Sales\\Communication\\Form\\AddressForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Form/AddressForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Sales\\Communication\\Form\\CommentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Form/CommentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Sales\\Communication\\Form\\CustomerForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Form/CustomerForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 44,
             "line_to": 44,
             "type": "PossiblyNullReference",
@@ -2317,18 +2281,6 @@
             "selected_text": "$formCollection",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 188,
-            "line_to": 188,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Sales\\Communication\\Table\\OrdersTable::formatCsvRow has the more specific type 'Orm\\Zed\\Sales\\Persistence\\SpySalesOrder', expecting 'Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface' as defined by Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::formatCsvRow",
-            "file_name": "vendor/spryker/spryker/Bundles/Sales/src/Spryker/Zed/Sales/Communication/Table/OrdersTable.php",
-            "snippet": "    protected function formatCsvRow(ActiveRecordInterface $entity): array",
-            "selected_text": "$entity",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

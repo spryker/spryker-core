@@ -24,12 +24,12 @@ class ProductConfigurationItemExpanderPlugin extends AbstractPlugin implements I
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $WishlistItemTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    public function expandItem(WishlistItemTransfer $WishlistItemTransfer): WishlistItemTransfer
+    public function expandItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
-        return $this->getFacade()->expandWishlistItemWithProductConfiguration($WishlistItemTransfer);
+        return $this->getFacade()->expandWishlistItemWithProductConfiguration($wishlistItemTransfer);
     }
 }

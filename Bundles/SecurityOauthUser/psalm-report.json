@@ -3,6 +3,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 103,
+            "line_to": 106,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Symfony\\Component\\Security\\Core\\User\\ChainUserProvider::__construct expects iterable<array-key, Symfony\\Component\\Security\\Core\\User\\UserProviderInterface>, possibly different type array{mixed, Symfony\\Component\\Security\\Core\\User\\UserProviderInterface} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/OauthUserSecurityPlugin.php",
+            "snippet": "                    return new ChainUserProvider([\n                        $userFirewallConfiguration['users'](),\n                        $this->getFactory()->createOauthUserProvider(),\n                    ]);",
+            "selected_text": "[\n                        $userFirewallConfiguration['users'](),\n                        $this->getFactory()->createOauthUserProvider(),\n                    ]",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
             "line_from": 26,
             "line_to": 26,
             "type": "MissingReturnType",
@@ -26,5 +38,114 @@
             "shortcode": 50
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedInterface",
+            "message": "Symfony\\Component\\Security\\Guard\\AuthenticatorInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+            "snippet": "class OauthUserTokenAuthenticator extends AbstractPlugin implements AuthenticatorInterface",
+            "selected_text": "OauthUserTokenAuthenticator",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+            "snippet": "     * @return \\Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface",
+            "selected_text": "\\Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Core\\User\\UserProviderInterface::loadUserByUsername has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+            "snippet": "        return $userProvider->loadUserByUsername($credentials['token']);",
+            "selected_text": "loadUserByUsername",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+            "snippet": "        return $credentials['token'] === $user->getUsername();",
+            "selected_text": "getUsername",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/SecurityOauthUserCommunicationFactory.php",
+            "snippet": "     * @return \\Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface",
+            "selected_text": "\\Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\Security\\Guard\\Token\\GuardTokenInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/SecurityOauthUserCommunicationFactory.php",
+            "snippet": "    public function createPostAuthenticationGuardToken(UserInterface $user, string $providerKey): GuardTokenInterface",
+            "selected_text": "GuardTokenInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Guard\\Token\\PostAuthenticationGuardToken is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/SecurityOauthUserCommunicationFactory.php",
+            "snippet": "        return new PostAuthenticationGuardToken(\n            $user,\n            $providerKey,\n            $user->getRoles(),\n        );",
+            "selected_text": "new PostAuthenticationGuardToken(\n            $user,\n            $providerKey,\n            $user->getRoles(),\n        )",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
 }

@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Yves\\StepEngine\\Dependency\\Form\\AbstractSubFormType::buildView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildView",
-            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Dependency/Form/AbstractSubFormType.php",
-            "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 136,
             "line_to": 136,
             "type": "PossiblyInvalidArrayOffset",

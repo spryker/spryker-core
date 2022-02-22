@@ -35,12 +35,12 @@ class PriceProductOfferVolumeService extends AbstractService implements PricePro
      *
      * @api
      *
-     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductOfferTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function extractVolumePrices(array $priceProductOfferTransfers): array
+    public function extractVolumePrices(array $priceProductTransfers): array
     {
-        return $this->getFactory()->createProductOfferVolumePriceExtractor()->extractProductPrices($priceProductOfferTransfers);
+        return $this->getFactory()->createProductOfferVolumePriceExtractor()->extractProductPrices($priceProductTransfers);
     }
 }

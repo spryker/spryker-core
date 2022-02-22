@@ -26,30 +26,6 @@
         },
         {
             "severity": "error",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Store\\Communication\\Form\\Transformer\\IdStoresDataTransformer::transform has wrong name $idStoresArray, expecting $value as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Transformer/IdStoresDataTransformer.php",
-            "snippet": "    public function transform($idStoresArray)",
-            "selected_text": "$idStoresArray",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Store\\Communication\\Form\\Transformer\\IdStoresDataTransformer::reverseTransform has wrong name $idStoresJson, expecting $value as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Transformer/IdStoresDataTransformer.php",
-            "snippet": "    public function reverseTransform($idStoresJson)",
-            "selected_text": "$idStoresJson",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 185,
             "line_to": 185,
             "type": "InvalidReturnType",
@@ -169,42 +145,6 @@
             "selected_text": "$storeTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Store\\Communication\\Form\\Transformer\\IdStoresDataTransformer::transform has the more specific type 'array<array-key, mixed>|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Transformer/IdStoresDataTransformer.php",
-            "snippet": "    public function transform($idStoresArray)",
-            "selected_text": "$idStoresArray",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Store\\Communication\\Form\\Transformer\\IdStoresDataTransformer::reverseTransform has the more specific type 'string', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Transformer/IdStoresDataTransformer.php",
-            "snippet": "    public function reverseTransform($idStoresJson)",
-            "selected_text": "$idStoresJson",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::buildForm has the more specific type 'array<array-key, string>', expecting 'array<string, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Type/StoreRelationToggleType.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

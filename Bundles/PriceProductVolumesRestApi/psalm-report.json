@@ -1,5 +1,30 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\CurrentProductPriceTransfer::getPriceData has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolumesRestApi/src/Spryker/Glue/PriceProductVolumesRestApi/Processor/Mapper/PriceProductVolumeMapper.php",
+            "snippet": "        if (!$currentProductPriceTransfer->getPriceData()) {",
+            "selected_text": "getPriceData",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\CurrentProductPriceTransfer::getPriceDataOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolumesRestApi/src/Spryker/Glue/PriceProductVolumesRestApi/Processor/Mapper/PriceProductVolumeMapper.php",
+            "snippet": "            ->setPriceData($currentProductPriceTransfer->getPriceDataOrFail())",
+            "selected_text": "getPriceDataOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

@@ -80,7 +80,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
-            "snippet": "                $this->sequenceNumberSettings->getName()",
+            "snippet": "                $this->sequenceNumberSettings->getName(),",
             "selected_text": "$this->sequenceNumberSettings->getName()",
             "error_level": 3,
             "shortcode": 78

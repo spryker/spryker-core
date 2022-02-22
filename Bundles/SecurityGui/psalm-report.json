@@ -1,5 +1,67 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "MissingReturnType",
+            "message": "Method Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait::saveTargetPath does not have a return type, expecting void",
+            "file_name": "vendor/symfony/security-http/Util/TargetPathTrait.php",
+            "snippet": "    private function saveTargetPath(SessionInterface $session, string $firewallName, string $uri)",
+            "selected_text": "saveTargetPath",
+            "error_level": 2,
+            "shortcode": 50
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "MissingReturnType",
+            "message": "Method Symfony\\Component\\Security\\Http\\Util\\TargetPathTrait::removeTargetPath does not have a return type, expecting void",
+            "file_name": "vendor/symfony/security-http/Util/TargetPathTrait.php",
+            "snippet": "    private function removeTargetPath(SessionInterface $session, string $firewallName)",
+            "selected_text": "removeTargetPath",
+            "error_level": 2,
+            "shortcode": 50
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
+            "snippet": "            throw new UsernameNotFoundException();",
+            "selected_text": "new UsernameNotFoundException()",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
+            "snippet": "        return $this->findUserByUsername($user->getUsername());",
+            "selected_text": "getUsername",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

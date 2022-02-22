@@ -1,5 +1,102 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationCart\\Expander\\ProductConfigurationInstanceCartChangeExpander::extractItemSkus expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Client/ProductConfigurationCart/Expander/ProductConfigurationInstanceCartChangeExpander.php",
+            "snippet": "        $skus = $this->extractItemSkus($cartChangeTransfer->getItems());",
+            "selected_text": "$cartChangeTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Client\\ProductConfigurationCart\\Expander\\ProductConfigurationInstanceCartChangeExpander::expandItemsWithProductConfigurationInstance expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Client/ProductConfigurationCart/Expander/ProductConfigurationInstanceCartChangeExpander.php",
+            "snippet": "            $cartChangeTransfer->getItems(),",
+            "selected_text": "$cartChangeTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConfigurationInstancesIndexedBySku using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Client/ProductConfigurationCart/Expander/ProductConfigurationInstanceCartChangeExpander.php",
+            "snippet": "            $productConfigurationInstanceTransfer = $productConfigurationInstancesIndexedBySku[$itemTransfer->getSku()] ?? null;",
+            "selected_text": "$productConfigurationInstancesIndexedBySku",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Zed/ProductConfigurationCart/Business/Counter/ProductConfigurationItemQuantityCounter.php",
+            "snippet": "                $currentItemQuantity += $quoteItemTransfer->getQuantity();",
+            "selected_text": "$quoteItemTransfer->getQuantity()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Zed/ProductConfigurationCart/Business/Counter/ProductConfigurationItemQuantityCounter.php",
+            "snippet": "            return $currentItemQuantity - $deltaQuantity;",
+            "selected_text": "$deltaQuantity",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Zed/ProductConfigurationCart/Business/Counter/ProductConfigurationItemQuantityCounter.php",
+            "snippet": "        return $currentItemQuantity + $deltaQuantity;",
+            "selected_text": "$deltaQuantity",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Zed/ProductConfigurationCart/Business/Expander/ProductConfigurationPriceProductExpander.php",
+            "snippet": "            $productConfigurationPriceProductTransfers[] = $productConfigurationInstance->getPrices()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationCart/src/Spryker/Zed/ProductConfigurationCart/Business/Expander/ProductConfigurationPriceProductExpander.php",
+            "snippet": "        return $productConfigurationInstance && $productConfigurationInstance->getPrices()->count();",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": []
 }

@@ -17,7 +17,7 @@
             "line_from": 26,
             "line_to": 26,
             "type": "DuplicateClass",
-            "message": "Class Spryker\\Shared\\Twig\\Loader\\FilesystemLoaderInterface has already been defined in /data/vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/Loader/FilesystemLoaderInterface.php",
+            "message": "Class Spryker\\Shared\\Twig\\Loader\\FilesystemLoaderInterface has already been defined in /var/work/devvm/project/vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/Loader/FilesystemLoaderInterface.php",
             "file_name": "vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/Loader/FilesystemLoaderInterface.php",
             "snippet": "    interface FilesystemLoaderInterface extends LoaderInterface",
             "selected_text": "FilesystemLoaderInterface",
@@ -29,7 +29,7 @@
             "line_from": 81,
             "line_to": 81,
             "type": "DuplicateClass",
-            "message": "Class Spryker\\Shared\\Twig\\TwigFilesystemLoader has already been defined in /data/vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFilesystemLoader.php",
+            "message": "Class Spryker\\Shared\\Twig\\TwigFilesystemLoader has already been defined in /var/work/devvm/project/vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFilesystemLoader.php",
             "file_name": "vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFilesystemLoader.php",
             "snippet": "    class TwigFilesystemLoader extends BaseTwigFilesystemLoader",
             "selected_text": "TwigFilesystemLoader",
@@ -121,18 +121,6 @@
             "selected_text": "strtolower",
             "error_level": 4,
             "shortcode": 280
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Shared\\Twig\\TwigFileSystem::setPaths has the more specific type 'array<array-key, mixed>', expecting 'array<array-key, mixed>|string' as defined by Twig\\Loader\\FilesystemLoader::setPaths",
-            "file_name": "vendor/spryker/spryker/Bundles/Twig/src/Spryker/Shared/Twig/TwigFileSystem.php",
-            "snippet": "    public function setPaths($paths, string $namespace = self::MAIN_NAMESPACE): void",
-            "selected_text": "$paths",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

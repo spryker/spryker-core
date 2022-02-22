@@ -75,24 +75,24 @@
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 65,
+            "line_to": 65,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListItemRestResponseBuilder::createShoppingListItemRestResource cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/RestResponseBuilder/ShoppingListItemRestResponseBuilder.php",
-            "snippet": "                $shoppingListUuid",
+            "snippet": "                $shoppingListUuid,",
             "selected_text": "$shoppingListUuid",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 109,
-            "line_to": 109,
+            "line_from": 112,
+            "line_to": 112,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListItemRestResponseBuilder::createSelfLinkForShoppingListItem cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/RestResponseBuilder/ShoppingListItemRestResponseBuilder.php",
-            "snippet": "                $shoppingListItemTransfer->getUuid()",
+            "snippet": "                $shoppingListItemTransfer->getUuid(),",
             "selected_text": "$shoppingListItemTransfer->getUuid()",
             "error_level": 3,
             "shortcode": 78
@@ -104,7 +104,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListRestResponseBuilderInterface::buildShoppingListRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/ShoppingList/ShoppingListCreator.php",
-            "snippet": "            $shoppingListResponseTransfer->getShoppingList()",
+            "snippet": "            $shoppingListResponseTransfer->getShoppingList(),",
             "selected_text": "$shoppingListResponseTransfer->getShoppingList()",
             "error_level": 3,
             "shortcode": 78
@@ -128,7 +128,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListRestResponseBuilderInterface::buildShoppingListRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/ShoppingList/ShoppingListReader.php",
-            "snippet": "            $shoppingListResponseTransfer->getShoppingList()",
+            "snippet": "            $shoppingListResponseTransfer->getShoppingList(),",
             "selected_text": "$shoppingListResponseTransfer->getShoppingList()",
             "error_level": 3,
             "shortcode": 78
@@ -140,7 +140,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListRestResponseBuilderInterface::buildShoppingListRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/ShoppingList/ShoppingListUpdater.php",
-            "snippet": "            $shoppingListResponseTransfer->getShoppingList()",
+            "snippet": "            $shoppingListResponseTransfer->getShoppingList(),",
             "selected_text": "$shoppingListResponseTransfer->getShoppingList()",
             "error_level": 3,
             "shortcode": 78
@@ -164,7 +164,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListItemRestResponseBuilderInterface::buildShoppingListItemRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/ShoppingListItem/ShoppingListItemAdder.php",
-            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListUuid()",
+            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListUuid(),",
             "selected_text": "$shoppingListItemRequestTransfer->getShoppingListUuid()",
             "error_level": 3,
             "shortcode": 78
@@ -188,7 +188,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\ShoppingListsRestApi\\Processor\\RestResponseBuilder\\ShoppingListItemRestResponseBuilderInterface::buildShoppingListItemRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Glue/ShoppingListsRestApi/Processor/ShoppingListItem/ShoppingListItemUpdater.php",
-            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListUuid()",
+            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListUuid(),",
             "selected_text": "$shoppingListItemRequestTransfer->getShoppingListUuid()",
             "error_level": 3,
             "shortcode": 78
@@ -284,10 +284,22 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ShoppingListsRestApi\\Dependency\\Facade\\ShoppingListsRestApiToShoppingListFacadeInterface::removeItemById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/Business/ShoppingListItem/ShoppingListItemDeleter.php",
-            "snippet": "            $shoppingListItemResponseTransfer->getShoppingListItem()",
+            "snippet": "            $shoppingListItemResponseTransfer->getShoppingListItem(),",
             "selected_text": "$shoppingListItemResponseTransfer->getShoppingListItem()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShoppingListsRestApi\\Business\\ShoppingListItem\\ShoppingListItemReader::findShoppingListItemTransfer expects ArrayObject<int, Generated\\Shared\\Transfer\\ShoppingListItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShoppingListItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/Business/ShoppingListItem/ShoppingListItemReader.php",
+            "snippet": "            $shoppingListResponseTransfer->getShoppingList()->getItems(),",
+            "selected_text": "$shoppingListResponseTransfer->getShoppingList()->getItems()",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -308,7 +320,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ShoppingListsRestApi\\Business\\ShoppingListItem\\ShoppingListItemReader::findShoppingListItemTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/Business/ShoppingListItem/ShoppingListItemReader.php",
-            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid()",
+            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid(),",
             "selected_text": "$shoppingListItemRequestTransfer->getShoppingListItem()->getUuid()",
             "error_level": 3,
             "shortcode": 78
@@ -320,7 +332,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getUuid on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/Business/ShoppingListItem/ShoppingListItemReader.php",
-            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid()",
+            "snippet": "            $shoppingListItemRequestTransfer->getShoppingListItem()->getUuid(),",
             "selected_text": "getUuid",
             "error_level": 3,
             "shortcode": 83
@@ -344,22 +356,10 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdShoppingList on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/Business/ShoppingListItem/ShoppingListItemReader.php",
-            "snippet": "                    ->setFkShoppingList($shoppingListResponseTransfer->getShoppingList()->getIdShoppingList())",
+            "snippet": "                    ->setFkShoppingList($shoppingListResponseTransfer->getShoppingList()->getIdShoppingList()),",
             "selected_text": "getIdShoppingList",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $shoppingListItemTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShoppingListItemTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListsRestApi/src/Spryker/Zed/ShoppingListsRestApi/Business/ShoppingListItem/ShoppingListItemReader.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ShoppingListItemTransfer[] $shoppingListItemTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShoppingListItemTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",

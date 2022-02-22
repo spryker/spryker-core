@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 75,
+            "line_to": 75,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\AbstractProductAvailability\\AbstractProductAvailabilitiesReader::findAbstractProductAvailabilityBySku cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/AbstractProductAvailability/AbstractProductAvailabilitiesReader.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 75,
+            "line_to": 75,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\ConcreteProductAvailability\\ConcreteProductAvailabilitiesReader::findConcreteProductAvailabilityBySku cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/ConcreteProductAvailability/ConcreteProductAvailabilitiesReader.php",
@@ -75,12 +75,24 @@
         },
         {
             "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIsNeverOutOfStock on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/Mapper/Wishlist/RestWishlistItemsMapper.php",
+            "snippet": "                ->setisNeverOutOfStock($productConcreteAvailabilityTransfer->getIsNeverOutOfStock())",
+            "selected_text": "getIsNeverOutOfStock",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 68,
             "line_to": 68,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\RestResponseBuilder\\ProductConcreteAvailabilityRestResponseBuilder::getProductConcreteAvailabilityResourceSelfLink cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/RestResponseBuilder/ProductConcreteAvailabilityRestResponseBuilder.php",
-            "snippet": "            $this->getProductConcreteAvailabilityResourceSelfLink($productConcreteAvailabilityTransfer->getSku())",
+            "snippet": "            $this->getProductConcreteAvailabilityResourceSelfLink($productConcreteAvailabilityTransfer->getSku()),",
             "selected_text": "$productConcreteAvailabilityTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78

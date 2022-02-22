@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKey> variable $attributeMetaData",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Attribute/AttributeProvider.php",
-            "snippet": "        return $attributeMetaData->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 45,
             "line_to": 45,
             "type": "PossiblyNullArgument",
@@ -74,6 +62,30 @@
             "selected_text": "setUnitGrossPrice",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\CollectorPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Communication/Plugin/Collector/ProductAttributeCollectorPlugin.php",
+            "snippet": "class ProductAttributeCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithAttributesPluginInterface",
+            "selected_text": "ProductAttributeCollectorPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\DecisionRulePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Communication/Plugin/DecisionRule/ProductAttributeDecisionRulePlugin.php",
+            "snippet": "class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithAttributesPluginInterface",
+            "selected_text": "ProductAttributeDecisionRulePlugin",
+            "error_level": 2,
+            "shortcode": 152
         }
     ]
 }

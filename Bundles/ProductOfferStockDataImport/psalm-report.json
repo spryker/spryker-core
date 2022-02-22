@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock' for Spryker\\Zed\\ProductOfferStockDataImport\\Business\\Step\\ProductOfferStockWriterStep::findOrCreateProductOfferStock is not nullable, but 'Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferStockDataImport/src/Spryker/Zed/ProductOfferStockDataImport/Business/Step/ProductOfferStockWriterStep.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock",
+            "selected_text": "\\Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock' for Spryker\\Zed\\ProductOfferStockDataImport\\Business\\Step\\ProductOfferStockWriterStep::findOrCreateProductOfferStock is not nullable, but the function returns 'Orm\\Zed\\ProductOfferStock\\Persistence\\SpyProductOfferStock|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferStockDataImport/src/Spryker/Zed/ProductOfferStockDataImport/Business/Step/ProductOfferStockWriterStep.php",
+            "snippet": "        return $productOfferStockEntity;",
+            "selected_text": "$productOfferStockEntity",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
     "deprecation": []
 }

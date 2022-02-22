@@ -3,30 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\PropelQueryBuilder\\Dependency\\Service\\PropelQueryBuilderToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Dependency/Service/PropelQueryBuilderToUtilEncodingBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\PropelQueryBuilder\\Dependency\\Service\\PropelQueryBuilderToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Dependency/Service/PropelQueryBuilderToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
             "line_from": 76,
             "line_to": 76,
             "type": "PossiblyInvalidMethodCall",
@@ -180,30 +156,6 @@
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "MoreSpecificReturnType",
-            "message": "The declared return type 'Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\JsonMapperInterface' for Spryker\\Zed\\PropelQueryBuilder\\Persistence\\PropelQueryBuilderPersistenceFactory::createJsonMapper is more specific than the inferred return type 'object'",
-            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/PropelQueryBuilderPersistenceFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\JsonMapperInterface",
-            "selected_text": "\\Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\JsonMapperInterface",
-            "error_level": 3,
-            "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'object' is more general than the declared return type 'Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\JsonMapperInterface' for Spryker\\Zed\\PropelQueryBuilder\\Persistence\\PropelQueryBuilderPersistenceFactory::createJsonMapper",
-            "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/PropelQueryBuilderPersistenceFactory.php",
-            "snippet": "        return new $jsonMapperClassName();",
-            "selected_text": "new $jsonMapperClassName()",
-            "error_level": 3,
-            "shortcode": 129
         },
         {
             "severity": "info",
@@ -368,7 +320,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of preg_replace cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/JsonCriterionMapper.php",
-            "snippet": "            $ruleSetTransfer->getId()",
+            "snippet": "            $ruleSetTransfer->getId(),",
             "selected_text": "$ruleSetTransfer->getId()",
             "error_level": 3,
             "shortcode": 78
@@ -423,8 +375,8 @@
         },
         {
             "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
+            "line_from": 27,
+            "line_to": 27,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\MySql\\JsonMapper::getField is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/MySql/JsonMapper.php",
@@ -435,8 +387,8 @@
         },
         {
             "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
+            "line_from": 31,
+            "line_to": 31,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\PropelQueryBuilder\\Persistence\\QueryBuilder\\JsonMapper\\MySql\\JsonMapper::getField is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/MySql/JsonMapper.php",
@@ -447,8 +399,8 @@
         },
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
+            "line_from": 45,
+            "line_to": 45,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/JsonMapper/MySql/JsonMapper.php",
@@ -483,8 +435,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 35,
+            "line_to": 35,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/Operator/BeginsWith.php",
@@ -495,8 +447,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 35,
+            "line_to": 35,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/Operator/Contains.php",
@@ -507,8 +459,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 35,
+            "line_to": 35,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/Operator/EndsWith.php",
@@ -519,8 +471,8 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 35,
+            "line_to": 35,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of trim cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PropelQueryBuilder/src/Spryker/Zed/PropelQueryBuilder/Persistence/QueryBuilder/Operator/In.php",

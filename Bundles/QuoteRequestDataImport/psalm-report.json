@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "MethodSignatureMismatch",
-            "message": "Method Spryker\\Zed\\QuoteRequestDataImport\\Business\\QuoteRequestDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestDataImport/src/Spryker/Zed/QuoteRequestDataImport/Business/QuoteRequestDataImportBusinessFactory.php",
-            "snippet": "class QuoteRequestDataImportBusinessFactory extends DataImportBusinessFactory",
-            "selected_text": "QuoteRequestDataImportBusinessFactory",
-            "error_level": 7,
-            "shortcode": 42
-        }
-    ],
+    "error": [],
     "warning": [],
     "deprecation": []
 }

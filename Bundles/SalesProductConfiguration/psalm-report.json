@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesProductConfiguration\\Business\\Expander\\OrderItemExpander::getSalesOrderItemIds is incorrect, got 'list<int|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Expander/OrderItemExpander.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -26,6 +26,42 @@
         }
     ],
     "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConfigurationSalesOrderItemsGroupedByGroupKey using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Client/SalesProductConfiguration/Expander/ProductConfigurationItemExpander.php",
+            "snippet": "                $productConfigurationSalesOrderItemsGroupedByGroupKey[$itemTransfer->getGroupKey()],",
+            "selected_text": "$productConfigurationSalesOrderItemsGroupedByGroupKey",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Client/SalesProductConfiguration/Expander/ProductConfigurationItemExpander.php",
+            "snippet": "            ->fromArray($itemTransfer->getSalesOrderItemConfiguration()->toArray(), true)",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedSalesOrderItemConfigurationTransfers using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesProductConfiguration/src/Spryker/Zed/SalesProductConfiguration/Business/Expander/OrderItemExpander.php",
+            "snippet": "            $salesOrderItemConfigurationTransfer = $indexedSalesOrderItemConfigurationTransfers[$itemTransfer->getIdSalesOrderItem()] ?? null;",
+            "selected_text": "$indexedSalesOrderItemConfigurationTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
         {
             "severity": "info",
             "line_from": 80,

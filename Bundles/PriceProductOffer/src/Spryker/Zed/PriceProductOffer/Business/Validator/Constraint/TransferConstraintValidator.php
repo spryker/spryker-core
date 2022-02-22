@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 class TransferConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $abstractTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -25,8 +25,9 @@ class TransferConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($abstractTransfer, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
+        $abstractTransfer = $value;
         if (!$constraint instanceof TransferConstraint) {
             throw new UnexpectedTypeException($constraint, TransferConstraint::class);
         }

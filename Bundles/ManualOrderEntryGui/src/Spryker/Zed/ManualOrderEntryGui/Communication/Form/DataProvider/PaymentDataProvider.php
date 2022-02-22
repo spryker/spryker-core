@@ -26,17 +26,17 @@ class PaymentDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         $options = [];
         foreach ($this->subFormPlugins as $subFormPlugin) {
             $options = array_merge(
                 $options,
-                $subFormPlugin->getOptions($quoteTransfer),
+                $subFormPlugin->getOptions($transfer),
             );
         }
 
@@ -48,16 +48,16 @@ class PaymentDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
         foreach ($this->subFormPlugins as $subFormPlugin) {
-            $quoteTransfer = $subFormPlugin->getData($quoteTransfer);
+            $transfer = $subFormPlugin->getData($transfer);
         }
 
-        return $quoteTransfer;
+        return $transfer;
     }
 }

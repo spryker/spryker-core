@@ -1,10 +1,35 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductsRestApi\\Processor\\Expander\\ConcreteProductsByQuoteRequestResourceRelationshipExpander::findProductConcreteSkusInAttributes is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/Expander/ConcreteProductsByQuoteRequestResourceRelationshipExpander.php",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductsRestApi\\Processor\\Expander\\ConcreteProductsByQuoteRequestResourceRelationshipExpander::findProductConcreteSkusInAttributes",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/Expander/ConcreteProductsByQuoteRequestResourceRelationshipExpander.php",
+            "snippet": "        return $productConcreteSkus;",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 49,
+            "line_to": 49,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\ProductsRestApi\\Dependency\\Client\\ProductsRestApiToProductStorageClientInterface::findProductAbstractStorageData cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/AbstractProducts/Storage/ProductAbstractRestUrlResolverAttributesReader.php",
@@ -15,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 212,
-            "line_to": 212,
+            "line_from": 231,
+            "line_to": 231,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $concreteProductRestResources[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/ConcreteProducts/ConcreteProductsReader.php",
@@ -27,34 +52,82 @@
         },
         {
             "severity": "info",
-            "line_from": 308,
-            "line_to": 308,
+            "line_from": 351,
+            "line_to": 351,
             "type": "PossiblyNullReference",
             "message": "Cannot call method offsetSet on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/ConcreteProducts/ConcreteProductsReader.php",
-            "snippet": "                $concreteProductRestResource->getAttributes()->offsetSet(",
+            "snippet": "        $concreteProductRestResource->getAttributes()->offsetSet(",
             "selected_text": "offsetSet",
             "error_level": 3,
             "shortcode": 83
         },
         {
             "severity": "info",
-            "line_from": 332,
-            "line_to": 332,
+            "line_from": 371,
+            "line_to": 371,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Glue\\ProductsRestApi\\Dependency\\Client\\ProductsRestApiToProductStorageClientInterface::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/ConcreteProducts/ConcreteProductsReader.php",
-            "snippet": "                $this->storeClient->getCurrentStore()->getName()",
+            "snippet": "                $this->storeClient->getCurrentStore()->getName(),",
             "selected_text": "$this->storeClient->getCurrentStore()->getName()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkusGroupedByResourceId[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/Expander/AbstractConcreteProductsResourceRelationshipExpander.php",
+            "snippet": "            $productConcreteSkusGroupedByResourceId[$resource->getId()] = $this->findProductConcreteSkusInAttributes($resource);",
+            "selected_text": "$productConcreteSkusGroupedByResourceId",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkusGroupedByResourceId using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/Expander/AbstractConcreteProductsResourceRelationshipExpander.php",
+            "snippet": "            foreach ($productConcreteSkusGroupedByResourceId[$resource->getId()] as $resourceProductConcreteSku) {",
+            "selected_text": "$productConcreteSkusGroupedByResourceId",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCart on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/Expander/ConcreteProductsByQuoteRequestResourceRelationshipExpander.php",
+            "snippet": "        $restQuoteRequestsItemTransfer = $restQuoteRequestsAttributesTransfer->getShownVersion()->getCart()->getItems();",
+            "selected_text": "getCart",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getItems on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/Expander/ConcreteProductsByQuoteRequestResourceRelationshipExpander.php",
+            "snippet": "        $restQuoteRequestsItemTransfer = $restQuoteRequestsAttributesTransfer->getShownVersion()->getCart()->getItems();",
+            "selected_text": "getItems",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
+            "line_from": 128,
+            "line_to": 128,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Glue\\ProductsRestApi\\Processor\\AbstractProducts\\AbstractProductsReader::addConcreteProducts has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/AbstractProducts/AbstractProductsReader.php",

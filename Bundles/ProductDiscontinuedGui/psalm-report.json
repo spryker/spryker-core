@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 132,
-            "line_to": 132,
+            "line_from": 158,
+            "line_to": 158,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedGui\\Communication\\Controller\\IndexController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Communication/Controller/IndexController.php",

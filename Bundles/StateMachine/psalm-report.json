@@ -1192,27 +1192,27 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Communication\\Form\\EventItemTriggerForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Form/EventItemTriggerForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\StateMachineFacadeInterface::checkConditions cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Console/CheckConditionConsole.php",
+            "snippet": "        $affected = $this->getFacade()->checkConditions($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);",
+            "selected_text": "$isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName",
+            "error_level": 3,
+            "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\StateMachine\\Communication\\Form\\EventTriggerForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Form/EventTriggerForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\StateMachine\\Business\\StateMachineFacadeInterface::checkTimeouts cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StateMachine/src/Spryker/Zed/StateMachine/Communication/Console/CheckTimeoutConsole.php",
+            "snippet": "        $affected = $this->getFacade()->checkTimeouts($isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName);",
+            "selected_text": "$isValidArgument === null ? $optionStateMachineName : $argumentStateMachineName",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": [

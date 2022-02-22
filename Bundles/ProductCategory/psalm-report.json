@@ -75,18 +75,6 @@
         },
         {
             "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductCategory\\Communication\\Form\\AssignForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCategory/src/Spryker/Zed/ProductCategory/Communication/Form/AssignForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyNullArgument",

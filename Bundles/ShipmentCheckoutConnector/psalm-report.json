@@ -1,10 +1,23 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, iterable<mixed, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/StrategyResolver/PreCheckStrategyResolver.php",
+            "snippet": "        if (count($itemTransfers) === 0) {",
+            "selected_text": "$itemTransfers",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 51,
+            "line_to": 51,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
@@ -15,8 +28,8 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 54,
+            "line_to": 54,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
@@ -27,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 55,
+            "line_to": 55,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdShipmentMethod on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
@@ -39,20 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\CheckoutErrorTransfer::setErrorCode expects int|null, string(shipment failed) provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
-            "snippet": "            ->setErrorCode(ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED)",
-            "selected_text": "ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 71,
+            "line_to": 71,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ShipmentCheckoutConnector\\Dependency\\Facade\\ShipmentCheckoutConnectorToShipmentFacadeInterface::isShipmentMethodActive cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Shipment/ShipmentCheckoutPreCheck.php",
@@ -60,54 +61,6 @@
             "selected_text": "$shipmentMethodTransfer->getIdShipmentMethod()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\CheckoutErrorTransfer::setErrorCode expects int|null, string(shipment failed) provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Shipment/ShipmentCheckoutPreCheck.php",
-            "snippet": "            ->setErrorCode(ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED)",
-            "selected_text": "ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of count expects Countable|ResourceBundle|SimpleXMLElement|array<array-key, mixed>, possibly different type array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>|iterable<mixed, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/StrategyResolver/PreCheckStrategyResolver.php",
-            "snippet": "        if (count($itemTransfers) === 0) {",
-            "selected_text": "$itemTransfers",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentGroupTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Dependency/Service/ShipmentCheckoutConnectorToShipmentServiceBridge.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentGroupTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Dependency/Service/ShipmentCheckoutConnectorToShipmentServiceInterface.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentGroupTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
         }
     ],
     "deprecation": [
@@ -125,8 +78,8 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
+            "line_from": 47,
+            "line_to": 47,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
@@ -137,8 +90,8 @@
         },
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 51,
+            "line_to": 51,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",
@@ -149,8 +102,8 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 53,
+            "line_to": 53,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentCheckoutConnector/src/Spryker/Zed/ShipmentCheckoutConnector/Business/Model/ShipmentCheckoutPreCheck.php",

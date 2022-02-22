@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Communication\\Plugin\\ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin::getProductConcreteIds is incorrect, got 'list<int|mixed|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Communication/Plugin/ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -109,18 +109,6 @@
             "selected_text": "$productDiscontinuedTransfer->getFkProduct()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Persistence/ProductDiscontinuedProductLabelConnectorRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [

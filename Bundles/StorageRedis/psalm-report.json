@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of json_decode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/Redis/StorageRedisWrapper.php",
@@ -24,55 +24,32 @@
             "selected_text": "$value",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\StorageRedis\\Communication\\Export\\StorageRedisExporterInterface::export expects string, possibly different type array<array-key, string>|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisExportRdbConsole.php",
-            "snippet": "        if ($storageRedisExporter->export($destination)) {",
-            "selected_text": "$destination",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of sprintf expects float|int|string, possibly different type array<array-key, string>|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisExportRdbConsole.php",
-            "snippet": "            $this->info(sprintf('Exported rdb file to \"%s\"', $destination));",
-            "selected_text": "$destination",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\StorageRedis\\Communication\\Import\\StorageRedisImporterInterface::import expects string, possibly different type array<array-key, string>|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisImportRdbConsole.php",
-            "snippet": "        if ($storageRedisImporter->import($source)) {",
-            "selected_text": "$source",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of sprintf expects float|int|string, possibly different type array<array-key, string>|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisImportRdbConsole.php",
-            "snippet": "            $this->info(sprintf('Imported rdb file \"%s\"', $source));",
-            "selected_text": "$source",
-            "error_level": 3,
-            "shortcode": 92
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\StorageRedis\\StorageRedisConfig::getScheme has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/StorageRedisConfig.php",
+            "snippet": "            ->setScheme($this->getScheme())",
+            "selected_text": "getScheme",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\StorageRedis\\StorageRedisConstants::STORAGE_REDIS_PROTOCOL is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/StorageRedisConfig.php",
+            "snippet": "            $this->get(StorageRedisConstants::STORAGE_REDIS_PROTOCOL);",
+            "selected_text": "StorageRedisConstants::STORAGE_REDIS_PROTOCOL",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ]
 }

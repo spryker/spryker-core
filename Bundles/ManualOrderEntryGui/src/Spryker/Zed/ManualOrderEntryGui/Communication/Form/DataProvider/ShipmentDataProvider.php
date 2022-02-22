@@ -36,35 +36,35 @@ class ShipmentDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
-            ShipmentType::OPTION_SHIPMENT_METHODS_ARRAY => $this->getShipmentMethodList($quoteTransfer),
+            ShipmentType::OPTION_SHIPMENT_METHODS_ARRAY => $this->getShipmentMethodList($transfer),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getShipment() === null) {
-            $quoteTransfer->setShipment(new ShipmentTransfer());
+        if ($transfer->getShipment() === null) {
+            $transfer->setShipment(new ShipmentTransfer());
         }
-        if ($quoteTransfer->getShipment()->getMethod() === null) {
-            $quoteTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
+        if ($transfer->getShipment()->getMethod() === null) {
+            $transfer->getShipment()->setMethod(new ShipmentMethodTransfer());
         }
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**

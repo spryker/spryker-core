@@ -56,7 +56,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
-            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName())",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName()),",
             "selected_text": "$paymentProviderTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -68,7 +68,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
-            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName())",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName()),",
             "selected_text": "$paymentMethodTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -92,7 +92,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
-            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey)",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey),",
             "selected_text": "$paymentProviderKey",
             "error_level": 3,
             "shortcode": 78
@@ -104,7 +104,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
-            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey)",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey),",
             "selected_text": "$paymentMethodKey",
             "error_level": 3,
             "shortcode": 78
@@ -135,6 +135,18 @@
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 191,
+            "line_to": 191,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "        $paymentMethodKey = $paymentMethodTransfer->getMethodName();",
+            "selected_text": "getMethodName",
+            "error_level": 2,
+            "shortcode": 1
+        },
         {
             "severity": "info",
             "line_from": 33,

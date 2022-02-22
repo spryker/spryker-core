@@ -13,25 +13,25 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class VoucherDataProvider implements FormDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer): QuoteTransfer
+    public function getData($transfer): QuoteTransfer
     {
-        if ($quoteTransfer->getManualOrder() === null) {
-            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
+        if ($transfer->getManualOrder() === null) {
+            $transfer->setManualOrder(new ManualOrderTransfer());
         }
 
-        return $quoteTransfer;
+        return $transfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($quoteTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,

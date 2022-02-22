@@ -2,20 +2,20 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 83,
+            "line_to": 83,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductOptionMerchantPortalGui\\Communication\\Expander\\MerchantOrderItemTableExpander::getProductOptionsArray is incorrect, got 'list<mixed|null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionMerchantPortalGui/src/Spryker/Zed/ProductOptionMerchantPortalGui/Communication/Expander/MerchantOrderItemTableExpander.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 99,
+            "line_to": 99,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductOptionMerchantPortalGui\\Communication\\Expander\\MerchantOrderItemTableExpander::getProductOptionsArray",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionMerchantPortalGui/src/Spryker/Zed/ProductOptionMerchantPortalGui/Communication/Expander/MerchantOrderItemTableExpander.php",
@@ -28,8 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 89,
+            "line_to": 89,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireItem on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionMerchantPortalGui/src/Spryker/Zed/ProductOptionMerchantPortalGui/Communication/Expander/MerchantOrderItemTableExpander.php",
@@ -40,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 91,
+            "line_to": 91,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getProductOptions on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionMerchantPortalGui/src/Spryker/Zed/ProductOptionMerchantPortalGui/Communication/Expander/MerchantOrderItemTableExpander.php",

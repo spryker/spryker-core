@@ -21,11 +21,11 @@ interface OfferFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OfferListTransfer $offerList
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
      *
      * @return \Generated\Shared\Transfer\OfferListTransfer
      */
-    public function getOffers(OfferListTransfer $offerList): OfferListTransfer;
+    public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer;
 
     /**
      * Specification:

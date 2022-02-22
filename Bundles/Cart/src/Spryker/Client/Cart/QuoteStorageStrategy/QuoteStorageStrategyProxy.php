@@ -126,11 +126,11 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(ArrayObject $items): QuoteTransfer
+    public function removeItems(ArrayObject $itemTransfers): QuoteTransfer
     {
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
@@ -138,7 +138,7 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->getQuote();
         }
 
-        return $this->quoteStorageStrategy->removeItems($items);
+        return $this->quoteStorageStrategy->removeItems($itemTransfers);
     }
 
     /**

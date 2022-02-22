@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductRelationStorage\\Business\\Writer\\ProductRelationStorageWriter::fillProductAbstractIds is incorrect, got 'array<array-key|mixed, int|mixed|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Business/Writer/ProductRelationStorageWriter.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -31,8 +31,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductRelationStorage\\Business\\Writer\\ProductRelationStorageWriter::getStoreNamesFromStoreRelationTransfer is incorrect, got 'list<mixed|null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Business/Writer/ProductRelationStorageWriter.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -69,7 +69,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Client\\ProductRelationStorage\\Dependency\\Client\\ProductRelationStorageToProductStorageClientInterface::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Relation/UpSellingProductReader.php",
-            "snippet": "            $storeTransfer->getName()",
+            "snippet": "            $storeTransfer->getName(),",
             "selected_text": "$storeTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -81,7 +81,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Relation/UpSellingProductReader.php",
-            "snippet": "            $storeTransfer->getName()",
+            "snippet": "            $storeTransfer->getName(),",
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
@@ -136,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 97,
+            "line_to": 97,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $relation['product_abstract_ids'][int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Storage/ProductAbstractRelationStorageReader.php",
@@ -208,18 +208,6 @@
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ProductRelationStorage\\Communication\\Plugin\\Event\\ProductRelationEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Communication/Plugin/Event/ProductRelationEventResourceQueryContainerPlugin.php",
-            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
-            "selected_text": "$ids",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "PossiblyNullArgument",
@@ -229,54 +217,6 @@
             "selected_text": "$this->getIdColumnName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelationStorage\\Persistence\\SpyProductAbstractRelationStorage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageEntityManager.php",
-            "snippet": "            ->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelationStorage\\Persistence\\SpyProductAbstractRelationStorage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageEntityManager.php",
-            "snippet": "            ->delete();",
-            "selected_text": "delete",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnector|Orm\\Zed\\GiftCard\\Persistence\\SpyGiftCardProductAbstractConfigurationLink|Orm\\Zed\\MerchantProduct\\Persistence\\SpyMerchantProductAbstract|Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship|Orm\\Zed\\PriceProductSchedule\\Persistence\\SpyPriceProductSchedule|Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProduct|Orm\\Zed\\ProductAlternative\\Persistence\\SpyProductAlternative|Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory|Orm\\Zed\\ProductCustomerPermission\\Persistence\\SpyProductCustomerPermission|Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup|Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSet|Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelProductAbstract|Orm\\Zed\\ProductMeasurementUnit\\Persistence\\SpyProductMeasurementBaseUnit|Orm\\Zed\\ProductOption\\Persistence\\SpyProductAbstractProductOptionGroup|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelation|Orm\\Zed\\ProductRelation\\Persistence\\SpyProductRelationProductAbstract|Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview|Orm\\Zed\\ProductSet\\Persistence\\SpyProductAbstractSet|Orm\\Zed\\Product\\Persistence\\SpyProduct|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore|Orm\\Zed\\Tax\\Persistence\\SpyTaxSet|Orm\\Zed\\Url\\Persistence\\SpyUrl> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageRepository.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductRelationStorage\\Persistence\\SpyProductAbstractRelationStorage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Zed/ProductRelationStorage/Persistence/ProductRelationStorageRepository.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -330,13 +270,13 @@
         },
         {
             "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
+            "line_from": 113,
+            "line_to": 113,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/ProductRelationStorageDependencyProvider.php",
-            "snippet": "     * @return \\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
-            "selected_text": "\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
+            "snippet": "     * @return array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -347,8 +287,8 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/ProductRelationStorageFactory.php",
-            "snippet": "     * @return \\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
-            "selected_text": "\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
+            "snippet": "     * @return array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -359,8 +299,8 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Relation/RelatedProductReader.php",
-            "snippet": "     * @var \\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
-            "selected_text": "\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
+            "snippet": "     * @var array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -371,8 +311,8 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Relation/RelatedProductReader.php",
-            "snippet": "     * @param \\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins",
-            "selected_text": "\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
+            "snippet": "     * @param array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface> $productViewExpanderPlugins",
+            "selected_text": "array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -383,8 +323,8 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Relation/UpSellingProductReader.php",
-            "snippet": "     * @var \\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
-            "selected_text": "\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
+            "snippet": "     * @var array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },
@@ -395,8 +335,8 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationStorage/src/Spryker/Client/ProductRelationStorage/Relation/UpSellingProductReader.php",
-            "snippet": "     * @param \\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins",
-            "selected_text": "\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface[]",
+            "snippet": "     * @param array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface> $productViewExpanderPlugins",
+            "selected_text": "array<\\Spryker\\Client\\ProductStorage\\Dependency\\Plugin\\ProductViewExpanderPluginInterface>",
             "error_level": 2,
             "shortcode": 98
         },

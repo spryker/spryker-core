@@ -35,18 +35,18 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function boot(Application $application)
+    public function boot(Application $app)
     {
-        $session = $this->getSession($application);
+        $session = $this->getSession($app);
 
         $this->getClient()->setContainer($session);
 
         /** @var \Spryker\Shared\EventDispatcher\EventDispatcherInterface $dispatcher */
-        $dispatcher = $application['dispatcher'];
+        $dispatcher = $app['dispatcher'];
         $dispatcher->addListener(KernelEvents::RESPONSE, [
             $this,
             'extendCookieLifetime',

@@ -15,66 +15,6 @@
         },
         {
             "severity": "info",
-            "line_from": 248,
-            "line_to": 248,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Business/Storage/ProductAbstractGroupStorageWriter.php",
-            "snippet": "        return $this->queryContainer->queryProductAbstractGroupByGroupIds($productGroupIds)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 258,
-            "line_to": 258,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductGroup\\Persistence\\SpyProductAbstractGroup> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Business/Storage/ProductAbstractGroupStorageWriter.php",
-            "snippet": "        return $this->queryContainer->queryProductAbstractGroupByProductAbstractIds($productAbstractIds)->find()->toKeyIndex('fkProductGroup');",
-            "selected_text": "toKeyIndex",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 268,
-            "line_to": 268,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Business/Storage/ProductAbstractGroupStorageWriter.php",
-            "snippet": "        return $this->queryContainer->queryProductAbstractLocalizedWithGroupByIds($productAbstractIds)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 278,
-            "line_to": 278,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Business/Storage/ProductAbstractGroupStorageWriter.php",
-            "snippet": "        return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ProductGroupStorage\\Communication\\Plugin\\Event\\ProductGroupEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Communication/Plugin/Event/ProductGroupEventResourceQueryContainerPlugin.php",
-            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
-            "selected_text": "$ids",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyNullArgument",
@@ -94,7 +34,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ProductGroupStorage\\ProductGroupStorageConfig::isSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Business/ProductGroupStorageBusinessFactory.php",
-            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "snippet": "            $this->getConfig()->isSendingToQueue(),",
             "selected_text": "isSendingToQueue",
             "error_level": 2,
             "shortcode": 1
@@ -122,6 +62,18 @@
             "selected_text": "setIsSendingToQueue",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\ProductGroupStorage\\Business\\Storage\\ProductAbstractGroupStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductGroupStorage/src/Spryker/Zed/ProductGroupStorage/Business/Storage/ProductAbstractGroupStorageWriter.php",
+            "snippet": "        $spyProductStorageGroupEntity->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
         },
         {
             "severity": "info",

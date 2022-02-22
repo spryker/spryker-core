@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductConfigurationDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\ProductConfigurationDataImport\Business\Model\ProductConfigurationWriterStep;
 use Spryker\Zed\ProductConfigurationDataImport\Business\Model\Step\ProductConcreteSkuToIdProductConcreteStep;
 
@@ -21,7 +22,7 @@ class ProductConfigurationDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductConfigurationDataImport()
+    public function createProductConfigurationDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductConfigurationDataImporterConfiguration());
 

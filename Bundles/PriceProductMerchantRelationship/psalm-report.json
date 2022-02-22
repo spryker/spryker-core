@@ -3,6 +3,54 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdMerchantRelationship on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Service/PriceProductMerchantRelationship/Filter/MerchantRelationshipPriceProductFilter.php",
+            "snippet": "        return $priceProductFilterTransfer->getPriceDimension() && $priceProductFilterTransfer->getPriceDimension()->getIdMerchantRelationship();",
+            "selected_text": "getIdMerchantRelationship",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdMerchantRelationship on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Service/PriceProductMerchantRelationship/Filter/MerchantRelationshipPriceProductFilter.php",
+            "snippet": "        return $priceProductTransfer->getPriceDimension() && $priceProductTransfer->getPriceDimension()->getIdMerchantRelationship();",
+            "selected_text": "getIdMerchantRelationship",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdMerchantRelationship on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Service/PriceProductMerchantRelationship/Filter/MerchantRelationshipPriceProductFilter.php",
+            "snippet": "            && $priceProductTransfer->getPriceDimension()->getIdMerchantRelationship() === $priceProductFilterTransfer->getPriceDimension()->getIdMerchantRelationship();",
+            "selected_text": "getIdMerchantRelationship",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdMerchantRelationship on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Service/PriceProductMerchantRelationship/Filter/MerchantRelationshipPriceProductFilter.php",
+            "snippet": "            && $priceProductTransfer->getPriceDimension()->getIdMerchantRelationship() === $priceProductFilterTransfer->getPriceDimension()->getIdMerchantRelationship();",
+            "selected_text": "getIdMerchantRelationship",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 44,
             "line_to": 44,
             "type": "PossiblyNullReference",
@@ -188,8 +236,8 @@
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $priceProductMerchantRelationshipEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/PriceProductMerchantRelationshipEntityManager.php",
-            "snippet": "     * @param \\Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship[]|\\Propel\\Runtime\\Collection\\ObjectCollection $priceProductMerchantRelationshipEntities",
-            "selected_text": "\\Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship[]",
             "error_level": 4,
             "shortcode": 141
         },
@@ -231,8 +279,8 @@
         },
         {
             "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
+            "line_from": 35,
+            "line_to": 35,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/Propel/PriceDimensionQueryExpander/MerchantRelationshipPriceQueryExpander.php",
@@ -243,8 +291,8 @@
         },
         {
             "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
+            "line_from": 78,
+            "line_to": 78,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/Propel/PriceDimensionQueryExpander/MerchantRelationshipPriceQueryExpander.php",

@@ -15,6 +15,18 @@
         },
         {
             "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "RedundantCast",
+            "message": "Redundant cast to string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/AddController.php",
+            "snippet": "                    (string)$type,",
+            "selected_text": "(string)$type",
+            "error_level": 4,
+            "shortcode": 262
+        },
+        {
+            "severity": "info",
             "line_from": 210,
             "line_to": 210,
             "type": "MixedClone",
@@ -51,8 +63,20 @@
         },
         {
             "severity": "info",
-            "line_from": 164,
-            "line_to": 164,
+            "line_from": 113,
+            "line_to": 113,
+            "type": "RedundantCast",
+            "message": "Redundant cast to string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/EditController.php",
+            "snippet": "            ->createVariantTable($idProductAbstract, (string)$type);",
+            "selected_text": "(string)$type",
+            "error_level": 4,
+            "shortcode": 262
+        },
+        {
+            "severity": "info",
+            "line_from": 165,
+            "line_to": 165,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Dependency\\Facade\\ProductManagementToProductInterface::findProductAbstractById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/EditController.php",
@@ -63,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 181,
-            "line_to": 181,
+            "line_from": 182,
+            "line_to": 182,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\DataProvider\\ProductConcreteFormEditDataProvider::getData cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Controller/EditController.php",
@@ -228,18 +252,6 @@
             "selected_text": "$productAbstractTransfer->getIdTaxSet()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\BundledProductForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/BundledProductForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -999,18 +1011,6 @@
         },
         {
             "severity": "info",
-            "line_from": 134,
-            "line_to": 134,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\AttributeAbstractForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/AttributeAbstractForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options = [])",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 207,
             "line_to": 207,
             "type": "PossiblyNullArgument",
@@ -1095,30 +1095,6 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Concrete\\ConcreteGeneralForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/ConcreteGeneralForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Concrete\\ProductConcreteSuperAttributeCollectionType::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/ProductConcreteSuperAttributeCollectionType.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 129,
             "line_to": 129,
             "type": "PossiblyNullArgument",
@@ -1131,18 +1107,6 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Concrete\\ProductConcreteSuperAttributeForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/ProductConcreteSuperAttributeForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 146,
             "line_to": 146,
             "type": "PossiblyInvalidMethodCall",
@@ -1152,90 +1116,6 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Concrete\\StockForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/StockForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 157,
-            "line_to": 157,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Concrete\\StockForm::buildView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildView",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Concrete/StockForm.php",
-            "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\GeneralForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/GeneralForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\ImageCollectionForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/ImageCollectionForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 112,
-            "line_to": 112,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\ImageSetForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/ImageSetForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options = [])",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Price\\ProductMoneyCollectionType::buildForm has the more specific type 'array<array-key, string>', expecting 'array<string, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Price/ProductMoneyCollectionType.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Price\\ProductMoneyCollectionType::finishView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType::finishView",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Price/ProductMoneyCollectionType.php",
-            "snippet": "    public function finishView(FormView $view, FormInterface $form, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1431,66 +1311,6 @@
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Price\\ProductMoneyType::buildForm has the more specific type 'array<array-key, string>', expecting 'array<string, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Price/ProductMoneyType.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Price\\ProductMoneyType::buildView has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildView",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/Price/ProductMoneyType.php",
-            "snippet": "    public function buildView(FormView $view, FormInterface $form, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\PriceForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/PriceForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\SeoForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Product/SeoForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductConcreteFormAdd::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductConcreteFormAdd.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 206,
             "line_to": 206,
             "type": "PossiblyNullArgument",
@@ -1500,18 +1320,6 @@
             "selected_text": "$productAbstractTransfer",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductConcreteFormEdit::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductConcreteFormEdit.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1536,18 +1344,6 @@
             "selected_text": "$superAttributes",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 275,
-            "line_to": 275,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\ProductFormAdd::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/ProductFormAdd.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1644,30 +1440,6 @@
             "selected_text": "GeneralForm::$errorFieldsDisplayed",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Validator\\Constraints\\ProductAttributeTypeValidator::validate has the more specific type 'Spryker\\Zed\\ProductManagement\\Communication\\Form\\Validator\\Constraints\\ProductAttributeType', expecting 'Symfony\\Component\\Validator\\Constraint' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Validator/Constraints/ProductAttributeTypeValidator.php",
-            "snippet": "    public function validate($value, Constraint $constraint)",
-            "selected_text": "$constraint",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Form\\Validator\\Constraints\\ProductAttributesNotBlankValidator::validate has the more specific type 'Spryker\\Zed\\ProductManagement\\Communication\\Form\\Validator\\Constraints\\ProductAttributesNotBlank', expecting 'Symfony\\Component\\Validator\\Constraint' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Form/Validator/Constraints/ProductAttributesNotBlankValidator.php",
-            "snippet": "    public function validate($value, Constraint $constraint)",
-            "selected_text": "$constraint",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1887,8 +1659,8 @@
         },
         {
             "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
+            "line_from": 153,
+            "line_to": 153,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::configure is more specific than the implemented return type for Spryker\\Zed\\ProductManagement\\Communication\\Table\\ProductTable::configure 'mixed'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
@@ -1899,8 +1671,8 @@
         },
         {
             "severity": "info",
-            "line_from": 179,
-            "line_to": 179,
+            "line_from": 220,
+            "line_to": 220,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, mixed>' for Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::prepareData is more specific than the implemented return type for Spryker\\Zed\\ProductManagement\\Communication\\Table\\ProductTable::preparedata 'mixed'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
@@ -1911,13 +1683,37 @@
         },
         {
             "severity": "info",
-            "line_from": 267,
-            "line_to": 267,
+            "line_from": 333,
+            "line_to": 333,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
             "snippet": "                $productAbstractStoreEntity->getSpyStore()->getName(),",
             "selected_text": "$productAbstractStoreEntity->getSpyStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 416,
+            "line_to": 416,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductManagement\\Communication\\Table\\ProductTable::generateButton cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
+            "snippet": "                $button->getUrl(),",
+            "selected_text": "$button->getUrl()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 417,
+            "line_to": 417,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductManagement\\Communication\\Table\\ProductTable::generateButton cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
+            "snippet": "                $button->getTitle(),",
+            "selected_text": "$button->getTitle()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -2151,8 +1947,8 @@
         },
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::join cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Persistence/Expander/ProductAbstractQueryExpander.php",
@@ -2163,8 +1959,8 @@
         },
         {
             "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::addJoinCondition cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Persistence/Expander/ProductAbstractQueryExpander.php",
@@ -2175,8 +1971,8 @@
         },
         {
             "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 73,
+            "line_to": 73,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::addJoinCondition cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Persistence/Expander/ProductAbstractQueryExpander.php",
@@ -2189,8 +1985,68 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 171,
-            "line_to": 171,
+            "line_from": 369,
+            "line_to": 369,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductManagement\\Communication\\ProductManagementCommunicationFactory::getProductTableDataExpanderPlugins has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/ProductManagementCommunicationFactory.php",
+            "snippet": "            $this->getProductTableDataExpanderPlugins(),",
+            "selected_text": "getProductTableDataExpanderPlugins",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 530,
+            "line_to": 530,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/ProductManagementCommunicationFactory.php",
+            "snippet": "     * @return array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 534,
+            "line_to": 534,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Zed\\ProductManagement\\ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/ProductManagementCommunicationFactory.php",
+            "snippet": "        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER);",
+            "selected_text": "ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
+            "snippet": "     * @var array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
+            "snippet": "     * @param array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface> $productTableDataExpanderPlugins",
+            "selected_text": "array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 196,
+            "line_to": 196,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::setDefaultSortDirection has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
@@ -2198,6 +2054,66 @@
             "selected_text": "setDefaultSortDirection",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 300,
+            "line_to": 300,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductManagement\\Communication\\Table\\ProductTable::executeItemDataExpanderPlugins has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/Communication/Table/ProductTable.php",
+            "snippet": "        return $this->executeItemDataExpanderPlugins($item);",
+            "selected_text": "executeItemDataExpanderPlugins",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 400,
+            "line_to": 400,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductManagement\\ProductManagementDependencyProvider::addProductTableDataExpanderPlugins has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/ProductManagementDependencyProvider.php",
+            "snippet": "        $container = $this->addProductTableDataExpanderPlugins($container);",
+            "selected_text": "addProductTableDataExpanderPlugins",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 823,
+            "line_to": 823,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Zed\\ProductManagement\\ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/ProductManagementDependencyProvider.php",
+            "snippet": "        $container->set(static::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER, function () {",
+            "selected_text": "static::PLUGINS_PRODUCT_TABLE_DATA_EXPANDER",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 824,
+            "line_to": 824,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductManagement\\ProductManagementDependencyProvider::getProductTableDataExpanderPlugins has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/ProductManagementDependencyProvider.php",
+            "snippet": "            return $this->getProductTableDataExpanderPlugins();",
+            "selected_text": "getProductTableDataExpanderPlugins",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 833,
+            "line_to": 833,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductManagement/src/Spryker/Zed/ProductManagement/ProductManagementDependencyProvider.php",
+            "snippet": "     * @return array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "selected_text": "array<\\Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface>",
+            "error_level": 2,
+            "shortcode": 98
         }
     ]
 }

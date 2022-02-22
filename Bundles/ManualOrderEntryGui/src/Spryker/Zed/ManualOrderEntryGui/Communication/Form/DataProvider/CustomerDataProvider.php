@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 class CustomerDataProvider implements FormDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $transfer
      *
      * @return array
      */
-    public function getOptions($customerTransfer): array
+    public function getOptions($transfer): array
     {
         return [
             'data_class' => CustomerTransfer::class,
@@ -24,12 +24,12 @@ class CustomerDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $transfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getData($customerTransfer)
+    public function getData($transfer)
     {
-        return $customerTransfer;
+        return $transfer;
     }
 }

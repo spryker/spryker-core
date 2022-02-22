@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 47,
+            "line_to": 47,
             "type": "MismatchingDocblockReturnType",
             "message": "Docblock has incorrect return type 'Symfony\\Component\\Finder\\Finder|array<array-key, Symfony\\Component\\Finder\\SplFileInfo>', should be 'Symfony\\Component\\Finder\\Finder'",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/Model/Installer/PathFinder/InstallMultiPathFinder.php",
@@ -24,42 +24,6 @@
             "selected_text": "\\Symfony\\Component\\Finder\\Finder|\\Symfony\\Component\\Finder\\SplFileInfo[]",
             "error_level": 4,
             "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SetupFrontendConfigurationTransfer::setEnvironment expects null|string, possibly different type array<array-key, string>|bool|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Communication/Console/MerchantPortalBuildFrontendConsole.php",
-            "snippet": "            $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));",
-            "selected_text": "$input->getOption(static::OPTION_ENVIRONMENT)",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SetupFrontendConfigurationTransfer::setEnvironment expects null|string, possibly different type array<array-key, string>|bool|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Communication/Console/YvesBuildFrontendConsole.php",
-            "snippet": "            $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));",
-            "selected_text": "$input->getOption(static::OPTION_ENVIRONMENT)",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\SetupFrontendConfigurationTransfer::setEnvironment expects null|string, possibly different type array<array-key, string>|bool|null|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Communication/Console/ZedBuildFrontendConsole.php",
-            "snippet": "            $setupFrontendConfigurationTransfer->setEnvironment($input->getOption(static::OPTION_ENVIRONMENT));",
-            "selected_text": "$input->getOption(static::OPTION_ENVIRONMENT)",
-            "error_level": 3,
-            "shortcode": 92
         }
     ],
     "deprecation": [
@@ -82,7 +46,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\SetupFrontendConfig::getYvesInstallCommand has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendBusinessFactory.php",
-            "snippet": "            $this->getConfig()->getYvesInstallCommand()",
+            "snippet": "            $this->getConfig()->getYvesInstallCommand(),",
             "selected_text": "getYvesInstallCommand",
             "error_level": 2,
             "shortcode": 1
@@ -142,7 +106,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\SetupFrontendConfig::getZedInstallCommand has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendBusinessFactory.php",
-            "snippet": "            $this->getConfig()->getZedInstallCommand()",
+            "snippet": "            $this->getConfig()->getZedInstallCommand(),",
             "selected_text": "getZedInstallCommand",
             "error_level": 2,
             "shortcode": 1
@@ -233,8 +197,8 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 53,
+            "line_to": 53,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacadeInterface::installMerchantPortalDependencies has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Communication/Console/MerchantPortalInstallDependenciesConsole.php",
@@ -245,8 +209,8 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 53,
+            "line_to": 53,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacadeInterface::installYvesDependencies has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Communication/Console/YvesInstallDependenciesConsole.php",
@@ -257,8 +221,8 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 53,
+            "line_to": 53,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacadeInterface::installZedDependencies has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Communication/Console/ZedInstallDependenciesConsole.php",
@@ -269,8 +233,8 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 66,
+            "line_to": 66,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Kernel\\KernelConstants::SPRYKER_ROOT is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/SetupFrontendConfig.php",
@@ -281,8 +245,8 @@
         },
         {
             "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
+            "line_from": 79,
+            "line_to": 79,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\SetupFrontendConfig::getYvesInstallerDirectoryPattern has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/SetupFrontendConfig.php",
@@ -293,8 +257,8 @@
         },
         {
             "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
+            "line_from": 129,
+            "line_to": 129,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Shared\\Kernel\\KernelConstants::SPRYKER_ROOT is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/SetupFrontendConfig.php",
@@ -305,8 +269,8 @@
         },
         {
             "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
+            "line_from": 142,
+            "line_to": 142,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\SetupFrontend\\SetupFrontendConfig::getZedInstallerDirectoryPattern has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/SetupFrontendConfig.php",

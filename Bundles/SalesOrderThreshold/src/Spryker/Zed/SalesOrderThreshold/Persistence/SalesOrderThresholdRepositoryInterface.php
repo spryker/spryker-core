@@ -37,12 +37,12 @@ interface SalesOrderThresholdRepositoryInterface
     ): array;
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $orderThresholdTypeTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer|null
      */
     public function findSalesOrderThreshold(
-        SalesOrderThresholdTransfer $orderThresholdTypeTransfer
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer
     ): ?SalesOrderThresholdTransfer;
 
     /**

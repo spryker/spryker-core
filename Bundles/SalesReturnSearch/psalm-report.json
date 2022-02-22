@@ -5,10 +5,10 @@
             "line_from": 70,
             "line_to": 70,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, array<array-key, string>>' for Spryker\\Zed\\SalesReturnSearch\\Business\\Reader\\GlossaryReader::mapReturnReasonTranslations is incorrect, got 'array<int(0)|string, array<int, null|string>>'",
+            "message": "The declared return type 'array<array-key, array<array-key, string>>' for Spryker\\Zed\\SalesReturnSearch\\Business\\Reader\\GlossaryReader::mapReturnReasonTranslations is incorrect, got 'array<0|string, array<int, null|string>>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Business/Reader/GlossaryReader.php",
-            "snippet": "     * @return string[][]",
-            "selected_text": "string[][]",
+            "snippet": "     * @return array<array<string>>",
+            "selected_text": "array<array<string>>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -17,7 +17,7 @@
             "line_from": 84,
             "line_to": 84,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int(0)|string, array<int, null|string>>' does not match the declared return type 'array<array-key, array<array-key, string>>' for Spryker\\Zed\\SalesReturnSearch\\Business\\Reader\\GlossaryReader::mapReturnReasonTranslations",
+            "message": "The inferred type 'array<0|string, array<int, null|string>>' does not match the declared return type 'array<array-key, array<array-key, string>>' for Spryker\\Zed\\SalesReturnSearch\\Business\\Reader\\GlossaryReader::mapReturnReasonTranslations",
             "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Business/Reader/GlossaryReader.php",
             "snippet": "        return $returnReasonTranslations;",
             "selected_text": "$returnReasonTranslations",
@@ -31,8 +31,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesReturnSearch\\Business\\Reader\\GlossaryReader::extractGlossaryKeysFromReturnReasonTransfers is incorrect, got 'list<null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Business/Reader/GlossaryReader.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -85,6 +85,102 @@
             "selected_text": "$this->paginationConfigTransfer->getDefaultItemsPerPage()",
             "error_level": 5,
             "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $requestParameters using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/PaginationConfigBuilder/ReturnReasonSearchPaginationConfigBuilder.php",
+            "snippet": "        $perPage = $requestParameters[$this->paginationConfigTransfer->getItemsPerPageParameterName()] ?? null;",
+            "selected_text": "$requestParameters",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $searchQuery has wrong type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', should be 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/PaginatedReturnReasonSearchQueryExpanderPlugin.php",
+            "snippet": "     * @param \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface $searchQuery",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', should be 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/PaginatedReturnReasonSearchQueryExpanderPlugin.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "ImplementedParamTypeMismatch",
+            "message": "Argument 1 of Spryker\\Client\\SalesReturnSearch\\Plugin\\Elasticsearch\\Query\\PaginatedReturnReasonSearchQueryExpanderPlugin::expandQuery has wrong type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', expecting 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface::expandQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/PaginatedReturnReasonSearchQueryExpanderPlugin.php",
+            "snippet": "    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface",
+            "selected_text": "$searchQuery",
+            "error_level": 4,
+            "shortcode": 199
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Elastica\\Query\\Match|Elastica\\Query\\MatchQuery' for Spryker\\Client\\SalesReturnSearch\\Plugin\\Elasticsearch\\Query\\ReturnReasonSearchQueryPlugin::getMatchQuery is more specific than the inferred return type 'object'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/ReturnReasonSearchQueryPlugin.php",
+            "snippet": "     * @return \\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "selected_text": "\\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'object' is more general than the declared return type 'Elastica\\Query\\Match|Elastica\\Query\\MatchQuery' for Spryker\\Client\\SalesReturnSearch\\Plugin\\Elasticsearch\\Query\\ReturnReasonSearchQueryPlugin::getMatchQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/ReturnReasonSearchQueryPlugin.php",
+            "snippet": "        return new $matchQueryClassName();",
+            "selected_text": "new $matchQueryClassName()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $returnReasonTranslations using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Business/Mapper/ReturnReasonSearchMapper.php",
+            "snippet": "            $returnReasonTranslations[$returnReasonTransfer->getGlossaryKeyReason()][$localeTransfer->getIdLocale()] ?? $returnReasonTransfer->getGlossaryKeyReason(),",
+            "selected_text": "$returnReasonTranslations",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $glossaryKeyTransfers using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Business/Reader/GlossaryReader.php",
+            "snippet": "            $glossaryKeyTransfer = $glossaryKeyTransfers[$translationTransfer->getFkGlossaryKey()] ?? null;",
+            "selected_text": "$glossaryKeyTransfers",
+            "error_level": 3,
+            "shortcode": 125
         },
         {
             "severity": "info",
@@ -172,25 +268,13 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 51,
+            "line_to": 51,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnReasonTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Communication/Plugin/Publisher/ReturnReasonPublisherTriggerPlugin.php",
             "snippet": "            ->getArrayCopy();",
             "selected_text": "getArrayCopy",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\SalesReturnSearch\\Persistence\\SpySalesReturnReasonSearch> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Zed/SalesReturnSearch/Persistence/SalesReturnSearchEntityManager.php",
-            "snippet": "            ->delete();",
-            "selected_text": "delete",
             "error_level": 3,
             "shortcode": 113
         },
@@ -241,18 +325,6 @@
             "selected_text": "$this->buildQueryFromCriteria($salesReturnReasonSearchQuery, $filterTransfer)\n            ->setFormatter(ModelCriteria::FORMAT_OBJECT)\n            ->find()",
             "error_level": 3,
             "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\SearchElasticsearch\\Plugin\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
-            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
-            "selected_text": "$searchResult",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [
@@ -267,6 +339,30 @@
             "selected_text": "ReturnReasonSearchQueryPlugin",
             "error_level": 2,
             "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "DeprecatedClass",
+            "message": "Class Elastica\\Query\\Match is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/ReturnReasonSearchQueryPlugin.php",
+            "snippet": "        $typeFilter = $this->getMatchQuery()->setField(ReturnReasonIndexMap::TYPE, SalesReturnSearchConfig::RETURN_REASON_RESOURCE_NAME);",
+            "selected_text": "$this->getMatchQuery()->setField(ReturnReasonIndexMap::TYPE, SalesReturnSearchConfig::RETURN_REASON_RESOURCE_NAME)",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "DeprecatedClass",
+            "message": "Class Elastica\\Query\\Match is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnSearch/src/Spryker/Client/SalesReturnSearch/Plugin/Elasticsearch/Query/ReturnReasonSearchQueryPlugin.php",
+            "snippet": "     * @return \\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "selected_text": "\\Elastica\\Query\\MatchQuery|\\Elastica\\Query\\Match",
+            "error_level": 2,
+            "shortcode": 98
         }
     ]
 }

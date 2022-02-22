@@ -16,15 +16,16 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class VolumePriceHasBasePriceConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($priceProductOfferTransfer, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
+        $priceProductOfferTransfer = $value;
         if (!$priceProductOfferTransfer instanceof PriceProductOfferTransfer) {
             throw new UnexpectedTypeException($priceProductOfferTransfer, PriceProductOfferTransfer::class);
         }

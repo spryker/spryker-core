@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
+            "line_from": 83,
+            "line_to": 83,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\RelatedProductsRestApi\\Dependency\\Client\\RelatedProductsRestApiToProductStorageClientInterface::findProductAbstractStorageDataByMapping cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/Processor/RelatedProduct/RelatedProductReader.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\RelatedProductsRestApi\\Dependency\\Client\\RelatedProductsRestApiToProductRelationStorageClientInterface::findRelatedAbstractProductIds cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/Processor/RelatedProduct/RelatedProductReader.php",

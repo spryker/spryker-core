@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductApprovalGui\\Dependency\\Facade\\ProductApprovalGuiToProductApprovalFacadeInterface::getApplicableApprovalStatuses cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductApprovalGui/src/Spryker/Zed/ProductApprovalGui/Communication/Expander/ProductApprovalProductAbstractEditViewExpander.php",
+            "snippet": "            ? $this->productApprovalFacade->getApplicableApprovalStatuses($productAbstractTransfer->getApprovalStatus())",
+            "selected_text": "$productAbstractTransfer->getApprovalStatus()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

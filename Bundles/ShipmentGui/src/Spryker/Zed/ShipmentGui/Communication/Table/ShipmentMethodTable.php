@@ -231,18 +231,18 @@ class ShipmentMethodTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $tableConfiguration
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $tableConfiguration): TableConfiguration
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $tableConfiguration = $this->configureHeader($tableConfiguration);
-        $tableConfiguration = $this->configureSortableColumns($tableConfiguration);
-        $tableConfiguration = $this->configureSearchableColumns($tableConfiguration);
-        $tableConfiguration = $this->setRawColumns($tableConfiguration);
+        $config = $this->configureHeader($config);
+        $config = $this->configureSortableColumns($config);
+        $config = $this->configureSearchableColumns($config);
+        $config = $this->setRawColumns($config);
 
-        return $tableConfiguration;
+        return $config;
     }
 
     /**

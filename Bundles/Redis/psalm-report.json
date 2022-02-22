@@ -3,6 +3,42 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "TypeDoesNotContainType",
+            "message": "\"development\" cannot be identical to \"\"",
+            "file_name": "vendor/spryker/spryker/Bundles/Redis/src/Spryker/Client/Redis/RedisConfig.php",
+            "snippet": "        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';",
+            "selected_text": "APPLICATION_ENV === 'development'",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "TypeDoesNotContainType",
+            "message": "\"docker.dev\" cannot be identical to \"\"",
+            "file_name": "vendor/spryker/spryker/Bundles/Redis/src/Spryker/Client/Redis/RedisConfig.php",
+            "snippet": "        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';",
+            "selected_text": "APPLICATION_ENV === 'docker.dev'",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Shared\\Redis\\Dependency\\Service\\RedisToUtilEncodingServiceInterface::encodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Redis/src/Spryker/Shared/Redis/Logger/RedisInMemoryLogger.php",
+            "snippet": "            'result' => stripslashes($this->utilEncodingService->encodeJson($result, JSON_PRETTY_PRINT) ?? ''),",
+            "selected_text": "$result",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
             "line_from": 64,
             "line_to": 64,
             "type": "PossiblyNullArgument",

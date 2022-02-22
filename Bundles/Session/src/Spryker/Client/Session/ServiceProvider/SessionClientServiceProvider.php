@@ -38,11 +38,11 @@ class SessionClientServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application $app
      *
      * @return void
      */
-    public function boot(Application $application)
+    public function boot(Application $app)
     {
     }
 }

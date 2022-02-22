@@ -24,18 +24,6 @@
             "selected_text": "delete",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ProductSearchConfigStorage\\Communication\\Plugin\\Event\\ProductSearchConfigEventResourceQueryContainerPlugin::queryData has the more specific type 'array<array-key, int>', expecting 'array<array-key, int|string>' as defined by Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceQueryContainerPluginInterface::queryData",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Communication/Plugin/Event/ProductSearchConfigEventResourceQueryContainerPlugin.php",
-            "snippet": "    public function queryData(array $ids = []): ?ModelCriteria",
-            "selected_text": "$ids",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [
@@ -58,7 +46,7 @@
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\ProductSearchConfigStorage\\ProductSearchConfigStorageConfig::isSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/ProductSearchConfigStorageBusinessFactory.php",
-            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "snippet": "            $this->getConfig()->isSendingToQueue(),",
             "selected_text": "isSendingToQueue",
             "error_level": 2,
             "shortcode": 1
@@ -86,6 +74,18 @@
             "selected_text": "setIsSendingToQueue",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\ProductSearchConfigStorage\\Business\\Storage\\ProductSearchConfigStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/Storage/ProductSearchConfigStorageWriter.php",
+            "snippet": "        $spyProductSearchConfigStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
         },
         {
             "severity": "info",

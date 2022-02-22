@@ -31,20 +31,20 @@ interface ProductAlternativeStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageForEntity
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementForStorageEntity
      *
      * @return void
      */
     public function saveProductReplacementForStorage(
-        SpyProductReplacementForStorage $productReplacementStorageForEntity
+        SpyProductReplacementForStorage $productReplacementForStorageEntity
     ): void;
 
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageForEntity
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementForStorageEntity
      *
      * @return void
      */
     public function deleteProductReplacementForStorage(
-        SpyProductReplacementForStorage $productReplacementStorageForEntity
+        SpyProductReplacementForStorage $productReplacementForStorageEntity
     ): void;
 }

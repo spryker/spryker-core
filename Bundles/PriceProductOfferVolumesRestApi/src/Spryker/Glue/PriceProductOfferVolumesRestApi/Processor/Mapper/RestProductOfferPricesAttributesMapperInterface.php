@@ -14,12 +14,12 @@ interface RestProductOfferPricesAttributesMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
-     * @param \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer $restProductOfferPriceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer $restProductOfferPricesAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestProductOfferPricesAttributesTransfer
      */
     public function mapCurrentProductPriceTransferToRestProductOfferPricesAttributesTransfer(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
-        RestProductOfferPricesAttributesTransfer $restProductOfferPriceAttributesTransfer
+        RestProductOfferPricesAttributesTransfer $restProductOfferPricesAttributesTransfer
     ): RestProductOfferPricesAttributesTransfer;
 }

@@ -33,7 +33,7 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of get_class expects object, possibly different type Elastica\\Query\\AbstractQuery|array<array-key, mixed> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Client/ProductListSearch/Plugin/Search/ProductListQueryExpanderPlugin.php",
-            "snippet": "                get_class($boolQuery)",
+            "snippet": "                get_class($boolQuery),",
             "selected_text": "$boolQuery",
             "error_level": 3,
             "shortcode": 92
@@ -88,51 +88,15 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "InvalidFalsableReturnType",
-            "message": "The declared return type 'int' for Spryker\\Zed\\ProductListSearch\\Persistence\\ProductListSearchRepository::getEnumValueForListType does not allow false, but 'array-key|false' contains false",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Persistence/ProductListSearchRepository.php",
-            "snippet": "     * @return int",
-            "selected_text": "int",
-            "error_level": 2,
-            "shortcode": 143
-        },
-        {
-            "severity": "info",
-            "line_from": 48,
-            "line_to": 51,
-            "type": "FalsableReturnStatement",
-            "message": "The declared return type 'int' for Spryker\\Zed\\ProductListSearch\\Persistence\\ProductListSearchRepository::getEnumValueForListType does not allow false, but the function returns 'array-key|false'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Persistence/ProductListSearchRepository.php",
-            "snippet": "        return array_search(\n            $listType,\n            SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE)\n        );",
-            "selected_text": "array_search(\n            $listType,\n            SpyProductListTableMap::getValueSet(SpyProductListTableMap::COL_TYPE)\n        )",
-            "error_level": 5,
-            "shortcode": 137
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Persistence/ProductListSearchRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $mappedProductListIds using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Business/ProductPage/ProductPageDataExpander.php",
+            "snippet": "            $lists = $mappedProductListIds[$payloadTransfer->getIdProductAbstract()] ?? null;",
+            "selected_text": "$mappedProductListIds",
             "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategory> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Persistence/ProductListSearchRepository.php",
-            "snippet": "            ->toArray();",
-            "selected_text": "toArray",
-            "error_level": 3,
-            "shortcode": 113
+            "shortcode": 125
         }
     ],
     "deprecation": [
@@ -294,6 +258,30 @@
         },
         {
             "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\ProductPageSearch\\Dependency\\Plugin\\ProductPageDataExpanderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Communication/Plugin/ProductPageSearch/DataExpander/ProductListDataLoadExpanderPlugin.php",
+            "snippet": "class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface",
+            "selected_text": "ProductListDataLoadExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\ProductPageSearch\\Dependency\\Plugin\\ProductPageDataExpanderInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Communication/Plugin/ProductPageSearch/ProductListDataExpanderPlugin.php",
+            "snippet": "class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface",
+            "selected_text": "ProductListDataExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
             "line_from": 24,
             "line_to": 24,
             "type": "DeprecatedInterface",
@@ -306,8 +294,8 @@
         },
         {
             "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
+            "line_from": 37,
+            "line_to": 37,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Communication/Plugin/ProductPageSearch/ProductListMapExpanderPlugin.php",
