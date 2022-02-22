@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesProductConnector\Persistence;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface SalesProductConnectorRepositoryInterface
 {
     /**
@@ -37,4 +39,17 @@ interface SalesProductConnectorRepositoryInterface
      * @return array
      */
     public function getProductAbstractIdsForRefreshByInterval(int $interval): array;
+
+    /**
+     * Result format:
+     * [
+     *     $idSalesOrderItem => ['attribute', ...],
+     *     ...
+     * ]
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array<int, array>
+     */
+    public function getSupperAttributesGroupedByIdItem(QuoteTransfer $quoteTransfer): array;
 }

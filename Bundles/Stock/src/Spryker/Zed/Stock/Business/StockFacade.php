@@ -229,6 +229,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Stock\Business\StockFacade::expandProductConcreteTransfersWithStocks()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -238,6 +240,22 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createStockProductReader()
             ->expandProductConcreteWithStocks($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithStocks(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createStockProductReader()
+            ->expandProductConcreteTransfersWithStocks($productConcreteTransfers);
     }
 
     /**

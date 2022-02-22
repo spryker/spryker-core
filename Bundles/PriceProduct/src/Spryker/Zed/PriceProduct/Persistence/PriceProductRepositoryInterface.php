@@ -50,6 +50,17 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
+     * @param array<int> $productConcreteIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     */
+    public function getProductConcretePricesByIdsAndCriteria(
+        array $productConcreteIds,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ObjectCollection;
+
+    /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *

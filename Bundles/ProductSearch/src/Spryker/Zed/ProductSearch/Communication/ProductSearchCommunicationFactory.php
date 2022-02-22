@@ -26,6 +26,7 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchRepositoryInterface getRepository()
  */
 class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
 {

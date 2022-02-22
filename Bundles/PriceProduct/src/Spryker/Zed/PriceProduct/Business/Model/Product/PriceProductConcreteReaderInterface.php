@@ -90,4 +90,11 @@ interface PriceProductConcreteReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithPrices(array $productConcreteTransfers): array;
 }

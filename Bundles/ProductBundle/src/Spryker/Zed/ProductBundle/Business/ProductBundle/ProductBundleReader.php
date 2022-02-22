@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductBundleTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
@@ -91,34 +91,54 @@ class ProductBundleReader implements ProductBundleReaderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader::expandProductConcreteTransfersWithBundledProducts()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcreteTransfer->requireIdProductConcrete()->requireSku();
+        $productConcreteTransfersWithBundledProducts = $this->expandProductConcreteTransfersWithBundledProducts([$productConcreteTransfer]);
 
-        $bundledProducts = $this->findBundledProductsByIdProductConcrete(
-            $productConcreteTransfer->getIdProductConcrete(),
-        );
+        return array_shift($productConcreteTransfersWithBundledProducts);
+    }
 
-        if (count($bundledProducts) == 0) {
-            return $productConcreteTransfer;
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithBundledProducts(array $productConcreteTransfers): array
+    {
+        $productIds = [];
+        $productSkus = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productIds[] = $productConcreteTransfer->getIdProductConcreteOrFail();
+            $productSkus[] = $productConcreteTransfer->getSkuOrFail();
         }
 
-        $productBundleTransfer = new ProductBundleTransfer();
-        $productBundleTransfer->setBundledProducts($bundledProducts);
+        $productBundleTransfers = $this->productBundleRepository->getProductBundleTransfersIndexedByIdProductConcrete($productIds);
+        $productConcreteAvailabilityIndexedBySkuForStore = $this->getProductConcreteAvailabilityIndexedBySkuForStore($productSkus);
 
-        $productBundleAvailabilityTransfer = $this->findProductConcreteAvailabilityBySkuForStore($productConcreteTransfer);
-        if ($productBundleAvailabilityTransfer !== null) {
-            $productBundleTransfer->setAvailability($productBundleAvailabilityTransfer->getAvailability());
-            $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityTransfer->getIsNeverOutOfStock());
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productBundleTransfer = $productBundleTransfers[$productConcreteTransfer->getIdProductConcrete()] ?? null;
+            if ($productBundleTransfer === null) {
+                continue;
+            }
+
+            $productBundleAvailabilityTransfer = $productConcreteAvailabilityIndexedBySkuForStore[$productConcreteTransfer->getSkuOrFail()] ?? null;
+
+            if ($productBundleAvailabilityTransfer !== null) {
+                $productBundleTransfer->setAvailability($productBundleAvailabilityTransfer->getAvailability());
+                $productBundleTransfer->setIsNeverOutOfStock($productBundleAvailabilityTransfer->getIsNeverOutOfStock());
+            }
+
+            $productConcreteTransfer->setProductBundle($productBundleTransfer);
         }
 
-        $productConcreteTransfer->setProductBundle($productBundleTransfer);
-
-        return $productConcreteTransfer;
+        return $productConcreteTransfers;
     }
 
     /**
@@ -144,6 +164,45 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
         return $this->availabilityFacade
             ->findOrCreateProductConcreteAvailabilityBySkuForStore($productConcreteTransfer->getSku(), $storeTransfer);
+    }
+
+    /**
+     * Result format:
+     * [
+     *     $productConcreteSku => ProductConcreteAvailabilityTransfer,
+     *     ...,
+     * ]
+     *
+     * @param array<string> $productConcreteSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
+     */
+    protected function getProductConcreteAvailabilityIndexedBySkuForStore(array $productConcreteSkus): array
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+            ->addIdStore($storeTransfer->getIdStoreOrFail())
+            ->setProductConcreteSkus($productConcreteSkus);
+
+        $productConcreteAvailabilityCollectionTransfer = $this->availabilityFacade
+            ->getProductConcreteAvailabilityCollection($productAvailabilityCriteriaTransfer);
+
+        $result = [];
+        $foundSkus = [];
+
+        foreach ($productConcreteAvailabilityCollectionTransfer->getProductConcreteAvailabilities() as $productConcreteAvailabilityTransfer) {
+            $result[$productConcreteAvailabilityTransfer->getSkuOrFail()] = $productConcreteAvailabilityTransfer;
+            $foundSkus[] = $productConcreteAvailabilityTransfer->getSkuOrFail();
+        }
+
+        $missedSkus = array_diff($productConcreteSkus, $foundSkus);
+
+        foreach ($missedSkus as $sku) {
+            $result[$sku] = $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
+        }
+
+        return $result;
     }
 
     /**

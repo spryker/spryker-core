@@ -300,8 +300,9 @@ trait ActiveRecordBatchProcessorTrait
     {
         $tableMapClass = $this->getTableMapClass($entityClassName);
 
-        $connection = $this->getWriteConnection($entityClassName);
         $statements = [];
+
+        $statementsGroupedByInsertedColumns = [];
 
         foreach ($entities as $entity) {
             $keyIndex = 0;
@@ -322,17 +323,13 @@ trait ActiveRecordBatchProcessorTrait
                 return sprintf(':p%d', $keyIndex++);
             }, $valuesForInsert);
 
-            $sql = sprintf(
-                'INSERT INTO %s (%s) VALUES (%s);',
-                $tableMapClass->getName(),
-                implode(', ', array_keys($columnNamesForInsertWithPdoPlaceholder)),
-                implode(', ', $columnNamesForInsertWithPdoPlaceholder),
-            );
+            $key = implode(',', array_keys($columnNamesForInsertWithPdoPlaceholder));
 
-            $statement = $this->prepareStatement($sql, $connection);
-            $statement = $this->bindInsertValues($statement, $valuesForInsert);
+            $statementsGroupedByInsertedColumns[$key][] = $entity;
+        }
 
-            $statements[] = $statement;
+        foreach ($statementsGroupedByInsertedColumns as $entities) {
+            $statements[] = $this->buildInsertStatementIdentical($entityClassName, $entities);
         }
 
         return $statements;

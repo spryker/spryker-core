@@ -31,11 +31,25 @@ interface ProductValidityFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface::expandProductConcreteTransfersWithValidity()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function hydrateProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Expands transfers of product concrete with product concrete validity (validFrom and validTo fields).
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithValidity(array $productConcreteTransfers): array;
 
     /**
      * Specification:

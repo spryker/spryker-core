@@ -352,6 +352,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             $salesOrderItemQuery->filterByUuid_In(array_unique($orderItemFilterTransfer->getSalesOrderItemUuids()));
         }
 
+        if ($orderItemFilterTransfer->getSalesOrderIds()) {
+            $salesOrderItemQuery->filterByFkSalesOrder_In(array_unique($orderItemFilterTransfer->getSalesOrderIds()));
+        }
+
         if ($orderItemFilterTransfer->getCustomerReferences()) {
             $salesOrderItemQuery
                 ->useOrderQuery()

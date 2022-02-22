@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchRepositoryInterface getRepository()
  */
 class AttributeTranslationForm extends AbstractType
 {

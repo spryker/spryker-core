@@ -13,8 +13,13 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableItemRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
 {
@@ -39,18 +44,26 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     protected $cartItemQuantityCounterStrategyPlugins;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\AvailabilityConfig $availabilityConfig
      * @param array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface> $cartItemQuantityCounterStrategyPlugins
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         SellableInterface $sellable,
         AvailabilityConfig $availabilityConfig,
-        array $cartItemQuantityCounterStrategyPlugins
+        array $cartItemQuantityCounterStrategyPlugins,
+        AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->sellable = $sellable;
         $this->availabilityConfig = $availabilityConfig;
         $this->cartItemQuantityCounterStrategyPlugins = $cartItemQuantityCounterStrategyPlugins;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -63,27 +76,58 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     {
         $quoteTransfer->requireStore();
         $isPassed = true;
-        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
-        $storeTransfer = $quoteTransfer->requireStore()->getStore();
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer);
+        $storeTransfer = $quoteTransfer->getStoreOrFail();
 
-            $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
-                ->fromArray($itemTransfer->toArray(), true);
+        if (!$storeTransfer->getIdStore()) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getNameOrFail());
+        }
 
-            /** @var string $sku */
-            $sku = $itemTransfer->requireSku()->getSku();
+        $sellableItemsResponseTransfer = $this->sellable->areProductConcretesSellableForStore(
+            $this->createSellableItemsRequestTransfer($quoteTransfer, $storeTransfer),
+            new SellableItemsResponseTransfer(),
+        );
 
-            if ($this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+        foreach ($sellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
+            if ($sellableItemResponseTransfer->getIsSellable()) {
                 continue;
             }
 
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sellableItemResponseTransfer->getSkuOrFail());
             $isPassed = false;
         }
 
         return $isPassed;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
+     */
+    protected function createSellableItemsRequestTransfer(QuoteTransfer $quoteTransfer, StoreTransfer $storeTransfer): SellableItemsRequestTransfer
+    {
+        $sellableItemsRequestTransfer = new SellableItemsRequestTransfer();
+        $sellableItemsRequestTransfer->setStore($storeTransfer);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getAmount() !== null) {
+                continue;
+            }
+
+            $sellableItemRequestTransfer = new SellableItemRequestTransfer();
+            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer);
+            $sellableItemRequestTransfer->setQuantity($quantity);
+            $sellableItemRequestTransfer->setProductAvailabilityCriteria(
+                (new ProductAvailabilityCriteriaTransfer())
+                    ->fromArray($itemTransfer->toArray(), true),
+            );
+            $sellableItemRequestTransfer->setSku($itemTransfer->getSku());
+            $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
+        }
+
+        return $sellableItemsRequestTransfer;
     }
 
     /**

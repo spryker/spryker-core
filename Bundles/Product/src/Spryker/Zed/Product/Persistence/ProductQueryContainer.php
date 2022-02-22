@@ -240,7 +240,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         return $this->queryProductAbstract()
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
-                ->endUse()
+            ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
     }
 

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 
 class MerchantCartValidator implements MerchantCartValidatorInterface
@@ -40,6 +41,17 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
      * @var \Spryker\Zed\Merchant\Business\MerchantFacadeInterface
      */
     protected $merchantFacade;
+
+    /**
+     * Format:
+     * [
+     *     $storeName => ['merchantReference' => MerchantTransfer],
+     *     ...
+     * ]
+     *
+     * @var array<string, array<string, \Generated\Shared\Transfer\MerchantTransfer>>
+     */
+    protected static $merchantTransfersCache;
 
     /**
      * @param \Spryker\Zed\Merchant\Business\MerchantFacadeInterface $merchantFacade
@@ -114,15 +126,51 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
-        $merchantCollectionTransfer = $this->merchantFacade->get(
-            (new MerchantCriteriaTransfer())
-                ->setMerchantReferences($merchantReferences)
-                ->setStore($quoteTransfer->getStore()),
-        );
-        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $merchantTransfers[$merchantTransfer->getMerchantReference()] = $merchantTransfer;
+        return $this->getMerchants($merchantReferences, $quoteTransfer->getStoreOrFail());
+    }
+
+    /**
+     * @param array<string> $merchantReferences
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\MerchantTransfer>
+     */
+    protected function getMerchants(array $merchantReferences, StoreTransfer $storeTransfer): array
+    {
+        $result = [];
+        $missedReferences = [];
+        $storeName = $storeTransfer->getNameOrFail();
+
+        foreach ($merchantReferences as $merchantReference) {
+            if (isset(static::$merchantTransfersCache[$storeName][$merchantReference])) {
+                $result[$merchantReference] = static::$merchantTransfersCache[$storeName][$merchantReference];
+
+                continue;
+            }
+
+            $missedReferences[] = $merchantReference;
         }
 
-        return $merchantTransfers;
+        if ($missedReferences === []) {
+            return $result;
+        }
+
+        $merchantCollectionTransfer = $this->merchantFacade->get(
+            (new MerchantCriteriaTransfer())
+                ->setMerchantReferences($missedReferences)
+                ->setStore($storeTransfer),
+        );
+
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $merchantReference = $merchantTransfer->getMerchantReferenceOrFail();
+
+            foreach ($merchantTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
+                static::$merchantTransfersCache[$storeTransfer->getNameOrFail()][$merchantReference] = $merchantTransfer;
+            }
+
+            $result[$merchantReference] = $merchantTransfer;
+        }
+
+        return $result;
     }
 }

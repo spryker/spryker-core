@@ -9,6 +9,9 @@ namespace Spryker\Zed\Product\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface} instead.
+ */
 interface ProductConcretePluginReadInterface
 {
     /**

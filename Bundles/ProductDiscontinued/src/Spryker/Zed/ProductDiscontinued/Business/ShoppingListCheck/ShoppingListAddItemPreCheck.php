@@ -63,7 +63,11 @@ class ShoppingListAddItemPreCheck implements ShoppingListAddItemPreCheckInterfac
      */
     protected function isProductDiscontinued(string $sku): bool
     {
-        return $this->productDiscontinuedRepository->checkIfProductDiscontinuedBySku($sku);
+        return in_array(
+            $sku,
+            $this->productDiscontinuedRepository->getDiscontinuedProductSkus([$sku]),
+            true,
+        );
     }
 
     /**

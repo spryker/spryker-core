@@ -607,6 +607,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Business\PriceProductFacade::expandProductConcreteTransfersWithPrices()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -616,6 +618,22 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createPriceProductConcreteReader()
             ->expandProductConcreteWithPrices($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithPrices(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createPriceProductConcreteReader()
+            ->expandProductConcreteTransfersWithPrices($productConcreteTransfers);
     }
 
     /**

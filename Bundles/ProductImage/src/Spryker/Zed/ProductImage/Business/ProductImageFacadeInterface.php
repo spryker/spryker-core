@@ -149,11 +149,25 @@ interface ProductImageFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface::expandProductConcreteTransfersWithImageSets()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     * - Expands transfers of product concrete with the product's image sets from database.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithImageSets(array $productConcreteTransfers): array;
 
     /**
      * Specification:

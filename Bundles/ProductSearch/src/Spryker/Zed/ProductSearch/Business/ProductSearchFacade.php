@@ -24,6 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchRepositoryInterface getRepository()
  */
 class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeInterface
 {
@@ -408,6 +409,8 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\ProductSearchFacade::expandProductConcreteTransfersWithIsSearchable()} instead.
+     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
@@ -418,5 +421,21 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         return $this->getFactory()
             ->createProductConcreteSearchReader()
             ->isProductConcreteSearchable($idProductConcrete, $localeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithIsSearchable(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteSearchReader()
+            ->expandProductConcreteTransfersWithIsSearchable($productConcreteTransfers);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -228,6 +229,42 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
         return $this->getFactory()
             ->createStockProductMapper()
             ->mapStockProductEntitiesToStockProductTransfers($stockProductEntities->getArrayCopy());
+    }
+
+    /**
+     * Result format:
+     * [
+     *     $idProductConcrete => [StockProductTransfer, ...],
+     *     ...,
+     * ]
+     *
+     * @param array<int> $productConcreteIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\StockProductTransfer>>
+     */
+    public function getStockTransfersGroupedByIdProductConcrete(array $productConcreteIds): array
+    {
+        $stockProductEntities = $this->getFactory()
+            ->createStockProductQuery()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->useStockQuery()
+                ->filterByIsActive(true)
+            ->endUse()
+            ->find();
+
+        $result = [];
+
+        $stockProductMapper = $this->getFactory()->createStockProductMapper();
+
+        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct $stockProductEntity */
+        foreach ($stockProductEntities as $stockProductEntity) {
+            $result[$stockProductEntity->getFkProduct()][] = $stockProductMapper->mapStockProductEntityToStockProductTransfer(
+                $stockProductEntity,
+                new StockProductTransfer(),
+            );
+        }
+
+        return $result;
     }
 
     /**

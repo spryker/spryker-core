@@ -14,11 +14,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface ProductImageTransferMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetEntityCollection
+     * @param iterable<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function mapProductImageSetCollection(ObjectCollection $productImageSetEntityCollection);
+    public function mapProductImageSetCollection(iterable $productImageSetEntityCollection);
 
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity

@@ -367,6 +367,7 @@
         <property name="filter" type="Filter"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
     </transfer>
 
     <transfer name="QueryJoin">

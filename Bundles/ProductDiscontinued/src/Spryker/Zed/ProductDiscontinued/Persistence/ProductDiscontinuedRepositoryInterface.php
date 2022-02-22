@@ -51,11 +51,11 @@ interface ProductDiscontinuedRepositoryInterface
     ): ProductDiscontinuedCollectionTransfer;
 
     /**
-     * @param string $sku
+     * @param array<string> $skus
      *
-     * @return bool
+     * @return array<string>
      */
-    public function checkIfProductDiscontinuedBySku(string $sku): bool;
+    public function getDiscontinuedProductSkus(array $skus): array;
 
     /**
      * @return array<int>

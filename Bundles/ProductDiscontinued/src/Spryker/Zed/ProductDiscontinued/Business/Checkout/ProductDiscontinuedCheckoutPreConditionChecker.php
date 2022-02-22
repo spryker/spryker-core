@@ -47,8 +47,16 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
     {
         $isPassed = true;
 
+        $skus = [];
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->isProductDiscontinued($itemTransfer)) {
+            $skus[] = $itemTransfer->getSkuOrFail();
+        }
+
+        $discontinuedProductSkus = $this->productDiscontinuedRepository->getDiscontinuedProductSkus($skus);
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!in_array($itemTransfer->getSkuOrFail(), $discontinuedProductSkus, true)) {
                 continue;
             }
 
@@ -57,16 +65,6 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
         }
 
         return $isPassed;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isProductDiscontinued(ItemTransfer $itemTransfer): bool
-    {
-        return $this->productDiscontinuedRepository->checkIfProductDiscontinuedBySku($itemTransfer->getSku());
     }
 
     /**

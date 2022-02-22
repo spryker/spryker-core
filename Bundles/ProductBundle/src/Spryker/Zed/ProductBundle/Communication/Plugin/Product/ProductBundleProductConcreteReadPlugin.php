@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductBundle\Communication\Plugin\Product\ProductBundleProductConcreteExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
@@ -30,6 +32,8 @@ class ProductBundleProductConcreteReadPlugin extends AbstractPlugin implements P
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->assignBundledProductsToProductConcrete($productConcreteTransfer);
+        $productConcreteTransfersWithBundledProducts = $this->getFacade()->expandProductConcreteTransfersWithBundledProducts([$productConcreteTransfer]);
+
+        return array_shift($productConcreteTransfersWithBundledProducts);
     }
 }

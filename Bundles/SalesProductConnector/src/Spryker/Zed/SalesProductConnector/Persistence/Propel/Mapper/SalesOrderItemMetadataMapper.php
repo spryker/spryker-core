@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ItemMetadataTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
 
@@ -43,5 +45,40 @@ class SalesOrderItemMetadataMapper
         }
 
         return $itemMetadataTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $superAttributes
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
+     */
+    public function mapItemTransferToSalesOrderItemMetadataEntity(
+        ItemTransfer $itemTransfer,
+        array $superAttributes
+    ): SpySalesOrderItemMetadata {
+        $image = $this->determineImage($itemTransfer);
+
+        $entity = new SpySalesOrderItemMetadata();
+        $entity->setSuperAttributes($this->utilEncodingService->encodeJson($superAttributes));
+        $entity->setImage($image);
+        $entity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
+
+        return $entity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string|null
+     */
+    protected function determineImage(ItemTransfer $itemTransfer): ?string
+    {
+        $images = $itemTransfer->getImages();
+        if (count($images) === 0) {
+            return null;
+        }
+
+        return $images[0]->getExternalUrlSmall();
     }
 }

@@ -96,7 +96,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
             return;
         }
 
-        $this->updateFkShipmentForOrderItems($saveOrderTransfer->getOrderItems(), $shipmentTransfer);
+        $this->entityManager->updateFkShipmentForOrderItems($saveOrderTransfer->getOrderItems(), $shipmentTransfer);
     }
 
     /**

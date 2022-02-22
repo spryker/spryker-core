@@ -17,8 +17,10 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use ReflectionProperty;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use Symfony\Component\Process\Process;
@@ -119,6 +121,8 @@ class OmsHelper extends Module
      */
     public function configureTestStateMachine(array $activeProcesses, ?string $xmlFolder = null): void
     {
+        $this->clearPersistenceManagerCache();
+
         if (!$xmlFolder) {
             $xmlFolder = realpath(__DIR__ . '/../../../../../_data/state-machine/');
         }
@@ -198,5 +202,18 @@ class OmsHelper extends Module
         });
 
         return $omsEventTimeout;
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearPersistenceManagerCache(): void
+    {
+        $stateCacheProperty = new ReflectionProperty(PersistenceManager::class, 'stateCache');
+        $stateCacheProperty->setAccessible(true);
+        $stateCacheProperty->setValue([]);
+        $processCacheProperty = new ReflectionProperty(PersistenceManager::class, 'processCache');
+        $processCacheProperty->setAccessible(true);
+        $processCacheProperty->setValue([]);
     }
 }

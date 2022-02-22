@@ -181,4 +181,17 @@ interface ProductRepositoryInterface
      * @return array<int, string>
      */
     public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array;
+
+    /**
+     * Result format:
+     * [
+     *     $idProduct => [LocalizedAttributesTransfer, ...],
+     *     ...
+     * ]
+     *
+     * @param array<int> $productIds
+     *
+     * @return array<int, array<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>>
+     */
+    public function getLocalizedAttributesGroupedByIdProduct(array $productIds): array;
 }

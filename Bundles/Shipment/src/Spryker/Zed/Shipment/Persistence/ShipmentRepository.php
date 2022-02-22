@@ -48,6 +48,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         ShipmentMethodTransfer $methodTransfer,
         string $countryIso2Code
     ): ?TaxSetTransfer {
+        /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null $shipmentMethodEntity */
         $shipmentMethodEntity = $this->getFactory()
             ->createShipmentMethodQuery()
             ->filterByIdShipmentMethod($methodTransfer->getIdShipmentMethod())

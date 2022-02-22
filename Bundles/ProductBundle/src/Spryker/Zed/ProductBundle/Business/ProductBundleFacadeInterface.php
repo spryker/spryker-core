@@ -286,11 +286,26 @@ interface ProductBundleFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface::expandProductConcreteTransfersWithBundledProducts()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     * - Expands transfers of product concrete with bundled products.
+     * - Returns modified ProductConcreteTransfers.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithBundledProducts(array $productConcreteTransfers): array;
 
     /**
      * Specification:

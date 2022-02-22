@@ -10,6 +10,9 @@ namespace Spryker\Zed\Product\Business\Product\Plugin;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteReadObserverInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductConcreteReadObserverPluginManager implements ProductConcreteReadObserverInterface
 {
     /**

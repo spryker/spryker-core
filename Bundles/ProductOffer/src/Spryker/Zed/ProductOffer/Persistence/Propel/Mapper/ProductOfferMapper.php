@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductOfferMapper
 {
@@ -64,11 +63,11 @@ class ProductOfferMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore[] $productOfferStoreEntities
+     * @param iterable<\Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore> $productOfferStoreEntities
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function mapProductOfferStoreEntitiesToStoreTransfers(ObjectCollection $productOfferStoreEntities): array
+    public function mapProductOfferStoreEntitiesToStoreTransfers(iterable $productOfferStoreEntities): array
     {
         $storeTransfers = [];
         foreach ($productOfferStoreEntities as $productOfferStoreEntity) {

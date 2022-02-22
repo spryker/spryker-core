@@ -32,4 +32,17 @@ interface ProductImageRepositoryInterface
      * @return array<int>
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
+
+    /**
+     * Result formats:
+     * [
+     *     $idProduct => [ProductImageSet, ...],
+     *     ...,
+     * ]
+     *
+     * @param array<int> $productIds
+     *
+     * @return array<array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet>>
+     */
+    public function getProductImageSetsGroupedByIdProduct(array $productIds): array;
 }

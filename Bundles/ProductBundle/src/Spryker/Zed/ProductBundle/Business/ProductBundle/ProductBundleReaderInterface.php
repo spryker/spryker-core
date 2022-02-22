@@ -19,11 +19,20 @@ interface ProductBundleReaderInterface
     public function findBundledProductsByIdProductConcrete($idProductConcrete);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface::expandProductConcreteTransfersWithBundledProducts()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithBundledProducts(array $productConcreteTransfers): array;
 
     /**
      * @param array<string> $skus

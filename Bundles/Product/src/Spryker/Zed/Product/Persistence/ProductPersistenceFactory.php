@@ -97,7 +97,10 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createProductMapper(): ProductMapperInterface
     {
-        return new ProductMapper($this->getUtilEncodingService());
+        return new ProductMapper(
+            $this->getUtilEncodingService(),
+            $this->createLocalizedAttributesMapper(),
+        );
     }
 
     /**

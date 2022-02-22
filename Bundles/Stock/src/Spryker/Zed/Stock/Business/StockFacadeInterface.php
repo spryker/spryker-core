@@ -210,11 +210,26 @@ interface StockFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Stock\Business\StockFacadeInterface::expandProductConcreteTransfersWithStocks()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * Specification:
+     *  - Expands transfers of product concrete with stock information from the database.
+     *  - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithStocks(array $productConcreteTransfers): array;
 
     /**
      * Specification:

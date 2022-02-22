@@ -7,16 +7,13 @@
 
 namespace Spryker\Zed\Product\Persistence\Mapper;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
@@ -30,11 +27,20 @@ class ProductMapper implements ProductMapperInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
+     * @var \Spryker\Zed\Product\Persistence\Mapper\LocalizedAttributesMapper
      */
-    public function __construct(ProductToUtilEncodingInterface $utilEncodingService)
-    {
+    protected $localizedAttributeMapper;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\Product\Persistence\Mapper\LocalizedAttributesMapper $localizedAttributeMapper
+     */
+    public function __construct(
+        ProductToUtilEncodingInterface $utilEncodingService,
+        LocalizedAttributesMapper $localizedAttributeMapper
+    ) {
         $this->utilEncodingService = $utilEncodingService;
+        $this->localizedAttributeMapper = $localizedAttributeMapper;
     }
 
     /**
@@ -59,7 +65,11 @@ class ProductMapper implements ProductMapperInterface
 
         foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
             $productConcreteTransfer->addLocalizedAttributes(
-                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer()),
+                $this->localizedAttributeMapper
+                    ->mapProductLocalizedAttributesEntityToTransfer(
+                        $productLocalizedAttributesEntity,
+                        new LocalizedAttributesTransfer(),
+                    ),
             );
         }
 
@@ -87,42 +97,6 @@ class ProductMapper implements ProductMapperInterface
         $productAbstractTransfer->setSku($productAbstractEntity->getSku());
 
         return $productAbstractTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes $productLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
-    protected function mapProductLocalizedAttributesEntityToTransfer(
-        SpyProductLocalizedAttributes $productLocalizedAttributesEntity,
-        LocalizedAttributesTransfer $localizedAttributesTransfer
-    ): LocalizedAttributesTransfer {
-        $localizedAttributesTransfer->fromArray(
-            $productLocalizedAttributesEntity->toArray(),
-            true,
-        );
-
-        $localizedAttributesTransfer->setLocale(
-            $this->mapLocaleEntityToTransfer($productLocalizedAttributesEntity->getLocale(), new LocaleTransfer()),
-        );
-
-        return $localizedAttributesTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function mapLocaleEntityToTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
-    {
-        return $localeTransfer->fromArray(
-            $localeEntity->toArray(),
-            true,
-        );
     }
 
     /**
@@ -163,7 +137,10 @@ class ProductMapper implements ProductMapperInterface
 
         foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
             $productConcreteTransfer->addLocalizedAttributes(
-                $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer()),
+                $this->localizedAttributeMapper->mapProductLocalizedAttributesEntityToTransfer(
+                    $productLocalizedAttributesEntity,
+                    new LocalizedAttributesTransfer(),
+                ),
             );
         }
 

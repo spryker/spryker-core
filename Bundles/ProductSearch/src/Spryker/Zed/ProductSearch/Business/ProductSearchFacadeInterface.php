@@ -332,10 +332,25 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface::expandProductConcreteTransfersWithIsSearchable()} instead.
+     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
     public function isProductConcreteSearchable($idProductConcrete, ?LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Expands transfers of product concrete with isSearchable.
+     * - Sets true if the concrete product is marked as searchable in the given locale.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithIsSearchable(array $productConcreteTransfers): array;
 }

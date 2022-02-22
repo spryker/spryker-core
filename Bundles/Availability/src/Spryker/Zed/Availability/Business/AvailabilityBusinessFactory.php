@@ -165,6 +165,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->createSellableModel(),
             $this->getConfig(),
             $this->getCartItemQuantityCounterStrategyPlugins(),
+            $this->getStoreFacade(),
         );
     }
 

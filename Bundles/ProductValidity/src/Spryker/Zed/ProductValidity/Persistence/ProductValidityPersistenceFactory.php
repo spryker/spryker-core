@@ -9,9 +9,12 @@ namespace Spryker\Zed\ProductValidity\Persistence;
 
 use Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductValidity\Persistence\Mapper\ProductValidityMapper;
 
 /**
  * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductValidity\ProductValidityConfig getConfig()
  */
 class ProductValidityPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -21,5 +24,13 @@ class ProductValidityPersistenceFactory extends AbstractPersistenceFactory
     public function createProductValidityQuery(): SpyProductValidityQuery
     {
         return SpyProductValidityQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductValidity\Persistence\Mapper\ProductValidityMapper
+     */
+    public function createProductValidityMapper(): ProductValidityMapper
+    {
+        return new ProductValidityMapper();
     }
 }

@@ -14,6 +14,7 @@ use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
+use Spryker\Zed\ProductImage\Persistence\ProductImageRepository;
 
 /**
  * Auto-generated group annotations
@@ -70,6 +71,7 @@ class ProductImageTransferMapperTest extends Unit
             $this->queryContainer,
             $this->transferGenerator,
             new ProductImageToLocaleBridge($this->localeFacade),
+            new ProductImageRepository(),
         );
     }
 

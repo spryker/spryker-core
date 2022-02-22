@@ -186,6 +186,8 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductImage\Business\ProductImageFacade::expandProductConcreteTransfersWithImageSets()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -195,6 +197,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->expandProductConcreteWithImageSets($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithImageSets(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->expandProductConcreteTransfersWithImageSets($productConcreteTransfers);
     }
 
     /**

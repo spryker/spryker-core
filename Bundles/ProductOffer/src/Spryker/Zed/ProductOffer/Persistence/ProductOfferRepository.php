@@ -45,13 +45,23 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteria->getPagination());
 
+        $productOfferIds = [];
+
+        foreach ($productOfferEntities as $productOfferEntity) {
+            $productOfferIds[] = $productOfferEntity->getIdProductOffer();
+        }
+
+        $productOfferStoreEntities = $this->getProductOfferStoreEntitiesGroupedByIdProductOffer($productOfferIds);
+
         foreach ($productOfferEntities as $productOfferEntity) {
             $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
                 $productOfferEntity,
                 new ProductOfferTransfer(),
             );
             $productOfferTransfer->setStores(new ArrayObject(
-                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores()),
+                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers(
+                    $productOfferStoreEntities[$productOfferEntity->getIdProductOffer()] ?? [],
+                ),
             ));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
@@ -222,5 +232,26 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         return $productOfferQuery
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT_CONCRETE);
+    }
+
+    /**
+     * @param array<int, int> $productOfferIds
+     *
+     * @return array<int, array<int, \Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore>>
+     */
+    protected function getProductOfferStoreEntitiesGroupedByIdProductOffer(array $productOfferIds): array
+    {
+        $result = [];
+
+        $productOfferStoreEntities = $this->getFactory()->createProductOfferStoreQuery()
+            ->filterByFkProductOffer_In($productOfferIds)
+            ->find();
+
+        /** @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore $productOfferStoreEntity */
+        foreach ($productOfferStoreEntities as $productOfferStoreEntity) {
+            $result[$productOfferStoreEntity->getFkProductOffer()][] = $productOfferStoreEntity;
+        }
+
+        return $result;
     }
 }

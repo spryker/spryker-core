@@ -470,11 +470,7 @@ class OrderHydrator implements OrderHydratorInterface
         $stateTransfer->fromArray($orderItemEntity->getState()->toArray(), true);
         $stateTransfer->setIdSalesOrder($orderItemEntity->getIdSalesOrderItem());
 
-        $lastStateHistory = $this->queryContainer
-            ->queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc(
-                $orderItemEntity->getIdSalesOrderItem(),
-                $orderItemEntity->getFkOmsOrderItemState(),
-            )->findOne();
+        $lastStateHistory = $orderItemEntity->getStateHistories()->getFirst();
 
         if ($lastStateHistory) {
             $stateTransfer->setCreatedAt($lastStateHistory->getCreatedAt());

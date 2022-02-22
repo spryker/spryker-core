@@ -128,11 +128,20 @@ interface StockProductReaderInterface
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer): array;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface::expandProductConcreteTransfersWithStocks()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithStocks(array $productConcreteTransfers): array;
 
     /**
      * @param int $idStockType

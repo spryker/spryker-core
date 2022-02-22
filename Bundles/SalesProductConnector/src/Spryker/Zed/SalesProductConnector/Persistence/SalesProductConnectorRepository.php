@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesProductConnector\Persistence;
 use DateInterval;
 use DateTimeImmutable;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -140,5 +141,91 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
             SpySalesOrderItemTableMap::COL_CREATED_AT,
             $dateFrom->format('Y-m-d H:i:s'),
         ));
+    }
+
+    /**
+     * Result format:
+     * [
+     *     $idSalesOrderItem => ['attribute', ...],
+     *     ...
+     * ]
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array<int, array>
+     */
+    public function getSupperAttributesGroupedByIdItem(QuoteTransfer $quoteTransfer): array
+    {
+        $supperAttributesGroupedByIdItem = [];
+
+        $allConcreteAttributes = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $allConcreteAttributes = array_merge(
+                $allConcreteAttributes,
+                $itemTransfer->getConcreteAttributes(),
+            );
+        }
+
+        $matchingSuperAttributesIndexedByKeys = $this->getMatchingSuperAttributesIndexedByKeys(array_keys($allConcreteAttributes));
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $filteredSuperAttributes = [];
+
+            foreach ($itemTransfer->getConcreteAttributes() as $key => $value) {
+                $filteredSuperAttributes[$key] = $matchingSuperAttributesIndexedByKeys[$key];
+            }
+
+            $supperAttributesGroupedByIdItem[$itemTransfer->getIdSalesOrderItemOrFail()] = $filteredSuperAttributes;
+        }
+
+        return $supperAttributesGroupedByIdItem;
+    }
+
+    /**
+     * @param array $concreteAttributes
+     * @param array<\Orm\Zed\Product\Persistence\SpyProductAttributeKey> $matchingAttributes
+     *
+     * @return array
+     */
+    protected function filterMatchingSuperAttributes(array $concreteAttributes, array $matchingAttributes): array
+    {
+        if (count($matchingAttributes) === 0) {
+            return [];
+        }
+
+        $result = [];
+
+        foreach ($concreteAttributes as $key => $value) {
+            foreach ($matchingAttributes as $matchingAttribute) {
+                if ($matchingAttribute->getKey() === $key) {
+                    $result[$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array<string> $concreteAttributes
+     *
+     * @return array<string, array<int, \Orm\Zed\Product\Persistence\SpyProductAttributeKey>>
+     */
+    protected function getMatchingSuperAttributesIndexedByKeys(array $concreteAttributes)
+    {
+        $result = [];
+
+        $matchingAttributeEntities = $this->getFactory()
+            ->getSalesProductConnectorQueryContainer()
+            ->queryMatchingSuperAttributes($concreteAttributes)
+            ->find();
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAttributeKey $matchingAttributeEntity */
+        foreach ($matchingAttributeEntities as $matchingAttributeEntity) {
+            $result[$matchingAttributeEntity->getKey()][] = $matchingAttributeEntity;
+        }
+
+        return $result;
     }
 }

@@ -69,24 +69,24 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return bool
      */
-    protected function isMultiShipmentOrder(iterable $shipmentTransfers): bool
+    protected function isMultiShipmentOrder(array $shipmentTransfers): bool
     {
         /** @phpstan-var array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers */
         return count($shipmentTransfers) > 1;
     }
 
     /**
-     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function hydrateShipmentMethodToOrderTransfer(
-        iterable $shipmentTransfers,
+        array $shipmentTransfers,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
         $shipmentTransfers = (array)$shipmentTransfers;
@@ -114,13 +114,13 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function hydrateMultiShipmentMethodToOrderTransfer(
-        iterable $shipmentTransfers,
+        array $shipmentTransfers,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
         $salesOrderItemIdsGroupedByShipmentIds = $this->shipmentRepository
@@ -244,13 +244,13 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      * @deprecated Exists for Backward Compatibility reasons only.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
     protected function getDefaultShipmentTransferWithOrderLevelShippingAddress(
         OrderTransfer $orderTransfer,
-        iterable $shipmentTransfers
+        array $shipmentTransfers
     ): ?ShipmentTransfer {
         /** @phpstan-var array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers */
         if (count($shipmentTransfers) === 0) {

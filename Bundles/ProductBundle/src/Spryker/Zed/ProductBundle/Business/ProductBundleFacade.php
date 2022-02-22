@@ -343,6 +343,8 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductBundle\Business\ProductBundleFacade::expandProductConcreteTransfersWithBundledProducts()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -352,6 +354,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createProductBundleReader()
             ->assignBundledProductsToProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithBundledProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductBundleReader()
+            ->expandProductConcreteTransfersWithBundledProducts($productConcreteTransfers);
     }
 
     /**

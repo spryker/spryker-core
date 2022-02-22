@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductProductConcreteExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
@@ -32,6 +34,9 @@ class ConcreteProductPriceProductConcreteReadPlugin extends AbstractPlugin imple
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getFacade()->expandProductConcreteWithPrices($productConcreteTransfer);
+        /** @phpstan-var non-empty-array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfersWithPrices */
+        $productConcreteTransfersWithPrices = $this->getFacade()->expandProductConcreteTransfersWithPrices([$productConcreteTransfer]);
+
+        return array_shift($productConcreteTransfersWithPrices);
     }
 }

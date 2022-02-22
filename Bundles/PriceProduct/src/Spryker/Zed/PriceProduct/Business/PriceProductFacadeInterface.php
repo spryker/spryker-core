@@ -595,11 +595,30 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface::expandProductConcreteTransfersWithPrices()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Expands transfers of product concrete with concrete product prices for default dimension.
+     * - Reads concrete product prices from database.
+     * - Filters results by price type name when provided in criteria.
+     * - Filters results by store when provided in criteria.
+     * - Filters results by currency when provided in criteria.
+     * - Does not merge abstract concrete prices with concrete product prices.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithPrices(array $productConcreteTransfers): array;
 
     /**
      * Specification:

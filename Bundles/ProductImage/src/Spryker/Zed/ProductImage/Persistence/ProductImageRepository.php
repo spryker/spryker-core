@@ -59,7 +59,10 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         $productImageSetTransfers = [];
         foreach ($productImageSetEntities as $productImageSetEntity) {
             $productImageSetTransfer = new ProductImageSetTransfer();
-            $productImageSetTransfers[] = $mapper->mapProductImageSetEntityToProductImageSetTransfer($productImageSetEntity, $productImageSetTransfer);
+            $productImageSetTransfers[] = $mapper->mapProductImageSetEntityToProductImageSetTransfer(
+                $productImageSetEntity,
+                $productImageSetTransfer,
+            );
         }
 
         return $productImageSetTransfers;
@@ -104,6 +107,32 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         }
 
         return $indexedProductImages;
+    }
+
+    /**
+     * Result formats:
+     * [
+     *     $idProduct => [ProductImageSet, ...],
+     *     ...,
+     * ]
+     *
+     * @param array<int> $productIds
+     *
+     * @return array<array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet>>
+     */
+    public function getProductImageSetsGroupedByIdProduct(array $productIds): array
+    {
+        $productImageSetEntities = $this->getFactory()->createProductImageSetQuery()
+            ->filterByFkProduct_In($productIds)
+            ->find();
+
+        $result = [];
+
+        foreach ($productImageSetEntities as $productImageSetEntity) {
+            $result[$productImageSetEntity->getFkProduct()][] = $productImageSetEntity;
+        }
+
+        return $result;
     }
 
     /**

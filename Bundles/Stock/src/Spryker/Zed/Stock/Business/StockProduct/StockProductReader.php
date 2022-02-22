@@ -328,33 +328,45 @@ class StockProductReader implements StockProductReaderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Stock\Business\StockProduct\StockProductReader::expandProductConcreteTransfersWithStocks()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        /** @var array<\Orm\Zed\Stock\Persistence\SpyStockProduct> $stockProductCollection */
-        $stockProductCollection = $this->queryContainer
-            ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
-            ->innerJoinStock()
-            ->useStockQuery()
-            ->filterByIsActive(true)
-            ->endUse()
-            ->find();
+        $productConcreteTransfersWithStocks = $this->expandProductConcreteTransfersWithStocks([$productConcreteTransfer]);
 
-        if (!$stockProductCollection) {
-            return $productConcreteTransfer;
+        return array_shift($productConcreteTransfersWithStocks);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithStocks(array $productConcreteTransfers): array
+    {
+        $productIds = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productIds[] = $productConcreteTransfer->getIdProductConcreteOrFail();
         }
 
-        foreach ($stockProductCollection as $stockProductEntity) {
-            $stockProductTransfer = $this->transferMapper->convertStockProduct($stockProductEntity);
-            $stockProductTransfer->setSku($productConcreteTransfer->getSku());
+        $stockTransfersGroupedByIdProductConcrete = $this->stockRepository->getStockTransfersGroupedByIdProductConcrete($productIds);
 
-            $productConcreteTransfer->addStock($stockProductTransfer);
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $stockProductTransfers = $stockTransfersGroupedByIdProductConcrete[$productConcreteTransfer->getIdProductConcreteOrFail()] ?? [];
+
+            foreach ($stockProductTransfers as $stockProductTransfer) {
+                $stockProductTransfer->setSku($productConcreteTransfer->getSku());
+
+                $productConcreteTransfer->addStock($stockProductTransfer);
+            }
         }
 
-        return $productConcreteTransfer;
+        return $productConcreteTransfers;
     }
 
     /**

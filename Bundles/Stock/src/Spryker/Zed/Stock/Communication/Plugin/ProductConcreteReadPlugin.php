@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Stock\Communication\Plugin\Product\StockProductConcreteExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
  * @method \Spryker\Zed\Stock\Communication\StockCommunicationFactory getFactory()
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
@@ -30,6 +32,8 @@ class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcret
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->expandProductConcreteWithStocks($productConcreteTransfer);
+        $productConcreteTransfersWithStocks = $this->getFacade()->expandProductConcreteTransfersWithStocks([$productConcreteTransfer]);
+
+        return array_shift($productConcreteTransfersWithStocks);
     }
 }

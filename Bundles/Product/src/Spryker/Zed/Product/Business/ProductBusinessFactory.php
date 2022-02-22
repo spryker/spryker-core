@@ -115,6 +115,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createAttributeEncoder(),
             $this->createProductTransferMapper(),
             $this->getRepository(),
+            $this->getProductConcreteExpanderPlugins(),
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -412,6 +413,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
+     */
+    public function getProductConcreteExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_EXPANDER);
+    }
+
+    /**
      * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductBusinessFactory::getProductAbstractExpanderPlugins()} instead.
      *
      * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface>
@@ -462,6 +471,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductBusinessFactory::getProductConcreteExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface>
      */
     protected function getProductConcreteReadPlugins()

@@ -112,7 +112,7 @@ class PriceProductMapper
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity */
         $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
             ->getSpyProductAbstract();
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct[] $concreateProductEntities */
+        /** @var array<\Orm\Zed\Product\Persistence\SpyProduct> $concreateProductEntities */
         $concreateProductEntities = $abstractProductEntity->getSpyProducts();
 
         foreach ($concreateProductEntities as $concreateProductEntity) {

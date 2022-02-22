@@ -7,4 +7,10 @@
         <property name="validFrom" type="string"/>
     </transfer>
 
+    <transfer name="ProductValidity">
+        <property name="idProductConcrete" type="int"/>
+        <property name="validTo" type="string"/>
+        <property name="validFrom" type="string"/>
+    </transfer>
+
 </transfers>

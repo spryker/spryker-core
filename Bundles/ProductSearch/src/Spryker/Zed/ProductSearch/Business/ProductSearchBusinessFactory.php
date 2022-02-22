@@ -32,6 +32,7 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
@@ -284,6 +285,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteSearchReader(
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
+            $this->getRepository(),
         );
     }
 

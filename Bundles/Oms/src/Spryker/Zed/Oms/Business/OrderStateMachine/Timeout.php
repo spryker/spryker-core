@@ -23,9 +23,12 @@ use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 class Timeout implements TimeoutInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -100,29 +103,10 @@ class Timeout implements TimeoutInterface
      */
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime)
     {
-        $targetStateEntity = $orderItem->getState();
+        $newOmsEventTimeoutEntities = $this->getNewOmsEventTimeoutEntities($orderItem, $process, $currentTime);
 
-        $targetState = $this->getStateFromProcess($targetStateEntity->getName(), $process);
-
-        if ($targetState->hasTimeoutEvent()) {
-            $events = $targetState->getTimeoutEvents();
-
-            $handledEvents = [];
-            foreach ($events as $event) {
-                if (in_array($event->getName(), $handledEvents)) {
-                    continue;
-                }
-
-                $handledEvents[] = $event->getName();
-                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event, $orderItem);
-
-                (new SpyOmsEventTimeout())
-                    ->setTimeout($timeoutDate)
-                    ->setOrderItem($orderItem)
-                    ->setState($targetStateEntity)
-                    ->setEvent($event->getName())
-                    ->save();
-            }
+        foreach ($newOmsEventTimeoutEntities as $newOmsEventTimeoutEntity) {
+            $newOmsEventTimeoutEntity->save();
         }
     }
 
@@ -142,6 +126,64 @@ class Timeout implements TimeoutInterface
                 ->filterByOrderItem($orderItem)
                 ->delete();
         }
+    }
+
+    /**
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param \DateTime $currentTime
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
+     *
+     * @return void
+     */
+    public function setNewTimeouts(array $orderItems, DateTime $currentTime, array $processes): void
+    {
+        $newOmsEventTimeoutEntities = [];
+
+        foreach ($orderItems as $orderItem) {
+            $process = $processes[$orderItem->getProcess()->getName()];
+
+            $newOmsEventTimeoutEntities = array_merge(
+                $newOmsEventTimeoutEntities,
+                $this->getNewOmsEventTimeoutEntities($orderItem, $process, $currentTime),
+            );
+        }
+
+        if ($newOmsEventTimeoutEntities !== []) {
+            foreach ($newOmsEventTimeoutEntities as $newOmsEventTimeoutEntity) {
+                $this->persist($newOmsEventTimeoutEntity);
+            }
+
+            $this->commitIdentical();
+        }
+    }
+
+    /**
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
+     * @param array $sourceStateBuffer
+     *
+     * @return void
+     */
+    public function dropOldTimeouts(array $orderItems, array $processes, array $sourceStateBuffer): void
+    {
+        $orderItemIdsForRemoving = [];
+
+        foreach ($orderItems as $orderItem) {
+            $process = $processes[$orderItem->getProcess()->getName()];
+
+            $sourceStateId = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
+            $targetStateId = $orderItem->getState()->getName();
+            $targetState = $this->getStateFromProcess($targetStateId, $process);
+            $sourceState = $this->getStateFromProcess($sourceStateId, $process);
+
+            if ($targetState->hasTimeoutEvent() && $sourceState->hasTimeoutEvent()) {
+                $orderItemIdsForRemoving[] = $orderItem->getIdSalesOrderItem();
+            }
+        }
+
+        SpyOmsEventTimeoutQuery::create()
+            ->filterByFkSalesOrderItem_In($orderItemIdsForRemoving)
+            ->delete();
     }
 
     /**
@@ -293,5 +335,46 @@ class Timeout implements TimeoutInterface
         $timeoutProcessorTimeoutResponseTransfer = $timeoutProcessor->calculateTimeout($timeoutProcessorTimeoutRequestTransfer);
 
         return (new DateTime())->setTimestamp($timeoutProcessorTimeoutResponseTransfer->getTimeoutTimestamp());
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \DateTime $currentTime
+     *
+     * @return array<\Orm\Zed\Oms\Persistence\SpyOmsEventTimeout>
+     */
+    protected function getNewOmsEventTimeoutEntities(
+        SpySalesOrderItem $orderItem,
+        ProcessInterface $process,
+        DateTime $currentTime
+    ): array {
+        $targetStateEntity = $orderItem->getState();
+
+        $targetState = $this->getStateFromProcess($targetStateEntity->getName(), $process);
+
+        $omsEventTimeoutEntities = [];
+
+        if ($targetState->hasTimeoutEvent()) {
+            $events = $targetState->getTimeoutEvents();
+
+            $handledEvents = [];
+            foreach ($events as $event) {
+                if (in_array($event->getName(), $handledEvents)) {
+                    continue;
+                }
+
+                $handledEvents[] = $event->getName();
+                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event, $orderItem);
+
+                $omsEventTimeoutEntities[] = (new SpyOmsEventTimeout())
+                    ->setTimeout($timeoutDate)
+                    ->setOrderItem($orderItem)
+                    ->setState($targetStateEntity)
+                    ->setEvent($event->getName());
+            }
+        }
+
+        return $omsEventTimeoutEntities;
     }
 }

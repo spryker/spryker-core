@@ -100,4 +100,17 @@ interface StockRepositoryInterface
      * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByProductConcreteSku(string $concreteSku): array;
+
+    /**
+     * Result format:
+     * [
+     *     $idProductConcrete => [StockProductTransfer, ...],
+     *     ...,
+     * ]
+     *
+     * @param array<int> $productConcreteIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\StockProductTransfer>>
+     */
+    public function getStockTransfersGroupedByIdProductConcrete(array $productConcreteIds): array;
 }

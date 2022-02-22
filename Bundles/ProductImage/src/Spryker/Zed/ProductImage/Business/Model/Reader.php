@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface;
 use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface;
 use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
+use Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface;
 
 class Reader implements ReaderInterface
 {
@@ -32,18 +33,26 @@ class Reader implements ReaderInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface
+     */
+    protected $productImageRepository;
+
+    /**
      * @param \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface $productImageContainer
      * @param \Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface $productImageRepository
      */
     public function __construct(
         ProductImageQueryContainerInterface $productImageContainer,
         ProductImageTransferMapperInterface $transferMapper,
-        ProductImageToLocaleInterface $localeFacade
+        ProductImageToLocaleInterface $localeFacade,
+        ProductImageRepositoryInterface $productImageRepository
     ) {
         $this->productImageContainer = $productImageContainer;
         $this->transferMapper = $transferMapper;
         $this->localeFacade = $localeFacade;
+        $this->productImageRepository = $productImageRepository;
     }
 
     /**
@@ -136,22 +145,46 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductImage\Business\Model\Reader::expandProductConcreteTransfersWithImageSets()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productImageSetCollection = $this->getProductImagesSetCollectionByProductId(
-            $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete(),
-        );
+        $productConcreteTransfersWithImageSets = $this->expandProductConcreteTransfersWithImageSets([$productConcreteTransfer]);
 
-        if (!$productImageSetCollection) {
-            return $productConcreteTransfer;
+        return array_shift($productConcreteTransfersWithImageSets);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithImageSets(array $productConcreteTransfers): array
+    {
+        $productIds = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productIds[] = $productConcreteTransfer->getIdProductConcreteOrFail();
         }
 
-        $productConcreteTransfer->setImageSets(new ArrayObject($productImageSetCollection));
+        $productImageSetsGroupedByIdProduct = $this->productImageRepository->getProductImageSetsGroupedByIdProduct($productIds);
 
-        return $productConcreteTransfer;
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productImageSetEntities = $productImageSetsGroupedByIdProduct[$productConcreteTransfer->getIdProductConcreteOrFail()] ?? null;
+
+            if ($productImageSetEntities !== null) {
+                $productConcreteTransfer->setImageSets(
+                    new ArrayObject(
+                        $this->transferMapper->mapProductImageSetCollection($productImageSetEntities),
+                    ),
+                );
+            }
+        }
+
+        return $productConcreteTransfers;
     }
 }

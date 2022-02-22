@@ -101,7 +101,7 @@ class SkuGenerator implements SkuGeneratorInterface
             $sku = iconv('UTF-8', 'ASCII//TRANSLIT', $sku);
         }
 
-        $sku = preg_replace("/[^a-zA-Z0-9\.\-\_]/", '', trim($sku));
+        $sku = preg_replace("/[^a-zA-Z0-9\.\-\_]/", '', trim((string)$sku));
         $sku = preg_replace('/\s+/', '-', $sku);
         $sku = preg_replace('/(\-)\1+/', '$1', $sku);
 

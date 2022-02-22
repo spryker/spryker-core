@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -285,10 +284,28 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems)
     {
+        $salesOrderItemIds = [];
+
         foreach ($salesOrderItems as $orderItemEntity) {
-            $criteria = new Criteria();
-            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
-            $orderItemEntity->getStateHistoriesJoinState($criteria);
+            $salesOrderItemIds[] = $orderItemEntity->getIdSalesOrderItem();
+        }
+
+        $orderItemStateHistoryEntities = $this->getFactory()->createOmsOrderItemStateHistoryQuery()
+            ->joinWithState()
+            ->useOrderItemQuery()
+                ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->endUse()
+            ->find();
+
+        $orderItemStateHistoryEntitiesGroupedByIdSalesOrderItem = [];
+
+        foreach ($orderItemStateHistoryEntities as $orderItemStateHistoryEntity) {
+            $orderItemStateHistoryEntitiesGroupedByIdSalesOrderItem[$orderItemStateHistoryEntity->getFkSalesOrderItem()][] = $orderItemStateHistoryEntity;
+        }
+
+        foreach ($salesOrderItems as $orderItemEntity) {
+            $orderItemStateHistoryEntities = $orderItemStateHistoryEntitiesGroupedByIdSalesOrderItem[$orderItemEntity->getIdSalesOrderItem()] ?? [];
+            $orderItemEntity->setStateHistories(new ObjectCollection($orderItemStateHistoryEntities));
             $orderItemEntity->resetPartialStateHistories(false);
         }
     }

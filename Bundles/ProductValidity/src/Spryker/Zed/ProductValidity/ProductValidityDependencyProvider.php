@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductValidity\ProductValidityConfig getConfig()
+ */
 class ProductValidityDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

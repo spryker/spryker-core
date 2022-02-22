@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductBundleTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -186,5 +188,42 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ])
             ->find()
             ->toArray(ItemTransfer::SKU);
+    }
+
+    /**
+     * Result format:
+     * [
+     *     $idProductConcrete => ProductBundleTransfer,
+     *     ...,
+     * ]
+     *
+     * @param array<int> $productConcreteIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductBundleTransfer>
+     */
+    public function getProductBundleTransfersIndexedByIdProductConcrete(array $productConcreteIds): array
+    {
+        $productBundlesCollection = $this->getFactory()
+            ->createProductBundleQuery()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->joinSpyProductRelatedByFkProduct()
+            ->find();
+
+        $productBundleEntitiesIndexedByIdProduct = [];
+
+        foreach ($productBundlesCollection as $productBundleEntity) {
+            $productBundleEntitiesIndexedByIdProduct[$productBundleEntity->getFkProduct()][] = $productBundleEntity;
+        }
+
+        $productBundleMapper = $this->getFactory()->createProductBundleMapper();
+
+        $result = [];
+        foreach ($productBundleEntitiesIndexedByIdProduct as $idProductConcrete => $productBundleEntities) {
+            $productForBundleTransfers = $productBundleMapper->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities);
+            $result[$idProductConcrete] = (new ProductBundleTransfer())
+                ->setBundledProducts(new ArrayObject($productForBundleTransfers));
+        }
+
+        return $result;
     }
 }

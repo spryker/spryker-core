@@ -12,8 +12,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductValidity\Communication\Plugin\Product\ProductValidityProductConcreteExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductValidity\ProductValidityConfig getConfig()
  */
 class ProductValidityReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
@@ -28,7 +31,10 @@ class ProductValidityReadPlugin extends AbstractPlugin implements ProductConcret
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getFacade()
-            ->hydrateProductConcrete($productConcreteTransfer);
+        /** @phpstan-var non-empty-array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfersWithValidity */
+        $productConcreteTransfersWithValidity = $this->getFacade()
+            ->expandProductConcreteTransfersWithValidity([$productConcreteTransfer]);
+
+        return array_shift($productConcreteTransfersWithValidity);
     }
 }

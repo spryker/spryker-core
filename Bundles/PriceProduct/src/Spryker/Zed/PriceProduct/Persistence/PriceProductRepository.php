@@ -86,6 +86,25 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @param array<int> $productConcreteIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     */
+    public function getProductConcretePricesByIdsAndCriteria(
+        array $productConcreteIds,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ObjectCollection {
+        return $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
+            ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
+            ->addJoinCondition(
+                static::PRICE_PRODUCT_RELATION_NAME,
+                SpyPriceProductTableMap::COL_FK_PRODUCT . ' IN ?',
+                $productConcreteIds,
+            )->find();
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *

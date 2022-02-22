@@ -154,6 +154,7 @@ class SearchPreferencesTable extends AbstractTable
             ->productSearchQueryContainer
             ->querySearchPreferencesTable();
 
+        /** @var array<\Orm\Zed\Product\Persistence\SpyProductAttributeKey> $productAttributeKey */
         $productAttributeKey = $this->runQuery($query, $config, true);
 
         /** @phpstan-var array<\Orm\Zed\Product\Persistence\SpyProductAttributeKey> */

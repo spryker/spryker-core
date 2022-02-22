@@ -32,6 +32,8 @@ interface ShipmentEntityManagerInterface
     ): ShipmentTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentEntityManager::updateFkShipmentForOrderItems()} instead.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
@@ -97,4 +99,12 @@ interface ShipmentEntityManagerInterface
      * @return void
      */
     public function addShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
+
+    /**
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return void
+     */
+    public function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void;
 }

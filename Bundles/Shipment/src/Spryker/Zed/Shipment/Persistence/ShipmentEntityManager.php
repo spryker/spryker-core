@@ -24,6 +24,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEntityManagerInterface
 {
     /**
+     * @var string
+     */
+    protected const COL_FK_SALES_SHIPMENT = 'FkSalesShipment';
+
+    /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer|null $expenseTransfer
@@ -65,6 +70,8 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentEntityManager::updateFkShipmentForOrderItems()} instead.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
@@ -80,6 +87,30 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
         $orderItemEntity->setFkSalesShipment($shipmentTransfer->getIdSalesShipment());
 
         $orderItemEntity->save();
+    }
+
+    /**
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return void
+     */
+    public function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void
+    {
+        $salesOrderItemIds = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $salesOrderItemIds[] = $itemTransfer->getIdSalesOrderItemOrFail();
+        }
+
+        if ($salesOrderItemIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem_In($salesOrderItemIds)
+            ->update([static::COL_FK_SALES_SHIPMENT => $shipmentTransfer->getIdSalesShipmentOrFail()]);
     }
 
     /**

@@ -48,7 +48,7 @@ class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         foreach ($itemTransfers as $itemTransfer) {
             foreach ($this->orderItemsTableExpanderPlugins as $orderItemsTableExpanderPlugin) {
-                $columnCellsContentGroupedByIdItem[$itemTransfer->getIdSalesOrderItem()][] = $orderItemsTableExpanderPlugin->getColumnCellContent($itemTransfer);
+                $columnCellsContentGroupedByIdItem[$itemTransfer->getIdSalesOrderItemOrFail()][] = $orderItemsTableExpanderPlugin->getColumnCellContent($itemTransfer);
             }
         }
 

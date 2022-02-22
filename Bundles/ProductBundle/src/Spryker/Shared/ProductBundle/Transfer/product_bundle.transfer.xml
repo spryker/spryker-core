@@ -187,6 +187,7 @@
     <transfer name="ProductConcreteAvailability">
         <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Currency">
@@ -215,6 +216,15 @@
 
     <transfer name="ReservationRequest">
         <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAvailabilityCriteria">
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
+    </transfer>
+
+    <transfer name="ProductConcreteAvailabilityCollection">
+        <property name="productConcreteAvailabilities" type="ProductConcreteAvailability[]" singular="productConcreteAvailability"/>
     </transfer>
 
 </transfers>

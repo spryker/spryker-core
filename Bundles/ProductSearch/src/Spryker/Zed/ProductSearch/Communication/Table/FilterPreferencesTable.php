@@ -129,6 +129,7 @@ class FilterPreferencesTable extends AbstractTable
             ->queryFilterPreferencesTable()
             ->withColumn(SpyProductAttributeKeyTableMap::COL_KEY, static::COL_NAME);
 
+        /** @var array<\Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute> $productAttributeKey */
         $productAttributeKey = $this->runQuery($query, $config, true);
 
         /** @phpstan-var array<\Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute> */

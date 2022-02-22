@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
@@ -75,6 +75,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     protected $productRepository;
 
     /**
+     * @var array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
+     */
+    protected $productConcreteExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -83,6 +88,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
      * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
+     * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface> $productConcreteExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -92,7 +98,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         ProductConcreteAssertionInterface $productConcreteAssertion,
         AttributeEncoderInterface $attributeEncoder,
         ProductTransferMapperInterface $productTransferMapper,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        array $productConcreteExpanderPlugins
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -102,6 +109,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
         $this->productRepository = $productRepository;
+        $this->productConcreteExpanderPlugins = $productConcreteExpanderPlugins;
     }
 
     /**
@@ -234,7 +242,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()} instead.
+     * @deprecated Use
+     *     {@link \Spryker\Zed\Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()}
+     *     instead.
      *
      * @param string $productConcreteSku
      *
@@ -274,7 +284,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    public function getConcreteProductsByAbstractProductId($idProductAbstract): array
     {
         $entityCollection = $this->productQueryContainer
             ->queryProduct()
@@ -282,14 +292,27 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->joinSpyProductAbstract()
             ->find();
 
-        $transferCollection = $this->productTransferMapper->convertProductCollection($entityCollection);
+        $productTransfers = $this->productTransferMapper->convertProductCollection($entityCollection);
 
-        $numberOfProducts = count($transferCollection);
-        for ($a = 0; $a < $numberOfProducts; $a++) {
-            $transferCollection[$a] = $this->loadProductData($transferCollection[$a]);
+        return $this->loadProductData($productTransfers);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function loadProductData(array $productTransfers): array
+    {
+        $productTransfers = $this->loadLocalizedAttributes($productTransfers);
+
+        foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
+            $productConcreteExpanderPlugin->expand($productTransfers);
         }
 
-        return $transferCollection;
+        $productTransfers = $this->triggerProductReadEvents($productTransfers);
+
+        return $productTransfers;
     }
 
     /**
@@ -494,9 +517,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         $productTransfer = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
-        $productTransfer = $this->loadProductData($productTransfer);
 
-        return $productTransfer;
+        return $this->loadProductData([$productTransfer])[0];
     }
 
     /**
@@ -521,56 +543,36 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function loadProductData(ProductConcreteTransfer $productTransfer)
-    {
-        $this->loadLocalizedAttributes($productTransfer);
-
-        $this->notifyReadObservers($productTransfer);
-
-        return $productTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function loadRawProductData(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
     {
-        $this->loadLocalizedAttributes($productTransfer);
+        $productTransfer = $this->loadLocalizedAttributes([$productTransfer])[0];
         $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productTransfer);
 
         return $productTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    protected function loadLocalizedAttributes(ProductConcreteTransfer $productTransfer)
+    protected function loadLocalizedAttributes(array $productTransfers): array
     {
-        $productAttributeCollection = $this->productQueryContainer
-            ->queryProductLocalizedAttributes($productTransfer->getIdProductConcrete())
-            ->find();
+        $productIds = [];
 
-        foreach ($productAttributeCollection as $attributeEntity) {
-            $localeTransfer = $this->getLocaleTransferByIdLocale($attributeEntity->getFkLocale());
-
-            $localizedAttributesData = $attributeEntity->toArray();
-            if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
-                unset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES]);
-            }
-
-            $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-                ->fromArray($localizedAttributesData, true)
-                ->setAttributes($this->attributeEncoder->decodeAttributes($attributeEntity->getAttributes()))
-                ->setLocale($localeTransfer);
-
-            $productTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        foreach ($productTransfers as $productTransfer) {
+            $productIds[] = $productTransfer->getIdProductConcreteOrFail();
         }
 
-        return $productTransfer;
+        $localizedAttributesGroupedByIdProduct = $this->productRepository->getLocalizedAttributesGroupedByIdProduct($productIds);
+
+        foreach ($productTransfers as $productTransfer) {
+            $productTransfer->setLocalizedAttributes(
+                new ArrayObject($localizedAttributesGroupedByIdProduct[$productTransfer->getIdProductConcreteOrFail()] ?? []),
+            );
+        }
+
+        return $productTransfers;
     }
 
     /**
@@ -660,5 +662,21 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
     {
         return $this->productRepository->getProductConcretesByConcreteSkus($productConcreteSkus);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. Exists only for BS reasons.
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function triggerProductReadEvents(array $productTransfers): array
+    {
+        foreach ($productTransfers as $key => $productTransfer) {
+            $productTransfers[$key] = $this->notifyReadObservers($productTransfer);
+        }
+
+        return $productTransfers;
     }
 }

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductSearch\Communication\Plugin\Product\ProductSearchProductConcreteExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
@@ -20,6 +22,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
     /**
+     * s
      * {@inheritDoc}
      *
      * @api
@@ -30,18 +33,8 @@ class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements P
      */
     public function read(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $productConcreteTransfer->requireIdProductConcrete();
+        $productConcreteTransfersWithIsSearchable = $this->getFacade()->expandProductConcreteTransfersWithIsSearchable([$productConcreteTransfer]);
 
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            $isSearchable = $this->getFacade()
-                ->isProductConcreteSearchable(
-                    $productConcreteTransfer->getIdProductConcrete(),
-                    $localizedAttributesTransfer->getLocale(),
-                );
-
-            $localizedAttributesTransfer->setIsSearchable($isSearchable);
-        }
-
-        return $productConcreteTransfer;
+        return array_shift($productConcreteTransfersWithIsSearchable);
     }
 }

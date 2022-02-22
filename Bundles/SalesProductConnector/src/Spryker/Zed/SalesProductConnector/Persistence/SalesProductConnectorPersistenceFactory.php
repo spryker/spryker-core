@@ -19,6 +19,7 @@ use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorEntityManagerInterface getEntityManager()
  */
 class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -70,5 +71,13 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     public function getUtilEncodingService(): SalesProductConnectorToUtilEncodingInterface
     {
         return $this->getProvidedDependency(SalesProductConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface
+     */
+    public function getSalesProductConnectorQueryContainer(): SalesProductConnectorQueryContainerInterface
+    {
+        return $this->getQueryContainer();
     }
 }

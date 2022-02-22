@@ -14,6 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityRepositoryInterface getRepository()
  */
 class ProductValidityConsole extends Console
 {

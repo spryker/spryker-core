@@ -34,6 +34,7 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createTransferGenerator(),
             $this->getLocaleFacade(),
+            $this->getRepository(),
         );
     }
 

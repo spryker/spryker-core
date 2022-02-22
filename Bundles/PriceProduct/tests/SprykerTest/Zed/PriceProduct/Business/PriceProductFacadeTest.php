@@ -1224,6 +1224,46 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandProductConcreteTransfersWithPricesSuccessful(): void
+    {
+        //Arrange
+        $productConcreteTransfer1 = $this->tester->haveProduct();
+        $this->createPriceProductForAbstractProduct(
+            $productConcreteTransfer1->getAbstractSku(),
+            $productConcreteTransfer1->getFkProductAbstract(),
+        );
+
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+        $priceProductTransfer = $this->createPriceProductForConcreteProduct(
+            $productConcreteTransfer2->getAbstractSku(),
+            $productConcreteTransfer2->getIdProductConcrete(),
+        );
+
+        //Act
+        $productConcreteTransfers = $this->getPriceProductFacade()->expandProductConcreteTransfersWithPrices(
+            [$productConcreteTransfer1, $productConcreteTransfer2],
+        );
+
+        //Assert
+        $this->assertSame(0, $productConcreteTransfers[0]->getPrices()->count());
+
+        $this->assertGreaterThan(0, $productConcreteTransfers[1]->getPrices()->count());
+
+        $resultPriceProductTransfer = $productConcreteTransfers[1]->getPrices()->offsetGet(0);
+        $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getNetAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getNetAmount(),
+        );
+        $this->assertSame(
+            $priceProductTransfer->getMoneyValue()->getGrossAmount(),
+            $resultPriceProductTransfer->getMoneyValue()->getGrossAmount(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testValidatePricesIsSuccessful(): void
     {
         // Arrange

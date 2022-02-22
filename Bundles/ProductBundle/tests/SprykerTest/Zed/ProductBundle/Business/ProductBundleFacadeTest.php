@@ -522,6 +522,36 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandProductConcreteTransfersWithBundledProductsSuccessful(): void
+    {
+        // Arrange
+        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+
+        $productConcreteTransferWithBundle = new ProductConcreteTransfer();
+        $productConcreteTransferWithBundle->setIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete());
+        $productConcreteTransferWithBundle->setSku($productConcreteBundleTransfer->getSkuOrFail());
+
+        $productConcreteTransferWithoutBundle = new ProductConcreteTransfer();
+        $productConcreteTransferWithoutBundle->setIdProductConcrete(
+            $productConcreteBundleTransfer->getProductBundle()->getBundledProducts()[1]->getIdProductConcreteOrFail(),
+        );
+        $productConcreteTransferWithoutBundle->setSku('unknown');
+
+        // Act
+        $productConcreteTransfers = $this->getProductBundleFacade()
+            ->expandProductConcreteTransfersWithBundledProducts(
+                [$productConcreteTransferWithBundle, $productConcreteTransferWithoutBundle],
+            );
+
+        $this->assertNotNull($productConcreteTransfers[0]->getProductBundle());
+        $this->assertCount(2, $productConcreteTransfers[0]->getProductBundle()->getBundledProducts());
+
+        $this->assertNull($productConcreteTransfers[1]->getProductBundle());
+    }
+
+    /**
+     * @return void
+     */
     public function testFilterBundleItemsOnCartReloadShouldRemoveBundleItems(): void
     {
         // Arrange

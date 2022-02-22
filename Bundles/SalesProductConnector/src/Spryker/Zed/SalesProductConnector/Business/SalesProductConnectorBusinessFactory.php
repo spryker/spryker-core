@@ -27,6 +27,7 @@ use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
+ * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorEntityManagerInterface getEntityManager()
  */
 class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -37,7 +38,8 @@ class SalesProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ItemMetadataSaver(
             $this->getUtilEncodingService(),
-            $this->getQueryContainer(),
+            $this->getEntityManager(),
+            $this->getRepository(),
         );
     }
 

@@ -282,7 +282,9 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         );
 
         $itemTransfers = $shipmentGroupTransfer->getItems();
-        $this->updateFkShipmentForOrderItems($itemTransfers, $shipmentTransfer);
+
+        $this->entityManager->updateFkShipmentForOrderItems($itemTransfers, $shipmentTransfer);
+
         $shipmentGroupTransfer->setItems($itemTransfers);
 
         return $shipmentGroupTransfer;
@@ -359,21 +361,6 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         }
 
         return $expenseTransfer;
-    }
-
-    /**
-     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::addShipmentToQuoteItems()} instead.
-     *
-     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     *
-     * @return void
-     */
-    protected function updateFkShipmentForOrderItems(iterable $itemTransfers, ShipmentTransfer $shipmentTransfer): void
-    {
-        foreach ($itemTransfers as $itemTransfer) {
-            $this->entityManager->updateFkShipmentForOrderItem($itemTransfer, $shipmentTransfer);
-        }
     }
 
     /**

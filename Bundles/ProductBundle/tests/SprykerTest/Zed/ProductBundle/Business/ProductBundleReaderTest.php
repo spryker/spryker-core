@@ -7,8 +7,10 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -75,29 +77,62 @@ class ProductBundleReaderTest extends Unit
      */
     public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability(): void
     {
+        // Arrange
         $bundleAvailability = 5;
 
-        $productBundleReaderMock = $this->createProductBundleReader();
-
-        $this->setupFindBundledProducts($this->fixtures, $productBundleReaderMock);
+        $productBundleReaderMock = $this->createProductBundleReader(
+            null,
+            null,
+            null,
+            $this->setupGetProductBundleTransfersIndexedByIdProductConcrete($this->fixtures),
+        );
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($this->fixtures['idProductConcrete']);
-        $productConcreteTransfer->setSku('sku-2');
+        $sku = 'sku-2';
+        $productConcreteTransfer->setSku($sku);
 
         $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
         $availabilityTransfer->setAvailability($bundleAvailability);
 
-        $productBundleReaderMock->method('findProductConcreteAvailabilityBySkuForStore')
-            ->willReturn($availabilityTransfer);
+        $productBundleReaderMock->method('getProductConcreteAvailabilityIndexedBySkuForStore')
+            ->willReturn([$sku => $availabilityTransfer]);
 
+        // Action
         $productConcreteTransfer = $productBundleReaderMock->assignBundledProductsToProductConcrete($productConcreteTransfer);
 
+        // Asssertion
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
 
         $this->assertNotNull($productBundleTransfer);
         $this->assertSame((string)$bundleAvailability, $productBundleTransfer->getAvailability()->toString());
         $this->assertCount(1, $productBundleTransfer->getBundledProducts());
+    }
+
+    /**
+     * @param array $fixtures
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     */
+    protected function setupGetProductBundleTransfersIndexedByIdProductConcrete(array $fixtures): ProductBundleRepositoryInterface
+    {
+        $productBundleRepositoryMock = $this->createProductBundleRepositoryMock();
+
+        $productBundleTransfer = new ProductBundleTransfer();
+        $productBundleTransfer->setIdProductConcreteBundle($fixtures['idProductConcrete']);
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setIdProductConcrete($fixtures['fkBundledProduct']);
+        $productConcreteTransfer->setSku($fixtures['bundledProductSku']);
+
+        $productBundleTransfer->setBundledProducts(new ArrayObject([$productConcreteTransfer]));
+
+        $productBundleRepositoryMock->expects($this->once())
+            ->method('getProductBundleTransfersIndexedByIdProductConcrete')
+            ->with([$fixtures['idProductConcrete']])
+            ->willReturn([$fixtures['idProductConcrete'] => $productBundleTransfer]);
+
+        return $productBundleRepositoryMock;
     }
 
     /**
@@ -146,7 +181,7 @@ class ProductBundleReaderTest extends Unit
                 $productBundleRepository,
                 $productBundleCache,
             ])
-            ->setMethods(['findBundledProducts', 'findProductConcreteAvailabilityBySkuForStore'])
+            ->setMethods(['findBundledProducts', 'getProductConcreteAvailabilityIndexedBySkuForStore'])
             ->getMock();
 
         return $productBundleReaderMock;

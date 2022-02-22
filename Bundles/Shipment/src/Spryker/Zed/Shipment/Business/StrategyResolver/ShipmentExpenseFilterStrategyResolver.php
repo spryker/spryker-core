@@ -40,6 +40,8 @@ class ShipmentExpenseFilterStrategyResolver implements ShipmentExpenseFilterStra
     }
 
     /**
+     * @phpstan-param iterable<\Generated\Shared\Transfer\ItemTransfer>&\Countable $itemTransfers
+     *
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface

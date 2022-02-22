@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductValidity\Persistence\ProductValidityRepositoryInterface getRepository()
  */
 class ProductValidityFacade extends AbstractFacade implements ProductValidityFacadeInterface
 {
@@ -34,15 +35,31 @@ class ProductValidityFacade extends AbstractFacade implements ProductValidityFac
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductValidity\Business\ProductValidityFacade::expandProductConcreteTransfersWithValidity()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function hydrateProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
+        return $this->expandProductConcreteTransfersWithValidity([$productConcreteTransfer])[0];
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithValidity(array $productConcreteTransfers): array
+    {
         return $this->getFactory()
-            ->createProductValidityHydrator()
-            ->hydrate($productConcreteTransfer);
+            ->createProductValidityReader()
+            ->expandProductConcreteTransfersWithValidity($productConcreteTransfers);
     }
 
     /**

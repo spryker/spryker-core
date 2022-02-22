@@ -23,6 +23,11 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     use InstancePoolingTrait;
 
     /**
+     * @var string
+     */
+    protected const FIELD_SKU = 'sku';
+
+    /**
      * @uses Product
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
@@ -147,18 +152,20 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     /**
      * @module Product
      *
-     * @param string $sku
+     * @param array<string> $skus
      *
-     * @return bool
+     * @return array<string>
      */
-    public function checkIfProductDiscontinuedBySku(string $sku): bool
+    public function getDiscontinuedProductSkus(array $skus): array
     {
         return $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->useProductQuery()
-                ->filterBySku($sku)
+                ->select(static::FIELD_SKU)
+                ->filterBySku_In($skus)
             ->endUse()
-            ->exists();
+            ->find()
+            ->getArrayCopy();
     }
 
     /**

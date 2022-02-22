@@ -25,6 +25,16 @@ class PersistenceManager implements PersistenceManagerInterface
     protected $omsConfig;
 
     /**
+     * @var array<string, \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState>
+     */
+    protected static $stateCache = [];
+
+    /**
+     * @var array<string, \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess>
+     */
+    protected static $processCache = [];
+
+    /**
      * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
     public function __construct(OmsConfig $omsConfig)
@@ -39,7 +49,11 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     protected function getStateEntity($stateName)
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($stateName): SpyOmsOrderItemState {
+        if (isset(static::$stateCache[$stateName])) {
+            return static::$stateCache[$stateName];
+        }
+
+        $stateEntity = $this->getTransactionHandler()->handleTransaction(function () use ($stateName): SpyOmsOrderItemState {
             $stateEntity = SpyOmsOrderItemStateQuery::create()
                 ->filterByName($stateName)
                 ->findOneOrCreate();
@@ -50,6 +64,10 @@ class PersistenceManager implements PersistenceManagerInterface
 
             return $stateEntity;
         });
+
+        static::$stateCache[$stateName] = $stateEntity;
+
+        return $stateEntity;
     }
 
     /**
@@ -68,7 +86,11 @@ class PersistenceManager implements PersistenceManagerInterface
             ));
         }
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($processName): SpyOmsOrderProcess {
+        if (isset(static::$processCache[$processName])) {
+            return static::$processCache[$processName];
+        }
+
+        $processEntity = $this->getTransactionHandler()->handleTransaction(function () use ($processName): SpyOmsOrderProcess {
             $processEntity = SpyOmsOrderProcessQuery::create()
                 ->filterByName($processName)
                 ->findOneOrCreate();
@@ -79,6 +101,10 @@ class PersistenceManager implements PersistenceManagerInterface
 
             return $processEntity;
         });
+
+        static::$processCache[$processName] = $processEntity;
+
+        return $processEntity;
     }
 
     /**

@@ -135,7 +135,7 @@ class TriggerLocker implements LockerInterface
         }
 
         try {
-            $isCommitSuccess = $this->commit();
+            $isCommitSuccess = $this->commitIdentical();
         } catch (Exception $exception) {
             throw new LockException(
                 sprintf(

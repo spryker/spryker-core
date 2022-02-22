@@ -48,9 +48,18 @@ interface ReaderInterface
     public function expandProductAbstractWithImageSets(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductImage\Business\Model\ReaderInterface::expandProductConcreteTransfersWithImageSets()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithImageSets(ProductConcreteTransfer $productConcreteTransfer);
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithImageSets(array $productConcreteTransfers): array;
 }

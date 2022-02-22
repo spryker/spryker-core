@@ -48,4 +48,17 @@ interface ProductBundleRepositoryInterface
      * @return array
      */
     public function getProductConcretesRawDataByProductConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * Result format:
+     * [
+     *     $idProductConcrete => ProductBundleTransfer,
+     *     ...,
+     * ]
+     *
+     * @param array<int> $productConcreteIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductBundleTransfer>
+     */
+    public function getProductBundleTransfersIndexedByIdProductConcrete(array $productConcreteIds): array;
 }

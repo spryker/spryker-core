@@ -429,6 +429,33 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandProductConcreteTransfersWithStocksSuccessful(): void
+    {
+        // Arrange
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
+            ->setSku(static::CONCRETE_SKU);
+
+        $productConcreteTransfer2 = (new ProductConcreteTransfer())
+            ->setIdProductConcrete($this->productAbstractEntity->getIdProductAbstract())
+            ->setSku('unknown');
+
+        // Act
+        $productConcreteTransfers = $this->stockFacade->expandProductConcreteTransfersWithStocks([$productConcreteTransfer, $productConcreteTransfer2]);
+
+        // Assert
+        $this->assertNotEmpty($productConcreteTransfers[0]->getStocks());
+        foreach ($productConcreteTransfers[0]->getStocks() as $stock) {
+            $this->assertTrue($stock->getQuantity()->greaterThan(0));
+            $this->assertSame($stock->getSku(), static::CONCRETE_SKU);
+        }
+
+        $this->assertEmpty($productConcreteTransfers[1]->getStocks());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandProductConcreteWithStocksWillExpandOnlyWithActiveStocks(): void
     {
         //Arrange

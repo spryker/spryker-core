@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -69,5 +71,16 @@ class ProductBundleToAvailabilityFacadeBridge implements ProductBundleToAvailabi
     public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
         return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer
+     */
+    public function getProductConcreteAvailabilityCollection(
+        ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
+    ): ProductConcreteAvailabilityCollectionTransfer {
+        return $this->availabilityFacade->getProductConcreteAvailabilityCollection($productAvailabilityCriteriaTransfer);
     }
 }

@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/gui": "Presentation Sales/list.twig depends on it"
+        "spryker/gui": "Presentation Sales/list.twig depends on it",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
     }
 }

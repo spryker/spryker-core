@@ -265,23 +265,43 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function expandProductConcreteWithPrices(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
+        /** @phpstan-var non-empty-array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfersWithPrices */
+        $productConcreteTransfersWithPrices = $this->expandProductConcreteTransfersWithPrices([$productConcreteTransfer]);
+
+        return array_shift($productConcreteTransfersWithPrices);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithPrices(array $productConcreteTransfers): array
+    {
+        $productIds = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productIds[] = $productConcreteTransfer->getIdProductConcreteOrFail();
+        }
+
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceDimension(
             (new PriceProductDimensionTransfer())
                 ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
         );
 
-        /** @var int $idProductConcrete */
-        $idProductConcrete = $productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete();
-        $priceProductTransfers = $this->findProductConcretePricesById(
-            $idProductConcrete,
-            $priceProductCriteriaTransfer,
-        );
+        $priceProductTransfers = $this->getPriceProductTransfersByIdsAndCriteria($productIds, $priceProductCriteriaTransfer);
 
-        if ($priceProductTransfers) {
-            $productConcreteTransfer->setPrices(new ArrayObject($priceProductTransfers));
+        $groupedPriceProductTransferByProductSku = $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $priceProductTransfers = $groupedPriceProductTransferByProductSku[$productConcreteTransfer->getSkuOrFail()] ?? [];
+
+            if ($priceProductTransfers !== []) {
+                $productConcreteTransfer->setPrices(new ArrayObject($priceProductTransfers));
+            }
         }
 
-        return $productConcreteTransfer;
+        return $productConcreteTransfers;
     }
 
     /**
@@ -321,5 +341,26 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param array<int> $productIds
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getPriceProductTransfersByIdsAndCriteria(
+        array $productIds,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $priceProductStoreEntities = $this->priceProductRepository->getProductConcretePricesByIdsAndCriteria(
+            $productIds,
+            $priceProductCriteriaTransfer,
+        );
+
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+
+        return $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
     }
 }

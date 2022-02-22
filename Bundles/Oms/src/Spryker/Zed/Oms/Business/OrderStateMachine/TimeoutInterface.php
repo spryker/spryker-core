@@ -48,4 +48,28 @@ interface TimeoutInterface
      * @return void
      */
     public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem);
+
+    /**
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param \DateTime $currentTime
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
+     *
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    public function setNewTimeouts(array $orderItems, DateTime $currentTime, array $processes);
+
+    /**
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
+     * @param array $sourceStateBuffer
+     *
+     * @throws \Exception
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    public function dropOldTimeouts(array $orderItems, array $processes, array $sourceStateBuffer);
 }

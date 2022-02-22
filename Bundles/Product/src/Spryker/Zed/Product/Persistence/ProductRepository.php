@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -751,5 +752,38 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $productAbstractTransfers;
+    }
+
+    /**
+     * Result format:
+     * [
+     *     $idProduct => [LocalizedAttributesTransfer, ...],
+     *     ...
+     * ]
+     *
+     * @param array<int> $productIds
+     *
+     * @return array<int, array<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>>
+     */
+    public function getLocalizedAttributesGroupedByIdProduct(array $productIds): array
+    {
+        $productLocalizedAttributesCollection = $this->getFactory()->createProductLocalizedAttributesQuery()
+            ->filterByFkProduct_In($productIds)
+            ->joinWithLocale()
+            ->find();
+
+        $result = [];
+
+        $localizedAttributesMapper = $this->getFactory()->createLocalizedAttributesMapper();
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes $productLocalizedAttributesEntity */
+        foreach ($productLocalizedAttributesCollection as $productLocalizedAttributesEntity) {
+            $result[$productLocalizedAttributesEntity->getFkProduct()][] = $localizedAttributesMapper->mapProductLocalizedAttributesEntityToTransfer(
+                $productLocalizedAttributesEntity,
+                new LocalizedAttributesTransfer(),
+            );
+        }
+
+        return $result;
     }
 }
