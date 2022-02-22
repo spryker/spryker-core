@@ -1372,8 +1372,8 @@
         },
         {
             "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
+            "line_from": 224,
+            "line_to": 224,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Cms\\Persistence\\CmsQueryContainerInterface::queryKeyWithTranslationByKeyAndLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Controller/GlossaryController.php",
@@ -1441,30 +1441,6 @@
             "selected_text": "$idPage",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Cms\\Communication\\Form\\CmsGlossaryForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Form/CmsGlossaryForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Cms\\Communication\\Form\\CmsRedirectForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Communication/Form/CmsRedirectForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

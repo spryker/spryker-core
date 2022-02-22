@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
+            "line_from": 71,
+            "line_to": 71,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setMerchantReference on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/MerchantSwitcher.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
+            "line_from": 95,
+            "line_to": 95,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getItems on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/MerchantSwitcher.php",
@@ -27,13 +27,61 @@
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 109,
+            "line_to": 109,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Zed\\MerchantSwitcher\\Business\\MerchantSwitcher\\MerchantSwitcher::switchItemData cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/MerchantSwitcher.php",
             "snippet": "            $switchedItemTransfers[] = $this->switchItemData($itemTransfer, $merchantProductOfferCollectionTransfer, $merchantReference);",
             "selected_text": "$merchantReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantSwitcher\\Business\\MerchantSwitcher\\WishlistMerchantSwitcher::getProductOffersForWishlistItems cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/WishlistMerchantSwitcher.php",
+            "snippet": "            ->getProductOffersForWishlistItems($merchantReference, $wishlistTransfer)",
+            "selected_text": "$merchantReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantSwitcher\\Business\\MerchantSwitcher\\WishlistMerchantSwitcher::getProductOffersForWishlistItems cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/WishlistMerchantSwitcher.php",
+            "snippet": "            ->getProductOffersForWishlistItems($merchantReference, $wishlistTransfer)",
+            "selected_text": "$wishlistTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantSwitcher\\Business\\MerchantSwitcher\\WishlistMerchantSwitcher::findProductOfferBySku expects ArrayObject<int, Generated\\Shared\\Transfer\\ProductOfferTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductOfferTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/WishlistMerchantSwitcher.php",
+            "snippet": "                $productOfferTransfers,",
+            "selected_text": "$productOfferTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantSwitcher\\Business\\MerchantSwitcher\\WishlistMerchantSwitcher::findProductOfferBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/WishlistMerchantSwitcher.php",
+            "snippet": "                $wishlistItemTransfer->getSku(),",
+            "selected_text": "$wishlistItemTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
         },
@@ -70,6 +118,30 @@
             "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Communication/Plugin/Cart/SingleMerchantPreReloadItemsPlugin.php",
             "snippet": "        return $this->getFacade()\n            ->switchMerchantInQuoteItems($merchantSwitcherRequestTransfer)\n            ->getQuote();",
             "selected_text": "$this->getFacade()\n            ->switchMerchantInQuoteItems($merchantSwitcherRequestTransfer)\n            ->getQuote()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\WishlistTransfer' for Spryker\\Zed\\MerchantSwitcher\\Communication\\Plugin\\Wishlist\\SingleMerchantWishlistReloadItemsPlugin::reloadItems is not nullable, but 'Generated\\Shared\\Transfer\\WishlistTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Communication/Plugin/Wishlist/SingleMerchantWishlistReloadItemsPlugin.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\WishlistTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\WishlistTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 53,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\WishlistTransfer' for Spryker\\Zed\\MerchantSwitcher\\Communication\\Plugin\\Wishlist\\SingleMerchantWishlistReloadItemsPlugin::reloadItems is not nullable, but the function returns 'Generated\\Shared\\Transfer\\WishlistTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Communication/Plugin/Wishlist/SingleMerchantWishlistReloadItemsPlugin.php",
+            "snippet": "        return $this->getFacade()\n            ->switchMerchantInWishlistItems($merchantSwitchRequestTransfer)\n            ->getWishlist();",
+            "selected_text": "$this->getFacade()\n            ->switchMerchantInWishlistItems($merchantSwitchRequestTransfer)\n            ->getWishlist()",
             "error_level": 5,
             "shortcode": 139
         }

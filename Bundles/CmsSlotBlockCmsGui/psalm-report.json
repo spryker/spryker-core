@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockCmsGui\\Dependency\\QueryContainer\\CmsSlotBlockCmsGuiToCmsQueryContainerInterface::queryPagesWithTemplatesForSelectedLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCmsGui/src/Spryker/Zed/CmsSlotBlockCmsGui/Communication/Form/DataProvider/CmsPageConditionDataProvider.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
+            "line_from": 100,
+            "line_to": 100,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $cmsPageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Cms\\Persistence\\SpyCmsPage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCmsGui/src/Spryker/Zed/CmsSlotBlockCmsGui/Communication/Form/DataProvider/CmsPageConditionDataProvider.php",

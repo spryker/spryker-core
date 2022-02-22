@@ -15,9 +15,9 @@ interface AlternativeProductApplicablePluginInterface
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function check(int $idProductConcrete): bool;
+    public function check(int $idProduct): bool;
 }

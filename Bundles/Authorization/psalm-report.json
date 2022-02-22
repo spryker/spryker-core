@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Authorization/src/Spryker/Client/Authorization/Authorization/AuthorizationChecker.php",
+            "snippet": "            throw new AuthorizationStrategyNotFoundException(sprintf('Authorization strategy `%s` not found.', $authorizationRequestTransfer->getStrategy()));",
+            "selected_text": "$authorizationRequestTransfer->getStrategy()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
     "deprecation": []
 }

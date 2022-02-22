@@ -27,27 +27,15 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
+            "line_from": 44,
+            "line_to": 44,
             "type": "PossiblyNullReference",
-            "message": "Cannot call method getName on possibly null value",
+            "message": "Cannot call method getIdMerchant on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferGui/src/Spryker/Zed/MerchantProductOfferGui/Communication/Reader/MerchantProductOfferReader.php",
-            "snippet": "            'merchantName' => $merchantTransfer->getName(),",
-            "selected_text": "getName",
+            "snippet": "            'idMerchant' => $merchantTransfer->getIdMerchant(),",
+            "selected_text": "getIdMerchant",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferGui/src/Spryker/Zed/MerchantProductOfferGui/Persistence/MerchantProductOfferGuiRepository.php",
-            "snippet": "            $queryJoinTransfer->setCondition(sprintf('%s = %d', SpyProductOfferTableMap::COL_FK_MERCHANT, $merchantProductOfferCriteriaTransfer->getIdMerchant()));",
-            "selected_text": "$merchantProductOfferCriteriaTransfer->getIdMerchant()",
-            "error_level": 3,
-            "shortcode": 78
         }
     ],
     "deprecation": []

@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 245,
-            "line_to": 245,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\Customer\\Zed\\CustomerStub::deleteAddress has wrong name $AddressTransfer, expecting $addressTransfer as defined by Spryker\\Client\\Customer\\Zed\\CustomerStubInterface::deleteAddress",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Client/Customer/Zed/CustomerStub.php",
-            "snippet": "    public function deleteAddress(AddressTransfer $AddressTransfer)",
-            "selected_text": "$AddressTransfer",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 279,
             "line_to": 279,
             "type": "InvalidReturnType",
@@ -47,18 +35,6 @@
             "selected_text": "BCryptPasswordEncoder",
             "error_level": -1,
             "shortcode": 19
-        },
-        {
-            "severity": "error",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Customer\\Business\\CustomerFacade::getCustomerCollection has wrong name $customerCollectionTransfer, expecting $customerListTransfer as defined by Spryker\\Zed\\Customer\\Business\\CustomerFacadeInterface::getCustomerCollection",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/CustomerFacade.php",
-            "snippet": "    public function getCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): CustomerCollectionTransfer",
-            "selected_text": "$customerCollectionTransfer",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -631,7 +607,7 @@
             "line_from": 111,
             "line_to": 111,
             "type": "InvalidDocblock",
-            "message": "\\Spryker\\Zed\\Customer\\Business\\CustomerPasswordPolicy\\CustomerPasswordPolicyValidatorInterface; is not a valid type (from /data/vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php:108)",
+            "message": "\\Spryker\\Zed\\Customer\\Business\\CustomerPasswordPolicy\\CustomerPasswordPolicyValidatorInterface; is not a valid type (from /var/work/devvm/project/vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php:108)",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Business/Customer/Customer.php",
             "snippet": "    /**\n     * @var \\Spryker\\Zed\\Customer\\Business\\CustomerPasswordPolicy\\CustomerPasswordPolicyValidatorInterface;\n     */\n    protected $customerPasswordPolicyValidator;",
             "selected_text": "protected $customerPasswordPolicyValidator;",
@@ -1120,8 +1096,8 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
+            "line_from": 71,
+            "line_to": 71,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CustomerTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Console/CustomerPasswordResetConsole.php",
@@ -1132,8 +1108,8 @@
         },
         {
             "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
+            "line_from": 71,
+            "line_to": 71,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CustomerTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Console/CustomerPasswordSetConsole.php",
@@ -1225,54 +1201,6 @@
             "selected_text": "$customerTransfer->getCustomerReference()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Customer\\Communication\\Form\\AddressForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Form/AddressForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Customer\\Communication\\Form\\CustomerDeleteForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Form/CustomerDeleteForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 132,
-            "line_to": 132,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Customer\\Communication\\Form\\CustomerForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Form/CustomerForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Customer\\Communication\\Form\\CustomerUpdateForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Form/CustomerUpdateForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -1489,18 +1417,6 @@
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 162,
-            "line_to": 162,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Customer\\Communication\\Table\\CustomerTable::formatCsvRow has the more specific type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomer', expecting 'Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface' as defined by Spryker\\Zed\\Gui\\Communication\\Table\\AbstractTable::formatCsvRow",
-            "file_name": "vendor/spryker/spryker/Bundles/Customer/src/Spryker/Zed/Customer/Communication/Table/CustomerTable.php",
-            "snippet": "    protected function formatCsvRow(ActiveRecordInterface $entity): array",
-            "selected_text": "$entity",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

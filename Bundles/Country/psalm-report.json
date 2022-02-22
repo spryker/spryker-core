@@ -11,6 +11,54 @@
             "selected_text": "$iso2Codes",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 175,
+            "line_to": 175,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Country\\Business\\Validator\\CountryCheckoutDataValidator::extractIso2CodesFromShipments is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 187,
+            "line_to": 187,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Country\\Business\\Validator\\CountryCheckoutDataValidator::extractIso2CodesFromShipments",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        return $iso2Codes;",
+            "selected_text": "$iso2Codes",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 193,
+            "line_to": 193,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Country\\Business\\Validator\\CountryCheckoutDataValidator::getCountriesIsoCodes is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Country\\Business\\Validator\\CountryCheckoutDataValidator::getCountriesIsoCodes",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        return $countryIso2Codes;",
+            "selected_text": "$countryIso2Codes",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -28,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 100,
+            "line_to": 100,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIso2Code on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
@@ -40,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Country\\Business\\CountryManagerInterface::hasCountry cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
@@ -52,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
+            "line_from": 129,
+            "line_to": 129,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIso2Code on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
@@ -64,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 131,
+            "line_to": 131,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Country\\Business\\CountryManagerInterface::hasCountry cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
@@ -73,6 +121,42 @@
             "selected_text": "$shippingAddressCountryIso2Code",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 152,
+            "line_to": 152,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestShipmentsTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        if (!$checkoutDataTransfer->getShipments()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIso2Code on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "            if ($restShipmentsTransfer->getShippingAddress() && $restShipmentsTransfer->getShippingAddress()->getIso2Code()) {",
+            "selected_text": "getIso2Code",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 183,
+            "line_to": 183,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIso2Code on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "                $iso2Codes[] = $restShipmentsTransfer->getShippingAddress()->getIso2Code();",
+            "selected_text": "getIso2Code",
+            "error_level": 3,
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -97,6 +181,18 @@
             "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/CountryManager.php",
             "snippet": "        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());",
             "selected_text": "createCountry",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Country\\Business\\Validator\\CountryCheckoutDataValidator::validateCountryInShippingAddress has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        $checkoutResponseTransfer = $this->validateCountryInShippingAddress($checkoutDataTransfer, $checkoutResponseTransfer);",
+            "selected_text": "validateCountryInShippingAddress",
             "error_level": 2,
             "shortcode": 1
         }

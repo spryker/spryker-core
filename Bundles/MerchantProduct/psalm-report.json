@@ -1,5 +1,78 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\MerchantProductCriteriaTransfer::addProductConcreteSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProduct/src/Spryker/Zed/MerchantProduct/Business/Expander/ShoppingListItemExpander.php",
+            "snippet": "                $merchantProductCriteriaTransfer->addProductConcreteSku($item->getSku());",
+            "selected_text": "$item->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProduct\\Dependency\\Facade\\MerchantProductToProductFacadeInterface::findProductAbstractById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProduct/src/Spryker/Zed/MerchantProduct/Business/Reader/MerchantProductReader.php",
+            "snippet": "            $this->productFacade->findProductAbstractById($merchantProductTransfer->getIdProductAbstract()),",
+            "selected_text": "$merchantProductTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductConcreteTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProduct/src/Spryker/Zed/MerchantProduct/Business/Reader/MerchantProductReader.php",
+            "snippet": "            }, $merchantProductTransfer->getProducts()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductConcreteTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProduct/src/Spryker/Zed/MerchantProduct/Business/Reader/MerchantProductReader.php",
+            "snippet": "        if (!$merchantProductTransfer || !$merchantProductTransfer->getProducts()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $concreteProductSkuMerchantReferenceMap using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProduct/src/Spryker/Zed/MerchantProduct/Business/Validator/MerchantProductCartValidator.php",
+            "snippet": "        if ($itemTransfer->getMerchantReference() !== $concreteProductSkuMerchantReferenceMap[$itemTransfer->getSku()]) {",
+            "selected_text": "$concreteProductSkuMerchantReferenceMap",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $productEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProduct/src/Spryker/Zed/MerchantProduct/Persistence/Propel/Mapper/MerchantProductMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Product\\Persistence\\SpyProduct[] $productEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Product\\Persistence\\SpyProduct[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
     "deprecation": []
 }

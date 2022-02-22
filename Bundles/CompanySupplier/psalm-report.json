@@ -36,18 +36,6 @@
             "selected_text": "$supplier->getIdCompany()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CompanySupplier\\Persistence\\CompanySupplierRepository::getCompanySupplierCollectionFromQuery expects Orm\\Zed\\Company\\Persistence\\SpyCompanyQuery, possibly different type Orm\\Zed\\Company\\Persistence\\SpyCompanyQuery|Orm\\Zed\\Product\\Persistence\\SpyProductQuery provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanySupplier/src/Spryker/Zed/CompanySupplier/Persistence/CompanySupplierRepository.php",
-            "snippet": "        return $this->getCompanySupplierCollectionFromQuery($query);",
-            "selected_text": "$query",
-            "error_level": 3,
-            "shortcode": 92
         }
     ],
     "deprecation": []

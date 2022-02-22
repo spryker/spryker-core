@@ -12,28 +12,28 @@ use Symfony\Component\Form\DataTransformerInterface;
 class AbstractSkusTransformer implements DataTransformerInterface
 {
     /**
-     * @param array<string>|null $skusArray
+     * @param array<string>|null $value SKUs.
      *
      * @return string
      */
-    public function transform($skusArray): string
+    public function transform($value): string
     {
-        if (!$skusArray) {
+        if (!$value) {
             return '';
         }
 
-        return implode(', ', $skusArray);
+        return implode(', ', $value);
     }
 
     /**
-     * @param string $skusAsString
+     * @param string $value SKUs as string.
      *
      * @return array<string>
      */
-    public function reverseTransform($skusAsString): array
+    public function reverseTransform($value): array
     {
         $skus = [];
-        foreach (explode(',', $skusAsString) as $sku) {
+        foreach (explode(',', $value) as $sku) {
             $trimmedSku = trim($sku);
             if ($trimmedSku) {
                 $skus[] = $trimmedSku;

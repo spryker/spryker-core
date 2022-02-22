@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Shared\\Form\\DoubleSubmitProtection\\Subscriber\\FormEventSubscriber::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Form/src/Spryker/Shared/Form/DoubleSubmitProtection/Subscriber/FormEventSubscriber.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
     "deprecation": []
 }

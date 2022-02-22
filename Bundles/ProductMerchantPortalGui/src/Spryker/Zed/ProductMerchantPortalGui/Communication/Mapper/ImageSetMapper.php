@@ -127,7 +127,7 @@ class ImageSetMapper implements ImageSetMapperInterface
         }
 
         $propertyPath = substr($propertyPath, $position + strlen(static::IMAGE_SETS_FORM_FIELD) + 2);
-        $propertyPath = (string)str_replace(['children', '[', ']'], '', $propertyPath);
+        $propertyPath = str_replace(['children', '[', ']'], '', $propertyPath);
         $propertyPath = (string)preg_replace('/\.data$/', '', $propertyPath);
 
         return $propertyPath;

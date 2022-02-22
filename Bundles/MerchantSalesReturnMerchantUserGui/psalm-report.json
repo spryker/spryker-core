@@ -1,5 +1,139 @@
 {
-    "error": [],
-    "warning": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, string>' for Spryker\\Zed\\MerchantSalesReturnMerchantUserGui\\Communication\\Controller\\DetailController::extractUniqueItemStateLabelsFromReturn is incorrect, got 'array<0|string, mixed|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Controller/DetailController.php",
+            "snippet": "     * @return array<string, string>",
+            "selected_text": "array<string, string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 163,
+            "line_to": 163,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<0|string, mixed|string>' does not match the declared return type 'array<string, string>' for Spryker\\Zed\\MerchantSalesReturnMerchantUserGui\\Communication\\Controller\\DetailController::extractUniqueItemStateLabelsFromReturn",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Controller/DetailController.php",
+            "snippet": "        return $uniqueItemStates;",
+            "selected_text": "$uniqueItemStates",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Controller/DetailController.php",
+            "snippet": "            ->getIterator()",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 157,
+            "line_to": 157,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $uniqueItemStates[$state] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Controller/DetailController.php",
+            "snippet": "            $uniqueItemStates[$state] = $this",
+            "selected_text": "$uniqueItemStates",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 194,
+            "line_to": 194,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Controller/OmsTriggerController.php",
+            "snippet": "            ->getIterator()",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 146,
+            "line_to": 146,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Form/DataProvider/ReturnCreateFormDataProvider.php",
+            "snippet": "        if (!$itemTransfer->getReturnPolicyMessages()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Form/Handler/CreateReturnFormHandler.php",
+            "snippet": "        if ($returnCreateRequestTransfer->getReturnItems()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Reader/CustomerReader.php",
+            "snippet": "            ->getIterator()",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $stateMachineItemTransfers using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Reader/MerchantOrderReader.php",
+            "snippet": "            $stateHistory = $stateMachineItemTransfers[$merchantOrderItemTransfer->getIdMerchantOrderItem()];",
+            "selected_text": "$stateMachineItemTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 180,
+            "line_to": 180,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\SalesReturn\\Persistence\\SpySalesReturn> variable $salesReturnEntityCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Table/MyReturnsTable.php",
+            "snippet": "        if (!$salesReturnEntityCollection->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 225,
+            "line_to": 225,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $salesReturnEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\SalesReturn\\Persistence\\SpySalesReturn>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnMerchantUserGui/src/Spryker/Zed/MerchantSalesReturnMerchantUserGui/Communication/Table/MyReturnsTable.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\SalesReturn\\Persistence\\SpySalesReturn[] $salesReturnEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\SalesReturn\\Persistence\\SpySalesReturn[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
     "deprecation": []
 }

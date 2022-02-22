@@ -40,20 +40,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 3 of Spryker\\Client\\GlossaryStorage\\Storage\\GlossaryStorageReader::translate has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\GlossaryStorage\\Storage\\GlossaryStorageReaderInterface::translate",
-            "file_name": "vendor/spryker/spryker/Bundles/GlossaryStorage/src/Spryker/Client/GlossaryStorage/Storage/GlossaryStorageReader.php",
-            "snippet": "    public function translate(string $keyName, string $localeName, array $parameters = []): string",
-            "selected_text": "$parameters",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 232,
-            "line_to": 232,
+            "line_from": 234,
+            "line_to": 234,
             "type": "PossiblyNullArrayAccess",
             "message": "Cannot access array value on possibly null variable $glossaryStorageDataItem of type array<array-key, mixed>|null",
             "file_name": "vendor/spryker/spryker/Bundles/GlossaryStorage/src/Spryker/Client/GlossaryStorage/Storage/GlossaryStorageReader.php",
@@ -64,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
+            "line_from": 235,
+            "line_to": 235,
             "type": "PossiblyNullArrayAccess",
             "message": "Cannot access array value on possibly null variable $glossaryStorageDataItem of type array<array-key, mixed>|null",
             "file_name": "vendor/spryker/spryker/Bundles/GlossaryStorage/src/Spryker/Client/GlossaryStorage/Storage/GlossaryStorageReader.php",
@@ -73,18 +61,6 @@
             "selected_text": "$glossaryStorageDataItem[static::KEY_VALUE]",
             "error_level": 3,
             "shortcode": 79
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\GlossaryStorage\\Business\\Deleter\\GlossaryTranslationStorageDeleter::unpublish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\GlossaryStorage\\Business\\Deleter\\GlossaryTranslationStorageDeleterInterface::unpublish",
-            "file_name": "vendor/spryker/spryker/Bundles/GlossaryStorage/src/Spryker/Zed/GlossaryStorage/Business/Deleter/GlossaryTranslationStorageDeleter.php",
-            "snippet": "    public function unpublish(array $glossaryKeyIds)",
-            "selected_text": "$glossaryKeyIds",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -97,18 +73,6 @@
             "selected_text": "$glossaryStorageTransfersByIdAndLocale",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\GlossaryStorage\\Business\\Writer\\GlossaryTranslationStorageWriter::publish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\GlossaryStorage\\Business\\Writer\\GlossaryTranslationStorageWriterInterface::publish",
-            "file_name": "vendor/spryker/spryker/Bundles/GlossaryStorage/src/Spryker/Zed/GlossaryStorage/Business/Writer/GlossaryTranslationStorageWriter.php",
-            "snippet": "    public function publish(array $glossaryKeyIds)",
-            "selected_text": "$glossaryKeyIds",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

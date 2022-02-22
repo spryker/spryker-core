@@ -3,32 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144,
-            "other_references": null
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139,
-            "other_references": null
-        },
-        {
-            "severity": "info",
             "line_from": 55,
             "line_to": 55,
             "type": "PossiblyNullReference",
@@ -37,8 +11,7 @@
             "snippet": "        $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();",
             "selected_text": "requireFilter",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -50,8 +23,7 @@
             "snippet": "        $criteriaTransfer = $this->expandResourceCriteria($apiQueryBuilderQueryTransfer->getApiRequest(), $criteriaTransfer);",
             "selected_text": "$apiQueryBuilderQueryTransfer->getApiRequest()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -63,8 +35,7 @@
             "snippet": "        $apiQueryBuilderQueryTransfer->getApiRequest()->requireFilter();",
             "selected_text": "requireFilter",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -73,11 +44,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ApiQueryBuilder\\Dependency\\QueryContainer\\ApiQueryBuilderToPropelQueryBuilderInterface::createPropelQueryBuilderCriteriaFromJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
-            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson(),",
             "selected_text": "$apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -86,11 +56,10 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getFilter on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
-            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson(),",
             "selected_text": "getFilter",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -99,11 +68,10 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCriteriaJson on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
-            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson()",
+            "snippet": "            $apiQueryBuilderQueryTransfer->getApiRequest()->getFilter()->getCriteriaJson(),",
             "selected_text": "getCriteriaJson",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -115,8 +83,7 @@
             "snippet": "            $apiRequestTransfer->getFilter()->getFields(),",
             "selected_text": "getFields",
             "error_level": 3,
-            "shortcode": 83,
-            "other_references": null
+            "shortcode": 83
         },
         {
             "severity": "info",
@@ -125,11 +92,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ApiQueryBuilder\\Persistence\\Mapper\\ApiRequestMapper::buildColumnSelection cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
-            "snippet": "            $criteriaTransfer->getColumnSelection()",
+            "snippet": "            $criteriaTransfer->getColumnSelection(),",
             "selected_text": "$criteriaTransfer->getColumnSelection()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -141,8 +107,7 @@
             "snippet": "            $apiRequestTransfer->getFilter(),",
             "selected_text": "$apiRequestTransfer->getFilter()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -151,11 +116,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ApiQueryBuilder\\Persistence\\Mapper\\ApiRequestMapper::buildPagination cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/Mapper/ApiRequestMapper.php",
-            "snippet": "            $criteriaTransfer->getColumnSelection()",
+            "snippet": "            $criteriaTransfer->getColumnSelection(),",
             "selected_text": "$criteriaTransfer->getColumnSelection()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         },
         {
             "severity": "info",
@@ -167,9 +131,45 @@
             "snippet": "            if (mb_strtolower($columnAlias) === mb_strtolower($columnTransfer->getAlias())) {",
             "selected_text": "$columnTransfer->getAlias()",
             "error_level": 3,
-            "shortcode": 78,
-            "other_references": null
+            "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingBridge is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/ApiQueryBuilderDependencyProvider.php",
+            "snippet": "            return new ApiQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
+            "selected_text": "new ApiQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service())",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 13,
+            "line_to": 13,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
+            "snippet": "class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodingInterface",
+            "selected_text": "ApiQueryBuilderToUtilEncodingBridge",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Persistence/ApiQueryBuilderPersistenceFactory.php",
+            "snippet": "     * @return \\Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingInterface",
+            "selected_text": "\\Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingInterface",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
 }

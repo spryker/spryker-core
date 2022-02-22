@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "TypeDoesNotContainType",
+            "message": "\"GLUE_BACKEND\" cannot be identical to \"\"",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueBackendApiApplication/src/Spryker/Glue/GlueBackendApiApplication/Plugin/GlueApplication/BackendApiGlueApplicationBootstrapPlugin.php",
+            "snippet": "        return APPLICATION === 'GLUE_BACKEND';",
+            "selected_text": "APPLICATION === 'GLUE_BACKEND'",
+            "error_level": 4,
+            "shortcode": 56
+        }
+    ],
     "deprecation": []
 }

@@ -23,14 +23,14 @@ interface RoleInterface
     public function addRole($name);
 
     /**
-     * @param \Generated\Shared\Transfer\RoleTransfer $data
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNotFoundException
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
-    public function save(RoleTransfer $data);
+    public function save(RoleTransfer $roleTransfer);
 
     /**
      * @param int $idRole

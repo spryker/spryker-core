@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryKeysIndexedByIdMerchant[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCategorySearch/src/Spryker/Zed/MerchantCategorySearch/Communication/Expander/MerchantCategorySearchExpander.php",
+            "snippet": "            $categoryKeysIndexedByIdMerchant[$merchantCategoryTransfer->getFkMerchant()][] = $categoryTransfer->getCategoryKey();",
+            "selected_text": "$categoryKeysIndexedByIdMerchant",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $categoryKeysIndexedByIdMerchant using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantCategorySearch/src/Spryker/Zed/MerchantCategorySearch/Communication/Expander/MerchantCategorySearchExpander.php",
+            "snippet": "            $merchantSearchData[static::CATEGORY_KEYS] = $categoryKeysIndexedByIdMerchant[$merchantSearchTransfer->getIdMerchant()] ?? [];",
+            "selected_text": "$categoryKeysIndexedByIdMerchant",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
     "deprecation": []
 }

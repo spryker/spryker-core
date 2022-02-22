@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "MethodSignatureMismatch",
-            "message": "Method Spryker\\Zed\\CmsSlotBlockDataImport\\Business\\CmsSlotBlockDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockDataImport/src/Spryker/Zed/CmsSlotBlockDataImport/Business/CmsSlotBlockDataImportBusinessFactory.php",
-            "snippet": "class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory",
-            "selected_text": "CmsSlotBlockDataImportBusinessFactory",
-            "error_level": 7,
-            "shortcode": 42
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

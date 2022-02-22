@@ -135,18 +135,6 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Dataset\\Communication\\Form\\DatasetForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Dataset/src/Spryker/Zed/Dataset/Communication/Form/DatasetForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 196,
             "line_to": 196,
             "type": "PossiblyNullArrayAccess",
@@ -156,18 +144,6 @@
             "selected_text": "$options[static::OPTION_AVAILABLE_LOCALES]",
             "error_level": 3,
             "shortcode": 79
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Dataset\\Communication\\Form\\DatasetLocalizedAttributesForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Dataset/src/Spryker/Zed/Dataset/Communication/Form/DatasetLocalizedAttributesForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

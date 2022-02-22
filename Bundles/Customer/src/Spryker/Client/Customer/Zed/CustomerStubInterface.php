@@ -135,18 +135,18 @@ interface CustomerStubInterface
     public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function setDefaultBillingAddress(AddressTransfer $AddressTransfer);
+    public function setDefaultBillingAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function setDefaultShippingAddress(AddressTransfer $AddressTransfer);
+    public function setDefaultShippingAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

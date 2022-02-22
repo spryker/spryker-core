@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "MethodSignatureMismatch",
-            "message": "Method Spryker\\Zed\\MerchantStockDataImport\\Business\\MerchantStockDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantStockDataImport/src/Spryker/Zed/MerchantStockDataImport/Business/MerchantStockDataImportBusinessFactory.php",
-            "snippet": "class MerchantStockDataImportBusinessFactory extends DataImportBusinessFactory",
-            "selected_text": "MerchantStockDataImportBusinessFactory",
-            "error_level": 7,
-            "shortcode": 42
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",

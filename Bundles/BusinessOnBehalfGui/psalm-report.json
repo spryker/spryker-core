@@ -3,8 +3,20 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
+            "line_from": 108,
+            "line_to": 108,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\BusinessOnBehalfGui\\Communication\\Controller\\CustomerController::handleErrorMessages expects ArrayObject<int, Generated\\Shared\\Transfer\\ResponseMessageTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ResponseMessageTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
+            "snippet": "            $this->handleErrorMessages($companyUserResponseTransfer->getMessages());",
+            "selected_text": "$companyUserResponseTransfer->getMessages()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getFkCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
@@ -15,20 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $errorMessageTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ResponseMessageTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[] $errorMessageTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\BusinessOnBehalfGui\\Communication\\Controller\\CustomerController::addErrorMessage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
@@ -56,7 +56,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Form/DataProvider/CustomerBusinessUnitAttachFormDataProvider.php",
-            "snippet": "            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
+            "snippet": "            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),",
             "selected_text": "$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
             "error_level": 3,
             "shortcode": 78

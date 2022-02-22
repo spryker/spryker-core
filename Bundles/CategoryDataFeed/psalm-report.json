@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
+            "line_from": 45,
+            "line_to": 45,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CategoryDataFeed\\Dependency\\QueryContainer\\CategoryDataFeedToCategoryInterface::queryCategory cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryDataFeed/src/Spryker/Zed/CategoryDataFeed/Persistence/CategoryDataFeedQueryContainer.php",

@@ -32,7 +32,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyRolesRestApi/src/Spryker/Glue/CompanyRolesRestApi/Processor/CompanyRole/Reader/CompanyRoleReader.php",
-            "snippet": "            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())",
+            "snippet": "            (new CompanyRoleCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser()),",
             "selected_text": "getIdCompanyUser",
             "error_level": 3,
             "shortcode": 83

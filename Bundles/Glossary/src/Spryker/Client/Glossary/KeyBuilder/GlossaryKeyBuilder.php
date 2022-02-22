@@ -15,13 +15,13 @@ class GlossaryKeyBuilder implements KeyBuilderInterface
     use KeyBuilderTrait;
 
     /**
-     * @param string $glossaryKey
+     * @param string $data Glossary key.
      *
      * @return string
      */
-    protected function buildKey($glossaryKey)
+    protected function buildKey($data)
     {
-        return 'translation.' . $glossaryKey;
+        return 'translation.' . $data;
     }
 
     /**

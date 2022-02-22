@@ -16,30 +16,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Yves\\DummyPayment\\Form\\CreditCardSubForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Yves/DummyPayment/Form/CreditCardSubForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Yves\\DummyPayment\\Form\\InvoiceSubForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Yves/DummyPayment/Form/InvoiceSubForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "PossiblyNullReference",
@@ -109,18 +85,6 @@
             "selected_text": "$paymentTransfer",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\DummyPayment\\Communication\\Form\\InvoiceSubForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/DummyPayment/src/Spryker/Zed/DummyPayment/Communication/Form/InvoiceSubForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

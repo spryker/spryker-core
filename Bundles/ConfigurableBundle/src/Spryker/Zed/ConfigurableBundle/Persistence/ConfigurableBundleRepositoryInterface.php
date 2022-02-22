@@ -53,11 +53,11 @@ interface ConfigurableBundleRepositoryInterface
     ): ConfigurableBundleTemplateSlotCollectionTransfer;
 
     /**
-     * @param array<string> $templateUuid
+     * @param array<string> $templateUuids
      *
      * @return array<string>
      */
-    public function getActiveConfigurableBundleTemplateUuids(array $templateUuid): array;
+    public function getActiveConfigurableBundleTemplateUuids(array $templateUuids): array;
 
     /**
      * @param int $idConfigurableBundleTemplate

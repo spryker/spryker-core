@@ -13,7 +13,7 @@ use Spryker\Zed\ProductConfigurationDataImport\Business\Model\Step\ProductConcre
 
 /**
  * @method \Spryker\Zed\ProductConfigurationDataImport\ProductConfigurationDataImportConfig getConfig()
- * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker($bulkSize = null)
  * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class ProductConfigurationDataImportBusinessFactory extends DataImportBusinessFactory

@@ -3,18 +3,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ContentFileGui\\Communication\\Form\\Constraints\\ContentFileListConstraintValidator::validate has the more specific type 'array<array-key, int>', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentFileGui/src/Spryker/Zed/ContentFileGui/Communication/Form/Constraints/ContentFileListConstraintValidator.php",
-            "snippet": "    public function validate($value, Constraint $constraint): void",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 84,
             "line_to": 84,
             "type": "PossiblyNullPropertyFetch",

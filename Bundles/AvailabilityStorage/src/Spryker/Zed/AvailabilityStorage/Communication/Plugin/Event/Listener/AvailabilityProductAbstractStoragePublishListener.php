@@ -24,14 +24,14 @@ class AvailabilityProductAbstractStoragePublishListener extends AbstractPlugin i
      *
      * @api
      *
-     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName): void
+    public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $this->getFacade()->publishByProductAbstractIds($productAbstractIds);
     }
 }

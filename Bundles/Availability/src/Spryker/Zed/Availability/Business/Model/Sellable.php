@@ -244,14 +244,14 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
      * @return array<string>
      */
-    protected function getSkus($SellableItemsRequestTransfer): array
+    protected function getSkus($sellableItemsRequestTransfer): array
     {
         $concreteSkus = [];
-        foreach ($SellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequest) {
+        foreach ($sellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequest) {
             $concreteSkus[] = $sellableItemRequest->getSkuOrFail();
         }
 
@@ -259,23 +259,23 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
      * @return array<\Generated\Shared\Transfer\SellableItemResponseTransfer>
      */
     protected function processProductConcretesBatchRequest(
-        SellableItemsRequestTransfer $SellableItemsRequestTransfer
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
     ): array {
         $sellableItemResponseTransfers = [];
-        $storeTransfer = $SellableItemsRequestTransfer->getStoreOrFail();
-        $concreteSkus = $this->getSkus($SellableItemsRequestTransfer);
+        $storeTransfer = $sellableItemsRequestTransfer->getStoreOrFail();
+        $concreteSkus = $this->getSkus($sellableItemsRequestTransfer);
 
         $productConcreteAvailabilityTransfers = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkusAndStore($concreteSkus, $storeTransfer);
 
         $productConcreteAvailabilityTransfersSkuMap = $this->getMappedProductConcreteAvailabilityTransfers($productConcreteAvailabilityTransfers);
 
-        foreach ($SellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
+        foreach ($sellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
             if ($sellableItemRequestTransfer->getIsProcessed()) {
                 continue;
             }

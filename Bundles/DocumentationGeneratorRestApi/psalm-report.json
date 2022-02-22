@@ -136,18 +136,6 @@
         },
         {
             "severity": "info",
-            "line_from": 276,
-            "line_to": 276,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Builder\\OpenApiSpecificationSchemaBuilder::createIncludedDataSchema has the more specific type 'array<array-key, Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceRelationshipPluginInterface>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\DocumentationGeneratorRestApi\\Business\\Builder\\SchemaBuilderInterface::createIncludedDataSchema",
-            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Builder/OpenApiSpecificationSchemaBuilder.php",
-            "snippet": "    public function createIncludedDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer",
-            "selected_text": "$resourceRelationships",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 250,
             "line_to": 250,
             "type": "PossiblyInvalidArgument",
@@ -157,54 +145,6 @@
             "selected_text": "$pathMethodDataTransfer->getResponseSchemas()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 142,
-            "line_to": 142,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer with \"new $class_name\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Generator/OpenApiSpecificationSchemaGenerator.php",
-            "snippet": "        $this->addRequestDataAttributesSchemaFromTransfer(new $transferClassName(), $requestAttributesSchemaName);",
-            "selected_text": "new $transferClassName()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer with \"new $class_name\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Generator/OpenApiSpecificationSchemaGenerator.php",
-            "snippet": "        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);",
-            "selected_text": "new $transferClassName()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer with \"new $class_name\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Generator/OpenApiSpecificationSchemaGenerator.php",
-            "snippet": "        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);",
-            "selected_text": "new $transferClassName()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
-            "line_from": 218,
-            "line_to": 218,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer with \"new $class_name\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/DocumentationGeneratorRestApi/src/Spryker/Zed/DocumentationGeneratorRestApi/Business/Generator/OpenApiSpecificationSchemaGenerator.php",
-            "snippet": "            $this->addResponseDataAttributesSchemaFromTransfer(new $resourceAttributesClassName(), $responseAttributesSchemaName);",
-            "selected_text": "new $resourceAttributesClassName()",
-            "error_level": 2,
-            "shortcode": 229
         },
         {
             "severity": "info",

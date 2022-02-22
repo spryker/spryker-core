@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 90,
+            "line_to": 90,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getTemplatePath on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
+            "line_from": 93,
+            "line_to": 93,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Twig\\Environment::render cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 139,
+            "line_to": 139,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getTemplatePath on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
+            "line_from": 152,
+            "line_to": 152,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
+            "line_from": 160,
+            "line_to": 160,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of DateTime::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 163,
-            "line_to": 163,
+            "line_from": 178,
+            "line_to": 178,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getGlossaryPlaceholders on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",
@@ -75,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 164,
-            "line_to": 164,
+            "line_from": 179,
+            "line_to": 179,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $placeholders[mixed|null|string] using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetCmsBlockConnector/src/Spryker/Yves/CmsContentWidgetCmsBlockConnector/Plugin/CmsContentWidget/CmsBlockContentWidgetPlugin.php",

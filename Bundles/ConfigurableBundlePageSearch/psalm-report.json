@@ -2,30 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Client\\ConfigurableBundlePageSearch\\ConfigurableBundlePageSearchClient::searchConfigurableBundleTemplates is incorrect, got 'Elastica\\ResultSet|array<array-key, mixed>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Client/ConfigurableBundlePageSearch/ConfigurableBundlePageSearchClient.php",
-            "snippet": "     * @return array",
-            "selected_text": "array",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 43,
-            "line_to": 45,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Elastica\\ResultSet|array<array-key, mixed>' does not match the declared return type 'array<array-key, mixed>' for Spryker\\Client\\ConfigurableBundlePageSearch\\ConfigurableBundlePageSearchClient::searchConfigurableBundleTemplates",
-            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearch/src/Spryker/Client/ConfigurableBundlePageSearch/ConfigurableBundlePageSearchClient.php",
-            "snippet": "        return $this->getFactory()\n            ->getSearchClient()\n            ->search($searchQuery, $resultFormatters, $requestParameters);",
-            "selected_text": "$this->getFactory()\n            ->getSearchClient()\n            ->search($searchQuery, $resultFormatters, $requestParameters)",
-            "error_level": 6,
-            "shortcode": 128
-        },
-        {
-            "severity": "error",
             "line_from": 36,
             "line_to": 36,
             "type": "InvalidArgument",
@@ -313,18 +289,6 @@
             "selected_text": "$configurableBundleTemplatePageSearchFilterTransfer->getLimit()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Client\\Search\\Plugin\\Elasticsearch\\ResultFormatter\\AbstractElasticsearchResultFormatterPlugin::formatResult has the more specific type 'Elastica\\ResultSet', expecting 'mixed' as defined by Spryker\\Client\\Search\\Dependency\\Plugin\\ResultFormatterPluginInterface::formatResult",
-            "file_name": "vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/ResultFormatter/AbstractElasticsearchResultFormatterPlugin.php",
-            "snippet": "    public function formatResult($searchResult, array $requestParameters = [])",
-            "selected_text": "$searchResult",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": [

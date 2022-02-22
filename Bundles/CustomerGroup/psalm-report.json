@@ -123,30 +123,6 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\CustomerGroup\\Communication\\Form\\CustomerAssignmentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Form/CustomerAssignmentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\CustomerGroup\\Communication\\Form\\CustomerGroupForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroup/src/Spryker/Zed/CustomerGroup/Communication/Form/CustomerGroupForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 183,
             "line_to": 183,
             "type": "MismatchingDocblockParamType",

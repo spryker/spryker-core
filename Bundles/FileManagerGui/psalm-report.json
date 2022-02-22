@@ -75,18 +75,6 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\FileDirectoryForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/FileDirectoryForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 107,
             "line_to": 107,
             "type": "PossiblyNullArrayAccess",
@@ -99,30 +87,6 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\FileDirectoryLocalizedAttributesForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/FileDirectoryLocalizedAttributesForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\FileForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/FileForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 238,
             "line_to": 238,
             "type": "PossiblyNullArrayAccess",
@@ -132,66 +96,6 @@
             "selected_text": "$options[static::OPTION_AVAILABLE_LOCALES]",
             "error_level": 3,
             "shortcode": 79
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\FileLocalizedAttributesForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/FileLocalizedAttributesForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\MimeTypeForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/MimeTypeForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\MimeTypeSettingsForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/MimeTypeSettingsForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\FileManagerGui\\Communication\\Form\\Validator\\Constraints\\FileValidator::validate has the more specific type 'Generated\\Shared\\Transfer\\FileUploadTransfer', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Form/Validator/Constraints/FileValidator.php",
-            "snippet": "    public function validate($value, Constraint $constraint)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\FileManagerGui\\Communication\\Table\\FileInfoEditTable::buildLinks has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\FileManagerGui\\Communication\\Table\\FileInfoTable::buildLinks",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerGui/src/Spryker/Zed/FileManagerGui/Communication/Table/FileInfoEditTable.php",
-            "snippet": "    protected function buildLinks($item)",
-            "selected_text": "$item",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": []

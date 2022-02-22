@@ -60,30 +60,6 @@
             "selected_text": "$result",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabel|Orm\\Zed\\CompanyUnitAddress\\Persistence\\SpyCompanyUnitAddress> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Persistence/CompanyUnitAddressLabelRepository.php",
-            "snippet": "            )->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CompanyUnitAddressLabel\\Persistence\\SpyCompanyUnitAddressLabelToCompanyUnitAddress> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabel/src/Spryker/Zed/CompanyUnitAddressLabel/Persistence/CompanyUnitAddressLabelRepository.php",
-            "snippet": "            )->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": []

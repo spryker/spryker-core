@@ -134,18 +134,6 @@
         },
         {
             "severity": "error",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "NullArgument",
-            "message": "Argument 3 of preg_split cannot be null, null value provided to parameter with type int",
-            "file_name": "vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Business/QueryString/Tokenizer.php",
-            "snippet": "            null,",
-            "selected_text": "null",
-            "error_level": 6,
-            "shortcode": 57
-        },
-        {
-            "severity": "error",
             "line_from": 155,
             "line_to": 155,
             "type": "InvalidReturnType",
@@ -657,8 +645,8 @@
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $quoteItemsCollection has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
             "file_name": "vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Business/Calculator/Discount.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $quoteItemsCollection",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "snippet": "     * @param \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject $quoteItemsCollection",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
             "error_level": 4,
             "shortcode": 141
         },
@@ -669,8 +657,8 @@
             "type": "MismatchingDocblockReturnType",
             "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
             "file_name": "vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Business/Calculator/Discount.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
+            "selected_text": "\\Generated\\Shared\\Transfer\\ItemTransfer[]|\\ArrayObject",
             "error_level": 4,
             "shortcode": 142
         },
@@ -913,18 +901,6 @@
             "selected_text": "$this->discountCalculatorPlugins",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "PossiblyNullOperand",
-            "message": "Right operand cannot be nullable, got int|mixed|null",
-            "file_name": "vendor/spryker/spryker/Bundles/Discount/src/Spryker/Zed/Discount/Business/Collector/ItemQuantityCollector.php",
-            "snippet": "                $quantity += $itemTransfer->getQuantity();",
-            "selected_text": "$itemTransfer->getQuantity()",
-            "error_level": 1,
-            "shortcode": 80
         },
         {
             "severity": "info",

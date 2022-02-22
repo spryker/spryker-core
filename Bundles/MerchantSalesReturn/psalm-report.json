@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ReturnItemTransfer> variable $returnItemTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturn/src/Spryker/Zed/MerchantSalesReturn/Business/Creator/MerchantReturnCreator.php",
+            "snippet": "        $firstReturnItem = $returnItemTransfers->offsetGet(0);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": []
 }

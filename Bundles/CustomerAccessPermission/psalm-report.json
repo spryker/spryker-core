@@ -20,7 +20,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\CustomerAccessPermission\\CustomerAccessPermissionConfig::getPluginNameToSeeContentType cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessPermission/src/Spryker/Client/CustomerAccessPermission/CustomerAccess/CustomerAccess.php",
-            "snippet": "                    $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType())",
+            "snippet": "                    $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType()),",
             "selected_text": "$contentTypeAccess->getContentType()",
             "error_level": 3,
             "shortcode": 78

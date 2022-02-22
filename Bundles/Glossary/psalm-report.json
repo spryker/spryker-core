@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Client\\Glossary\\KeyBuilder\\GlossaryKeyBuilder::buildKey has wrong name $glossaryKey, expecting $data as defined by Spryker\\Shared\\KeyBuilder\\KeyBuilderTrait::buildKey",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Client/Glossary/KeyBuilder/GlossaryKeyBuilder.php",
-            "snippet": "    protected function buildKey($glossaryKey)",
-            "selected_text": "$glossaryKey",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 60,
             "line_to": 60,
             "type": "InvalidReturnType",
@@ -47,18 +35,6 @@
             "selected_text": "$translation",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 176,
-            "line_to": 176,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Glossary\\Persistence\\GlossaryQueryContainer::queryTranslationById has wrong name $idSpyGlossaryTranslation, expecting $idGlossaryTranslation as defined by Spryker\\Zed\\Glossary\\Persistence\\GlossaryQueryContainerInterface::queryTranslationById",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Persistence/GlossaryQueryContainer.php",
-            "snippet": "    public function queryTranslationById($idSpyGlossaryTranslation)",
-            "selected_text": "$idSpyGlossaryTranslation",
-            "error_level": 7,
-            "shortcode": 230
         }
     ],
     "warning": [
@@ -421,30 +397,6 @@
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Glossary\\Communication\\Form\\TranslationForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/Form/TranslationForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options)",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\Glossary\\Persistence\\GlossaryRepository::getTranslationsByGlossaryKeyAndLocaleIsoCodes has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\Glossary\\Persistence\\GlossaryRepositoryInterface::getTranslationsByGlossaryKeyAndLocaleIsoCodes",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Persistence/GlossaryRepository.php",
-            "snippet": "    public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array",
-            "selected_text": "$localeIsoCodes",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

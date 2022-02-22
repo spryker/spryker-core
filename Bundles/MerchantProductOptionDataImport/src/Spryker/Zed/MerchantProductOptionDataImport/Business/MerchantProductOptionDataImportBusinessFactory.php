@@ -17,7 +17,7 @@ use Spryker\Zed\MerchantProductOptionDataImport\Business\Model\Step\ProductOptio
 
 /**
  * @method \Spryker\Zed\MerchantProductOptionDataImport\MerchantProductOptionDataImportConfig getConfig()
- * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker($bulkSize = null)
  * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class MerchantProductOptionDataImportBusinessFactory extends DataImportBusinessFactory

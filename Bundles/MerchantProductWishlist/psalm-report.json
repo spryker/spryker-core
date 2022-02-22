@@ -1,5 +1,42 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductWishlist/src/Spryker/Client/MerchantProductWishlist/Expander/MerchantProductWishlistExpander.php",
+            "snippet": "        $itemTransfers = array_merge($quoteTransfer->getItems()->getArrayCopy(), $quoteTransfer->getBundleItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductWishlist/src/Spryker/Client/MerchantProductWishlist/Expander/MerchantProductWishlistExpander.php",
+            "snippet": "        $itemTransfers = array_merge($quoteTransfer->getItems()->getArrayCopy(), $quoteTransfer->getBundleItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $merchantReferenceIndex[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductWishlist/src/Spryker/Client/MerchantProductWishlist/Expander/MerchantProductWishlistExpander.php",
+            "snippet": "            $merchantReferenceIndex[$itemTransfer->getMerchantReference()] = true;",
+            "selected_text": "$merchantReferenceIndex",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
     "deprecation": []
 }

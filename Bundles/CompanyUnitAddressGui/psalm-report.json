@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CompanyUnitAddressGui\\Communication\\Form\\DataProvider\\CompanyUnitAddressFormDataProvider::prepareCountryChoices is incorrect, got 'array<array-key|mixed, mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<array-key|mixed, mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CompanyUnitAddressGui\\Communication\\Form\\DataProvider\\CompanyUnitAddressFormDataProvider::prepareCountryChoices",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
+            "snippet": "        return $result;",
+            "selected_text": "$result",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -20,15 +45,39 @@
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $result[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
-            "snippet": "            $result[$company->getIdCompany()] = $company->getName();",
+            "snippet": "            $result[$companyTransfer->getIdCompany()] = sprintf(",
             "selected_text": "$result",
             "error_level": 3,
             "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
+            "snippet": "                $companyTransfer->getName(),",
+            "selected_text": "$companyTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
+            "snippet": "                $companyTransfer->getIdCompany(),",
+            "selected_text": "$companyTransfer->getIdCompany()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $result[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
@@ -39,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 213,
-            "line_to": 213,
+            "line_from": 228,
+            "line_to": 228,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'string' for Spryker\\Zed\\CompanyUnitAddressGui\\Communication\\Table\\CompanyUnitAddressTable::getCountryName is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Table/CompanyUnitAddressTable.php",
@@ -51,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 218,
-            "line_to": 218,
+            "line_from": 233,
+            "line_to": 233,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\CompanyUnitAddressGui\\Communication\\Table\\CompanyUnitAddressTable::getCountryName is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Table/CompanyUnitAddressTable.php",
@@ -63,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 232,
-            "line_to": 232,
+            "line_from": 247,
+            "line_to": 247,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Table/CompanyUnitAddressTable.php",

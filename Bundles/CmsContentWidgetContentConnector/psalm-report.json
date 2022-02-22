@@ -2,22 +2,22 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 28,
-            "line_to": 28,
+            "line_from": 30,
+            "line_to": 30,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<string, string>' for Spryker\\Zed\\CmsContentWidgetContentConnector\\Business\\Mapper\\CmsContentItemKeyMapper::mapContentItemKeys is incorrect, got 'array<int(0)|string, null|string>'",
+            "message": "The declared return type 'array<string, string>' for Spryker\\Zed\\CmsContentWidgetContentConnector\\Business\\Mapper\\CmsContentItemKeyMapper::mapContentItemKeys is incorrect, got 'array<0|string, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetContentConnector/src/Spryker/Zed/CmsContentWidgetContentConnector/Business/Mapper/CmsContentItemKeyMapper.php",
-            "snippet": "     * @phpstan-return array<string, string>",
+            "snippet": "     * @return array<string, string>",
             "selected_text": "array<string, string>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 41,
+            "line_to": 41,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int(0)|string, null|string>' does not match the declared return type 'array<string, string>' for Spryker\\Zed\\CmsContentWidgetContentConnector\\Business\\Mapper\\CmsContentItemKeyMapper::mapContentItemKeys",
+            "message": "The inferred type 'array<0|string, null|string>' does not match the declared return type 'array<string, string>' for Spryker\\Zed\\CmsContentWidgetContentConnector\\Business\\Mapper\\CmsContentItemKeyMapper::mapContentItemKeys",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetContentConnector/src/Spryker/Zed/CmsContentWidgetContentConnector/Business/Mapper/CmsContentItemKeyMapper.php",
             "snippet": "        return $contentItemKeys;",
             "selected_text": "$contentItemKeys",
@@ -28,8 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 38,
+            "line_to": 38,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $contentItemKeys[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetContentConnector/src/Spryker/Zed/CmsContentWidgetContentConnector/Business/Mapper/CmsContentItemKeyMapper.php",
@@ -37,18 +37,6 @@
             "selected_text": "$contentItemKeys",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CmsContentWidgetContentConnector\\Communication\\Plugin\\Cms\\CmsContentItemKeyMapperPlugin::map has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsContentWidget\\Dependency\\Plugin\\CmsContentWidgetParameterMapperPluginInterface::map",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetContentConnector/src/Spryker/Zed/CmsContentWidgetContentConnector/Communication/Plugin/Cms/CmsContentItemKeyMapperPlugin.php",
-            "snippet": "    public function map(array $contentItemKeys)",
-            "selected_text": "$contentItemKeys",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": []

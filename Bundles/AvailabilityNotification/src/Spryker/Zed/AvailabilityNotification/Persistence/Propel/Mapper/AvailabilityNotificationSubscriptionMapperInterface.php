@@ -15,12 +15,12 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface AvailabilityNotificationSubscriptionMapperInterface
 {
     /**
-     * @param \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntityTransfer
+     * @param \Orm\Zed\AvailabilityNotification\Persistence\SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntity
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
     public function mapAvailabilityNotificationSubscriptionTransfer(
-        SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntityTransfer
+        SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntity
     ): AvailabilityNotificationSubscriptionTransfer;
 
     /**

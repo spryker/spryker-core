@@ -25,11 +25,11 @@ interface CompanyRoleClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function createCompanyRole(CompanyRoleTransfer $companyRoleUserTransfer): CompanyRoleResponseTransfer;
+    public function createCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
      * Specification:

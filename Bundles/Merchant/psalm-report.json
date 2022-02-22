@@ -8,7 +8,7 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\Merchant\\Business\\Exception\\MerchantNotSavedException::__construct expects ArrayObject<int, Generated\\Shared\\Transfer\\MerchantErrorTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MerchantErrorTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Merchant/src/Spryker/Zed/Merchant/Business/Creator/MerchantCreator.php",
-            "snippet": "                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));",
+            "snippet": "                throw new MerchantNotSavedException($merchantResponseTransfer->getErrors());",
             "selected_text": "$merchantResponseTransfer->getErrors()",
             "error_level": 3,
             "shortcode": 92
@@ -104,7 +104,7 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\Merchant\\Business\\Exception\\MerchantNotSavedException::__construct expects ArrayObject<int, Generated\\Shared\\Transfer\\MerchantErrorTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MerchantErrorTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Merchant/src/Spryker/Zed/Merchant/Business/Updater/MerchantUpdater.php",
-            "snippet": "                throw (new MerchantNotSavedException($merchantResponseTransfer->getErrors()));",
+            "snippet": "                throw new MerchantNotSavedException($merchantResponseTransfer->getErrors());",
             "selected_text": "$merchantResponseTransfer->getErrors()",
             "error_level": 3,
             "shortcode": 92

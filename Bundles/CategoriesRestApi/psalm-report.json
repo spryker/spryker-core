@@ -3,8 +3,20 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\CategoriesRestApi\\Dependency\\Client\\CategoriesRestApiToCategoryStorageClientInterface::getCategories cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName(),",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\CategoriesRestApi\\Processor\\Reader\\CategoryReader::getCategoryNode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
@@ -15,8 +27,32 @@
         },
         {
             "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
+            "line_from": 130,
+            "line_to": 130,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CategoriesRestApi\\Dependency\\Client\\CategoriesRestApiToCategoryStorageClientInterface::getCategoryNodeById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
+            "snippet": "        $categoryNodeStorageTransfer = $this->categoryStorageClient->getCategoryNodeById($nodeId, $locale, $storeName);",
+            "selected_text": "$storeName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 147,
+            "line_to": 147,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CategoriesRestApi\\Dependency\\Client\\CategoriesRestApiToCategoryStorageClientInterface::getCategoryNodeByIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
+            "snippet": "        $categoryNodeStorageTransfers = $this->categoryStorageClient->getCategoryNodeByIds($nodeIds, $localeName, $storeName);",
+            "selected_text": "$storeName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $restResources[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
@@ -24,6 +60,18 @@
             "selected_text": "$restResources",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\CategoriesRestApi\\Dependency\\Client\\CategoriesRestApiToCategoryStorageClientInterface::getCategoryNodeById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/UrlResolver/CategoryNodeUrlResolver.php",
+            "snippet": "            $this->storeClient->getCurrentStore()->getName(),",
+            "selected_text": "$this->storeClient->getCurrentStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": []

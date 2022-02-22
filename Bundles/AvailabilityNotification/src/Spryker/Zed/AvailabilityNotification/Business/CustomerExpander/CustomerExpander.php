@@ -45,16 +45,15 @@ class CustomerExpander implements CustomerExpanderInterface
     {
         $customerTransfer->requireCustomerReference();
 
-        $availabilityNotificationSubscriptions = $this
-                            ->availabilityNotificationSubscriptionReader
-                            ->getAvailabilityNotifications(
-                                (new AvailabilityNotificationCriteriaTransfer())
-                                    ->addCustomerReference($customerTransfer->getCustomerReference())
-                                    ->addStoreName($this->storeFacade->getCurrentStore()->getName()),
-                            )
-                            ->getAvailabilityNotificationSubscriptions();
-        $skus = [];
+        $availabilityNotificationSubscriptions = $this->availabilityNotificationSubscriptionReader
+            ->getAvailabilityNotifications(
+                (new AvailabilityNotificationCriteriaTransfer())
+                    ->addCustomerReference($customerTransfer->getCustomerReference())
+                    ->addStoreName($this->storeFacade->getCurrentStore()->getName()),
+            )
+            ->getAvailabilityNotificationSubscriptions();
 
+        $skus = [];
         foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscription) {
             $skus[] = $availabilityNotificationSubscription->getSku();
         }

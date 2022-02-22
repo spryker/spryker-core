@@ -22,12 +22,12 @@ class SupplierProductConcreteAfterUpdatePlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function update(ProductConcreteTransfer $productConcrete): ProductConcreteTransfer
+    public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->getFacade()->saveCompanySupplierRelationsForProductConcrete($productConcrete);
+        return $this->getFacade()->saveCompanySupplierRelationsForProductConcrete($productConcreteTransfer);
     }
 }

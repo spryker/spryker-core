@@ -1,91 +1,43 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MissingTemplateParam",
-            "message": "ArrayObject has missing template params, expecting 2",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageSetCollectionTransformer.php",
-            "snippet": "     * @phpstan-param \\ArrayObject<\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer>|null $value",
-            "selected_text": "\\ArrayObject<\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer>|null",
-            "error_level": -1,
-            "shortcode": 182
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageCollectionTransformer::transform has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\CategoryImageTransfer>', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageCollectionTransformer.php",
-            "snippet": "    public function transform($value)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageCollectionTransformer::reverseTransform has the more specific type 'array<array-key, mixed>', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageCollectionTransformer.php",
-            "snippet": "    public function reverseTransform($value)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageSetCollectionTransformer::transform has the more specific type 'ArrayObject<Generated\\Shared\\Transfer\\CategoryImageSetTransfer>|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLocaleName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageSetCollectionTransformer.php",
-            "snippet": "    public function transform($value)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageSetCollectionTransformer::reverseTransform has the more specific type 'array<array-key, mixed>|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageSetCollectionTransformer.php",
-            "snippet": "    public function reverseTransform($value)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\LocaleTransformer::transform has the more specific type 'Generated\\Shared\\Transfer\\LocaleTransfer|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/LocaleTransformer.php",
-            "snippet": "    public function transform($value)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\LocaleTransformer::reverseTransform has the more specific type 'int|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/LocaleTransformer.php",
-            "snippet": "    public function reverseTransform($value)",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
+            "snippet": "                if ($categoryImageSetTransfer->getLocale()->getLocaleName() === $localeName) {",
+            "selected_text": "getLocaleName",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\CategoryExtension\\Dependency\\Plugin\\CategoryFormPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Plugin/CategoryImageFormPlugin.php",
+            "snippet": "class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface",
+            "selected_text": "CategoryImageFormPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\CategoryExtension\\Dependency\\Plugin\\CategoryFormTabExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Plugin/CategoryImageFormTabExpanderPlugin.php",
+            "snippet": "class CategoryImageFormTabExpanderPlugin extends AbstractPlugin implements CategoryFormTabExpanderPluginInterface",
+            "selected_text": "CategoryImageFormTabExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

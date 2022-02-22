@@ -179,13 +179,13 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProduct
      *
      * @return bool
      */
-    public function isBundleProduct(int $idProductConcrete): bool
+    public function isBundleProduct(int $idProduct): bool
     {
-        return $this->productBundleQueryContainer->queryBundleProduct($idProductConcrete)->exists();
+        return $this->productBundleQueryContainer->queryBundleProduct($idProduct)->exists();
     }
 
     /**

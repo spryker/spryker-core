@@ -4,8 +4,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
+            "line_from": 79,
+            "line_to": 79,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigPieChartPlugin is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
@@ -16,8 +16,8 @@
         },
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
+            "line_from": 80,
+            "line_to": 80,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigBarChartPlugin is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
@@ -28,8 +28,8 @@
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
+            "line_from": 81,
+            "line_to": 81,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigLineChartPlugin is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",
@@ -40,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 82,
+            "line_to": 82,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\Chart\\Communication\\Plugin\\Twig\\TwigChartPlugin is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/ChartDependencyProvider.php",

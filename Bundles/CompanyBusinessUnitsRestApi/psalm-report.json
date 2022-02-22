@@ -32,7 +32,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCompanyUser on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitsRestApi/src/Spryker/Glue/CompanyBusinessUnitsRestApi/Processor/CompanyBusinessUnit/Reader/CompanyBusinessUnitReader.php",
-            "snippet": "            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser())",
+            "snippet": "            (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdCompanyUser($restRequest->getRestUser()->getIdCompanyUser()),",
             "selected_text": "getIdCompanyUser",
             "error_level": 3,
             "shortcode": 83
@@ -132,18 +132,6 @@
             "selected_text": "getIdCompany",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Glue\\CompanyBusinessUnitsRestApi\\Processor\\CompanyBusinessUnit\\RestResponseBuilder\\CompanyBusinessUnitRestResponseBuilder::createCompanyBusinessUnitCollectionRestResponse has the more specific type 'array<array-key, Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceInterface>', expecting 'array<array-key, mixed>' as defined by Spryker\\Glue\\CompanyBusinessUnitsRestApi\\Processor\\CompanyBusinessUnit\\RestResponseBuilder\\CompanyBusinessUnitRestResponseBuilderInterface::createCompanyBusinessUnitCollectionRestResponse",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnitsRestApi/src/Spryker/Glue/CompanyBusinessUnitsRestApi/Processor/CompanyBusinessUnit/RestResponseBuilder/CompanyBusinessUnitRestResponseBuilder.php",
-            "snippet": "    public function createCompanyBusinessUnitCollectionRestResponse(array $companyBusinessUnitRestResources): RestResponseInterface",
-            "selected_text": "$companyBusinessUnitRestResources",
-            "error_level": 5,
-            "shortcode": 140
         }
     ],
     "deprecation": []

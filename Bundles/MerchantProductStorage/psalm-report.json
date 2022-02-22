@@ -16,15 +16,51 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 48,
-            "line_to": 48,
+            "line_from": 58,
+            "line_to": 58,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\MerchantProductStorage\\Reader\\MerchantProductStorageReaderInterface::findOne cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductStorage/src/Spryker/Client/MerchantProductStorage/Plugin/ProductStorage/ProductViewMerchantProductExpanderPlugin.php",
-            "snippet": "            ->findOne($productViewTransfer->getIdProductAbstract());",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductStorage/src/Spryker/Client/MerchantProductStorage/Expander/ProductViewMerchantProductExpander.php",
+            "snippet": "            $productViewTransfer->getIdProductAbstract(),",
             "selected_text": "$productViewTransfer->getIdProductAbstract()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\MerchantProductCriteriaTransfer::addIdProductAbstract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductStorage/src/Spryker/Zed/MerchantProductStorage/Business/Expander/MerchantReferenceProductConcreteStorageExpander.php",
+            "snippet": "            $merchantProductCriteriaTransfer->addIdProductAbstract($productConcreteStorageTransfer->getIdProductAbstract());",
+            "selected_text": "$productConcreteStorageTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $merchantReferencesIndexedByIdProductAbstract using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductStorage/src/Spryker/Zed/MerchantProductStorage/Business/Expander/MerchantReferenceProductConcreteStorageExpander.php",
+            "snippet": "                    $merchantReferencesIndexedByIdProductAbstract[$productConcreteStorageTransfer->getIdProductAbstract()],",
+            "selected_text": "$merchantReferencesIndexedByIdProductAbstract",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $merchantReferencesIndexedByIdProductAbstract[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductStorage/src/Spryker/Zed/MerchantProductStorage/Business/Expander/MerchantReferenceProductConcreteStorageExpander.php",
+            "snippet": "            $merchantReferencesIndexedByIdProductAbstract[$merchantProduct->getIdProductAbstract()] = $merchantProduct->getMerchantReference();",
+            "selected_text": "$merchantReferencesIndexedByIdProductAbstract",
+            "error_level": 3,
+            "shortcode": 125
         },
         {
             "severity": "info",

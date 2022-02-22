@@ -14,30 +14,30 @@ use Symfony\Component\Form\DataTransformerInterface;
 class CmsSlotBlockTransformer implements DataTransformerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer|null $cmsSlotBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer|null $value
      *
      * @return array|null
      */
-    public function transform($cmsSlotBlockTransfer): ?array
+    public function transform($value): ?array
     {
-        return $cmsSlotBlockTransfer ? $cmsSlotBlockTransfer->toArray(true, true) : null;
+        return $value ? $value->toArray(true, true) : null;
     }
 
     /**
-     * @param array|null $cmsSlotBlock
+     * @param array|null $value
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer|null
      */
-    public function reverseTransform($cmsSlotBlock): ?CmsSlotBlockTransfer
+    public function reverseTransform($value): ?CmsSlotBlockTransfer
     {
-        if (!$cmsSlotBlock) {
+        if (!$value) {
             return null;
         }
 
-        $conditions = $cmsSlotBlock[CmsSlotBlockTransfer::CONDITIONS];
-        unset($cmsSlotBlock[CmsSlotBlockTransfer::CONDITIONS]);
+        $conditions = $value[CmsSlotBlockTransfer::CONDITIONS];
+        unset($value[CmsSlotBlockTransfer::CONDITIONS]);
 
-        $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->fromArray($cmsSlotBlock, true);
+        $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->fromArray($value, true);
         foreach ($conditions as $conditionKey => $condition) {
             $cmsSlotBlockTransfer->addCondition(
                 $conditionKey,

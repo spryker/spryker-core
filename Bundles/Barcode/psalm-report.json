@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 54,
+            "line_to": 54,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Barcode/src/Spryker/Zed/Barcode/Plugin/Twig/BarcodeTwigPlugin.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
+            "line_from": 54,
+            "line_to": 54,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Barcode/src/Spryker/Zed/Barcode/Plugin/Twig/BarcodeTwigPlugin.php",

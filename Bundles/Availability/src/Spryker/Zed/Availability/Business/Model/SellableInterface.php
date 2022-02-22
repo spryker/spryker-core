@@ -16,12 +16,12 @@ use Spryker\DecimalObject\Decimal;
 interface SellableInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableItemsRequestTransfer $sellableItemsBatchRequestTransfer
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
     ): SellableItemsResponseTransfer;
 
     /**

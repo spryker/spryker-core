@@ -1,5 +1,54 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityNotificationsRestApi/src/Spryker/Glue/AvailabilityNotificationsRestApi/Processor/Reader/AvailabilityNotificationReader.php",
+            "snippet": "                    ->setMaxPerPage($restRequest->getPage()->getLimit())",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\PaginationTransfer::setPage expects int|null, float|int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityNotificationsRestApi/src/Spryker/Glue/AvailabilityNotificationsRestApi/Processor/Reader/AvailabilityNotificationReader.php",
+            "snippet": "                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1),",
+            "selected_text": "($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityNotificationsRestApi/src/Spryker/Glue/AvailabilityNotificationsRestApi/Processor/Reader/AvailabilityNotificationReader.php",
+            "snippet": "                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1),",
+            "selected_text": "getOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityNotificationsRestApi/src/Spryker/Glue/AvailabilityNotificationsRestApi/Processor/Reader/AvailabilityNotificationReader.php",
+            "snippet": "                    ->setPage(($restRequest->getPage()->getOffset() / $restRequest->getPage()->getLimit()) + 1),",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
     "deprecation": []
 }

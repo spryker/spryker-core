@@ -99,12 +99,12 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $spyCustomerQuery
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $customerQuery
      * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function applyFilterToQuery(SpyCustomerQuery $spyCustomerQuery, ?FilterTransfer $filterTransfer): SpyCustomerQuery
+    protected function applyFilterToQuery(SpyCustomerQuery $customerQuery, ?FilterTransfer $filterTransfer): SpyCustomerQuery
     {
         $criteria = new Criteria();
         if ($filterTransfer !== null) {
@@ -112,9 +112,9 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
                 ->toCriteria();
         }
 
-        $spyCustomerQuery->mergeWith($criteria);
+        $customerQuery->mergeWith($criteria);
 
-        return $spyCustomerQuery;
+        return $customerQuery;
     }
 
     /**

@@ -20,7 +20,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/FlysystemLocalFileSystem/src/Spryker/Service/FlysystemLocalFileSystem/Model/Builder/Adapter/LocalAdapterBuilder.php",
-            "snippet": "            $this->adapterConfig->getPath()",
+            "snippet": "            $this->adapterConfig->getPath(),",
             "selected_text": "$this->adapterConfig->getPath()",
             "error_level": 3,
             "shortcode": 78

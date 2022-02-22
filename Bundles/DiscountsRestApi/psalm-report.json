@@ -1,5 +1,114 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "                $quoteRequestTransfer->getLatestVersion()->getQuote() === null",
+            "selected_text": "getQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "            $quoteTransfer = $quoteRequestTransfer->getLatestVersion()->getQuote();",
+            "selected_text": "getQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedRestQuoteRequestsAttributesTransfers using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "            $restQuoteRequestsAttributesTransfer = $indexedRestQuoteRequestsAttributesTransfers[$quoteRequestTransfer->getQuoteRequestReference()];",
+            "selected_text": "$indexedRestQuoteRequestsAttributesTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCart on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "                $restQuoteRequestsAttributesTransfer->getShownVersion()->getCart() === null",
+            "selected_text": "getCart",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCart on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "            $restQuoteRequestsCartTransfer = $restQuoteRequestsAttributesTransfer->getShownVersion()->getCart();",
+            "selected_text": "getCart",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getVoucherDiscounts on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "            foreach ($quoteTransfer->getVoucherDiscounts() as $voucherDiscount) {",
+            "selected_text": "getVoucherDiscounts",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\DiscountsRestApi\\Processor\\Mapper\\DiscountMapper::addDiscountToRestCartTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "                    $restQuoteRequestsCartTransfer,",
+            "selected_text": "$restQuoteRequestsCartTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\DiscountsRestApi\\Processor\\Mapper\\DiscountMapper::addDiscountToRestCartTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "                    $restQuoteRequestsCartTransfer,",
+            "selected_text": "$restQuoteRequestsCartTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedRestQuoteRequestsAttributesTransfers[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountsRestApi/src/Spryker/Glue/DiscountsRestApi/Processor/Mapper/DiscountMapper.php",
+            "snippet": "            $indexedRestQuoteRequestsAttributesTransfers[$restQuoteRequestsAttributesTransfer->getQuoteRequestReference()] = $restQuoteRequestsAttributesTransfer;",
+            "selected_text": "$indexedRestQuoteRequestsAttributesTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
     "deprecation": []
 }

@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Mail\\Business\\Model\\Mail\\Builder\\MailBuilderInterface::addRecipient cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardDeliveryMailTypePlugin.php",
@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getEmail on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardDeliveryMailTypePlugin.php",
@@ -75,32 +75,32 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 106,
+            "line_to": 106,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardDeliveryMailTypePlugin.php",
-            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
+            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
             "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 106,
+            "line_to": 106,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardDeliveryMailTypePlugin.php",
-            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
+            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
             "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 107,
+            "line_to": 107,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Mail\\Business\\Model\\Mail\\Builder\\MailBuilderInterface::addRecipient cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardUsageMailTypePlugin.php",
@@ -111,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
+            "line_from": 107,
+            "line_to": 107,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getEmail on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardUsageMailTypePlugin.php",
@@ -123,28 +123,41 @@
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardUsageMailTypePlugin.php",
-            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
+            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),",
             "selected_text": "$customerTransfer->getFirstName()",
             "error_level": 1,
             "shortcode": 80
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Mail/GiftCardUsageMailTypePlugin.php",
-            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName()",
+            "snippet": "            $customerTransfer->getFirstName() . ' ' . $customerTransfer->getLastName(),",
             "selected_text": "$customerTransfer->getLastName()",
             "error_level": 1,
             "shortcode": 80
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardMailConnector/src/Spryker/Zed/GiftCardMailConnector/Communication/Plugin/Checkout/SendEmailToGiftCardUser.php",
+            "snippet": "class SendEmailToGiftCardUser extends AbstractPlugin implements CheckoutPostSaveHookInterface",
+            "selected_text": "SendEmailToGiftCardUser",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

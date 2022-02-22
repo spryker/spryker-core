@@ -1,5 +1,211 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\AuthRestApi\\Dependency\\Service\\AuthRestApiToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/AccessTokens/AccessTokenUserFinder.php",
+            "snippet": "            $oauthAccessTokenDataTransfer->getOauthUserId(),",
+            "selected_text": "$oauthAccessTokenDataTransfer->getOauthUserId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'bool' for Spryker\\Glue\\AuthRestApi\\Processor\\AccessTokens\\AccessTokenValidator::validateAccessToken is not nullable, but 'bool|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/AccessTokens/AccessTokenValidator.php",
+            "snippet": "     * @return bool",
+            "selected_text": "bool",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'bool' for Spryker\\Glue\\AuthRestApi\\Processor\\AccessTokens\\AccessTokenValidator::validateAccessToken is not nullable, but the function returns 'bool|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/AccessTokens/AccessTokenValidator.php",
+            "snippet": "        return $this->oauthClient->validateOauthAccessToken($authAccessTokenValidationRequestTransfer)->getIsValid();",
+            "selected_text": "$this->oauthClient->validateOauthAccessToken($authAccessTokenValidationRequestTransfer)->getIsValid()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getErrorType on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/AccessTokens/OauthToken.php",
+            "snippet": "            if ($oauthResponseTransfer->getError()->getErrorType() === 'invalid_credentials') {",
+            "selected_text": "getErrorType",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getErrorType on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/AccessTokens/OauthToken.php",
+            "snippet": "                'error' => $oauthResponseTransfer->getError()->getErrorType(),",
+            "selected_text": "getErrorType",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMessage on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/AccessTokens/OauthToken.php",
+            "snippet": "                'error_description' => $oauthResponseTransfer->getError()->getMessage(),",
+            "selected_text": "getMessage",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\AuthRestApi\\Processor\\RefreshTokens\\RefreshTokensRevoker::isResourceIdentifierCurrentUser cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/RefreshTokens/RefreshTokensRevoker.php",
+            "snippet": "        if ($this->isResourceIdentifierCurrentUser($refreshTokenIdentifier)) {",
+            "selected_text": "$refreshTokenIdentifier",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\AuthRestApi\\Dependency\\Client\\AuthRestApiToOauthClientInterface::revokeRefreshToken cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/RefreshTokens/RefreshTokensRevoker.php",
+            "snippet": "        $this->oauthClient->revokeRefreshToken($refreshTokenIdentifier, $restRequest->getRestUser()->getNaturalIdentifier());",
+            "selected_text": "$restRequest->getRestUser()->getNaturalIdentifier()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNaturalIdentifier on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/RefreshTokens/RefreshTokensRevoker.php",
+            "snippet": "        $this->oauthClient->revokeRefreshToken($refreshTokenIdentifier, $restRequest->getRestUser()->getNaturalIdentifier());",
+            "selected_text": "getNaturalIdentifier",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\AuthRestApi\\Dependency\\Client\\AuthRestApiToOauthClientInterface::revokeAllRefreshTokens cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/RefreshTokens/RefreshTokensRevoker.php",
+            "snippet": "        $this->oauthClient->revokeAllRefreshTokens($restRequest->getRestUser()->getNaturalIdentifier());",
+            "selected_text": "$restRequest->getRestUser()->getNaturalIdentifier()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNaturalIdentifier on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Processor/RefreshTokens/RefreshTokensRevoker.php",
+            "snippet": "        $this->oauthClient->revokeAllRefreshTokens($restRequest->getRestUser()->getNaturalIdentifier());",
+            "selected_text": "getNaturalIdentifier",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Shared\\AuthRestApi\\AuthRestApiConfig::getClientSecret has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/AuthRestApiConfig.php",
+            "snippet": "        return $this->getSharedConfig()->getClientSecret();",
+            "selected_text": "getClientSecret",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Shared\\AuthRestApi\\AuthRestApiConfig::getClientId has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/AuthRestApiConfig.php",
+            "snippet": "        return $this->getSharedConfig()->getClientId();",
+            "selected_text": "getClientId",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\Oauth\\OauthClientInterface::validateAccessToken has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Dependency/Client/AuthRestApiToOauthClientBridge.php",
+            "snippet": "        return $this->oauthClient->validateAccessToken($authAccessTokenValidationRequestTransfer);",
+            "selected_text": "validateAccessToken",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ValidateRestRequestPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Glue/AuthRestApi/Plugin/AccessTokenValidatorPlugin.php",
+            "snippet": "class AccessTokenValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface",
+            "selected_text": "AccessTokenValidatorPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\AuthRestApi\\AuthRestApiConstants::OAUTH_CLIENT_SECRET is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Shared/AuthRestApi/AuthRestApiConfig.php",
+            "snippet": "        return $this->get(AuthRestApiConstants::OAUTH_CLIENT_SECRET);",
+            "selected_text": "AuthRestApiConstants::OAUTH_CLIENT_SECRET",
+            "error_level": 2,
+            "shortcode": 170
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "DeprecatedConstant",
+            "message": "Constant Spryker\\Shared\\AuthRestApi\\AuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/AuthRestApi/src/Spryker/Shared/AuthRestApi/AuthRestApiConfig.php",
+            "snippet": "        return $this->get(AuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER);",
+            "selected_text": "AuthRestApiConstants::OAUTH_CLIENT_IDENTIFIER",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ]
 }

@@ -50,5 +50,18 @@
             "shortcode": 83
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\DecisionRulePluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Communication/Plugin/DecisionRule/CustomerGroupDecisionRulePlugin.php",
+            "snippet": "class CustomerGroupDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface",
+            "selected_text": "CustomerGroupDecisionRulePlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
 }

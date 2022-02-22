@@ -1,30 +1,31 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>' for Spryker\\Zed\\CategoryImage\\Business\\ImageSet\\ImageSetCreator::executeCreateCategoryImageSetsForCategoryTransaction is incorrect, got 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetCreator.php",
+            "snippet": "     * @return \\ArrayObject<int, \\Generated\\Shared\\Transfer\\CategoryImageSetTransfer>",
+            "selected_text": "\\ArrayObject<int, \\Generated\\Shared\\Transfer\\CategoryImageSetTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>' does not match the declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>' for Spryker\\Zed\\CategoryImage\\Business\\ImageSet\\ImageSetCreator::executeCreateCategoryImageSetsForCategoryTransaction",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetCreator.php",
+            "snippet": "        return $categoryTransfer->getImageSets();",
+            "selected_text": "$categoryTransfer->getImageSets()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/CategoryImageFacade.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/CategoryImageFacadeInterface.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
         {
             "severity": "info",
             "line_from": 36,
@@ -32,46 +33,10 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CategoryImage\\Business\\ImageSet\\ImageSetReaderInterface::getCategoryImageSetsByIdCategory cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/CategoryExpander.php",
-            "snippet": "            $categoryTransfer->requireIdCategory()->getIdCategory()",
+            "snippet": "            $categoryTransfer->requireIdCategory()->getIdCategory(),",
             "selected_text": "$categoryTransfer->requireIdCategory()->getIdCategory()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetCreator.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetCreator.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetCreatorInterface.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
         },
         {
             "severity": "info",
@@ -80,7 +45,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CategoryImage\\Persistence\\CategoryImageEntityManagerInterface::deleteCategoryImageSetById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetDeleter.php",
-            "snippet": "                $categoryImageSetTransfer->getIdCategoryImageSet()",
+            "snippet": "                $categoryImageSetTransfer->getIdCategoryImageSet(),",
             "selected_text": "$categoryImageSetTransfer->getIdCategoryImageSet()",
             "error_level": 3,
             "shortcode": 78
@@ -104,7 +69,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CategoryImage\\Persistence\\CategoryImageEntityManagerInterface::deleteCategoryImageSetById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetUpdater.php",
-            "snippet": "                $categoryImageSetTransfer->getIdCategoryImageSet()",
+            "snippet": "                $categoryImageSetTransfer->getIdCategoryImageSet(),",
             "selected_text": "$categoryImageSetTransfer->getIdCategoryImageSet()",
             "error_level": 3,
             "shortcode": 78
@@ -140,7 +105,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\CategoryImage\\Persistence\\CategoryImageEntityManagerInterface::deleteCategoryImageFromImageSetById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Business/ImageSet/ImageSetUpdater.php",
-            "snippet": "                    $categoryImageSetTransfer->getIdCategoryImageSet()",
+            "snippet": "                    $categoryImageSetTransfer->getIdCategoryImageSet(),",
             "selected_text": "$categoryImageSetTransfer->getIdCategoryImageSet()",
             "error_level": 3,
             "shortcode": 78
@@ -171,25 +136,13 @@
         },
         {
             "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetToCategoryImage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/CategoryImageEntityManager.php",
-            "snippet": "        if ($categoryImage->getSpyCategoryImageSetToCategoryImages()->isEmpty()) {",
-            "selected_text": "isEmpty",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $categoryImageSetEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/Propel/Mapper/CategoryImageMapper.php",
-            "snippet": "     * @param \\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[]|\\Propel\\Runtime\\Collection\\ObjectCollection $categoryImageSetEntityCollection",
-            "selected_text": "\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[] $categoryImageSetEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[]",
             "error_level": 4,
             "shortcode": 141
         },
@@ -200,8 +153,8 @@
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $categoryImageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/Propel/Mapper/CategoryImageMapper.php",
-            "snippet": "     * @param \\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]|\\Propel\\Runtime\\Collection\\ObjectCollection $categoryImageEntityCollection",
-            "selected_text": "\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[] $categoryImageEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]",
             "error_level": 4,
             "shortcode": 141
         },
@@ -219,25 +172,13 @@
         },
         {
             "severity": "info",
-            "line_from": 156,
-            "line_to": 156,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetToCategoryImage> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/Propel/Mapper/CategoryImageMapper.php",
-            "snippet": "            ->getFirst();",
-            "selected_text": "getFirst",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 19,
             "line_to": 19,
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $categoryImageSetEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/Propel/Mapper/CategoryImageMapperInterface.php",
-            "snippet": "     * @param \\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[]|\\Propel\\Runtime\\Collection\\ObjectCollection $categoryImageSetEntityCollection",
-            "selected_text": "\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[] $categoryImageSetEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet[]",
             "error_level": 4,
             "shortcode": 141
         },
@@ -248,8 +189,8 @@
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $categoryImageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImage/src/Spryker/Zed/CategoryImage/Persistence/Propel/Mapper/CategoryImageMapperInterface.php",
-            "snippet": "     * @param \\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]|\\Propel\\Runtime\\Collection\\ObjectCollection $categoryImageEntityCollection",
-            "selected_text": "\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[] $categoryImageEntityCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImage[]",
             "error_level": 4,
             "shortcode": 141
         }

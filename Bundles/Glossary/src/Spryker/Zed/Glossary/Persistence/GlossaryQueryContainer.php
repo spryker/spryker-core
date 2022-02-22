@@ -169,14 +169,14 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      *
      * @api
      *
-     * @param int $idSpyGlossaryTranslation
+     * @param int $idGlossaryTranslation
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryTranslationById($idSpyGlossaryTranslation)
+    public function queryTranslationById($idGlossaryTranslation)
     {
         $query = $this->queryTranslations();
-        $query->filterByIdGlossaryTranslation($idSpyGlossaryTranslation);
+        $query->filterByIdGlossaryTranslation($idGlossaryTranslation);
 
         return $query;
     }

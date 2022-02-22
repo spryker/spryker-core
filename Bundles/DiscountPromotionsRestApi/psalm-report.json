@@ -1,34 +1,47 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\PromotionItemTransfer>' for Spryker\\Glue\\DiscountPromotionsRestApi\\Processor\\Expander\\PromotionItemByQuoteResourceRelationshipExpander::getPromotionItemsFromPayload is incorrect, got 'ArrayObject|ArrayObject<mixed, mixed>|array<array-key, Generated\\Shared\\Transfer\\PromotionItemTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Expander/PromotionItemByQuoteResourceRelationshipExpander.php",
+            "snippet": "     * @return \\ArrayObject<int, \\Generated\\Shared\\Transfer\\PromotionItemTransfer>",
+            "selected_text": "\\ArrayObject<int, \\Generated\\Shared\\Transfer\\PromotionItemTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PromotionItemTransfer>' does not match the declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\PromotionItemTransfer>' for Spryker\\Glue\\DiscountPromotionsRestApi\\Processor\\Expander\\PromotionItemByQuoteResourceRelationshipExpander::getPromotionItemsFromPayload",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Expander/PromotionItemByQuoteResourceRelationshipExpander.php",
+            "snippet": "        return $payload->getPromotionItems();",
+            "selected_text": "$payload->getPromotionItems()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PromotionItemTransfer>', should be 'ArrayObject'",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $filteredPromotionItemTransfers[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Expander/PromotionItemByQuoteResourceRelationshipExpander.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\PromotionItemTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\PromotionItemTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getUuid on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Expander/PromotionItemByQuoteResourceRelationshipExpander.php",
-            "snippet": "                ->getUuid();",
-            "selected_text": "getUuid",
+            "snippet": "                $filteredPromotionItemTransfers[$promotionItemTransfer->getUuid()] = $promotionItemTransfer;",
+            "selected_text": "$filteredPromotionItemTransfers",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
+            "line_from": 41,
+            "line_to": 41,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/Business/Mapper/DiscountPromotionMapper.php",
@@ -39,20 +52,20 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\DiscountPromotionsRestApi\\Dependency\\Facade\\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface::findDiscountPromotionByUuid cannot be null, possibly null value provided",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\DiscountPromotionTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/Business/Mapper/DiscountPromotionMapper.php",
-            "snippet": "            $cartItemRequestTransfer->getDiscountPromotionUuid()",
-            "selected_text": "$cartItemRequestTransfer->getDiscountPromotionUuid()",
+            "snippet": "            ->getIterator()",
+            "selected_text": "getIterator",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 113
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/Business/Mapper/DiscountPromotionMapper.php",
@@ -62,5 +75,42 @@
             "shortcode": 113
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\RestPromotionalItemsAttributesTransfer::setSku has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Mapper/PromotionItemMapper.php",
+            "snippet": "            ->setSku($this->getAbstractSku($discountPromotionTransfer))",
+            "selected_text": "setSku",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\DiscountPromotionTransfer::getAbstractSku has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Mapper/PromotionItemMapper.php",
+            "snippet": "            ->setDiscountPromotionAbstractSku($discountPromotionTransfer->getAbstractSku())",
+            "selected_text": "getAbstractSku",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\DiscountPromotionTransfer::getAbstractSku has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Mapper/PromotionItemMapper.php",
+            "snippet": "        $abstractSku = $discountPromotionTransfer->getAbstractSku();",
+            "selected_text": "getAbstractSku",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

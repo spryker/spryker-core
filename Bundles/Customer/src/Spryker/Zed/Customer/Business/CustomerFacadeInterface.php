@@ -27,11 +27,11 @@ interface CustomerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerListTransfer
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
      */
-    public function getCustomerCollection(CustomerCollectionTransfer $customerListTransfer): CustomerCollectionTransfer;
+    public function getCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): CustomerCollectionTransfer;
 
     /**
      * Specification:

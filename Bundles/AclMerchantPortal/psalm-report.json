@@ -3,15 +3,15 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Generated\\Zed\\Ide\\AutoCompletion::aclEntity does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/AclMerchantPortal/src/Spryker/Zed/AclMerchantPortal/AclMerchantPortalDependencyProvider.php",
-            "snippet": "                $container->getLocator()->aclEntity()->facade()",
-            "selected_text": "aclEntity",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\AclMerchantPortal\\Dependency\\Facade\\AclMerchantPortalToAclFacadeInterface::getUserGroups cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/AclMerchantPortal/src/Spryker/Zed/AclMerchantPortal/Business/ConditionChecker/MerchantUser/UserRoleFilterConditionChecker.php",
+            "snippet": "            $userTransfer->getIdUser(),",
+            "selected_text": "$userTransfer->getIdUser()",
             "error_level": 3,
-            "shortcode": 108
+            "shortcode": 78
         }
     ],
     "deprecation": []

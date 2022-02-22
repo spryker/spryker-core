@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserPasswordResetMail/src/Spryker/Zed/MerchantUserPasswordResetMail/Communication/Plugin/Mail/MerchantUserPasswordResetMailTypePlugin.php",
+            "snippet": "        $mailBuilder->addRecipient($recipientEmail, $userTransfer->getFirstName() . ' ' . $userTransfer->getLastName());",
+            "selected_text": "$userTransfer->getFirstName()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUserPasswordResetMail/src/Spryker/Zed/MerchantUserPasswordResetMail/Communication/Plugin/Mail/MerchantUserPasswordResetMailTypePlugin.php",
+            "snippet": "        $mailBuilder->addRecipient($recipientEmail, $userTransfer->getFirstName() . ' ' . $userTransfer->getLastName());",
+            "selected_text": "$userTransfer->getLastName()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
     "deprecation": []
 }

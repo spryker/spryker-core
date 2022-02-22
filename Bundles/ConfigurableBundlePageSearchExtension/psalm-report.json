@@ -4,8 +4,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
+            "line_from": 26,
+            "line_to": 26,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearchExtension/src/Spryker/Zed/ConfigurableBundlePageSearchExtension/Dependency/Plugin/ConfigurableBundleTemplatePageMapExpanderPluginInterface.php",

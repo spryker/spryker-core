@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\MerchantOrderTransfer>' for Spryker\\Zed\\MerchantSalesReturnGui\\Communication\\Reader\\MerchantSalesReturnReader::getMerchantOrders is incorrect, got 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MerchantOrderTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnGui/src/Spryker/Zed/MerchantSalesReturnGui/Communication/Reader/MerchantSalesReturnReader.php",
+            "snippet": "     * @return \\ArrayObject<int, \\Generated\\Shared\\Transfer\\MerchantOrderTransfer>",
+            "selected_text": "\\ArrayObject<int, \\Generated\\Shared\\Transfer\\MerchantOrderTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MerchantOrderTransfer>' does not match the declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\MerchantOrderTransfer>' for Spryker\\Zed\\MerchantSalesReturnGui\\Communication\\Reader\\MerchantSalesReturnReader::getMerchantOrders",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSalesReturnGui/src/Spryker/Zed/MerchantSalesReturnGui/Communication/Reader/MerchantSalesReturnReader.php",
+            "snippet": "        return $merchantOrderCollection->getMerchantOrders();",
+            "selected_text": "$merchantOrderCollection->getMerchantOrders()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [],
     "deprecation": []
 }

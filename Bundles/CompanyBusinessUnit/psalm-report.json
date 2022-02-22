@@ -280,18 +280,6 @@
         },
         {
             "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyBusinessUnit\\Persistence\\CompanyBusinessUnitEntityManager::save has the more specific type 'Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer', expecting 'Spryker\\Shared\\Kernel\\Transfer\\EntityTransferInterface' as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyBusinessUnit/src/Spryker/Zed/CompanyBusinessUnit/Persistence/CompanyBusinessUnitEntityManager.php",
-            "snippet": "/**\n * @method \\Spryker\\Zed\\CompanyBusinessUnit\\Persistence\\CompanyBusinessUnitPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyBusinessUnitEntityTransfer $spyCompanyBusinessUnitEntityTransfer)\n */",
-            "selected_text": "\\Spryker\\Zed\\CompanyBusinessUnit\\Persistence\\CompanyBusinessUnitPersistenceFactory getFactory()",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyNullArgument",

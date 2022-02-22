@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdAgent on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/CustomerReader.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
+            "line_from": 83,
+            "line_to": 83,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getOffset on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/CustomerReader.php",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 84,
+            "line_to": 84,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLimit on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/Reader/CustomerReader.php",
@@ -92,7 +92,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceBuilderInterface::createRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
-            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
+            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage(),",
             "selected_text": "$customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
             "error_level": 3,
             "shortcode": 78
@@ -104,7 +104,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMaxPerPage on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/AgentAuthRestApi/src/Spryker/Glue/AgentAuthRestApi/Processor/RestResponseBuilder/AgentAccessTokenRestResponseBuilder.php",
-            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()",
+            "snippet": "            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage(),",
             "selected_text": "getMaxPerPage",
             "error_level": 3,
             "shortcode": 83

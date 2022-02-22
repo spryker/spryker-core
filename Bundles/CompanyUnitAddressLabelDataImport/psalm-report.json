@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "MethodSignatureMismatch",
-            "message": "Method Spryker\\Zed\\CompanyUnitAddressLabelDataImport\\Business\\CompanyUnitAddressLabelDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabelDataImport/src/Spryker/Zed/CompanyUnitAddressLabelDataImport/Business/CompanyUnitAddressLabelDataImportBusinessFactory.php",
-            "snippet": "class CompanyUnitAddressLabelDataImportBusinessFactory extends DataImportBusinessFactory",
-            "selected_text": "CompanyUnitAddressLabelDataImportBusinessFactory",
-            "error_level": 7,
-            "shortcode": 42
-        }
-    ],
+    "error": [],
     "warning": [],
     "deprecation": []
 }

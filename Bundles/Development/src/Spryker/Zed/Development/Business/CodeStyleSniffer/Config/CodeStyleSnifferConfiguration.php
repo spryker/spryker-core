@@ -165,13 +165,13 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     /**
      * {@inheritDoc}
      *
-     * @param string $modulePath
+     * @param string $path
      *
      * @return string
      */
-    public function getCodingStandard(string $modulePath): string
+    public function getCodingStandard(string $path): string
     {
-        $phpcsRootFilePath = $modulePath . 'phpcs.xml';
+        $phpcsRootFilePath = $path . 'phpcs.xml';
 
         if (file_exists($phpcsRootFilePath)) {
             return $phpcsRootFilePath;
@@ -179,7 +179,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
 
         $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
 
-        if (strpos($modulePath, $vendorDir) !== false) {
+        if (strpos($path, $vendorDir) !== false) {
             if ($this->getLevel() === static::LEVEL_SPRYKER_STRICT) {
                 return $this->developmentConfig->getCodeSnifferStrictRuleset();
             }

@@ -28,7 +28,7 @@ class Tokenizer implements TokenizerInterface
         $tokens = preg_split(
             static::STRING_TO_TOKENS_REGEXP,
             $queryString,
-            null,
+            -1,
             PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE,
         );
 

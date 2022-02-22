@@ -366,13 +366,13 @@ abstract class AbstractCollector
     }
 
     /**
-     * @param string $identifier
+     * @param string $data Identifier.
      *
      * @return string
      */
-    protected function buildKey($identifier)
+    protected function buildKey($data)
     {
-        return $this->collectResourceType() . '.' . $identifier;
+        return $this->collectResourceType() . '.' . $data;
     }
 
     /**

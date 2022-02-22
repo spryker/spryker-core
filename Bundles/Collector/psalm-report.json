@@ -2,18 +2,6 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Shared\\Collector\\Code\\KeyBuilder\\SharedResourceKeyBuilder::buildKey has wrong name $identifier, expecting $data as defined by Spryker\\Shared\\KeyBuilder\\KeyBuilderTrait::buildKey",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Shared/Collector/Code/KeyBuilder/SharedResourceKeyBuilder.php",
-            "snippet": "    protected function buildKey($identifier)",
-            "selected_text": "$identifier",
-            "error_level": 7,
-            "shortcode": 230
-        },
-        {
-            "severity": "error",
             "line_from": 175,
             "line_to": 175,
             "type": "InvalidReturnType",
@@ -35,18 +23,6 @@
             "selected_text": "$expiredData",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 373,
-            "line_to": 373,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\Collector\\Business\\Collector\\AbstractCollector::buildKey has wrong name $identifier, expecting $data as defined by Spryker\\Shared\\KeyBuilder\\KeyBuilderTrait::buildKey",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Collector/AbstractCollector.php",
-            "snippet": "    protected function buildKey($identifier)",
-            "selected_text": "$identifier",
-            "error_level": 7,
-            "shortcode": 230
         },
         {
             "severity": "error",
@@ -86,8 +62,8 @@
         },
         {
             "severity": "error",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 46,
+            "line_to": 46,
             "type": "UndefinedClass",
             "message": "Class, interface or enum named Elastica\\Type does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
@@ -98,8 +74,8 @@
         },
         {
             "severity": "error",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 57,
+            "line_to": 57,
             "type": "UndefinedClass",
             "message": "Class, interface or enum named Elastica\\Type does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
@@ -110,8 +86,8 @@
         },
         {
             "severity": "error",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 66,
+            "line_to": 66,
             "type": "UndefinedClass",
             "message": "Class, interface or enum named Elastica\\Type does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
@@ -122,8 +98,8 @@
         },
         {
             "severity": "error",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 67,
+            "line_to": 67,
             "type": "UndefinedClass",
             "message": "Class, interface or enum named Elastica\\Type does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
@@ -134,8 +110,8 @@
         },
         {
             "severity": "error",
-            "line_from": 91,
-            "line_to": 91,
+            "line_from": 92,
+            "line_to": 92,
             "type": "UndefinedClass",
             "message": "Class, interface or enum named Elastica\\Type does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php",
@@ -295,7 +271,7 @@
             "line_from": 24,
             "line_to": 24,
             "type": "NonInvariantDocblockPropertyType",
-            "message": "Property Spryker\\Zed\\Collector\\Business\\Collector\\Storage\\AbstractStoragePdoCollector::$queryBuilder has type Spryker\\Zed\\Collector\\Persistence\\Collector\\AbstractPdoCollectorQuery, not invariant with Spryker\\Zed\\Collector\\Business\\Collector\\AbstractCollector::$queryBuilder of type Spryker\\Zed\\Collector\\Persistence\\Collector\\AbstractCollectorQuery",
+            "message": "Property Spryker\\Zed\\Collector\\Business\\Collector\\Search\\AbstractSearchPdoCollector::$queryBuilder has type Spryker\\Zed\\Collector\\Persistence\\Collector\\AbstractPdoCollectorQuery, not invariant with Spryker\\Zed\\Collector\\Business\\Collector\\AbstractCollector::$queryBuilder of type Spryker\\Zed\\Collector\\Persistence\\Collector\\AbstractCollectorQuery",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Collector/AbstractPdoCollector.php",
             "snippet": "    protected $queryBuilder;",
             "selected_text": "$queryBuilder",
@@ -484,8 +460,8 @@
         },
         {
             "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 104,
+            "line_to": 104,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::deleteDocuments does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchWriter.php",
@@ -496,8 +472,8 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyUndefinedMethod",
             "message": "Method Spryker\\Zed\\Collector\\Business\\Index\\IndexAdapterInterface::flush does not exist",
             "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchWriter.php",

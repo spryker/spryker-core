@@ -1,5 +1,66 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\GuiTableRowDataResponseTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityMerchantPortalGui/src/Spryker/Zed/AvailabilityMerchantPortalGui/Communication/Expander/ProductConcreteTableExpander.php",
+            "snippet": "        }, $guiTableDataResponseTransfer->getRows()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StockTransfer> variable $stockTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityMerchantPortalGui/src/Spryker/Zed/AvailabilityMerchantPortalGui/Communication/Expander/ProductConcreteTableExpander.php",
+            "snippet": "        if (!$stockTransfers->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StockTransfer> variable $stockTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityMerchantPortalGui/src/Spryker/Zed/AvailabilityMerchantPortalGui/Communication/Expander/ProductConcreteTableExpander.php",
+            "snippet": "                ->setStoreIds($stockTransfers->offsetGet(0)->getStoreRelationOrFail()->getIdStores()),",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productAvailabilities[$sku] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityMerchantPortalGui/src/Spryker/Zed/AvailabilityMerchantPortalGui/Communication/Expander/ProductConcreteTableExpander.php",
+            "snippet": "            $productAvailabilities[$sku][] = $productConcreteAvailabilityTransfer->getAvailability()->toFloat();",
+            "selected_text": "$productAvailabilities",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toFloat on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityMerchantPortalGui/src/Spryker/Zed/AvailabilityMerchantPortalGui/Communication/Expander/ProductConcreteTableExpander.php",
+            "snippet": "            $productAvailabilities[$sku][] = $productConcreteAvailabilityTransfer->getAvailability()->toFloat();",
+            "selected_text": "toFloat",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
     "deprecation": []
 }

@@ -75,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 61,
+            "line_to": 61,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuoteTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Client/MultiCart/Plugin/DefaultQuoteUpdatePlugin.php",

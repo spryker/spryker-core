@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Locale\\Business\\Manager\\LocaleManager::getAvailableLocales is incorrect, got 'array<int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Manager/LocaleManager.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -31,8 +31,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\LocaleTransfer>' for Spryker\\Zed\\Locale\\Business\\Manager\\LocaleManager::getAvailableLocaleCollection is incorrect, got 'array<array-key, Generated\\Shared\\Transfer\\LocaleTransfer|array-key>'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Manager/LocaleManager.php",
-            "snippet": "     * @return \\Generated\\Shared\\Transfer\\LocaleTransfer[]",
-            "selected_text": "\\Generated\\Shared\\Transfer\\LocaleTransfer[]",
+            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\LocaleTransfer>",
+            "selected_text": "array<\\Generated\\Shared\\Transfer\\LocaleTransfer>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -52,8 +52,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Shared\\Kernel\\Store::setCurrentLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Yves/Locale/Plugin/Application/LocaleApplicationPlugin.php",
@@ -64,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 60,
+            "line_to": 60,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Shared\\Config\\Application\\Environment::initializeLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Yves/Locale/Plugin/Application/LocaleApplicationPlugin.php",
@@ -76,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 64,
+            "line_to": 64,
             "type": "RedundantCondition",
             "message": "string can never contain false",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Yves/Locale/Plugin/Locale/LocaleLocalePlugin.php",
@@ -196,10 +196,10 @@
         },
         {
             "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
+            "line_from": 47,
+            "line_to": 47,
             "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:42:1479:-:closure is not nullable, but 'null|string' contains null",
+            "message": "The declared return type 'string' for /var/work/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:47:1540:-:closure is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
             "snippet": "        $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container): string {",
             "selected_text": "string",
@@ -208,10 +208,10 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
+            "line_from": 52,
+            "line_to": 52,
             "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for /media/mark/f42d91bd-14bc-4e71-936f-96ed99135be4/www/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:42:1479:-:closure is not nullable, but the function returns 'null|string'",
+            "message": "The declared return type 'string' for /var/work/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:47:1540:-:closure is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
             "snippet": "            return $localeTransfer->getLocaleName();",
             "selected_text": "$localeTransfer->getLocaleName()",
@@ -225,8 +225,8 @@
             "type": "MismatchingDocblockParamType",
             "message": "Parameter $localeEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Locale\\Persistence\\SpyLocale>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Persistence/LocaleRepository.php",
-            "snippet": "     * @param \\Orm\\Zed\\Locale\\Persistence\\SpyLocale[]|\\Propel\\Runtime\\Collection\\ObjectCollection $localeEntities",
-            "selected_text": "\\Orm\\Zed\\Locale\\Persistence\\SpyLocale[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Locale\\Persistence\\SpyLocale[] $localeEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Locale\\Persistence\\SpyLocale[]",
             "error_level": 4,
             "shortcode": 141
         }

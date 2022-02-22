@@ -5,7 +5,7 @@
             "line_from": 201,
             "line_to": 201,
             "type": "InvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationshipApi\\Business\\Updater\\MerchantRelationshipUpdater::getValidationErrorsApiItem expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ApiValidationErrorTransfer>, ArrayObject<0, Generated\\Shared\\Transfer\\ApiValidationErrorTransfer&static> provided",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationshipApi\\Business\\Updater\\MerchantRelationshipUpdater::getValidationErrorsApiItem expects ArrayObject<int, Generated\\Shared\\Transfer\\ApiValidationErrorTransfer>, ArrayObject<0, Generated\\Shared\\Transfer\\ApiValidationErrorTransfer&static> provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipApi/src/Spryker/Zed/MerchantRelationshipApi/Business/Updater/MerchantRelationshipUpdater.php",
             "snippet": "            new ArrayObject([$apiValidationErrorTransfer]),",
             "selected_text": "new ArrayObject([$apiValidationErrorTransfer])",

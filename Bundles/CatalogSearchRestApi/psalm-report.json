@@ -3,32 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 150,
-            "line_to": 150,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Glue\\CatalogSearchRestApi\\Processor\\Catalog\\CatalogSearchReader::getRequestParameter is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 154,
-            "line_to": 154,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Glue\\CatalogSearchRestApi\\Processor\\Catalog\\CatalogSearchReader::getRequestParameter is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
-            "snippet": "        return $restRequest->getHttpRequest()->query->get($parameterName, '');",
-            "selected_text": "$restRequest->getHttpRequest()->query->get($parameterName, '')",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
+            "line_from": 172,
+            "line_to": 172,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLimit on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
@@ -39,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 167,
-            "line_to": 167,
+            "line_from": 173,
+            "line_to": 173,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getOffset on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
@@ -51,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 167,
-            "line_to": 167,
+            "line_from": 173,
+            "line_to": 173,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLimit on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
@@ -63,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 225,
-            "line_to": 225,
+            "line_from": 231,
+            "line_to": 231,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceBuilderInterface::createRestResponse cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
@@ -75,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 225,
-            "line_to": 225,
+            "line_from": 231,
+            "line_to": 231,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNumFound on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Catalog/CatalogSearchReader.php",
@@ -99,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
+            "line_from": 120,
+            "line_to": 120,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\CatalogSearchRestApi\\Processor\\Mapper\\CatalogSearchResourceMapper::mapFacetConfigTransferToRestFacetConfigTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Mapper/CatalogSearchResourceMapper.php",
@@ -111,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
+            "line_from": 127,
+            "line_to": 127,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Glue\\CatalogSearchRestApi\\Processor\\Mapper\\CatalogSearchResourceMapper::mapFacetConfigTransferToRestFacetConfigTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Mapper/CatalogSearchResourceMapper.php",
@@ -123,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 67,
+            "line_to": 67,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSortParamNames on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Translation/CatalogSearchTranslationExpander.php",
@@ -137,8 +113,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 102,
-            "line_to": 102,
+            "line_from": 133,
+            "line_to": 133,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\RestCatalogSearchSuggestionsAttributesTransfer::setCategories has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Mapper/CatalogSearchSuggestionsResourceMapper.php",
@@ -149,8 +125,8 @@
         },
         {
             "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
+            "line_from": 157,
+            "line_to": 157,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\RestCatalogSearchSuggestionsAttributesTransfer::setCmsPages has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchRestApi/src/Spryker/Glue/CatalogSearchRestApi/Processor/Mapper/CatalogSearchSuggestionsResourceMapper.php",

@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/EventHandler/EventHandler.php",
@@ -15,8 +15,32 @@
         },
         {
             "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
+            "line_from": 26,
+            "line_to": 26,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Yves\\Monitoring\\Plugin\\Console\\MonitoringConsolePlugin::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/Plugin/Console/MonitoringConsolePlugin.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Yves\\Monitoring\\Plugin\\ControllerListener::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/Plugin/ControllerListener.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Business/EventHandler/EventHandler.php",
@@ -27,8 +51,44 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 27,
+            "line_to": 27,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Zed\\Monitoring\\Communication\\Plugin\\Console\\MonitoringConsolePlugin::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/Console/MonitoringConsolePlugin.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 135,
+            "line_to": 135,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Zed\\Monitoring\\Communication\\Plugin\\ControllerListener::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/ControllerListener.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Zed\\Monitoring\\Communication\\Plugin\\GatewayControllerListener::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/GatewayControllerListener.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/MonitoringConsolePlugin.php",
@@ -36,9 +96,33 @@
             "selected_text": "getName",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Zed\\Monitoring\\Communication\\Plugin\\MonitoringConsolePlugin::getsubscribedevents 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/MonitoringConsolePlugin.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/Plugin/ControllerListener.php",
+            "snippet": "        if (!$event->isMasterRequest()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        },
         {
             "severity": "info",
             "line_from": 60,
@@ -48,6 +132,30 @@
             "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Yves/Monitoring/Plugin/ServiceProvider/MonitoringRequestTransactionServiceProvider.php",
             "snippet": "        return $app['dispatcher'];",
             "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/ControllerListener.php",
+            "snippet": "        if (!$event->isMasterRequest()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Monitoring\\Communication\\Plugin\\ControllerListener::addStore has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Monitoring/src/Spryker/Zed/Monitoring/Communication/Plugin/ControllerListener.php",
+            "snippet": "        $this->addStore();",
+            "selected_text": "addStore",
             "error_level": 2,
             "shortcode": 1
         },

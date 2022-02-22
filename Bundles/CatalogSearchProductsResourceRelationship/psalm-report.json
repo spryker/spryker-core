@@ -2,22 +2,22 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 113,
+            "line_to": 113,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\CatalogSearchProductsResourceRelationship\\Processor\\Expander\\CatalogSearchProductsResourceRelationshipExpander::getProductAbstractSkusForRestResource is incorrect, got 'list<mixed|null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\CatalogSearchProductsResourceRelationship\\Processor\\Expander\\CatalogSearchProductsResourceRelationshipExpander::getProductAbstractSkusForRestResource is incorrect, got 'list<null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchProductsResourceRelationship/src/Spryker/Glue/CatalogSearchProductsResourceRelationship/Processor/Expander/CatalogSearchProductsResourceRelationshipExpander.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 119,
-            "line_to": 119,
+            "line_from": 125,
+            "line_to": 125,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\CatalogSearchProductsResourceRelationship\\Processor\\Expander\\CatalogSearchProductsResourceRelationshipExpander::getProductAbstractSkusForRestResource",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\CatalogSearchProductsResourceRelationship\\Processor\\Expander\\CatalogSearchProductsResourceRelationshipExpander::getProductAbstractSkusForRestResource",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchProductsResourceRelationship/src/Spryker/Glue/CatalogSearchProductsResourceRelationship/Processor/Expander/CatalogSearchProductsResourceRelationshipExpander.php",
             "snippet": "        return $productAbstractSkus;",
             "selected_text": "$productAbstractSkus",
@@ -28,8 +28,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
+            "line_from": 107,
+            "line_to": 107,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchProductsResourceRelationship/src/Spryker/Glue/CatalogSearchProductsResourceRelationship/Processor/Expander/CatalogSearchProductsResourceRelationshipExpander.php",
@@ -37,25 +37,13 @@
             "selected_text": "$restResource->getId()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $products has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\RestCatalogSearchAbstractProductsTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchProductsResourceRelationship/src/Spryker/Glue/CatalogSearchProductsResourceRelationship/Processor/Expander/CatalogSearchProductsResourceRelationshipExpander.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\RestCatalogSearchAbstractProductsTransfer[] $products",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\RestCatalogSearchAbstractProductsTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
+            "line_from": 90,
+            "line_to": 90,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Glue\\CatalogSearchProductsResourceRelationship\\Processor\\Expander\\CatalogSearchProductsResourceRelationshipExpander::KEY_PRODUCTS is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchProductsResourceRelationship/src/Spryker/Glue/CatalogSearchProductsResourceRelationship/Processor/Expander/CatalogSearchProductsResourceRelationshipExpander.php",
@@ -66,12 +54,12 @@
         },
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
+            "line_from": 92,
+            "line_to": 92,
             "type": "DeprecatedConstant",
             "message": "Constant Spryker\\Glue\\CatalogSearchProductsResourceRelationship\\Processor\\Expander\\CatalogSearchProductsResourceRelationshipExpander::KEY_PRODUCTS is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CatalogSearchProductsResourceRelationship/src/Spryker/Glue/CatalogSearchProductsResourceRelationship/Processor/Expander/CatalogSearchProductsResourceRelationshipExpander.php",
-            "snippet": "                    $attributes->offsetGet(static::KEY_PRODUCTS)",
+            "snippet": "                    $attributes->offsetGet(static::KEY_PRODUCTS),",
             "selected_text": "static::KEY_PRODUCTS",
             "error_level": 2,
             "shortcode": 170

@@ -18,7 +18,7 @@ use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductListKeyToIdProd
 
 /**
  * @method \Spryker\Zed\ProductListDataImport\ProductListDataImportConfig getConfig()
- * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker($bulkSize = null)
  * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class ProductListDataImportBusinessFactory extends DataImportBusinessFactory

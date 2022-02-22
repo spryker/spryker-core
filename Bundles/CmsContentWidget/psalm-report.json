@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsContentWidget\\Communication\\Plugin\\CmsBlockStorage\\CmsBlockStorageStorageParameterMapExpanderPlugin::gePlaceholders is incorrect, got 'array<array-key|mixed, mixed|null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsBlockStorage/CmsBlockStorageStorageParameterMapExpanderPlugin.php",
-            "snippet": "     * @return string[]",
-            "selected_text": "string[]",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -26,18 +26,6 @@
         }
     ],
     "warning": [
-        {
-            "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method error on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/Twig/TwigCmsContentRenderer.php",
-            "snippet": "            $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);",
-            "selected_text": "error",
-            "error_level": 3,
-            "shortcode": 83
-        },
         {
             "severity": "info",
             "line_from": 74,
@@ -109,37 +97,13 @@
             "selected_text": "getKey",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\CmsContentWidget\\Dependency\\Service\\CmsContentWidgetToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Dependency/Service/CmsContentWidgetToUtilEncodingBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\CmsContentWidget\\Dependency\\Service\\CmsContentWidgetToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Dependency/Service/CmsContentWidgetToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 64,
+            "line_to": 64,
             "type": "DeprecatedClass",
             "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/CmsContentWidgetDependencyProvider.php",

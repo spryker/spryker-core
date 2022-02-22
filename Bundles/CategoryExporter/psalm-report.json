@@ -1,5 +1,18 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Shared\\KeyBuilder\\KeyBuilderTrait::resolveStoreName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/KeyBuilder/src/Spryker/Shared/KeyBuilder/KeyBuilderTrait.php",
+            "snippet": "            $this->resolveStoreName($storeName),",
+            "selected_text": "resolveStoreName",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

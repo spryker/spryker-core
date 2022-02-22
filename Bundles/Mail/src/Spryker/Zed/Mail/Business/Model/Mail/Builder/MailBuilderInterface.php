@@ -39,11 +39,11 @@ interface MailBuilderInterface
     public function setHtmlTemplate($htmlTemplate);
 
     /**
-     * @param string $htmlTemplate
+     * @param string $textTemplate
      *
      * @return $this
      */
-    public function setTextTemplate($htmlTemplate);
+    public function setTextTemplate($textTemplate);
 
     /**
      * @param string $email

@@ -238,40 +238,40 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function deleteAddress(AddressTransfer $AddressTransfer)
+    public function deleteAddress(AddressTransfer $addressTransfer)
     {
         /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
+        $addressTransfer = $this->zedStub->call('/customer/gateway/delete-address', $addressTransfer);
 
         return $addressTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function setDefaultBillingAddress(AddressTransfer $AddressTransfer)
+    public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
     {
         /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/default-billing-address', $AddressTransfer);
+        $addressTransfer = $this->zedStub->call('/customer/gateway/default-billing-address', $addressTransfer);
 
         return $addressTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AddressTransfer $AddressTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    public function setDefaultShippingAddress(AddressTransfer $AddressTransfer)
+    public function setDefaultShippingAddress(AddressTransfer $addressTransfer)
     {
         /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
-        $addressTransfer = $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
+        $addressTransfer = $this->zedStub->call('/customer/gateway/default-shipping-address', $addressTransfer);
 
         return $addressTransfer;
     }

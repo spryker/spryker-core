@@ -37,7 +37,7 @@ interface CodeStyleSnifferConfigurationInterface
 
     /**
      * Returns the list of paths to the coding standards which should be used in current CodeStyleSniffer run.
-     * Multiple paths should be separated by coma.
+     * Multiple paths should be separated by comma.
      *
      * @param string $path
      *

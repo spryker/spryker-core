@@ -80,7 +80,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
     protected function generateKey(string $cmsSlotKey): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference((string)$cmsSlotKey);
+            ->setReference($cmsSlotKey);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(CmsSlotStorageConfig::CMS_SLOT_RESOURCE_NAME)

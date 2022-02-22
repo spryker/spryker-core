@@ -195,18 +195,6 @@
         },
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ContentGui\\Communication\\Form\\ContentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/ContentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 90,
             "line_to": 90,
             "type": "PossiblyNullArgument",
@@ -264,18 +252,6 @@
             "selected_text": "$locales",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ContentGui\\Communication\\Form\\LocalizedContentForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentGui/src/Spryker/Zed/ContentGui/Communication/Form/LocalizedContentForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

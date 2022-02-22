@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantStockDataImport\Business\MerchantStock\Step\StockNameToI
 
 /**
  * @method \Spryker\Zed\MerchantStockDataImport\MerchantStockDataImportConfig getConfig()
- * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker($bulkSize = null)
  * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class MerchantStockDataImportBusinessFactory extends DataImportBusinessFactory

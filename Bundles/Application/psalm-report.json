@@ -88,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Shared\\Application\\Log\\Processor\\GuzzleBodyProcessor::prepareValues cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Shared/Application/Log/Processor/GuzzleBodyProcessor.php",
@@ -220,30 +220,6 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Yves\\Application\\Plugin\\Provider\\CookieServiceProvider::register has the more specific type 'Spryker\\Yves\\Kernel\\Application', expecting 'Silex\\Application' as defined by Silex\\ServiceProviderInterface::register",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Yves/Application/Plugin/Provider/CookieServiceProvider.php",
-            "snippet": "    public function register(Application $app)",
-            "selected_text": "$app",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Yves\\Application\\Plugin\\Provider\\CookieServiceProvider::boot has the more specific type 'Spryker\\Yves\\Kernel\\Application', expecting 'Silex\\Application' as defined by Silex\\ServiceProviderInterface::boot",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Yves/Application/Plugin/Provider/CookieServiceProvider.php",
-            "snippet": "    public function boot(Application $app)",
-            "selected_text": "$app",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 51,
             "line_to": 51,
             "type": "PossiblyNullPropertyAssignmentValue",
@@ -352,30 +328,6 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Application\\Communication\\Plugin\\ServiceProvider\\MvcRoutingServiceProvider::boot has the more specific type 'Spryker\\Shared\\Kernel\\Communication\\Application', expecting 'Silex\\Application' as defined by Silex\\ServiceProviderInterface::boot",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Zed/Application/Communication/Plugin/ServiceProvider/MvcRoutingServiceProvider.php",
-            "snippet": "    public function boot(Application $app)",
-            "selected_text": "$app",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Application\\Communication\\Plugin\\ServiceProvider\\MvcRoutingServiceProvider::register has the more specific type 'Spryker\\Shared\\Kernel\\Communication\\Application', expecting 'Silex\\Application' as defined by Silex\\ServiceProviderInterface::register",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Zed/Application/Communication/Plugin/ServiceProvider/MvcRoutingServiceProvider.php",
-            "snippet": "    public function register(Application $app)",
-            "selected_text": "$app",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 137,
             "line_to": 137,
             "type": "TypeDoesNotContainType",
@@ -385,30 +337,6 @@
             "selected_text": "count($requestUriParts) < 1",
             "error_level": 4,
             "shortcode": 56
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Application\\Communication\\Plugin\\ServiceProvider\\SilexRoutingServiceProvider::boot has the more specific type 'Spryker\\Shared\\Kernel\\Communication\\Application', expecting 'Silex\\Application' as defined by Silex\\ServiceProviderInterface::boot",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Zed/Application/Communication/Plugin/ServiceProvider/SilexRoutingServiceProvider.php",
-            "snippet": "    public function boot(Application $app)",
-            "selected_text": "$app",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\Application\\Communication\\Plugin\\ServiceProvider\\SilexRoutingServiceProvider::register has the more specific type 'Spryker\\Shared\\Kernel\\Communication\\Application', expecting 'Silex\\Application' as defined by Silex\\ServiceProviderInterface::register",
-            "file_name": "vendor/spryker/spryker/Bundles/Application/src/Spryker/Zed/Application/Communication/Plugin/ServiceProvider/SilexRoutingServiceProvider.php",
-            "snippet": "    public function register(Application $app)",
-            "selected_text": "$app",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -433,18 +361,6 @@
             "selected_text": "\\Spryker\\Shared\\Kernel\\ContainerInterface|\\Spryker\\Zed\\Kernel\\Container",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 158,
-            "line_to": 158,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Service\\Container\\Container::setGlobal has the more specific type 'callable|string', expecting 'mixed' as defined by Spryker\\Service\\Container\\ContainerInterface::setGlobal",
-            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
-            "snippet": "    public function setGlobal(string $id, $service): void",
-            "selected_text": "$service",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

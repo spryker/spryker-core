@@ -1,5 +1,66 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProductOption\\Business\\Validator\\MerchantProductOption\\MerchantProductOptionValidator::extractProductOptionGroupIdsFromItemTransfers expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOption/src/Spryker/Zed/MerchantProductOption/Business/Validator/MerchantProductOption/MerchantProductOptionValidator.php",
+            "snippet": "        $productOptionGroupIds = $this->extractProductOptionGroupIdsFromItemTransfers($cartChangeTransfer->getItems());",
+            "selected_text": "$cartChangeTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProductOption\\Business\\Validator\\MerchantProductOption\\MerchantProductOptionValidator::extractProductOptionGroupIdsFromItemTransfers expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOption/src/Spryker/Zed/MerchantProductOption/Business/Validator/MerchantProductOption/MerchantProductOptionValidator.php",
+            "snippet": "        $productOptionGroupIds = $this->extractProductOptionGroupIdsFromItemTransfers($quoteTransfer->getItems());",
+            "selected_text": "$quoteTransfer->getItems()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProductOption\\Business\\Validator\\MerchantProductOption\\MerchantProductOptionValidator::extractProductOptionGroupIds expects ArrayObject<int, Generated\\Shared\\Transfer\\ProductOptionTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductOptionTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOption/src/Spryker/Zed/MerchantProductOption/Business/Validator/MerchantProductOption/MerchantProductOptionValidator.php",
+            "snippet": "            $productOptionGroupIds = $this->extractProductOptionGroupIds($itemTransfer->getProductOptions(), $productOptionGroupIds);",
+            "selected_text": "$itemTransfer->getProductOptions()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 258,
+            "line_to": 258,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CheckoutErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOption/src/Spryker/Zed/MerchantProductOption/Business/Validator/MerchantProductOption/MerchantProductOptionValidator.php",
+            "snippet": "        $checkoutResponseTransfer->setIsSuccess($checkoutResponseTransfer->getErrors()->count() === 0);",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $merchantProductOptionGroupEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\MerchantProductOption\\Persistence\\SpyMerchantProductOptionGroup>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOption/src/Spryker/Zed/MerchantProductOption/Persistence/Mapper/MerchantProductOptionGroupMapper.php",
+            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantProductOption\\Persistence\\SpyMerchantProductOptionGroup[] $merchantProductOptionGroupEntities",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\MerchantProductOption\\Persistence\\SpyMerchantProductOptionGroup[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
     "deprecation": []
 }

@@ -7,8 +7,8 @@
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Reader\\Category\\CategoryReader::getCategories is incorrect, got 'array<array-key|mixed, int|mixed|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Category/CategoryReader.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
@@ -26,20 +26,20 @@
         },
         {
             "severity": "error",
-            "line_from": 96,
-            "line_to": 96,
+            "line_from": 118,
+            "line_to": 118,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Reader\\Product\\ProductReader::mapProductAbstractTransfersToArray is incorrect, got 'array<string, int|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 132,
+            "line_to": 132,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<string, int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Reader\\Product\\ProductReader::mapProductAbstractTransfersToArray",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
@@ -52,20 +52,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Reader\\Product\\ProductReaderInterface::getProductAbstractPaginatedAutocompleteData cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Controller/ProductAutocompleteController.php",
-            "snippet": "            ->getProductAbstractPaginatedAutocompleteData($suggestion, $page);",
-            "selected_text": "$suggestion",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 171,
-            "line_to": 171,
+            "line_from": 194,
+            "line_to": 194,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Form\\ProductCategorySlotBlockConditionForm::replaceProductIdsField cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Form/ProductCategorySlotBlockConditionForm.php",
@@ -88,51 +76,27 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Reader\\Product\\ProductReader::mapProductAbstractSuggestionsToAutocompleteData expects ArrayObject<int, Generated\\Shared\\Transfer\\ProductAbstractTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductAbstractTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
+            "snippet": "                $productAbstractSuggestionCollectionTransfer->getProductAbstracts(),",
+            "selected_text": "$productAbstractSuggestionCollectionTransfer->getProductAbstracts()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Reader\\Product\\ProductReader::getPaginationData cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "                $productAbstractSuggestionCollectionTransfer->getPagination()",
+            "snippet": "                $productAbstractSuggestionCollectionTransfer->getPagination(),",
             "selected_text": "$productAbstractSuggestionCollectionTransfer->getPagination()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Formatter\\ProductLabelFormatterInterface::format cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "                $productAbstractTransfer->getName(),",
-            "selected_text": "$productAbstractTransfer->getName()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Formatter\\ProductLabelFormatterInterface::format cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "                $productAbstractTransfer->getSku()",
-            "selected_text": "$productAbstractTransfer->getSku()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productAbstractTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductAbstractTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductAbstractTransfer[] $productAbstractTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductAbstractTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -141,7 +105,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Formatter\\ProductLabelFormatterInterface::format cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "                    $productAbstractTransfer->getName(),",
+            "snippet": "                $productAbstractTransfer->getName(),",
             "selected_text": "$productAbstractTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
@@ -153,7 +117,31 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Formatter\\ProductLabelFormatterInterface::format cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
-            "snippet": "                    $productAbstractTransfer->getSku()",
+            "snippet": "                $productAbstractTransfer->getSku(),",
+            "selected_text": "$productAbstractTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Formatter\\ProductLabelFormatterInterface::format cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
+            "snippet": "                    $productAbstractTransfer->getName(),",
+            "selected_text": "$productAbstractTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 149,
+            "line_to": 149,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Communication\\Formatter\\ProductLabelFormatterInterface::format cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Communication/Reader/Product/ProductReader.php",
+            "snippet": "                    $productAbstractTransfer->getSku(),",
             "selected_text": "$productAbstractTransfer->getSku()",
             "error_level": 3,
             "shortcode": 78
@@ -169,18 +157,6 @@
             "selected_text": "$idLocale",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsSlotBlockProductCategoryGui\\Persistence\\CmsSlotBlockProductCategoryGuiMapper::mapProductAbstractCollectionToTransfers expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryGui/src/Spryker/Zed/CmsSlotBlockProductCategoryGui/Persistence/CmsSlotBlockProductCategoryGuiRepository.php",
-            "snippet": "            ->mapProductAbstractCollectionToTransfers($productAbstractCollection);",
-            "selected_text": "$productAbstractCollection",
-            "error_level": 3,
-            "shortcode": 92
         }
     ],
     "deprecation": []

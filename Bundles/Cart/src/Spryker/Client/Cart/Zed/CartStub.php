@@ -72,14 +72,14 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItem(CartChangeTransfer $changeTransfer)
+    public function removeItem(CartChangeTransfer $cartChangeTransfer)
     {
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-        $quoteTransfer = $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
+        $quoteTransfer = $this->zedStub->call('/cart/gateway/remove-item', $cartChangeTransfer);
 
         return $quoteTransfer;
     }

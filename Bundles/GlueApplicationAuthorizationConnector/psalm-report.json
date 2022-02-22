@@ -1,5 +1,18 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdentifier on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueApplicationAuthorizationConnector/src/Spryker/Glue/GlueApplicationAuthorizationConnector/Processor/AuthorizationChecker/AuthorizationChecker.php",
+            "snippet": "                !$authorizationRequestTransfer->getEntity()->getIdentifier()",
+            "selected_text": "getIdentifier",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
     "deprecation": []
 }

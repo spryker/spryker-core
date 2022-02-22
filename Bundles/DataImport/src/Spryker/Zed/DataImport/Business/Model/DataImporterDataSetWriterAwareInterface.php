@@ -12,9 +12,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 interface DataImporterDataSetWriterAwareInterface
 {
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface $dataImportWriter
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface $dataSetWriter
      *
      * @return void
      */
-    public function setDataSetWriter(DataSetWriterInterface $dataImportWriter);
+    public function setDataSetWriter(DataSetWriterInterface $dataSetWriter);
 }

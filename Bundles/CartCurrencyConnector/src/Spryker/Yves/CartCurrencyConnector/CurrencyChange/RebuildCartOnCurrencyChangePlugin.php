@@ -22,11 +22,11 @@ class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements Curren
      *
      * @api
      *
-     * @param string $currencyIsoCode
+     * @param string $currencyCode
      *
      * @return bool
      */
-    public function execute($currencyIsoCode)
+    public function execute($currencyCode)
     {
         $cartClient = $this->getFactory()->getCartClient();
 

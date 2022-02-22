@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferWishlist/src/Spryker/Client/MerchantProductOfferWishlist/Expander/MerchantProductOfferWishlistExpander.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferWishlist/src/Spryker/Client/MerchantProductOfferWishlist/Expander/MerchantProductOfferWishlistExpander.php",
@@ -24,6 +24,30 @@
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOfferReferenceIndex[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferWishlist/src/Spryker/Client/MerchantProductOfferWishlist/Expander/MerchantProductOfferWishlistExpander.php",
+            "snippet": "            $productOfferReferenceIndex[$itemTransfer->getProductOfferReference()] = true;",
+            "selected_text": "$productOfferReferenceIndex",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $merchantReferenceIndex[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferWishlist/src/Spryker/Client/MerchantProductOfferWishlist/Expander/MerchantProductOfferWishlistExpander.php",
+            "snippet": "            $merchantReferenceIndex[$itemTransfer->getMerchantReference()] = true;",
+            "selected_text": "$merchantReferenceIndex",
+            "error_level": 3,
+            "shortcode": 125
         }
     ],
     "deprecation": []

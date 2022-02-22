@@ -1,5 +1,66 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Glue/Http/Plugin/EventDispatcher/StrictTransportSecurityHeaderEventDispatcherPlugin.php",
+            "snippet": "            if (!$event->isMasterRequest() || !$this->getConfig()->isStrictTransportSecurityEnabled()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Yves/Http/Plugin/EventDispatcher/HeaderEventDispatcherPlugin.php",
+            "snippet": "            if (!$event->isMasterRequest()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Yves/Http/Plugin/EventDispatcher/HstsHeaderEventDispatcher.php",
+            "snippet": "            if (!$event->isMasterRequest() || !$this->getConfig()->isHstsEnabled()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/Communication/Plugin/EventDispatcher/HeaderEventDispatcherPlugin.php",
+            "snippet": "        if (!$event->isMasterRequest()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/Communication/Plugin/EventDispatcher/HstsHeaderEventDispatcher.php",
+            "snippet": "            if (!$event->isMasterRequest() || !$this->getConfig()->isHstsEnabled()) {",
+            "selected_text": "isMasterRequest",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

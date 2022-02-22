@@ -15,30 +15,6 @@
         },
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::publish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriterInterface::publish",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "    public function publish(array $cmsPageIds): void",
-            "selected_text": "$cmsPageIds",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriter::unpublish has the more specific type 'array<array-key, int>', expecting 'array<array-key, mixed>' as defined by Spryker\\Zed\\CmsStorage\\Business\\Storage\\CmsPageStorageWriterInterface::unpublish",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Business/Storage/CmsPageStorageWriter.php",
-            "snippet": "    public function unpublish(array $cmsPageIds): void",
-            "selected_text": "$cmsPageIds",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 399,
             "line_to": 399,
             "type": "PossiblyNullArrayOffset",

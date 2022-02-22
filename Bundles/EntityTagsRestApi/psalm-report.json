@@ -8,7 +8,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Glue\\EntityTagsRestApi\\Dependency\\Client\\EntityTagsRestApiToEntityTagClientInterface::read cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagRequestValidator.php",
-            "snippet": "            $restRequest->getResource()->getId()",
+            "snippet": "            $restRequest->getResource()->getId(),",
             "selected_text": "$restRequest->getResource()->getId()",
             "error_level": 3,
             "shortcode": 78
@@ -56,7 +56,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method toArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResolver.php",
-            "snippet": "            $restResource->getAttributes()->toArray()",
+            "snippet": "            $restResource->getAttributes()->toArray(),",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 83
@@ -80,7 +80,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method toArray on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResponseHeaderFormatter.php",
-            "snippet": "            $restResource->getAttributes()->toArray()",
+            "snippet": "            $restResource->getAttributes()->toArray(),",
             "selected_text": "toArray",
             "error_level": 3,
             "shortcode": 83

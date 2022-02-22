@@ -1,43 +1,6 @@
 {
     "error": [],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for Spryker\\Zed\\CmsBlockCollector\\Dependency\\Service\\CmsBlockCollectorToUtilEncodingBridge::encodeJson is not nullable, but 'null|string' contains null",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Dependency/Service/CmsBlockCollectorToUtilEncodingBridge.php",
-            "snippet": "     * @return string",
-            "selected_text": "string",
-            "error_level": 5,
-            "shortcode": 144
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for Spryker\\Zed\\CmsBlockCollector\\Dependency\\Service\\CmsBlockCollectorToUtilEncodingBridge::encodeJson is not nullable, but the function returns 'null|string'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Dependency/Service/CmsBlockCollectorToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->encodeJson($value, $options, $depth);",
-            "selected_text": "$this->utilEncodingService->encodeJson($value, $options, $depth)",
-            "error_level": 5,
-            "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "NullableReturnStatement",
-            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\CmsBlockCollector\\Dependency\\Service\\CmsBlockCollectorToUtilEncodingBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Dependency/Service/CmsBlockCollectorToUtilEncodingBridge.php",
-            "snippet": "        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);",
-            "selected_text": "$this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options)",
-            "error_level": 5,
-            "shortcode": 139
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",
@@ -58,6 +21,30 @@
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Business/CmsBlockCollectorFacadeInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Business/Collector/CmsBlockCollectorRunner.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
+            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Business/Collector/CmsBlockCollectorRunnerInterface.php",
             "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface $result",
             "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface",
             "error_level": 2,

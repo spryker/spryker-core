@@ -5,7 +5,7 @@
             "line_from": 21,
             "line_to": 21,
             "type": "DuplicateClass",
-            "message": "Class Spryker\\Shared\\Log\\Dependency\\Plugin\\LogHandlerPluginInterface has already been defined in /data/vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php",
+            "message": "Class Spryker\\Shared\\Log\\Dependency\\Plugin\\LogHandlerPluginInterface has already been defined in /var/work/devvm/project/vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php",
             "file_name": "vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php",
             "snippet": "    interface LogHandlerPluginInterface extends HandlerInterface, ProcessableHandlerInterface, FormattableHandlerInterface",
             "selected_text": "LogHandlerPluginInterface",

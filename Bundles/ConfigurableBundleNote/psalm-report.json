@@ -3,8 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 42,
+            "line_to": 42,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getItems on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleNote/src/Spryker/Client/ConfigurableBundleNote/QuoteStorageStrategy/SessionQuoteStorageStrategy.php",
@@ -15,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 47,
+            "line_to": 47,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getGroupKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleNote/src/Spryker/Client/ConfigurableBundleNote/QuoteStorageStrategy/SessionQuoteStorageStrategy.php",
@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 47,
+            "line_to": 47,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getGroupKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleNote/src/Spryker/Client/ConfigurableBundleNote/QuoteStorageStrategy/SessionQuoteStorageStrategy.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 51,
+            "line_to": 51,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setNote on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleNote/src/Spryker/Client/ConfigurableBundleNote/QuoteStorageStrategy/SessionQuoteStorageStrategy.php",
@@ -56,7 +56,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ConfigurableBundleNote\\Dependency\\Facade\\ConfigurableBundleNoteToQuoteFacadeInterface::findQuoteById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleNote/src/Spryker/Zed/ConfigurableBundleNote/Business/Setter/ConfigurableBundleNoteSetter.php",
-            "snippet": "                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()",
+            "snippet": "                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote(),",
             "selected_text": "$configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()",
             "error_level": 3,
             "shortcode": 78
@@ -68,7 +68,7 @@
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdQuote on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundleNote/src/Spryker/Zed/ConfigurableBundleNote/Business/Setter/ConfigurableBundleNoteSetter.php",
-            "snippet": "                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote()",
+            "snippet": "                $configuredBundleNoteRequestTransfer->getQuote()->getIdQuote(),",
             "selected_text": "getIdQuote",
             "error_level": 3,
             "shortcode": 83

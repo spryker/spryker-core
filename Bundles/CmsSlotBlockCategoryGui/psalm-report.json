@@ -2,22 +2,22 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 87,
-            "line_to": 87,
+            "line_from": 114,
+            "line_to": 114,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockCategoryGui\\Communication\\DataProvider\\CategorySlotBlockDataProvider::getCategoryIdsFromCollection is incorrect, got 'array<array-key|mixed, int|mixed|null>'",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockCategoryGui\\Communication\\DataProvider\\CategorySlotBlockDataProvider::getCategoryIdsFromCollection is incorrect, got 'array<string, int|mixed|null>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryGui/src/Spryker/Zed/CmsSlotBlockCategoryGui/Communication/DataProvider/CategorySlotBlockDataProvider.php",
-            "snippet": "     * @return int[]",
-            "selected_text": "int[]",
+            "snippet": "     * @return array<int>",
+            "selected_text": "array<int>",
             "error_level": 6,
             "shortcode": 11
         },
         {
             "severity": "error",
-            "line_from": 97,
-            "line_to": 97,
+            "line_from": 123,
+            "line_to": 123,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<array-key|mixed, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockCategoryGui\\Communication\\DataProvider\\CategorySlotBlockDataProvider::getCategoryIdsFromCollection",
+            "message": "The inferred type 'array<string, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\CmsSlotBlockCategoryGui\\Communication\\DataProvider\\CategorySlotBlockDataProvider::getCategoryIdsFromCollection",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryGui/src/Spryker/Zed/CmsSlotBlockCategoryGui/Communication/DataProvider/CategorySlotBlockDataProvider.php",
             "snippet": "        return $categoryIds;",
             "selected_text": "$categoryIds",
@@ -28,16 +28,41 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $categoryIds[mixed|null|string] using possibly null offset mixed|null|string",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryGui/src/Spryker/Zed/CmsSlotBlockCategoryGui/Communication/DataProvider/CategorySlotBlockDataProvider.php",
-            "snippet": "            $categoryIds[$categoryTransfer->getName()] = $categoryTransfer->getIdCategory();",
-            "selected_text": "$categoryIds",
+            "snippet": "        return sprintf(static::FORMATTED_CATEGORY_NAME, $categoryTransfer->getName(), $categoryTransfer->getCategoryKey());",
+            "selected_text": "$categoryTransfer->getName()",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryGui/src/Spryker/Zed/CmsSlotBlockCategoryGui/Communication/DataProvider/CategorySlotBlockDataProvider.php",
+            "snippet": "        return sprintf(static::FORMATTED_CATEGORY_NAME, $categoryTransfer->getName(), $categoryTransfer->getCategoryKey());",
+            "selected_text": "$categoryTransfer->getCategoryKey()",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Category\\Business\\CategoryFacadeInterface::getCategoriesByCriteria has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryGui/src/Spryker/Zed/CmsSlotBlockCategoryGui/Dependency/Facade/CmsSlotBlockCategoryGuiToCategoryFacadeBridge.php",
+            "snippet": "        return $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer);",
+            "selected_text": "getCategoriesByCriteria",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
 }

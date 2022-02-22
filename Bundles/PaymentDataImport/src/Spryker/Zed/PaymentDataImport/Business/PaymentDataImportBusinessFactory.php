@@ -17,7 +17,7 @@ use Spryker\Zed\PaymentDataImport\Business\PaymentMethodStore\Writer\Step\StoreN
 
 /**
  * @method \Spryker\Zed\PaymentDataImport\PaymentDataImportConfig getConfig()
- * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker($bulkSize = null)
  * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class PaymentDataImportBusinessFactory extends DataImportBusinessFactory

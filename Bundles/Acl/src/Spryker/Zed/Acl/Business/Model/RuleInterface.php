@@ -24,13 +24,11 @@ interface RuleInterface
     public function addRule(RuleTransfer $ruleTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\RuleTransfer $RuleTransfer
-     *
-     * @throws \Spryker\Zed\Acl\Business\Exception\RuleNotFoundException
+     * @param \Generated\Shared\Transfer\RuleTransfer $ruleTransfer
      *
      * @return \Generated\Shared\Transfer\RuleTransfer
      */
-    public function save(RuleTransfer $RuleTransfer);
+    public function save(RuleTransfer $ruleTransfer);
 
     /**
      * @param int $idRule

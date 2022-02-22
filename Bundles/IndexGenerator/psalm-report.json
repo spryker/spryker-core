@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>' for Spryker\\Zed\\IndexGenerator\\Business\\IndexGenerator\\PostgresIndexGenerator::getForeignKeyTableTransferCollection is incorrect, got 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/IndexGenerator/src/Spryker/Zed/IndexGenerator/Business/IndexGenerator/PostgresIndexGenerator.php",
+            "snippet": "     * @return \\ArrayObject<int, \\Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>",
+            "selected_text": "\\ArrayObject<int, \\Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>' does not match the declared return type 'ArrayObject<int, Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>' for Spryker\\Zed\\IndexGenerator\\Business\\IndexGenerator\\PostgresIndexGenerator::getForeignKeyTableTransferCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/IndexGenerator/src/Spryker/Zed/IndexGenerator/Business/IndexGenerator/PostgresIndexGenerator.php",
+            "snippet": "        return $foreignKeyTableTransferCollection;",
+            "selected_text": "$foreignKeyTableTransferCollection",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -27,18 +52,6 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "MismatchingDocblockReturnType",
-            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/IndexGenerator/src/Spryker/Zed/IndexGenerator/Business/IndexGenerator/PostgresIndexGenerator.php",
-            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ForeignKeyTableTransfer[]",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ForeignKeyTableTransfer[]",
-            "error_level": 4,
-            "shortcode": 142
-        },
-        {
-            "severity": "info",
             "line_from": 140,
             "line_to": 140,
             "type": "PossiblyNullArgument",
@@ -63,15 +76,15 @@
         },
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $foreignKeyTableTransferCollection has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ForeignKeyTableTransfer>', should be 'ArrayObject'",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of DOMDocument::loadXML expects non-empty-string, parent type string provided",
             "file_name": "vendor/spryker/spryker/Bundles/IndexGenerator/src/Spryker/Zed/IndexGenerator/Business/IndexGenerator/PostgresIndexGenerator.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ForeignKeyTableTransfer[] $foreignKeyTableTransferCollection",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ForeignKeyTableTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "        $domDocument->loadXML($baseXml);",
+            "selected_text": "$baseXml",
+            "error_level": 3,
+            "shortcode": 193
         },
         {
             "severity": "info",

@@ -26,7 +26,7 @@ use Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportDependencyPro
 
 /**
  * @method \Spryker\Zed\ProductRelationDataImport\ProductRelationDataImportConfig getConfig()
- * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker()
+ * @method \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware createTransactionAwareDataSetStepBroker($bulkSize = null)
  * @method \Spryker\Zed\DataImport\Business\Model\DataImporter getCsvDataImporterFromConfig(\Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer)
  */
 class ProductRelationDataImportBusinessFactory extends DataImportBusinessFactory

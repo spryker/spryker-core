@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapper::mapCompanyUserEntityToCompanyUserTransfer has wrong name $companyUserEntity, expecting $companyUser as defined by Spryker\\Zed\\CompanyUser\\Persistence\\Mapper\\CompanyUserMapperInterface::mapCompanyUserEntityToCompanyUserTransfer",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/Mapper/CompanyUserMapper.php",
-            "snippet": "        SpyCompanyUser $companyUserEntity",
-            "selected_text": "$companyUserEntity",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -385,18 +372,6 @@
             "selected_text": "$customerTransfer->getCompanyUserTransfer()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserEntityManager::save has the more specific type 'Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer', expecting 'Spryker\\Shared\\Kernel\\Transfer\\EntityTransferInterface' as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyUser/src/Spryker/Zed/CompanyUser/Persistence/CompanyUserEntityManager.php",
-            "snippet": "/**\n * @method \\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()\n * @method \\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer $spyCompanyUserEntityTransfer)\n */",
-            "selected_text": "\\Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserPersistenceFactory getFactory()",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",

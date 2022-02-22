@@ -1,5 +1,30 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\MerchantPortalApplication\\Communication\\MerchantPortalApplicationCommunicationFactory' for Spryker\\Zed\\Kernel\\Communication\\FactoryResolverAwareTrait::getFactory is more specific than the inferred return type 'Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/FactoryResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\Communication\\AbstractCommunicationFactory",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Zed\\Kernel\\Container' for Spryker\\Zed\\Kernel\\BundleDependencyProviderResolverAwareTrait::injectExternalDependencies is more specific than the implemented return type for Spryker\\Zed\\MerchantPortalApplication\\Communication\\Bootstrap\\MerchantPortalBootstrap::injectexternaldependencies 'Spryker\\Shared\\Kernel\\ContainerInterface|Spryker\\Zed\\Kernel\\Container'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantPortalApplication/src/Spryker/Zed/MerchantPortalApplication/Communication/Bootstrap/MerchantPortalBootstrap.php",
+            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\ContainerInterface|\\Spryker\\Zed\\Kernel\\Container",
+            "selected_text": "\\Spryker\\Shared\\Kernel\\ContainerInterface|\\Spryker\\Zed\\Kernel\\Container",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
     "deprecation": []
 }

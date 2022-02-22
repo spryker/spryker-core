@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 59,
+            "line_to": 59,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageSetEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageSetsByFkCategoryIn",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 70,
-            "line_to": 70,
+            "line_from": 73,
+            "line_to": 73,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageStorageEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageStorageByFkCategoryIn",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
@@ -33,7 +33,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageEntityManagerInterface::deleteCategoryImageStorage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
-            "snippet": "                $spyCategoryImageStorageEntity->getIdCategoryImageStorage()",
+            "snippet": "                $spyCategoryImageStorageEntity->getIdCategoryImageStorage(),",
             "selected_text": "$spyCategoryImageStorageEntity->getIdCategoryImageStorage()",
             "error_level": 3,
             "shortcode": 78
@@ -93,7 +93,7 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageEntityManagerInterface::deleteCategoryImageStorage cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Business/Storage/CategoryImageStorageWriter.php",
-            "snippet": "                    $imageStorageEntityTransfer->requireIdCategoryImageStorage()\n                        ->getIdCategoryImageStorage()",
+            "snippet": "                    $imageStorageEntityTransfer->requireIdCategoryImageStorage()\n                        ->getIdCategoryImageStorage(),",
             "selected_text": "$imageStorageEntityTransfer->requireIdCategoryImageStorage()\n                        ->getIdCategoryImageStorage()",
             "error_level": 3,
             "shortcode": 78

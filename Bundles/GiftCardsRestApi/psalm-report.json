@@ -5,6 +5,18 @@
             "severity": "info",
             "line_from": 51,
             "line_to": 51,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\GiftCardsRestApi\\Processor\\RestResponseBuilder\\GiftCardRestResponseBuilderInterface::createGiftCardRestResource expects ArrayObject<int, Generated\\Shared\\Transfer\\GiftCardTransfer>, possibly different type ArrayObject|non-empty-array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCardsRestApi/src/Spryker/Glue/GiftCardsRestApi/Processor/Expander/GiftCardByQuoteResourceRelationshipExpander.php",
+            "snippet": "                ->createGiftCardRestResource($giftCardTransfers, $resource->getType(), $payload->getUuid());",
+            "selected_text": "$giftCardTransfers",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Glue\\GiftCardsRestApi\\Processor\\RestResponseBuilder\\GiftCardRestResponseBuilderInterface::createGiftCardRestResource cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardsRestApi/src/Spryker/Glue/GiftCardsRestApi/Processor/Expander/GiftCardByQuoteResourceRelationshipExpander.php",
@@ -15,27 +27,15 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $giftCardTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer>', should be 'ArrayObject'",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Glue\\GiftCardsRestApi\\Processor\\RestResponseBuilder\\GiftCardRestResponseBuilder::getGiftCardsResourceSelfLink cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCardsRestApi/src/Spryker/Glue/GiftCardsRestApi/Processor/RestResponseBuilder/GiftCardRestResponseBuilder.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\GiftCardTransfer[] $giftCardTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\GiftCardTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $giftCardTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer>', should be 'ArrayObject'",
-            "file_name": "vendor/spryker/spryker/Bundles/GiftCardsRestApi/src/Spryker/Glue/GiftCardsRestApi/Processor/RestResponseBuilder/GiftCardRestResponseBuilderInterface.php",
-            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\GiftCardTransfer[] $giftCardTransfers",
-            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\GiftCardTransfer[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "                $this->getGiftCardsResourceSelfLink($parentResourceType, $parentResourceId, $giftCardCode),",
+            "selected_text": "$giftCardCode",
+            "error_level": 3,
+            "shortcode": 78
         }
     ],
     "deprecation": []

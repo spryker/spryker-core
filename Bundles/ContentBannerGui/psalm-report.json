@@ -15,30 +15,6 @@
         },
         {
             "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Zed\\ContentBannerGui\\Communication\\Form\\BannerContentTermForm::buildForm has the more specific type 'array<string, mixed>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\AbstractType::buildForm",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/BannerContentTermForm.php",
-            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
-            "selected_text": "$options",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Zed\\ContentBannerGui\\Communication\\Form\\Constraints\\ContentBannerConstraintValidator::validate has the more specific type 'null|string', expecting 'mixed' as defined by Symfony\\Component\\Validator\\ConstraintValidatorInterface::validate",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentBannerGui/src/Spryker/Zed/ContentBannerGui/Communication/Form/Constraints/ContentBannerConstraintValidator.php",
-            "snippet": "    public function validate($value, Constraint $constraint): void",
-            "selected_text": "$value",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 60,
             "line_to": 60,
             "type": "PossiblyNullArgument",

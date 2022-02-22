@@ -40,11 +40,11 @@ interface CompanyUserMapperInterface
     public function mapCompanyUserCollection($collection): CompanyUserCollectionTransfer;
 
     /**
-     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUser
+     * @param \Orm\Zed\CompanyUser\Persistence\SpyCompanyUser $companyUserEntity
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function mapCompanyUserEntityToCompanyUserTransfer(
-        SpyCompanyUser $companyUser
+        SpyCompanyUser $companyUserEntity
     ): CompanyUserTransfer;
 }

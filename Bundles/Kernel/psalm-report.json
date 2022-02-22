@@ -208,90 +208,6 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 158,
-            "line_to": 158,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Service\\Container\\Container::setGlobal has the more specific type 'callable|string', expecting 'mixed' as defined by Spryker\\Service\\Container\\ContainerInterface::setGlobal",
-            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
-            "snippet": "    public function setGlobal(string $id, $service): void",
-            "selected_text": "$service",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 389,
-            "line_to": 389,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Service\\Container\\Container::extend has the more specific type 'Closure', expecting 'object' as defined by Spryker\\Shared\\Kernel\\ContainerInterface::extend",
-            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
-            "snippet": "    public function extend(string $id, $service)",
-            "selected_text": "$service",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Client\\Kernel\\Locator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Client/Kernel/Locator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Glue\\Kernel\\Backend\\AbstractBundleDependencyProvider::provideDependencies has the more specific type 'Spryker\\Glue\\Kernel\\Backend\\Container', expecting 'Spryker\\Glue\\Kernel\\Container' as defined by Spryker\\Glue\\Kernel\\BundleDependencyProviderInterface::provideDependencies",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Backend/AbstractBundleDependencyProvider.php",
-            "snippet": "    public function provideDependencies(GlueContainer $container)",
-            "selected_text": "$container",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Glue\\Kernel\\Backend\\AbstractFactory::setContainer has the more specific type 'Spryker\\Glue\\Kernel\\Backend\\Container', expecting 'Spryker\\Glue\\Kernel\\Container' as defined by Spryker\\Glue\\Kernel\\AbstractFactory::setContainer",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Backend/AbstractFactory.php",
-            "snippet": "/**\n * @method \\Spryker\\Glue\\Kernel\\Backend\\Container getContainer()\n * @method setContainer(\\Spryker\\Glue\\Kernel\\Backend\\Container $container)\n */\nabstract class AbstractFactory extends GlueAbstractFactory",
-            "selected_text": "\\Spryker\\Glue\\Kernel\\Backend\\Container getContainer()",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Glue\\Kernel\\Backend\\AbstractFactory::provideDependencies has the more specific type 'Spryker\\Glue\\Kernel\\Backend\\AbstractBundleDependencyProvider', expecting 'Spryker\\Glue\\Kernel\\AbstractBundleDependencyProvider' as defined by Spryker\\Glue\\Kernel\\AbstractFactory::provideDependencies",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Backend/AbstractFactory.php",
-            "snippet": "    protected function provideDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container)",
-            "selected_text": "$dependencyProvider",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 2 of Spryker\\Glue\\Kernel\\Backend\\AbstractFactory::provideDependencies has the more specific type 'Spryker\\Glue\\Kernel\\Backend\\Container', expecting 'Spryker\\Glue\\Kernel\\Container' as defined by Spryker\\Glue\\Kernel\\AbstractFactory::provideDependencies",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Backend/AbstractFactory.php",
-            "snippet": "    protected function provideDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container)",
-            "selected_text": "$container",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 25,
             "line_to": 25,
             "type": "LessSpecificImplementedReturnType",
@@ -304,18 +220,6 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Glue\\Kernel\\Backend\\Locator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Backend/Locator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
             "line_from": 45,
             "line_to": 45,
             "type": "MoreSpecificReturnType",
@@ -325,18 +229,6 @@
             "selected_text": "\\Spryker\\Glue\\Kernel\\AbstractBundleConfig",
             "error_level": 3,
             "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Glue\\Kernel\\ClassResolver\\Controller\\ControllerResolver::resolve has the more specific type 'Spryker\\Shared\\Kernel\\Communication\\BundleControllerActionInterface', expecting 'object|string' as defined by Spryker\\Shared\\Kernel\\ClassResolver\\AbstractClassResolver::resolve",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/ClassResolver/Controller/ControllerResolver.php",
-            "snippet": "    public function resolve($callerClass)",
-            "selected_text": "$callerClass",
-            "error_level": 5,
-            "shortcode": 140
         },
         {
             "severity": "info",
@@ -364,18 +256,6 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Glue\\Kernel\\Locator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Glue/Kernel/Locator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
             "line_from": 23,
             "line_to": 23,
             "type": "LessSpecificImplementedReturnType",
@@ -385,30 +265,6 @@
             "selected_text": "self",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Service\\Kernel\\Locator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/Locator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\AbstractLocatorLocator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/AbstractLocatorLocator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
         },
         {
             "severity": "info",
@@ -460,18 +316,6 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "MoreSpecificImplementedParamType",
-            "message": "Argument 1 of Spryker\\Shared\\Kernel\\ClassResolver\\Controller\\AbstractControllerResolver::resolve has the more specific type 'Spryker\\Shared\\Kernel\\Communication\\BundleControllerActionInterface', expecting 'object|string' as defined by Spryker\\Shared\\Kernel\\ClassResolver\\AbstractClassResolver::resolve",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/Controller/AbstractControllerResolver.php",
-            "snippet": "    public function resolve($callerClass)",
-            "selected_text": "$callerClass",
-            "error_level": 5,
-            "shortcode": 140
-        },
-        {
-            "severity": "info",
             "line_from": 57,
             "line_to": 57,
             "type": "TypeDoesNotContainType",
@@ -493,18 +337,6 @@
             "selected_text": "\\Spryker\\Shared\\Kernel\\AbstractSharedConfig",
             "error_level": 3,
             "shortcode": 70
-        },
-        {
-            "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Shared\\Kernel\\Store with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/Store.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
         },
         {
             "severity": "info",
@@ -592,18 +424,6 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Yves\\Kernel\\Locator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Yves/Kernel/Locator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
-        },
-        {
-            "severity": "info",
             "line_from": 76,
             "line_to": 76,
             "type": "ArgumentTypeCoercion",
@@ -673,18 +493,6 @@
             "selected_text": "self",
             "error_level": 5,
             "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "UnsafeInstantiation",
-            "message": "Cannot safely instantiate class Spryker\\Zed\\Kernel\\Locator with \"new static\" as its constructor might change in child classes",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Locator.php",
-            "snippet": "            static::$instance = new static();",
-            "selected_text": "new static()",
-            "error_level": 2,
-            "shortcode": 229
         },
         {
             "severity": "info",
@@ -1170,24 +978,24 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 47,
+            "line_to": 47,
             "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Shared\\Kernel\\ClassResolver\\ModuleNameCandidatesBuilder\\ModuleNameCandidatesBuilder::getCurrentStoreName has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/ModuleNameCandidatesBuilder/ModuleNameCandidatesBuilder.php",
-            "snippet": "        $moduleNamePostfix = $this->getApplicationCodeBucket() ?: $this->getCurrentStoreName();",
+            "message": "The method Spryker\\Shared\\Kernel\\ClassResolver\\ModuleNamePostfixProvider\\ModuleNamePostfixProvider::getCurrentStoreName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/ModuleNamePostfixProvider/ModuleNamePostfixProvider.php",
+            "snippet": "        return $this->getCurrentApplicationsCodeBucket() ?: $this->getCurrentStoreName();",
             "selected_text": "getCurrentStoreName",
             "error_level": 2,
             "shortcode": 1
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 77,
+            "line_to": 77,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Shared\\Kernel\\ClassResolver\\ModuleNameCandidatesBuilder\\ModuleNameCandidatesBuilderConfigInterface::getCurrentStoreName has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/ModuleNameCandidatesBuilder/ModuleNameCandidatesBuilder.php",
-            "snippet": "        return $this->config->getCurrentStoreName();",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/ClassResolver/ModuleNamePostfixProvider/ModuleNamePostfixProvider.php",
+            "snippet": "        return $this->moduleNameCandidatesBuilderConfig->getCurrentStoreName();",
             "selected_text": "getCurrentStoreName",
             "error_level": 2,
             "shortcode": 1
@@ -1362,8 +1170,8 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
+            "line_from": 40,
+            "line_to": 40,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheFactoryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/KernelSharedFactory.php",
@@ -1374,8 +1182,8 @@
         },
         {
             "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
+            "line_from": 42,
+            "line_to": 42,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheFactoryInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/KernelSharedFactory.php",
@@ -1386,8 +1194,8 @@
         },
         {
             "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
+            "line_from": 44,
+            "line_to": 44,
             "type": "DeprecatedClass",
             "message": "Spryker\\Shared\\Kernel\\ClassResolver\\ResolverCacheManager is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Shared/Kernel/KernelSharedFactory.php",
@@ -1803,6 +1611,18 @@
             "selected_text": "new ResolverCacheManager()",
             "error_level": 2,
             "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Shared\\Kernel\\KernelConfig::getResolvableCacheFilePath has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/KernelConfig.php",
+            "snippet": "        return $this->getSharedConfig()->getResolvableCacheFilePath();",
+            "selected_text": "getResolvableCacheFilePath",
+            "error_level": 2,
+            "shortcode": 1
         }
     ]
 }

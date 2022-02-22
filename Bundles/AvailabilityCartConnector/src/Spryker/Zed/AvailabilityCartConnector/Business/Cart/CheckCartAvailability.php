@@ -123,17 +123,17 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $SellableItemsResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function createCartPreCheckResponseTransfer(
-        SellableItemsResponseTransfer $SellableItemsResponseTransfer
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
     ): CartPreCheckResponseTransfer {
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
         $messages = new ArrayObject();
-        foreach ($SellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
+        foreach ($sellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
             if (!$sellableItemResponseTransfer->getIsSellable()) {
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer(

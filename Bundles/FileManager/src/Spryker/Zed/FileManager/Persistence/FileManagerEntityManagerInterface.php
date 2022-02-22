@@ -45,11 +45,11 @@ interface FileManagerEntityManagerInterface
     public function deleteFileInfo(FileInfoTransfer $fileInfoTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $attributesTransfer
+     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\FileLocalizedAttributesTransfer
      */
-    public function saveFileLocalizedAttribute(FileLocalizedAttributesTransfer $attributesTransfer);
+    public function saveFileLocalizedAttribute(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer

@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "ParamNameMismatch",
-            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterDataSetWriterAware::setDataSetWriter has wrong name $dataSetWriter, expecting $dataImportWriter as defined by Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterDataSetWriterAwareInterface::setDataSetWriter",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataImporterDataSetWriterAware.php",
-            "snippet": "    public function setDataSetWriter(DataSetWriterInterface $dataSetWriter)",
-            "selected_text": "$dataSetWriter",
-            "error_level": 7,
-            "shortcode": 230
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -652,8 +639,8 @@
         },
         {
             "severity": "info",
-            "line_from": 320,
-            "line_to": 320,
+            "line_from": 321,
+            "line_to": 321,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of explode cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
@@ -664,8 +651,8 @@
         },
         {
             "severity": "info",
-            "line_from": 361,
-            "line_to": 361,
+            "line_from": 362,
+            "line_to": 362,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
@@ -676,8 +663,8 @@
         },
         {
             "severity": "info",
-            "line_from": 374,
-            "line_to": 374,
+            "line_from": 375,
+            "line_to": 375,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
@@ -688,8 +675,8 @@
         },
         {
             "severity": "info",
-            "line_from": 376,
-            "line_to": 376,
+            "line_from": 377,
+            "line_to": 377,
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
@@ -700,8 +687,8 @@
         },
         {
             "severity": "info",
-            "line_from": 377,
-            "line_to": 377,
+            "line_from": 378,
+            "line_to": 378,
             "type": "PossiblyNullArgument",
             "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
@@ -712,8 +699,8 @@
         },
         {
             "severity": "info",
-            "line_from": 378,
-            "line_to": 378,
+            "line_from": 379,
+            "line_to": 379,
             "type": "PossiblyNullArgument",
             "message": "Argument 6 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/DataImportConsole.php",
@@ -784,8 +771,8 @@
         },
         {
             "severity": "info",
-            "line_from": 187,
-            "line_to": 187,
+            "line_from": 204,
+            "line_to": 204,
             "type": "PossiblyNullOperand",
             "message": "Left operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/Executor/DataImportExecutor.php",
@@ -796,8 +783,8 @@
         },
         {
             "severity": "info",
-            "line_from": 187,
-            "line_to": 187,
+            "line_from": 204,
+            "line_to": 204,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/Executor/DataImportExecutor.php",

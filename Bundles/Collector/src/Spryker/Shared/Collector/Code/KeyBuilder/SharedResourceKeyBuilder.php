@@ -15,13 +15,13 @@ abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
     use KeyBuilderTrait;
 
     /**
-     * @param string $identifier
+     * @param string $data Identifier.
      *
      * @return string
      */
-    protected function buildKey($identifier)
+    protected function buildKey($data)
     {
-        return $this->getResourceType() . '.' . $identifier;
+        return $this->getResourceType() . '.' . $data;
     }
 
     /**
