@@ -80,7 +80,7 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory::getProductAbstractPageMapExpanderPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory::getProductAbstractMapExpanderPlugins()} instead.
      *
      * @return array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface>
      */
