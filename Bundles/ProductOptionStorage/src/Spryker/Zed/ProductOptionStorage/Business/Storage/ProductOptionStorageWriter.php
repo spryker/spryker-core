@@ -156,21 +156,19 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
+     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage> $productAbstractOptionStorageEntities
      *
      * @return void
      */
     protected function deleteStorageData(array $productAbstractOptionStorageEntities): void
     {
-        foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
-            foreach ($productAbstractOptionStorageEntityArray as $productAbstractOptionStorageEntity) {
-                $productAbstractOptionStorageEntity->delete();
-            }
+        foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
+            $productAbstractOptionStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $spyProductAbstractOptionStorageEntities
+     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $spyProductAbstractOptionStorageEntities
      * @param array $productAbstractWithOptions
      *
      * @return void
@@ -191,7 +189,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int $idProductAbstract
      * @param array $productOptions
-     * @param array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>> $productAbstractOptionStorageEntities
+     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -250,10 +248,11 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return array<array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>>
+     * @return array<int, array<string, \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>>
      */
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
+        /** @var array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage> $productAbstractOptionStorageEntities */
         $productAbstractOptionStorageEntities = $this->queryContainer->queryProductAbstractOptionStorageByIds($productAbstractIds)->find();
         $productAbstractOptionStorageEntitiesByIdAndStore = [];
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {

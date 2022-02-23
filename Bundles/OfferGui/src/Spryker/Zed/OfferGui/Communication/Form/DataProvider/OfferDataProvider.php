@@ -92,10 +92,10 @@ class OfferDataProvider
 
         if ($this->request->query->has(EditOfferType::FIELD_CUSTOMER_REFERENCE)) {
             $offerTransfer->getQuote()->getCustomer()->setCustomerReference(
-                $this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE),
+                (string)$this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE),
             );
 
-            $offerTransfer->setCustomerReference($this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE));
+            $offerTransfer->setCustomerReference((string)$this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE));
         }
 
         $offerTransfer->getQuote()

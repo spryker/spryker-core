@@ -153,6 +153,7 @@ class OffersTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->queryBuilder->buildQuery();
+        /** @var array $queryResults */
         $queryResults = $this->runQuery($query, $config);
 
         return $this->formatQueryData($queryResults);

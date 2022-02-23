@@ -18,6 +18,7 @@ class LocaleConfig extends AbstractBundleConfig
      */
     public function getLocaleFile()
     {
+        /** @phpstan-var string */
         return realpath(__DIR__ . '/Business/Internal/Install/locales.txt');
     }
 }

@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 202,
-            "line_to": 202,
+            "line_from": 200,
+            "line_to": 200,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductOptionStorage\\Business\\Storage\\ProductOptionStorageWriter::getProductOptionGroupStorageTransfers cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
+            "line_from": 202,
+            "line_to": 202,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $storePrices[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
@@ -77,42 +77,6 @@
             "severity": "info",
             "line_from": 220,
             "line_to": 220,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage> variable $spyProductAbstractOptionStorageEntity",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
-            "snippet": "            $spyProductAbstractOptionStorageEntity->setFkProductAbstract($idProductAbstract);",
-            "selected_text": "setFkProductAbstract",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 221,
-            "line_to": 221,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage> variable $spyProductAbstractOptionStorageEntity",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
-            "snippet": "            $spyProductAbstractOptionStorageEntity->setData($productAbstractOptionStorageTransfer->toArray());",
-            "selected_text": "setData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 222,
-            "line_to": 222,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage> variable $spyProductAbstractOptionStorageEntity",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
-            "snippet": "            $spyProductAbstractOptionStorageEntity->setStore($store);",
-            "selected_text": "setStore",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 222,
-            "line_to": 222,
             "type": "InvalidScalarArgument",
             "message": "Argument 1 of Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage::setStore expects string, 0|string provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
@@ -120,30 +84,6 @@
             "selected_text": "$store",
             "error_level": 4,
             "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage> variable $spyProductAbstractOptionStorageEntity",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
-            "snippet": "            $spyProductAbstractOptionStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
-            "selected_text": "setIsSendingToQueue",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 224,
-            "line_to": 224,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage> variable $spyProductAbstractOptionStorageEntity",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
-            "snippet": "            $spyProductAbstractOptionStorageEntity->save();",
-            "selected_text": "save",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -173,8 +113,8 @@
         },
         {
             "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
+            "line_from": 221,
+            "line_to": 221,
             "type": "DeprecatedMethod",
             "message": "The method Orm\\Zed\\ProductOptionStorage\\Persistence\\Base\\SpyProductAbstractOptionStorage::setIsSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
@@ -185,8 +125,8 @@
         },
         {
             "severity": "info",
-            "line_from": 223,
-            "line_to": 223,
+            "line_from": 221,
+            "line_to": 221,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\ProductOptionStorage\\Business\\Storage\\ProductOptionStorageWriter::$isSendingToQueue is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",

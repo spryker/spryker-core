@@ -37,7 +37,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      */
     public function can(array $configuration, $context = null): bool
     {
-        if ($context === null) {
+        if ($context === null || !is_array($context)) {
             return false;
         }
 

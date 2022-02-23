@@ -58,10 +58,13 @@ class LocaleInstaller implements LocaleInstallerInterface
      */
     protected function executeInstallLocalesTransaction(): void
     {
+        /** @var resource $localeFile */
         $localeFile = fopen($this->localeFile, 'r');
 
         while (!feof($localeFile)) {
-            $locale = trim(fgets($localeFile));
+            /** @var string $locale */
+            $locale = fgets($localeFile);
+            $locale = trim($locale);
 
             $query = $this->localeQueryContainer->queryLocaleByName($locale);
 

@@ -138,7 +138,7 @@ class EditController extends AbstractController
         if (!$request->query->has(CreateController::PARAM_CUSTOMER_REFERENCE) || !$request->query->has(CreateController::PARAM_KEY_INITIAL_OFFER)) {
             return $offerTransfer;
         }
-        $offerKey = $request->query->get(CreateController::PARAM_KEY_INITIAL_OFFER);
+        $offerKey = (string)$request->query->get(CreateController::PARAM_KEY_INITIAL_OFFER);
 
         return (new OfferTransfer())->fromArray(
             $this->retrieveFormDataFromSession($offerKey),

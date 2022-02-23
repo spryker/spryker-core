@@ -23,30 +23,6 @@
             "selected_text": "$locales",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 237,
-            "line_to": 237,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, Generated\\Shared\\Transfer\\LocaleTransfer>' for Spryker\\Zed\\Locale\\Business\\Manager\\LocaleManager::getAvailableLocaleCollection is incorrect, got 'array<array-key, Generated\\Shared\\Transfer\\LocaleTransfer|array-key>'",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Manager/LocaleManager.php",
-            "snippet": "     * @return array<\\Generated\\Shared\\Transfer\\LocaleTransfer>",
-            "selected_text": "array<\\Generated\\Shared\\Transfer\\LocaleTransfer>",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 247,
-            "line_to": 247,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<array-key, Generated\\Shared\\Transfer\\LocaleTransfer|array-key>' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\LocaleTransfer>' for Spryker\\Zed\\Locale\\Business\\Manager\\LocaleManager::getAvailableLocaleCollection",
-            "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Manager/LocaleManager.php",
-            "snippet": "        return array_merge(array_flip($availableLocales), $indexedLocaleTransfers);",
-            "selected_text": "array_merge(array_flip($availableLocales), $indexedLocaleTransfers)",
-            "error_level": 6,
-            "shortcode": 128
         }
     ],
     "warning": [
@@ -184,8 +160,8 @@
         },
         {
             "severity": "info",
-            "line_from": 260,
-            "line_to": 260,
+            "line_from": 262,
+            "line_to": 262,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $indexedLocaleTransfers[null|string] using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Business/Manager/LocaleManager.php",
@@ -199,7 +175,7 @@
             "line_from": 47,
             "line_to": 47,
             "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for /var/work/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:47:1540:-:closure is not nullable, but 'null|string' contains null",
+            "message": "The declared return type 'string' for /data/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:47:1540:-:closure is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
             "snippet": "        $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container): string {",
             "selected_text": "string",
@@ -211,7 +187,7 @@
             "line_from": 52,
             "line_to": 52,
             "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for /var/work/devvm/project/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:47:1540:-:closure is not nullable, but the function returns 'null|string'",
+            "message": "The declared return type 'string' for /data/vendor/spryker/spryker/bundles/locale/src/spryker/zed/locale/communication/plugin/application/localeapplicationplugin.php:47:1540:-:closure is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/Locale/src/Spryker/Zed/Locale/Communication/Plugin/Application/LocaleApplicationPlugin.php",
             "snippet": "            return $localeTransfer->getLocaleName();",
             "selected_text": "$localeTransfer->getLocaleName()",

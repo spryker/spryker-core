@@ -243,8 +243,10 @@ class LocaleManager
         $localeTransfers = $this->localeRepository->getLocaleTransfersByLocaleNames($availableLocales);
 
         $indexedLocaleTransfers = $this->indexLocaleTransfersByLocalename($localeTransfers);
+        /** @var array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocales */
+        $availableLocales = array_intersect_key(array_flip($availableLocales), $indexedLocaleTransfers);
 
-        return array_merge(array_flip($availableLocales), $indexedLocaleTransfers);
+        return array_merge($availableLocales, $indexedLocaleTransfers);
     }
 
     /**

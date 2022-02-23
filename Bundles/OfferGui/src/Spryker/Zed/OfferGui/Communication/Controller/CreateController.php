@@ -238,7 +238,7 @@ class CreateController extends AbstractController
         if (!$request->query->has(static::PARAM_CUSTOMER_REFERENCE) || !$request->query->has(static::PARAM_KEY_INITIAL_OFFER)) {
             return $offerTransfer;
         }
-        $offerKey = $request->query->get(static::PARAM_KEY_INITIAL_OFFER);
+        $offerKey = (string)$request->query->get(static::PARAM_KEY_INITIAL_OFFER);
 
         $data = $this->retrieveFormDataFromSession($offerKey);
 

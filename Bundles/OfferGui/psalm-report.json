@@ -27,18 +27,6 @@
         },
         {
             "severity": "info",
-            "line_from": 243,
-            "line_to": 243,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Spryker\\Zed\\OfferGui\\Communication\\Controller\\CreateController::retrieveFormDataFromSession expects string, null|scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Controller/CreateController.php",
-            "snippet": "        $data = $this->retrieveFormDataFromSession($offerKey);",
-            "selected_text": "$offerKey",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
             "line_from": 124,
             "line_to": 124,
             "type": "PossiblyNullReference",
@@ -48,18 +36,6 @@
             "selected_text": "setItems",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Spryker\\Zed\\OfferGui\\Communication\\Controller\\EditController::retrieveFormDataFromSession expects string, null|scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Controller/EditController.php",
-            "snippet": "            $this->retrieveFormDataFromSession($offerKey),",
-            "selected_text": "$offerKey",
-            "error_level": 4,
-            "shortcode": 12
         },
         {
             "severity": "info",
@@ -144,30 +120,6 @@
             "selected_text": "setCustomerReference",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 95,
-            "line_to": 95,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\CustomerTransfer::setCustomerReference expects null|string, null|scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Form/DataProvider/OfferDataProvider.php",
-            "snippet": "                $this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE),",
-            "selected_text": "$this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE)",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\OfferTransfer::setCustomerReference expects null|string, null|scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Form/DataProvider/OfferDataProvider.php",
-            "snippet": "            $offerTransfer->setCustomerReference($this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE));",
-            "selected_text": "$this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE)",
-            "error_level": 4,
-            "shortcode": 12
         },
         {
             "severity": "info",
@@ -279,20 +231,8 @@
         },
         {
             "severity": "info",
-            "line_from": 158,
-            "line_to": 158,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\OfferGui\\Communication\\Table\\OffersTable::formatQueryData expects array<array-key, mixed>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, mixed> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
-            "snippet": "        return $this->formatQueryData($queryResults);",
-            "selected_text": "$queryResults",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 168,
-            "line_to": 168,
+            "line_from": 169,
+            "line_to": 169,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -303,8 +243,8 @@
         },
         {
             "severity": "info",
-            "line_from": 169,
-            "line_to": 169,
+            "line_from": 170,
+            "line_to": 170,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getGrandTotal on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -315,8 +255,8 @@
         },
         {
             "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
+            "line_from": 174,
+            "line_to": 174,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\OfferGui\\Communication\\Table\\OffersTable::formatPrice cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -327,8 +267,8 @@
         },
         {
             "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
+            "line_from": 174,
+            "line_to": 174,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getGrandTotal on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -339,8 +279,8 @@
         },
         {
             "severity": "info",
-            "line_from": 190,
-            "line_to": 190,
+            "line_from": 191,
+            "line_to": 191,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -351,8 +291,8 @@
         },
         {
             "severity": "info",
-            "line_from": 191,
-            "line_to": 191,
+            "line_from": 192,
+            "line_to": 192,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -363,8 +303,8 @@
         },
         {
             "severity": "info",
-            "line_from": 192,
-            "line_to": 192,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",
@@ -375,8 +315,8 @@
         },
         {
             "severity": "info",
-            "line_from": 219,
-            "line_to": 219,
+            "line_from": 220,
+            "line_to": 220,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilSanitizeServiceInterface::escapeHtml cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/OfferGui/src/Spryker/Zed/OfferGui/Communication/Table/OffersTable.php",

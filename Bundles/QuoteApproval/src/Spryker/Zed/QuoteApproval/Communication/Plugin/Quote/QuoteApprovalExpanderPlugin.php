@@ -27,7 +27,7 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
     protected $quoteIds = [];
 
     /**
-     * @var array<\Generated\Shared\Transfer\QuoteApprovalTransfer>|null
+     * @var array<int, array<\Generated\Shared\Transfer\QuoteApprovalTransfer>>|null
      */
     protected $quoteApprovalsByIdQuote;
 
@@ -61,7 +61,7 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
 
         $quoteApprovals = $this->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote());
 
-        $quoteTransfer->setQuoteApprovals($quoteApprovals);
+        $quoteTransfer->setQuoteApprovals(new ArrayObject($quoteApprovals));
 
         return $quoteTransfer;
     }
@@ -97,12 +97,12 @@ class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpande
     /**
      * @param int $idQuote
      *
-     * @return \ArrayObject
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
-    protected function getQuoteApprovalsByIdQuote(int $idQuote): ArrayObject
+    protected function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
         if (!isset($this->quoteApprovalsByIdQuote[$idQuote])) {
-            $this->quoteApprovalsByIdQuote[$idQuote] = new ArrayObject($this->getFacade()->getQuoteApprovalsByIdQuote($idQuote));
+            $this->quoteApprovalsByIdQuote[$idQuote] = $this->getFacade()->getQuoteApprovalsByIdQuote($idQuote);
         }
 
         return $this->quoteApprovalsByIdQuote[$idQuote];

@@ -29,12 +29,12 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     {
         return $this->getFactory()
             ->createQuoteApprovalPropelQuery()
-            ->joinWithSpyCompanyUser()
-            ->useSpyCompanyUserQuery()
-            ->joinWithCustomer()
-            ->endUse()
             ->filterByFkQuote_In($quoteIds)
             ->orderByIdQuoteApproval()
+            ->joinWithSpyCompanyUser()
+            ->useSpyCompanyUserQuery()
+                ->joinWithCustomer()
+            ->endUse()
             ->find();
     }
 
@@ -72,7 +72,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
      *
-     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
+     * @return array<int, array<\Generated\Shared\Transfer\QuoteApprovalTransfer>>
      */
     public function getQuoteApprovalsIdexedByQuoteId(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
     {
@@ -84,6 +84,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
         $mapper = $this->getFactory()
             ->createQuoteApprovalMapper();
         foreach ($quoteApprovalEntities as $quoteApprovalEntity) {
+            /** @var int $quoteId */
             $quoteId = $quoteApprovalEntity->getFkQuote();
             if ($quoteApprovalTransfers[$quoteId] === null) {
                 $quoteApprovalTransfers[$quoteId] = [];
@@ -126,11 +127,11 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
     {
         $quoteApprovalEntity = $this->getFactory()
             ->createQuoteApprovalPropelQuery()
+            ->filterByIdQuoteApproval($idQuoteApproval)
             ->joinWithSpyCompanyUser()
             ->useSpyCompanyUserQuery()
-            ->joinWithCustomer()
+                ->joinWithCustomer()
             ->endUse()
-            ->filterByIdQuoteApproval($idQuoteApproval)
             ->find()
             ->getFirst();
 

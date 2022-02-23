@@ -81,7 +81,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
      *
-     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
+     * @return array<int, array<\Generated\Shared\Transfer\QuoteApprovalTransfer>>
      */
     public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
 

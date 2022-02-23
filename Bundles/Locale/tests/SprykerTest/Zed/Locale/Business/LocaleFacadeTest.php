@@ -47,6 +47,11 @@ class LocaleFacadeTest extends Unit
     protected $localeNames = [];
 
     /**
+     * @var \SprykerTest\Zed\Locale\LocaleBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -104,5 +109,18 @@ class LocaleFacadeTest extends Unit
 
         //Assert
         $this->assertSame($currentLocale->getLocaleName(), $newCurrentLocale->getLocaleName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetLocaleCollectionGetsLocalesFromStoreInstance(): void
+    {
+        // Act
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+
+        // Assert
+        $this->assertSame('en_US', array_keys($localeTransfers)[0]);
+        $this->assertSame('de_DE', array_keys($localeTransfers)[1]);
     }
 }
