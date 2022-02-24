@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\Container as GlueContainer;
 abstract class AbstractBundleDependencyProvider extends GlueAbstractBundleDependencyProvider
 {
     /**
-     * Use {@see \Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider::provideBackendDependencies()} instead
+     * Use {@link \Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider::provideBackendDependencies()} instead.
      * to enable auto-completion for facades
      *
      * @param \Spryker\Glue\Kernel\Backend\Container $container

@@ -94,7 +94,7 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead.
+     * @deprecated Use {@link getCoreSourceDirectoryGlobPatterns()} instead.
      *
      * @return string
      */
@@ -127,7 +127,7 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated please use TransferConfig::getCoreSourceDirectoryGlobPatterns() instead.
+     * @deprecated Use {@link getCoreSourceDirectoryGlobPatterns()} instead.
      *
      * This method can be used to extend the list of directories for transfer object
      * discovery in project implementations.
