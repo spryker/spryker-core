@@ -26,7 +26,7 @@ interface RestUrlResolverAttributesTransferProviderPluginInterface
 
     /**
      * Specification:
-     * - Attempts to find the type+id pair for the the given UrlStorageTransfer.
+     * - Attempts to find the type+id pair for the given UrlStorageTransfer.
      * - Returns RestUrlResolverAttributesTransfer on success, null otherwise.
      *
      * @api
