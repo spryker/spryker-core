@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Will be removed in the next major. Please use \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface.
+ * @deprecated Use {@link \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface} instead.
  */
 interface CartCodePluginInterface
 {

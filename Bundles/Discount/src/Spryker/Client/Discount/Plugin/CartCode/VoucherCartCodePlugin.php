@@ -13,7 +13,7 @@ use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin.
+ * @deprecated Use {@link \Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin} instead.
  *
  * @method \Spryker\Client\Discount\DiscountFactory getFactory()
  */

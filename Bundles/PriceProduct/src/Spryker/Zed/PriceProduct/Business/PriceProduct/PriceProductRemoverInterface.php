@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface PriceProductRemoverInterface
 {
     /**
-     * @deprecated Please try to avoid removing price product store. Use \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover::removePriceProductDefaultsForPriceProduct.
+     * @deprecated Please try to avoid removing price product store.
+     *   Use {@link \Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemover::removePriceProductDefaultsForPriceProduct} instead.
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *

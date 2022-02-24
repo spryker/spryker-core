@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Deprecated: Please use \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface instead
+ * Deprecated: Please use {@link \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface} instead
  */
 interface CheckoutPreSaveHookInterface
 {
