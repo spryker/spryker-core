@@ -97,7 +97,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Yves\Log\LogConfig::getExceptionLogDestination()} instead.
+     * @deprecated Use {@link \Spryker\Yves\Log\LogConfig::getExceptionLogDestinationPath()} instead.
      *
      * @return string
      */

@@ -13,7 +13,7 @@ interface QuotePreExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Method is executed before {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand() }.
+     * - Method is executed before {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand()}.
      *
      * @api
      *

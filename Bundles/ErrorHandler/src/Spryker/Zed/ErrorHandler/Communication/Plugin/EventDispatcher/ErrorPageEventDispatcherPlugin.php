@@ -28,8 +28,8 @@ class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDisp
 
     /**
      * {@inheritDoc}
-     * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::EXCEPTION` event.
-     * - Executes `\Spryker\Shared\ErrorHandler\Dependency\Plugin\ExceptionHandlerPluginInterface` which is able to handle the current status code.
+     * - Adds a listener for the {@link \Symfony\Component\HttpKernel\KernelEvents::EXCEPTION} event.
+     * - Executes {@link \SprykerShop\Yves\ErrorPageExtension\Dependency\Plugin\ExceptionHandlerPluginInterface} which is able to handle the current status code.
      *
      * @api
      *

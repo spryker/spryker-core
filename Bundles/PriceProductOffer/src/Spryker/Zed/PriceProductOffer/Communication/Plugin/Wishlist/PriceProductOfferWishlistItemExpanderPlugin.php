@@ -12,7 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface;
 
 /**
- * This plugin should be put after `\Spryker\Zed\PriceProduct\Communication\Plugin\Wishlist\PriceProductWishlistItemExpanderPlugin` in the plugin stack, otherwise prices for offers will not be correct.
+ * This plugin should be put after {@link \Spryker\Zed\PriceProduct\Communication\Plugin\Wishlist\PriceProductWishlistItemExpanderPlugin}
+ * in the plugin stack, otherwise prices for offers will not be correct.
  *
  * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  * @method \Spryker\Zed\PriceProductOffer\Business\PriceProductOfferFacadeInterface getFacade()

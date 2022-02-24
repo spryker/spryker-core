@@ -249,7 +249,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::saveOrderShipmentTransactionByShipmentGroupAndCopyToQuote()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::saveOrderShipmentByShipmentGroup()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer

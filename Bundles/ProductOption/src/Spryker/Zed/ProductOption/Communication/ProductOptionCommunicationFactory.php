@@ -33,7 +33,7 @@ use Symfony\Component\Form\FormInterface;
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @deprecated Use {@link getProductOptionGroupType()} instead.
+     * @deprecated Use {@link getProductOptionGroupForm()} instead.
      *
      * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
      *

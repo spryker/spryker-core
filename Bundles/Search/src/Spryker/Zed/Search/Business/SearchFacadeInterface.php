@@ -234,7 +234,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshotRepository()} instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::registerSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      * @param string $type

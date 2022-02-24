@@ -11,7 +11,7 @@ interface QuotePostExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Method is executed after {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand() }.
+     * - Method is executed after {@link \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface::expand()}.
      *
      * @api
      *

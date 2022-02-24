@@ -14,7 +14,7 @@ interface ConfigurableBundleNoteClientInterface
 {
     /**
      * Specification:
-     * - Resolves quote storage strategy which implements `\Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface`.
+     * - Resolves quote storage strategy which implements {@link \Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface}.
      * - Updates configured bundle with note using quote storage strategy.
      * - Returns `isSuccess=true` if note was successfully set or `isSuccess=false` otherwise.
      *

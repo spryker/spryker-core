@@ -101,8 +101,6 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use {@link getCmsPageForm()} instead.
-     *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @param int|null $idCmsPage
      * @param \Generated\Shared\Transfer\CmsPageTransfer|null $cmsPageTransfer

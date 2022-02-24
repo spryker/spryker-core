@@ -69,7 +69,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     * @deprecated Use {@link getProjectInstallCommand()} instead.
      *
      * @return array<string>
      */
@@ -83,7 +83,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     * @deprecated Use {@link getProjectInstallCommand()} instead.
      *
      * @return string
      */
@@ -132,7 +132,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     * @deprecated Use {@link getProjectInstallCommand()} instead.
      *
      * @return array<string>
      */
@@ -146,7 +146,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     * @deprecated Use {@link getProjectInstallCommand()} instead.
      *
      * @return string
      */
@@ -168,7 +168,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     * @deprecated Use {@link getProjectInstallCommand()} instead.
      *
      * @return string
      */

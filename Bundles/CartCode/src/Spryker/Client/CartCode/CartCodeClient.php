@@ -57,7 +57,7 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
      *
      * @api
      *
-     * @deprecated Use {@link clearAllCartCodes()} instead.
+     * @deprecated Use {@link clearCartCodes()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

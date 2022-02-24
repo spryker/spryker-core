@@ -67,7 +67,7 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionHandlerRedis()} instead.
+     * @deprecated Use {@link \Spryker\Yves\SessionRedis\SessionRedisFactory::createSessionRedisHandler()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis|\SessionHandlerInterface
      */

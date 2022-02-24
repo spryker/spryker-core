@@ -18,7 +18,7 @@ interface CollectorClientInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Client\Url\UrlClientInterface:matchUrl()} instead.
+     * @deprecated Use {@link \Spryker\Client\Url\UrlClientInterface::matchUrl()} instead.
      *
      * @param string $url
      * @param string $localeName

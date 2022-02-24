@@ -93,7 +93,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Log\LogConfig::getLogDestinationPath()} instead.
+     * @deprecated Use {@link getLogDestinationPath()} instead.
      *
      * @return string
      */
@@ -132,7 +132,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Log\LogConfig::getExceptionLogDestination()} instead.
+     * @deprecated Use {@link getExceptionLogDestinationPath()} instead.
      *
      * @return string
      */

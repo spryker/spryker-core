@@ -16,8 +16,8 @@ use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\GlossaryTran
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated This will be deleted in the next major without replacement, the plugin registering now happened in
- *  project by implementing `\Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface`
+ * @deprecated This will be deleted in the next major without replacement, the plugin registering is now handled in
+ *   project by implementing {@link \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface}.
  *
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()

@@ -278,7 +278,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackofficeRouterEnhancerPlugins()} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackendGatewayRouterEnhancerPlugins()} instead.
-     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackendApiRouterEnhancerPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addMerchantPortalRouterEnhancerPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -296,7 +296,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackofficeRouterEnhancerPlugins()} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendGatewayRouterEnhancerPlugins()} instead.
-     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendApiRouterEnhancerPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addMerchantPortalRouterEnhancerPlugins()} instead.
      *
      * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */

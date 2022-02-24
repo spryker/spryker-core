@@ -314,7 +314,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshotRepository()} instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::registerSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      * @param string $type

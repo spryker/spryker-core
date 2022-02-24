@@ -218,7 +218,8 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated The index suffix will be resolved by `\Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface` implementation in Elasticsearch specific vendor module.
+     * @deprecated The index suffix will be resolved by {@link \Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface}
+     *   implementation in Elasticsearch specific vendor module.
      *
      * @return string
      */

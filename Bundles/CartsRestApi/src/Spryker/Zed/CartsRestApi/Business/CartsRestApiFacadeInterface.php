@@ -124,7 +124,7 @@ interface CartsRestApiFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link changeItemQuantity()} instead.
+     * @deprecated Use {@link updateItemQuantity()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

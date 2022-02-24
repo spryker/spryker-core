@@ -354,7 +354,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndexCopier()} instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndex()} instead.
      *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopierInterface
      */

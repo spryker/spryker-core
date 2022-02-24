@@ -567,7 +567,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Finds customer by provided criteria.
-     * - Optionally expands customer data with `\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface` plugins stack.
+     * - Optionally expands customer data with {@link \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface} plugins stack.
      * - Returns customer response transfer.
      *
      * @api

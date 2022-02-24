@@ -57,7 +57,7 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface::expandItemsWithSalesOrderConfiguredBundles()} instead.
+     * @deprecated Use {@link expandOrderItemsWithSalesOrderConfiguredBundles()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

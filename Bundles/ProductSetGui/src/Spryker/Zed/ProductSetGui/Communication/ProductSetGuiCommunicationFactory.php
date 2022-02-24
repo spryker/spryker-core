@@ -54,7 +54,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use {@link getProductSetForm()} instead.
+     * @deprecated Use {@link getCreateProductSetForm()} instead.
      *
      * @param array $data
      * @param array<string, mixed> $options

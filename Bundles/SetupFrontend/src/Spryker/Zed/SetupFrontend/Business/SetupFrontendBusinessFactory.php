@@ -59,7 +59,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated In next major single installer will be used. See {@link this->createProjectInstaller()}
+     * @deprecated Use {@link createProjectInstaller()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstallerInterface
      */
@@ -82,7 +82,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated In next major single installer will be used. See {@link this->createProjectInstaller()}
+     * @deprecated Use {@link createProjectInstaller()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
@@ -111,7 +111,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated In next major single installer will be used. See {@link this->createProjectInstaller()}
+     * @deprecated Use {@link createProjectInstaller()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstallerInterface
      */
@@ -134,7 +134,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated In next major single installer will be used. See {@link this->createProjectInstaller()}
+     * @deprecated Use {@link createProjectInstaller()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\PathFinder\PathFinderInterface
      */
@@ -163,7 +163,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated In next major single installer will be used. See {@link this->createProjectInstaller()}
+     * @deprecated Use {@link createProjectInstaller()} instead.
      *
      * @return \Spryker\Zed\SetupFrontend\Business\Model\Installer\DependencyInstallerInterface
      */

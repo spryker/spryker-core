@@ -120,7 +120,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderAggregationBySkuAndStatesNames()} instead.
      *
      * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      * @param string $sku
@@ -136,7 +136,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderItemsBySkuAndStatesNames()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface::getSalesOrderAggregationBySkuAndStatesNames()} instead.
      *
      * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      * @param string $sku
