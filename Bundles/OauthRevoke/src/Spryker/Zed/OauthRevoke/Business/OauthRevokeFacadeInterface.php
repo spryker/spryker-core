@@ -104,7 +104,7 @@ interface OauthRevokeFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface::saveRefreshTokenFromTransfer() } instead.
+     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface::saveRefreshTokenFromTransfer()} instead.
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *

@@ -93,7 +93,7 @@ class SessionFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\SessionFile::createSessionHandlerFile()} instead.
+     * @deprecated Use {@link \Spryker\Yves\SessionFile\SessionFileFactory::createSessionHandlerFile()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */

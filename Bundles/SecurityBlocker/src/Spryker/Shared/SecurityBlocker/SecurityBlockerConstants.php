@@ -18,7 +18,7 @@ interface SecurityBlockerConstants
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Shared\SecurityBlockerSecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME} instead.
+     * @deprecated Use {@link \Spryker\Shared\SecurityBlocker\SecurityBlockerConstants::SECURITY_BLOCKER_REDIS_SCHEME} instead.
      *
      * @var string
      */

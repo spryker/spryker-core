@@ -20,7 +20,7 @@ interface ApiFacadeInterface
      * - Requires `ApiRequestTransfer.resource`, `ApiRequestTransfer.filter`, `ApiRequestTransfer.requestType` transfer properties to be set.
      * - Requires `ApiRequestTransfer.meta.resourceId` transfer property to be set if ApiRequestTransfer.meta` is set.
      * - Dispatches an API request.
-     * - Throws {@link \Spryker\Zed\Api\Business\Exception\ApiDispatchingException) exception if action `ApiRequestTransfer.resourceAction` is not supported for resource `ApiRequestTransfer.resource`.
+     * - Throws {@link \Spryker\Zed\Api\Business\Exception\ApiDispatchingException} exception if action `ApiRequestTransfer.resourceAction` is not supported for resource `ApiRequestTransfer.resource`.
      *
      * @api
      *

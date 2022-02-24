@@ -203,7 +203,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Development\Business\Module\PathBuilder\SprykerSdkPathBuilder::buildPath()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerSdkPathBuilder::buildPaths()} instead.
      *
      * Gets path to SprykerSdk core modules.
      *

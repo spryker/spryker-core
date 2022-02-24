@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use {@link \Spryker\Yves\Session\Plugin\Application\Session\SessionApplicationPlugin} instead.
+ * @deprecated Use {@link \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin} instead.
  * @deprecated Use {@link \Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin} instead.
  *
  * @method \Spryker\Yves\Session\SessionFactory getFactory()

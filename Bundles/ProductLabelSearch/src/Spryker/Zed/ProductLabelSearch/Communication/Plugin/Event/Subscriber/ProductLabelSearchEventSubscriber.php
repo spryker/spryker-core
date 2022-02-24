@@ -16,7 +16,7 @@ use Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener\ProductLa
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ProductLabelSearch\Communication\Plugin\Publisher\ProductLabel\ProductLabelWritePublisherPlugin}
- *              or {@link \Spryker\Zed\ProductLabelSearch\Communication\Plugin\Publisher\ProductLabelProductAbstract\ProductLabelStoreWritePublisherPlugin} instead.
+ *   or {@link \Spryker\Zed\ProductLabelSearch\Communication\Plugin\Publisher\ProductLabelStore\ProductLabelStoreWritePublisherPlugin} instead.
  *
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()

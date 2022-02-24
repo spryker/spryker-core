@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessenger;
 
 /**
- * @deprecated Use {@link \Spryker\Yves\Messenger\Plugin\Provider\FlashMessengerApplicationPlugin} instead.
+ * @deprecated Use {@link \Spryker\Yves\Messenger\Plugin\Application\FlashMessengerApplicationPlugin} instead.
  *
  * @see \Spryker\Yves\Messenger\Plugin\Provider\FlashMessengerApplicationPlugin
  */

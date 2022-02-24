@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 /**
- * @deprecated Use {@link \Spryker\Shared\Kernel\StaticContainer} instead.
+ * @deprecated Use {@link \Spryker\Shared\Kernel\ContainerInterface} instead.
  */
 class Pimple extends GlobalContainer
 {

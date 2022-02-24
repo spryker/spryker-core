@@ -15,7 +15,7 @@ use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundl
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\Expander\ItemExpander} instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ConfigurableBundlePage\Expander\ItemExpander} instead.
  */
 class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface
 {

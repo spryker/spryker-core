@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole } instead.
+ * @deprecated Use {@link \Spryker\Zed\SetupFrontend\Communication\Console\Npm\RunnerConsole} instead.
  *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()

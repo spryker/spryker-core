@@ -19,7 +19,7 @@ class CustomerAccessPermissionClient extends AbstractClient implements CustomerA
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Client\CustomerAccessPermission\Plugin\CustomerSecuredPatternPermissionPlugin} plugin instead.
+     * @deprecated Use {@link \Spryker\Client\CustomerAccessPermission\Plugin\Customer\CustomerAccessSecuredPatternRulePlugin} plugin instead.
      *
      * @return string
      */

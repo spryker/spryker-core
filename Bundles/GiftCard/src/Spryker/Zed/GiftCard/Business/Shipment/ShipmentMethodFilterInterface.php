@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilterInterface} instead.
+ * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilterInterface} instead.
  */
 interface ShipmentMethodFilterInterface
 {

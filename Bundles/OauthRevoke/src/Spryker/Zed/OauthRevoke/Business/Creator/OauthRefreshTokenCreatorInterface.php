@@ -13,7 +13,7 @@ use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 interface OauthRefreshTokenCreatorInterface
 {
     /**
-     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\Creator::saveRefreshTokenFromTransfer()} instead.
+     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\Creator\OauthRefreshTokenCreatorInterface::saveRefreshTokenFromTransfer()} instead.
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *

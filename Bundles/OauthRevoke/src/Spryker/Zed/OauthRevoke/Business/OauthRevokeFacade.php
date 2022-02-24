@@ -110,7 +110,7 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacade::saveRefreshTokenFromTransfer() } instead.
+     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacade::saveRefreshTokenFromTransfer()} instead.
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *

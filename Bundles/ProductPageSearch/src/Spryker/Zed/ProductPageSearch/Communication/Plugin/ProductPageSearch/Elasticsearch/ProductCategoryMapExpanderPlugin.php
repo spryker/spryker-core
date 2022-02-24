@@ -14,7 +14,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductCategorySearch\Elasticsearch\ProductCategoryMapExpanderPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductCategorySearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductCategoryMapExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()

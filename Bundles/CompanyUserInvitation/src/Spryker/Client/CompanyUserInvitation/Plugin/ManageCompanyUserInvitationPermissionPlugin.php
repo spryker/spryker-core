@@ -10,7 +10,7 @@ namespace Spryker\Client\CompanyUserInvitation\Plugin;
 use Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin as SharedManageCompanyUserInvitationPermissionPlugin;
 
 /**
- * @deprecated Use \Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin instead
+ * @deprecated Use {@link \Spryker\Shared\CompanyUserInvitation\Plugin\ManageCompanyUserInvitationPermissionPlugin} instead
  */
 class ManageCompanyUserInvitationPermissionPlugin extends SharedManageCompanyUserInvitationPermissionPlugin
 {

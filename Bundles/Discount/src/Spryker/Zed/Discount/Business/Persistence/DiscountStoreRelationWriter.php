@@ -35,7 +35,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Discount\Business\Creator\DiscountStoreCreator::createDiscountStoreRelationships()}
-     *             or {@link \Spryker\Zed\Discount\Business\Updater\DiscountStoreUpdater::updateDiscountStoreRelationships()} instead.
+     *   or {@link \Spryker\Zed\Discount\Business\Updater\DiscountStoreUpdater::updateDiscountStoreRelationships()} instead.
      *
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *

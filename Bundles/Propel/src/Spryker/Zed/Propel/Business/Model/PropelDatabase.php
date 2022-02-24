@@ -13,7 +13,7 @@ use Spryker\Zed\Propel\Business\Exception\DatabaseCreatorNotFoundException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Propel\Business\Model\PropelDatabase\Engine} instead.
+ * @deprecated Use {@link \Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterCollectionInterface} instead.
  */
 class PropelDatabase implements PropelDatabaseInterface
 {

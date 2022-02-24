@@ -120,7 +120,7 @@ interface ProductLabelStorageFacadeInterface
      * @api
      *
      * @deprecated Use {@link writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *  or {@link writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
+     *   or {@link writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *
      * @param array<int> $productAbstractIds
      *

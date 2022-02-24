@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaverInterface} instead
+ * @deprecated Use {@link \Spryker\Zed\ProductBundle\Communication\Plugin\Sales\ProductBundleOrderSaverPlugin} instead
  */
 interface ProductBundleSalesOrderSaverInterface
 {
