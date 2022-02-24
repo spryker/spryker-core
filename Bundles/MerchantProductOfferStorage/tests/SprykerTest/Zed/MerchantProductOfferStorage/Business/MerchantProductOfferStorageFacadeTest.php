@@ -49,6 +49,37 @@ class MerchantProductOfferStorageFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testWriteProductConcreteProductOffersStorageCollectionByMerchantEvents(): void
+    {
+        // Assign
+        $this->tester->clearProductOfferData();
+        $storeTransfer = $this->tester->getLocator()->store()->facade()->getCurrentStore();
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
+        $productTransfer = $this->tester->haveProduct();
+
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::CONCRETE_SKU => $productTransfer->getSku(),
+        ])->addStore($storeTransfer);
+
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
+        ];
+
+        // Act
+        $this->tester->getFacade()->writeProductConcreteProductOffersStorageCollectionByMerchantEvents($eventTransfers);
+
+        $this->assertCount(
+            1,
+            $this->tester->getProductConcreteProductOffersEntities($productOfferTransfer->getConcreteSku()),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testWriteCollectionByMerchantEvents(): void
     {
         // Arrange

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantStorage\Business;
 
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+
 interface MerchantStorageFacadeInterface
 {
     /**
@@ -32,4 +34,17 @@ interface MerchantStorageFacadeInterface
      * @return void
      */
     public function writeCollectionByMerchantCategoryEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Filters `ProductOfferCollection` transfer object by active merchant.
+     * - Returns `ProductOfferCollection` transfer object excluded product offers with no active merchant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function filterProductOfferStorages(ProductOfferCollectionTransfer $productOfferCollectionTransfer): ProductOfferCollectionTransfer;
 }

@@ -12,6 +12,8 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\LowestPriceProductOfferStorageCollectionSorterPlugin} instead.
+ *
  * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageFactory getFactory()
  */
 class LowestPriceProductOfferStorageCollectionSorterPlugin extends AbstractPlugin implements ProductOfferStorageCollectionSorterPluginInterface

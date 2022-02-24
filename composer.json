@@ -631,6 +631,8 @@
         "spryker/product-offer-stock-data-import": "*",
         "spryker/product-offer-stock-gui": "*",
         "spryker/product-offer-stock-gui-extension": "*",
+        "spryker/product-offer-storage": "*",
+        "spryker/product-offer-storage-extension": "*",
         "spryker/product-offer-validity": "*",
         "spryker/product-offer-validity-data-import": "*",
         "spryker/product-offer-validity-gui": "*",

@@ -38,7 +38,7 @@ class MerchantProductStorageToEventBehaviorFacadeBridge implements MerchantProdu
      *
      * @return array<int>
      */
-    public function getEventTransferIds(array $eventTransfers)
+    public function getEventTransferIds(array $eventTransfers): array
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }

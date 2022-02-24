@@ -12,6 +12,8 @@ use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStorageCli
 use Spryker\Client\MerchantStorage\Dependency\Client\MerchantStorageToStoreClientInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantStorage\Dependency\Service\MerchantStorageToUtilEncodingServiceInterface;
+use Spryker\Client\MerchantStorage\Expander\ProductOfferStorage\ProductOfferStorageExpander;
+use Spryker\Client\MerchantStorage\Expander\ProductOfferStorage\ProductOfferStorageExpanderInterface;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapper;
 use Spryker\Client\MerchantStorage\Mapper\MerchantStorageMapperInterface;
 use Spryker\Client\MerchantStorage\Mapper\UrlStorageMerchantMapper;
@@ -52,6 +54,16 @@ class MerchantStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStorageClient(),
             $this->getStoreClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantStorage\Expander\ProductOfferStorage\ProductOfferStorageExpanderInterface
+     */
+    public function createProductOfferStorageExpander(): ProductOfferStorageExpanderInterface
+    {
+        return new ProductOfferStorageExpander(
+            $this->createMerchantStorageReader(),
         );
     }
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\MerchantStorage\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class MerchantStorageToStoreClientBridge implements MerchantStorageToStoreClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class MerchantStorageToStoreClientBridge implements MerchantStorageToStoreClient
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeClient->getCurrentStore();
     }

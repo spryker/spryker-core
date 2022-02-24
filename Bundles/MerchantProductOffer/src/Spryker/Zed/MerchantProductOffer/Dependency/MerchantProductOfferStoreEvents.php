@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Dependency;
 
+/**
+ * @deprecated Will be removed next major release.
+ */
 interface MerchantProductOfferStoreEvents
 {
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_STORE_PUBLISH}
+     *
      * Specification
      * - This events will be used for merchant product offer store key publishing.
      *
@@ -20,6 +25,8 @@ interface MerchantProductOfferStoreEvents
     public const MERCHANT_PRODUCT_OFFER_STORE_KEY_PUBLISH = 'MerchantProductOfferStore.key.publish';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_STORE_UNPUBLISH}
+     *
      * Specification
      * - This events will be used for merchant product offer store key un-publishing.
      *
@@ -30,6 +37,8 @@ interface MerchantProductOfferStoreEvents
     public const MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH = 'MerchantProductOfferStore.key.unpublish';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE}
+     *
      * Specification
      * - This events will be used for spy_product_offer_store entity creation.
      *
@@ -40,6 +49,8 @@ interface MerchantProductOfferStoreEvents
     public const ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE = 'Entity.spy_product_offer_store.create';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE}
+     *
      * Specification
      * - This events will be used for spy_product_offer_store entity changes.
      *
@@ -50,6 +61,8 @@ interface MerchantProductOfferStoreEvents
     public const ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE = 'Entity.spy_product_offer_store.update';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE}
+     *
      * Specification
      * - This events will be used for spy_product_offer_store entity deletion.
      *

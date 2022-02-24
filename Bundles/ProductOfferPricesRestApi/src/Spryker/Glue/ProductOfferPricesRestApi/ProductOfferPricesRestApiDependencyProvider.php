@@ -9,9 +9,9 @@ namespace Spryker\Glue\ProductOfferPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientBridge;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientBridge;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientBridge;
+use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientBridge;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientBridge;
 
 /**
@@ -27,7 +27,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     /**
      * @var string
      */
-    public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+    public const CLIENT_PRODUCT_OFFER_STORAGE = 'CLIENT_PRODUCT_OFFER_STORAGE';
 
     /**
      * @var string
@@ -58,7 +58,7 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
     {
         $container = parent::provideDependencies($container);
         $container = $this->addPriceProductStorageClient($container);
-        $container = $this->addMerchantProductOfferStorageClient($container);
+        $container = $this->addProductOfferStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addRestProductOfferPricesAttributesMapperPlugins($container);
@@ -87,11 +87,11 @@ class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addMerchantProductOfferStorageClient(Container $container): Container
+    protected function addProductOfferStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE, function (Container $container) {
-            return new ProductOfferPricesRestApiToMerchantProductOfferStorageClientBridge(
-                $container->getLocator()->merchantProductOfferStorage()->client(),
+        $container->set(static::CLIENT_PRODUCT_OFFER_STORAGE, function (Container $container) {
+            return new ProductOfferPricesRestApiToProductOfferStorageClientBridge(
+                $container->getLocator()->productOfferStorage()->client(),
             );
         });
 

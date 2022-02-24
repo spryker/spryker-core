@@ -10,6 +10,9 @@ namespace Spryker\Client\MerchantProductStorage\Plugin\MerchantProductOfferStora
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\MerchantProductStorage\Plugin\ProductOfferStorage\MerchantProductProductOfferReferenceStrategyPlugin} instead.
+ */
 class MerchantProductProductOfferReferenceStrategyPlugin implements ProductOfferReferenceStrategyPluginInterface
 {
     /**

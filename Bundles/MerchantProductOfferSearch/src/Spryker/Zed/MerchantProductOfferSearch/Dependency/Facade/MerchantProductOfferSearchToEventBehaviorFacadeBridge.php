@@ -27,7 +27,7 @@ class MerchantProductOfferSearchToEventBehaviorFacadeBridge implements MerchantP
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers)
+    public function getEventTransferIds(array $eventTransfers): array
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }

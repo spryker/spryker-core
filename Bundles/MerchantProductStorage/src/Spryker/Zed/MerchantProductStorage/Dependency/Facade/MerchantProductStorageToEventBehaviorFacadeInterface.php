@@ -22,5 +22,5 @@ interface MerchantProductStorageToEventBehaviorFacadeInterface
      *
      * @return array<int>
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getEventTransferIds(array $eventTransfers): array;
 }

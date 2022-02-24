@@ -25,7 +25,7 @@ class MerchantProductStorageToLocaleClientBridge implements MerchantProductStora
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         return $this->localeClient->getCurrentLocale();
     }

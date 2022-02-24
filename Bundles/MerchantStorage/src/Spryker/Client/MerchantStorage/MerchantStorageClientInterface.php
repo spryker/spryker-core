@@ -9,6 +9,7 @@ namespace Spryker\Client\MerchantStorage;
 
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 interface MerchantStorageClientInterface
 {
@@ -47,4 +48,16 @@ interface MerchantStorageClientInterface
      * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array;
+
+    /**
+     * Specification:
+     * - Expands `ProductOfferStorage` transfer object with `MerchantStorage` transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
+     */
+    public function expandProductOfferStorage(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer;
 }

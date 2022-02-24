@@ -15,11 +15,17 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAfterExec
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
-use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferStoreEvents;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantProductOfferDataSetInterface;
 
 class MerchantProductOfferStoreWriterStep implements DataImportStepInterface, DataImportStepAfterExecuteInterface
 {
+    /**
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_STORE_PUBLISH
+     *
+     * @var string
+     */
+    protected const PRODUCT_OFFER_STORE_PUBLISH = 'ProductOfferStore.publish';
+
     /**
      * @var array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
@@ -61,7 +67,7 @@ class MerchantProductOfferStoreWriterStep implements DataImportStepInterface, Da
     public function afterExecute(): void
     {
         foreach ($this->entityEventTransfers as $entityEventTransfer) {
-            $this->eventFacade->trigger(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_PUBLISH, $entityEventTransfer);
+            $this->eventFacade->trigger(static::PRODUCT_OFFER_STORE_PUBLISH, $entityEventTransfer);
         }
 
         $this->entityEventTransfers = [];

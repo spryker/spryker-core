@@ -9,23 +9,16 @@
         "spryker/kernel": "^3.33.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-product-offer": "^1.0.0",
-        "spryker/merchant-product-offer-storage-extension": "^1.0.0",
-        "spryker/merchant-storage": "^1.0.0",
-        "spryker/product": "^6.0.0",
+        "spryker/merchant-product-offer-storage-extension": "^1.1.0",
         "spryker/product-offer": "^1.0.0 ",
-        "spryker/product-storage-extension": "^1.4.0",
+        "spryker/product-offer-storage": "^1.0.0",
+        "spryker/product-offer-storage-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
-        "spryker/publisher-extension": "^1.0.0",
-        "spryker/storage": "^3.4.0",
-        "spryker/store": "^1.4.0",
-        "spryker/synchronization": "^1.0.0",
-        "spryker/synchronization-behavior": "^1.0.0",
-        "spryker/synchronization-extension": "^1.0.0",
-        "spryker/util-encoding": "^2.0.0"
+        "spryker/publisher-extension": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/event": "*",
+        "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/testify": "*"
@@ -46,12 +39,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

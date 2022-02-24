@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantStorage\Business\Filter\MerchantProductOfferStorageFilter;
+use Spryker\Zed\MerchantStorage\Business\Filter\MerchantProductOfferStorageFilterInterface;
 use Spryker\Zed\MerchantStorage\Business\Writer\MerchantStorageWriter;
 use Spryker\Zed\MerchantStorage\Business\Writer\MerchantStorageWriterInterface;
 use Spryker\Zed\MerchantStorage\Dependency\Facade\MerchantStorageToEventBehaviorFacadeInterface;
@@ -33,6 +35,16 @@ class MerchantStorageBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getEntityManager(),
             $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantStorage\Business\Filter\MerchantProductOfferStorageFilterInterface
+     */
+    public function createMerchantProductOfferStorageFilter(): MerchantProductOfferStorageFilterInterface
+    {
+        return new MerchantProductOfferStorageFilter(
+            $this->getMerchantFacade(),
         );
     }
 

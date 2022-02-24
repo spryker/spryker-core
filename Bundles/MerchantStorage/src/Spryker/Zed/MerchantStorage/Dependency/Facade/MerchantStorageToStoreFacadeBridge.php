@@ -25,7 +25,7 @@ class MerchantStorageToStoreFacadeBridge implements MerchantStorageToStoreFacade
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores()
+    public function getAllStores(): array
     {
         return $this->storeFacade->getAllStores();
     }

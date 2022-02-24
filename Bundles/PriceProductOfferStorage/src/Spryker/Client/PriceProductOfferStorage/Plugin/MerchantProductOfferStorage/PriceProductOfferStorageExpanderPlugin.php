@@ -13,6 +13,8 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\PriceProductOfferStorage\Plugin\ProductOfferStorage\PriceProductOfferStorageExpanderPlugin} instead.
+ *
  * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageClientInterface getClient()
  * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageFactory getFactory()
  */

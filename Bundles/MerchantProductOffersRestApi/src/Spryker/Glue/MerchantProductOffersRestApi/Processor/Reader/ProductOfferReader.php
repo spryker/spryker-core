@@ -11,16 +11,16 @@ use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilderInterface;
 
 class ProductOfferReader implements ProductOfferReaderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
+     * @var \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface
      */
-    protected $merchantProductOfferStorageClient;
+    protected $productOfferStorageClient;
 
     /**
      * @var \Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilderInterface
@@ -29,14 +29,14 @@ class ProductOfferReader implements ProductOfferReaderInterface
 
     /**
      * @param \Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilderInterface $productOfferRestResponseBuilder
-     * @param \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
+     * @param \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface $productOfferStorageClient
      */
     public function __construct(
         ProductOfferRestResponseBuilderInterface $productOfferRestResponseBuilder,
-        MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
+        MerchantProductOffersRestApiToProductOfferStorageClientInterface $productOfferStorageClient
     ) {
         $this->productOfferRestResponseBuilder = $productOfferRestResponseBuilder;
-        $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
+        $this->productOfferStorageClient = $productOfferStorageClient;
     }
 
     /**
@@ -52,7 +52,7 @@ class ProductOfferReader implements ProductOfferReaderInterface
             return $this->productOfferRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
-        $productOfferStorageTransfer = $this->merchantProductOfferStorageClient
+        $productOfferStorageTransfer = $this->productOfferStorageClient
             ->findProductOfferStorageByReference($merchantProductOfferReference);
 
         if (!$productOfferStorageTransfer) {
@@ -103,8 +103,8 @@ class ProductOfferReader implements ProductOfferReaderInterface
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
             ->setProductConcreteSkus($productConcreteSkus);
 
-        $productOfferStorageCollectionTransfer = $this->merchantProductOfferStorageClient
-            ->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
+        $productOfferStorageCollectionTransfer = $this->productOfferStorageClient
+            ->getProductOfferStoragesBySkus($productOfferStorageCriteriaTransfer);
 
         return $this->productOfferRestResponseBuilder->createProductOfferRestResources($productOfferStorageCollectionTransfer);
     }
@@ -116,9 +116,11 @@ class ProductOfferReader implements ProductOfferReaderInterface
      */
     protected function getDefaultProductOfferReference(ProductOfferStorageTransfer $productOfferStorageTransfer): ?string
     {
+        /** @var string $sku */
+        $sku = $productOfferStorageTransfer->getProductConcreteSku();
         $productOfferStorageCriteriaTransfer = (new ProductOfferStorageCriteriaTransfer())
-            ->addProductConcreteSku($productOfferStorageTransfer->getProductConcreteSku());
+            ->addProductConcreteSku($sku);
 
-        return $this->merchantProductOfferStorageClient->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer);
+        return $this->productOfferStorageClient->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer);
     }
 }

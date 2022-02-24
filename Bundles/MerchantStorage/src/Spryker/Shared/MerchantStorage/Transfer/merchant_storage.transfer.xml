@@ -60,6 +60,9 @@
     <transfer name="MerchantCriteria">
         <property name="filter" type="Filter"/>
         <property name="merchantIds" type="array" singular="merchantId"/>
+        <property name="isActive" type="bool"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="MerchantStorageCriteria">
@@ -90,6 +93,7 @@
         <property name="merchantProfile" type="MerchantProfile"/>
         <property name="storeRelation" type="StoreRelation"/>
         <property name="status" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -100,6 +104,19 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorage">
+        <property name="merchantReference" type="string"/>
+        <property name="merchantStorage" type="MerchantStorage"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
 </transfers>

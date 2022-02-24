@@ -9,21 +9,21 @@ namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
-use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface;
 
 class CartItemExpander implements CartItemExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
+     * @var \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface
      */
-    protected $merchantProductOfferStorageClient;
+    protected $productOfferStorageClient;
 
     /**
-     * @param \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
+     * @param \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface $productOfferStorageClient
      */
-    public function __construct(MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient)
+    public function __construct(MerchantProductOffersRestApiToProductOfferStorageClientInterface $productOfferStorageClient)
     {
-        $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
+        $this->productOfferStorageClient = $productOfferStorageClient;
     }
 
     /**
@@ -42,11 +42,11 @@ class CartItemExpander implements CartItemExpanderInterface
 
         $productOfferStorageTransfer = null;
 
-        if ($restCartItemsAttributesTransfer->getProductOfferReference()) {
-            $productOfferStorageTransfer = $this->merchantProductOfferStorageClient
-                ->findProductOfferStorageByReference(
-                    $restCartItemsAttributesTransfer->getProductOfferReference(),
-                );
+        /** @var string $productOfferReference */
+        $productOfferReference = $restCartItemsAttributesTransfer->getProductOfferReference();
+        if ($productOfferReference) {
+            $productOfferStorageTransfer = $this->productOfferStorageClient
+                ->findProductOfferStorageByReference($productOfferReference);
         }
 
         if ($productOfferStorageTransfer !== null) {

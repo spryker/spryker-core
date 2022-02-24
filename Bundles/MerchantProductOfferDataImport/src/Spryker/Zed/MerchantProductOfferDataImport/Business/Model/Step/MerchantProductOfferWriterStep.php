@@ -16,7 +16,6 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAfterExec
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
-use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantProductOfferDataSetInterface;
 
 class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImportStepAfterExecuteInterface
@@ -28,6 +27,13 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
     protected const IS_ACTIVE = MerchantProductOfferDataSetInterface::IS_ACTIVE;
     protected const APPROVAL_STATUS = MerchantProductOfferDataSetInterface::APPROVAL_STATUS;
+
+    /**
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_PUBLISH
+     *
+     * @var string
+     */
+    protected const PRODUCT_OFFER_PUBLISH = 'ProductOffer.product_offer.publish';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
@@ -86,7 +92,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     public function afterExecute(): void
     {
         foreach ($this->entityEventTransfers as $entityEventTransfer) {
-            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, $entityEventTransfer);
+            $this->eventFacade->trigger(static::PRODUCT_OFFER_PUBLISH, $entityEventTransfer);
         }
 
         $this->entityEventTransfers = [];

@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\PriceProductOfferStorage\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface PriceProductOfferStorageToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

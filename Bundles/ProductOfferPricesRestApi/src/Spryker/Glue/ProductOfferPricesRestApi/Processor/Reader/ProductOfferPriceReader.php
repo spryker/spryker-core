@@ -10,9 +10,9 @@ namespace Spryker\Glue\ProductOfferPricesRestApi\Processor\Reader;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface;
+use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\RestResponseBuilder\ProductOfferPriceRestResponseBuilderInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
@@ -40,9 +40,9 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     protected const PRODUCT_CONCRETE_SKU = 'sku';
 
     /**
-     * @var \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface
+     * @var \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface
      */
-    protected $merchantProductOfferStorageClient;
+    protected $productOfferStorageClient;
 
     /**
      * @var \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface
@@ -65,20 +65,20 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     protected $productOfferPriceRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient
+     * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface $productOfferStorageClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface $priceProductClient
      * @param \Spryker\Glue\ProductOfferPricesRestApi\Processor\RestResponseBuilder\ProductOfferPriceRestResponseBuilderInterface $productOfferPriceRestResponseBuilder
      */
     public function __construct(
-        ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface $merchantProductOfferStorageClient,
+        ProductOfferPricesRestApiToProductOfferStorageClientInterface $productOfferStorageClient,
         ProductOfferPricesRestApiToProductStorageClientInterface $productStorageClient,
         ProductOfferPricesRestApiToPriceProductStorageClientInterface $priceProductStorageClient,
         ProductOfferPricesRestApiToPriceProductClientInterface $priceProductClient,
         ProductOfferPriceRestResponseBuilderInterface $productOfferPriceRestResponseBuilder
     ) {
-        $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
+        $this->productOfferStorageClient = $productOfferStorageClient;
         $this->productStorageClient = $productStorageClient;
         $this->priceProductStorageClient = $priceProductStorageClient;
         $this->priceProductClient = $priceProductClient;
@@ -119,7 +119,7 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
      */
     public function getProductOfferPriceRestResources(array $productOfferReferences, string $localeName): array
     {
-        $productOfferStorageTransfers = $this->merchantProductOfferStorageClient->getProductOfferStorageByReferences($productOfferReferences);
+        $productOfferStorageTransfers = $this->productOfferStorageClient->getProductOfferStoragesByReferences($productOfferReferences);
 
         $productConcreteSkus = $this->getProductConcreteSkus($productOfferStorageTransfers);
 

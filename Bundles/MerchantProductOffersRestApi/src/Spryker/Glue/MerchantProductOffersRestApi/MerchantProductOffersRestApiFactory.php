@@ -8,7 +8,7 @@
 namespace Spryker\Glue\MerchantProductOffersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpander;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapper;
@@ -31,7 +31,7 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
     {
         return new ProductOfferReader(
             $this->createProductOfferRestResponseBuilder(),
-            $this->getMerchantProductOfferStorageClient(),
+            $this->getProductOfferStorageClient(),
         );
     }
 
@@ -58,7 +58,7 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
      */
     public function createCartItemExpander(): CartItemExpanderInterface
     {
-        return new CartItemExpander($this->getMerchantProductOfferStorageClient());
+        return new CartItemExpander($this->getProductOfferStorageClient());
     }
 
     /**
@@ -70,11 +70,11 @@ class MerchantProductOffersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientInterface
      */
-    public function getMerchantProductOfferStorageClient(): MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
+    public function getProductOfferStorageClient(): MerchantProductOffersRestApiToProductOfferStorageClientInterface
     {
-        return $this->getProvidedDependency(MerchantProductOffersRestApiDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE);
+        return $this->getProvidedDependency(MerchantProductOffersRestApiDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 
     /**

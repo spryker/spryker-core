@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProductOfferStorage\Dependency\Service;
 
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+
 class PriceProductOfferStorageToSynchronizationServiceBridge implements PriceProductOfferStorageToSynchronizationServiceInterface
 {
     /**
@@ -27,7 +29,7 @@ class PriceProductOfferStorageToSynchronizationServiceBridge implements PricePro
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName)
+    public function getStorageKeyBuilder($resourceName): SynchronizationKeyGeneratorPluginInterface
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }

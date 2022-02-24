@@ -28,7 +28,7 @@ class MerchantProductOfferSearchToProductPageSearchFacadeBridge implements Merch
      *
      * @return void
      */
-    public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = [])
+    public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = []): void
     {
         $this->productPageSearchFacade->refresh($productAbstractIds, $pageDataExpanderPluginNames);
     }

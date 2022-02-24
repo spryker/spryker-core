@@ -13,52 +13,26 @@ namespace Spryker\Shared\MerchantProductOfferStorage;
 class MerchantProductOfferStorageConfig
 {
     /**
-     * Specification:
-     * - Product offer reference attribute as used for selected attributes.
+     * Specification
+     * - This events will be used for spy_merchant publishing.
      *
      * @api
      *
+     * @uses \Spryker\Zed\Merchant\Dependency\MerchantEvents::MERCHANT_PUBLISH
+     *
      * @var string
      */
-    public const PRODUCT_OFFER_REFERENCE_ATTRIBUTE = 'product_offer_reference';
+    public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 
     /**
-     * Specification:
-     * - Queue name as used for processing merchant product offer messages.
+     * Specification
+     * - This events will be used for spy_merchant entity changes.
      *
      * @api
      *
-     * @var string
-     */
-    public const MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_QUEUE = 'sync.storage.merchant_product_offer';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing merchant product offer messages.
-     *
-     * @api
+     * @uses \Spryker\Zed\Merchant\Dependency\MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE
      *
      * @var string
      */
-    public const MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.merchant_product_offer.error';
-
-    /**
-     * Specification:
-     * - Resource name, this will use for key generating.
-     *
-     * @api
-     *
-     * @var string
-     */
-    public const RESOURCE_MERCHANT_PRODUCT_OFFER_NAME = 'product_offer';
-
-    /**
-     * Specification:
-     * - Resource name, this will use for key generating.
-     *
-     * @api
-     *
-     * @var string
-     */
-    public const RESOURCE_PRODUCT_CONCRETE_PRODUCT_OFFERS_NAME = 'product_concrete_product_offers';
+    public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 }

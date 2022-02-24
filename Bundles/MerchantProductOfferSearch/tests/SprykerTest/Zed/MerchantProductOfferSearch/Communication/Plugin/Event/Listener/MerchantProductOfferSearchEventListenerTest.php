@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\MerchantProductOfferSearchEventListener;
 
 /**
@@ -33,6 +32,13 @@ use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\M
  */
 class MerchantProductOfferSearchEventListenerTest extends Unit
 {
+    /**
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_UPDATE
+     *
+     * @var string
+     */
+    protected const EVENT_ENTITY_SPY_PRODUCT_OFFER_UPDATE = 'Entity.spy_product_offer.update';
+
     /**
      * @var \SprykerTest\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchCommunicationTester
      */
@@ -75,7 +81,7 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
         ];
 
         // Act
-        $merchantProductOfferSearchEventListener->handleBulk($eventTransfers, MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE);
+        $merchantProductOfferSearchEventListener->handleBulk($eventTransfers, static::EVENT_ENTITY_SPY_PRODUCT_OFFER_UPDATE);
         $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
         // Assert

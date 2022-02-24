@@ -17,5 +17,5 @@ interface MerchantProductOfferDataImportToEventInterface
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $transfer);
+    public function trigger($eventName, TransferInterface $transfer): void;
 }

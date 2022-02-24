@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\MerchantStorage\Dependency\Service;
 
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+
 class MerchantStorageToSynchronizationServiceBridge implements MerchantStorageToSynchronizationServiceInterface
 {
     /**
@@ -27,7 +29,7 @@ class MerchantStorageToSynchronizationServiceBridge implements MerchantStorageTo
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName)
+    public function getStorageKeyBuilder($resourceName): SynchronizationKeyGeneratorPluginInterface
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }

@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Dependency;
 
+/**
+ * @deprecated Will be removed next major release.
+ */
 interface MerchantProductOfferEvents
 {
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_PUBLISH}
+     *
      * Specification
      * - This events will be used for merchant product offer publishing.
      *
@@ -20,6 +25,8 @@ interface MerchantProductOfferEvents
     public const MERCHANT_PRODUCT_OFFER_PUBLISH = 'MerchantProductOffer.product_offer.publish';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_UNPUBLISH}
+     *
      * Specification
      * - This events will be used for merchant product offer un-publishing.
      *
@@ -30,6 +37,8 @@ interface MerchantProductOfferEvents
     public const MERCHANT_PRODUCT_OFFER_UNPUBLISH = 'MerchantProductOffer.product_offer.unpublish';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_CREATE}
+     *
      * Specification
      * - This events will be used for spy_product_offer entity creation.
      *
@@ -40,6 +49,8 @@ interface MerchantProductOfferEvents
     public const ENTITY_SPY_PRODUCT_OFFER_CREATE = 'Entity.spy_product_offer.create';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_UPDATE}
+     *
      * Specification
      * - This events will be used for spy_product_offer entity changes.
      *
@@ -50,6 +61,8 @@ interface MerchantProductOfferEvents
     public const ENTITY_SPY_PRODUCT_OFFER_UPDATE = 'Entity.spy_product_offer.update';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_DELETE}
+     *
      * Specification
      * - This events will be used for spy_product_offer entity deletion.
      *

@@ -9,7 +9,7 @@ namespace Spryker\Glue\MerchantProductOffersRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToMerchantProductOfferStorageClientBridge;
+use Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client\MerchantProductOffersRestApiToProductOfferStorageClientBridge;
 
 /**
  * @method \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig getConfig()
@@ -19,7 +19,7 @@ class MerchantProductOffersRestApiDependencyProvider extends AbstractBundleDepen
     /**
      * @var string
      */
-    public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+    public const CLIENT_PRODUCT_OFFER_STORAGE = 'CLIENT_PRODUCT_OFFER_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,7 +29,7 @@ class MerchantProductOffersRestApiDependencyProvider extends AbstractBundleDepen
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addMerchantProductOfferStorageClient($container);
+        $container = $this->addProductOfferStorageClient($container);
 
         return $container;
     }
@@ -39,11 +39,11 @@ class MerchantProductOffersRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addMerchantProductOfferStorageClient(Container $container): Container
+    protected function addProductOfferStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE, function (Container $container) {
-            return new MerchantProductOffersRestApiToMerchantProductOfferStorageClientBridge(
-                $container->getLocator()->merchantProductOfferStorage()->client(),
+        $container->set(static::CLIENT_PRODUCT_OFFER_STORAGE, function (Container $container) {
+            return new MerchantProductOffersRestApiToProductOfferStorageClientBridge(
+                $container->getLocator()->productOfferStorage()->client(),
             );
         });
 

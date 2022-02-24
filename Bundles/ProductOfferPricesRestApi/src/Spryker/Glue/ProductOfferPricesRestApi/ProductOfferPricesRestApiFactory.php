@@ -8,9 +8,9 @@
 namespace Spryker\Glue\ProductOfferPricesRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToPriceProductStorageClientInterface;
+use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpander;
 use Spryker\Glue\ProductOfferPricesRestApi\Processor\Expander\ProductOfferPriceExpanderInterface;
@@ -32,7 +32,7 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     public function createProductOfferPriceReader(): ProductOfferPriceReaderInterface
     {
         return new ProductOfferPriceReader(
-            $this->getMerchantProductOfferStorageClient(),
+            $this->getProductOfferStorageClient(),
             $this->getProductStorageClient(),
             $this->getPriceProductStorageClient(),
             $this->getPriceProductClient(),
@@ -78,11 +78,11 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface
+     * @return \Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesRestApiToProductOfferStorageClientInterface
      */
-    public function getMerchantProductOfferStorageClient(): ProductOfferPricesRestApiToMerchantProductOfferStorageClientInterface
+    public function getProductOfferStorageClient(): ProductOfferPricesRestApiToProductOfferStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE);
+        return $this->getProvidedDependency(ProductOfferPricesRestApiDependencyProvider::CLIENT_PRODUCT_OFFER_STORAGE);
     }
 
     /**

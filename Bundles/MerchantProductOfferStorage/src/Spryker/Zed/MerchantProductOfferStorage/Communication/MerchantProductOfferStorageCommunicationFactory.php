@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
@@ -19,11 +17,4 @@ use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependenc
  */
 class MerchantProductOfferStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface
-     */
-    public function getEventBehaviorFacade(): MerchantProductOfferStorageToEventBehaviorFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
 }

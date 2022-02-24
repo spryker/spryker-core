@@ -14,5 +14,5 @@ interface MerchantProductStorageToProductStorageFacadeInterface
      *
      * @return void
      */
-    public function publishAbstractProducts(array $productAbstractIds);
+    public function publishAbstractProducts(array $productAbstractIds): void;
 }

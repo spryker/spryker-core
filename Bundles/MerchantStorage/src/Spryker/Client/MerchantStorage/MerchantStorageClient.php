@@ -9,6 +9,7 @@ namespace Spryker\Client\MerchantStorage;
 
 use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -62,5 +63,21 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
         return $this->getFactory()
             ->createMerchantStorageReader()
             ->get($merchantStorageCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
+     */
+    public function expandProductOfferStorage(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
+    {
+        return $this->getFactory()
+            ->createProductOfferStorageExpander()
+            ->expand($productOfferStorageTransfer);
     }
 }

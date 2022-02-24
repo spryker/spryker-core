@@ -17,5 +17,5 @@ interface MerchantStorageToUtilEncodingServiceInterface
      *
      * @return array<mixed>|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null): ?array;
 }

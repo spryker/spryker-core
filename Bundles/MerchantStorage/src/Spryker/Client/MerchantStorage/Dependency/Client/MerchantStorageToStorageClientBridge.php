@@ -25,9 +25,9 @@ class MerchantStorageToStorageClientBridge implements MerchantStorageToStorageCl
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return array|null
      */
-    public function get($key)
+    public function get($key): ?array
     {
         return $this->storageClient->get($key);
     }
@@ -37,7 +37,7 @@ class MerchantStorageToStorageClientBridge implements MerchantStorageToStorageCl
      *
      * @return array
      */
-    public function getMulti(array $keys)
+    public function getMulti(array $keys): array
     {
         return $this->storageClient->getMulti($keys);
     }

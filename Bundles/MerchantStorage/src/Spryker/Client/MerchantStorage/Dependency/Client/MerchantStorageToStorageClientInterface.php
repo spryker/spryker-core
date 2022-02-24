@@ -12,14 +12,14 @@ interface MerchantStorageToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return array|null
      */
-    public function get($key);
+    public function get($key): ?array;
 
     /**
      * @param array<string> $keys
      *
      * @return array
      */
-    public function getMulti(array $keys);
+    public function getMulti(array $keys): array;
 }

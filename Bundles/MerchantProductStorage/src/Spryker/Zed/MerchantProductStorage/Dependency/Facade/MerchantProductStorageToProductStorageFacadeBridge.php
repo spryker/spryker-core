@@ -27,7 +27,7 @@ class MerchantProductStorageToProductStorageFacadeBridge implements MerchantProd
      *
      * @return void
      */
-    public function publishAbstractProducts(array $productAbstractIds)
+    public function publishAbstractProducts(array $productAbstractIds): void
     {
         $this->productStorageFacade->publishAbstractProducts($productAbstractIds);
     }

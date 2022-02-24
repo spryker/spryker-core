@@ -20,12 +20,12 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
     /**
      * @var string
      */
-    protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+    protected const PARAM_SELECTED_REFERENCE = 'selected_merchant_reference';
 
     /**
      * @var string
      */
-    protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
+    protected const PARAM_SELECTED_REFERENCE_TYPE = 'selected_merchant_reference_type';
 
     /**
      * @var \Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReaderInterface
@@ -76,18 +76,18 @@ class ProductViewMerchantProductExpander implements ProductViewMerchantProductEx
      */
     protected function findMerchantReferenceInSelectedAttributes(array $selectedAttributes): ?string
     {
-        if (!isset($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE])) {
+        if (!isset($selectedAttributes[static::PARAM_SELECTED_REFERENCE_TYPE])) {
             return null;
         }
 
-        if ($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE_TYPE] !== static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE) {
+        if ($selectedAttributes[static::PARAM_SELECTED_REFERENCE_TYPE] !== static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE) {
             return null;
         }
 
-        if (!isset($selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE])) {
+        if (!isset($selectedAttributes[static::PARAM_SELECTED_REFERENCE])) {
             return null;
         }
 
-        return $selectedAttributes[static::PARAM_SELECTED_MERCHANT_REFERENCE];
+        return $selectedAttributes[static::PARAM_SELECTED_REFERENCE];
     }
 }

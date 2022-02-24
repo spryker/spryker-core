@@ -53,7 +53,7 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     protected function getProductConcreteSkus(array $resources): array
     {
@@ -64,7 +64,9 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
                 continue;
             }
 
-            $productConcreteSkus[] = $resource->getId();
+            /** @var string $idResource */
+            $idResource = $resource->getId();
+            $productConcreteSkus[] = $idResource;
         }
 
         return $productConcreteSkus;
