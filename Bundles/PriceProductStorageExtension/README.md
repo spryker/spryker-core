@@ -12,4 +12,4 @@ composer require spryker/price-product-storage-extension
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/price-product-storage-extension.html)
+[Module Documentation](https://docs.spryker.com)

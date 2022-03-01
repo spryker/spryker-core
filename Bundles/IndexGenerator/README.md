@@ -14,5 +14,5 @@ Add the IndexGeneratorConsole to your ConsoleDependencyProvider and check the co
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Module Documentation](https://docs.spryker.com)
 

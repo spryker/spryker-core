@@ -12,4 +12,4 @@ composer require spryker/availability-cart-connector
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/inventory/availability.html)
+[Module Documentation](https://docs.spryker.com)

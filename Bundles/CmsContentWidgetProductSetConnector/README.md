@@ -12,4 +12,4 @@ composer require spryker/cms-content-widget-product-set-connector
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/cms/cms_widget.html)
+[Module Documentation](https://docs.spryker.com)

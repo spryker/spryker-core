@@ -12,4 +12,4 @@ composer require spryker/step-engine
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/engines/step_engine/step_engine.html)
+[Module Documentation](https://docs.spryker.com)

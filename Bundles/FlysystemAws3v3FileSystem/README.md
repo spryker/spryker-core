@@ -12,4 +12,4 @@ composer require spryker/flysystem-aws3v3-file-system
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/flysystem.html)
+[Module Documentation](https://docs.spryker.com)

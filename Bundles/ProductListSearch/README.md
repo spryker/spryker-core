@@ -10,4 +10,4 @@ composer require spryker/product-list-search
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Spryker Documentation](https://docs.spryker.com)

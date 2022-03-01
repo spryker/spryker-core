@@ -12,4 +12,4 @@ composer require spryker/dummy-payment
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/dummy_payment.html)
+[Module Documentation](https://docs.spryker.com)

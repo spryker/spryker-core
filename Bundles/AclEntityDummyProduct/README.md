@@ -12,4 +12,4 @@ composer require spryker/acl-entity-dummy-product
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Spryker Documentation](https://docs.spryker.com)

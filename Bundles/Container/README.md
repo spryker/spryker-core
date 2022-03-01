@@ -22,4 +22,4 @@ Please make sure that none of the mentioned modules exists in your project.
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Spryker Documentation](https://docs.spryker.com)

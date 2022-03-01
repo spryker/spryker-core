@@ -12,4 +12,4 @@ composer require spryker/price-product-extension
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/price-product-extension.html)
+[Module Documentation](https://docs.spryker.com)

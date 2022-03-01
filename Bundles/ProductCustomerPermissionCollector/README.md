@@ -10,4 +10,4 @@ composer require spryker/product-customer-permission-collector
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/)
+[Spryker Documentation](https://docs.spryker.com)

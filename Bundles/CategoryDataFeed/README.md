@@ -12,4 +12,4 @@ composer require spryker/category-data-feed
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/data_feed.html)
+[Module Documentation](https://docs.spryker.com)

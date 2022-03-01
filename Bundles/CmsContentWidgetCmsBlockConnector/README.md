@@ -12,4 +12,4 @@ composer require spryker/cms-content-widget-cms-block-connector
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Spryker Documentation](https://docs.spryker.com)

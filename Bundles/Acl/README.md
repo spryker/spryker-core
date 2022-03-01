@@ -12,4 +12,4 @@ composer require spryker/acl
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/user_rights_management.html)
+[Module Documentation](https://docs.spryker.com)

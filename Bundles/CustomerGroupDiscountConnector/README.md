@@ -16,4 +16,4 @@ Make sure you have latest changes for Yves side. There was issue when customer l
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/customer_management/customer/customer.html)
+[Module Documentation](https://docs.spryker.com)

@@ -12,4 +12,4 @@ composer require spryker/category
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/category.html)
+[Module Documentation](https://docs.spryker.com)

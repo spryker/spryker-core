@@ -12,4 +12,4 @@ composer require spryker/console
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/infrastructure/console.html)
+[Module Documentation](https://docs.spryker.com)

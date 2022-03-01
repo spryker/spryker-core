@@ -12,4 +12,4 @@ composer require spryker/merchant-opening-hours-data-import
 
 ## Documentation
 
-[Spryker Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
+[Spryker Documentation](https://docs.spryker.com)

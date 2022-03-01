@@ -14,4 +14,4 @@ composer require spryker/payment-extension
 
 todo:: Updata link below
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/checkout_process/payment-extension.html)
+[Module Documentation](https://docs.spryker.com)

@@ -12,4 +12,4 @@ composer require spryker/product-api
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/zed_api/zed_api.html?Highlight=api)
+[Module Documentation](https://docs.spryker.com)

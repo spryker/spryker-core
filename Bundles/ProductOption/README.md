@@ -12,4 +12,4 @@ composer require spryker/product-option
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product/product_options.html)
+[Module Documentation](https://docs.spryker.com)

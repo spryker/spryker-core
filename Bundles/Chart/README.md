@@ -10,4 +10,4 @@ composer require spryker/chart
 
 ## Documentation
 
-[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/chart.html)
+[Module Documentation](https://docs.spryker.com)
