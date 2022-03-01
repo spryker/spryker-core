@@ -88,6 +88,7 @@ class DiscountConfig extends AbstractBundleConfig
      */
     public function getAllowedCodeCharactersLength()
     {
+        /** @var int $charactersLength */
         $charactersLength = array_reduce($this->getVoucherCodeCharacters(), function ($length, $items) {
             $length += count($items);
 

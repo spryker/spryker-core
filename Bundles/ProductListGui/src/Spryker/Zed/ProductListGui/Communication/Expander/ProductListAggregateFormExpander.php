@@ -44,13 +44,16 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
         $productIdsToBeAssignedData = $this->getFieldValue(ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_ASSIGNED, $formEvent);
         $productIdsToBeDeassignedData = $this->getFieldValue(ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED, $formEvent);
 
+        /** @var array<string|int> $assignedProductIds */
         $assignedProductIds = $assignedProductIdsData
             ? preg_split('/,/', $assignedProductIdsData, null, PREG_SPLIT_NO_EMPTY)
             : [];
 
+        /** @var array<string|int> $productIdsToBeAssigned */
         $productIdsToBeAssigned = $productIdsToBeAssignedData
             ? preg_split('/,/', $productIdsToBeAssignedData, null, PREG_SPLIT_NO_EMPTY)
             : [];
+        /** @var array<string|int> $productIdsToBeDeassigned */
         $productIdsToBeDeassigned = $productIdsToBeDeassignedData
             ? preg_split('/,/', $productIdsToBeDeassignedData, null, PREG_SPLIT_NO_EMPTY)
             : [];

@@ -549,6 +549,7 @@ class CmsPageTable extends AbstractTable
     {
         $cmsNames = $this->extractNames($item);
 
+        /** @var string */
         return reset($cmsNames);
     }
 

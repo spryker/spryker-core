@@ -1,17 +1,11 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
-    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Parameter \#1 \$value of method .+ClauseTransfer::setValue\(\) expects string\|null, int given.#'
         - '#Parameter \#1 \$grossAmount of method .+MoneyValueTransfer::setGrossAmount\(\) expects int\|null, string given.#'
         - '#Parameter \#1 \$amount of method .+DiscountCalculatorTransfer::setAmount\(\) expects string\|null, .+ given.#'
-        - '#Parameter \#1 \$validFrom of method .+DiscountGeneralTransfer::setValidFrom\(\) expects string\|null, DateTime given.#'
-        - '#Parameter \#1 \$validTo of method .+DiscountGeneralTransfer::setValidTo\(\) expects string\|null, DateTime given.#'
         - '#Parameter \#1 \$v of method .+SpyDiscount::setAmount\(\) expects int, string\|null given.#'
-        - '#Parameter \#3 ...\$rest of function array_uintersect expects array, Closure\(.+DiscountableItemTransfer, .+DiscountableItemTransfer\): int given.#'
-        - '#Parameter \#3 \$limit of function preg_split expects int, null given.#'
-        - '#Method .+CalculatorFormDataProvider::getCalculatorPlugins\(\) should return array<.+DiscountCalculatorPluginInterface> but returns array<\(int\|string\)>.#'
-        - '#Method .+CalculatorFormDataProvider::getCalculatorPlugins\(\) should return array<.+DiscountCalculatorPluginInterface> but returns array<int\|string, string>.#'
         - '#PHPDoc tag @throws with type UnexpectedTypeException is not subtype of Throwable#'
+        - '#Call to an undefined method Orm\\.+Query::useSpyDiscountStoreQuery\(\).#'

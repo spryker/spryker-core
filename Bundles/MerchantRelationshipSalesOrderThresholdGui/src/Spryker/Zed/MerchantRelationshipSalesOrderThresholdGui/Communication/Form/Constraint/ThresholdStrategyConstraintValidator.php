@@ -50,6 +50,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
         $thresholdGroup = '';
         $salesOrderThresholdFormExpanderPlugins = $constraint->getSalesOrderThresholdFormExpanderPlugins();
 
+        /** @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface&\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface $salesOrderThresholdFormExpanderPlugin */
         foreach ($salesOrderThresholdFormExpanderPlugins as $salesOrderThresholdFormExpanderPlugin) {
             if (!$this->isPluginApplicable($salesOrderThresholdFormExpanderPlugin, $formData)) {
                 continue;

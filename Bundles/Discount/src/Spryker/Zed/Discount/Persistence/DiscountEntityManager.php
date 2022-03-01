@@ -124,6 +124,7 @@ class DiscountEntityManager extends AbstractEntityManager implements DiscountEnt
      */
     public function updateDiscountVoucherPool(DiscountGeneralTransfer $discountGeneralTransfer): int
     {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool $discountVoucherPoolEntity */
         $discountVoucherPoolEntity = $this->getFactory()
             ->createDiscountVoucherPoolQuery()
             ->joinDiscount()

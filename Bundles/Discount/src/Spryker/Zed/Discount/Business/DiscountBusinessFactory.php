@@ -246,7 +246,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface>
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     public function getCalculatorPlugins()
     {

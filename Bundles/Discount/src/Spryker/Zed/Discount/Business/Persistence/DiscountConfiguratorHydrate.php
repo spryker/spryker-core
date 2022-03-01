@@ -103,8 +103,13 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountGeneralTransfer = new DiscountGeneralTransfer();
         $discountGeneralTransfer->fromArray($discountEntity->toArray(), true);
 
-        $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom(static::FORMAT_DATE_TIME));
-        $discountGeneralTransfer->setValidTo($discountEntity->getValidTo(static::FORMAT_DATE_TIME));
+        /** @var string|null $validFrom */
+        $validFrom = $discountEntity->getValidFrom(static::FORMAT_DATE_TIME);
+        /** @var string|null $validTo */
+        $validTo = $discountEntity->getValidTo(static::FORMAT_DATE_TIME);
+
+        $discountGeneralTransfer->setValidFrom($validFrom);
+        $discountGeneralTransfer->setValidTo($validTo);
         $discountGeneralTransfer->setStoreRelation(
             $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity),
         );

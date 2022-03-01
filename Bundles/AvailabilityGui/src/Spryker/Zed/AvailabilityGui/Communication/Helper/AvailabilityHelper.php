@@ -227,16 +227,19 @@ class AvailabilityHelper implements AvailabilityHelperInterface
      * @param int $idLocale
      * @param int $idStore
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale(?int $idProductAbstract, int $idLocale, int $idStore)
     {
-        return $this->availabilityQueryContainer->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery */
+        $productAbstractQuery = $this->availabilityQueryContainer->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
             $idProductAbstract,
             $idLocale,
             $idStore,
             $this->getStockNamesForStoreByStoreId($idStore),
         );
+
+        return $productAbstractQuery;
     }
 
     /**

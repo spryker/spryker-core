@@ -155,13 +155,18 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
      */
     protected function generateItem(SpyPriceProductSchedule $priceProductScheduleEntity): array
     {
+        /** @var \DateTime $activeFrom */
+        $activeFrom = $priceProductScheduleEntity->getActiveFrom();
+        /** @var \DateTime $activeTo */
+        $activeTo = $priceProductScheduleEntity->getActiveTo();
+
         return [
             static::COL_NET_PRICE => $this->formatMoney($priceProductScheduleEntity->getNetPrice(), $priceProductScheduleEntity),
             static::COL_GROSS_PRICE => $this->formatMoney($priceProductScheduleEntity->getGrossPrice(), $priceProductScheduleEntity),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
-            static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity->getFkStore()),
-            static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity->getFkStore()),
+            static::COL_ACTIVE_FROM => $this->formatDateTime($activeFrom, $priceProductScheduleEntity->getFkStore()),
+            static::COL_ACTIVE_TO => $this->formatDateTime($activeTo, $priceProductScheduleEntity->getFkStore()),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($priceProductScheduleEntity)),
         ];
     }

@@ -78,7 +78,9 @@ class CreateGlossaryController extends AbstractController
      */
     public function searchAction(Request $request)
     {
+        /** @var string|null $value */
         $value = $request->query->get('value');
+        /** @var string|null $key */
         $key = $request->query->get('key');
 
         $result = [];

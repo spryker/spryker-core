@@ -219,6 +219,11 @@ abstract class AbstractPriceProductScheduleTable extends AbstractTable
      */
     protected function generateDefaultItemFields(SpyPriceProductSchedule $priceProductScheduleEntity): array
     {
+        /** @var \DateTime $activeFrom */
+        $activeFrom = $priceProductScheduleEntity->getActiveFrom();
+        /** @var \DateTime $activeTo */
+        $activeTo = $priceProductScheduleEntity->getActiveTo();
+
         return [
             static::COL_SKU_PRODUCT_ABSTRACT => $this->getAbstractSkuFromPriceProductScheduleEntity($priceProductScheduleEntity),
             static::COL_SKU_PRODUCT => $this->getConcreteSkuFromPriceProductScheduleEntity($priceProductScheduleEntity),
@@ -227,8 +232,8 @@ abstract class AbstractPriceProductScheduleTable extends AbstractTable
             static::COL_GROSS_PRICE => $this->formatMoney($priceProductScheduleEntity->getGrossPrice(), $priceProductScheduleEntity),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
-            static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity->getFkStore()),
-            static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity->getFkStore()),
+            static::COL_ACTIVE_FROM => $this->formatDateTime($activeFrom, $priceProductScheduleEntity->getFkStore()),
+            static::COL_ACTIVE_TO => $this->formatDateTime($activeTo, $priceProductScheduleEntity->getFkStore()),
         ];
     }
 

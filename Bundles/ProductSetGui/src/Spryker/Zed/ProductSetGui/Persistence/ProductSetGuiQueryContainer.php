@@ -61,6 +61,7 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductAbstract(LocaleTransfer $localeTransfer)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
         $query = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
@@ -111,6 +112,7 @@ class ProductSetGuiQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductAbstractByIdProductSet($idProductSet, LocaleTransfer $localeTransfer)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query */
         $query = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()

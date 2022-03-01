@@ -119,6 +119,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $configurableBundleTemplateSlotProducts */
         $configurableBundleTemplateSlotProducts = $this->runQuery(
             $this->prepareQuery(),
             $config,
@@ -166,6 +167,9 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
             return [];
         }
 
-        return $this->productListFacade->getProductConcreteIdsByProductListIds([$configurableBundleTemplateSlotEntity->getFkProductList()]);
+        /** @var int $idProductList */
+        $idProductList = $configurableBundleTemplateSlotEntity->getFkProductList();
+
+        return $this->productListFacade->getProductConcreteIdsByProductListIds([$idProductList]);
     }
 }

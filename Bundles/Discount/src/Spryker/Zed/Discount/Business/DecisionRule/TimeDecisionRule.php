@@ -65,6 +65,7 @@ class TimeDecisionRule implements DecisionRuleInterface
      */
     protected function convertToSeconds($timeFormatted)
     {
+        /** @phpstan-var int */
         return strtotime("1970-01-01 $timeFormatted UTC");
     }
 

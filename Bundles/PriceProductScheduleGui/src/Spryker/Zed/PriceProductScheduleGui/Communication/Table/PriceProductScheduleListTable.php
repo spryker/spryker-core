@@ -252,13 +252,14 @@ class PriceProductScheduleListTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList[] $priceProductScheduleListCollection */
         $priceProductScheduleListCollection = $this->runQuery($query, $config, true);
 
         return $this->mapPriceProductScheduleListCollectionToTableDataArray($priceProductScheduleListCollection, []);
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductScheduleListCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList[] $priceProductScheduleListCollection
      * @param array $priceProductScheduleList
      *
      * @return array
@@ -309,8 +310,9 @@ class PriceProductScheduleListTable extends AbstractTable
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $defaultStoreTimezone = new DateTimeZone($storeTransfer->getTimezone());
-        $createdAt = $priceProductScheduleListEntity->getCreatedAt()
-            ->setTimezone($defaultStoreTimezone)
+        /** @var \DateTime $createdAt */
+        $createdAt = $priceProductScheduleListEntity->getCreatedAt();
+        $createdAtString = $createdAt->setTimezone($defaultStoreTimezone)
             ->format(static::PATTERN_DATE_TIME);
         $userFullName = static::DEFAULT_IMPORTED_BY_VALUE;
 
@@ -324,7 +326,7 @@ class PriceProductScheduleListTable extends AbstractTable
             );
         }
 
-        return sprintf(static::TEMPLATE_IMPORTED_BY, $userFullName, $createdAt);
+        return sprintf(static::TEMPLATE_IMPORTED_BY, $userFullName, $createdAtString);
     }
 
     /**

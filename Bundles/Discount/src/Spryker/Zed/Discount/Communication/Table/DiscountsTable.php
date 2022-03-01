@@ -389,7 +389,12 @@ class DiscountsTable extends AbstractTable
      */
     protected function createTimePeriod(SpyDiscount $discountEntity)
     {
-        return $discountEntity->getValidFrom(static::DATE_FORMAT) . ' UTC - ' . $discountEntity->getValidTo(static::DATE_FORMAT) . ' UTC';
+        /** @var string $validFrom */
+        $validFrom = $discountEntity->getValidFrom(static::DATE_FORMAT);
+        /** @var string $validTo */
+        $validTo = $discountEntity->getValidTo(static::DATE_FORMAT);
+
+        return $validFrom . ' UTC - ' . $validTo . ' UTC';
     }
 
     /**

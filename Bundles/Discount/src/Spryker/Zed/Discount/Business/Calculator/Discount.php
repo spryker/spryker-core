@@ -285,6 +285,7 @@ class Discount implements DiscountInterface
         $isDiscountApplicable = false;
 
         try {
+            /** @var \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface $compositeSpecification */
             $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString);
 
             $minimumItemAmount = $discountEntity->getMinimumItemAmount();

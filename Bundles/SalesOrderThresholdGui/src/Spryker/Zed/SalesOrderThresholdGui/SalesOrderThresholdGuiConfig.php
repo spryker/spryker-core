@@ -95,6 +95,8 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     protected const STRATEGY_TYPE_TO_FORM_TYPE_MAP = [];
 
     /**
+     * @phpstan-var array<class-string<\Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalThresholdFormMapperInterface>>
+     *
      * @var array<string, string>
      */
     protected const STRATEGY_GROUP_TO_FORM_TYPE_MAP = [

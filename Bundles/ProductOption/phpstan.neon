@@ -1,10 +1,8 @@
 parameters:
-    level: 6
+    level: 7
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
-    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Cannot access offset .+ on .+SpyProductOptionValue.#'
-        - '#Parameter \#2 \$callback of function usort expects callable\(mixed, mixed\): int, Closure\(.+ItemTransfer, .+ItemTransfer\): bool given.#'
-        - '#Parameter \#2 \$cmp_function of function usort expects callable\(mixed, mixed\): int, Closure\(.+ItemTransfer, .+ItemTransfer\): bool given.#'
         - '#Parameter \#2 \$callback of function usort expects callable\(.+ItemTransfer, .+ItemTransfer\): int, Closure\(.+ItemTransfer, .+ItemTransfer\): bool given.#'
+        - '#Call to an undefined method Orm\\.+Query::filterByName\(\).#'

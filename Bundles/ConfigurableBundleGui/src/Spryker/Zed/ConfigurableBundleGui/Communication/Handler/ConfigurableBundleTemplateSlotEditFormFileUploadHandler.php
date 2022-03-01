@@ -45,14 +45,14 @@ class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements Configu
         ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
     ): ConfigurableBundleTemplateSlotEditFormTransfer {
         foreach ($this->configurableBundleTemplateSlotEditFormFileUploadHandlerPlugins as $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin) {
-            $configurableBundleTemplateSlotEditForm = $this->executeConfigurableBundleTemplateSlotEditFormFileUploadHandlerPlugin(
+            $configurableBundleTemplateSlotEditFormTransfer = $this->executeConfigurableBundleTemplateSlotEditFormFileUploadHandlerPlugin(
                 $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin,
                 $configurableBundleTemplateSlotEditForm,
                 $configurableBundleTemplateSlotEditFormTransfer,
             );
         }
 
-        return $configurableBundleTemplateSlotEditForm;
+        return $configurableBundleTemplateSlotEditFormTransfer;
     }
 
     /**

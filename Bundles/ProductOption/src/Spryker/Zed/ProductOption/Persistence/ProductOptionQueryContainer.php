@@ -141,12 +141,15 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionGroupByProductOptionValueId(int $idProductOptionValue): SpyProductOptionGroupQuery
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery $productOptionGroupQuery */
+        $productOptionGroupQuery = $this->getFactory()
             ->createProductOptionGroupQuery()
             ->filterByActive(true)
             ->useSpyProductOptionValueQuery()
                 ->filterByIdProductOptionValue($idProductOptionValue)
             ->endUse();
+
+        return $productOptionGroupQuery;
     }
 
     /**
@@ -231,7 +234,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
     {
-        return $this->queryProductOptionGroupById($idProductOptionGroup)
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery $productOptionGroupQuery */
+        $productOptionGroupQuery = $this->queryProductOptionGroupById($idProductOptionGroup)
             ->leftJoinWithSpyProductOptionValue()
             ->useSpyProductOptionValueQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithProductOptionValuePrice()
@@ -241,6 +245,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->orderByFkCurrency()
                 ->endUse()
             ->endUse();
+
+        return $productOptionGroupQuery;
     }
 
     /**
@@ -500,7 +506,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryTaxSetByIdProductOptionValueAndCountryIso2Codes(array $idProductOptionValues, array $countryIso2Codes): SpyProductOptionValueQuery
     {
-        return $this->getFactory()->createProductOptionValueQuery()
+        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery $productOptionValueQuery */
+        $productOptionValueQuery = $this->getFactory()->createProductOptionValueQuery()
             ->filterByIdProductOptionValue($idProductOptionValues, Criteria::IN)
             ->withColumn(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, static::COL_ID_PRODUCT_OPTION_VALUE)
             ->groupBy(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
@@ -522,6 +529,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->withColumn('MAX(' . SpyTaxRateTableMap::COL_RATE . ')', static::COL_MAX_TAX_RATE)
             ->endUse()
             ->select([static::COL_ID_PRODUCT_OPTION_VALUE, static::COL_COUNTRY_ISO2_CODE, static::COL_MAX_TAX_RATE]);
+
+        return $productOptionValueQuery;
     }
 
     /**

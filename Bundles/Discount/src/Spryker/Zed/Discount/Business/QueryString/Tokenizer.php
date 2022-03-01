@@ -25,6 +25,7 @@ class Tokenizer implements TokenizerInterface
      */
     public function tokenizeQueryString($queryString)
     {
+        /** @var array<string> $tokens */
         $tokens = preg_split(
             static::STRING_TO_TOKENS_REGEXP,
             $queryString,

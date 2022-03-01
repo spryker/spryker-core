@@ -53,7 +53,7 @@ class ProductLabelGuiRepository extends AbstractRepository implements ProductLab
 
         $categoryNames = [];
         foreach ($productCategoryEntityCollection as $productCategoryEntity) {
-            $categoryNames[$productCategoryEntity->getFkProductAbstract()][] = $productCategoryEntity->getVirtualColumn(static::ALIAS_CATEGORY_ATTRIBUTE_NAME);
+            $categoryNames[(int)$productCategoryEntity->getFkProductAbstract()][] = $productCategoryEntity->getVirtualColumn(static::ALIAS_CATEGORY_ATTRIBUTE_NAME);
         }
 
         return $categoryNames;
@@ -80,8 +80,8 @@ class ProductLabelGuiRepository extends AbstractRepository implements ProductLab
 
         $additionalRelationsCount = [];
         foreach ($productLabelProductAbstractCountDataCollection as $productLabelProductAbstractCountData) {
-            $idProductAbstract = $productLabelProductAbstractCountData[SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT];
-            $additionalRelationsCount[$idProductAbstract] = $productLabelProductAbstractCountData[static::COL_COUNT] - 1;
+            $idProductAbstract = (int)$productLabelProductAbstractCountData[SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT];
+            $additionalRelationsCount[$idProductAbstract] = (int)$productLabelProductAbstractCountData[static::COL_COUNT] - 1;
         }
 
         return $additionalRelationsCount;

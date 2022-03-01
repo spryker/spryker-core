@@ -148,6 +148,7 @@ class VoucherController extends AbstractController
         $streamedResponse = new StreamedResponse();
 
         $streamedResponse->setCallback(function () use ($generatedVouchers) {
+            /** @var resource $csvHandle */
             $csvHandle = fopen('php://output', 'w+');
             fputcsv($csvHandle, ['Voucher Code']);
 

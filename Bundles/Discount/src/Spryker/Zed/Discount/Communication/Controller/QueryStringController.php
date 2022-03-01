@@ -41,6 +41,7 @@ class QueryStringController extends AbstractController
      */
     public function ruleFieldsAction(Request $request)
     {
+        /** @var string $type */
         $type = $request->query->get(static::URL_PARAM_TYPE);
 
         $transformer = $this->getFactory()->createJavascriptQueryBuilderTransformer();
@@ -57,7 +58,9 @@ class QueryStringController extends AbstractController
      */
     public function ruleFieldExpressionsAction(Request $request)
     {
+        /** @var string $type */
         $type = $request->query->get(static::URL_PARAM_TYPE);
+        /** @var string $field */
         $field = $request->query->get(static::URL_PARAM_FIELD);
 
         return new JsonResponse(
@@ -73,6 +76,7 @@ class QueryStringController extends AbstractController
      */
     public function logicalComparatorsAction(Request $request)
     {
+        /** @var string $type */
         $type = $request->query->get(static::URL_PARAM_TYPE);
 
         return new JsonResponse(
@@ -88,7 +92,9 @@ class QueryStringController extends AbstractController
      */
     public function validateQueryStringAction(Request $request)
     {
+        /** @var string $type */
         $type = $request->query->get(static::URL_PARAM_TYPE);
+        /** @var string $queryString */
         $queryString = $request->query->get(static::URL_PARAM_QUERY_STRING);
 
         return new JsonResponse(

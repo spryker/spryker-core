@@ -151,8 +151,11 @@ class PriceProductScheduleImportFormType extends AbstractType
      */
     protected function mapSymfonyUploadedFileToUploadedFile(SymfonyUploadedFile $uploadedFile): UploadedFile
     {
+        /** @var string $path */
+        $path = $uploadedFile->getRealPath();
+
         return new UploadedFile(
-            $uploadedFile->getRealPath(),
+            $path,
             $uploadedFile->getClientOriginalName(),
             $uploadedFile->getClientMimeType(),
             $uploadedFile->getSize(),

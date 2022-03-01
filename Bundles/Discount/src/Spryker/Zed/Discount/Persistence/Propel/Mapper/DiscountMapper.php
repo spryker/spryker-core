@@ -47,9 +47,14 @@ class DiscountMapper
      */
     public function mapDiscountEntityToDiscountTransfer(SpyDiscount $discountEntity, DiscountTransfer $discountTransfer): DiscountTransfer
     {
+        /** @var string|null $validFrom */
+        $validFrom = $discountEntity->getValidFrom(static::DATE_TIME_FORMAT);
+        /** @var string|null $validTo */
+        $validTo = $discountEntity->getValidTo(static::DATE_TIME_FORMAT);
+
         return $discountTransfer->fromArray($discountEntity->toArray(), true)
-            ->setValidFrom($discountEntity->getValidFrom(static::DATE_TIME_FORMAT))
-            ->setValidTo($discountEntity->getValidTo(static::DATE_TIME_FORMAT));
+            ->setValidFrom($validFrom)
+            ->setValidTo($validTo);
     }
 
     /**

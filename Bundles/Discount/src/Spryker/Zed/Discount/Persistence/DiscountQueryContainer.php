@@ -110,6 +110,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountsBySpecifiedVouchersForStore($idStore, array $voucherCodes = [])
     {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery $query */
         $query = $this->queryActiveAndRunningDiscounts()
             ->setFormatter(OnDemandFormatter::class)
             ->useVoucherPoolQuery()
@@ -137,6 +138,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryActiveCartRulesForStore($idStore)
     {
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery $query */
         $query = $this->queryActiveAndRunningDiscounts()
             ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE)
             ->useSpyDiscountStoreQuery()
@@ -356,12 +358,15 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountWithStoresByFkDiscount($idDiscount)
     {
-        return $this->getFactory()
+        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountQuery $query */
+        $query = $this->getFactory()
             ->createDiscountQuery()
             ->filterByIdDiscount($idDiscount)
             ->leftJoinWithSpyDiscountStore()
             ->useSpyDiscountStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyStore()
             ->endUse();
+
+        return $query;
     }
 }

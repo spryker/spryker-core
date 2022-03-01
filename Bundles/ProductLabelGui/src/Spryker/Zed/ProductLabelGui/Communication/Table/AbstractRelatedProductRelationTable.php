@@ -183,7 +183,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
             'js-abstract-product-checkbox',
             $productAbstractEntity->getIdProductAbstract(),
             $this->getCheckboxCheckedAttribute(),
-            htmlspecialchars(json_encode([
+            htmlspecialchars((string)json_encode([
                 'id' => $productAbstractEntity->getIdProductAbstract(),
                 'sku' => $productAbstractEntity->getSku(),
                 'name' => $this->getNameColumn($productAbstractEntity),

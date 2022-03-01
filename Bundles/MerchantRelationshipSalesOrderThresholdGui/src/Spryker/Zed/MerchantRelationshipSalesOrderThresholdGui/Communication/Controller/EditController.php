@@ -49,6 +49,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        /** @var string|null $storeCurrencyRequestParam */
         $storeCurrencyRequestParam = $request->query->get(static::PARAM_STORE_CURRENCY_REQUEST);
         $idMerchantRelationship = $request->query->getInt(static::REQUEST_ID_MERCHANT_RELATIONSHIP);
 

@@ -162,6 +162,7 @@ class IndexController extends AbstractController
             return $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
         }
 
+        /** @var \Symfony\Component\Form\FormError $formError */
         foreach ($voucherForm->getErrors(true) as $formError) {
             $this->addErrorMessage($formError->getMessage());
         }

@@ -110,6 +110,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->prepareQuery();
+        /** @var array $queryResults */
         $queryResults = $this->runQuery($query, $config);
         $results = [];
 

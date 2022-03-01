@@ -28,10 +28,11 @@ class CalculatorFormDataProvider extends BaseDiscountFormDataProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
+     * @return array<string, string>
      */
     protected function getCalculatorPlugins()
     {
+        /** @var array<string, string> $calculatorPlugins */
         $calculatorPlugins = array_combine(array_keys($this->calculatorPlugins), array_keys($this->calculatorPlugins));
 
         foreach ($calculatorPlugins as $key => $calculatorPlugin) {

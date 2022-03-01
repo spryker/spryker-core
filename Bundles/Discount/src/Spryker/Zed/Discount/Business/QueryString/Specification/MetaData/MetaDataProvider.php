@@ -100,8 +100,11 @@ class MetaDataProvider implements MetaDataProviderInterface
             }
         }
 
+        /** @var array<string, mixed> $mapBuffer */
+        $mapBuffer = array_flip($queryStringFields);
+
         $this->availableFieldsBuffer = $queryStringFields;
-        $this->availableFieldsMapBuffer = array_flip($queryStringFields);
+        $this->availableFieldsMapBuffer = $mapBuffer;
     }
 
     /**
@@ -166,7 +169,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     }
 
     /**
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface $specificationPlugin
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface $specificationPlugin
      *
      * @return array
      */
@@ -174,6 +177,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     {
         $attributeFields = [];
         foreach ($specificationPlugin->getAttributeTypes() as $attributeType) {
+            /** @phpstan-var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemCollectorPluginInterface|\Spryker\Zed\DiscountExtension\Dependency\Plugin\DecisionRulePluginInterface $specificationPlugin */
             $attributeFields[] = $specificationPlugin->getFieldName() . '.' . $attributeType;
         }
 

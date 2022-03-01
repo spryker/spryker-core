@@ -258,6 +258,7 @@ class Calculator implements CalculatorInterface
         try {
             $collectorQueryString = $discountTransfer->getCollectorQueryString();
 
+            /** @var \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface $collectorComposite */
             $collectorComposite = $this->collectorBuilder
                 ->buildFromQueryString(
                     $collectorQueryString,
